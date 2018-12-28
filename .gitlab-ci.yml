@@ -24,8 +24,7 @@ build:
   before_script:
     - npm install
   script:
-    - npm run mock:build
-    - npm run build:prod
+    - npm run build
   artifacts:
     paths:
     - dist/
