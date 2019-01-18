@@ -1,0 +1,12 @@
+<form [formGroup]="loginForm" (ngSubmit)="login()">
+  <fieldset [class.error]="loginForm.get('login') | fieldTouchedHasError:'required'">
+    <p class="message">Field is requred!</p>
+    Login <input type="text" formControlName="login" required>
+  </fieldset>
+
+  <fieldset [class.error]="loginForm.get('password') | fieldTouchedHasError:'required'">
+    <p class="message">Field is requred!</p>
+    Password <input type="password" formControlName="password" required>
+  </fieldset>
+  <button [disabled]="loading" type="submit">Login</button>
+</form>

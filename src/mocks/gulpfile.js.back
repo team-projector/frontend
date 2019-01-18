@@ -1,0 +1,89 @@
+let gulp = require('gulp');
+let debug = require('gulp-debug');
+let path = require('path');
+let map = require('map-stream');
+let dummyjson = require('dummy-json');
+let extname = require('gulp-extname');
+var ts = require('gulp-typescript');
+var reflect = require('reflect-metadata');
+var fs = require('fs');
+var typescript = require('typescript');
+
+let store = {partials: {}, helpers: {}};
+
+function partials() {
+  return gulp.src(['objects/*.hbs'])
+    .pipe(debug())
+    .pipe(map(function (file, cb) {
+      var attrName = path.basename(file.path, '.jhbs');
+      store.partials[attrName] = file.contents.toString();
+      cb();
+    }));
+}
+
+function helpers() {
+  return gulp.src(['helpers/*.json'])
+    .pipe(debug())
+    .pipe(map(function (file, cb) {
+      let attr = path.basename(file.path, '.json');
+      store.helpers[attr] = function () {
+        return dummyjson.utils.randomArrayItem(JSON.parse(file.contents.toString()))
+      };
+      cb();
+    }));
+}
+
+function objects() {
+  return gulp.src(['objects/*.hbs'])
+    .pipe(debug())
+    .pipe(map(function (file, cb) {
+      file.contents = new Buffer(dummyjson.parse(file.contents.toString(), store));
+      return cb(null, file);
+    }))
+    .pipe(extname('.json'))
+    .pipe(gulp.dest('../assets/mocks/objects/'));
+}
+
+function services() {
+  return gulp.src(['services/**/*.hbs'])
+    .pipe(debug())
+    .pipe(map(function (file, cb) {
+      file.contents = new Buffer(dummyjson.parse(file.contents.toString(), store));
+      return cb(null, file);
+    }))
+    .pipe(extname('.json'))
+    .pipe(gulp.dest('../assets/mocks/services'));
+}
+
+function images() {
+  return gulp.src(['images/*'])
+    .pipe(gulp.dest('../assets/mocks/images/'));
+}
+
+let project = ts.createProject('../../tsconfig.json', {outFile: 'test.js', rootDir: '../../'});
+
+function compile() {
+  return gulp.src(['../models/*.ts'])
+    .pipe(debug())
+    .pipe(ts({
+      noImplicitAny: true,
+      module: 'none',
+      out: "output.js"
+    }))
+    .pipe(gulp.dest('models'));
+}
+
+function models() {
+  return gulp.src(['models/**/*.js'])
+    .pipe(debug())
+    .pipe(map(function (file, cb) {
+      let context = require(file.path);
+      return cb(null, file);
+    }))
+    .pipe(extname('.hbs'))
+    .pipe(gulp.dest('objects'));
+}
+
+exports.compile = compile;
+exports.models = models;
+exports.default = gulp.series(partials, helpers, objects, services, images);
