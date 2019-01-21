@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, Validators} from '@angular/forms';
 import {AppConfig} from '../../../app-config';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ISignupService, signup_service} from '../../../services/signup/interface';

@@ -1,5 +1,5 @@
 import {ArraySerializer, Field, Model, Name, Type} from 'serialize-ts';
-import {MockField, MockClass} from '../decorators/mock';
+import {MockClass, MockField} from '../decorators/mock';
 import {UserPermission, UserRole} from './user';
 import {PrimitiveSerializer} from 'serialize-ts/dist/serializers/primitive.serializer';
 
