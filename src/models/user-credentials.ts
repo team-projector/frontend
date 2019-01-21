@@ -1,5 +1,5 @@
-import {Field, Name} from 'serialize-ts';
-import {MockField, MockClass} from '../decorators/mock';
+import {Field} from 'serialize-ts';
+import {MockClass, MockField} from '../decorators/mock';
 
 @MockClass()
 export class UserCredentials {

@@ -1,21 +1,20 @@
 import {Gulpclass, SequenceTask, Task} from 'gulpclass';
-import {UserCredentials} from '../models/user-credentials';
 import {MOCK_FIELD_METADATA_KEY, MOCK_OBJECT_METADATA_KEY, MockFieldDescription, MockFieldNestedValue} from '../decorators/mock';
 import {__FIELD_JSON_NAME_METADATA_KEY} from 'serialize-ts/dist/metadata/metadata.keys';
 import * as change from 'change-case';
 import * as fs from 'fs';
-import {Me} from '../models/me';
 import {isArray} from 'util';
-import {Issue, IssueCard} from '../models/issue';
-import {Project} from '../models/project';
 import * as gulp from 'gulp';
 import * as debug from 'gulp-debug';
 import * as map from 'map-stream';
 import * as dummyjson from 'dummy-json';
 import * as extname from 'gulp-extname';
 import * as path from 'path';
-import {ObjectLink} from '../models/object-link';
-import {LabelCard} from '../models/label';
+import {isConstructor} from 'serialize-ts';
+
+class NotFoundError {
+
+}
 
 @Gulpclass()
 export class Gulpfile {
@@ -24,11 +23,18 @@ export class Gulpfile {
 
   private getTypeName(instance: any) {
     const meta = Reflect.getMetadata(MOCK_OBJECT_METADATA_KEY, instance);
+    if (!meta) {
+      throw new NotFoundError;
+    }
     return change.snake(meta.name);
   }
 
   private getObjectMock(instance: any) {
     const fields = Reflect.getMetadata(MOCK_FIELD_METADATA_KEY, instance);
+    if (!fields) {
+      throw new NotFoundError;
+    }
+
     const mock = [];
     fields.forEach((f: MockFieldDescription) => {
       const name = Reflect.getMetadata(__FIELD_JSON_NAME_METADATA_KEY, instance, f.name) || f.name;
@@ -53,13 +59,36 @@ export class Gulpfile {
     fs.writeFileSync(`objects/${name}.hbs`, mock);
   }
 
+  private formatJSON(source: string) {
+    return JSON.stringify(JSON.parse(source), null, 4);
+  }
+
   @Task()
-  mocks(cb: Function) {
-
-    const types = [ObjectLink, UserCredentials, Me, Project, LabelCard, IssueCard, Issue];
-    types.forEach(type => this.write(type));
-    return cb();
-
+  mocks() {
+    return gulp.src(['./../../dist/out-tsc/src/models/**/*.js'])
+      .pipe(debug())
+      .pipe(map((file, cb) => {
+        const context = require(file.path);
+        for (const key in context) {
+          if (!context.hasOwnProperty(key)) {
+            continue;
+          }
+          const type = context[key];
+          if (isConstructor(type)) {
+            console.log(key);
+            try {
+              this.write(type);
+            } catch (e) {
+              if ((e instanceof NotFoundError)) {
+                console.log('meta not found');
+              } else {
+                throw e;
+              }
+            }
+          }
+        }
+        return cb();
+      }));
   }
 
   @Task()
@@ -89,7 +118,8 @@ export class Gulpfile {
     return gulp.src(['objects/*.hbs'])
       .pipe(debug())
       .pipe(map((file, cb) => {
-        file.contents = new Buffer(dummyjson.parse(file.contents.toString(), this.store));
+        const json = dummyjson.parse(file.contents.toString(), this.store);
+        file.contents = new Buffer(this.formatJSON(json));
         return cb(null, file);
       }))
       .pipe(extname('.json'))
@@ -101,7 +131,8 @@ export class Gulpfile {
     return gulp.src(['services/**/*.hbs'])
       .pipe(debug())
       .pipe(map((file, cb) => {
-        file.contents = new Buffer(dummyjson.parse(file.contents.toString(), this.store));
+        const json = dummyjson.parse(file.contents.toString(), this.store);
+        file.contents = new Buffer(this.formatJSON(json));
         return cb(null, file);
       }))
       .pipe(extname('.json'))

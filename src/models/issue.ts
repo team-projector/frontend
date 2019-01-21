@@ -3,6 +3,7 @@ import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
 import {ObjectLink} from './object-link';
 import {LabelCard} from './label';
 import {Project} from './project';
+import {Paging} from './paging';
 
 export enum IssueState {
   opened = 'opened',
@@ -22,8 +23,8 @@ export class IssueCard {
   title: string;
 
   @Field()
-  @MockFieldNested('[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]')
   @Type(new ArraySerializer(new ModelSerializer(LabelCard)))
+  @MockFieldNested('[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]')
   labels: LabelCard[];
 
   @Field()
@@ -71,10 +72,11 @@ export class Issue {
 
   @Field()
   @Type(new ArraySerializer(new ModelSerializer(LabelCard)))
+  @MockFieldNested('[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]')
   labels: LabelCard[];
 
   @Field()
-  @MockField('{{> project}}')
+  @MockFieldNested('{{> project}}')
   project: Project;
 
   @Field()
@@ -102,4 +104,19 @@ export class Issue {
   @Field()
   @MockField(IssueState.opened)
   state: IssueState;
+}
+
+@Model()
+@MockClass()
+export class PagingIssues implements Paging<IssueCard> {
+
+  @Field()
+  @MockField('{{seconds}}')
+  count: number;
+
+  @Field()
+  @Type(new ArraySerializer(new ModelSerializer(IssueCard)))
+  @MockFieldNested('[{{#repeat 10 50}} {{> issue_card}} {{/repeat}}]')
+  results: IssueCard[];
+
 }

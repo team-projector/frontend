@@ -19,7 +19,7 @@ export class LoginComponent {
 
   loading = false;
   error: Error;
-  loginForm: FormGroup = this.builder.group({
+  loginForm = this.builder.group({
     login: [null, [Validators.required]],
     password: [null, [Validators.required]]
   });
@@ -38,12 +38,10 @@ export class LoginComponent {
       this.signupService.login(this.loginForm.value as UserCredentials)
         .pipe(delay(PLATFORM_DELAY), finalize(() => this.loading = false))
         .subscribe(authorization => {
-          console.log(authorization);
           this.config.authorization = authorization;
           this.router.navigate(['/']);
         }, error => this.error = error);
     }
   }
-
 
 }

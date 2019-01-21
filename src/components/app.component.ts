@@ -1,5 +1,7 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import {MeManager} from '../managers/me.manager';
+import {Config} from 'junte-angular';
+import {AppConfig} from '../app-config';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +9,11 @@ import {MeManager} from '../managers/me.manager';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(public me: MeManager) {
+  constructor(@Inject(Config) private config: AppConfig,
+              public me: MeManager) {
+  }
+
+  logout() {
+    this.config.authorization = null;
   }
 }

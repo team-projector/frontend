@@ -1,14 +1,13 @@
 import {InjectionToken} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Me} from '../../models/me';
-import {IssueCard} from '../../models/issue';
-import {Paging} from '../../models/paging';
+import {PagingIssues} from '../../models/issue';
 
 export interface IMeService {
 
   getUser(): Observable<Me>;
 
-  issues(): Observable<Paging<IssueCard>>;
+  issues(): Observable<PagingIssues>;
 
 }
 

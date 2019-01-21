@@ -1,7 +1,8 @@
 {
 	"id": "{{id}}", 
 	"title": "{{title}}", 
-	"project": "{{> project}}", 
+	"labels": [{{#repeat 2 5}} {{> label_card}} {{/repeat}}], 
+	"project": {{> project}}, 
 	"dueDate": "{{date '2019' '2020'}}", 
 	"time_estimate": "{{seconds}}", 
 	"time_spent": "{{seconds}}", 

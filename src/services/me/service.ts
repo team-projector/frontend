@@ -5,8 +5,7 @@ import {Observable} from 'rxjs';
 import {deserialize} from 'serialize-ts';
 import {map} from 'rxjs/operators';
 import {Me} from '../../models/me';
-import {IssueCard} from '../../models/issue';
-import {Paging, PagingIssues} from '../../models/paging';
+import {PagingIssues} from '../../models/issue';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +20,7 @@ export class MeService implements IMeService {
       .pipe(map(obj => deserialize(obj, Me)));
   }
 
-  issues(): Observable<Paging<IssueCard>> {
+  issues(): Observable<PagingIssues> {
     return this.http.get('me/issues')
       .pipe(map(obj => deserialize(obj, PagingIssues)));
   }
