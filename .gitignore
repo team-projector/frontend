@@ -44,3 +44,5 @@ Thumbs.db
 /package-lock.json
 /.idea/markdown-navigator.xml
 /.idea/vcs.xml
+
+/src/mocks/**/*.json

@@ -7,7 +7,7 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "mocks": "tsc && gulp mocks --gulpfile ./dist/out-tsc/src/mocks/gulpfile.js --cwd ./src/mocks",
+    "mocks": "tsc && gulp build --gulpfile ./dist/out-tsc/src/mocks/gulpfile.js --cwd ./src/mocks",
     "e2e": "ng e2e"
   },
   "private": true,

@@ -8,7 +8,7 @@ import {delay, finalize} from 'rxjs/operators';
 import {Config, Error, validate} from 'junte-angular';
 import {PLATFORM_DELAY} from '../../../consts';
 import 'reflect-metadata';
-import {MOCK_FIELD_METADATA_KEY, MOCK_OBJECT_METADATA_KEY} from '../../../decorators/mock';
+import {IMeService, me_service} from '../../../services/me/interface';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,8 @@ export class LoginComponent {
     password: [null, [Validators.required]]
   });
 
-  constructor(@Inject(signup_service) protected signupService: ISignupService,
+  constructor(@Inject(signup_service) public signupService: ISignupService,
+              @Inject(me_service) public meService: IMeService,
               @Inject(Config) private config: AppConfig,
               private builder: FormBuilder,
               private route: ActivatedRoute,

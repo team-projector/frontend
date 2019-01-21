@@ -2,14 +2,14 @@ import {Field, Name} from 'serialize-ts';
 import {MockField, MockClass} from '../decorators/mock';
 
 @MockClass()
-export class UserCredentials {
+export class LabelCard {
 
   @Field()
-  @MockField('{{login}}')
-  login: string;
+  @MockField('{{title}}')
+  title: string;
 
   @Field()
-  @MockField('{{password}}')
-  password: string;
+  @MockField('{{color}}')
+  color: string;
 
 }

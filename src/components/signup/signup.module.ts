@@ -5,6 +5,7 @@ import {SignupRoutingModule} from './signup-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {SignupServiceProvider} from '../../services/signup/provider';
 import {FormPipesModule} from 'junte-angular';
+import {MeServiceProvider} from '../../services/me/provider';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -15,7 +16,8 @@ import {FormPipesModule} from 'junte-angular';
     FormPipesModule
   ],
   providers: [
-    SignupServiceProvider
+    SignupServiceProvider,
+    MeServiceProvider
   ]
 })
 export class SignupModule {

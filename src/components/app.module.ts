@@ -5,6 +5,8 @@ import {AppComponent} from './app.component';
 import {Config, HttpMockService, HttpService} from 'junte-angular';
 import {AppConfig} from '../app-config';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {MeServiceProvider} from '../services/me/provider';
+import {MeManager} from '../managers/me.manager';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,10 @@ import {HttpClient, HttpClientModule} from '@angular/common/http';
     },
     HttpClient,
     HttpService,
-    HttpMockService
+    HttpMockService,
+
+    MeServiceProvider,
+    MeManager
   ],
   bootstrap: [AppComponent]
 })

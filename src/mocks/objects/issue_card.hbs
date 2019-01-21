@@ -1,0 +1,12 @@
+{
+	"id": "{{id}}", 
+	"title": "{{title}}", 
+	"labels": [{{#repeat 2 5}} {{> label_card}} {{/repeat}}], 
+	"project": {{> object_link presentation=(project)}}, 
+	"dueDate": "{{date '2019' '2020'}}", 
+	"time_estimate": "{{seconds}}", 
+	"time_spent": "{{seconds}}", 
+	"efficiency": "{{seconds}}", 
+	"earnings": "{{money}}", 
+	"state": "opened"
+}
