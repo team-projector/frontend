@@ -8,7 +8,6 @@ import {delay, finalize} from 'rxjs/operators';
 import {Config, Error, validate} from 'junte-angular';
 import {PLATFORM_DELAY} from '../../../consts';
 import 'reflect-metadata';
-import {IMeService, me_service} from '../../../services/me/interface';
 
 @Component({
   selector: 'app-login',
@@ -17,15 +16,14 @@ import {IMeService, me_service} from '../../../services/me/interface';
 })
 export class LoginComponent {
 
-  loading = false;
+  progress: any = {};
   error: Error;
   loginForm = this.builder.group({
     login: [null, [Validators.required]],
     password: [null, [Validators.required]]
   });
 
-  constructor(@Inject(signup_service) public signupService: ISignupService,
-              @Inject(me_service) public meService: IMeService,
+  constructor(@Inject(signup_service) private signupService: ISignupService,
               @Inject(Config) private config: AppConfig,
               private builder: FormBuilder,
               private route: ActivatedRoute,
@@ -34,9 +32,9 @@ export class LoginComponent {
 
   login() {
     if (validate(this.loginForm)) {
-      this.loading = true;
+      this.progress.login = true;
       this.signupService.login(this.loginForm.value as UserCredentials)
-        .pipe(delay(PLATFORM_DELAY), finalize(() => this.loading = false))
+        .pipe(delay(PLATFORM_DELAY), finalize(() => this.progress.login = false))
         .subscribe(authorization => {
           this.config.authorization = authorization;
           this.router.navigate(['/']);

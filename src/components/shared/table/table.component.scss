@@ -1,0 +1,16 @@
+
+:host {
+  display: block;
+}
+
+thead {
+  .sortable {
+    cursor: pointer;
+  }
+}
+
+tbody {
+  tr.even {
+    background-color: lightcyan;
+  }
+}

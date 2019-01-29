@@ -1,7 +1,7 @@
-import {Component, Inject} from '@angular/core';
-import {MeManager} from '../managers/me.manager';
-import {Config} from 'junte-angular';
-import {AppConfig} from '../app-config';
+import {Component} from '@angular/core';
+import * as moment from 'moment';
+import {HttpMockService, HttpService, InvalidGrantError} from 'junte-angular';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -9,11 +9,24 @@ import {AppConfig} from '../app-config';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(@Inject(Config) private config: AppConfig,
-              public me: MeManager) {
+
+  constructor(private httpService: HttpService,
+              private httpMockService: HttpMockService,
+              private router: Router) {
+    moment.locale('en', {
+      week: {
+        doy: 7,
+        dow: 1
+      }
+    });
+    moment.locale('en');
+
+
+    this.httpService.error$.subscribe((err: Error) => {
+      if (err instanceof InvalidGrantError) {
+        this.router.navigate(['/signup/login']);
+      }
+    });
   }
 
-  logout() {
-    this.config.authorization = null;
-  }
 }

@@ -1,0 +1,34 @@
+<app-table-column #issue i18n-title="@@issue_title" title="Issue" sort="issue_title"></app-table-column>
+<app-table-column #project i18n-title="@@issue_project" title="Project"></app-table-column>
+<app-table-column #spent i18n-title="@@issue_spent" title="Spent"></app-table-column>
+<app-table-column #earnings i18n-title="@@earn" title="Earn"></app-table-column>
+
+<app-table #table
+           [columns]="[issue, project, spent, earnings]"
+           [filter]="filter"
+           [rowTemplate]="rowTemplate">
+  <ng-template #rowTemplate let-id="id"
+               let-title="issue.title"
+               let-labels="issue.labels"
+               let-project="issue.project"
+               let-timeSpent="timeSpent"
+               let-earnings="earnings">
+    <td>
+      {{title}}
+      <ul class="labels">
+        <li *ngFor="let l of labels" [style.background-color]="l.color">
+          {{l.title}}
+        </li>
+      </ul>
+    </td>
+    <td>
+      {{project.presentation}}
+    </td>
+    <td style="text-align: right;">
+      {{timeSpent | duration}}h
+    </td>
+    <td style="text-align: right;">
+      {{earnings | currency}}
+    </td>
+  </ng-template>
+</app-table>

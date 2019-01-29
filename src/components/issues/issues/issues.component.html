@@ -1,0 +1,43 @@
+<app-table-column #title i18n-title="@@issue_title" title="Title" sort="title"></app-table-column>
+<app-table-column #project i18n-title="@@issue_project" title="Project"></app-table-column>
+<app-table-column #estimate i18n-title="@@est" title="Est"></app-table-column>
+<app-table-column #spent i18n-title="@@issue_spent" title="Spent"></app-table-column>
+<app-table-column #efficiency i18n-title="@@eff" title="Eff"></app-table-column>
+<app-table-column #earnings i18n-title="@@earn" title="Earn"></app-table-column>
+
+<app-table #table
+           [columns]="[title, project, estimate, spent, efficiency, earnings]"
+           [rowTemplate]="rowTemplate">
+  <ng-template #rowTemplate let-id="id"
+               let-title="title"
+               let-labels="labels"
+               let-project="project"
+               let-timeEstimate="timeEstimate"
+               let-timeSpent="timeSpent"
+               let-efficiency="efficiency"
+               let-earnings="earnings">
+    <td>
+      {{title}}
+      <ul class="labels">
+        <li *ngFor="let l of labels" [style.background-color]="l.color">
+          {{l.title}}
+        </li>
+      </ul>
+    </td>
+    <td>
+      {{project.presentation}}
+    </td>
+    <td style="text-align: right;">
+      {{timeEstimate | duration}}h
+    </td>
+    <td style="text-align: right;">
+      {{timeSpent | duration}}h
+    </td>
+    <td style="text-align: right;">
+      {{efficiency}}x
+    </td>
+    <td style="text-align: right;">
+      {{earnings | currency}}
+    </td>
+  </ng-template>
+</app-table>

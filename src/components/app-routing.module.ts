@@ -1,10 +1,20 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-const routes: Routes = [{
-  path: 'signup',
-  loadChildren: './signup/signup.module#SignupModule'
-}];
+export function dashboardMatcher() {
+  return {consumed: []};
+}
+
+const routes: Routes = [
+  {
+    path: 'signup',
+    loadChildren: './signup/signup.module#SignupModule'
+  },
+  {
+    matcher: dashboardMatcher,
+    loadChildren: './dashboard/dashboard.module#DashboardModule'
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

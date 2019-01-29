@@ -4,6 +4,11 @@ import {ObjectLink} from './object-link';
 import {LabelCard} from './label';
 import {Project} from './project';
 import {Paging} from './paging';
+import {Moment} from 'moment';
+import {MomentSerializer} from '../serializers/moment';
+import {Order, SearchFilter} from '../components/shared/table/models';
+import {DATE_FORMAT} from '../consts';
+import {SearchFilterSerializer} from '../serializers/search-filter';
 
 export enum IssueState {
   opened = 'opened',
@@ -19,7 +24,7 @@ export class IssueCard {
   id: number;
 
   @Field()
-  @MockField('{{title}}')
+  @MockField('{{issue}}')
   title: string;
 
   @Field()
@@ -32,25 +37,27 @@ export class IssueCard {
   project: ObjectLink;
 
   @Field()
+  @Name('due_date')
+  @Type(new MomentSerializer())
   @MockField('{{date \'2019\' \'2020\'}}')
-  dueDate: Date;
+  dueDate: Moment;
 
   @Field()
   @Name('time_estimate')
-  @MockField('{{seconds}}')
+  @MockFieldNested('{{time}}')
   timeEstimate: number;
 
   @Field()
   @Name('time_spent')
-  @MockField('{{seconds}}')
-  timeSpend: number;
+  @MockFieldNested('{{time}}')
+  timeSpent: number;
 
   @Field()
-  @MockField('{{seconds}}')
+  @MockFieldNested('{{efficiency}}')
   efficiency: number;
 
   @Field()
-  @MockField('{{money}}')
+  @MockFieldNested('{{money}}')
   earnings: number;
 
   @Field()
@@ -67,7 +74,7 @@ export class Issue {
   id: number;
 
   @Field()
-  @MockField('{{title}}')
+  @MockField('{{issue}}')
   title: string;
 
   @Field()
@@ -80,25 +87,27 @@ export class Issue {
   project: Project;
 
   @Field()
+  @Name('due_date')
+  @Type(new MomentSerializer())
   @MockField('{{date \'2019\' \'2020\'}}')
-  dueDate: Date;
+  dueDate: Moment;
 
   @Field()
   @Name('time_estimate')
-  @MockField('{{seconds}}')
+  @MockFieldNested('{{time}}')
   timeEstimate: number;
 
   @Field()
   @Name('time_spent')
-  @MockField('{{seconds}}')
-  timeSpend: number;
+  @MockFieldNested('{{time}}')
+  timeSpent: number;
 
   @Field()
-  @MockField('{{seconds}}')
+  @MockFieldNested('{{efficiency}}')
   efficiency: number;
 
   @Field()
-  @MockField('{{money}}')
+  @MockFieldNested('{{money}}')
   earnings: number;
 
   @Field()
@@ -111,12 +120,52 @@ export class Issue {
 export class PagingIssues implements Paging<IssueCard> {
 
   @Field()
-  @MockField('{{seconds}}')
+  @MockFieldNested('{{int 50 1000}}')
   count: number;
 
   @Field()
   @Type(new ArraySerializer(new ModelSerializer(IssueCard)))
-  @MockFieldNested('[{{#repeat 10 50}} {{> issue_card}} {{/repeat}}]')
+  @MockFieldNested('[{{#repeat 10 20}} {{> issue_card}} {{/repeat}}]')
   results: IssueCard[];
+
+}
+
+@Model(new SearchFilterSerializer())
+export class IssuesFilter implements SearchFilter {
+
+  @Field()
+  @Name('employee')
+  user?: number;
+
+  @Field()
+  @Name('q')
+  query?: string;
+
+  @Field()
+  @Type(new MomentSerializer(DATE_FORMAT))
+  @Name('due_date')
+  dueDate?: Moment;
+
+  @Field()
+  state?: IssueState;
+
+  @Field()
+  sort?: string;
+
+  @Field()
+  order?: Order = Order.asc;
+
+  @Field()
+  page?: number;
+
+  @Field()
+  @Name('page_size')
+  pageSize?: number;
+
+  constructor(defs: IssuesFilter = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
 
 }

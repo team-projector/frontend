@@ -13,7 +13,7 @@ export class MeManager {
   user$: BehaviorSubject<Me> = new BehaviorSubject<Me>(null);
 
   set user(user: Me) {
-    if (jsonEquals(this.user, user)) {
+    if (!jsonEquals(this.user, user)) {
       this.user$.next(user);
     }
   }

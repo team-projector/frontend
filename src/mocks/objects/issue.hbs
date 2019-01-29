@@ -1,12 +1,12 @@
 {
 	"id": "{{id}}", 
-	"title": "{{title}}", 
+	"title": "{{issue}}", 
 	"labels": [{{#repeat 2 5}} {{> label_card}} {{/repeat}}], 
 	"project": {{> project}}, 
-	"dueDate": "{{date '2019' '2020'}}", 
-	"time_estimate": "{{seconds}}", 
-	"time_spent": "{{seconds}}", 
-	"efficiency": "{{seconds}}", 
-	"earnings": "{{money}}", 
+	"due_date": "{{date '2019' '2020'}}", 
+	"time_estimate": {{time}}, 
+	"time_spent": {{time}}, 
+	"efficiency": {{efficiency}}, 
+	"earnings": {{money}}, 
 	"state": "opened"
 }

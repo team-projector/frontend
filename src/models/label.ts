@@ -5,7 +5,7 @@ import {MockClass, MockField} from '../decorators/mock';
 export class LabelCard {
 
   @Field()
-  @MockField('{{title}}')
+  @MockField('{{label}}')
   title: string;
 
   @Field()

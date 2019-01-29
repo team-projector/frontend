@@ -1,0 +1,30 @@
+
+:host {
+  display: block;
+}
+
+thead {
+  .sortable {
+    cursor: pointer;
+  }
+  .metrics {
+    text-align: center;
+  }
+}
+
+tbody {
+  tr {
+    &.current {
+      background-color: silver;
+    }
+    td {
+      text-align: center;
+      &.day {
+        cursor: pointer;
+        &.current {
+          background: lightcoral;
+        }
+      }
+    }
+  }
+}

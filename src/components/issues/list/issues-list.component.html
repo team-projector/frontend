@@ -1,0 +1,47 @@
+<app-week-metric #estimate i18n-title="@@est" title="Est"></app-week-metric>
+<app-week-metric #spent i18n-title="@@est" title="Spent"></app-week-metric>
+<app-week-metric #efficiency i18n-title="@@est" title="Eff"></app-week-metric>
+<app-week-metric #earnings i18n-title="@@est" title="Earn"></app-week-metric>
+
+<form [formGroup]="filterForm">
+  <app-calendar [metrics]="[estimate, spent, efficiency, earnings]"
+                formControlName="dueDate" [dayTemplate]="dayTemplate"
+                [metricTemplate]="metricTemplate"
+                (updated)="period = $event">
+    <ng-template #dayTemplate let-date="date"
+                 let-key="date.format('L')">
+      <i>{{date.date()}}</i>
+      <br>
+      <small>
+        {{metrics.days.get(key)?.timeEstimate | duration}}h | {{metrics.days.get(key)?.timeSpent | duration}}h
+      </small>
+    </ng-template>
+    <ng-template #metricTemplate let-metric="metric"
+                 let-date="date"
+                 let-key="date.format('L')">
+      <ng-container [ngSwitch]="metric">
+        <ng-container *ngSwitchCase="0">{{metrics.weeks.get(key)?.timeEstimate | duration}}h</ng-container>
+        <ng-container *ngSwitchCase="1">{{metrics.weeks.get(key)?.timeSpent | duration}}h</ng-container>
+        <ng-container *ngSwitchCase="2">{{metrics.weeks.get(key)?.efficiency}}x</ng-container>
+        <ng-container *ngSwitchCase="3">{{metrics.weeks.get(key)?.earnings | currency}}</ng-container>
+      </ng-container>
+    </ng-template>
+  </app-calendar>
+
+  <app-calendar-week [period]="dueDate.value" [dayTemplate]="weekdayTemplate">
+    <ng-template #weekdayTemplate let-date="date"
+                 let-key="date.format('L')">
+      <i>{{date.date()}}</i>
+      <br>
+      <small>
+        {{metrics.days.get(key)?.timeEstimate | duration}}h | {{metrics.days.get(key)?.timeSpent | duration}}h
+      </small>
+    </ng-template>
+  </app-calendar-week>
+</form>
+
+<h1 i18n="@@issues_title">Issues</h1>
+<app-issues [user]="user?.id" [dueDate]="dueDate.value"></app-issues>
+
+<h1 i18n="@@time_expenses_title">Time Expenses</h1>
+<app-time-expenses [user]="user?.id" [createdAt]="dueDate.value"></app-time-expenses>

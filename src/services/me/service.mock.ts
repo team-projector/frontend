@@ -5,7 +5,6 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {deserialize} from 'serialize-ts';
 import {Me} from '../../models/me';
-import {PagingIssues} from '../../models/issue';
 
 
 @Injectable({
@@ -21,8 +20,4 @@ export class MeMockService implements IMeService {
       .pipe(map(obj => deserialize(obj, Me)));
   }
 
-  issues(): Observable<PagingIssues> {
-    return this.http.get('me/issues.json')
-      .pipe(map(obj => deserialize(obj, PagingIssues)));
-  }
 }

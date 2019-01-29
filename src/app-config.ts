@@ -7,4 +7,6 @@ const APP_VERSION = '1.0.0';
 export class AppConfig extends Config {
 
   version = APP_VERSION;
+
+  backendEndpoint = 'https://tp.junte.it/api';
 }
