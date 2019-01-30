@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {DashboardComponent} from './dashboard.component';
 import {AuthorizationGuard} from '../../guards/authorization.guard';
 
@@ -17,6 +17,10 @@ const routes: Routes = [
       {
         path: 'developer',
         loadChildren: '../developer/developer.module#DeveloperModule',
+      },
+      {
+        path: 'leader',
+        loadChildren: '../leader/leader.module#LeaderModule',
       }
     ]
   }];

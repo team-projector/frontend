@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {LoginComponent} from './login/login.component';
 import {SignupRoutingModule} from './signup-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
-import {SignupServiceProvider} from '../../services/signup/provider';
+import {UsersServiceProvider} from '../../services/users/provider';
 import {FormPipesModule} from 'junte-angular';
 import {MeServiceProvider} from '../../services/me/provider';
 
@@ -16,7 +16,7 @@ import {MeServiceProvider} from '../../services/me/provider';
     FormPipesModule
   ],
   providers: [
-    SignupServiceProvider,
+    UsersServiceProvider,
     MeServiceProvider
   ]
 })

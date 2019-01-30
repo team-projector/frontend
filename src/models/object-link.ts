@@ -1,12 +1,12 @@
 import {Field, Model} from 'serialize-ts';
-import {MockClass, MockField} from '../decorators/mock';
+import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
 
 @Model()
 @MockClass()
 export class ObjectLink {
 
   @Field()
-  @MockField('{{id}}')
+  @MockFieldNested('{{int 1 100}}')
   id: number;
 
   @Field()

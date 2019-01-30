@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnInit, TemplateRef} from '@angular/core';
+import * as moment from 'moment';
 import {Moment} from 'moment';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {today} from '../../../../utils/date';
-import * as moment from 'moment';
 
 const DAYS_IN_WEEK = 7;
 

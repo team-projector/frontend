@@ -19,6 +19,7 @@ export class IssuesComponent implements OnInit {
 
   @Input()
   set user(user: number) {
+    console.log(user);
     this.user$.next(user);
   }
 

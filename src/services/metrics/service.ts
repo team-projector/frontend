@@ -18,7 +18,7 @@ export class MetricsService implements IMetricsService {
 
   list(user: number, start: Moment, end: Moment, group: MetricsGroup): Observable<Map<string, Metric>> {
     return Observable.create((observer: any) => {
-      this.http.get<Metric[]>('metrics/days',
+      this.http.get<Metric[]>('metrics',
         encodeParams(new MetricFilter({user: user, start: start, end: end, group: group})))
         .pipe(map(arr => arr.map(el => deserialize(el, Metric))))
         .subscribe(metrics => {

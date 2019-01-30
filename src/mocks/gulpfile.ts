@@ -16,10 +16,23 @@ class NotFoundError {
 
 }
 
+function concat() {
+  const chunks = [];
+  for (let i = 0; i < arguments.length - 1; i++) {
+    chunks[i] = arguments[i];
+  }
+  return chunks.join('');
+}
+
 @Gulpclass()
 export class Gulpfile {
 
-  store = {partials: {}, helpers: {}};
+  store = {
+    partials: {},
+    helpers: {
+      concat: concat
+    }
+  };
 
   private getTypeName(instance: any) {
     const meta = Reflect.getMetadata(MOCK_OBJECT_METADATA_KEY, instance);

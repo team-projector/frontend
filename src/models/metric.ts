@@ -2,9 +2,7 @@ import {Field, Model, Name, Type} from 'serialize-ts';
 import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
 import {MomentSerializer} from '../serializers/moment';
 import {Moment} from 'moment';
-import {Order, SearchFilter} from '../components/shared/table/models';
 import {DATE_FORMAT} from '../consts';
-import {IssueState} from './issue';
 
 export enum MetricsGroup {
   day = 'day',

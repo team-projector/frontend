@@ -1,7 +1,7 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output, TemplateRef} from '@angular/core';
 import * as moment from 'moment';
-import {today} from '../../../utils/date';
 import {Moment} from 'moment';
+import {today} from '../../../utils/date';
 import {BehaviorSubject, combineLatest, Subject} from 'rxjs';
 import {filter} from 'rxjs/operators';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';

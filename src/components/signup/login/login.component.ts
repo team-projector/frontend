@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
 import {AppConfig} from '../../../app-config';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ISignupService, signup_service} from '../../../services/signup/interface';
+import {IUsersService, users_service} from '../../../services/users/interface';
 import {UserCredentials} from '../../../models/user-credentials';
 import {delay, finalize} from 'rxjs/operators';
 import {Config, Error, validate} from 'junte-angular';
@@ -23,7 +23,7 @@ export class LoginComponent {
     password: [null, [Validators.required]]
   });
 
-  constructor(@Inject(signup_service) private signupService: ISignupService,
+  constructor(@Inject(users_service) private usersService: IUsersService,
               @Inject(Config) private config: AppConfig,
               private builder: FormBuilder,
               private route: ActivatedRoute,
@@ -33,7 +33,7 @@ export class LoginComponent {
   login() {
     if (validate(this.loginForm)) {
       this.progress.login = true;
-      this.signupService.login(this.loginForm.value as UserCredentials)
+      this.usersService.login(this.loginForm.value as UserCredentials)
         .pipe(delay(PLATFORM_DELAY), finalize(() => this.progress.login = false))
         .subscribe(authorization => {
           this.config.authorization = authorization;
