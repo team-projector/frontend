@@ -1,28 +1,65 @@
+@import '../../../style/variables';
+
 :host {
   display: flex;
-  align-items: start;
-  justify-content: flex-end;
-  padding: 20px;
-  background: antiquewhite;
+  align-items: center;
+  justify-content: space-between;
+  background: $primary-color-dark;
+  min-height: $header-height;
+  color: $white-color;
+  padding: 0 40px 0 30px;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0 10px;
-  display: flex;
-  li:not(:first-child) {
-    &:before {
-      margin: 0 5px;
-      content: '|';
+nav {
+  flex: 1;
+  margin-left: 50px;
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 10px;
+    display: flex;
+    li {
+      display: flex;
+      align-items: center;
+      &:not(:first-child) {
+        margin-left: 20px;
+      }
+      a {
+        color: $white-color;
+        text-decoration: none;
+        font-weight: 300;
+        padding: 10px;
+        &:not(.active) {
+          opacity: .8;
+        }
+        &.active span {
+          border-bottom: 1px solid $white-color;
+        }
+      }
     }
   }
 }
 
-p {
-  margin: 0;
+.user {
+  position: relative;
+  .dropdown {
+    display: none;
+    position: absolute;
+    right: -15px;
+    padding: 30px;
+    background-color: $primary-color-dark;
+    p {
+      margin: 0;
+    }
+
+    button {
+      margin-left: 10px;
+    }
+  }
+  &:hover {
+    .dropdown {
+      display: block;
+    }
+  }
 }
 
-button {
-  margin-left: 10px;
-}

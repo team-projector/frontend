@@ -1,4 +1,7 @@
 <form [formGroup]="loginForm" (ngSubmit)="login()">
+  <div class="logo">
+    <img src="/assets/images/logo.svg" height="50">
+  </div>
   <p>{{error}}</p>
   <fieldset [class.error]="loginForm.get('login') | fieldTouchedHasError:'required'">
     <p class="message">Field is requred!</p>

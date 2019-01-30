@@ -4,6 +4,17 @@
 <app-week-metric #earnings i18n-title="@@est" title="Earn"></app-week-metric>
 
 <form [formGroup]="filterForm">
+  <app-calendar-week class="week" [period]="dueDate.value" [dayTemplate]="weekdayTemplate">
+    <ng-template #weekdayTemplate let-date="date"
+                 let-key="date.format('L')">
+      <i>{{date.date()}}</i>
+      <br>
+      <small>
+        {{metrics.days.get(key)?.timeEstimate | duration}}h | {{metrics.days.get(key)?.timeSpent | duration}}h
+      </small>
+    </ng-template>
+  </app-calendar-week>
+
   <app-calendar [metrics]="[estimate, spent, efficiency, earnings]"
                 formControlName="dueDate" [dayTemplate]="dayTemplate"
                 [metricTemplate]="metricTemplate"
@@ -27,17 +38,6 @@
       </ng-container>
     </ng-template>
   </app-calendar>
-
-  <app-calendar-week [period]="dueDate.value" [dayTemplate]="weekdayTemplate">
-    <ng-template #weekdayTemplate let-date="date"
-                 let-key="date.format('L')">
-      <i>{{date.date()}}</i>
-      <br>
-      <small>
-        {{metrics.days.get(key)?.timeEstimate | duration}}h | {{metrics.days.get(key)?.timeSpent | duration}}h
-      </small>
-    </ng-template>
-  </app-calendar-week>
 </form>
 
 <h1 i18n="@@issues_title">Issues</h1>

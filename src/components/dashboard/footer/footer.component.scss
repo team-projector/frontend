@@ -1,5 +1,13 @@
+@import '../../../style/variables';
+
 :host {
   display: block;
-  background: antiquewhite;
-  padding: 20px;
+  background: $primary-color-dark;
+  padding: 10px 30px;
+  font-size: .75em;
+}
+
+p {
+  margin: 0;
+  color: $white-color;
 }

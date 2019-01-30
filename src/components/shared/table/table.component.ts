@@ -3,7 +3,7 @@ import {Subscription} from 'rxjs';
 import {DefaultSearchFilter, Order, SearchFilter} from './models';
 import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from '../../../consts';
 import {FormBuilder} from '@angular/forms';
-import {filter as filtering} from 'rxjs/operators';
+import {filter as filtering, finalize} from 'rxjs/operators';
 import {TableColumnComponent} from './table-column.component';
 
 @Component({
@@ -16,6 +16,7 @@ export class TableComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
   private count: number;
 
+  progress = {loading: false};
   sort = this.formBuilder.control(null);
   order = this.formBuilder.control(Order.asc);
 
@@ -55,7 +56,9 @@ export class TableComponent implements OnInit, OnDestroy {
   }
 
   load() {
+    this.progress.loading = true;
     this.fetcher(this.filter)
+      .pipe(finalize(() => this.progress.loading = false))
       .subscribe(resp => {
         this.source = resp.results;
         this.count = resp.count;

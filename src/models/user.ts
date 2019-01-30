@@ -26,13 +26,8 @@ export class User {
 
   @Field()
   @Name('first_name')
-  @MockField('{{firstName}}')
-  firstName: string;
-
-  @Field()
-  @Name('last_name')
-  @MockField('{{lastName}}')
-  lastName: string;
+  @MockField('{{firstName}} {{lastName}}')
+  name: string;
 
   @Field()
   @Type(new ArraySerializer(new PrimitiveSerializer()))

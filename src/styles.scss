@@ -1,12 +1,15 @@
 @import 'style/variables';
+@import 'assets/fonts/open-sans/import';
 
 body {
   padding: 0;
   margin: 0;
   background-color: $primary-background;
+  font-family: Open Sans;
 }
 
 fieldset {
+  border: none;
   .message {
     display: none;
   }
@@ -17,5 +20,21 @@ fieldset {
     input {
       border: 1px solid red;
     }
+  }
+}
+
+button {
+  cursor: pointer;
+  padding: 10px 30px;
+  font-family: Open Sans;
+  outline: none;
+  font-weight: 300;
+  font-size: 14px;
+  background-color: $primary-color;
+  color: $white-color;
+  border-radius: 40px;
+  border: none;
+  &:focus {
+    box-shadow: 0 0 0 2px #88b8ff;
   }
 }

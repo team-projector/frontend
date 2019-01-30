@@ -1,20 +1,38 @@
-<ul>
-  <li>
-    <a routerLink="/developer">Developer</a>
-  </li>
-  <li>
-    <a routerLink="/leader">Team Leader</a>
-  </li>
-  <li>
-    <a routerLink="/manager">Project Manager</a>
-  </li>
-  <li>
-    <a routerLink="/customer">Customer</a>
-  </li>
-  <li>
-    <a routerLink="/shareholder">Shareholder</a>
-  </li>
-</ul>
+<img src="/assets/images/logo-white.svg" height="45">
+<nav>
+  <ul>
+    <li>
+      <a routerLink="/developer" routerLinkActive="active">
+        <span>Developer</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/leader" routerLinkActive="active">
+        <span>Team Leader</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/manager" routerLinkActive="active">
+        <span>Project Manager</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/customer" routerLinkActive="active">
+        <span>Customer</span>
+      </a>
+    </li>
+    <li>
+      <a routerLink="/shareholder" routerLinkActive="active">
+        <span>Shareholder</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 
-<p>Hello {{me.user?.login}}</p>
-<button *ngIf="config.authorization" (click)="logout()">Logout</button>
+<div class="user">
+  <img src="/assets/images/avatar.png" width="40" height="40">
+  <div class="dropdown">
+    <p>{{me.user?.name}}</p>
+    <button *ngIf="config.authorization" (click)="logout()">Logout</button>
+  </div>
+</div>

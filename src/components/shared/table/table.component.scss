@@ -3,14 +3,17 @@
   display: block;
 }
 
-thead {
-  .sortable {
-    cursor: pointer;
+table {
+  width: 100%;
+  thead {
+    .sortable {
+      cursor: pointer;
+    }
   }
-}
 
-tbody {
-  tr.even {
-    background-color: lightcyan;
+  tbody {
+    tr.even {
+      background-color: lightcyan;
+    }
   }
 }

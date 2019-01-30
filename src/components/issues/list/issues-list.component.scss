@@ -1,4 +1,16 @@
 
 :host {
   display: block;
+  padding: 20px;
+}
+
+form {
+  display: flex;
+  justify-content: space-between;
+  .week {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 }
