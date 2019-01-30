@@ -1,23 +1,21 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {MeRoutingModule} from './me-routing.module';
+import {DeveloperRoutingModule} from './developer-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
-import {MeServiceProvider} from '../../services/me/provider';
 import {IssuesModule} from '../issues/issues.module';
-import {MeUserResolver} from './resovers';
+import {MeUserResolver} from '../../resolvers/me';
 
 @NgModule({
   declarations: [],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MeRoutingModule,
+    DeveloperRoutingModule,
     IssuesModule
   ],
   providers: [
-    MeServiceProvider,
     MeUserResolver
   ]
 })
-export class MeModule {
+export class DeveloperModule {
 }

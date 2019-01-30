@@ -4,10 +4,9 @@ import {HttpService} from 'junte-angular';
 import {Observable} from 'rxjs';
 import {deserialize} from 'serialize-ts';
 import {map} from 'rxjs/operators';
-import {encodeParams} from '../../utils/http';
 import {Moment} from 'moment';
-import {DayMetrics, WeekMetrics} from '../../models/metrics';
-import * as moment from 'moment';
+import {Metric, MetricFilter, MetricsGroup} from '../../models/metric';
+import {encodeParams} from '../../utils/http';
 
 @Injectable({
   providedIn: 'root'
@@ -17,35 +16,20 @@ export class MetricsService implements IMetricsService {
   constructor(private http: HttpService) {
   }
 
-  days(user: number, start: Moment, finish: Moment): Observable<Map<string, DayMetrics>> {
+  list(user: number, start: Moment, end: Moment, group: MetricsGroup): Observable<Map<string, Metric>> {
     return Observable.create((observer: any) => {
-      this.http.get<DayMetrics[]>('metrics/days')
-        .pipe(map(arr => arr.map(el => deserialize(el, DayMetrics))))
+      this.http.get<Metric[]>('metrics/days',
+        encodeParams(new MetricFilter({user: user, start: start, end: end, group: group})))
+        .pipe(map(arr => arr.map(el => deserialize(el, Metric))))
         .subscribe(metrics => {
-          const dic = new Map<string, DayMetrics>();
-          metrics.forEach(m => dic.set(m.date.format('L'), m));
+          const dic = new Map<string, Metric>();
+          metrics.forEach(m => dic.set(m.getKey(), m));
           observer.next(dic);
           observer.complete();
         }, err => {
           observer.error(err);
           observer.complete();
         });
-    }) as Observable<Map<string, DayMetrics>>;
-  }
-
-  weeks(user: number, start: Moment, finish: Moment): Observable<Map<string, WeekMetrics>> {
-    return Observable.create((observer: any) => {
-      this.http.get<DayMetrics[]>('metrics/weeks')
-        .pipe(map(arr => arr.map(el => deserialize(el, WeekMetrics))))
-        .subscribe(metrics => {
-          const dic = new Map<string, DayMetrics>();
-          metrics.forEach(m => dic.set(m.date.format('L'), m));
-          observer.next(dic);
-          observer.complete();
-        }, err => {
-          observer.error(err);
-          observer.complete();
-        });
-    }) as Observable<Map<string, WeekMetrics>>;
+    }) as Observable<Map<string, Metric>>;
   }
 }

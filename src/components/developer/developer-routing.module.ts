@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {IssuesListComponent} from '../issues/list/issues-list.component';
-import {MeUserResolver} from './resovers';
+import {MeUserResolver} from '../../resolvers/me';
 
 const routes: Routes = [
   {
@@ -21,5 +21,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class MeRoutingModule {
+export class DeveloperRoutingModule {
 }

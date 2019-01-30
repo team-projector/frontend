@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {Me} from '../../models/me';
-import {MeManager} from '../../managers/me.manager';
+import {Me} from '../models/me';
+import {MeManager} from '../managers/me.manager';
 import {filter} from 'rxjs/operators';
 
 @Injectable()

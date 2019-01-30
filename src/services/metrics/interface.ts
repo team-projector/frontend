@@ -1,13 +1,11 @@
 import {InjectionToken} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Moment} from 'moment';
-import {DayMetrics, WeekMetrics} from '../../models/metrics';
+import {Metric, MetricsGroup} from '../../models/metric';
 
 export interface IMetricsService {
 
-  days(user: number, start: Moment, finish: Moment): Observable<Map<string, DayMetrics>>;
-
-  weeks(user: number, start: Moment, finish: Moment): Observable<Map<string, WeekMetrics>>;
+  list(user: number, start: Moment, end: Moment, group: MetricsGroup): Observable<Map<string, Metric>>;
 
 }
 

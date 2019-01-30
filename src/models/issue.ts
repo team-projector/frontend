@@ -8,7 +8,6 @@ import {Moment} from 'moment';
 import {MomentSerializer} from '../serializers/moment';
 import {Order, SearchFilter} from '../components/shared/table/models';
 import {DATE_FORMAT} from '../consts';
-import {SearchFilterSerializer} from '../serializers/search-filter';
 
 export enum IssueState {
   opened = 'opened',
@@ -130,7 +129,7 @@ export class PagingIssues implements Paging<IssueCard> {
 
 }
 
-@Model(new SearchFilterSerializer())
+@Model()
 export class IssuesFilter implements SearchFilter {
 
   @Field()

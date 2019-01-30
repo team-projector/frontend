@@ -12,11 +12,11 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'me'
+        redirectTo: 'developer'
       },
       {
-        path: 'me',
-        loadChildren: '../me/me.module#MeModule',
+        path: 'developer',
+        loadChildren: '../developer/developer.module#DeveloperModule',
       }
     ]
   }];

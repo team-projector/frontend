@@ -6,7 +6,7 @@ import {Period} from '../../shared/calendar/models';
 import {IIssuesService, issues_service} from '../../../services/issues/interface';
 import {ActivatedRoute} from '@angular/router';
 import {filter} from 'rxjs/operators';
-import {DayMetrics, WeekMetrics} from '../../../models/metrics';
+import {Metric, MetricsGroup} from '../../../models/metric';
 import {ITimeExpensesService, time_expenses_service} from '../../../services/time-expenses/interface';
 import {User} from '../../../models/user';
 import {BehaviorSubject, combineLatest} from 'rxjs';
@@ -33,7 +33,7 @@ export class IssuesListComponent implements OnInit {
     this.period$.next(period);
   }
 
-  metrics = {days: new Map<string, DayMetrics>(), weeks: new Map<string, WeekMetrics>()};
+  metrics = {days: new Map<string, Metric>(), weeks: new Map<string, Metric>()};
   dueDate = new FormControl(moment());
   filterForm = this.formBuilder.group({
     dueDate: this.dueDate
@@ -56,10 +56,10 @@ export class IssuesListComponent implements OnInit {
   }
 
   loadMetrics(user: User, period: Period) {
-    this.metricsService.days(user.id, period.start, period.finish)
+    this.metricsService.list(user.id, period.start, period.end, MetricsGroup.day)
       .subscribe(metrics => this.metrics.days = metrics);
 
-    this.metricsService.weeks(user.id, period.start, period.start)
+    this.metricsService.list(user.id, period.start, period.start, MetricsGroup.week)
       .subscribe(metrics => this.metrics.weeks = metrics);
   }
 

@@ -92,7 +92,7 @@ export class CalendarComponent implements ControlValueAccessor, OnInit {
       date.add(1, 'week');
     }
 
-    this.updated.emit({start: start, finish: date});
+    this.updated.emit({start: start, end: date});
   }
 
   writeValue(date: Moment): void {
