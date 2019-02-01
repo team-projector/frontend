@@ -1,6 +1,6 @@
 <ul>
   <li *ngFor="let u of users">
-    <a [routerLink]="[u.id, 'issues']">{{u.presentation}}</a>
+    <a [routerLink]="[u.id, 'issues']" routerLinkActive="active">{{u.presentation}}</a>
   </li>
 </ul>
 
