@@ -18,6 +18,7 @@ tbody {
       background-color: silver;
     }
     td {
+      min-width: 50px;
       text-align: center;
       &.day {
         cursor: pointer;

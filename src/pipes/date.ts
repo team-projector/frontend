@@ -5,7 +5,8 @@ import {Moment} from 'moment';
 @Pipe({name: 'duration'})
 export class DurationPipe implements PipeTransform {
   transform(seconds: number): string {
-    return moment.duration(seconds, 'second').asHours().toString();
+    const hours = moment.duration(seconds, 'second').asHours();
+    return Math.round(hours).toString();
   }
 }
 

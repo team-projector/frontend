@@ -51,7 +51,6 @@ export class Metric {
 export class MetricFilter {
 
   @Field()
-  @Name('employee')
   user?: number;
 
   @Field()
