@@ -1,18 +1,23 @@
-<app-table-column #issue i18n-title="@@issue_title" title="Issue" sort="issue_title"></app-table-column>
-<app-table-column #project i18n-title="@@issue_project" title="Project"></app-table-column>
-<app-table-column #spent i18n-title="@@issue_spent" title="Spent"></app-table-column>
+<app-table-column #createdAt i18n-title="@@created_at" title="Created at" sort="created_at"></app-table-column>
+<app-table-column #issue i18n-title="@@title" title="Issue" sort="title"></app-table-column>
+<app-table-column #project i18n-title="@@project" title="Project"></app-table-column>
+<app-table-column #spent i18n-title="@@spent" title="Spent"></app-table-column>
 <app-table-column #earnings i18n-title="@@earn" title="Earn"></app-table-column>
 
 <app-table #table
-           [columns]="[issue, project, spent, earnings]"
+           [columns]="[createdAt, issue, project, spent, earnings]"
            [filter]="filter"
            [rowTemplate]="rowTemplate">
   <ng-template #rowTemplate let-id="id"
+               let-createdAt="createdAt"
                let-title="issue.title"
                let-labels="issue.labels"
                let-project="issue.project"
                let-timeSpent="timeSpent"
                let-earnings="earnings">
+    <td>
+      {{createdAt | date:'medium'}}
+    </td>
     <td>
       {{title}}
       <ul class="labels">

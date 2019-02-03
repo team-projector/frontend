@@ -15,7 +15,7 @@ import {TimeExpensesFilter} from '../../../models/spent-time';
 export class TimeExpensesComponent implements OnInit {
 
   private user$ = new BehaviorSubject<number>(null);
-  private createdAt$ = new BehaviorSubject<Moment>(null);
+  private date$ = new BehaviorSubject<Moment>(null);
 
   @Input()
   set user(user: number) {
@@ -23,8 +23,8 @@ export class TimeExpensesComponent implements OnInit {
   }
 
   @Input()
-  set createdAt(createdAt: Moment) {
-    this.createdAt$.next(createdAt);
+  set date(date: Moment) {
+    this.date$.next(date);
   }
 
   filter: TimeExpensesFilter = new TimeExpensesFilter({page: DEFAULT_PAGE, pageSize: DEFAULT_PAGE_SIZE});
@@ -36,15 +36,14 @@ export class TimeExpensesComponent implements OnInit {
   }
 
   ngOnInit() {
-    combineLatest(this.user$, this.createdAt$)
+    combineLatest(this.user$, this.date$)
       .pipe(filtering(u => !!u))
-      .subscribe(([user, createdAt]) => {
-        this.table.fetcher = (filter: TimeExpensesFilter) => this.timeExpensesService.list(filter);
+      .subscribe(([user, date]) => {
         this.filter.user = user;
-        this.filter.createdAt = createdAt;
-        if (!!user) {
-          this.table.load();
-        }
+        this.filter.date = date;
+        this.table.fetcher = (filter: TimeExpensesFilter) =>
+          this.timeExpensesService.list(Object.assign(this.filter, filter));
+        this.table.load();
       });
   }
 

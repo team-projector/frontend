@@ -40,9 +40,9 @@ export class IssuesComponent implements OnInit {
     combineLatest(this.user$, this.dueDate$)
       .pipe(filtering(u => !!u))
       .subscribe(([user, dueDate]) => {
-        this.table.fetcher = (filter: IssuesFilter) => this.issuesService.list(Object.assign(this.filter, filter));
         this.filter.user = user;
         this.filter.dueDate = dueDate;
+        this.table.fetcher = (filter: IssuesFilter) => this.issuesService.list(Object.assign(this.filter, filter));
         this.table.load();
       });
   }

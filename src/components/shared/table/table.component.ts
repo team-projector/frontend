@@ -60,6 +60,7 @@ export class TableComponent implements OnInit, OnDestroy {
     this.fetcher(this.filter)
       .pipe(finalize(() => this.progress.loading = false))
       .subscribe(resp => {
+        console.log(resp.results);
         this.source = resp.results;
         this.count = resp.count;
       });

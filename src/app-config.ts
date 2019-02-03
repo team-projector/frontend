@@ -8,5 +8,5 @@ export class AppConfig extends Config {
 
   version = APP_VERSION;
 
-  backendEndpoint = 'https://tp.junte.it/api';
+  backendEndpoint = 'https://teamprojector.com/api';
 }
