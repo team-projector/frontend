@@ -1,6 +1,7 @@
-import {Field} from 'serialize-ts';
+import {Field, Model} from 'serialize-ts';
 import {MockClass, MockField} from '../decorators/mock';
 
+@Model()
 @MockClass()
 export class UserCredentials {
 
@@ -11,5 +12,11 @@ export class UserCredentials {
   @Field()
   @MockField('{{password}}')
   password: string;
+
+  constructor(defs: UserCredentials = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
 
 }

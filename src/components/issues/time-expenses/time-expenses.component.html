@@ -11,6 +11,8 @@
   <ng-template #rowTemplate let-id="id"
                let-createdAt="createdAt"
                let-title="issue.title"
+               let-url="issue.glUrl"
+               let-state="issue.state"
                let-labels="issue.labels"
                let-project="issue.project"
                let-timeSpent="timeSpent"
@@ -19,7 +21,7 @@
       {{createdAt | date:'medium'}}
     </td>
     <td>
-      {{title}}
+      <a href="{{url}}" target="_blank" [class.closed]="state == issuesState.closed">{{title}}</a>
       <ul class="labels">
         <li *ngFor="let l of labels" [style.background-color]="l.color">
           {{l.title}}

@@ -10,6 +10,8 @@
            [rowTemplate]="rowTemplate">
   <ng-template #rowTemplate let-id="id"
                let-title="title"
+               let-url="glUrl"
+               let-state="state"
                let-labels="labels"
                let-project="project"
                let-timeEstimate="timeEstimate"
@@ -17,7 +19,7 @@
                let-efficiency="efficiency"
                let-earnings="earnings">
     <td>
-      {{title}}
+      <a href="{{url}}" target="_blank" [class.closed]="state == issuesState.closed">{{title}}</a>
       <ul class="labels">
         <li *ngFor="let l of labels" [style.background-color]="l.color">
           {{l.title}}

@@ -9,6 +9,8 @@ export interface IUsersService {
 
   login(credentials: UserCredentials): Observable<Authorization>;
 
+  gitlab(code: string, state: string): Observable<Authorization>;
+
   get(id: number): Observable<User>;
 
   links(): Observable<ObjectLink[]>;

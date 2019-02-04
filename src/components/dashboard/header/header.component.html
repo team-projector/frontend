@@ -30,7 +30,7 @@
 </nav>
 
 <div class="user">
-  <img src="/assets/images/avatar.png" width="40" height="40">
+  <img class="avatar" [src]="me.user?.avatar || '/assets/images/avatar.png'" width="40" height="40">
   <div class="dropdown">
     <p>{{me.user?.name}}</p>
     <button *ngIf="config.authorization" (click)="logout()">Logout</button>

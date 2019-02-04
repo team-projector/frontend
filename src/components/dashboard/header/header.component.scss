@@ -42,6 +42,10 @@ nav {
 
 .user {
   position: relative;
+  .avatar {
+    border: 2px solid white;
+    border-radius: 50%;
+  }
   .dropdown {
     display: none;
     position: absolute;

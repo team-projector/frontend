@@ -1,5 +1,5 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {IssuesFilter} from '../../../models/issue';
+import {IssuesFilter, IssueState} from '../../../models/issue';
 import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from '../../../consts';
 import {TableComponent} from '../../shared/table/table.component';
 import {IIssuesService, issues_service} from '../../../services/issues/interface';
@@ -13,6 +13,8 @@ import {filter as filtering} from 'rxjs/operators';
   styleUrls: ['./issues.component.scss']
 })
 export class IssuesComponent implements OnInit {
+
+  issuesState = IssueState;
 
   private user$ = new BehaviorSubject<number>(null);
   private dueDate$ = new BehaviorSubject<Moment>(null);

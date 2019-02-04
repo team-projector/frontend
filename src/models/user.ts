@@ -30,6 +30,10 @@ export class User {
   name: string;
 
   @Field()
+  @MockField('{{avatar}}')
+  avatar: string;
+
+  @Field()
   @Type(new ArraySerializer(new PrimitiveSerializer()))
   @MockField([UserRole.developer])
   roles: UserRole[];

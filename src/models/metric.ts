@@ -38,6 +38,10 @@ export class Metric {
   efficiency: number;
 
   @Field()
+  @MockFieldNested('{{time}}')
+  loading: number;
+
+  @Field()
   @MockFieldNested('{{money}}')
   earnings: number;
 

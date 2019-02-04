@@ -3,6 +3,10 @@
   display: block;
 }
 
+.closed {
+  text-decoration: line-through;
+}
+
 .labels {
   display: inline-flex;
   list-style: none;

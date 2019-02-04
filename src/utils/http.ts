@@ -3,7 +3,6 @@ import 'reflect-metadata';
 import {serialize} from 'serialize-ts';
 
 export function encodeParams(source: any) {
-  console.log(source);
   const obj: { [key: string]: string } = {};
   const serialized = serialize(source);
   for (const key in serialized) {

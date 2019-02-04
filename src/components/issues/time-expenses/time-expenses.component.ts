@@ -6,6 +6,7 @@ import {Moment} from 'moment';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {filter as filtering} from 'rxjs/operators';
 import {TimeExpensesFilter} from '../../../models/spent-time';
+import {IssueState} from '../../../models/issue';
 
 @Component({
   selector: 'app-time-expenses',
@@ -13,6 +14,8 @@ import {TimeExpensesFilter} from '../../../models/spent-time';
   styleUrls: ['./time-expenses.component.scss']
 })
 export class TimeExpensesComponent implements OnInit {
+
+  issuesState = IssueState;
 
   private user$ = new BehaviorSubject<number>(null);
   private date$ = new BehaviorSubject<Moment>(null);

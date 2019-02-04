@@ -10,8 +10,10 @@
       <i>{{date.date()}}</i>
       <br>
       <small *ngIf="metrics.days.get(key)?.timeSpent" class="metric">
-        <!--{{metrics.days.get(key)?.timeEstimate | duration}}h | -->
         {{metrics.days.get(key)?.timeSpent | duration}}h
+      </small>
+      <small *ngIf="metrics.days.get(key)?.loading" class="metric loading">
+        {{metrics.days.get(key)?.loading | duration}}h
       </small>
     </ng-template>
   </app-calendar-week>
@@ -25,8 +27,10 @@
       <i>{{date.date()}}</i>
       <br>
       <small *ngIf="metrics.days.get(key)?.timeSpent" class="metric">
-        <!--{{metrics.days.get(key)?.timeEstimate | duration}}h |-->
         {{metrics.days.get(key)?.timeSpent | duration}}h
+      </small>
+      <small *ngIf="metrics.days.get(key)?.loading" class="metric loading">
+        {{metrics.days.get(key)?.loading | duration}}h
       </small>
     </ng-template>
     <ng-template #metricTemplate let-metric="metric"

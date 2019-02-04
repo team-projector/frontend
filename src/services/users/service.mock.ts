@@ -21,6 +21,11 @@ export class UsersMockService implements IUsersService {
       .pipe(map(src => deserialize(src, Authorization)), delay(500));
   }
 
+  gitlab(code: string, state: string): Observable<Authorization> {
+    return of({type: 'mock', token: 'mock'})
+      .pipe(map(src => deserialize(src, Authorization)), delay(500));
+  }
+
   get(id: number): Observable<User> {
     return this.http.get('users/get.json')
       .pipe(map(src => {

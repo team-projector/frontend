@@ -60,54 +60,9 @@ export class IssueCard {
   earnings: number;
 
   @Field()
-  @MockField(IssueState.opened)
-  state: IssueState;
-}
-
-@Model()
-@MockClass()
-export class Issue {
-
-  @Field()
-  @MockField('{{id}}')
-  id: number;
-
-  @Field()
-  @MockField('{{issue}}')
-  title: string;
-
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(LabelCard)))
-  @MockFieldNested('[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]')
-  labels: LabelCard[];
-
-  @Field()
-  @MockFieldNested('{{> project}}')
-  project: Project;
-
-  @Field()
-  @Name('due_date')
-  @Type(new MomentSerializer())
-  @MockField('{{date \'2019\' \'2020\'}}')
-  dueDate: Moment;
-
-  @Field()
-  @Name('time_estimate')
-  @MockFieldNested('{{time}}')
-  timeEstimate: number;
-
-  @Field()
-  @Name('time_spent')
-  @MockFieldNested('{{time}}')
-  timeSpent: number;
-
-  @Field()
-  @MockFieldNested('{{efficiency}}')
-  efficiency: number;
-
-  @Field()
-  @MockFieldNested('{{money}}')
-  earnings: number;
+  @Name('gl_url')
+  @MockField('{{url}}')
+  glUrl: string;
 
   @Field()
   @MockField(IssueState.opened)
