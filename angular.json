@@ -25,9 +25,15 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/i18n"
+              {
+                "glob": "**/*",
+                "input": "node_modules/junte-ui/lib/assets/fonts/icons/",
+                "output": "./assets/fonts/icons/"
+              }
             ],
             "styles": [
+              "node_modules/junte-ui/lib/assets/styles/_icons.scss",
+              "src/assets/fonts/open-sans/import.scss",
               "src/styles.scss"
             ],
             "scripts": []

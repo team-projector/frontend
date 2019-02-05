@@ -6,6 +6,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {UsersServiceProvider} from '../../services/users/provider';
 import {FormPipesModule} from 'junte-angular';
 import {MeServiceProvider} from '../../services/me/provider';
+import {JunteUiModule} from 'junte-ui';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -13,7 +14,8 @@ import {MeServiceProvider} from '../../services/me/provider';
     CommonModule,
     ReactiveFormsModule,
     SignupRoutingModule,
-    FormPipesModule
+    FormPipesModule,
+    JunteUiModule
   ],
   providers: [
     UsersServiceProvider,
