@@ -45,6 +45,10 @@ export class Metric {
   @MockFieldNested('{{money}}')
   earnings: number;
 
+  @Field()
+  @MockFieldNested('{{int 50 1000}}')
+  issues: number;
+
   getKey(): string {
     return this.start.format('L');
   }
