@@ -12,8 +12,11 @@
       <small *ngIf="metrics.days.get(key)?.timeSpent" class="metric">
         {{metrics.days.get(key)?.timeSpent | duration}}
       </small>
-      <small *ngIf="metrics.days.get(key)?.timeEstimate" class="metric loading">
+      <small *ngIf="metrics.days.get(key)?.timeEstimate" class="metric estimate">
         {{metrics.days.get(key)?.timeEstimate | duration}}
+      </small>
+      <small *ngIf="metrics.days.get(key)?.loading" class="metric loading">
+        {{metrics.days.get(key)?.loading | duration}}
       </small>
       <div class="issues" *ngIf="metrics.days.get(key)?.issues"></div>
     </ng-template>
@@ -30,8 +33,11 @@
       <small *ngIf="metrics.days.get(key)?.timeSpent" class="metric">
         {{metrics.days.get(key)?.timeSpent | duration}}
       </small>
-      <small *ngIf="metrics.days.get(key)?.timeEstimate" class="metric loading">
+      <small *ngIf="metrics.days.get(key)?.timeEstimate" class="metric estimate">
         {{metrics.days.get(key)?.timeEstimate | duration}}
+      </small>
+      <small *ngIf="metrics.days.get(key)?.loading" class="metric loading">
+        {{metrics.days.get(key)?.loading | duration}}
       </small>
       <div class="issues" *ngIf="metrics.days.get(key)?.issues"></div>
     </ng-template>

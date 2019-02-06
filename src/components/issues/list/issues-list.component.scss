@@ -19,10 +19,14 @@ form {
 .metric {
   color: $white-color;
   background-color: $primary-color;
-  padding: 2px;
+  padding: 1px 2px;
   border-radius: 5px;
-  &.loading {
+  line-height: 1em;
+  &.estimate {
     background-color: orangered;
+  }
+  &.loading {
+    background-color: cornflowerblue;
   }
 }
 
