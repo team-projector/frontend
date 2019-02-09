@@ -13,7 +13,9 @@
     Password <input type="password" formControlName="password" required>
   </fieldset>
   <jnt-button [loading]="progress.login" type="submit" text="Login" [fluid]="true"></jnt-button>
-  <a class="gitlab" href="https://teamprojector.com/api/login/gitlab/">
-    <img src="/assets/images/gitlab.svg" height="30">
-  </a>
+  <jnt-block class="gitlab" [loading]="progress.gitlab">
+    <a href="https://teamprojector.com/api/login/gitlab/">
+      <img src="/assets/images/gitlab.svg" height="30">
+    </a>
+  </jnt-block>
 </form>

@@ -26,11 +26,14 @@ form {
   }
   .gitlab {
     margin-top: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 1px solid silver;
     border-radius: 5px;
-    padding: 10px;
+    border: 1px solid silver;
+    overflow: hidden;
+    a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
   }
 }
