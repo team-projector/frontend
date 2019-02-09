@@ -8,6 +8,7 @@ import {delay, filter, finalize} from 'rxjs/operators';
 import {Authorization, Config, Error, validate} from 'junte-angular';
 import {PLATFORM_DELAY} from '../../../consts';
 import 'reflect-metadata';
+import {UI} from 'junte-ui';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,8 @@ import 'reflect-metadata';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  ui = UI;
 
   progress: any = {};
   error: Error;

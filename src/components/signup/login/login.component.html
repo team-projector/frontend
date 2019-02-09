@@ -1,21 +1,23 @@
 <form [formGroup]="loginForm" (ngSubmit)="login()">
-  <div class="logo">
+  <div logo>
     <img src="/assets/images/logo.svg" height="50">
   </div>
   <p>{{error}}</p>
-  <fieldset [class.error]="loginForm.get('login') | fieldTouchedHasError:'required'">
-    <p class="message">Field is requred!</p>
-    Login <input type="text" formControlName="login" required>
-  </fieldset>
+  <jnt-stack fields [gutter]="ui.stack.gutter.normal">
+    <fieldset [class.error]="loginForm.get('login') | fieldTouchedHasError:'required'">
+      <p class="message">Field is requred!</p>
+      <jnt-input formControlName="login" placeholder="Login" required></jnt-input>
+    </fieldset>
 
-  <fieldset [class.error]="loginForm.get('password') | fieldTouchedHasError:'required'">
-    <p class="message">Field is requred!</p>
-    Password <input type="password" formControlName="password" required>
-  </fieldset>
-  <jnt-button [loading]="progress.login" type="submit" text="Login" [fluid]="true"></jnt-button>
-  <jnt-block class="gitlab" [loading]="progress.gitlab">
-    <a href="https://teamprojector.com/api/login/gitlab/">
-      <img src="/assets/images/gitlab.svg" height="30">
-    </a>
-  </jnt-block>
+    <fieldset [class.error]="loginForm.get('password') | fieldTouchedHasError:'required'">
+      <p class="message">Field is requred!</p>
+      <jnt-input formControlName="password" placeholder="Password" required></jnt-input>
+    </fieldset>
+    <jnt-button [loading]="progress.login" type="submit" text="Login" [fluid]="true"></jnt-button>
+    <jnt-block gitlab [loading]="progress.gitlab">
+      <a href="https://teamprojector.com/api/login/gitlab/">
+        <img src="/assets/images/gitlab.svg" height="30">
+      </a>
+    </jnt-block>
+  </jnt-stack>
 </form>
