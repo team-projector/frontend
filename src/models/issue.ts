@@ -2,7 +2,6 @@ import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serial
 import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
 import {ObjectLink} from './object-link';
 import {LabelCard} from './label';
-import {Project} from './project';
 import {Paging} from './paging';
 import {Moment} from 'moment';
 import {MomentSerializer} from '../serializers/moment';

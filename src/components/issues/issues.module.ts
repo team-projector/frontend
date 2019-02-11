@@ -11,11 +11,13 @@ import {ArrayPipesModule} from '../../pipes/array-pipes.module';
 import {TimeExpensesServiceProvider} from '../../services/time-expenses/provider';
 import {IssuesComponent} from './issues/issues.component';
 import {TimeExpensesComponent} from './time-expenses/time-expenses.component';
+import {IssueProblemsComponent} from './problems/issue-problems.component';
 
 @NgModule({
   declarations: [
     IssuesListComponent,
     IssuesComponent,
+    IssueProblemsComponent,
     TimeExpensesComponent
   ],
   imports: [

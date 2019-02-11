@@ -1,6 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import * as moment from 'moment';
-import {Duration, Moment} from 'moment';
+import {Moment} from 'moment';
 
 @Pipe({name: 'duration'})
 export class DurationPipe implements PipeTransform {

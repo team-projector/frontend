@@ -1,0 +1,30 @@
+
+:host {
+  display: block;
+}
+
+.closed {
+  text-decoration: line-through;
+}
+
+.labels {
+  display: inline-flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  li {
+    padding: 2px 5px;
+    border-radius: 10px;
+    &:not(:first-child) {
+      margin-left: 5px;
+    }
+  }
+}
+
+.error {
+  color: white;
+  font-size: .75em;
+  padding: 1px 5px;
+  border-radius: 10px;
+  background-color: orangered;
+}
