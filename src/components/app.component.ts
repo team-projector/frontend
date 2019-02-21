@@ -1,7 +1,8 @@
-import {Component} from '@angular/core';
+import {Component, Inject} from '@angular/core';
 import * as moment from 'moment';
-import {HttpMockService, HttpService, InvalidGrantError} from 'junte-angular';
+import {Config, HttpMockService, HttpService, InvalidGrantError} from 'junte-angular';
 import {Router} from '@angular/router';
+import {AppConfig} from '../app-config';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,8 @@ import {Router} from '@angular/router';
 })
 export class AppComponent {
 
-  constructor(private httpService: HttpService,
+  constructor(@Inject(Config) private config: AppConfig,
+              private httpService: HttpService,
               private httpMockService: HttpMockService,
               private router: Router) {
     moment.locale('en', {
@@ -24,6 +26,7 @@ export class AppComponent {
 
     this.httpService.error$.subscribe((err: Error) => {
       if (err instanceof InvalidGrantError) {
+        this.config.authorization = null;
         this.router.navigate(['/signup/login']);
       }
     });

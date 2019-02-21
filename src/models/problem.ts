@@ -6,7 +6,7 @@ import {SearchFilter} from '../components/shared/table/models';
 import {PrimitiveSerializer} from 'serialize-ts/dist/serializers/primitive.serializer';
 
 export enum IssueProblemType {
-  overdueDueDate = 'overdue_due_date',
+  overDueDate = 'over_due_date',
   emptyDueDate = 'empty_due_date',
   emptyEstimate = 'empty_estimate'
 }

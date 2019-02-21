@@ -29,7 +29,7 @@
     <td style="text-align: right;">
       {{dueDate | date}}
       <span class="error" *ngIf="problems.includes(issueProblemType.emptyDueDate)">empty</span>
-      <span class="error" *ngIf="problems.includes(issueProblemType.overdueDueDate)">overdue</span>
+      <span class="error" *ngIf="problems.includes(issueProblemType.overDueDate)">overdue</span>
     </td>
     <td style="text-align: right;">
       {{timeEstimate | duration}}

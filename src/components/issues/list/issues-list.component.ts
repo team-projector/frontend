@@ -59,7 +59,7 @@ export class IssuesListComponent implements OnInit {
     this.metricsService.list(user.id, period.start, period.end, MetricsGroup.day)
       .subscribe(metrics => this.metrics.days = metrics);
 
-    this.metricsService.list(user.id, period.start, period.start, MetricsGroup.week)
+    this.metricsService.list(user.id, period.start, period.end, MetricsGroup.week)
       .subscribe(metrics => this.metrics.weeks = metrics);
   }
 

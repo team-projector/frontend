@@ -45,9 +45,9 @@
                  let-date="date"
                  let-key="date.format('L')">
       <ng-container [ngSwitch]="metric">
-        <ng-container *ngSwitchCase="0">{{metrics.weeks.get(key)?.timeEstimate | duration}}h</ng-container>
-        <ng-container *ngSwitchCase="1">{{metrics.weeks.get(key)?.timeSpent | duration}}h</ng-container>
-        <ng-container *ngSwitchCase="2">{{metrics.weeks.get(key)?.efficiency}}x</ng-container>
+        <ng-container *ngSwitchCase="0">{{metrics.weeks.get(key)?.timeEstimate | duration}}</ng-container>
+        <ng-container *ngSwitchCase="1">{{metrics.weeks.get(key)?.timeSpent | duration}}</ng-container>
+        <ng-container *ngSwitchCase="2">{{metrics.weeks.get(key)?.efficiency | number:'1.2-2'}}x</ng-container>
         <ng-container *ngSwitchCase="3">{{metrics.weeks.get(key)?.earnings | currency}}</ng-container>
       </ng-container>
     </ng-template>
