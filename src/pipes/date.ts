@@ -2,16 +2,16 @@ import {Pipe, PipeTransform} from '@angular/core';
 import * as moment from 'moment';
 import {Moment} from 'moment';
 
+const DAYS_IN_MONTH = 30;
+const HOURS_IN_DAY = 24;
+
 @Pipe({name: 'duration'})
 export class DurationPipe implements PipeTransform {
   transform(seconds: number): string {
     const duration = moment.duration(seconds, 'second');
 
     const units = [
-      {value: duration.years(), unit: 'y'},
-      {value: duration.months(), unit: 'm'},
-      {value: duration.days(), unit: 'd'},
-      {value: duration.hours(), unit: 'h'},
+      {value: (duration.months() * DAYS_IN_MONTH + duration.days()) * HOURS_IN_DAY + duration.hours(), unit: 'h'},
       {value: duration.minutes(), unit: 'm'},
       {value: duration.seconds(), unit: 's'},
       {value: duration.milliseconds(), unit: 'mm'}
