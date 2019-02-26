@@ -1,12 +1,9 @@
-<app-table-column #issue i18n-title="@@title" title="Issue" sort="title"></app-table-column>
-<app-table-column #project i18n-title="@@project" title="Project"></app-table-column>
-<app-table-column #dueDate i18n-title="@@due_daye" title="Due date"></app-table-column>
-<app-table-column #estimate i18n-title="@@est" title="Est"></app-table-column>
+<jnt-table [filter]="filter">
+  <jnt-table-column i18n-title="@@title" title="Issue" sort="title"></jnt-table-column>
+  <jnt-table-column i18n-title="@@project" title="Project"></jnt-table-column>
+  <jnt-table-column i18n-title="@@due_daye" title="Due date"></jnt-table-column>
+  <jnt-table-column i18n-title="@@est" title="Est"></jnt-table-column>
 
-<app-table #table
-           [columns]="[issue, project, dueDate, estimate]"
-           [filter]="filter"
-           [rowTemplate]="rowTemplate">
   <ng-template #rowTemplate let-problems="problems"
                let-title="issue.title"
                let-url="issue.glUrl"
@@ -36,4 +33,4 @@
       <span class="error" *ngIf="problems.includes(issueProblemType.emptyEstimate)">empty</span>
     </td>
   </ng-template>
-</app-table>
+</jnt-table>
