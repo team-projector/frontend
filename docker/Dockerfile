@@ -1,4 +1,4 @@
-FROM nginx:1.14-alpine
+FROM nginx:alpine
 
 WORKDIR /var/www
 
