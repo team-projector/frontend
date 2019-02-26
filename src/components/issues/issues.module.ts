@@ -12,6 +12,7 @@ import {TimeExpensesServiceProvider} from '../../services/time-expenses/provider
 import {IssuesComponent} from './issues/issues.component';
 import {TimeExpensesComponent} from './time-expenses/time-expenses.component';
 import {IssueProblemsComponent} from './problems/issue-problems.component';
+import { JunteUiModule } from 'junte-ui';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {IssueProblemsComponent} from './problems/issue-problems.component';
     TableModule,
     CalendarModule,
     DatePipesModule,
-    ArrayPipesModule
+    ArrayPipesModule,
+    JunteUiModule
   ],
   exports: [
     IssuesListComponent

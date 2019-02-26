@@ -1,13 +1,10 @@
-<app-table-column #createdAt i18n-title="@@created_at" title="Created at" sort="created_at"></app-table-column>
-<app-table-column #issue i18n-title="@@title" title="Issue" sort="title"></app-table-column>
-<app-table-column #project i18n-title="@@project" title="Project"></app-table-column>
-<app-table-column #spent i18n-title="@@spent" title="Spent"></app-table-column>
-<app-table-column #earnings i18n-title="@@earn" title="Earn"></app-table-column>
+<jnt-table [filter]="filter">
+  <jnt-table-column i18n-title="@@created_at" title="Created at" sort="created_at"></jnt-table-column>
+  <jnt-table-column i18n-title="@@title" title="Issue" sort="title"></jnt-table-column>
+  <jnt-table-column i18n-title="@@project" title="Project"></jnt-table-column>
+  <jnt-table-column i18n-title="@@spent" title="Spent"></jnt-table-column>
+  <jnt-table-column i18n-title="@@earn" title="Earn"></jnt-table-column>
 
-<app-table #table
-           [columns]="[createdAt, issue, project, spent, earnings]"
-           [filter]="filter"
-           [rowTemplate]="rowTemplate">
   <ng-template #rowTemplate let-id="id"
                let-createdAt="createdAt"
                let-title="issue.title"
@@ -38,4 +35,4 @@
       {{earnings | currency}}
     </td>
   </ng-template>
-</app-table>
+</jnt-table>

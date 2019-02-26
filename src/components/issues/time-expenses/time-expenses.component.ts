@@ -1,12 +1,12 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from '../../../consts';
-import {TableComponent} from '../../shared/table/table.component';
-import {ITimeExpensesService, time_expenses_service} from '../../../services/time-expenses/interface';
-import {Moment} from 'moment';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {filter as filtering} from 'rxjs/operators';
-import {TimeExpensesFilter} from '../../../models/spent-time';
-import {IssueState} from '../../../models/issue';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
+import { ITimeExpensesService, time_expenses_service } from 'src/services/time-expenses/interface';
+import { Moment } from 'moment';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { filter as filtering } from 'rxjs/operators';
+import { TimeExpensesFilter } from 'src/models/spent-time';
+import { IssueState } from 'src/models/issue';
+import { TableComponent } from 'junte-ui';
 
 @Component({
   selector: 'app-time-expenses',
@@ -32,7 +32,7 @@ export class TimeExpensesComponent implements OnInit {
 
   filter: TimeExpensesFilter = new TimeExpensesFilter({page: DEFAULT_PAGE, pageSize: DEFAULT_PAGE_SIZE});
 
-  @ViewChild('table')
+  @ViewChild(TableComponent)
   table: TableComponent;
 
   constructor(@Inject(time_expenses_service) private timeExpensesService: ITimeExpensesService) {
