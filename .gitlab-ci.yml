@@ -39,7 +39,7 @@ docker:
     GIT_STRATEGY: fetch
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
-    - docker build --pull -t $DOCKER_TEST_IMAGE .
+    - docker build --pull -t $DOCKER_TEST_IMAGE -f docker/Dockerfile .
     - docker push $DOCKER_TEST_IMAGE
 
 publish_dev:
@@ -65,7 +65,7 @@ publish_prod:
   - prod
 
 deploy_dev:
-  image: slapshin1988/ssh-agent
+  image: junte/ssh-agent
   stage: deploy
   dependencies: []
   variables:
