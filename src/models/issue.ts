@@ -51,6 +51,11 @@ export class IssueCard {
   timeSpent: number;
 
   @Field()
+  @Name('total_time_spent')
+  @MockFieldNested('{{time}}')
+  totalTimeSpent: number;
+
+  @Field()
   @MockFieldNested('{{efficiency}}')
   efficiency: number;
 

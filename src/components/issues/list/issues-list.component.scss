@@ -5,6 +5,35 @@
   padding: 20px;
 }
 
+.day {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 70px;
+  .metrics {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: .8em;
+    li {
+      display: block;
+      color: $white-color;
+      background-color: $primary-color;
+      padding: 2px 3px;
+      border-radius: 5px;
+      line-height: 1em;
+      &.estimate {
+        background-color: orangered;
+      }
+      &.loading {
+        background-color: cornflowerblue;
+      }
+    }
+  }
+}
+
 form {
   display: flex;
   justify-content: space-between;
@@ -13,20 +42,6 @@ form {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-}
-
-.metric {
-  color: $white-color;
-  background-color: $primary-color;
-  padding: 1px 2px;
-  border-radius: 5px;
-  line-height: 1em;
-  &.estimate {
-    background-color: orangered;
-  }
-  &.loading {
-    background-color: cornflowerblue;
   }
 }
 

@@ -16,6 +16,7 @@
                let-project="project"
                let-timeEstimate="timeEstimate"
                let-timeSpent="timeSpent"
+               let-totalTimeSpent="totalTimeSpent"
                let-efficiency="efficiency"
                let-earnings="earnings">
     <td>
@@ -33,7 +34,7 @@
       {{timeEstimate | duration}}
     </td>
     <td style="text-align: right;">
-      {{timeSpent | duration}}
+      {{totalTimeSpent | duration}}
     </td>
     <td style="text-align: right;">
       {{efficiency}}x

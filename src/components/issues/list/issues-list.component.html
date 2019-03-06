@@ -7,17 +7,20 @@
   <app-calendar-week class="week" [period]="dueDate.value" [dayTemplate]="weekdayTemplate">
     <ng-template #weekdayTemplate let-date="date"
                  let-key="date.format('L')">
-      <i>{{date.date()}}</i>
-      <br>
-      <small *ngIf="metrics.days.get(key)?.timeSpent" class="metric">
-        {{metrics.days.get(key)?.timeSpent | duration}}
-      </small>
-      <small *ngIf="metrics.days.get(key)?.timeEstimate" class="metric estimate">
-        {{metrics.days.get(key)?.timeEstimate | duration}}
-      </small>
-      <small *ngIf="metrics.days.get(key)?.loading" class="metric loading">
-        {{metrics.days.get(key)?.loading | duration}}
-      </small>
+      <div class="day">
+        {{date.date()}}
+        <ul class="metrics">
+          <li *ngIf="metrics.days.get(key)?.timeSpent" class="metric">
+            {{metrics.days.get(key)?.timeSpent | duration}}
+          </li>
+          <li *ngIf="metrics.days.get(key)?.timeEstimate" class="metric estimate">
+            {{metrics.days.get(key)?.timeEstimate | duration}}
+          </li>
+          <li *ngIf="metrics.days.get(key)?.loading" class="metric loading">
+            {{metrics.days.get(key)?.loading | duration}}
+          </li>
+        </ul>
+      </div>
       <div class="issues" *ngIf="metrics.days.get(key)?.issues"></div>
     </ng-template>
   </app-calendar-week>
@@ -28,17 +31,20 @@
                 (updated)="period = $event">
     <ng-template #dayTemplate let-date="date"
                  let-key="date.format('L')">
-      <i>{{date.date()}}</i>
-      <br>
-      <small *ngIf="metrics.days.get(key)?.timeSpent" class="metric">
-        {{metrics.days.get(key)?.timeSpent | duration}}
-      </small>
-      <small *ngIf="metrics.days.get(key)?.timeEstimate" class="metric estimate">
-        {{metrics.days.get(key)?.timeEstimate | duration}}
-      </small>
-      <small *ngIf="metrics.days.get(key)?.loading" class="metric loading">
-        {{metrics.days.get(key)?.loading | duration}}
-      </small>
+      <div class="day">
+        {{date.date()}}
+        <ul class="metrics">
+          <li *ngIf="metrics.days.get(key)?.timeSpent">
+            {{metrics.days.get(key)?.timeSpent | duration}}
+          </li>
+          <li *ngIf="metrics.days.get(key)?.timeEstimate" class="estimate">
+            {{metrics.days.get(key)?.timeEstimate | duration}}
+          </li>
+          <li *ngIf="metrics.days.get(key)?.loading" class="loading">
+            {{metrics.days.get(key)?.loading | duration}}
+          </li>
+        </ul>
+      </div>
       <div class="issues" *ngIf="metrics.days.get(key)?.issues"></div>
     </ng-template>
     <ng-template #metricTemplate let-metric="metric"
