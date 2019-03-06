@@ -8,6 +8,7 @@
 .day {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   flex-direction: column;
   width: 70px;
   .metrics {

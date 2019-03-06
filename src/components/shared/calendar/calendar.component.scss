@@ -21,6 +21,7 @@ tbody {
       position: relative;
       min-width: 50px;
       text-align: center;
+      vertical-align: top;
       &.day {
         cursor: pointer;
         &.current {
