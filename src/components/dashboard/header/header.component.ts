@@ -3,6 +3,7 @@ import {Config} from 'junte-angular';
 import {AppConfig} from '../../../app-config';
 import {MeManager} from '../../../managers/me.manager';
 import {Router} from '@angular/router';
+import {UserRole} from '../../../models/user';
 
 @Component({
   selector: 'app-header',
@@ -10,6 +11,8 @@ import {Router} from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
+
+  userRole = UserRole;
 
   constructor(@Inject(Config) public config: AppConfig,
               public me: MeManager,

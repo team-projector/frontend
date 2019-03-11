@@ -5,6 +5,7 @@ import {DashboardComponent} from './dashboard.component';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import {AuthorizationGuard} from '../../guards/authorization.guard';
+import {ArrayPipesModule} from '../../pipes/array-pipes.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import {AuthorizationGuard} from '../../guards/authorization.guard';
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,
+    ArrayPipesModule
   ],
   providers: [
     AuthorizationGuard

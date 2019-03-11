@@ -1,6 +1,8 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {IUsersService, users_service} from '../../../services/users/interface';
-import {ObjectLink} from '../../../models/object-link';
+import {ITeamsService, teams_service} from '../../../services/teams/interface';
+import {TeamCard, TeamMemberRole} from '../../../models/team';
+import {MeManager} from '../../../managers/me.manager';
+import {filter} from 'rxjs/operators';
 
 @Component({
   selector: 'app-leader-team',
@@ -9,14 +11,19 @@ import {ObjectLink} from '../../../models/object-link';
 })
 export class TeamComponent implements OnInit {
 
-  users: ObjectLink[] = [];
+  teams: TeamCard[] = [];
 
-  constructor(@Inject(users_service) private usersService: IUsersService) {
+  constructor(@Inject(teams_service) private teamsService: ITeamsService,
+              private me: MeManager) {
   }
 
   ngOnInit() {
-    this.usersService.links()
-      .subscribe(users => this.users = users);
+
+    this.me.user$.pipe(filter(u => !!u))
+      .subscribe(user => {
+        this.teamsService.list(user.id, [TeamMemberRole.leader])
+          .subscribe((paging) => this.teams = paging.results);
+      });
   }
 
 }

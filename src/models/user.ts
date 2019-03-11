@@ -9,7 +9,9 @@ export enum UserPermission {
 export enum UserRole {
   developer = 'developer',
   teamLeader = 'team_leader',
-  projectManager = 'project_manager'
+  projectManager = 'project_manager',
+  customer = 'customer',
+  shareholder = 'shareholder'
 }
 
 @Model()
@@ -25,7 +27,33 @@ export class User {
   login: string;
 
   @Field()
-  @Name('first_name')
+  @MockField('{{firstName}} {{lastName}}')
+  name: string;
+
+  @Field()
+  @MockField('{{avatar}}')
+  avatar: string;
+
+  @Field()
+  @Type(new ArraySerializer(new PrimitiveSerializer()))
+  @MockField([UserRole.developer])
+  roles: UserRole[];
+
+}
+
+@Model()
+@MockClass()
+export class UserCard {
+
+  @Field()
+  @MockFieldNested('{{int 0 100}}')
+  id: number;
+
+  @Field()
+  @MockField('{{login}}')
+  login: string;
+
+  @Field()
   @MockField('{{firstName}} {{lastName}}')
   name: string;
 

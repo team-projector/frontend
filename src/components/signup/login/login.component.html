@@ -11,7 +11,7 @@
 
     <fieldset [class.error]="loginForm.get('password') | fieldTouchedHasError:'required'">
       <p class="message">Field is requred!</p>
-      <jnt-input formControlName="password" placeholder="Password" required></jnt-input>
+      <jnt-input formControlName="password" placeholder="Password" required [type]="ui.form.input.password"></jnt-input>
     </fieldset>
     <jnt-button [loading]="progress.login" type="submit" text="Login" [fluid]="true"></jnt-button>
     <jnt-block gitlab [loading]="progress.gitlab">

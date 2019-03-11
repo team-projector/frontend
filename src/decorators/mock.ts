@@ -18,7 +18,7 @@ export function MockClass() {
 }
 
 export class MockFieldNestedValue {
-  constructor(public nested: string) {
+  constructor(public nested: string | string[]) {
   }
 }
 
@@ -36,7 +36,7 @@ export function MockField(value: string | string[]) {
   };
 }
 
-export function MockFieldNested(value: string) {
+export function MockFieldNested(value: string | string[]) {
   return function (target: any, property: string | symbol) {
     const metadata = Reflect.getMetadata(MOCK_FIELD_METADATA_KEY, target) || [];
     metadata.push(new MockFieldDescription(property.toString(), new MockFieldNestedValue(value)));

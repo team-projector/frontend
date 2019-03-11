@@ -10,3 +10,10 @@ export class MockArrayPipe implements PipeTransform {
     return arr;
   }
 }
+
+@Pipe({name: 'includes'})
+export class IncludesPipe implements PipeTransform {
+  transform(el: string, arr: string[]): boolean {
+    return !!arr && arr.indexOf(el) !== -1;
+  }
+}

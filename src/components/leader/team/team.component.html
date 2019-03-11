@@ -1,6 +1,14 @@
-<ul>
-  <li *ngFor="let u of users">
-    <a [routerLink]="[u.id, 'issues']" routerLinkActive="active">{{u.presentation}}</a>
+<ul class="teams">
+  <li *ngFor="let t of teams">
+    <h2>{{t.title}}</h2>
+    <ul>
+      <li *ngFor="let m of (t.id | teamMembers | async)">
+        <a [routerLink]="[m.user.id, 'issues']" routerLinkActive="active">
+          <img height="50" width="50" [src]="m.user.avatar">
+          <h3>{{m.user.name}}</h3>
+        </a>
+      </li>
+    </ul>
   </li>
 </ul>
 

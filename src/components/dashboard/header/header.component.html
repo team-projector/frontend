@@ -1,27 +1,27 @@
 <img src="/assets/images/logo-white.svg" height="45">
 <nav>
   <ul>
-    <li>
+    <li *ngIf="userRole.developer |includes:me.user?.roles">
       <a routerLink="/developer" routerLinkActive="active">
         <span>Developer</span>
       </a>
     </li>
-    <li>
+    <li *ngIf="userRole.teamLeader |includes:me.user?.roles">
       <a routerLink="/leader" routerLinkActive="active">
         <span>Team Leader</span>
       </a>
     </li>
-    <li>
+    <li *ngIf="userRole.projectManager |includes:me.user?.roles">
       <a routerLink="/manager" routerLinkActive="active">
         <span>Project Manager</span>
       </a>
     </li>
-    <li>
+    <li *ngIf="userRole.customer |includes:me.user?.roles">
       <a routerLink="/customer" routerLinkActive="active">
         <span>Customer</span>
       </a>
     </li>
-    <li>
+    <li *ngIf="userRole.shareholder |includes:me.user?.roles">
       <a routerLink="/shareholder" routerLinkActive="active">
         <span>Shareholder</span>
       </a>

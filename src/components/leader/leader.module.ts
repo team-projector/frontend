@@ -6,10 +6,13 @@ import {LeaderRoutingModule} from './leader-routing.module';
 import {UserResolver} from './resolvers';
 import {TeamComponent} from './team/team.component';
 import {UsersServiceProvider} from '../../services/users/provider';
+import {TeamsServiceProvider} from '../../services/teams/provider';
+import {TeamMembersPipe} from './pipes';
 
 @NgModule({
   declarations: [
-    TeamComponent
+    TeamComponent,
+    TeamMembersPipe
   ],
   imports: [
     CommonModule,
@@ -19,7 +22,8 @@ import {UsersServiceProvider} from '../../services/users/provider';
   ],
   providers: [
     UsersServiceProvider,
-    UserResolver
+    UserResolver,
+    TeamsServiceProvider
   ]
 })
 export class LeaderModule {

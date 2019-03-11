@@ -1,12 +1,14 @@
 import {NgModule} from '@angular/core';
-import {MockArrayPipe} from './array';
+import {IncludesPipe, MockArrayPipe} from './array';
 
 @NgModule({
   declarations: [
-    MockArrayPipe
+    MockArrayPipe,
+    IncludesPipe
   ],
   exports: [
-    MockArrayPipe
+    MockArrayPipe,
+    IncludesPipe
   ]
 })
 export class ArrayPipesModule {
