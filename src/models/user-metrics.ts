@@ -11,7 +11,7 @@ export enum MetricsGroup {
 
 @Model()
 @MockClass()
-export class Metric {
+export class UserMetrics {
 
   @Field()
   @Type(new MomentSerializer())
@@ -32,6 +32,11 @@ export class Metric {
   @Name('time_spent')
   @MockFieldNested('{{time}}')
   timeSpent: number;
+
+  @Field()
+  @Name('time_remains')
+  @MockFieldNested('{{time}}')
+  timeRemains: number;
 
   @Field()
   @MockFieldNested('{{efficiency}}')
@@ -56,7 +61,7 @@ export class Metric {
 }
 
 @Model()
-export class MetricFilter {
+export class UserMetricsFilter {
 
   @Field()
   user?: number;
@@ -72,7 +77,7 @@ export class MetricFilter {
   @Field()
   group?: MetricsGroup;
 
-  constructor(defs: MetricFilter = null) {
+  constructor(defs: UserMetricsFilter = null) {
     if (!!defs) {
       Object.assign(this, defs);
     }

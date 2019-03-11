@@ -1,11 +1,11 @@
 import {InjectionToken} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Moment} from 'moment';
-import {Metric, MetricsGroup} from '../../models/metric';
+import {UserMetrics, MetricsGroup} from '../../models/user-metrics';
 
 export interface IMetricsService {
 
-  list(user: number, start: Moment, end: Moment, group: MetricsGroup): Observable<Map<string, Metric>>;
+  list(user: number, start: Moment, end: Moment, group: MetricsGroup): Observable<Map<string, UserMetrics>>;
 
 }
 

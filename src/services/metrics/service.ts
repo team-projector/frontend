@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {deserialize} from 'serialize-ts';
 import {map} from 'rxjs/operators';
 import {Moment} from 'moment';
-import {Metric, MetricFilter, MetricsGroup} from '../../models/metric';
+import {UserMetrics, UserMetricsFilter, MetricsGroup} from '../../models/user-metrics';
 import {encodeParams} from '../../utils/http';
 
 @Injectable({
@@ -16,13 +16,13 @@ export class MetricsService implements IMetricsService {
   constructor(private http: HttpService) {
   }
 
-  list(user: number, start: Moment, end: Moment, group: MetricsGroup): Observable<Map<string, Metric>> {
+  list(user: number, start: Moment, end: Moment, group: MetricsGroup): Observable<Map<string, UserMetrics>> {
     return Observable.create((observer: any) => {
-      this.http.get<Metric[]>('metrics',
-        encodeParams(new MetricFilter({user: user, start: start, end: end, group: group})))
-        .pipe(map(arr => arr.map(el => deserialize(el, Metric))))
+      this.http.get<UserMetrics[]>('metrics',
+        encodeParams(new UserMetricsFilter({user: user, start: start, end: end, group: group})))
+        .pipe(map(arr => arr.map(el => deserialize(el, UserMetrics))))
         .subscribe(metrics => {
-          const dic = new Map<string, Metric>();
+          const dic = new Map<string, UserMetrics>();
           metrics.forEach(m => dic.set(m.getKey(), m));
           observer.next(dic);
           observer.complete();
@@ -30,6 +30,6 @@ export class MetricsService implements IMetricsService {
           observer.error(err);
           observer.complete();
         });
-    }) as Observable<Map<string, Metric>>;
+    }) as Observable<Map<string, UserMetrics>>;
   }
 }

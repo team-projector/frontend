@@ -2,7 +2,8 @@
   <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title"></jnt-table-column>
   <jnt-table-column i18n-title="@@issue_project" title="Project"></jnt-table-column>
   <jnt-table-column i18n-title="@@est" title="Est"></jnt-table-column>
-  <jnt-table-column i18n-title="@@issue_spent" title="Spent"></jnt-table-column>
+  <jnt-table-column i18n-title="@@issue_time_spent" title="Spent"></jnt-table-column>
+  <jnt-table-column i18n-title="@@issue_time_remains" title="Remains"></jnt-table-column>
   <jnt-table-column i18n-title="@@eff" title="Eff"></jnt-table-column>
   <jnt-table-column i18n-title="@@earn" title="Earn"></jnt-table-column>
 
@@ -14,6 +15,7 @@
                let-project="project"
                let-timeEstimate="timeEstimate"
                let-timeSpent="timeSpent"
+               let-timeRemains="timeRemains"
                let-totalTimeSpent="totalTimeSpent"
                let-efficiency="efficiency"
                let-earnings="earnings">
@@ -35,7 +37,10 @@
       {{totalTimeSpent | duration}}
     </td>
     <td style="text-align: right;">
-      {{efficiency}}x
+      {{timeRemains | duration}}
+    </td>
+    <td style="text-align: right;">
+      {{efficiency | number:'1.2-2'}}x
     </td>
     <td style="text-align: right;">
       {{earnings | currency}}

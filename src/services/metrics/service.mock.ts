@@ -6,7 +6,7 @@ import {map} from 'rxjs/operators';
 import {deserialize} from 'serialize-ts';
 import * as moment from 'moment';
 import {Moment} from 'moment';
-import {Metric, MetricsGroup} from '../../models/metric';
+import {UserMetrics, MetricsGroup} from '../../models/user-metrics';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class MetricsMockService implements IMetricsService {
   constructor(private http: HttpMockService) {
   }
 
-  list(user: number, start: Moment, end: Moment, group: MetricsGroup): Observable<Map<string, Metric>> {
+  list(user: number, start: Moment, end: Moment, group: MetricsGroup): Observable<Map<string, UserMetrics>> {
     switch (group) {
       case MetricsGroup.day:
         return this.days(start);
@@ -25,18 +25,18 @@ export class MetricsMockService implements IMetricsService {
     }
   }
 
-  days(start: Moment): Observable<Map<string, Metric>> {
+  days(start: Moment): Observable<Map<string, UserMetrics>> {
     return Observable.create((observer: any) => {
-      this.http.get<Metric[]>('metrics/days.json')
+      this.http.get<UserMetrics[]>('metrics/days.json')
         .pipe(map(arr => arr.map((el, i) => {
-          const m = deserialize(el, Metric);
+          const m = deserialize(el, UserMetrics);
           const period = moment(start).add(i, 'days').startOf('day');
           m.start = moment(period);
           m.end = moment(period).endOf('day');
           return m;
         })))
         .subscribe(metrics => {
-          const dic = new Map<string, Metric>();
+          const dic = new Map<string, UserMetrics>();
           metrics.forEach(m => dic.set(m.getKey(), m));
           observer.next(dic);
           observer.complete();
@@ -44,21 +44,21 @@ export class MetricsMockService implements IMetricsService {
           observer.error(err);
           observer.complete();
         });
-    }) as Observable<Map<string, Metric>>;
+    }) as Observable<Map<string, UserMetrics>>;
   }
 
-  weeks(start: Moment): Observable<Map<string, Metric>> {
+  weeks(start: Moment): Observable<Map<string, UserMetrics>> {
     return Observable.create((observer: any) => {
-      this.http.get<Metric[]>('metrics/weeks.json')
+      this.http.get<UserMetrics[]>('metrics/weeks.json')
         .pipe(map(arr => arr.map((el, i) => {
-          const m = deserialize(el, Metric);
+          const m = deserialize(el, UserMetrics);
           const period = moment(start).add(i, 'week').startOf('day');
           m.start = moment(period);
           m.end = moment(period).endOf('week');
           return m;
         })))
         .subscribe(metrics => {
-          const dic = new Map<string, Metric>();
+          const dic = new Map<string, UserMetrics>();
           metrics.forEach(m => dic.set(m.getKey(), m));
           observer.next(dic);
           observer.complete();
@@ -66,6 +66,6 @@ export class MetricsMockService implements IMetricsService {
           observer.error(err);
           observer.complete();
         });
-    }) as Observable<Map<string, Metric>>;
+    }) as Observable<Map<string, UserMetrics>>;
   }
 }

@@ -6,7 +6,7 @@ import {Period} from '../../shared/calendar/models';
 import {IIssuesService, issues_service} from '../../../services/issues/interface';
 import {ActivatedRoute} from '@angular/router';
 import {filter} from 'rxjs/operators';
-import {Metric, MetricsGroup} from '../../../models/metric';
+import {UserMetrics, MetricsGroup} from '../../../models/user-metrics';
 import {ITimeExpensesService, time_expenses_service} from '../../../services/time-expenses/interface';
 import {User} from '../../../models/user';
 import {BehaviorSubject, combineLatest} from 'rxjs';
@@ -33,7 +33,7 @@ export class IssuesListComponent implements OnInit {
     this.period$.next(period);
   }
 
-  metrics = {days: new Map<string, Metric>(), weeks: new Map<string, Metric>()};
+  metrics = {days: new Map<string, UserMetrics>(), weeks: new Map<string, UserMetrics>()};
   dueDate = new FormControl(moment());
   filterForm = this.formBuilder.group({
     dueDate: this.dueDate
