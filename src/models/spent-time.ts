@@ -58,7 +58,6 @@ export class PagingTimeExpenses implements Paging<SpentTimeCard> {
 export class TimeExpensesFilter {
 
   @Field()
-  @Name('employee')
   user?: number;
 
   @Field()

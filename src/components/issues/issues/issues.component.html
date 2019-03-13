@@ -15,10 +15,8 @@
                let-project="project"
                let-timeEstimate="timeEstimate"
                let-timeSpent="timeSpent"
-               let-timeRemains="timeRemains"
                let-totalTimeSpent="totalTimeSpent"
-               let-efficiency="efficiency"
-               let-earnings="earnings">
+               let-metrics="metrics">
     <td>
       <a href="{{url}}" target="_blank" [class.closed]="state == issuesState.closed">{{title}}</a>
       <ul class="labels">
@@ -37,13 +35,13 @@
       {{totalTimeSpent | duration}}
     </td>
     <td style="text-align: right;">
-      {{timeRemains | duration}}
+      {{metrics.remains | duration}}
     </td>
     <td style="text-align: right;">
-      {{efficiency | number:'1.2-2'}}x
+      {{metrics.efficiency | number:'1.2-2'}}x
     </td>
     <td style="text-align: right;">
-      {{earnings | currency}}
+      {{metrics.earnings | currency}}
     </td>
   </ng-template>
 </jnt-table>

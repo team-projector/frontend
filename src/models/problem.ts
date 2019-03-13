@@ -44,7 +44,6 @@ export class PagingIssueProblems implements Paging<IssueProblemCard> {
 export class IssueProblemsFilter implements SearchFilter {
 
   @Field()
-  @Name('employee')
   user?: number;
 
   @Field()

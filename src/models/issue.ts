@@ -7,10 +7,29 @@ import {Moment} from 'moment';
 import {MomentSerializer} from '../serializers/moment';
 import {Order, SearchFilter} from '../components/shared/table/models';
 import {DATE_FORMAT} from '../consts';
+import {BooleanSerializer} from '../serializers/http';
 
 export enum IssueState {
   opened = 'opened',
   closed = 'closed'
+}
+
+@Model()
+@MockClass()
+export class IssueMetrics {
+
+  @Field()
+  @MockFieldNested('{{time}}')
+  remains: number;
+
+  @Field()
+  @MockFieldNested('{{efficiency}}')
+  efficiency: number;
+
+  @Field()
+  @MockFieldNested('{{money}}')
+  earnings: number;
+
 }
 
 @Model()
@@ -56,19 +75,6 @@ export class IssueCard {
   totalTimeSpent: number;
 
   @Field()
-  @Name('time_remains')
-  @MockFieldNested('{{time}}')
-  timeRemains: number;
-
-  @Field()
-  @MockFieldNested('{{efficiency}}')
-  efficiency: number;
-
-  @Field()
-  @MockFieldNested('{{money}}')
-  earnings: number;
-
-  @Field()
   @Name('gl_url')
   @MockField('{{url}}')
   glUrl: string;
@@ -76,6 +82,10 @@ export class IssueCard {
   @Field()
   @MockField(IssueState.opened)
   state: IssueState;
+
+  @Field()
+  @MockFieldNested('{{> issue_metrics}}')
+  metrics: IssueMetrics;
 }
 
 @Model()
@@ -97,7 +107,10 @@ export class PagingIssues implements Paging<IssueCard> {
 export class IssuesFilter implements SearchFilter {
 
   @Field()
-  @Name('employee')
+  @Type(new BooleanSerializer())
+  metrics: boolean;
+
+  @Field()
   user?: number;
 
   @Field()
@@ -126,9 +139,12 @@ export class IssuesFilter implements SearchFilter {
   pageSize?: number;
 
   constructor(defs: IssuesFilter = null) {
+    this.metrics = true;
     if (!!defs) {
       Object.assign(this, defs);
     }
   }
 
 }
+
+

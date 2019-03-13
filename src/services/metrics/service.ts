@@ -18,8 +18,8 @@ export class MetricsService implements IMetricsService {
 
   list(user: number, start: Moment, end: Moment, group: MetricsGroup): Observable<Map<string, UserMetrics>> {
     return Observable.create((observer: any) => {
-      this.http.get<UserMetrics[]>('metrics',
-        encodeParams(new UserMetricsFilter({user: user, start: start, end: end, group: group})))
+      this.http.get<UserMetrics[]>(`users/${user}/metrics`,
+        encodeParams(new UserMetricsFilter({ start: start, end: end, group: group})))
         .pipe(map(arr => arr.map(el => deserialize(el, UserMetrics))))
         .subscribe(metrics => {
           const dic = new Map<string, UserMetrics>();

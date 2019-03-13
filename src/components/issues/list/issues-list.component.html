@@ -21,7 +21,7 @@
           </li>
         </ul>
       </div>
-      <div class="issues" *ngIf="metrics.days.get(key)?.issues"></div>
+      <div class="issues" *ngIf="metrics.days.get(key)?.issues_count"></div>
     </ng-template>
   </app-calendar-week>
 
@@ -45,7 +45,7 @@
           </li>
         </ul>
       </div>
-      <div class="issues" *ngIf="metrics.days.get(key)?.issues"></div>
+      <div class="issues" *ngIf="metrics.days.get(key)?.issues_count"></div>
     </ng-template>
     <ng-template #metricTemplate let-metric="metric"
                  let-date="date"

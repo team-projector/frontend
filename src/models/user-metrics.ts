@@ -52,7 +52,7 @@ export class UserMetrics {
 
   @Field()
   @MockFieldNested('{{int 50 1000}}')
-  issues: number;
+  issues_count: number;
 
   getKey(): string {
     return this.start.format('L');
@@ -62,9 +62,6 @@ export class UserMetrics {
 
 @Model()
 export class UserMetricsFilter {
-
-  @Field()
-  user?: number;
 
   @Field()
   @Type(new MomentSerializer(DATE_FORMAT))
