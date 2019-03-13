@@ -108,7 +108,7 @@ export class IssuesFilter implements SearchFilter {
 
   @Field()
   @Type(new BooleanSerializer())
-  metrics: boolean;
+  metrics?: boolean;
 
   @Field()
   user?: number;

@@ -8,7 +8,7 @@ export class BooleanSerializer implements Serializer<boolean> {
     return value ? 'True' : 'False';
   }
 
-  deserialize(source: string): Moment {
+  deserialize(source: string): boolean {
     return source === 'True';
   }
 }
