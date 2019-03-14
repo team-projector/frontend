@@ -58,9 +58,6 @@ export class PagingTimeExpenses implements Paging<SpentTimeCard> {
 export class TimeExpensesFilter {
 
   @Field()
-  user?: number;
-
-  @Field()
   @Type(new MomentSerializer(DATE_FORMAT))
   date?: Moment;
 

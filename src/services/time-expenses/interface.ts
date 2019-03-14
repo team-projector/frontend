@@ -4,7 +4,7 @@ import {PagingTimeExpenses, TimeExpensesFilter} from '../../models/spent-time';
 
 export interface ITimeExpensesService {
 
-  list(filter: TimeExpensesFilter): Observable<PagingTimeExpenses>;
+  list(user: number, filter: TimeExpensesFilter): Observable<PagingTimeExpenses>;
 
 }
 
