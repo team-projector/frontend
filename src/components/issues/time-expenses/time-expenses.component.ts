@@ -1,12 +1,11 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
-import {ITimeExpensesService, time_expenses_service} from 'src/services/time-expenses/interface';
-import {Moment} from 'moment';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {filter as filtering} from 'rxjs/operators';
-import {TimeExpensesFilter} from 'src/models/spent-time';
-import {IssueState} from 'src/models/issue';
-import {TableComponent} from 'junte-ui';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
+import { ITimeExpensesService, time_expenses_service } from 'src/services/time-expenses/interface';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { filter as filtering } from 'rxjs/operators';
+import { TimeExpensesFilter } from 'src/models/spent-time';
+import { IssueState } from 'src/models/issue';
+import { TableComponent } from 'junte-ui';
 
 @Component({
   selector: 'app-time-expenses',
@@ -18,7 +17,7 @@ export class TimeExpensesComponent implements OnInit {
   issuesState = IssueState;
 
   private user$ = new BehaviorSubject<number>(null);
-  private date$ = new BehaviorSubject<Moment>(null);
+  private date$ = new BehaviorSubject<Date>(null);
 
   @Input()
   set user(user: number) {
@@ -26,7 +25,7 @@ export class TimeExpensesComponent implements OnInit {
   }
 
   @Input()
-  set date(date: Moment) {
+  set date(date: Date) {
     this.date$.next(date);
   }
 

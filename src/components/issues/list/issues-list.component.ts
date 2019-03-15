@@ -1,15 +1,15 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import * as moment from 'moment';
-import {FormBuilder, FormControl} from '@angular/forms';
-import {IMetricsService, metrics_service} from '../../../services/metrics/interface';
-import {Period} from '../../shared/calendar/models';
-import {IIssuesService, issues_service} from '../../../services/issues/interface';
-import {ActivatedRoute} from '@angular/router';
-import {filter} from 'rxjs/operators';
-import {UserMetrics, MetricsGroup} from '../../../models/user-metrics';
-import {ITimeExpensesService, time_expenses_service} from '../../../services/time-expenses/interface';
-import {User} from '../../../models/user';
-import {BehaviorSubject, combineLatest} from 'rxjs';
+import { Component, Inject, OnInit } from '@angular/core';
+import { format } from 'date-fns';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { IMetricsService, metrics_service } from 'src/services/metrics/interface';
+import { ActivatedRoute } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { MetricsGroup, UserMetrics } from 'src/models/user-metrics';
+import { User } from 'src/models/user';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { Period } from 'junte-ui/lib/components/calendar/models';
+
+const L = 'DD/MM/YYYY';
 
 @Component({
   selector: 'app-issues-list',
@@ -20,6 +20,9 @@ export class IssuesListComponent implements OnInit {
 
   user$ = new BehaviorSubject<User>(null);
   period$ = new BehaviorSubject<Period>(null);
+
+  format = format;
+  formatDate = L;
 
   set user(user: User) {
     this.user$.next(user);
@@ -34,14 +37,12 @@ export class IssuesListComponent implements OnInit {
   }
 
   metrics = {days: new Map<string, UserMetrics>(), weeks: new Map<string, UserMetrics>()};
-  dueDate = new FormControl(moment());
+  dueDate = new FormControl(new Date());
   filterForm = this.formBuilder.group({
     dueDate: this.dueDate
   });
 
-  constructor(@Inject(issues_service) private issuesService: IIssuesService,
-              @Inject(metrics_service) private metricsService: IMetricsService,
-              @Inject(time_expenses_service) private timeExpensesService: ITimeExpensesService,
+  constructor(@Inject(metrics_service) private metricsService: IMetricsService,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute) {
   }

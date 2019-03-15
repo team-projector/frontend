@@ -2,7 +2,6 @@ import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { IssuesFilter, IssueState } from 'src/models/issue';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
 import { IIssuesService, issues_service } from 'src/services/issues/interface';
-import { Moment } from 'moment';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { filter as filtering } from 'rxjs/operators';
 import { TableComponent } from 'junte-ui';
@@ -17,16 +16,15 @@ export class IssuesComponent implements OnInit {
   issuesState = IssueState;
 
   private user$ = new BehaviorSubject<number>(null);
-  private dueDate$ = new BehaviorSubject<Moment>(null);
+  private dueDate$ = new BehaviorSubject<Date>(null);
 
   @Input()
   set user(user: number) {
-    console.log(user);
     this.user$.next(user);
   }
 
   @Input()
-  set dueDate(dueDate: Moment) {
+  set dueDate(dueDate: Date) {
     this.dueDate$.next(dueDate);
   }
 

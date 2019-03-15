@@ -1,10 +1,9 @@
-import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {Paging} from './paging';
-import {Moment} from 'moment';
-import {MomentSerializer} from '../serializers/moment';
-import {IssueCard} from './issue';
-import {DATE_FORMAT} from '../consts';
+import { ArraySerializer, Field, Model, ModelSerializer, Name, Type } from 'serialize-ts';
+import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
+import { Paging } from './paging';
+import { DateSerializer } from '../serializers/date';
+import { IssueCard } from './issue';
+import { DATE_FORMAT } from '../consts';
 
 @Model()
 @MockClass()
@@ -16,14 +15,14 @@ export class SpentTimeCard {
 
   @Field()
   @Name('created_at')
-  @Type(new MomentSerializer())
+  @Type(new DateSerializer())
   @MockField('{{date \'2019\' \'2020\'}}')
-  createdAt: Moment;
+  createdAt: Date;
 
   @Field()
-  @Type(new MomentSerializer())
+  @Type(new DateSerializer())
   @MockField('{{date \'2019\' \'2020\'}}')
-  date: Moment;
+  date: Date;
 
   @Field()
   @MockFieldNested('{{> issue_card}}')
@@ -58,8 +57,8 @@ export class PagingTimeExpenses implements Paging<SpentTimeCard> {
 export class TimeExpensesFilter {
 
   @Field()
-  @Type(new MomentSerializer(DATE_FORMAT))
-  date?: Moment;
+  @Type(new DateSerializer(DATE_FORMAT))
+  date?: Date;
 
   @Field()
   page: number;

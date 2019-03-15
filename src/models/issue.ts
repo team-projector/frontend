@@ -1,13 +1,12 @@
-import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {ObjectLink} from './object-link';
-import {LabelCard} from './label';
-import {Paging} from './paging';
-import {Moment} from 'moment';
-import {MomentSerializer} from '../serializers/moment';
-import {Order, SearchFilter} from '../components/shared/table/models';
-import {DATE_FORMAT} from '../consts';
-import {BooleanSerializer} from '../serializers/http';
+import { ArraySerializer, Field, Model, ModelSerializer, Name, Type } from 'serialize-ts';
+import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
+import { ObjectLink } from './object-link';
+import { LabelCard } from './label';
+import { Paging } from './paging';
+import { DateSerializer } from '../serializers/date';
+import { DATE_FORMAT } from '../consts';
+import { BooleanSerializer } from '../serializers/http';
+import { Order, SearchFilter } from 'junte-ui';
 
 export enum IssueState {
   opened = 'opened',
@@ -55,9 +54,9 @@ export class IssueCard {
 
   @Field()
   @Name('due_date')
-  @Type(new MomentSerializer())
+  @Type(new DateSerializer())
   @MockField('{{date \'2019\' \'2020\'}}')
-  dueDate: Moment;
+  dueDate: Date;
 
   @Field()
   @Name('time_estimate')
@@ -118,9 +117,9 @@ export class IssuesFilter implements SearchFilter {
   query?: string;
 
   @Field()
-  @Type(new MomentSerializer(DATE_FORMAT))
+  @Type(new DateSerializer(DATE_FORMAT))
   @Name('due_date')
-  dueDate?: Moment;
+  dueDate?: Date;
 
   @Field()
   state?: IssueState;

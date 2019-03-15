@@ -1,14 +1,12 @@
-import {NgModule} from '@angular/core';
-import {CopyDatePipe, DurationPipe} from './date';
+import { NgModule } from '@angular/core';
+import { DurationPipe } from './date';
 
 @NgModule({
   declarations: [
-    DurationPipe,
-    CopyDatePipe
+    DurationPipe
   ],
   exports: [
-    DurationPipe,
-    CopyDatePipe
+    DurationPipe
   ]
 })
 export class DatePipesModule {
