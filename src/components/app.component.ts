@@ -1,8 +1,7 @@
-import {Component, Inject} from '@angular/core';
-import * as moment from 'moment';
-import {Config, HttpMockService, HttpService, InvalidGrantError} from 'junte-angular';
-import {Router} from '@angular/router';
-import {AppConfig} from '../app-config';
+import { Component, Inject } from '@angular/core';
+import { Config, HttpMockService, HttpService, InvalidGrantError } from 'junte-angular';
+import { Router } from '@angular/router';
+import { AppConfig } from '../app-config';
 
 @Component({
   selector: 'app-root',
@@ -15,14 +14,6 @@ export class AppComponent {
               private httpService: HttpService,
               private httpMockService: HttpMockService,
               private router: Router) {
-    moment.locale('en', {
-      week: {
-        doy: 7,
-        dow: 1
-      }
-    });
-    moment.locale('en');
-
 
     this.httpService.error$.subscribe((err: Error) => {
       if (err instanceof InvalidGrantError) {

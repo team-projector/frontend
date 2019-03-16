@@ -1,8 +1,8 @@
-import {Field, Model, Name, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {MomentSerializer} from '../serializers/moment';
-import {Moment} from 'moment';
-import {DATE_FORMAT} from '../consts';
+import { Field, Model, Name, Type } from 'serialize-ts';
+import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
+import { DateSerializer } from '../serializers/date';
+import { DATE_FORMAT } from '../consts';
+import { format } from 'date-fns';
 
 export enum MetricsGroup {
   day = 'day',
@@ -14,14 +14,14 @@ export enum MetricsGroup {
 export class UserMetrics {
 
   @Field()
-  @Type(new MomentSerializer())
+  @Type(new DateSerializer())
   @MockField('{{date \'2019\' \'2020\'}}')
-  start: Moment;
+  start: Date;
 
   @Field()
-  @Type(new MomentSerializer())
+  @Type(new DateSerializer())
   @MockField('{{date \'2019\' \'2020\'}}')
-  end: Moment;
+  end: Date;
 
   @Field()
   @Name('time_estimate')
@@ -55,7 +55,7 @@ export class UserMetrics {
   issues_count: number;
 
   getKey(): string {
-    return this.start.format('L');
+    return format(this.start, 'DD/MM/YYYY');
   }
 
 }
@@ -64,12 +64,12 @@ export class UserMetrics {
 export class UserMetricsFilter {
 
   @Field()
-  @Type(new MomentSerializer(DATE_FORMAT))
-  start?: Moment;
+  @Type(new DateSerializer(DATE_FORMAT))
+  start?: Date;
 
   @Field()
-  @Type(new MomentSerializer(DATE_FORMAT))
-  end?: Moment;
+  @Type(new DateSerializer(DATE_FORMAT))
+  end?: Date;
 
   @Field()
   group?: MetricsGroup;

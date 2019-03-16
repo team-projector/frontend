@@ -1,9 +1,9 @@
-import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {IssueCard} from './issue';
-import {Paging} from './paging';
-import {SearchFilter} from '../components/shared/table/models';
-import {PrimitiveSerializer} from 'serialize-ts/dist/serializers/primitive.serializer';
+import { ArraySerializer, Field, Model, ModelSerializer, Name, Type } from 'serialize-ts';
+import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
+import { IssueCard } from './issue';
+import { Paging } from './paging';
+import { PrimitiveSerializer } from 'serialize-ts/dist/serializers/primitive.serializer';
+import { SearchFilter } from 'junte-ui';
 
 export enum IssueProblemType {
   overDueDate = 'over_due_date',

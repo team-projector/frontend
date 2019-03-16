@@ -1,6 +1,4 @@
-import {Serializer} from 'serialize-ts';
-import * as moment from 'moment';
-import {Moment} from 'moment';
+import { Serializer } from 'serialize-ts';
 
 export class BooleanSerializer implements Serializer<boolean> {
 

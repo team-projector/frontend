@@ -1,12 +1,11 @@
-import {Injectable} from '@angular/core';
-import {IMetricsService} from './interface';
-import {HttpMockService} from 'junte-angular';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {deserialize} from 'serialize-ts';
-import * as moment from 'moment';
-import {Moment} from 'moment';
-import {UserMetrics, MetricsGroup} from '../../models/user-metrics';
+import { Injectable } from '@angular/core';
+import { IMetricsService } from './interface';
+import { HttpMockService } from 'junte-angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { deserialize } from 'serialize-ts';
+import { MetricsGroup, UserMetrics } from 'src/models/user-metrics';
+import { addDays, addWeeks, endOfDay, endOfISOWeek, startOfDay } from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +15,7 @@ export class MetricsMockService implements IMetricsService {
   constructor(private http: HttpMockService) {
   }
 
-  list(user: number, start: Moment, end: Moment, group: MetricsGroup): Observable<Map<string, UserMetrics>> {
+  list(user: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<string, UserMetrics>> {
     switch (group) {
       case MetricsGroup.day:
         return this.days(start);
@@ -25,14 +24,14 @@ export class MetricsMockService implements IMetricsService {
     }
   }
 
-  days(start: Moment): Observable<Map<string, UserMetrics>> {
+  days(start: Date): Observable<Map<string, UserMetrics>> {
     return Observable.create((observer: any) => {
       this.http.get<UserMetrics[]>('metrics/days.json')
         .pipe(map(arr => arr.map((el, i) => {
           const m = deserialize(el, UserMetrics);
-          const period = moment(start).add(i, 'days').startOf('day');
-          m.start = moment(period);
-          m.end = moment(period).endOf('day');
+          const period = startOfDay(addDays(start, i));
+          m.start = period;
+          m.end = endOfDay(period);
           return m;
         })))
         .subscribe(metrics => {
@@ -47,14 +46,14 @@ export class MetricsMockService implements IMetricsService {
     }) as Observable<Map<string, UserMetrics>>;
   }
 
-  weeks(start: Moment): Observable<Map<string, UserMetrics>> {
+  weeks(start: Date): Observable<Map<string, UserMetrics>> {
     return Observable.create((observer: any) => {
       this.http.get<UserMetrics[]>('metrics/weeks.json')
         .pipe(map(arr => arr.map((el, i) => {
           const m = deserialize(el, UserMetrics);
-          const period = moment(start).add(i, 'week').startOf('day');
-          m.start = moment(period);
-          m.end = moment(period).endOf('week');
+          const period = startOfDay(addWeeks(start, i));
+          m.start = period;
+          m.end = endOfISOWeek(period);
           return m;
         })))
         .subscribe(metrics => {
