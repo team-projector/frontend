@@ -15,7 +15,7 @@ export class MetricsMockService implements IMetricsService {
   constructor(private http: HttpMockService) {
   }
 
-  list(user: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<string, UserProgressMetrics>> {
+  userProgress(user: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<string, UserProgressMetrics>> {
     switch (group) {
       case MetricsGroup.day:
         return this.days(start);
@@ -26,7 +26,7 @@ export class MetricsMockService implements IMetricsService {
 
   days(start: Date): Observable<Map<string, UserProgressMetrics>> {
     return Observable.create((observer: any) => {
-      this.http.get<UserProgressMetrics[]>('metrics/list.json')
+      this.http.get<UserProgressMetrics[]>('metrics/userProgress.json')
         .pipe(map(arr => arr.map((el, i) => {
           const m = deserialize(el, UserProgressMetrics);
           const period = startOfDay(addDays(start, i));
@@ -48,7 +48,7 @@ export class MetricsMockService implements IMetricsService {
 
   weeks(start: Date): Observable<Map<string, UserProgressMetrics>> {
     return Observable.create((observer: any) => {
-      this.http.get<UserProgressMetrics[]>('metrics/list.json')
+      this.http.get<UserProgressMetrics[]>('metrics/userProgress.json')
         .pipe(map(arr => arr.map((el, i) => {
           const m = deserialize(el, UserProgressMetrics);
           const period = startOfDay(addWeeks(start, i));

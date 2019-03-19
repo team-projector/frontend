@@ -1,24 +1,17 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Me} from '../models/me';
-import {MeManager} from '../managers/me.manager';
-import {filter} from 'rxjs/operators';
+import {IMeService, me_service} from '../services/me/interface';
 
 @Injectable()
-export class MeUserResolver implements Resolve<Observable<Me>> {
+export class MeUserWithMetricsResolver implements Resolve<Observable<Me>> {
 
-  constructor(private me: MeManager) {
+  constructor(@Inject(me_service) private meService: IMeService) {
   }
 
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<Me> {
-    return Observable.create((observer: any) => {
-      this.me.user$.pipe(filter(u => !!u))
-        .subscribe(u => {
-          observer.next(u);
-          observer.complete();
-        });
-    }) as Observable<Me>;
+    return this.meService.getUser(true);
   }
 }

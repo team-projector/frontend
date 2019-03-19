@@ -4,7 +4,7 @@ import {Me} from '../../models/me';
 
 export interface IMeService {
 
-  getUser(): Observable<Me>;
+  getUser(metrics: boolean = false): Observable<Me>;
 
 }
 

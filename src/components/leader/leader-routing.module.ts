@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {IssuesListComponent} from '../issues/list/issues-list.component';
-import {UserResolver} from './resolvers';
+import {UserWithMetricsResolver} from './resolvers';
 import {TeamComponent} from './team/team.component';
 
 const routes: Routes = [
@@ -12,7 +12,7 @@ const routes: Routes = [
       {
         path: ':user/issues',
         component: IssuesListComponent,
-        resolve: {user: UserResolver}
+        resolve: {user: UserWithMetricsResolver}
       }
     ]
   }

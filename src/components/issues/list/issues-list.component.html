@@ -1,3 +1,12 @@
+<div class="user-metrics">
+  <label>Payroll</label>
+  <p>
+    <span class="closed">{{user.metrics?.payrollClosed | currency}}</span>
+    &larr;
+    <span class="opened">{{user.metrics?.payrollOpened | currency}}</span>
+    <sup>{{user.metrics?.issuesOpenedCount}}</sup></p>
+</div>
+
 <form [formGroup]="filterForm">
   <jnt-calendar-week [period]="dueDate.value">
     <ng-template #dayTemplate let-date="date">
@@ -5,13 +14,13 @@
         {{date | getDate}}
         <ng-container *ngIf="format(date, formatDate) as key">
           <ul class="metrics">
-            <li *ngIf="metrics.days.get(key)?.timeSpent" class="metric">
+            <li *ngIf="metrics.days.get(key)?.timeSpent">
               {{metrics.days.get(key)?.timeSpent | duration}}
             </li>
-            <li *ngIf="metrics.days.get(key)?.timeRemains" class="metric remains">
+            <li *ngIf="metrics.days.get(key)?.timeRemains" class="remains">
               {{metrics.days.get(key)?.timeRemains | duration}}
             </li>
-            <li *ngIf="metrics.days.get(key)?.loading" class="metric loading">
+            <li *ngIf="metrics.days.get(key)?.loading" class="loading">
               {{metrics.days.get(key)?.loading | duration}}
             </li>
           </ul>

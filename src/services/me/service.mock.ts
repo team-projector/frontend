@@ -15,7 +15,7 @@ export class MeMockService implements IMeService {
   constructor(private http: HttpMockService) {
   }
 
-  getUser(): Observable<Me> {
+  getUser(metrics: boolean = false): Observable<Me> {
     return this.http.get('me/get-user.json')
       .pipe(map(obj => deserialize(obj, Me)));
   }

@@ -17,7 +17,7 @@ export class IssuesMockService implements IIssuesService {
   }
 
   list(filter: IssuesFilter): Observable<PagingIssues> {
-    return this.http.get('issues/list.json')
+    return this.http.get('issues/userProgress.json')
       .pipe(map(obj => deserialize(obj, PagingIssues)));
   }
 

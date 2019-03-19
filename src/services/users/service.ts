@@ -8,6 +8,7 @@ import {map} from 'rxjs/operators';
 import {ObjectLink} from '../../models/object-link';
 import {User} from '../../models/user';
 import {HttpParams} from '@angular/common/http';
+import {encodeObject} from '../../utils/http';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +29,8 @@ export class UsersService implements IUsersService {
       .pipe(map(obj => deserialize(obj, Authorization)));
   }
 
-  get(id: number): Observable<User> {
-    return this.http.get(`users/${id}`)
+  get(id: number, metrics: boolean = false): Observable<User> {
+    return this.http.get(`users/${id}`, encodeObject({metrics: metrics}))
       .pipe(map(obj => deserialize(obj, User)));
   }
 

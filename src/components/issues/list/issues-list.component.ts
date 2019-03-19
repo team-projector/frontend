@@ -1,13 +1,13 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { format } from 'date-fns';
-import { FormBuilder, FormControl } from '@angular/forms';
-import { IMetricsService, metrics_service } from 'src/services/metrics/interface';
-import { ActivatedRoute } from '@angular/router';
-import { filter } from 'rxjs/operators';
-import { MetricsGroup, UserProgressMetrics } from 'src/models/user-progress-metrics';
-import { User } from 'src/models/user';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { Period } from 'junte-ui/lib/components/calendar/models';
+import {Component, Inject, OnInit} from '@angular/core';
+import {format} from 'date-fns';
+import {FormBuilder, FormControl} from '@angular/forms';
+import {IMetricsService, metrics_service} from 'src/services/metrics/interface';
+import {ActivatedRoute} from '@angular/router';
+import {filter} from 'rxjs/operators';
+import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metrics';
+import {User} from 'src/models/user';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {Period} from 'junte-ui/lib/components/calendar/models';
 
 const L = 'DD/MM/YYYY';
 
@@ -53,14 +53,14 @@ export class IssuesListComponent implements OnInit {
 
     combineLatest(this.user$, this.period$)
       .pipe(filter(([u, p]) => !!u && !!p))
-      .subscribe(([u, p]) => this.loadMetrics(u, p));
+      .subscribe(([u, p]) => this.loadUserProgressMetrics(u, p));
   }
 
-  loadMetrics(user: User, period: Period) {
-    this.metricsService.list(user.id, period.start, period.end, MetricsGroup.day)
+  private loadUserProgressMetrics(user: User, period: Period) {
+    this.metricsService.userProgress(user.id, period.start, period.end, MetricsGroup.day)
       .subscribe(metrics => this.metrics.days = metrics);
 
-    this.metricsService.list(user.id, period.start, period.end, MetricsGroup.week)
+    this.metricsService.userProgress(user.id, period.start, period.end, MetricsGroup.week)
       .subscribe(metrics => this.metrics.weeks = metrics);
   }
 

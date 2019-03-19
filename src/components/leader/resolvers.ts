@@ -5,13 +5,13 @@ import {IUsersService, users_service} from '../../services/users/interface';
 import {User} from '../../models/user';
 
 @Injectable()
-export class UserResolver implements Resolve<Observable<User>> {
+export class UserWithMetricsResolver implements Resolve<Observable<User>> {
 
   constructor(@Inject(users_service) private usersService: IUsersService) {
   }
 
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<User> {
-    return this.usersService.get(+route.params['user']);
+    return this.usersService.get(+route.params['user'], true);
   }
 }

@@ -26,7 +26,7 @@ export class UsersMockService implements IUsersService {
       .pipe(map(src => deserialize(src, Authorization)), delay(500));
   }
 
-  get(id: number): Observable<User> {
+  get(id: number, metrics: boolean = false): Observable<User> {
     return this.http.get('users/get.json')
       .pipe(map(src => {
         const obj = deserialize(src, User);

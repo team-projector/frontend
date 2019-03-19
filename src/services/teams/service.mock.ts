@@ -16,7 +16,7 @@ export class TeamsMockService implements ITeamsService {
   }
 
   list(user: number, roles: TeamMemberRole[]): Observable<PagingTeams> {
-    return this.http.get('teams/list.json')
+    return this.http.get('teams/userProgress.json')
       .pipe(map(obj => deserialize(obj, PagingTeams)));
   }
 

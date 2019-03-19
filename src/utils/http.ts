@@ -1,8 +1,9 @@
 import {HttpParams} from '@angular/common/http';
 import 'reflect-metadata';
 import {serialize} from 'serialize-ts';
+import {isBoolean} from 'util';
 
-export function encodeParams(source: any) {
+export function encodeModel(source: any) {
   const obj: { [key: string]: string } = {};
   const serialized = serialize(source);
   for (const key in serialized) {
@@ -10,6 +11,25 @@ export function encodeParams(source: any) {
       continue;
     }
     obj[key] = serialized[key].toString();
+  }
+
+  console.log(obj);
+
+  return new HttpParams({fromObject: obj});
+}
+
+export function encodeObject(source: any) {
+  const obj: { [key: string]: string } = {};
+  for (const key in source) {
+    if (!source.hasOwnProperty(key)) {
+      continue;
+    }
+    const val = source[key];
+    if (isBoolean(val)) {
+      obj[key] = val ? 'True' : 'False';
+    } else {
+      obj[key] = val.toString();
+    }
   }
 
   console.log(obj);

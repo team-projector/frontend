@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { deserialize } from 'serialize-ts';
 import { map } from 'rxjs/operators';
 import { MetricsGroup, UserProgressMetrics, UserMetricsFilter } from 'src/models/user-progress-metrics';
-import { encodeParams } from 'src/utils/http';
+import { encodeModel } from 'src/utils/http';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +15,10 @@ export class MetricsService implements IMetricsService {
   constructor(private http: HttpService) {
   }
 
-  list(user: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<string, UserProgressMetrics>> {
+  userProgress(user: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<string, UserProgressMetrics>> {
     return Observable.create((observer: any) => {
       this.http.get<UserProgressMetrics[]>(`users/${user}/progress-metrics`,
-        encodeParams(new UserMetricsFilter({start: start, end: end, group: group})))
+        encodeModel(new UserMetricsFilter({start: start, end: end, group: group})))
         .pipe(map(arr => arr.map(el => deserialize(el, UserProgressMetrics))))
         .subscribe(metrics => {
           const dic = new Map<string, UserProgressMetrics>();

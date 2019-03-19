@@ -4,7 +4,7 @@ import { MetricsGroup, UserProgressMetrics } from 'src/models/user-progress-metr
 
 export interface IMetricsService {
 
-  list(user: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<string, UserProgressMetrics>>;
+  userProgress(user: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<string, UserProgressMetrics>>;
 
 }
 

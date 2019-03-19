@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {deserialize} from 'serialize-ts';
 import {PagingTimeExpenses, TimeExpensesFilter} from '../../models/spent-time';
-import {encodeParams} from '../../utils/http';
+import {encodeModel} from '../../utils/http';
 
 
 @Injectable({
@@ -17,8 +17,8 @@ export class TimeExpensesMockService implements ITimeExpensesService {
   }
 
   list(user: number, filter: TimeExpensesFilter): Observable<PagingTimeExpenses> {
-    console.log(encodeParams(filter).toString());
-    return this.http.get('time-expenses/list.json')
+    console.log(encodeModel(filter).toString());
+    return this.http.get('time-expenses/userProgress.json')
       .pipe(map(obj => deserialize(obj, PagingTimeExpenses)));
   }
 }

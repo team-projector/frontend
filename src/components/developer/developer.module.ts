@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 import {DeveloperRoutingModule} from './developer-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {IssuesModule} from '../issues/issues.module';
-import {MeUserResolver} from '../../resolvers/me';
+import {MeUserWithMetricsResolver} from '../../resolvers/me';
 
 @NgModule({
   declarations: [],
@@ -14,7 +14,7 @@ import {MeUserResolver} from '../../resolvers/me';
     IssuesModule
   ],
   providers: [
-    MeUserResolver
+    MeUserWithMetricsResolver
   ]
 })
 export class DeveloperModule {
