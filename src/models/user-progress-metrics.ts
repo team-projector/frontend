@@ -11,7 +11,7 @@ export enum MetricsGroup {
 
 @Model()
 @MockClass()
-export class UserMetrics {
+export class UserProgressMetrics {
 
   @Field()
   @Type(new DateSerializer())

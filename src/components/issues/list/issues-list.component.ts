@@ -4,7 +4,7 @@ import { FormBuilder, FormControl } from '@angular/forms';
 import { IMetricsService, metrics_service } from 'src/services/metrics/interface';
 import { ActivatedRoute } from '@angular/router';
 import { filter } from 'rxjs/operators';
-import { MetricsGroup, UserMetrics } from 'src/models/user-metrics';
+import { MetricsGroup, UserProgressMetrics } from 'src/models/user-progress-metrics';
 import { User } from 'src/models/user';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { Period } from 'junte-ui/lib/components/calendar/models';
@@ -36,7 +36,7 @@ export class IssuesListComponent implements OnInit {
     this.period$.next(period);
   }
 
-  metrics = {days: new Map<string, UserMetrics>(), weeks: new Map<string, UserMetrics>()};
+  metrics = {days: new Map<string, UserProgressMetrics>(), weeks: new Map<string, UserProgressMetrics>()};
   dueDate = new FormControl(new Date());
   filterForm = this.formBuilder.group({
     dueDate: this.dueDate
