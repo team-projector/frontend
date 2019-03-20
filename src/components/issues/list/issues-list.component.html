@@ -1,9 +1,9 @@
 <div class="user-metrics">
   <label>Payroll</label>
   <p>
-    <span class="closed">{{user.metrics?.payrollClosed | currency}}</span>
+    <span class="closed">{{user.metrics?.payrollClosed | currency:'rur'}}</span>
     &larr;
-    <span class="opened">{{user.metrics?.payrollOpened | currency}}</span>
+    <span class="opened">{{user.metrics?.payrollOpened | currency:'rur'}}</span>
     <sup>{{user.metrics?.issuesOpenedCount}}</sup></p>
 </div>
 
