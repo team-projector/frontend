@@ -30,7 +30,7 @@ export class SpentTimeCard {
 
   @Field()
   @Name('time_spent')
-  @MockFieldNested('{{time}}')
+  @MockFieldNested('{{int 10 100}}')
   timeSpent: number;
 
   @Field()

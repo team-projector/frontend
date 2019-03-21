@@ -25,17 +25,17 @@ export class UserProgressMetrics {
 
   @Field()
   @Name('time_estimate')
-  @MockFieldNested('{{time}}')
+  @MockFieldNested('{{int 10 100}}')
   timeEstimate: number;
 
   @Field()
   @Name('time_spent')
-  @MockFieldNested('{{time}}')
+  @MockFieldNested('{{int 10 100}}')
   timeSpent: number;
 
   @Field()
   @Name('time_remains')
-  @MockFieldNested('{{time}}')
+  @MockFieldNested('{{int 10 100}}')
   timeRemains: number;
 
   @Field()
@@ -43,7 +43,7 @@ export class UserProgressMetrics {
   efficiency: number;
 
   @Field()
-  @MockFieldNested('{{time}}')
+  @MockFieldNested('{{int 10 100}}')
   loading: number;
 
   @Field()

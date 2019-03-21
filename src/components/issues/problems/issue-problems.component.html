@@ -1,7 +1,7 @@
 <jnt-table [filter]="filter">
   <jnt-table-column i18n-title="@@title" title="Issue" sort="title"></jnt-table-column>
   <jnt-table-column i18n-title="@@project" title="Project"></jnt-table-column>
-  <jnt-table-column i18n-title="@@due_daye" title="Due date"></jnt-table-column>
+  <jnt-table-column i18n-title="@@due_date" title="Due date"></jnt-table-column>
   <jnt-table-column i18n-title="@@est" title="Est"></jnt-table-column>
 
   <ng-template #rowTemplate let-problems="problems"
@@ -25,12 +25,12 @@
     </td>
     <td style="text-align: right;">
       {{dueDate | date}}
-      <span class="error" *ngIf="problems.includes(issueProblemType.emptyDueDate)">empty</span>
-      <span class="error" *ngIf="problems.includes(issueProblemType.overDueDate)">overdue</span>
+      <span class="error" *ngIf="problems?.includes(issueProblemType.emptyDueDate)">empty</span>
+      <span class="error" *ngIf="problems?.includes(issueProblemType.overDueDate)">overdue</span>
     </td>
     <td style="text-align: right;">
       {{timeEstimate | duration}}
-      <span class="error" *ngIf="problems.includes(issueProblemType.emptyEstimate)">empty</span>
+      <span class="error" *ngIf="problems?.includes(issueProblemType.emptyEstimate)">empty</span>
     </td>
   </ng-template>
 </jnt-table>

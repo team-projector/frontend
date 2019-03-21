@@ -49,7 +49,7 @@ export class TeamMemberCard {
 
   @Field()
   @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockFieldNested([TeamMemberRole.developer])
+  @MockField([TeamMemberRole.developer])
   roles: TeamMemberRole[];
 
 }

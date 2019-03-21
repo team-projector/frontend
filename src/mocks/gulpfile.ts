@@ -78,7 +78,7 @@ export class Gulpfile {
 
   @Task()
   mocks() {
-    return gulp.src(['./../../dist/out-tsc/src/models/**/*.js'])
+    return gulp.src(['../models/**/*.ts'])
       .pipe(debug())
       .pipe(map((file, cb) => {
         const context = require(file.path);
