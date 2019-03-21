@@ -1,9 +1,53 @@
-<app-header>
+<jnt-app-layout>
+  <jnt-app-header [fixed]="true">
+    <ng-template #logo>
+      <div logo>
+        <img src="/assets/images/logo-white.svg" height="45">
+      </div>
+    </ng-template>
+    <ng-template #topMenu>
+      <jnt-menu>
+        <jnt-menu-item link="/developer" title="Developer"></jnt-menu-item>
+        <jnt-menu-item title="Team Leader"></jnt-menu-item>
+        <jnt-menu-item title="Project Manager"></jnt-menu-item>
+        <jnt-menu-item title="Customer"></jnt-menu-item>
+        <jnt-menu-item title="Shareholder"></jnt-menu-item>
+      </jnt-menu>
+    </ng-template>
+    <ng-template #userbar>
+      <jnt-userbar>
+        <ng-template #avatar>
+          <jnt-avatar [size]="ui.sizes.small"
+                      [image]="me.user?.avatar || '/assets/images/avatar.png'"></jnt-avatar>
+        </ng-template>
 
-</app-header>
+        <ng-template #userMenu>
+          <jnt-user-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
+            <jnt-button *ngIf="config.authorization" (click)="logout()"
+                        text="Logout"></jnt-button>
+          </jnt-user-menu>
+        </ng-template>
+      </jnt-userbar>
+    </ng-template>
+  </jnt-app-header>
 
-<router-outlet></router-outlet>
+  <jnt-app-main>
 
-<app-footer>
+    <jnt-app-content>
 
-</app-footer>
+      <jnt-app-body>
+        <router-outlet></router-outlet>
+      </jnt-app-body>
+
+      <jnt-app-footer>
+        <small>Junte 2008 - 2019<br> Any rights are NOT reserved, use this as you want ;-)</small>
+      </jnt-app-footer>
+
+    </jnt-app-content>
+
+  </jnt-app-main>
+
+
+</jnt-app-layout>
+
+
