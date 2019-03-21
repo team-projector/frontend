@@ -1,7 +1,6 @@
 import {ArraySerializer, Field, Model, Name, Type} from 'serialize-ts';
 import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
 import {PrimitiveSerializer} from 'serialize-ts/dist/serializers/primitive.serializer';
-import {ObjectLink} from './object-link';
 import {UserMetrics} from './user-metrics';
 
 export enum UserPermission {

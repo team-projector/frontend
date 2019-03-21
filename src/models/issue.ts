@@ -1,12 +1,12 @@
-import { ArraySerializer, Field, Model, ModelSerializer, Name, Type } from 'serialize-ts';
-import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
-import { ObjectLink } from './object-link';
-import { LabelCard } from './label';
-import { Paging } from './paging';
-import { DateSerializer } from '../serializers/date';
-import { DATE_FORMAT } from '../consts';
-import { BooleanSerializer } from '../serializers/http';
-import { Order, SearchFilter } from 'junte-ui';
+import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
+import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
+import {ObjectLink} from './object-link';
+import {LabelCard} from './label';
+import {Paging} from './paging';
+import {DateSerializer} from '../serializers/date';
+import {DATE_FORMAT} from '../consts';
+import {BooleanSerializer} from '../serializers/http';
+import {Order, SearchFilter} from 'junte-ui';
 
 export enum IssueState {
   opened = 'opened',
@@ -18,7 +18,7 @@ export enum IssueState {
 export class IssueMetrics {
 
   @Field()
-  @MockFieldNested('{{time}}')
+  @MockFieldNested('{{int 10 100}}')
   remains: number;
 
   @Field()
@@ -60,17 +60,17 @@ export class IssueCard {
 
   @Field()
   @Name('time_estimate')
-  @MockFieldNested('{{time}}')
+  @MockFieldNested('{{int 10 100}}')
   timeEstimate: number;
 
   @Field()
   @Name('time_spent')
-  @MockFieldNested('{{time}}')
+  @MockFieldNested('{{int 10 100}}')
   timeSpent: number;
 
   @Field()
   @Name('total_time_spent')
-  @MockFieldNested('{{time}}')
+  @MockFieldNested('{{int 10 100}}')
   totalTimeSpent: number;
 
   @Field()

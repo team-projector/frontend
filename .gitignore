@@ -45,4 +45,5 @@ Thumbs.db
 /.idea/markdown-navigator.xml
 /.idea/vcs.xml
 
-/src/mocks/**/*.json
+/src/mocks/objects/*.json
+/src/assets/mocks

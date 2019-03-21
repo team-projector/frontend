@@ -1,11 +1,11 @@
-import { Injectable } from '@angular/core';
-import { IMetricsService } from './interface';
-import { HttpMockService } from 'junte-angular';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { deserialize } from 'serialize-ts';
-import { MetricsGroup, UserProgressMetrics } from 'src/models/user-progress-metrics';
-import { addDays, addWeeks, endOfDay, endOfISOWeek, startOfDay } from 'date-fns';
+import {Injectable} from '@angular/core';
+import {IMetricsService} from './interface';
+import {HttpMockService} from 'junte-angular';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {deserialize} from 'serialize-ts';
+import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metrics';
+import {addDays, addWeeks, endOfDay, endOfISOWeek, startOfDay} from 'date-fns';
 
 @Injectable({
   providedIn: 'root'
@@ -26,7 +26,7 @@ export class MetricsMockService implements IMetricsService {
 
   days(start: Date): Observable<Map<string, UserProgressMetrics>> {
     return Observable.create((observer: any) => {
-      this.http.get<UserProgressMetrics[]>('metrics/userProgress.json')
+      this.http.get<UserProgressMetrics[]>('metrics/user-progress.json')
         .pipe(map(arr => arr.map((el, i) => {
           const m = deserialize(el, UserProgressMetrics);
           const period = startOfDay(addDays(start, i));
@@ -48,7 +48,7 @@ export class MetricsMockService implements IMetricsService {
 
   weeks(start: Date): Observable<Map<string, UserProgressMetrics>> {
     return Observable.create((observer: any) => {
-      this.http.get<UserProgressMetrics[]>('metrics/userProgress.json')
+      this.http.get<UserProgressMetrics[]>('metrics/user-progress.json')
         .pipe(map(arr => arr.map((el, i) => {
           const m = deserialize(el, UserProgressMetrics);
           const period = startOfDay(addWeeks(start, i));

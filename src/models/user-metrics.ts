@@ -16,17 +16,17 @@ export class UserMetrics {
 
   @Field()
   @Name('issues_opened_count')
-  @MockFieldNested('{{int}}')
+  @MockFieldNested('{{int 10 100}}')
   issuesOpenedCount: number;
 
   @Field()
   @Name('payroll_closed')
-  @MockFieldNested('{{int}}')
+  @MockFieldNested('{{int 10 100}}')
   payrollClosed: number;
 
   @Field()
   @Name('payroll_opened')
-  @MockFieldNested('{{int}}')
+  @MockFieldNested('{{int 10 100}}')
   payrollOpened: number;
 
 }

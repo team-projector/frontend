@@ -4,9 +4,9 @@
 	"labels": [{{#repeat 2 5}} {{> label_card}} {{/repeat}}], 
 	"project": {{> object_link presentation=(project)}}, 
 	"due_date": "{{date '2019' '2020'}}", 
-	"time_estimate": {{time}}, 
-	"time_spent": {{time}}, 
-	"total_time_spent": {{time}}, 
+	"time_estimate": {{int 10 100}}, 
+	"time_spent": {{int 10 100}}, 
+	"total_time_spent": {{int 10 100}}, 
 	"gl_url": "{{url}}", 
 	"state": "opened", 
 	"metrics": {{> issue_metrics}}
