@@ -31,6 +31,10 @@
   </jnt-calendar-week>
 
   <jnt-calendar formControlName="dueDate" (updated)="period = $event">
+    <jnt-week-metric i18n-title="@@est" title="Est"></jnt-week-metric>
+    <jnt-week-metric i18n-title="@@est" title="Spent"></jnt-week-metric>
+    <jnt-week-metric i18n-title="@@est" title="Eff"></jnt-week-metric>
+    <jnt-week-metric i18n-title="@@est" title="Earn"></jnt-week-metric>
     <ng-template #dayTemplate let-date="date">
       <div class="day">
         {{date | getDate}}
