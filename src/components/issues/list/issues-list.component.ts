@@ -8,6 +8,7 @@ import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metric
 import {User} from 'src/models/user';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {Period} from 'junte-ui/lib/components/calendar/models';
+import {UI} from 'junte-ui';
 
 const L = 'DD/MM/YYYY';
 
@@ -17,6 +18,7 @@ const L = 'DD/MM/YYYY';
   styleUrls: ['./issues-list.component.scss']
 })
 export class IssuesListComponent implements OnInit {
+  ui = UI;
 
   user$ = new BehaviorSubject<User>(null);
   period$ = new BehaviorSubject<Period>(null);
