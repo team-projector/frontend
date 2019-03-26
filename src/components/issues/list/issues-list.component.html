@@ -9,7 +9,29 @@
   </div>
 
   <form [formGroup]="filterForm">
-    <jnt-stack [type]="ui.type.vertical">
+    <jnt-stack>
+      <jnt-calendar-week [period]="dueDate.value" class="week">
+        <ng-template #dayTemplate let-date="date">
+          <ng-container *ngIf="format(date, formatDate) as key">
+            <div class="day"
+                 *ngIf="metrics.days.get(key)?.timeSpent || metrics.days.get(key)?.timeRemains || metrics.days.get(key)?.loading">
+              <ul class="metrics">
+                <li *ngIf="metrics.days.get(key)?.timeSpent">
+                  {{metrics.days.get(key)?.timeSpent | duration}}
+                </li>
+                <li *ngIf="metrics.days.get(key)?.timeRemains" class="remains">
+                  {{metrics.days.get(key)?.timeRemains | duration}}
+                </li>
+                <li *ngIf="metrics.days.get(key)?.loading" class="loading">
+                  {{metrics.days.get(key)?.loading | duration}}
+                </li>
+              </ul>
+            </div>
+          </ng-container>
+          <div class="issues" *ngIf="metrics.days.get(key)?.issues_count"></div>
+        </ng-template>
+      </jnt-calendar-week>
+
       <jnt-calendar formControlName="dueDate" (updated)="period = $event">
         <jnt-week-metric i18n-title="@@est" title="Est"></jnt-week-metric>
         <jnt-week-metric i18n-title="@@spent" title="Spent"></jnt-week-metric>
@@ -47,28 +69,6 @@
           </ng-container>
         </ng-template>
       </jnt-calendar>
-
-      <jnt-calendar-week [period]="dueDate.value" class="week">
-        <ng-template #dayTemplate let-date="date">
-          <ng-container *ngIf="format(date, formatDate) as key">
-            <div class="day"
-                 *ngIf="metrics.days.get(key)?.timeSpent || metrics.days.get(key)?.timeRemains || metrics.days.get(key)?.loading">
-              <ul class="metrics">
-                <li *ngIf="metrics.days.get(key)?.timeSpent">
-                  {{metrics.days.get(key)?.timeSpent | duration}}
-                </li>
-                <li *ngIf="metrics.days.get(key)?.timeRemains" class="remains">
-                  {{metrics.days.get(key)?.timeRemains | duration}}
-                </li>
-                <li *ngIf="metrics.days.get(key)?.loading" class="loading">
-                  {{metrics.days.get(key)?.loading | duration}}
-                </li>
-              </ul>
-            </div>
-          </ng-container>
-          <div class="issues" *ngIf="metrics.days.get(key)?.issues_count"></div>
-        </ng-template>
-      </jnt-calendar-week>
     </jnt-stack>
   </form>
 
