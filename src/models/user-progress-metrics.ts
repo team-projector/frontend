@@ -1,8 +1,8 @@
-import { Field, Model, Name, Type } from 'serialize-ts';
-import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
-import { DateSerializer } from '../serializers/date';
-import { DATE_FORMAT } from '../consts';
-import { format } from 'date-fns';
+import {Field, Model, Name, Type} from 'serialize-ts';
+import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
+import {DateSerializer} from '../serializers/date';
+import {DATE_FORMAT} from '../consts';
+import {format} from 'date-fns';
 
 export enum MetricsGroup {
   day = 'day',
@@ -47,8 +47,18 @@ export class UserProgressMetrics {
   loading: number;
 
   @Field()
+  @Name('payroll_closed')
   @MockFieldNested('{{money}}')
-  earnings: number;
+  payrollClosed: number;
+
+  @Field()
+  @Name('payroll_opened')
+  @MockFieldNested('{{money}}')
+  payrollOpened: number;
+
+  @Field()
+  @MockFieldNested('{{money}}')
+  paid: number;
 
   @Field()
   @MockFieldNested('{{int 50 1000}}')

@@ -5,7 +5,8 @@
   <jnt-table-column i18n-title="@@issue_time_spent" title="Spent"></jnt-table-column>
   <jnt-table-column i18n-title="@@issue_time_remains" title="Remains"></jnt-table-column>
   <jnt-table-column i18n-title="@@eff" title="Eff"></jnt-table-column>
-  <jnt-table-column i18n-title="@@earn" title="Earn"></jnt-table-column>
+  <jnt-table-column i18n-title="@@payroll" title="Payroll"></jnt-table-column>
+  <jnt-table-column i18n-title="@@paid" title="Paid"></jnt-table-column>
 
   <ng-template #rowTemplate let-id="id"
                let-title="title"
@@ -41,7 +42,10 @@
       {{metrics.efficiency | number:'1.2-2'}}x
     </td>
     <td style="text-align: right;">
-      {{metrics.earnings | currency:'rur'}}
+      {{metrics.payroll | currency:'RUB'}}
+    </td>
+    <td style="text-align: right;">
+      {{metrics.paid | currency:'RUB'}}
     </td>
   </ng-template>
 </jnt-table>

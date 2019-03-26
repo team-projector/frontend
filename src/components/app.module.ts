@@ -27,7 +27,7 @@ registerLocaleData(localeDe);
       provide: Config,
       useClass: AppConfig,
     },
-    {provide: LOCALE_ID, useValue: 'de'},
+    {provide: LOCALE_ID, useValue: 'ru'},
     HttpClient,
     HttpService,
     HttpMockService,

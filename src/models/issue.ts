@@ -27,7 +27,11 @@ export class IssueMetrics {
 
   @Field()
   @MockFieldNested('{{money}}')
-  earnings: number;
+  paid: number;
+
+  @Field()
+  @MockFieldNested('{{money}}')
+  payroll: number;
 
 }
 
