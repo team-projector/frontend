@@ -1,38 +1,40 @@
-<jnt-table [filter]="filter">
-  <jnt-table-column i18n-title="@@created_at" title="Created at" sort="created_at"></jnt-table-column>
-  <jnt-table-column i18n-title="@@title" title="Issue" sort="title"></jnt-table-column>
-  <jnt-table-column i18n-title="@@project" title="Project"></jnt-table-column>
-  <jnt-table-column i18n-title="@@spent" title="Spent"></jnt-table-column>
-  <jnt-table-column i18n-title="@@earn" title="Earn"></jnt-table-column>
+<jnt-block [fluid]="true">
+  <jnt-table [filter]="filter">
+    <jnt-table-column i18n-title="@@created_at" title="Created at" sort="created_at"></jnt-table-column>
+    <jnt-table-column i18n-title="@@title" title="Issue" sort="title"></jnt-table-column>
+    <jnt-table-column i18n-title="@@project" title="Project"></jnt-table-column>
+    <jnt-table-column i18n-title="@@spent" title="Spent"></jnt-table-column>
+    <jnt-table-column i18n-title="@@earn" title="Earn"></jnt-table-column>
 
-  <ng-template #rowTemplate let-id="id"
-               let-createdAt="createdAt"
-               let-title="issue.title"
-               let-url="issue.glUrl"
-               let-state="issue.state"
-               let-labels="issue.labels"
-               let-project="issue.project"
-               let-timeSpent="timeSpent"
-               let-earnings="earnings">
-    <td>
-      {{createdAt | date:'medium'}}
-    </td>
-    <td>
-      <a href="{{url}}" target="_blank" [class.closed]="state == issuesState.closed">{{title}}</a>
-      <ul class="labels">
-        <li *ngFor="let l of labels" [style.background-color]="l.color">
-          {{l.title}}
-        </li>
-      </ul>
-    </td>
-    <td>
-      {{project.presentation}}
-    </td>
-    <td style="text-align: right;">
-      {{timeSpent | duration}}
-    </td>
-    <td style="text-align: right;">
-      {{earnings | currency}}
-    </td>
-  </ng-template>
-</jnt-table>
+    <ng-template #rowTemplate let-id="id"
+                 let-createdAt="createdAt"
+                 let-title="issue.title"
+                 let-url="issue.glUrl"
+                 let-state="issue.state"
+                 let-labels="issue.labels"
+                 let-project="issue.project"
+                 let-timeSpent="timeSpent"
+                 let-earnings="earnings">
+      <td>
+        {{createdAt | date:'medium'}}
+      </td>
+      <td>
+        <a href="{{url}}" target="_blank" [class.closed]="state == issuesState.closed">{{title}}</a>
+        <ul class="labels">
+          <li *ngFor="let l of labels" [style.background-color]="l.color">
+            {{l.title}}
+          </li>
+        </ul>
+      </td>
+      <td>
+        {{project.presentation}}
+      </td>
+      <td style="text-align: right;">
+        {{timeSpent | duration}}
+      </td>
+      <td style="text-align: right;">
+        {{earnings | currency}}
+      </td>
+    </ng-template>
+  </jnt-table>
+</jnt-block>
