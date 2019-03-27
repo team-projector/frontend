@@ -58,6 +58,10 @@ export class UserProgressMetrics {
 
   @Field()
   @MockFieldNested('{{money}}')
+  payroll: number;
+
+  @Field()
+  @MockFieldNested('{{money}}')
   paid: number;
 
   @Field()

@@ -41,7 +41,7 @@
               <ng-container *ngSwitchCase="0">{{metrics.weeks.get(key)?.timeEstimate | duration}}</ng-container>
               <ng-container *ngSwitchCase="1">{{metrics.weeks.get(key)?.timeSpent | duration}}</ng-container>
               <ng-container *ngSwitchCase="2">{{metrics.weeks.get(key)?.efficiency | number:'1.2-2'}}x</ng-container>
-              <ng-container *ngSwitchCase="3">{{metrics.weeks.get(key)?.payrollClosed | currency:'RUB'}}</ng-container>
+              <ng-container *ngSwitchCase="3">{{metrics.weeks.get(key)?.payroll | currency:'RUB'}}</ng-container>
               <ng-container *ngSwitchCase="4">{{metrics.weeks.get(key)?.paid | currency:'RUB'}}</ng-container>
             </ng-container>
           </ng-container>
