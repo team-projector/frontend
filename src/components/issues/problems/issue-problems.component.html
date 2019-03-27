@@ -1,36 +1,38 @@
-<jnt-table [filter]="filter">
-  <jnt-table-column i18n-title="@@title" title="Issue" sort="title"></jnt-table-column>
-  <jnt-table-column i18n-title="@@project" title="Project"></jnt-table-column>
-  <jnt-table-column i18n-title="@@due_date" title="Due date"></jnt-table-column>
-  <jnt-table-column i18n-title="@@est" title="Est"></jnt-table-column>
+<jnt-block [fluid]="true">
+  <jnt-table [filter]="filter">
+    <jnt-table-column i18n-title="@@title" title="Issue" sort="title"></jnt-table-column>
+    <jnt-table-column i18n-title="@@project" title="Project"></jnt-table-column>
+    <jnt-table-column i18n-title="@@due_date" title="Due date"></jnt-table-column>
+    <jnt-table-column i18n-title="@@est" title="Est"></jnt-table-column>
 
-  <ng-template #rowTemplate let-problems="problems"
-               let-title="issue.title"
-               let-url="issue.glUrl"
-               let-state="issue.state"
-               let-labels="issue.labels"
-               let-project="issue.project"
-               let-dueDate="issue.dueDate"
-               let-timeEstimate="issue.time_estimate">
-    <td>
-      <a href="{{url}}" target="_blank" [class.closed]="state == issuesState.closed">{{title}}</a>
-      <ul class="labels">
-        <li *ngFor="let l of labels" [style.background-color]="l.color">
-          {{l.title}}
-        </li>
-      </ul>
-    </td>
-    <td>
-      {{project.presentation}}
-    </td>
-    <td style="text-align: right;">
-      {{dueDate | date}}
-      <span class="error" *ngIf="problems?.includes(issueProblemType.emptyDueDate)">empty</span>
-      <span class="error" *ngIf="problems?.includes(issueProblemType.overDueDate)">overdue</span>
-    </td>
-    <td style="text-align: right;">
-      {{timeEstimate | duration}}
-      <span class="error" *ngIf="problems?.includes(issueProblemType.emptyEstimate)">empty</span>
-    </td>
-  </ng-template>
-</jnt-table>
+    <ng-template #rowTemplate let-problems="problems"
+                 let-title="issue.title"
+                 let-url="issue.glUrl"
+                 let-state="issue.state"
+                 let-labels="issue.labels"
+                 let-project="issue.project"
+                 let-dueDate="issue.dueDate"
+                 let-timeEstimate="issue.time_estimate">
+      <td>
+        <a href="{{url}}" target="_blank" [class.closed]="state == issuesState.closed">{{title}}</a>
+        <ul class="labels">
+          <li *ngFor="let l of labels" [style.background-color]="l.color">
+            {{l.title}}
+          </li>
+        </ul>
+      </td>
+      <td>
+        {{project.presentation}}
+      </td>
+      <td style="text-align: right;">
+        {{dueDate | date}}
+        <span class="error" *ngIf="problems?.includes(issueProblemType.emptyDueDate)">empty</span>
+        <span class="error" *ngIf="problems?.includes(issueProblemType.overDueDate)">overdue</span>
+      </td>
+      <td style="text-align: right;">
+        {{timeEstimate | duration}}
+        <span class="error" *ngIf="problems?.includes(issueProblemType.emptyEstimate)">empty</span>
+      </td>
+    </ng-template>
+  </jnt-table>
+</jnt-block>
