@@ -1,10 +1,10 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { IssuesFilter, IssueState } from 'src/models/issue';
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
-import { IIssuesService, issues_service } from 'src/services/issues/interface';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { filter as filtering } from 'rxjs/operators';
-import { TableComponent } from 'junte-ui';
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {IssuesFilter, IssueState} from 'src/models/issue';
+import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
+import {IIssuesService, issues_service} from 'src/services/issues/interface';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {filter as filtering} from 'rxjs/operators';
+import {TableComponent, UI} from 'junte-ui';
 
 @Component({
   selector: 'app-issues',
@@ -12,6 +12,8 @@ import { TableComponent } from 'junte-ui';
   styleUrls: ['./issues.component.scss']
 })
 export class IssuesComponent implements OnInit {
+
+  ui = UI;
 
   issuesState = IssueState;
 

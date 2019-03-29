@@ -1,11 +1,11 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
-import { ITimeExpensesService, time_expenses_service } from 'src/services/time-expenses/interface';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { filter as filtering } from 'rxjs/operators';
-import { TimeExpensesFilter } from 'src/models/spent-time';
-import { IssueState } from 'src/models/issue';
-import { TableComponent } from 'junte-ui';
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
+import {ITimeExpensesService, time_expenses_service} from 'src/services/time-expenses/interface';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {filter as filtering} from 'rxjs/operators';
+import {TimeExpensesFilter} from 'src/models/spent-time';
+import {IssueState} from 'src/models/issue';
+import {TableComponent, UI} from 'junte-ui';
 
 @Component({
   selector: 'app-time-expenses',
@@ -13,6 +13,8 @@ import { TableComponent } from 'junte-ui';
   styleUrls: ['./time-expenses.component.scss']
 })
 export class TimeExpensesComponent implements OnInit {
+
+  ui = UI;
 
   issuesState = IssueState;
 
