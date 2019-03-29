@@ -14,12 +14,12 @@
                  let-dueDate="issue.dueDate"
                  let-timeEstimate="issue.time_estimate">
       <td>
-        <a href="{{url}}" target="_blank" [class.closed]="state == issuesState.closed">{{title}}</a>
-        <ul class="labels">
-          <li *ngFor="let l of labels" [style.background-color]="l.color">
-            {{l.title}}
-          </li>
-        </ul>
+        <jnt-stack [type]="ui.stack.type.horizontal">
+          <a href="{{url}}" target="_blank" [class.closed]="state == issuesState.closed">{{title}}</a>
+          <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small">
+            <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
+          </jnt-stack>
+        </jnt-stack>
       </td>
       <td>
         {{project.presentation}}
