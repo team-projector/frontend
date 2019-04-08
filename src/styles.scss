@@ -1,3 +1,45 @@
+@import "~junte-ui/lib/assets/styles/components/calendar/week/day/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/app-layout/app-header/userbar/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/pagination/page-size/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/menu/user-menu/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/grid/row/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/grid/container/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/grid/col/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/form/form-message/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/form/form-label/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/form/form-item/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/form/form-control/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/calendar/week/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/app-layout/app-main/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/app-layout/app-header/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/app-layout/app-footer/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/app-layout/app-content/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/app-layout/app-body/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/app-layout/app-aside/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/tabs/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/table/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/switch/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/stack/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/spinner/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/skeleton/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/select/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/radio/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/pagination/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/menu/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/link/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/label/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/input/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/icon/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/form/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/checkbox/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/card/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/calendar/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/button/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/block/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/badge/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/avatar/encapsulated";
+@import "~junte-ui/lib/assets/styles/components/app-layout/encapsulated";
+
 @import 'style/variables';
 
 body {
@@ -25,18 +67,3 @@ fieldset {
   }
 }
 
-button {
-  cursor: pointer;
-  padding: 10px 30px;
-  font-family: Open Sans;
-  outline: none;
-  font-weight: 300;
-  font-size: 14px;
-  background-color: $primary-color;
-  color: $white-color;
-  border-radius: 40px;
-  border: none;
-  &:focus {
-    box-shadow: 0 0 0 2px #88b8ff;
-  }
-}
