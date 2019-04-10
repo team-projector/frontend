@@ -1,7 +1,7 @@
 <jnt-block [fluid]="true">
   <jnt-table>
     <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
-      <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl">
+      <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state">
         <jnt-stack [type]="ui.stack.type.horizontal">
           <jnt-link [source]=url target="_blank" [class.closed]="state == issuesState.closed">{{title}}</jnt-link>
           <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small">
