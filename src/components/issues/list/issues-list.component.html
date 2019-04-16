@@ -6,6 +6,7 @@
       &larr;
       <span class="opened">{{user.metrics?.payrollOpened | currency:'RUB'}}</span>
       <sup>{{user.metrics?.issuesOpenedCount}}</sup></p>
+    <p>+{{user.metrics?.bonus}} | -{{user.metrics?.penalty}}</p>
   </div>
 
   <form [formGroup]="filterForm">
