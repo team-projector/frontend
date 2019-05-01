@@ -17,7 +17,6 @@ export class TimeExpensesMockService implements ITimeExpensesService {
   }
 
   list(user: number, filter: TimeExpensesFilter): Observable<PagingTimeExpenses> {
-    console.log(encodeModel(filter).toString());
     return this.http.get('time-expenses/list.json')
       .pipe(map(obj => deserialize(obj, PagingTimeExpenses)));
   }

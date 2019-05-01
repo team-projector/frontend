@@ -23,7 +23,6 @@ export class IssueProblemsComponent implements OnInit {
 
   @Input()
   set user(user: number) {
-    console.log(user);
     this.user$.next(user);
   }
 

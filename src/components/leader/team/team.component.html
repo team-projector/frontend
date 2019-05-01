@@ -1,15 +1,16 @@
-<ul class="teams">
-  <li *ngFor="let t of teams">
-    <h2>{{t.title}}</h2>
-    <ul>
-      <li *ngFor="let m of (t.id | teamMembers | async)">
-        <a [routerLink]="[m.user.id, 'issues']" routerLinkActive="active">
-          <img height="50" width="50" [src]="m.user.avatar">
-          <h3>{{m.user.name}}</h3>
-        </a>
-      </li>
-    </ul>
-  </li>
-</ul>
-
+<jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap">
+  <jnt-block *ngFor="let t of teams">
+    <p>{{t.title}}</p>
+    <jnt-stack [type]="ui.stack.type.horizontal"
+               [gutter]="ui.stack.gutter.small"
+               [wrap]="ui.flex.wrap.wrap">
+      <a *ngFor="let m of (t.id | teamMembers | async)"
+         [routerLink]="['users', m.user.id, 'dashboard', 'issues']" routerLinkActive="active">
+        <jnt-avatar [image]="m.user.avatar" [size]="ui.sizes.small"></jnt-avatar>
+        <p>{{m.user.name}}</p>
+      </a>
+    </jnt-stack>
+  </jnt-block>
+</jnt-stack>
+<hr>
 <router-outlet></router-outlet>

@@ -1,0 +1,66 @@
+<jnt-container [fluid]="true">
+  <jnt-stack [gutter]="ui.stack.gutter.large">
+    <div class="user-metrics">
+      <label>Payroll</label>
+      <p>
+        <span class="closed">{{user.metrics?.payrollClosed | currency:'RUB'}}</span>
+        &larr;
+        <span class="opened">{{user.metrics?.payrollOpened | currency:'RUB'}}</span>
+        <sup>{{user.metrics?.issuesOpenedCount}}</sup></p>
+      <p>+{{user.metrics?.bonus}} | -{{user.metrics?.penalty}}</p>
+    </div>
+
+    <form [formGroup]="filterForm">
+      <jnt-stack>
+        <jnt-block>
+          <jnt-calendar formControlName="dueDate" (updated)="period = $event">
+            <jnt-week-metric i18n-title="@@est" title="Est"></jnt-week-metric>
+            <jnt-week-metric i18n-title="@@spent" title="Spent"></jnt-week-metric>
+            <jnt-week-metric i18n-title="@@eff" title="Eff"></jnt-week-metric>
+            <jnt-week-metric i18n-title="@@payroll" title="Payroll"></jnt-week-metric>
+            <jnt-week-metric i18n-title="@@paid" title="Paid"></jnt-week-metric>
+            <ng-template #dayTemplate let-date="date">
+              <div class="day">
+                {{date | getDate}}
+                <ul class="metrics">
+                  <ng-container *ngIf="format(date, formatDate) as key">
+                    <li *ngIf="metrics.days.get(key)?.timeSpent">
+                      {{metrics.days.get(key)?.timeSpent | duration}}
+                    </li>
+                    <li *ngIf="metrics.days.get(key)?.timeRemains" class="remains">
+                      {{metrics.days.get(key)?.timeRemains | duration}}
+                    </li>
+                    <li *ngIf="metrics.days.get(key)?.loading" class="loading">
+                      {{metrics.days.get(key)?.loading | duration}}
+                    </li>
+                  </ng-container>
+                </ul>
+              </div>
+              <div class="issues" *ngIf="metrics.days.get(key)?.issues_count"></div>
+            </ng-template>
+            <ng-template #metricTemplate let-metric="metric" let-date="date">
+              <ng-container *ngIf="format(date, formatDate) as key">
+                <ng-container [ngSwitch]="metric">
+                  <ng-container *ngSwitchCase="0">{{metrics.weeks.get(key)?.timeEstimate | duration}}</ng-container>
+                  <ng-container *ngSwitchCase="1">{{metrics.weeks.get(key)?.timeSpent | duration}}</ng-container>
+                  <ng-container *ngSwitchCase="2">{{metrics.weeks.get(key)?.efficiency | number:'1.2-2'}}x
+                  </ng-container>
+                  <ng-container *ngSwitchCase="3">{{metrics.weeks.get(key)?.payroll | currency:'RUB'}}</ng-container>
+                  <ng-container *ngSwitchCase="4">{{metrics.weeks.get(key)?.paid | currency:'RUB'}}</ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-template>
+          </jnt-calendar>
+        </jnt-block>
+      </jnt-stack>
+    </form>
+
+    <jnt-menu>
+      <jnt-menu-item link="issues" title="Issues"></jnt-menu-item>
+      <jnt-menu-item link="problems" title="Problems"></jnt-menu-item>
+      <jnt-menu-item link="time-expenses" title="Time Expenses"></jnt-menu-item>
+    </jnt-menu>
+
+    <router-outlet></router-outlet>
+  </jnt-stack>
+</jnt-container>

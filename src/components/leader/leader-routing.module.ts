@@ -1,7 +1,5 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {IssuesListComponent} from '../issues/list/issues-list.component';
-import {UserWithMetricsResolver} from './resolvers';
 import {TeamComponent} from './team/team.component';
 
 const routes: Routes = [
@@ -10,9 +8,8 @@ const routes: Routes = [
     component: TeamComponent,
     children: [
       {
-        path: ':user/issues',
-        component: IssuesListComponent,
-        resolve: {user: UserWithMetricsResolver}
+        path: 'users/:user/dashboard',
+        loadChildren: '../developer/dashboard/developer-dashboard.module#DeveloperDashboardModule'
       }
     ]
   }

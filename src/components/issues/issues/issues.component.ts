@@ -3,7 +3,7 @@ import {IssuesFilter, IssueState} from 'src/models/issue';
 import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
 import {IIssuesService, issues_service} from 'src/services/issues/interface';
 import {BehaviorSubject, combineLatest} from 'rxjs';
-import {filter as filtering} from 'rxjs/operators';
+import {distinctUntilChanged, filter as filtering} from 'rxjs/operators';
 import {TableComponent, UI} from 'junte-ui';
 
 @Component({
@@ -40,7 +40,7 @@ export class IssuesComponent implements OnInit {
 
   ngOnInit() {
     combineLatest(this.user$, this.dueDate$)
-      .pipe(filtering(u => !!u))
+      .pipe(filtering(([u, dueDate]) => !!u && !!dueDate), distinctUntilChanged())
       .subscribe(([user, dueDate]) => {
         this.filter.user = user;
         this.filter.dueDate = dueDate;

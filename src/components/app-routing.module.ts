@@ -17,7 +17,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes,
+    {
+      paramsInheritanceStrategy: 'always',
+      relativeLinkResolution: 'corrected'
+    })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {

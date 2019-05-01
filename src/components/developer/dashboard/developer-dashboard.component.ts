@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {format} from 'date-fns';
+import {format, parse} from 'date-fns';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {IMetricsService, metrics_service} from 'src/services/metrics/interface';
-import {ActivatedRoute} from '@angular/router';
-import {filter} from 'rxjs/operators';
+import {ActivatedRoute, Router} from '@angular/router';
+import {distinctUntilChanged, filter, tap} from 'rxjs/operators';
 import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metrics';
 import {User} from 'src/models/user';
 import {BehaviorSubject, combineLatest} from 'rxjs';
@@ -14,10 +14,10 @@ const L = 'DD/MM/YYYY';
 
 @Component({
   selector: 'app-issues-list',
-  templateUrl: './issues-list.component.html',
-  styleUrls: ['./issues-list.component.scss']
+  templateUrl: './developer-dashboard.component.html',
+  styleUrls: ['./developer-dashboard.component.scss']
 })
-export class IssuesListComponent implements OnInit {
+export class DeveloperDashboardComponent implements OnInit {
   ui = UI;
 
   user$ = new BehaviorSubject<User>(null);
@@ -46,12 +46,20 @@ export class IssuesListComponent implements OnInit {
 
   constructor(@Inject(metrics_service) private metricsService: IMetricsService,
               private formBuilder: FormBuilder,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.route.data.pipe(filter(({user}) => !!user))
-      .subscribe(({user}) => this.user = user);
+    this.route.data.subscribe(({user, dueDate}) => {
+      this.user = user;
+      this.filterForm.patchValue({dueDate: dueDate}, {emitEvent: false});
+    });
+
+    this.dueDate.valueChanges.pipe(distinctUntilChanged())
+      .subscribe(date => this.router.navigate([
+          {due_date: format(date, 'MM-DD-YYYY')}, 'issues'],
+        {relativeTo: this.route}));
 
     combineLatest(this.user$, this.period$)
       .pipe(filter(([u, p]) => !!u && !!p))

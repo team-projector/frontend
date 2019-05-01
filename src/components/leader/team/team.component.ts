@@ -3,6 +3,7 @@ import {ITeamsService, teams_service} from '../../../services/teams/interface';
 import {TeamCard, TeamMemberRole} from '../../../models/team';
 import {MeManager} from '../../../managers/me.manager';
 import {filter} from 'rxjs/operators';
+import {UI} from 'junte-ui';
 
 @Component({
   selector: 'app-leader-team',
@@ -11,6 +12,7 @@ import {filter} from 'rxjs/operators';
 })
 export class TeamComponent implements OnInit {
 
+  ui = UI;
   teams: TeamCard[] = [];
 
   constructor(@Inject(teams_service) private teamsService: ITeamsService,
@@ -18,7 +20,6 @@ export class TeamComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.me.user$.pipe(filter(u => !!u))
       .subscribe(user => {
         this.teamsService.list(user.id, [TeamMemberRole.leader])

@@ -13,8 +13,6 @@ export function encodeModel(source: any) {
     obj[key] = serialized[key].toString();
   }
 
-  console.log(obj);
-
   return new HttpParams({fromObject: obj});
 }
 
@@ -31,8 +29,6 @@ export function encodeObject(source: any) {
       obj[key] = val.toString();
     }
   }
-
-  console.log(obj);
 
   return new HttpParams({fromObject: obj});
 }

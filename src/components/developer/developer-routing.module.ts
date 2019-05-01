@@ -1,19 +1,15 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {IssuesListComponent} from '../issues/list/issues-list.component';
-import {MeUserWithMetricsResolver} from '../../resolvers/me';
 
 const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'issues'
+    redirectTo: 'dashboard'
   },
   {
-    path: 'issues',
-    component: IssuesListComponent,
-    resolve: {user: MeUserWithMetricsResolver}
-
+    path: 'dashboard',
+    loadChildren: './dashboard/developer-dashboard.module#DeveloperDashboardModule'
   }
 ];
 

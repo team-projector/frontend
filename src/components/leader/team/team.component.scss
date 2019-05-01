@@ -5,55 +5,24 @@
   margin: 10px;
 }
 
-.teams {
-  list-style: none;
-  margin: 0 20px;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  > li {
-    &:not(:first-child) {
-      margin-left: 10px;
-    }
-    padding: 10px;
-    border: 1px solid gray;
-    border-radius: 10px;
-    h2 {
-      color: $primary-color-dark;
-      padding: 0;
-      margin: 0;
-    }
-    ul {
-      list-style: none;
-      margin: 20px;
-      padding: 0;
-      display: flex;
-      flex-wrap: wrap;
-      li {
-        width: 50px;
-        &:not(:first-child) {
-          margin-left: 20px;
-        }
-        a {
-          text-decoration: none;
-          img {
-            border-radius: 50%;
-          }
-          h3 {
-            color: $primary-color-dark;
-            font-size: .75rem;
-            text-align: center;
-            padding: 0;
-            margin: 0;
-          }
-          &.active {
-            img {
-              border: 2px solid red;
-              box-sizing: border-box;
-            }
-          }
-        }
-      }
+a {
+  width: 100px;
+  text-decoration: none;
+  img {
+    border-radius: 50%;
+  }
+  h3 {
+    color: $primary-color-dark;
+    font-size: .75rem;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+  }
+  &.active {
+    img {
+      border: 2px solid red;
+      box-sizing: border-box;
     }
   }
 }
+

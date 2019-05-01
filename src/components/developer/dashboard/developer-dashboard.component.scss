@@ -64,16 +64,6 @@
   }
 }
 
-form {
-  margin-top: 30px;
-}
-
-.issues {
-  position: absolute;
-  top: 2px;
-  right: 2px;
-  background-color: blue;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
+router-outlet {
+  margin: 0 !important;
 }
