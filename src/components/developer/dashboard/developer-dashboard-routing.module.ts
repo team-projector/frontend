@@ -14,6 +14,11 @@ const routes: Routes = [
     resolve: {user: UserWithMetricsResolver, dueDate: DueDateResolver},
     children: [
       {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'issues'
+      },
+      {
         path: 'issues',
         component: IssuesListComponent,
         resolve: {user: UserWithMetricsResolver, dueDate: DueDateResolver}
