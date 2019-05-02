@@ -7,6 +7,7 @@ import {DateSerializer} from '../serializers/date';
 import {DATE_FORMAT} from '../consts';
 import {BooleanSerializer} from '../serializers/http';
 import {Order, SearchFilter} from 'junte-ui';
+import {UserCard} from './user';
 
 export enum IssueState {
   opened = 'opened',
@@ -89,6 +90,11 @@ export class IssueCard {
   @Field()
   @MockFieldNested('{{> issue_metrics}}')
   metrics: IssueMetrics;
+
+  @Field()
+  @Type(new ArraySerializer(new ModelSerializer(UserCard)))
+  @MockFieldNested('[{{#repeat 1 3}} {{> user}} {{/repeat}}]')
+  participants: UserCard[];
 }
 
 @Model()

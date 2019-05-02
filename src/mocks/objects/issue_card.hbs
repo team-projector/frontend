@@ -9,5 +9,6 @@
 	"total_time_spent": {{int 10 100}}, 
 	"gl_url": "{{url}}", 
 	"state": "opened", 
-	"metrics": {{> issue_metrics}}
+	"metrics": {{> issue_metrics}}, 
+	"participants": [{{#repeat 1 3}} {{> user}} {{/repeat}}]
 }
