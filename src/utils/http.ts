@@ -3,7 +3,7 @@ import 'reflect-metadata';
 import {serialize} from 'serialize-ts';
 import {isBoolean} from 'util';
 
-export function encodeModel(source: any) {
+export function encodeModel(source: any): any {
   const obj: { [key: string]: string } = {};
   const serialized = serialize(source);
   for (const key in serialized) {

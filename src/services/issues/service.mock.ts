@@ -21,7 +21,7 @@ export class IssuesMockService implements IIssuesService {
       .pipe(map(obj => deserialize(obj, PagingIssues)));
   }
 
-  problems(filter: IssueProblemsFilter): Observable<PagingIssueProblems> {
+  problemsForUser(user: number, filter: IssueProblemsFilter): Observable<PagingIssueProblems> {
     return this.http.get('issues/problems.json')
       .pipe(map(obj => deserialize(obj, PagingIssueProblems)));
   }

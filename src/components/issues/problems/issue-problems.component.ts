@@ -37,8 +37,7 @@ export class IssueProblemsComponent implements OnInit {
   ngOnInit() {
     this.user$.pipe(filtering(u => !!u))
       .subscribe((user) => {
-        this.filter.user = user;
-        this.table.fetcher = (filter: IssuesFilter) => this.issuesService.problems(Object.assign(this.filter, filter));
+        this.table.fetcher = (filter: IssuesFilter) => this.issuesService.problemsForUser(user, Object.assign(this.filter, filter));
         this.table.load();
       });
   }

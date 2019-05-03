@@ -11,7 +11,6 @@ export class TeamMembersPipe implements PipeTransform {
 
   }
 
-
   transform(team: number): Observable<TeamMemberCard[]> {
     return Observable.create((observer: Subscriber<TeamMemberCard[]>) => {
       this.teamsService.teamMembers(team)

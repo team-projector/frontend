@@ -7,7 +7,7 @@ export interface IIssuesService {
 
   list(filter: IssuesFilter): Observable<PagingIssues>;
 
-  problems(filter: IssueProblemsFilter): Observable<PagingIssueProblems>;
+  problemsForUser(user: number, filter: IssueProblemsFilter): Observable<PagingIssueProblems>;
 
 }
 

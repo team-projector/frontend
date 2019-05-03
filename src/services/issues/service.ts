@@ -7,6 +7,7 @@ import {map} from 'rxjs/operators';
 import {IssuesFilter, PagingIssues} from '../../models/issue';
 import {encodeModel} from '../../utils/http';
 import {IssueProblemsFilter, PagingIssueProblems} from '../../models/problem';
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,11 @@ export class IssuesService implements IIssuesService {
       .pipe(map(obj => deserialize(obj, PagingIssues)));
   }
 
-  problems(filter: IssueProblemsFilter): Observable<PagingIssueProblems> {
-    return this.http.get('issues/problems', encodeModel(filter))
+  problemsForUser(user: number, filter: IssueProblemsFilter): Observable<PagingIssueProblems> {
+    // TODO: refactor when API will be changed
+    let params = encodeModel(filter) as HttpParams;
+    params = params.append('user', user.toString());
+    return this.http.get('issues/problems', params)
       .pipe(map(obj => deserialize(obj, PagingIssueProblems)));
   }
 
