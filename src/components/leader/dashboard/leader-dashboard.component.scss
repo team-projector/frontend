@@ -1,0 +1,9 @@
+@import '../../../style/variables';
+
+:host {
+  display: block;
+}
+
+router-outlet {
+  margin: 0 !important;
+}

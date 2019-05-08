@@ -12,6 +12,21 @@ export enum TeamMemberRole {
 
 @Model()
 @MockClass()
+export class TeamMemberCard {
+
+  @Field()
+  @MockFieldNested('{{> user_card}}')
+  user: UserCard;
+
+  @Field()
+  @Type(new ArraySerializer(new PrimitiveSerializer()))
+  @MockField([TeamMemberRole.developer])
+  roles: TeamMemberRole[];
+
+}
+
+@Model()
+@MockClass()
 export class TeamCard {
 
   @Field()
@@ -21,6 +36,11 @@ export class TeamCard {
   @Field()
   @MockField('{{team}}')
   title: string;
+
+  @Field()
+  @Type(new ArraySerializer(new ModelSerializer(TeamMemberCard)))
+  @MockFieldNested('[{{#repeat 5 10}} {{> team_member_card}} {{/repeat}}]')
+  members: TeamMemberCard[];
 
 }
 
@@ -35,22 +55,7 @@ export class PagingTeams implements Paging<TeamCard> {
   @Field()
   @Type(new ArraySerializer(new ModelSerializer(TeamCard)))
   @MockFieldNested('[{{#repeat 10 20}} {{> team_card}} {{/repeat}}]')
-  results: IssueCard[];
-
-}
-
-@Model()
-@MockClass()
-export class TeamMemberCard {
-
-  @Field()
-  @MockFieldNested('{{> user_card}}')
-  user: UserCard;
-
-  @Field()
-  @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField([TeamMemberRole.developer])
-  roles: TeamMemberRole[];
+  results: TeamCard[];
 
 }
 

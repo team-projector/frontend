@@ -1,10 +1,10 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {DashboardRoutingModule} from './dashboard-routing.module';
-import {DashboardComponent} from './dashboard.component';
-import {AuthorizationGuard} from '../../guards/authorization.guard';
-import {JunteUiModule} from 'junte-ui';
-import {ArrayPipesModule} from '../../pipes/array-pipes.module';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { DashboardRoutingModule } from './dashboard-routing.module';
+import { DashboardComponent } from './dashboard.component';
+import { AuthorizationGuard } from 'src/guards/authorization.guard';
+import { JunteUiModule } from 'junte-ui';
+import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +12,6 @@ import {ArrayPipesModule} from '../../pipes/array-pipes.module';
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule,
     JunteUiModule,
     DashboardRoutingModule,
     ArrayPipesModule

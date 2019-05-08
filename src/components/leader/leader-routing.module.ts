@@ -1,17 +1,15 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {TeamComponent} from './team/team.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
     path: '',
-    component: TeamComponent,
-    children: [
-      {
-        path: 'users/:user/dashboard',
-        loadChildren: '../developer/dashboard/developer-dashboard.module#DeveloperDashboardModule'
-      }
-    ]
+    pathMatch: 'full',
+    redirectTo: 'dashboard'
+  },
+  {
+    path: 'dashboard',
+    loadChildren: './dashboard/leader-dashboard.module#LeaderDashboardModule'
   }
 ];
 
