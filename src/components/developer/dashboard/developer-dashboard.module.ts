@@ -8,11 +8,15 @@ import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { DueDateResolver } from 'src/resolvers/due-date';
 import { UserWithMetricsResolver } from 'src/resolvers/user';
 import { UsersServiceProvider } from 'src/services/users/provider';
-import { IssuesListsModule } from 'src/components/developer/dashboard/issues-lists.module';
+import { IssuesListsModule } from './issues-lists.module';
+import { SalariesListComponent } from './salaries/salaries-list.component';
+import { SalariesServiceProvider } from 'src/services/salaries/provider';
+import { SalariesModule } from 'src/components/salaries/salaries.module';
 
 @NgModule({
   declarations: [
-    DeveloperDashboardComponent
+    DeveloperDashboardComponent,
+    SalariesListComponent
   ],
   imports: [
     CommonModule,
@@ -20,12 +24,14 @@ import { IssuesListsModule } from 'src/components/developer/dashboard/issues-lis
     JunteUiModule,
     DatePipesModule,
     DeveloperDashboardRoutingModule,
-    IssuesListsModule
+    IssuesListsModule,
+    SalariesModule
   ],
   providers: [
     UserWithMetricsResolver,
     DueDateResolver,
-    UsersServiceProvider
+    UsersServiceProvider,
+    SalariesServiceProvider
   ]
 })
 export class DeveloperDashboardModule {
