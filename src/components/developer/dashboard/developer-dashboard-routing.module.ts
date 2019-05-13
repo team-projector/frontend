@@ -1,11 +1,12 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {DeveloperDashboardComponent} from './developer-dashboard.component';
-import {IssuesListComponent} from './issues/issues-list.component';
-import {DueDateResolver} from '../../../resolvers/due-date';
-import {UserWithMetricsResolver} from '../../../resolvers/user';
-import {ProblemsListComponent} from './problems/problems-list.component';
-import {TimeExpensesListComponent} from './time-expenses/time-expenses-list.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { DeveloperDashboardComponent } from './developer-dashboard.component';
+import { IssuesListComponent } from './issues/issues-list.component';
+import { DueDateResolver } from '../../../resolvers/due-date';
+import { UserWithMetricsResolver } from '../../../resolvers/user';
+import { ProblemsListComponent } from './problems/problems-list.component';
+import { TimeExpensesListComponent } from './time-expenses/time-expenses-list.component';
+import { SalariesListComponent } from './salaries/salaries-list.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,11 @@ const routes: Routes = [
         resolve: {user: UserWithMetricsResolver, dueDate: DueDateResolver}
       }
     ]
+  },
+  {
+    path: 'salaries',
+    component: SalariesListComponent,
+    resolve: {user: UserWithMetricsResolver}
   }
 ];
 
