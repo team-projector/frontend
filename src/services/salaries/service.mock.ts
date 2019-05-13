@@ -14,7 +14,7 @@ export class SalariesMockService implements ISalariesService {
   constructor(private http: HttpMockService) {
   }
 
-  userSalaries(user: number, filter: SalariesFilter): Observable<PagingSalaries> {
+  forUser(user: number, filter: SalariesFilter): Observable<PagingSalaries> {
     return this.http.get('salaries/list.json')
       .pipe(map(obj => deserialize(obj, PagingSalaries)));
   }

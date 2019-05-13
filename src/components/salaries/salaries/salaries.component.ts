@@ -35,7 +35,7 @@ export class SalariesComponent implements OnInit {
     this.user$.pipe(filtering(u => !!u), distinctUntilChanged())
       .subscribe(user => {
         this.table.fetcher = (filter: SalariesFilter) =>
-          this.salariesService.userSalaries(user, Object.assign(this.filter, filter));
+          this.salariesService.forUser(user, Object.assign(this.filter, filter));
         this.table.load();
       });
   }

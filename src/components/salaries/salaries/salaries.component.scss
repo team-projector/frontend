@@ -3,7 +3,3 @@
 :host {
   display: block;
 }
-
-.closed ::ng-deep a[child-of=#{$jnt-link-host}] {
-  text-decoration: line-through;
-}

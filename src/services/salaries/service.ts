@@ -16,7 +16,7 @@ export class SalariesService implements ISalariesService {
   constructor(private http: HttpService) {
   }
 
-  userSalaries(user: number, filter: SalariesFilter): Observable<PagingSalaries> {
+  forUser(user: number, filter: SalariesFilter): Observable<PagingSalaries> {
     return this.http.get(`users/${user}/salaries`, encodeModel(filter) as HttpParams)
       .pipe(map(obj => deserialize(obj, PagingSalaries)));
   }

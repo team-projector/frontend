@@ -4,7 +4,7 @@ import { PagingSalaries, SalariesFilter } from '../../models/salaries';
 
 export interface ISalariesService {
 
-  userSalaries(user: number, filter: SalariesFilter): Observable<PagingSalaries>;
+  forUser(user: number, filter: SalariesFilter): Observable<PagingSalaries>;
 
 }
 
