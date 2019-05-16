@@ -3,15 +3,13 @@
     <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
       <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
                    let-participants="participants">
-        <jnt-stack [type]="ui.stack.type.horizontal">
+        <jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap" [gutter]="ui.stack.gutter.small">
           <jnt-avatars-list>
             <jnt-avatar *ngFor="let p of participants"
                         [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>
           </jnt-avatars-list>
           <jnt-link [source]=url target="_blank" [class.closed]="state == issuesState.closed">{{title}}</jnt-link>
-          <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small">
-            <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
-          </jnt-stack>
+          <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
         </jnt-stack>
       </ng-template>
     </jnt-table-column>

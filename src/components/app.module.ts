@@ -9,6 +9,7 @@ import {MeServiceProvider} from '../services/me/provider';
 import {MeManager} from '../managers/me.manager';
 import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 registerLocaleData(localeDe);
 
@@ -18,6 +19,7 @@ registerLocaleData(localeDe);
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule
 
