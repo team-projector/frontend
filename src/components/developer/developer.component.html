@@ -1,7 +1,10 @@
 <jnt-app-main>
   <jnt-app-aside #aside>
     <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
-      <jnt-menu-item link="/developer/dashboard/salaries" title="Salaries" [icon]="ui.icons.salary"></jnt-menu-item>
+      <jnt-menu-item link="." title="Dashboard"
+                     [icon]="ui.icons.user"></jnt-menu-item>
+      <jnt-menu-item link="dashboard/salaries" title="Salaries"
+                     [icon]="ui.icons.salary"></jnt-menu-item>
     </jnt-menu>
   </jnt-app-aside>
   <jnt-app-content [aside]="aside">
@@ -14,4 +17,3 @@
     </jnt-app-footer>
   </jnt-app-content>
 </jnt-app-main>
-
