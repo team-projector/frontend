@@ -1,0 +1,19 @@
+<jnt-app-main>
+  <jnt-app-content>
+    <jnt-app-body>
+      <jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap">
+        <jnt-link *ngFor="let team of teams" [source]="[team.id]">
+          <jnt-block [padding]="ui.padding.large">
+            <jnt-avatars-group [size]="ui.sizes.normal">
+              <jnt-avatar *ngFor="let member of team.members"
+                          [image]="member.avatar">
+              </jnt-avatar>
+            </jnt-avatars-group>
+          </jnt-block>
+        </jnt-link>
+      </jnt-stack>
+      <hr>
+      <router-outlet></router-outlet>
+    </jnt-app-body>
+  </jnt-app-content>
+</jnt-app-main>
