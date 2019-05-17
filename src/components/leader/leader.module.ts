@@ -1,16 +1,17 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {ReactiveFormsModule} from '@angular/forms';
-import {LeaderRoutingModule} from './leader-routing.module';
-import {TeamComponent} from './team/team.component';
-import {TeamsServiceProvider} from '../../services/teams/provider';
-import {TeamMembersPipe} from './pipes';
-import {JunteUiModule} from 'junte-ui';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
+import { LeaderRoutingModule } from './leader-routing.module';
+import { TeamsComponent } from './teams/teams.component';
+import { TeamsServiceProvider } from '../../services/teams/provider';
+import { JunteUiModule } from 'junte-ui';
+import { TeamComponent } from './team/team.component';
+import { TeamMembersResolver } from '../../resolvers/team-members';
 
 @NgModule({
   declarations: [
-    TeamComponent,
-    TeamMembersPipe
+    TeamsComponent,
+    TeamComponent
   ],
   imports: [
     CommonModule,
@@ -19,7 +20,8 @@ import {JunteUiModule} from 'junte-ui';
     JunteUiModule
   ],
   providers: [
-    TeamsServiceProvider
+    TeamsServiceProvider,
+    TeamMembersResolver
   ]
 })
 export class LeaderModule {

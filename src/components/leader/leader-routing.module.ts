@@ -1,15 +1,22 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {TeamComponent} from './team/team.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { TeamsComponent } from './teams/teams.component';
+import { TeamComponent } from './team/team.component';
+import { TeamMembersResolver } from '../../resolvers/team-members';
 
 const routes: Routes = [
   {
     path: '',
-    component: TeamComponent,
+    redirectTo: 'teams'
+  },
+  {
+    path: 'teams',
+    component: TeamsComponent,
     children: [
       {
-        path: 'users/:user/dashboard',
-        loadChildren: '../developer/dashboard/developer-dashboard.module#DeveloperDashboardModule'
+        path: ':team',
+        component: TeamComponent,
+        resolve: {members: TeamMembersResolver}
       }
     ]
   }
