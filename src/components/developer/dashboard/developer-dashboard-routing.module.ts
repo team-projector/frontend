@@ -6,7 +6,6 @@ import { DueDateResolver } from '../../../resolvers/due-date';
 import { UserWithMetricsResolver } from '../../../resolvers/user';
 import { ProblemsListComponent } from './problems/problems-list.component';
 import { TimeExpensesListComponent } from './time-expenses/time-expenses-list.component';
-import { SalariesListComponent } from './salaries/salaries-list.component';
 
 const routes: Routes = [
   {
@@ -35,11 +34,6 @@ const routes: Routes = [
         resolve: {user: UserWithMetricsResolver, dueDate: DueDateResolver}
       }
     ]
-  },
-  {
-    path: 'salaries',
-    component: SalariesListComponent,
-    resolve: {user: UserWithMetricsResolver}
   }
 ];
 
