@@ -9,8 +9,6 @@ import { DueDateResolver } from 'src/resolvers/due-date';
 import { UserWithMetricsResolver } from 'src/resolvers/user';
 import { UsersServiceProvider } from 'src/services/users/provider';
 import { IssuesModule } from 'src/components/issues/issues.module';
-import { SalariesListComponent } from 'src/components/developer/dashboard/salaries/salaries-list.component';
-import { SalariesModule } from 'src/components/salaries/salaries.module';
 import { SalariesServiceProvider } from 'src/services/salaries/provider';
 import { TimeExpensesListComponent } from 'src/components/developer/dashboard/time-expenses/time-expenses-list.component';
 import { ProblemsListComponent } from 'src/components/developer/dashboard/problems/problems-list.component';
@@ -21,8 +19,7 @@ import { IssuesListComponent } from 'src/components/developer/dashboard/issues/i
     DeveloperDashboardComponent,
     IssuesListComponent,
     ProblemsListComponent,
-    TimeExpensesListComponent,
-    SalariesListComponent
+    TimeExpensesListComponent
   ],
   imports: [
     CommonModule,
@@ -30,8 +27,7 @@ import { IssuesListComponent } from 'src/components/developer/dashboard/issues/i
     JunteUiModule,
     DatePipesModule,
     DeveloperDashboardRoutingModule,
-    IssuesModule,
-    SalariesModule
+    IssuesModule
   ],
   providers: [
     UserWithMetricsResolver,
