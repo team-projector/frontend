@@ -22,33 +22,30 @@
             <ng-template #dayTemplate let-date="date">
               <div class="day">
                 {{date | getDate}}
-                <ul class="metrics">
-                  <ng-container *ngIf="format(date, formatDate) as key">
-                    <li *ngIf="metrics.days.get(key)?.timeSpent">
-                      {{metrics.days.get(key)?.timeSpent | duration}}
+                <ng-container *ngIf="metrics.days.get(format(date, formatDate)) as dayMetric">
+                  <ul class="metrics">
+                    <li *ngIf="dayMetric.timeSpent">
+                      {{dayMetric.timeSpent | duration}}
                     </li>
-                    <li *ngIf="metrics.days.get(key)?.timeRemains" class="remains">
-                      {{metrics.days.get(key)?.timeRemains | duration}}
+                    <li *ngIf="dayMetric.timeRemains" class="remains">
+                      {{dayMetric.timeRemains | duration}}
                     </li>
-                    <li *ngIf="metrics.days.get(key)?.loading" class="loading">
-                      {{metrics.days.get(key)?.loading | duration}}
+                    <li *ngIf="dayMetric.loading" class="loading">
+                      {{dayMetric.loading | duration}}
                     </li>
-                  </ng-container>
-                </ul>
+                  </ul>
+                  <div class="issues" *ngIf="!!dayMetric.issues_count"></div>
+                </ng-container>
               </div>
-              <div class="issues" *ngIf="metrics.days.get(key)?.issues_count"></div>
             </ng-template>
             <ng-template #metricTemplate let-metric="metric" let-date="date">
-              <ng-container *ngIf="format(date, formatDate) as key">
+              <ng-container *ngIf="metrics.weeks.get(format(date, formatDate)) as weekMetric">
                 <ng-container [ngSwitch]="metric">
-                  <ng-container *ngSwitchCase="0">{{metrics.weeks.get(key)?.timeEstimate | duration}}
-                  </ng-container>
-                  <ng-container *ngSwitchCase="1">{{metrics.weeks.get(key)?.timeSpent | duration}}</ng-container>
-                  <ng-container *ngSwitchCase="2">{{metrics.weeks.get(key)?.efficiency | number:'1.2-2'}}x
-                  </ng-container>
-                  <ng-container *ngSwitchCase="3">{{metrics.weeks.get(key)?.payroll | currency:'RUB'}}
-                  </ng-container>
-                  <ng-container *ngSwitchCase="4">{{metrics.weeks.get(key)?.paid | currency:'RUB'}}</ng-container>
+                  <ng-container *ngSwitchCase="0">{{weekMetric.timeEstimate | duration}}</ng-container>
+                  <ng-container *ngSwitchCase="1">{{weekMetric.timeSpent | duration}}</ng-container>
+                  <ng-container *ngSwitchCase="2">{{weekMetric.efficiency | number:'1.2-2'}}x</ng-container>
+                  <ng-container *ngSwitchCase="3">{{weekMetric.payroll | currency:'RUB'}}</ng-container>
+                  <ng-container *ngSwitchCase="4">{{weekMetric.paid | currency:'RUB'}}</ng-container>
                 </ng-container>
               </ng-container>
             </ng-template>

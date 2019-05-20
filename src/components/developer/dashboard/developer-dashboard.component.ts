@@ -1,16 +1,22 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {format, parse} from 'date-fns';
-import {FormBuilder, FormControl} from '@angular/forms';
-import {IMetricsService, metrics_service} from 'src/services/metrics/interface';
-import {ActivatedRoute, Router} from '@angular/router';
-import {distinctUntilChanged, filter, tap} from 'rxjs/operators';
-import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metrics';
-import {User} from 'src/models/user';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {Period} from 'junte-ui/lib/components/calendar/models';
-import {UI} from 'junte-ui';
+import { Component, Inject, OnInit } from '@angular/core';
+import { format } from 'date-fns';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { IMetricsService, metrics_service } from 'src/services/metrics/interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { MetricsGroup, UserProgressMetrics } from 'src/models/user-progress-metrics';
+import { User } from 'src/models/user';
+import { BehaviorSubject, combineLatest, zip } from 'rxjs';
+import { Period } from 'junte-ui/lib/components/calendar/models';
+import { UI } from 'junte-ui';
 
 const L = 'DD/MM/YYYY';
+
+class Metric {
+  constructor(public days: Map<string, UserProgressMetrics>,
+              public weeks: Map<string, UserProgressMetrics>) {
+  }
+}
 
 @Component({
   selector: 'app-issues-list',
@@ -38,11 +44,12 @@ export class DeveloperDashboardComponent implements OnInit {
     this.period$.next(period);
   }
 
-  metrics = {days: new Map<string, UserProgressMetrics>(), weeks: new Map<string, UserProgressMetrics>()};
+  metrics = new Metric(
+    new Map<string, UserProgressMetrics>(),
+    new Map<string, UserProgressMetrics>()
+  );
   dueDate = new FormControl(new Date());
-  filterForm = this.formBuilder.group({
-    dueDate: this.dueDate
-  });
+  filterForm = this.formBuilder.group({dueDate: this.dueDate});
 
   constructor(@Inject(metrics_service) private metricsService: IMetricsService,
               private formBuilder: FormBuilder,
@@ -57,21 +64,21 @@ export class DeveloperDashboardComponent implements OnInit {
     });
 
     this.dueDate.valueChanges.pipe(distinctUntilChanged())
-      .subscribe(date => this.router.navigate([
-          {due_date: format(date, 'MM-DD-YYYY')}, 'issues'],
-        {relativeTo: this.route}));
+      .subscribe(date => this.router.navigate(
+        [{due_date: format(date, 'MM-DD-YYYY')}, 'issues'],
+        {relativeTo: this.route})
+      );
 
     combineLatest(this.user$, this.period$)
-      .pipe(filter(([u, p]) => !!u && !!p))
-      .subscribe(([u, p]) => this.loadUserProgressMetrics(u, p));
+      .pipe(filter(([user, period]) => !!user && !!period))
+      .subscribe(([user, period]) => this.loadUserProgressMetrics(user, period));
   }
 
   private loadUserProgressMetrics(user: User, period: Period) {
-    this.metricsService.userProgress(user.id, period.start, period.end, MetricsGroup.day)
-      .subscribe(metrics => this.metrics.days = metrics);
+    const getMetric = (group: MetricsGroup) => this.metricsService.userProgress(user.id, period.start, period.end, group);
 
-    this.metricsService.userProgress(user.id, period.start, period.end, MetricsGroup.week)
-      .subscribe(metrics => this.metrics.weeks = metrics);
+    zip(getMetric(MetricsGroup.day), getMetric(MetricsGroup.week))
+      .subscribe(([days, weeks]) => this.metrics = new Metric(days, weeks));
   }
 
 }
