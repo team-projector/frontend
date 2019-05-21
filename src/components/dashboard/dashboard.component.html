@@ -14,13 +14,52 @@
         <jnt-menu-item link="/shareholder" title="Shareholder"></jnt-menu-item>
       </jnt-menu>
     </ng-template>
+
+    <ng-template #actions>
+      <jnt-actions>
+        <jnt-action *ngIf="!!status">
+          <ng-template #template>
+            <img src="/assets/images/gitlab-logo.svg" (mouseenter)="load()">
+            <div></div>
+          </ng-template>
+          <ng-template #content>
+            <jnt-stack [align]="ui.flex.align.stretch">
+              <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
+                <span>Last Sync Time</span>
+                <span>{{status.lastSync | format:'HH:mm:ss'}}</span>
+              </jnt-stack>
+              <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
+                <span>WEB</span>
+                <span>{{status.services.webHooks | diff | duration}}</span>
+              </jnt-stack>
+              <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
+                <span>API</span>
+                <span>{{status.services.api | diff | duration}}</span>
+              </jnt-stack>
+              <div>
+                <hr>
+              </div>
+              <jnt-stack [type]="ui.stack.type.horizontal"
+                         [justify]="ui.flex.justify.between"
+                         *ngFor="let issue of status.lastIssues">
+                <div>
+                  <div>{{issue.title}}</div>
+                  <div>{{issue.project?.presentation}}</div>
+                </div>
+                <span>{{issue.user.presentation}}</span>
+              </jnt-stack>
+            </jnt-stack>
+          </ng-template>
+        </jnt-action>
+      </jnt-actions>
+    </ng-template>
+
     <ng-template #userbar>
       <jnt-userbar>
         <ng-template #avatar>
           <jnt-avatar [size]="ui.sizes.small"
                       [image]="me.user?.avatar || '/assets/images/avatar.png'"></jnt-avatar>
         </ng-template>
-
         <ng-template #userMenu>
           <jnt-user-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
             <jnt-button *ngIf="config.authorization" (click)="logout()"
@@ -30,7 +69,7 @@
       </jnt-userbar>
     </ng-template>
   </jnt-app-header>
-        <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </jnt-app-layout>
 
 
