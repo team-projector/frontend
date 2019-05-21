@@ -20,23 +20,27 @@
             <jnt-week-metric i18n-title="@@payroll" title="Payroll"></jnt-week-metric>
             <jnt-week-metric i18n-title="@@paid" title="Paid"></jnt-week-metric>
             <ng-template #dayTemplate let-date="date">
-              <div class="day">
-                {{date | getDate}}
-                <ng-container *ngIf="metrics.days.get(format(date, formatDate)) as dayMetric">
-                  <ul class="metrics">
-                    <li *ngIf="dayMetric.timeSpent">
-                      {{dayMetric.timeSpent | duration}}
-                    </li>
-                    <li *ngIf="dayMetric.timeRemains" class="remains">
-                      {{dayMetric.timeRemains | duration}}
-                    </li>
-                    <li *ngIf="dayMetric.loading" class="loading">
-                      {{dayMetric.loading | duration}}
-                    </li>
-                  </ul>
+              <ng-container *ngIf="metrics.days.get(format(date, formatDate)) as dayMetric">
+                <div class="day">
+                  <jnt-circle-bar class="bar">
+                    <ng-template #content>{{date | getDate}}</ng-template>
+                    <jnt-bar-indicator-group>
+                      <jnt-bar-indicator [color]="ui.colors.green"
+                                         [value]="dayMetric.timeEstimate | percentage:(dayMetric.plannedWorkHours * 3600)">
+                      </jnt-bar-indicator>
+                    </jnt-bar-indicator-group>
+                    <jnt-bar-indicator-group>
+                      <jnt-bar-indicator [color]="ui.colors.red"
+                                         [value]="dayMetric.timeSpent | percentage:(dayMetric.plannedWorkHours * 3600)">
+                      </jnt-bar-indicator>
+                      <jnt-bar-indicator [color]="ui.colors.yellow"
+                                         [value]="dayMetric.timeRemains | percentage:(dayMetric.plannedWorkHours * 3600)">
+                      </jnt-bar-indicator>
+                    </jnt-bar-indicator-group>
+                  </jnt-circle-bar>
                   <div class="issues" *ngIf="!!dayMetric.issues_count"></div>
-                </ng-container>
-              </div>
+                </div>
+              </ng-container>
             </ng-template>
             <ng-template #metricTemplate let-metric="metric" let-date="date">
               <ng-container *ngIf="metrics.weeks.get(format(date, formatDate)) as weekMetric">

@@ -13,6 +13,7 @@ import { SalariesServiceProvider } from 'src/services/salaries/provider';
 import { TimeExpensesListComponent } from 'src/components/developer/dashboard/time-expenses/time-expenses-list.component';
 import { ProblemsListComponent } from 'src/components/developer/dashboard/problems/problems-list.component';
 import { IssuesListComponent } from 'src/components/developer/dashboard/issues/issues-list.component';
+import { NumberModule } from '../../../pipes/number.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { IssuesListComponent } from 'src/components/developer/dashboard/issues/i
     JunteUiModule,
     DatePipesModule,
     DeveloperDashboardRoutingModule,
-    IssuesModule
+    IssuesModule,
+    NumberModule
   ],
   providers: [
     UserWithMetricsResolver,
