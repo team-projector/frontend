@@ -26,8 +26,18 @@ export class UserMetrics {
 
   @Field()
   @Name('payroll_opened')
-  @MockFieldNested('{{int 10 100}}')
+  @MockFieldNested('{{int 1000 20000}}')
   payrollOpened: number;
+
+  @Field()
+  @Name('issues_closed_spent')
+  @MockFieldNested('{{int 3600 18000}}')
+  issuesClosedSpent: number;
+
+  @Field()
+  @Name('issues_opened_spent')
+  @MockFieldNested('{{int 3600 18000}}')
+  issuesOpenedSpent: number;
 
 }
 

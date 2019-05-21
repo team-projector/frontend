@@ -7,11 +7,13 @@ import { RouterModule } from '@angular/router';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { JunteUiModule } from 'junte-ui';
+import { SalaryMetricsComponent } from './salary-metrics/salary-metrics.component';
 
 
 @NgModule({
   declarations: [
-    SalariesComponent
+    SalariesComponent,
+    SalaryMetricsComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { JunteUiModule } from 'junte-ui';
     JunteUiModule
   ],
   exports: [
-    SalariesComponent
+    SalariesComponent,
+    SalaryMetricsComponent
   ],
   providers: [
     SalariesServiceProvider
