@@ -33,7 +33,8 @@ export class TimeExpensesComponent implements OnInit {
 
   filter: TimeExpensesFilter = new TimeExpensesFilter({page: DEFAULT_PAGE, pageSize: DEFAULT_PAGE_SIZE});
 
-  @ViewChild(TableComponent)
+  // TODO: @ViewChild(TableComponent) == undefined in AOT
+  @ViewChild('table')
   table: TableComponent;
 
   constructor(@Inject(time_expenses_service) private timeExpensesService: ITimeExpensesService) {
