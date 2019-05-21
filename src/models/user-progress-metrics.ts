@@ -39,6 +39,11 @@ export class UserProgressMetrics {
   timeRemains: number;
 
   @Field()
+  @Name('planned_work_hours')
+  @MockFieldNested('{{int 8 10}}')
+  plannedWorkHours: number;
+
+  @Field()
   @MockFieldNested('{{efficiency}}')
   efficiency: number;
 
