@@ -1,10 +1,10 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {IssuesFilter, IssueState} from 'src/models/issue';
-import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
-import {IIssuesService, issues_service} from 'src/services/issues/interface';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {distinctUntilChanged, filter as filtering} from 'rxjs/operators';
-import {TableComponent, UI} from 'junte-ui';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { IssuesFilter, IssueState } from 'src/models/issue';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
+import { IIssuesService, issues_service } from 'src/services/issues/interface';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { distinctUntilChanged, filter as filtering } from 'rxjs/operators';
+import { TableComponent, UI } from 'junte-ui';
 
 @Component({
   selector: 'app-issues',
@@ -32,7 +32,8 @@ export class IssuesComponent implements OnInit {
 
   filter: IssuesFilter = new IssuesFilter({page: DEFAULT_PAGE, pageSize: DEFAULT_PAGE_SIZE});
 
-  @ViewChild(TableComponent)
+  // TODO: @ViewChild(TableComponent) == undefined in AOT
+  @ViewChild('table')
   table: TableComponent;
 
   constructor(@Inject(issues_service) private issuesService: IIssuesService) {
@@ -40,7 +41,7 @@ export class IssuesComponent implements OnInit {
 
   ngOnInit() {
     combineLatest(this.user$, this.dueDate$)
-      .pipe(filtering(([u, dueDate]) => !!u && !!dueDate), distinctUntilChanged())
+      .pipe(filtering(([user, dueDate]) => !!user && !!dueDate), distinctUntilChanged())
       .subscribe(([user, dueDate]) => {
         this.filter.user = user;
         this.filter.dueDate = dueDate;

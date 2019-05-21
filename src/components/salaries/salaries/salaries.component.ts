@@ -25,7 +25,8 @@ export class SalariesComponent implements OnInit {
 
   filter: SalariesFilter = new SalariesFilter({page: DEFAULT_PAGE, pageSize: DEFAULT_PAGE_SIZE});
 
-  @ViewChild(TableComponent)
+  // TODO: @ViewChild(TableComponent) == undefined in AOT
+  @ViewChild('table')
   table: TableComponent;
 
   constructor(@Inject(salaries_service) private salariesService: ISalariesService) {
