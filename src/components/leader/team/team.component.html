@@ -1,5 +1,5 @@
 <jnt-stack [type]="ui.stack.type.vertical">
-  <jnt-link *ngFor="let member of members.results">
+  <jnt-link *ngFor="let member of members.results" [source]="['..', 'members', member.user.id]">
     {{member.user.name}}
   </jnt-link>
 </jnt-stack>

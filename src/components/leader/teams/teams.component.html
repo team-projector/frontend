@@ -6,13 +6,13 @@
           <jnt-block [padding]="ui.padding.large">
             <jnt-avatars-group [size]="ui.sizes.normal">
               <jnt-avatar *ngFor="let member of team.members"
-                          [image]="member.avatar">
+                          [image]="member.user.avatar">
               </jnt-avatar>
             </jnt-avatars-group>
+            <p>{{team.title}}</p>
           </jnt-block>
         </jnt-link>
       </jnt-stack>
-      <hr>
       <router-outlet></router-outlet>
     </jnt-app-body>
   </jnt-app-content>

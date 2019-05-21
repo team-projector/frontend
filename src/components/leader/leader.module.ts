@@ -7,6 +7,7 @@ import { TeamsServiceProvider } from '../../services/teams/provider';
 import { JunteUiModule } from 'junte-ui';
 import { TeamComponent } from './team/team.component';
 import { TeamMembersResolver } from '../../resolvers/team-members';
+import {DeveloperDashboardModule} from '../developer/dashboard/developer-dashboard.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { TeamMembersResolver } from '../../resolvers/team-members';
     CommonModule,
     ReactiveFormsModule,
     LeaderRoutingModule,
-    JunteUiModule
+    JunteUiModule,
+    DeveloperDashboardModule,
   ],
   providers: [
     TeamsServiceProvider,
