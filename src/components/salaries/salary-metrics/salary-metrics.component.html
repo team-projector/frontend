@@ -1,0 +1,35 @@
+<jnt-block *ngIf="metrics" [padding]="ui.padding.large">
+  <jnt-stack [gutter]="ui.stack.gutter.large" [align]="ui.flex.align.stretch">
+    <h6>Payroll</h6>
+    <jnt-stack [gutter]="ui.stack.gutter.small" [align]="ui.flex.justify.end">
+      <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
+        <span payroll closed>{{metrics.payrollClosed | currency:'RUB'}}</span>
+        <jnt-label label [label]="metrics.issuesClosedSpent | duration" color="#F3F4FC"></jnt-label>
+      </jnt-stack>
+
+      <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
+        <span payroll opened>{{metrics.payrollOpened | currency:'RUB'}}</span>
+        <jnt-label label [label]="metrics.issuesOpenedSpent | duration" color="#F3F4FC"
+                   [title]="metrics.issuesOpenedCount + ' issues'"></jnt-label>
+      </jnt-stack>
+    </jnt-stack>
+
+    <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.stretch" [justify]="ui.flex.justify.center">
+      <div metrics>
+        <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small"
+                   [align]="ui.flex.align.center">
+          <jnt-icon like [icon]="ui.icons.like"></jnt-icon>
+          <span>{{metrics.bonus | currency:'RUB'}}</span>
+        </jnt-stack>
+      </div>
+      <div separator></div>
+      <div metrics>
+        <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small"
+                   [align]="ui.flex.align.center">
+          <jnt-icon dislike [icon]="ui.icons.dislike"></jnt-icon>
+          <span>{{metrics.penalty | currency:'RUB'}}</span>
+        </jnt-stack>
+      </div>
+    </jnt-stack>
+  </jnt-stack>
+</jnt-block>

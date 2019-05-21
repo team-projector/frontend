@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from '../../../../models/user';
+import { User } from 'src/models/user';
 import { ActivatedRoute } from '@angular/router';
+import { UI } from 'junte-ui';
 
 @Component({
   selector: 'app-salaries-list',
@@ -11,6 +12,7 @@ import { ActivatedRoute } from '@angular/router';
 export class SalariesListComponent implements OnInit {
 
   user: User;
+  ui = UI;
 
   constructor(private route: ActivatedRoute) {
   }
