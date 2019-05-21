@@ -95,6 +95,10 @@ export class IssueCard {
   @Type(new ArraySerializer(new ModelSerializer(UserCard)))
   @MockFieldNested('[{{#repeat 1 3}} {{> user}} {{/repeat}}]')
   participants: UserCard[];
+
+  @Field()
+  @MockFieldNested('{{> object_link presentation=(user)}}')
+  user: ObjectLink;
 }
 
 @Model()

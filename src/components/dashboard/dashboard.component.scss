@@ -1,4 +1,9 @@
+@import '../../style/variables';
+
 :host {
   display: block;
 }
 
+jnt-action [content][child-of=#{$jnt-action-host}] {
+  background-color: white;
+}
