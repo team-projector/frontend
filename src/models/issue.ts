@@ -92,6 +92,10 @@ export class IssueCard {
   metrics: IssueMetrics;
 
   @Field()
+  @MockFieldNested('{{> object_link presentation=(milestone)}}')
+  milestone: ObjectLink;
+
+  @Field()
   @Type(new ArraySerializer(new ModelSerializer(UserCard)))
   @MockFieldNested('[{{#repeat 1 3}} {{> user}} {{/repeat}}]')
   participants: UserCard[];

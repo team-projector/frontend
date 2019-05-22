@@ -1,0 +1,41 @@
+<jnt-block *ngIf="salary" [padding]="ui.padding.normal">
+  <h6>Details</h6>
+  <table>
+    <thead>
+    <tr>
+      <th title>From:</th>
+      <th title>To:</th>
+    </tr>
+    <tr>
+      <th value>{{salary.periodFrom | date: 'shortDate'}}</th>
+      <th value>{{salary.periodTo | date: 'shortDate'}}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+      <td title>Charged Time</td>
+      <td value>{{salary.chargedTime | duration}}</td>
+    </tr>
+    <tr>
+      <td title>Sum</td>
+      <td value>{{salary.sum | duration}}</td>
+    </tr>
+    <tr>
+      <td title>Bonus</td>
+      <td value>{{salary.bonus | currency:'RUB'}}</td>
+    </tr>
+    <tr>
+      <td title>Penalty</td>
+      <td value>{{salary.penalty | currency:'RUB'}}</td>
+    </tr>
+    <tr>
+      <td title>Total</td>
+      <td value>{{salary.total | currency:'RUB'}}</td>
+    </tr>
+    <tr>
+      <td title>Payed</td>
+      <td value><jnt-icon *ngIf="salary.payed" [icon]="ui.icons.check"></jnt-icon></td>
+    </tr>
+    </tbody>
+  </table>
+</jnt-block>
