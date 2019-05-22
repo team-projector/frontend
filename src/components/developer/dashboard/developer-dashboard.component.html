@@ -1,15 +1,6 @@
 <jnt-container [fluid]="true">
   <jnt-stack [gutter]="ui.stack.gutter.large">
-    <div class="user-metrics">
-      <label>Payroll</label>
-      <p>
-        <span class="closed">{{user.metrics?.payrollClosed | currency:'RUB'}}</span>
-        &larr;
-        <span class="opened">{{user.metrics?.payrollOpened | currency:'RUB'}}</span>
-        <sup>{{user.metrics?.issuesOpenedCount}}</sup></p>
-      <p>+{{user.metrics?.bonus}} | -{{user.metrics?.penalty}}</p>
-    </div>
-
+    <h3>Issues</h3>
     <form [formGroup]="filterForm">
       <jnt-stack>
         <jnt-block>

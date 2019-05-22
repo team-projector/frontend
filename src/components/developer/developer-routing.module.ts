@@ -1,8 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DeveloperComponent } from 'src/components/developer/developer.component';
-import { SalariesListComponent } from 'src/components/developer/dashboard/salaries/salaries-list.component';
-import { UserWithMetricsResolver } from 'src/resolvers/user';
 
 const routes: Routes = [
   {
@@ -20,8 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'salaries',
-        component: SalariesListComponent,
-        resolve: {user: UserWithMetricsResolver}
+        loadChildren: './salaries/salaries.module#SalariesModule'
       }
     ]
   }
