@@ -66,6 +66,11 @@
                          [value]="metric.timeEstimate | percentage:(metric.plannedWorkHours * 3600)">
       </jnt-bar-indicator>
     </jnt-bar-indicator-group>
+    <jnt-bar-indicator-group>
+      <jnt-bar-indicator *ngIf="metric?.loading" [color]="ui.colors.purpleDark"
+                         [value]="metric.loading | percentage:(metric.plannedWorkHours * 3600)">
+      </jnt-bar-indicator>
+    </jnt-bar-indicator-group>
   </jnt-circle-bar>
   <div class="issues" *ngIf="!!metric?.issues_count"></div>
 </ng-template>
