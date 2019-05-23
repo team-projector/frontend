@@ -1,5 +1,5 @@
 <jnt-block [fluid]="true">
-  <jnt-table #table>
+  <jnt-table #table [search]="true">
     <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
       <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
                    let-participants="participants">
