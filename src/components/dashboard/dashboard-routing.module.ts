@@ -21,6 +21,10 @@ const routes: Routes = [
       {
         path: 'leader',
         loadChildren: '../leader/leader.module#LeaderModule',
+      },
+      {
+        path: 'manager',
+        loadChildren: '../manager/manager.module#ManagerModule',
       }
     ]
   }];

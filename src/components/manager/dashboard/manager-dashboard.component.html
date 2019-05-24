@@ -1,0 +1,35 @@
+<p>Hello!</p>
+<jnt-block [fluid]="true">
+  <jnt-table #table [search]="true">
+    <jnt-table-column title="Title">
+      <ng-template #cellTemplate let-title="title">
+        {{title}}
+      </ng-template>
+    </jnt-table-column>
+    <jnt-table-column title="Payroll">
+      <ng-template #cellTemplate let-metrics="metrics">
+        {{metrics.payroll | currency:'RUB'}}
+      </ng-template>
+    </jnt-table-column>
+    <jnt-table-column title="Est.">
+      <ng-template #cellTemplate let-metrics="metrics">
+        {{metrics.timeEstimate | duration}}
+      </ng-template>
+    </jnt-table-column>
+    <jnt-table-column title="Spent">
+      <ng-template #cellTemplate let-metrics="metrics">
+        {{metrics.timeSpent | duration}}
+      </ng-template>
+    </jnt-table-column>
+    <jnt-table-column title="Remains">
+      <ng-template #cellTemplate let-metrics="metrics">
+        {{metrics.timeRemains | duration}}
+      </ng-template>
+    </jnt-table-column>
+    <jnt-table-column title="Issues">
+      <ng-template #cellTemplate let-metrics="metrics">
+        {{metrics.issuesCount}} <sup> {{metrics.issuesOpenedCount}} &rarr; <b>{{metrics.issuesClosedCount}}</b></sup>
+      </ng-template>
+    </jnt-table-column>
+  </jnt-table>
+</jnt-block>
