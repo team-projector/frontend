@@ -7,22 +7,28 @@ import { TeamsServiceProvider } from '../../services/teams/provider';
 import { JunteUiModule } from 'junte-ui';
 import { TeamComponent } from './team/team.component';
 import { TeamMembersResolver } from '../../resolvers/team-members';
-import {DeveloperDashboardModule} from '../developer/dashboard/developer-dashboard.module';
+import { DeveloperDashboardModule } from '../developer/dashboard/developer-dashboard.module';
+import { DatePipesModule } from '../../pipes/date-pipes.module';
+import { MetricsServiceProvider } from '../../services/metrics/provider';
+import { PercentagePipe } from './team/team.pipe';
 
 @NgModule({
   declarations: [
     TeamsComponent,
-    TeamComponent
+    TeamComponent,
+    PercentagePipe
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     LeaderRoutingModule,
     JunteUiModule,
+    DatePipesModule,
     DeveloperDashboardModule,
   ],
   providers: [
     TeamsServiceProvider,
+    MetricsServiceProvider,
     TeamMembersResolver
   ]
 })
