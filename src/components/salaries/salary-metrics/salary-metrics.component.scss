@@ -1,0 +1,47 @@
+@import "~junte-ui/lib/assets/styles/variables";
+
+:host {
+  display: block;
+}
+
+h6 {
+  text-align: center;
+  color: $gray-dark;
+}
+
+[payroll] {
+  font-size: 1.625rem;
+
+  &[opened] {
+    color: $gray-800;
+  }
+  &[closed] {
+    color: $primary-dark-color;
+  }
+}
+
+[metrics] {
+  color: $gray-dark;
+
+  [like], [dislike] {
+    font-size: 15px;
+  }
+
+  [like] {
+    color: $success-color;
+  }
+
+  [dislike] {
+   color: $fail-color;
+  }
+}
+
+[label] ::ng-deep span[child-of=#{$jnt-label-host}] {
+  color: $text-color;
+}
+
+[separator] {
+  min-width: 1px;
+  min-height: 100%;
+  background-color: $gray-400;
+}
