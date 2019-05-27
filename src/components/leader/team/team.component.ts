@@ -1,8 +1,31 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { ITeamsService, teams_service } from '../../../services/teams/interface';
-import { PagingTeamMembers } from '../../../models/team';
+import { TeamMemberCard } from '../../../models/team';
 import { UI } from 'junte-ui';
 import { ActivatedRoute } from '@angular/router';
+import { addDays, addWeeks, format, startOfDay, startOfWeek, subWeeks } from 'date-fns';
+import { filter } from 'rxjs/operators';
+import { BehaviorSubject, zip } from 'rxjs';
+import { UserCard } from '../../../models/user';
+import { MetricsGroup, UserProgressMetrics } from '../../../models/user-progress-metrics';
+import { IMetricsService, metrics_service } from '../../../services/metrics/interface';
+import { Period } from 'junte-ui/lib/components/calendar/models';
+
+const WEEKS_DISPLAYED = 2;
+const DAYS_IN_WEEK = 7;
+const L = 'DD/MM/YYYY';
+
+class Week {
+  constructor(public days: string[],
+              public date: string) {
+  }
+}
+
+class Metric {
+  constructor(public days: Map<string, UserProgressMetrics>,
+              public weeks: Map<string, UserProgressMetrics>) {
+  }
+}
 
 @Component({
   selector: 'app-leader-team',
@@ -11,15 +34,63 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class TeamComponent implements OnInit {
 
+  private period$ = new BehaviorSubject<Period>(null);
+  private _date: Date;
   ui = UI;
-  members: PagingTeamMembers;
+  members: TeamMemberCard[] = [];
+  subWeeks = subWeeks;
+  addWeeks = addWeeks;
+  format = format;
+  formatDate = L;
+  weeks: Week[] = [];
+  metrics: { [id: number]: Metric } = {};
+  metricLabels = ['Est', 'Sp', 'Ef'];
+  weekDayLabels = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su',];
+  current: Date = startOfDay(new Date());
+
+  set date(date: Date) {
+    this._date = date;
+    this.update();
+  }
+
+  get date() {
+    return this._date;
+  }
 
   constructor(@Inject(teams_service) private teamsService: ITeamsService,
+              @Inject(metrics_service) private metricsService: IMetricsService,
               private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(({members}) => this.members = members);
+    this.route.data.pipe(filter(({members}) => !!members))
+      .subscribe(({members}) => this.members = members.results);
+
+    this.period$.pipe(filter(period => !!period))
+      .subscribe(period => this.members.forEach(member => this.loadUserProgressMetrics(member.user, period)));
+
+    this.date = new Date();
   }
+
+  private update() {
+    const start = format(startOfWeek(this.date, {weekStartsOn: 1}));
+    let date = start;
+    this.weeks = [];
+    for (let i = 0; i < WEEKS_DISPLAYED; i++) {
+      this.weeks[i] = new Week([], date);
+      for (let j = 0; j < DAYS_IN_WEEK; j++) {
+        this.weeks[i].days[j] = format(addDays(date, j));
+      }
+      date = format(addWeeks(date, 1));
+    }
+    this.period$.next({start: new Date(start), end: new Date(date)});
+  }
+
+  private loadUserProgressMetrics(user: UserCard, period: Period) {
+    zip(this.metricsService.userProgress(user.id, period.start, period.end, MetricsGroup.day),
+      this.metricsService.userProgress(user.id, period.start, period.end, MetricsGroup.week))
+      .subscribe(([days, weeks]) => this.metrics[user.id] = new Metric(days, weeks));
+  }
+
 
 }
