@@ -20,7 +20,8 @@ export class ManagerDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.table.fetcher = (filter: IssuesFilter) => this.milestonesService.list(new MilestonesFilter(filter));
+    this.table.fetcher = (filter: IssuesFilter) => this.milestonesService
+      .list(new MilestonesFilter(Object.assign(filter, {active: true})));
     this.table.load();
   }
 }

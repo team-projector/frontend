@@ -4,6 +4,7 @@ import {Paging} from './paging';
 import {SearchFilter} from 'junte-ui';
 import {Name} from 'serialize-ts/dist';
 import {DateSerializer} from '../serializers/date';
+import {ObjectLink} from './object-link';
 
 @Model()
 @MockClass()
@@ -76,6 +77,14 @@ export class MilestoneCard {
   @Field()
   @MockField('{{title}}')
   title: string;
+
+  @Field()
+  @MockFieldNested('{{> object_link presentation=(project)}}')
+  owner: ObjectLink;
+
+  @Field()
+  @MockFieldNested('{{money}}')
+  budget: number;
 
   @Field()
   @Name('start_date')

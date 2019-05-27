@@ -6,9 +6,24 @@
         {{title}}
       </ng-template>
     </jnt-table-column>
+    <jnt-table-column title="Owner">
+      <ng-template #cellTemplate let-owner="owner">
+        {{owner?.presentation}}
+      </ng-template>
+    </jnt-table-column>
+    <jnt-table-column title="Budget">
+      <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
+        {{budget | currency:'RUB'}} / {{metrics.budgetRemains | currency:'RUB'}}
+      </ng-template>
+    </jnt-table-column>
     <jnt-table-column title="Payroll">
       <ng-template #cellTemplate let-metrics="metrics">
         {{metrics.payroll | currency:'RUB'}}
+      </ng-template>
+    </jnt-table-column>
+    <jnt-table-column title="Profit">
+      <ng-template #cellTemplate let-metrics="metrics">
+        {{metrics.profit | currency:'RUB'}}
       </ng-template>
     </jnt-table-column>
     <jnt-table-column title="Est.">
