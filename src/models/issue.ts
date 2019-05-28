@@ -88,6 +88,10 @@ export class IssueCard {
   state: IssueState;
 
   @Field()
+  @MockFieldNested('{{> issue_metrics}}')
+  metrics: IssueMetrics;
+
+  @Field()
   @MockFieldNested('{{> object_link presentation=(milestone)}}')
   milestone: ObjectLink;
 
@@ -97,12 +101,8 @@ export class IssueCard {
   participants: UserCard[];
 
   @Field()
-  @MockFieldNested('{{> object_link presentation=(user)}}')
-  user: ObjectLink;
-
-  @Field()
-  @MockFieldNested('{{> issue_metrics}}')
-  metrics: IssueMetrics;
+  @MockFieldNested('{{> user_card}}')
+  user: UserCard;
 }
 
 @Model()

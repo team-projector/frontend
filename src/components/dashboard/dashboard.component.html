@@ -23,30 +23,28 @@
             <div></div>
           </ng-template>
           <ng-template #content>
-            <jnt-stack [align]="ui.flex.align.stretch">
+            <jnt-stack gitlab [align]="ui.flex.align.stretch">
               <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
-                <span>Last Sync Time</span>
-                <span>{{status.lastSync | format:'HH:mm:ss'}}</span>
+                <span param>Last Sync Time</span>
+                <span param>{{status.lastSync | format:'HH:mm:ss'}}</span>
               </jnt-stack>
               <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
-                <span>WEB</span>
-                <span>{{status.services.webHooks | diff | duration}}</span>
+                <span param>WEB</span>
+                <span param>{{status.services.webHooks | diff | duration}}</span>
               </jnt-stack>
               <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
-                <span>API</span>
-                <span>{{status.services.api | diff | duration}}</span>
+                <span param>API</span>
+                <span param>{{status.services.api | diff | duration}}</span>
               </jnt-stack>
-              <div>
                 <hr>
-              </div>
               <jnt-stack [type]="ui.stack.type.horizontal"
                          [justify]="ui.flex.justify.between"
                          *ngFor="let issue of status.lastIssues">
                 <div>
-                  <div>{{issue.title}}</div>
-                  <div>{{issue.project?.presentation}}</div>
+                  <jnt-link link>{{issue.title}}</jnt-link>
+                  <div project>{{issue.project?.presentation}}</div>
                 </div>
-                <span>{{issue.user.presentation}}</span>
+                <span>{{issue.user.name}}</span>
               </jnt-stack>
             </jnt-stack>
           </ng-template>
