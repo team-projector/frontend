@@ -1,6 +1,5 @@
 <jnt-container [fluid]="true">
   <jnt-stack [gutter]="ui.stack.gutter.large">
-    <h3>Issues</h3>
     <form [formGroup]="filterForm">
       <jnt-stack>
         <jnt-block>
@@ -19,11 +18,11 @@
             <ng-template #metricTemplate let-metric="metric" let-date="date">
               <ng-container *ngIf="metrics.weeks.get(format(date, formatDate)) as weekMetric">
                 <ng-container [ngSwitch]="metric">
-                  <ng-container *ngSwitchCase="0">{{weekMetric.timeEstimate | duration}}</ng-container>
-                  <ng-container *ngSwitchCase="1">{{weekMetric.timeSpent | duration}}</ng-container>
+                  <ng-container *ngSwitchCase="0">{{weekMetric.timeEstimate | duration:durationFormat.short}}</ng-container>
+                  <ng-container *ngSwitchCase="1">{{weekMetric.timeSpent | duration:durationFormat.short}}</ng-container>
                   <ng-container *ngSwitchCase="2">{{weekMetric.efficiency | number:'1.2-2'}}x</ng-container>
-                  <ng-container *ngSwitchCase="3">{{weekMetric.payroll | currency:'RUB'}}</ng-container>
-                  <ng-container *ngSwitchCase="4">{{weekMetric.paid | currency:'RUB'}}</ng-container>
+                  <ng-container *ngSwitchCase="3">{{weekMetric.payroll | currency:'RUB':'symbol':'4.0-0'}}</ng-container>
+                  <ng-container *ngSwitchCase="4">{{weekMetric.paid | currency:'RUB':'symbol':'4.0-0'}}</ng-container>
                 </ng-container>
               </ng-container>
             </ng-template>

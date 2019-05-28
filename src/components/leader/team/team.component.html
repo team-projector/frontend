@@ -1,4 +1,4 @@
-<table *ngIf="!!members.length">
+<table *ngIf="!!members.length" border="1" cellspacing="0" cellpadding="0">
   <thead>
   <tr>
     <td></td>
@@ -68,9 +68,9 @@
       <td day *ngFor="let metric of metricLabels;let index = index;">
         <ng-container *ngIf="format(week.date, formatDate) as key">
           <ng-container *ngIf="metrics[member.user.id]" [ngSwitch]="index">
-            <ng-container *ngSwitchCase="0">{{metrics[member.user.id].weeks.get(key)?.timeEstimate | duration}}
+            <ng-container *ngSwitchCase="0">{{metrics[member.user.id].weeks.get(key)?.timeEstimate | duration:durationFormat.short}}
             </ng-container>
-            <ng-container *ngSwitchCase="1">{{metrics[member.user.id].weeks.get(key)?.timeSpent | duration}}
+            <ng-container *ngSwitchCase="1">{{metrics[member.user.id].weeks.get(key)?.timeSpent | duration:durationFormat.short}}
             </ng-container>
             <ng-container *ngSwitchCase="2">{{metrics[member.user.id].weeks.get(key)?.efficiency | number:'1.2-2'}}
               x

@@ -9,6 +9,7 @@ import { User } from 'src/models/user';
 import { BehaviorSubject, combineLatest, zip } from 'rxjs';
 import { Period } from 'junte-ui/lib/components/calendar/models';
 import { UI } from 'junte-ui';
+import {DurationFormat} from '../../../pipes/date';
 
 const L = 'DD/MM/YYYY';
 
@@ -25,6 +26,7 @@ class Metric {
 })
 export class DeveloperDashboardComponent implements OnInit {
   ui = UI;
+  durationFormat = DurationFormat;
 
   user$ = new BehaviorSubject<User>(null);
   period$ = new BehaviorSubject<Period>(null);

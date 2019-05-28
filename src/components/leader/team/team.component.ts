@@ -1,15 +1,16 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { ITeamsService, teams_service } from '../../../services/teams/interface';
-import { TeamMemberCard } from '../../../models/team';
-import { UI } from 'junte-ui';
-import { ActivatedRoute } from '@angular/router';
-import { addDays, addWeeks, format, startOfDay, startOfWeek, subWeeks } from 'date-fns';
-import { filter } from 'rxjs/operators';
-import { BehaviorSubject, zip } from 'rxjs';
-import { UserCard } from '../../../models/user';
-import { MetricsGroup, UserProgressMetrics } from '../../../models/user-progress-metrics';
-import { IMetricsService, metrics_service } from '../../../services/metrics/interface';
-import { Period } from 'junte-ui/lib/components/calendar/models';
+import {Component, Inject, OnInit} from '@angular/core';
+import {ITeamsService, teams_service} from '../../../services/teams/interface';
+import {TeamMemberCard} from '../../../models/team';
+import {UI} from 'junte-ui';
+import {ActivatedRoute} from '@angular/router';
+import {addDays, addWeeks, format, startOfDay, startOfWeek, subWeeks} from 'date-fns';
+import {filter} from 'rxjs/operators';
+import {BehaviorSubject, zip} from 'rxjs';
+import {UserCard} from '../../../models/user';
+import {MetricsGroup, UserProgressMetrics} from '../../../models/user-progress-metrics';
+import {IMetricsService, metrics_service} from '../../../services/metrics/interface';
+import {Period} from 'junte-ui/lib/components/calendar/models';
+import {DurationFormat} from '../../../pipes/date';
 
 const WEEKS_DISPLAYED = 2;
 const DAYS_IN_WEEK = 7;
@@ -34,9 +35,12 @@ class Metric {
 })
 export class TeamComponent implements OnInit {
 
+  ui = UI;
+  durationFormat = DurationFormat;
+
   private period$ = new BehaviorSubject<Period>(null);
   private _date: Date;
-  ui = UI;
+
   members: TeamMemberCard[] = [];
   subWeeks = subWeeks;
   addWeeks = addWeeks;
