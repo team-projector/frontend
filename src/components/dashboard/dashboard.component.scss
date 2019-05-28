@@ -4,6 +4,21 @@
   display: block;
 }
 
-jnt-action [content][child-of=#{$jnt-action-host}] {
-  background-color: white;
+[gitlab] [link] ::ng-deep a[child-of=#{$jnt-link-host}] {
+  border: none;
+  font-weight: $font-weight-bold;
+}
+
+[param] {
+  font-weight: $font-weight-bold;
+}
+
+[project] {
+  font-size: 0.75rem;
+  color: $gray-800;
+}
+
+hr {
+  width: 100%;
+  border: 1px solid $gray-400;
 }
