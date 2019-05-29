@@ -40,8 +40,7 @@
     <ng-container *ngFor="let week of weeks" [attr.current-week]="(current | getISOWeek) === (week.date | getISOWeek)">
 
       <td day *ngFor="let day of week.days">
-        <ng-container *ngIf="metrics[member.user.id]
-          && metrics[member.user.id].days.get(format(day, formatDate)) as metric">
+        <ng-container *ngIf="!!metrics && metrics.days.get(member.user.id).get(format(day, formatDate)) as metric">
           <jnt-circle-bar class="metric">
             <jnt-bar-indicator-group>
               <jnt-bar-indicator *ngIf="metric.timeSpent" [color]="ui.colors.green"
@@ -67,12 +66,15 @@
 
       <td day *ngFor="let metric of metricLabels;let index = index;">
         <ng-container *ngIf="format(week.date, formatDate) as key">
-          <ng-container *ngIf="metrics[member.user.id]" [ngSwitch]="index">
-            <ng-container *ngSwitchCase="0">{{metrics[member.user.id].weeks.get(key)?.timeEstimate | duration:durationFormat.short}}
+          <ng-container *ngIf="!!metrics && metrics.weeks.get(member.user.id).get(format(key, formatDate)) as metric"
+                        [ngSwitch]="index">
+            <ng-container
+              *ngSwitchCase="0">{{metric.timeEstimate | duration:durationFormat.short}}
             </ng-container>
-            <ng-container *ngSwitchCase="1">{{metrics[member.user.id].weeks.get(key)?.timeSpent | duration:durationFormat.short}}
+            <ng-container
+              *ngSwitchCase="1">{{metric.timeSpent | duration:durationFormat.short}}
             </ng-container>
-            <ng-container *ngSwitchCase="2">{{metrics[member.user.id].weeks.get(key)?.efficiency | number:'1.2-2'}}
+            <ng-container *ngSwitchCase="2">{{metric.efficiency | number:'1.2-2'}}
               x
             </ng-container>
           </ng-container>
