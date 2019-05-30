@@ -1,0 +1,96 @@
+<jnt-stack>
+  <table *ngIf="!!members.length" border="1" cellspacing="0" cellpadding="0">
+    <thead>
+    <tr>
+      <td></td>
+      <td arrow-left>
+        <button arrow (click)="date = subWeeks(date, 2)">
+          <jnt-icon [icon]="ui.icons.arrowLeft"></jnt-icon>
+        </button>
+      </td>
+      <ng-container *ngFor="let week of weeks">
+        <td colspan="9" date>
+          {{week.days[0] | getDate}}-{{week.days[6] | getDate}} {{date | format: 'MMMM'}}
+        </td>
+      </ng-container>
+      <td arrow-right>
+        <button arrow (click)="date = addWeeks(date, 2)">
+          <jnt-icon [icon]="ui.icons.arrowRight"></jnt-icon>
+        </button>
+      </td>
+    </tr>
+    <tr days>
+      <th></th>
+      <ng-container *ngFor="let week of weeks">
+        <th *ngFor="let label of weekDayLabels; let index = index">
+          {{label}} {{week.days[index] | getDate}}
+        </th>
+
+        <th *ngFor="let label of metricLabels">
+          {{label}}
+        </th>
+      </ng-container>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr *ngFor="let member of members">
+      <td>
+        <jnt-link [source]="['.', {user: member.user.id}]">{{member.user.name}}</jnt-link>
+      </td>
+      <ng-container *ngFor="let week of weeks" [attr.current-week]="(current | getISOWeek) === (week.date | getISOWeek)">
+
+        <td day *ngFor="let day of week.days">
+          <ng-container *ngIf="metrics?.days?.get(member.user.id)?.get(format(day, formatDate)) as metric">
+            <jnt-circle-bar class="metric">
+              <jnt-bar-indicator-group>
+                <jnt-bar-indicator *ngIf="metric.timeSpent" [color]="ui.colors.green"
+                                   [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
+                </jnt-bar-indicator>
+                <jnt-bar-indicator *ngIf="metric.timeRemains" [color]="ui.colors.yellow"
+                                   [value]="metric.timeRemains | percentage:(metric.plannedWorkHours * 3600)">
+                </jnt-bar-indicator>
+              </jnt-bar-indicator-group>
+              <jnt-bar-indicator-group>
+                <jnt-bar-indicator *ngIf="metric.timeEstimate" [color]="ui.colors.red"
+                                   [value]="metric.timeEstimate | percentage:(metric.plannedWorkHours * 3600)">
+                </jnt-bar-indicator>
+              </jnt-bar-indicator-group>
+              <jnt-bar-indicator-group>
+                <jnt-bar-indicator *ngIf="metric.loading" [color]="ui.colors.purpleDark"
+                                   [value]="metric.loading | percentage:(metric.plannedWorkHours * 3600)">
+                </jnt-bar-indicator>
+              </jnt-bar-indicator-group>
+            </jnt-circle-bar>
+          </ng-container>
+        </td>
+
+        <td day *ngFor="let metric of metricLabels;let index = index;">
+          <ng-container *ngIf="format(week.date, formatDate) as key">
+            <ng-container *ngIf="metrics?.weeks?.get(member.user.id)?.get(format(key, formatDate)) as metric"
+                          [ngSwitch]="index">
+              <ng-container
+                *ngSwitchCase="0">{{metric.timeEstimate | duration:durationFormat.short}}
+              </ng-container>
+              <ng-container
+                *ngSwitchCase="1">{{metric.timeSpent | duration:durationFormat.short}}
+              </ng-container>
+              <ng-container *ngSwitchCase="2">{{metric.efficiency | number:'1.2-2'}}
+                x
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </td>
+      </ng-container>
+    </tr>
+    </tbody>
+  </table>
+
+
+  <jnt-menu>
+    <jnt-menu-item link="issues" title="Issues"></jnt-menu-item>
+    <jnt-menu-item link="problems" title="Problems"></jnt-menu-item>
+  </jnt-menu>
+  <router-outlet></router-outlet>
+</jnt-stack>
+

@@ -1,0 +1,13 @@
+<jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap" [align]="ui.flex.align.center">
+  <jnt-link *ngFor="let team of teams" [source]="[team.id]">
+    <jnt-block [padding]="ui.padding.large">
+      <jnt-avatars-group [size]="ui.sizes.normal">
+        <jnt-avatar *ngFor="let member of team.members"
+                    [image]="member.user.avatar">
+        </jnt-avatar>
+      </jnt-avatars-group>
+      <p>{{team.title}}</p>
+    </jnt-block>
+  </jnt-link>
+</jnt-stack>
+<router-outlet></router-outlet>
