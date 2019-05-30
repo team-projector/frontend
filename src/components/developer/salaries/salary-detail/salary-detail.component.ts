@@ -16,7 +16,8 @@ export class SalaryDetailComponent implements OnInit {
 
   ui = UI;
 
-  @ViewChild(TableComponent) table: TableComponent;
+  // TODO: @ViewChild(TableComponent) == undefined in AOT
+  @ViewChild('table') table: TableComponent;
 
   set salary(salary: Salary) {
     this._salary = salary;

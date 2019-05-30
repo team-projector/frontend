@@ -7,7 +7,7 @@
 
     <jnt-col [desktop]="9" [mobile]="12">
       <jnt-block>
-        <jnt-table>
+        <jnt-table #table>
           <jnt-table-column i18n-title="@@date" title="Date">
             <ng-template #cellTemplate let-date="date">
               {{date | date:'medium'}}
