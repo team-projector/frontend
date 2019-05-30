@@ -6,6 +6,7 @@ const routes: Routes = [
   {
     path: '',
     component: DeveloperComponent,
+    data: { breadcrumb: 'Developer'},
     children: [
       {
         path: '',
@@ -18,6 +19,7 @@ const routes: Routes = [
       },
       {
         path: 'salaries',
+        data: { breadcrumb: 'Salaries' },
         loadChildren: './salaries/salaries.module#SalariesModule'
       }
     ]

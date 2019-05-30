@@ -1,0 +1,65 @@
+<jnt-block [fluid]="true">
+  <jnt-table #table [search]="true">
+    <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
+      <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
+                   let-participants="participants">
+        <jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap" [gutter]="ui.stack.gutter.small">
+          <jnt-avatars-list>
+            <jnt-avatar *ngFor="let p of participants"
+                        [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>
+          </jnt-avatars-list>
+          <jnt-link [source]=url target="_blank" [class.closed]="state == issuesState.closed">{{title}}</jnt-link>
+          <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Dashboard">
+      <ng-template #cellTemplate let-developer="user">
+        <jnt-link [source]="['..', 'members', developer.id]">View</jnt-link>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column i18n-title="@@issue_project" title="Project">
+      <ng-template #cellTemplate let-project="project">
+        {{project.presentation}}
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column i18n-title="@@est" title="Est">
+      <ng-template #cellTemplate let-timeEstimate="timeEstimate">
+        {{timeEstimate | duration}}
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column i18n-title="@@issue_time_spent" title="Spent">
+      <ng-template #cellTemplate let-totalTimeSpent="totalTimeSpent">
+        {{totalTimeSpent | duration}}
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column i18n-title="@@issue_time_remains" title="Remains">
+      <ng-template #cellTemplate let-metrics="metrics">
+        {{metrics.remains | duration}}
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column i18n-title="@@eff" title="Eff">
+      <ng-template #cellTemplate let-metrics="metrics">
+        {{metrics.efficiency | number:'1.2-2'}}x
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column i18n-title="@@payroll" title="Payroll">
+      <ng-template #cellTemplate let-metrics="metrics">
+        {{metrics.payroll | currency:'RUB'}}
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column i18n-title="@@paid" title="Paid">
+      <ng-template #cellTemplate let-metrics="metrics">
+        {{metrics.paid | currency:'RUB'}}
+      </ng-template>
+    </jnt-table-column>
+  </jnt-table>
+</jnt-block>

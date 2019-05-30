@@ -13,6 +13,7 @@ const routes: Routes = [
   },
   {
     path: ':salary',
+    data: { breadcrumb: 'Salary Detail' },
     component: SalaryDetailComponent,
     resolve: {salary: SalaryResolver}
   }

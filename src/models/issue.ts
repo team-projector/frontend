@@ -1,17 +1,22 @@
-import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {ObjectLink} from './object-link';
-import {LabelCard} from './label';
-import {Paging} from './paging';
-import {DateSerializer} from '../serializers/date';
-import {DATE_FORMAT} from '../consts';
-import {BooleanSerializer} from '../serializers/http';
-import {Order, SearchFilter} from 'junte-ui';
-import {UserCard} from './user';
+import { ArraySerializer, Field, Model, ModelSerializer, Name, Type } from 'serialize-ts';
+import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
+import { ObjectLink } from './object-link';
+import { LabelCard } from './label';
+import { Paging } from './paging';
+import { DateSerializer } from '../serializers/date';
+import { DATE_FORMAT } from '../consts';
+import { BooleanSerializer } from '../serializers/http';
+import { Order, SearchFilter } from 'junte-ui';
+import { UserCard } from './user';
 
 export enum IssueState {
   opened = 'opened',
   closed = 'closed'
+}
+
+export enum ErrorType {
+  issueWithoutDueDate = 'issue_without_due_date',
+  issueWithoutEstimate = 'issue_without_estimate'
 }
 
 @Model()
@@ -107,6 +112,48 @@ export class IssueCard {
 
 @Model()
 @MockClass()
+export class ErrorCard {
+
+  @Field()
+  @MockFieldNested('{{> issue_card}}')
+  issue: IssueCard;
+
+  @Field()
+  @MockField(ErrorType.issueWithoutDueDate)
+  type: ErrorType;
+
+}
+
+@Model()
+@MockClass()
+export class PagingTeamIssues implements Paging<IssueCard> {
+  @Field()
+  @MockFieldNested('{{int 50 1000}}')
+  count: number;
+
+  @Field()
+  @Type(new ArraySerializer(new ModelSerializer(IssueCard)))
+  @MockFieldNested('[{{#repeat 10 20}} {{> issue_card}} {{/repeat}}]')
+  results: IssueCard[];
+}
+
+
+@Model()
+@MockClass()
+export class PagingErrorCard implements Paging<ErrorCard> {
+  @Field()
+  @MockFieldNested('{{int 50 1000}}')
+  count: number;
+
+  @Field()
+  @Type(new ArraySerializer(new ModelSerializer(ErrorCard)))
+  @MockFieldNested('[{{#repeat 10 20}} {{> error_card}} {{/repeat}}]')
+  results: ErrorCard[];
+}
+
+
+@Model()
+@MockClass()
 export class PagingIssues implements Paging<IssueCard> {
 
   @Field()
@@ -163,5 +210,4 @@ export class IssuesFilter implements SearchFilter {
   }
 
 }
-
 

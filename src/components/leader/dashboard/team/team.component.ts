@@ -1,15 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { ITeamsService, teams_service } from '../../../services/teams/interface';
-import { TeamMemberCard } from '../../../models/team';
 import { UI } from 'junte-ui';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { addDays, addWeeks, format, startOfDay, startOfWeek, subWeeks } from 'date-fns';
 import { filter } from 'rxjs/operators';
 import { BehaviorSubject, zip } from 'rxjs';
-import { MetricsGroup, UserProgressMetrics } from '../../../models/user-progress-metrics';
-import { IMetricsService, metrics_service } from '../../../services/metrics/interface';
+import { MetricsGroup, UserProgressMetrics } from '../../../../models/user-progress-metrics';
+import { IMetricsService, metrics_service } from '../../../../services/metrics/interface';
 import { Period } from 'junte-ui/lib/components/calendar/models';
-import { DurationFormat } from '../../../pipes/date';
+import { ITeamsService, teams_service } from '../../../../services/teams/interface';
+import { TeamMemberCard } from '../../../../models/team';
+import { DurationFormat } from 'src/pipes/date';
 
 const WEEKS_DISPLAYED = 2;
 const DAYS_IN_WEEK = 7;
@@ -38,6 +38,9 @@ export class TeamComponent implements OnInit {
   durationFormat = DurationFormat;
 
   private period$ = new BehaviorSubject<Period>(null);
+  private user$ = new BehaviorSubject<number>(null);
+  private team$ = new BehaviorSubject<number>(null);
+
   private _date: Date;
 
   members: TeamMemberCard[] = [];
@@ -50,7 +53,6 @@ export class TeamComponent implements OnInit {
   metricLabels = ['Est', 'Sp', 'Ef'];
   weekDayLabels = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
   current: Date = startOfDay(new Date());
-  team: number;
 
   set date(date: Date) {
     this._date = date;
@@ -61,16 +63,43 @@ export class TeamComponent implements OnInit {
     return this._date;
   }
 
+  set team(team: number) {
+    this.team$.next(team);
+  }
+
+  get team() {
+    return this.team$.getValue();
+  }
+
+  set user(user: number) {
+    this.user$.next(user);
+  }
+
+  get user() {
+    return this.user$.getValue();
+  }
+
   constructor(@Inject(teams_service) private teamsService: ITeamsService,
               @Inject(metrics_service) private metricsService: IMetricsService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.route.data.pipe(filter(({members}) => !!members))
-      .subscribe(({members}) => this.members = members.results);
 
-    this.route.params.subscribe(({team}) => this.team = team);
+    this.route.data.pipe(filter(({members, team}) => !!members || !!team))
+      .subscribe(({members, team}) => {
+        if (!!members) {
+          this.members = members.results;
+        }
+        if (!!team) {
+          this.team = team;
+        }
+      });
+
+    this.user$.pipe(filter(user => !!user))
+      .subscribe(user => this.router.navigate([{user: user}, 'issues'],
+        {relativeTo: this.route}));
 
     this.period$.pipe(filter(period => !!period))
       .subscribe(period => {

@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ITeamsService, teams_service} from '../../../services/teams/interface';
-import {TeamCard, TeamMemberRole} from '../../../models/team';
-import {MeManager} from '../../../managers/me.manager';
+import {ITeamsService, teams_service} from '../../../../services/teams/interface';
+import {TeamCard, TeamMemberRole} from '../../../../models/team';
+import {MeManager} from '../../../../managers/me.manager';
 import {filter} from 'rxjs/operators';
 import {UI} from 'junte-ui';
 

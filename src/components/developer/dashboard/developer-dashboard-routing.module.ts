@@ -7,10 +7,15 @@ import { UserWithMetricsResolver } from '../../../resolvers/user';
 import { ProblemsListComponent } from './problems/problems-list.component';
 import { TimeExpensesListComponent } from './time-expenses/time-expenses-list.component';
 
+export function getUserName(data: any) {
+  return data.user.name;
+}
+
 const routes: Routes = [
   {
     path: '',
     component: DeveloperDashboardComponent,
+    data: {breadcrumb: getUserName},
     resolve: {user: UserWithMetricsResolver, dueDate: DueDateResolver},
     children: [
       {
@@ -20,16 +25,19 @@ const routes: Routes = [
       },
       {
         path: 'issues',
+        data: { breadcrumb: 'Issues' },
         component: IssuesListComponent,
         resolve: {user: UserWithMetricsResolver, dueDate: DueDateResolver}
       },
       {
         path: 'problems',
+        data: { breadcrumb: 'Problems' },
         component: ProblemsListComponent,
         resolve: {user: UserWithMetricsResolver}
       },
       {
         path: 'time-expenses',
+        data: { breadcrumb: 'Time Expenses' },
         component: TimeExpensesListComponent,
         resolve: {user: UserWithMetricsResolver, dueDate: DueDateResolver}
       }
