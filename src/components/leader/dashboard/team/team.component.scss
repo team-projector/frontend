@@ -10,7 +10,7 @@ table {
   border-spacing: 0;
   box-shadow: $base-shadow;
   background-color: $white-color;
-  border-radius: $corner-md;
+  border-radius: $corner-normal;
   padding: $gutter-normal;
   tr {
     &[days] {
