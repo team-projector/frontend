@@ -10,7 +10,7 @@ import { OutletComponent } from 'src/components/outlet/outlet.component';
 import { UserWithMetricsResolver } from 'src/resolvers/user';
 
 export function getTeam(data: any) {
-  return data.team;
+  return data.team.title;
 }
 
 const routes: Routes = [

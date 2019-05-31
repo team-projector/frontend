@@ -11,6 +11,20 @@ export enum TeamMemberRole {
 
 @Model()
 @MockClass()
+export class Team {
+
+  @Field()
+  @MockField('{{id}}')
+  id: number;
+
+  @Field()
+  @MockField('{{team}}')
+  title: string;
+
+}
+
+@Model()
+@MockClass()
 export class TeamMemberCard {
 
   @Field()

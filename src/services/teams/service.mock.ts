@@ -7,6 +7,7 @@ import { deserialize } from 'serialize-ts';
 import { PagingTeamMembers, PagingTeams, TeamMemberRole } from '../../models/team';
 import { PagingErrorCard, PagingTeamIssues } from 'src/models/issue';
 import { IssueProblemsFilter, TeamIssueFilter } from 'src/models/problem';
+import { Team } from 'src/models/team';
 
 
 @Injectable({
@@ -15,6 +16,11 @@ import { IssueProblemsFilter, TeamIssueFilter } from 'src/models/problem';
 export class TeamsMockService implements ITeamsService {
 
   constructor(private http: HttpMockService) {
+  }
+
+  getTeam(team: number): Observable<Team> {
+    return this.http.get('teams/team.json')
+      .pipe(map(obj => deserialize(obj, Team)));
   }
 
   list(user: number, roles: TeamMemberRole[]): Observable<PagingTeams> {
