@@ -4,7 +4,6 @@ import { BehaviorSubject, combineLatest } from 'rxjs';
 import { filter as filtering } from 'rxjs/operators';
 import { ITeamsService, teams_service } from 'src/services/teams/interface';
 import { TeamIssueFilter } from 'src/models/problem';
-import { TimeExpensesFilter } from 'src/models/spent-time';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
 import { IssueState } from 'src/models/issue';
 
@@ -21,6 +20,7 @@ export class TeamIssuesComponent implements OnInit {
 
   private team$ = new BehaviorSubject<number>(null);
   private user$ = new BehaviorSubject<number>(null);
+  private dueDate$ = new BehaviorSubject<Date>(null);
 
   filter: TeamIssueFilter = new TeamIssueFilter({page: DEFAULT_PAGE, pageSize: DEFAULT_PAGE_SIZE});
 
@@ -34,6 +34,11 @@ export class TeamIssuesComponent implements OnInit {
     this.user$.next(user);
   }
 
+  @Input()
+  set dueDate(date: Date) {
+    this.dueDate$.next(date);
+  }
+
   @ViewChild('table')
   table: TableComponent;
 
@@ -41,11 +46,15 @@ export class TeamIssuesComponent implements OnInit {
   }
 
   ngOnInit() {
-    combineLatest(this.team$, this.user$)
+    combineLatest(this.team$, this.user$, this.dueDate$)
       .pipe(filtering(t => !!t))
-      .subscribe(([team, user]) => {
+      .subscribe(([team, user, dueDate]) => {
         if (!!user) {
           this.filter.user = user;
+        }
+
+        if (!!dueDate) {
+          this.filter.dueDate = dueDate;
         }
 
         this.table.fetcher = (filter: TeamIssueFilter) => this.teamsService.issues(team, Object.assign(this.filter, filter));

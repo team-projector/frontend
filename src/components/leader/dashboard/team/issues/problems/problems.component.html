@@ -14,15 +14,9 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Dashboard">
-      <ng-template #cellTemplate let-developer="issue.user">
-        <jnt-link [source]="['..', 'members', developer.id]">View</jnt-link>
-      </ng-template>
-    </jnt-table-column>
-
     <jnt-table-column i18n-title="@@issue_project" title="Project">
       <ng-template #cellTemplate let-project="issue.project">
-        {{project.presentation}}
+        {{project?.presentation}}
       </ng-template>
     </jnt-table-column>
 
@@ -40,25 +34,25 @@
 
     <jnt-table-column i18n-title="@@issue_time_remains" title="Remains">
       <ng-template #cellTemplate let-metrics="issue.metrics">
-        {{metrics.remains | duration}}
+        {{metrics?.remains | duration}}
       </ng-template>
     </jnt-table-column>
 
     <jnt-table-column i18n-title="@@eff" title="Eff">
       <ng-template #cellTemplate let-metrics="issue.metrics">
-        {{metrics.efficiency | number:'1.2-2'}}x
+        {{metrics?.efficiency | number:'1.2-2'}}x
       </ng-template>
     </jnt-table-column>
 
     <jnt-table-column i18n-title="@@payroll" title="Payroll">
       <ng-template #cellTemplate let-metrics="issue.metrics">
-        {{metrics.payroll | currency:'RUB'}}
+        {{metrics?.payroll | currency:'RUB'}}
       </ng-template>
     </jnt-table-column>
 
     <jnt-table-column i18n-title="@@paid" title="Paid">
       <ng-template #cellTemplate let-metrics="issue.metrics">
-        {{metrics.paid | currency:'RUB'}}
+        {{metrics?.paid | currency:'RUB'}}
       </ng-template>
     </jnt-table-column>
   </jnt-table>

@@ -39,13 +39,14 @@
         <td>
           <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small">
             <jnt-avatar [image]="member.user.avatar" [size]="ui.sizes.tiny"></jnt-avatar>
-            <jnt-link [source]="['.', {user: member.user.id}]" link>{{member.user.name}}</jnt-link>
+            <jnt-link (click)="user.setValue(member.user)" link>{{member.user.name}}</jnt-link>
+            <jnt-link [source]="['.', 'members', member.user.id]" [icon]="ui.icons.search"></jnt-link>
           </jnt-stack>
         </td>
         <ng-container *ngFor="let week of weeks"
                       [attr.current-week]="(current | getISOWeek) === (week.date | getISOWeek)">
 
-          <td day *ngFor="let day of week.days">
+          <td day *ngFor="let day of week.days" (click)="dueDate.setValue(day)">
             <ng-container *ngIf="metrics?.days?.get(member.user.id)?.get(format(day, formatDate)) as metric">
               <jnt-circle-bar class="metric">
                 <jnt-bar-indicator-group>
@@ -88,6 +89,9 @@
       </tbody>
     </table>
 
+    <span *ngIf="!!user.value" (click)="filterForm.setValue({user: null, dueDate: null})">
+      {{user.value.name}} [{{format(dueDate.value, 'DD-MM-YYYY')}}]
+    </span>
 
     <jnt-menu>
       <jnt-menu-item link="issues" title="Issues"></jnt-menu-item>

@@ -12,7 +12,7 @@ import { TeamIssuesComponent } from 'src/components/leader/dashboard/team/issues
 import { TeamProblemsListComponent } from 'src/components/leader/dashboard/team/issues/problems-list/problems-list.component';
 import { TeamIssuesListComponent } from 'src/components/leader/dashboard/team/issues/issues-list/issues-list.component';
 import { OutletModule } from 'src/components/outlet/outlet.module';
-import { UserWithMetricsResolver } from 'src/resolvers/user';
+import { UserResolver } from 'src/resolvers/user';
 
 @NgModule({
   declarations: [
@@ -42,7 +42,7 @@ import { UserWithMetricsResolver } from 'src/resolvers/user';
   ],
   providers: [
     TeamResolver,
-    UserWithMetricsResolver
+    UserResolver
   ]
 })
 export class TeamsModule {

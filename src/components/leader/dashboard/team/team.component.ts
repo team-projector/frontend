@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { UI } from 'junte-ui';
 import { ActivatedRoute, Router } from '@angular/router';
 import { addDays, addWeeks, format, startOfDay, startOfWeek, subWeeks } from 'date-fns';
-import { filter } from 'rxjs/operators';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
 import { BehaviorSubject, zip } from 'rxjs';
 import { MetricsGroup, UserProgressMetrics } from '../../../../models/user-progress-metrics';
 import { IMetricsService, metrics_service } from '../../../../services/metrics/interface';
@@ -10,6 +10,7 @@ import { Period } from 'junte-ui/lib/components/calendar/models';
 import { ITeamsService, teams_service } from '../../../../services/teams/interface';
 import { Team, TeamMemberCard } from '../../../../models/team';
 import { DurationFormat } from 'src/pipes/date';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 const WEEKS_DISPLAYED = 2;
 const DAYS_IN_WEEK = 7;
@@ -27,6 +28,16 @@ class Metric {
   }
 }
 
+class Params {
+  constructor(defs: any = null) {
+    for (const def in defs) {
+      if (!!defs[def]) {
+        this[def] = defs[def];
+      }
+    }
+  }
+}
+
 @Component({
   selector: 'app-leader-team',
   templateUrl: './team.component.html',
@@ -38,10 +49,16 @@ export class TeamComponent implements OnInit {
   durationFormat = DurationFormat;
 
   private period$ = new BehaviorSubject<Period>(null);
-  private user$ = new BehaviorSubject<number>(null);
   private team$ = new BehaviorSubject<Team>(null);
 
   private _date: Date;
+
+  dueDate = new FormControl(new Date());
+  user = new FormControl(null);
+  filterForm: FormGroup = this.fb.group({
+    dueDate: this.dueDate,
+    user: this.user
+  });
 
   members: TeamMemberCard[] = [];
   subWeeks = subWeeks;
@@ -71,35 +88,33 @@ export class TeamComponent implements OnInit {
     return this.team$.getValue();
   }
 
-  set user(user: number) {
-    this.user$.next(user);
-  }
-
-  get user() {
-    return this.user$.getValue();
-  }
-
   constructor(@Inject(teams_service) private teamsService: ITeamsService,
               @Inject(metrics_service) private metricsService: IMetricsService,
+              private fb: FormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
   }
 
   ngOnInit() {
-
-    this.route.data.pipe(filter(({members, team}) => !!members || !!team))
-      .subscribe(({members, team}) => {
-        if (!!members) {
-          this.members = members.results;
-        }
-        if (!!team) {
-          this.team = team;
-        }
+    this.filterForm.valueChanges.pipe(distinctUntilChanged())
+      .subscribe(f => {
+        const params = new Params({
+          user: !!f.user ? f.user.id : null,
+          due_date: !!f.dueDate ? format(f.dueDate, 'MM-DD-YYYY') : null
+        });
+        this.router.navigate([params, 'issues'],
+          {relativeTo: this.route});
       });
 
-    this.user$.pipe(filter(user => !!user))
-      .subscribe(user => this.router.navigate([{user: user}, 'issues'],
-        {relativeTo: this.route}));
+    this.route.data.subscribe(({members, team, dueDate, user}) => {
+      if (!!members) {
+        this.members = members.results;
+      }
+      if (!!team) {
+        this.team = team;
+      }
+      this.filterForm.patchValue({user: user, dueDate: dueDate}, {emitEvent: false});
+    });
 
     this.period$.pipe(filter(period => !!period))
       .subscribe(period => {

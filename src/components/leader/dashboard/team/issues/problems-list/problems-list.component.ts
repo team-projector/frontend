@@ -11,8 +11,8 @@ import { Team } from 'src/models/team';
 
 export class TeamProblemsListComponent implements OnInit {
 
-  team: Team;
   user: UserCard;
+  team: Team;
   dueDate: Date;
 
   constructor(private route: ActivatedRoute) {
