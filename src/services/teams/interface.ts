@@ -1,10 +1,12 @@
 import { InjectionToken } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PagingTeamMembers, PagingTeams, TeamMemberRole } from '../../models/team';
+import { PagingTeamMembers, PagingTeams, Team, TeamMemberRole } from '../../models/team';
 import { PagingErrorCard, PagingTeamIssues } from 'src/models/issue';
 import { IssueProblemsFilter, TeamIssueFilter } from 'src/models/problem';
 
 export interface ITeamsService {
+
+  getTeam(team: number): Observable<Team>;
 
   list(user: number, roles: TeamMemberRole[]): Observable<PagingTeams>;
 

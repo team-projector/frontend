@@ -15,7 +15,7 @@ export class UserWithMetricsResolver implements Resolve<Observable<User>> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<User> {
     const user = +route.params['user'];
-    return !!user ? this.usersService.get(+route.params['user'], true)
+    return !!user ? this.usersService.get(user, true)
       : this.meService.getUser(true);
   }
 }

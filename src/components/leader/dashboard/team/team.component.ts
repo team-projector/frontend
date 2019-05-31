@@ -8,7 +8,7 @@ import { MetricsGroup, UserProgressMetrics } from '../../../../models/user-progr
 import { IMetricsService, metrics_service } from '../../../../services/metrics/interface';
 import { Period } from 'junte-ui/lib/components/calendar/models';
 import { ITeamsService, teams_service } from '../../../../services/teams/interface';
-import { TeamMemberCard } from '../../../../models/team';
+import { Team, TeamMemberCard } from '../../../../models/team';
 import { DurationFormat } from 'src/pipes/date';
 
 const WEEKS_DISPLAYED = 2;
@@ -39,7 +39,7 @@ export class TeamComponent implements OnInit {
 
   private period$ = new BehaviorSubject<Period>(null);
   private user$ = new BehaviorSubject<number>(null);
-  private team$ = new BehaviorSubject<number>(null);
+  private team$ = new BehaviorSubject<Team>(null);
 
   private _date: Date;
 
@@ -63,7 +63,7 @@ export class TeamComponent implements OnInit {
     return this._date;
   }
 
-  set team(team: number) {
+  set team(team: Team) {
     this.team$.next(team);
   }
 
@@ -103,8 +103,8 @@ export class TeamComponent implements OnInit {
 
     this.period$.pipe(filter(period => !!period))
       .subscribe(period => {
-        zip(this.metricsService.teamProgress(this.team, period.start, period.end, MetricsGroup.day),
-          this.metricsService.teamProgress(this.team, period.start, period.end, MetricsGroup.week))
+        zip(this.metricsService.teamProgress(this.team.id, period.start, period.end, MetricsGroup.day),
+          this.metricsService.teamProgress(this.team.id, period.start, period.end, MetricsGroup.week))
           .subscribe(([days, weeks]) => this.metrics = new Metric(days, weeks));
       });
 
