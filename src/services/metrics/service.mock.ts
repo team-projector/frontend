@@ -25,7 +25,7 @@ export class MetricsMockService implements IMetricsService {
   }
 
   teamProgress(team: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<number, Map<string, UserProgressMetrics>>> {
-    const users = [1, 2, 3, 4, 5];
+    const users = [93, 54, 61];
     switch (group) {
       case MetricsGroup.day: {
         return Observable.create((observer: any) => {

@@ -2,34 +2,104 @@
 
 :host {
   display: block;
-  margin: 10px;
 }
 
-a {
-  width: 100px;
-  text-decoration: none;
-
-  img {
-    border-radius: 50%;
-  }
-
-  h3 {
-    color: $purple-dark;
-    font-size: .75rem;
-    text-align: center;
-    padding: 0;
-    margin: 0;
-  }
-
-  &.active {
-    img {
-      border: 2px solid red;
-      box-sizing: border-box;
+table {
+  table-layout: auto;
+  border: 0;
+  border-spacing: 0;
+  box-shadow: $base-shadow;
+  background-color: $white-color;
+  border-radius: $corner-md;
+  padding: $gutter-normal;
+  tr {
+    &[days] {
+      background-color: $gray-500;
+    }
+    td, th {
+      border: 0;
+      padding: $gutter-small $gutter-tiny;
+      [metric] {
+        color: $primary-dark-color;
+        font-weight: $font-weight-bold;
+      }
+    }
+    td {
+      border-top: 1px solid transparent;
+      border-bottom: 1px solid transparent;
+      &:first-child {
+        border-left: 1px solid transparent;
+      }
+      &:last-child {
+        border-right: 1px solid transparent;
+      }
     }
   }
-}
 
-.metric {
-  width: 40px;
-  height: 40px;
+  thead {
+    [arrow-left] {
+      text-align: left;
+    }
+    [arrow-right] {
+      text-align: right;
+    }
+    [arrow] {
+      background-color: transparent;
+      border-width: 0;
+      font-size: 1rem;
+      color: $text-color;
+      cursor: pointer;
+      padding: 0;
+      vertical-align: middle;
+      border-radius: 50%;
+      width: 25px;
+      height: 25px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      transition: box-shadow .3s;
+      &:focus {
+        outline: none;
+        box-shadow: 0 0 6px rgba(8, 35, 202, 0.4);;
+        border: 1px solid $primary-color;
+      }
+      &:hover {
+        color: lighten($text-color, 10%);
+      }
+    }
+    [date] {
+      color: $gray-dark;
+      font-weight: $font-weight-bold;
+      text-align: center;
+    }
+  }
+
+  tbody {
+    tr {
+      cursor: pointer;
+      &:hover {
+        background-color: $blue-500;
+        td {
+          border-top-color: $purple-light;
+          border-bottom-color: $purple-light;
+          &:first-child {
+            border-left-color: $purple-light;
+          }
+          &:last-child {
+            border-right-color: $purple-light;
+          }
+        }
+      }
+      td {
+        [link] ::ng-deep a[child-of=#{$jnt-link-host}][active='true'] {
+          border-bottom: 0;
+        }
+        .metric {
+          width: 30px;
+          height: 30px;
+        }
+      }
+    }
+  }
+
 }
