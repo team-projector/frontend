@@ -7,7 +7,11 @@
   </jnt-app-aside>
   <jnt-app-content [aside]="aside">
     <jnt-app-body>
-      <jnt-app-sub-header (burger)="aside.toggle()"></jnt-app-sub-header>
+      <jnt-app-sub-header (burger)="aside.toggle()">
+        <jnt-container [fluid]="true">
+          <jnt-breadcrumb></jnt-breadcrumb>
+        </jnt-container>
+      </jnt-app-sub-header>
       <router-outlet></router-outlet>
     </jnt-app-body>
     <jnt-app-footer>
