@@ -46,10 +46,6 @@ const routes: Routes = [
             data: {breadcrumb: 'Problems'},
             component: TeamProblemsListComponent,
             resolve: {team: TeamResolver, user: UserResolver, dueDate: DueDateResolver}
-          },
-          {
-            path: 'members/:user',
-            loadChildren: '../../../developer/dashboard/developer-dashboard.module#DeveloperDashboardModule'
           }
         ]
       }

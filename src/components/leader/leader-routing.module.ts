@@ -1,15 +1,26 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { LeaderComponent } from 'src/components/leader/leader.component';
 
 const routes: Routes = [
   {
     path: '',
-    pathMatch: 'full',
-    redirectTo: 'dashboard'
-  },
-  {
-    path: 'dashboard',
-    loadChildren: './dashboard/leader-dashboard.module#LeaderDashboardModule'
+    component: LeaderComponent,
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'teams'
+      },
+      {
+        path: 'teams',
+        loadChildren: './dashboard/teams/teams.module#TeamsModule'
+      },
+      {
+        path: 'users/:user',
+        loadChildren: '../developer/dashboard/developer-dashboard.module#DeveloperDashboardModule'
+      }
+    ]
   }
 ];
 

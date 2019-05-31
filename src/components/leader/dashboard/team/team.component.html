@@ -40,7 +40,7 @@
           <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small">
             <jnt-avatar [image]="member.user.avatar" [size]="ui.sizes.tiny"></jnt-avatar>
             <jnt-link (click)="user.setValue(member.user)" link>{{member.user.name}}</jnt-link>
-            <jnt-link [source]="['.', 'members', member.user.id]" [icon]="ui.icons.search"></jnt-link>
+            <jnt-link [source]="['../..', 'users', member.user.id]" [icon]="ui.icons.search"></jnt-link>
           </jnt-stack>
         </td>
         <ng-container *ngFor="let week of weeks"

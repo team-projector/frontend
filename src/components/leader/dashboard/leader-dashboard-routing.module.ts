@@ -7,19 +7,8 @@ const routes: Routes = [
   {
     path: '',
     component: LeaderDashboardComponent,
-    data: { breadcrumb: 'Dashboard' },
     resolve: {user: UserWithMetricsResolver},
-    children: [
-      {
-        path: '',
-        pathMatch: 'full',
-        redirectTo: 'teams'
-      },
-      {
-        path: 'teams',
-        loadChildren: './teams/teams.module#TeamsModule'
-      }
-    ]
+    children: []
   }
 ];
 
