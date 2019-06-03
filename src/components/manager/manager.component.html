@@ -1,7 +1,7 @@
 <jnt-app-main>
   <jnt-app-aside #aside>
     <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
-      <jnt-menu-item link="." title="Dashboard"
+      <jnt-menu-item link="." [exact-link]="false" title="Dashboard"
                      [icon]="ui.icons.user"></jnt-menu-item>
     </jnt-menu>
   </jnt-app-aside>

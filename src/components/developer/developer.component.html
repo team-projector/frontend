@@ -1,9 +1,9 @@
 <jnt-app-main>
   <jnt-app-aside #aside>
     <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
-      <jnt-menu-item link="." title="Dashboard"
+      <jnt-menu-item link="/developer/dashboard" [exact-link]="false" title="Dashboard"
                      [icon]="ui.icons.user"></jnt-menu-item>
-      <jnt-menu-item link="/developer/salaries" title="Salaries"
+      <jnt-menu-item link="/developer/salaries" [exact-link]="false" title="Salaries"
                      [icon]="ui.icons.salary"></jnt-menu-item>
     </jnt-menu>
   </jnt-app-aside>
