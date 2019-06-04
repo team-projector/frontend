@@ -11,36 +11,43 @@ table {
   box-shadow: $base-shadow;
   background-color: $white-color;
   border-radius: $corner-normal;
-  padding: $gutter-normal;
+  font-size: $font-size-sm;
+  padding: $gutter-normal 0;
   tr {
-    &[days] {
-      background-color: $gray-500;
+    td:first-child {
+      padding-left: $gutter-normal;
     }
-    td, th {
+    td:last-child {
+      padding-right: $gutter-normal;
+    }
+    /**th {
       border: 0;
       padding: $gutter-small $gutter-tiny;
       [metric] {
         color: $primary-dark-color;
         font-weight: $font-weight-bold;
       }
-    }
-    td {
-      border-top: 1px solid transparent;
-      border-bottom: 1px solid transparent;
-      &:first-child {
-        border-left: 1px solid transparent;
-      }
-      &:last-child {
-        border-right: 1px solid transparent;
-      }
-    }
+    }**/
   }
 
   thead {
-    [arrow-left] {
+    tr {
+      &[rewind] {
+        td {
+          padding: 0 0 $gutter-normal 0;
+        }
+      }
+      &[timeline] {
+        background-color: $gray-500;
+        th {
+          padding: $gutter-normal $gutter-tiny;
+        }
+      }
+    }
+    [prev] {
       text-align: left;
     }
-    [arrow-right] {
+    [next] {
       text-align: right;
     }
     [arrow] {
@@ -76,28 +83,25 @@ table {
 
   tbody {
     tr {
-      cursor: pointer;
-      &:hover {
-        background-color: $blue-500;
-        td {
-          border-top-color: $purple-light;
-          border-bottom-color: $purple-light;
-          &:first-child {
-            border-left-color: $purple-light;
-          }
-          &:last-child {
-            border-right-color: $purple-light;
+      td {
+        &[day] {
+          padding: 5px;
+          [metric] {
+            width: 35px;
+            height: 35px;
+            [circle] {
+              width: 35px;
+              height: 35px;
+            }
           }
         }
-      }
-      td {
         [link] ::ng-deep a[child-of=#{$jnt-link-host}][active='true'] {
           border-bottom: 0;
         }
-        .metric {
-          width: 30px;
-          height: 30px;
-        }
+      }
+
+      &:not(:last-child) td {
+        border-bottom: 1px solid $secondary-color;
       }
     }
   }

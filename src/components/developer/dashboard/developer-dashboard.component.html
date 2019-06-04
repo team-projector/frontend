@@ -41,7 +41,7 @@
 </jnt-container>
 
 <ng-template #dayMetricTemplate let-metric="metric" let-date="date">
-  <jnt-circle-bar class="metric">
+  <jnt-circle-bar class="metric" [title]="'Spent: ' + (metric?.timeSpent | duration) + ', estimate: ' + (metric?.timeEstimate | duration) + ', loading: ' + (metric?.loading | duration)">
     <ng-template #content>{{date | getDate}}</ng-template>
     <jnt-bar-indicator-group>
       <jnt-bar-indicator *ngIf="metric?.timeSpent" [color]="ui.colors.green"
@@ -62,5 +62,5 @@
       </jnt-bar-indicator>
     </jnt-bar-indicator-group>
   </jnt-circle-bar>
-  <div class="issues" *ngIf="!!metric?.issues_count"></div>
+  <div class="issues" *ngIf="!!metric?.issuesCount"></div>
 </ng-template>

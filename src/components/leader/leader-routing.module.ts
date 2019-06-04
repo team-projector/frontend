@@ -14,7 +14,7 @@ const routes: Routes = [
       },
       {
         path: 'teams',
-        loadChildren: './dashboard/teams/teams.module#TeamsModule'
+        loadChildren: './teams/teams.module#TeamsModule'
       },
       {
         path: 'users/:user',

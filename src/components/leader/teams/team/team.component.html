@@ -1,0 +1,113 @@
+<jnt-container [fluid]="true">
+  <jnt-stack>
+    <table *ngIf="!!members.length">
+      <thead>
+      <tr rewind>
+        <td></td>
+        <td colspan="10" prev>
+          <button arrow (click)="date = subWeeks(date, 1)">
+            <jnt-icon [icon]="ui.icons.arrowLeft"></jnt-icon>
+          </button>
+          {{weeks[0].days[0] | getDate}}-{{weeks[0].days[6] | getDate}} {{date | format: 'MMMM'}}
+        </td>
+        <td colspan="10" next>
+          {{weeks[1].days[0] | getDate}}-{{weeks[1].days[6] | getDate}} {{date | format: 'MMMM'}}
+          <button arrow (click)="date = addWeeks(date, 1)">
+            <jnt-icon [icon]="ui.icons.arrowRight"></jnt-icon>
+          </button>
+        </td>
+      </tr>
+      <tr timeline>
+        <th>Developer</th>
+        <ng-container *ngFor="let week of weeks">
+          <th>Mo {{week.days[0] | getDate}}</th>
+          <th>Tu {{week.days[1] | getDate}}</th>
+          <th>We {{week.days[2] | getDate}}</th>
+          <th>Th {{week.days[3] | getDate}}</th>
+          <th>Fr {{week.days[4] | getDate}}</th>
+          <th>Sa {{week.days[5] | getDate}}</th>
+          <th>Su {{week.days[6] | getDate}}</th>
+          <th>Est</th>
+          <th>Sp</th>
+          <th>Eff</th>
+        </ng-container>
+      </tr>
+      </thead>
+
+      <tbody>
+      <tr *ngFor="let member of members">
+        <td>
+          <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small">
+            <jnt-avatar (click)="router.navigate(['leader', 'users', member.user.id])"
+                        [image]="member.user.avatar"
+                        [size]="ui.sizes.tiny"></jnt-avatar>
+            <jnt-link (click)="user.setValue(member.user)" link>{{member.user.name}}</jnt-link>
+          </jnt-stack>
+        </td>
+        <ng-container *ngFor="let week of weeks"
+                      [attr.current-week]="(current | getISOWeek) === (week.date | getISOWeek)">
+
+          <td day *ngFor="let day of week.days" (click)="dueDate.setValue(day)">
+            <div metric>
+              <ng-container
+                *ngTemplateOutlet="dayMetricTemplate; context: {metric: metrics?.days?.get(member.user.id)?.get(format(day, formatDate))}"></ng-container>
+            </div>
+          </td>
+
+          <td *ngFor="let metric of metricLabels;let index = index;">
+            <ng-container *ngIf="metrics?.weeks?.get(member.user.id)?.get(format(week.date, formatDate)) as metric"
+                          [ngSwitch]="index">
+              <ng-container *ngSwitchCase="0">
+                {{metric?.timeEstimate | duration:durationFormat.short}}
+              </ng-container>
+              <ng-container *ngSwitchCase="1">
+                {{metric?.timeSpent | duration:durationFormat.short}}
+              </ng-container>
+              <ng-container *ngSwitchCase="2">
+                {{metric.efficiency | number:'1.2-2'}} x
+              </ng-container>
+            </ng-container>
+          </td>
+        </ng-container>
+      </tr>
+      </tbody>
+    </table>
+
+    <span *ngIf="!!user.value" (click)="filterForm.setValue({user: null, dueDate: null})">
+      {{user.value.name}} [{{format(dueDate.value, 'DD-MM-YYYY')}}]
+    </span>
+
+    <jnt-menu>
+      <jnt-menu-item link="issues" title="Issues"></jnt-menu-item>
+      <jnt-menu-item link="problems" title="Problems"></jnt-menu-item>
+    </jnt-menu>
+    <router-outlet></router-outlet>
+  </jnt-stack>
+
+</jnt-container>
+
+
+<ng-template #dayMetricTemplate let-metric="metric">
+  <jnt-circle-bar *ngIf="metric" circle
+                  [title]="'Spent: ' + (metric?.timeSpent | duration) + ', estimate: ' + (metric?.timeEstimate | duration) + ', loading: ' + (metric?.loading | duration)">
+    <jnt-bar-indicator-group>
+      <jnt-bar-indicator [color]="ui.colors.green"
+                         [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
+      </jnt-bar-indicator>
+      <jnt-bar-indicator [color]="ui.colors.yellow"
+                         [value]="metric.timeRemains | percentage:(metric.plannedWorkHours * 3600)">
+      </jnt-bar-indicator>
+    </jnt-bar-indicator-group>
+    <jnt-bar-indicator-group>
+      <jnt-bar-indicator [color]="ui.colors.red"
+                         [value]="metric.timeEstimate | percentage:(metric.plannedWorkHours * 3600)">
+      </jnt-bar-indicator>
+    </jnt-bar-indicator-group>
+    <jnt-bar-indicator-group>
+      <jnt-bar-indicator [color]="ui.colors.purpleDark"
+                         [value]="metric.loading | percentage:(metric.plannedWorkHours * 3600)">
+      </jnt-bar-indicator>
+    </jnt-bar-indicator-group>
+  </jnt-circle-bar>
+  <div class="issues" *ngIf="!!metric?.issuesCount"></div>
+</ng-template>

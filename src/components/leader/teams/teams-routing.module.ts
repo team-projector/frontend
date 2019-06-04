@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TeamComponent } from 'src/components/leader/dashboard/team/team.component';
-import { TeamsComponent } from 'src/components/leader/dashboard/teams/teams.component';
+import { TeamComponent } from 'src/components/leader/teams/team/team.component';
+import { TeamsComponent } from 'src/components/leader/teams/teams.component';
 import { TeamMembersResolver } from 'src/resolvers/team-members';
-import { TeamProblemsListComponent } from 'src/components/leader/dashboard/team/issues/problems-list/problems-list.component';
+import { TeamProblemsListComponent } from 'src/components/leader/teams/team/issues/problems-list/problems-list.component';
 import { TeamResolver } from 'src/resolvers/team';
-import { TeamIssuesListComponent } from 'src/components/leader/dashboard/team/issues/issues-list/issues-list.component';
+import { TeamIssuesListComponent } from 'src/components/leader/teams/team/issues/issues-list/issues-list.component';
 import { OutletComponent } from 'src/components/outlet/outlet.component';
 import { UserResolver } from 'src/resolvers/user';
 import { DueDateResolver } from 'src/resolvers/due-date';

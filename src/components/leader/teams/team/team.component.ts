@@ -68,7 +68,6 @@ export class TeamComponent implements OnInit {
   weeks: Week[] = [];
   metrics: Metric;
   metricLabels = ['Est', 'Sp', 'Ef'];
-  weekDayLabels = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
   current: Date = startOfDay(new Date());
 
   set date(date: Date) {

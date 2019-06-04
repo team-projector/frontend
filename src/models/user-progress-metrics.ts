@@ -70,8 +70,9 @@ export class UserProgressMetrics {
   paid: number;
 
   @Field()
+  @Name('issues_count')
   @MockFieldNested('{{int 50 1000}}')
-  issues_count: number;
+  issuesCount: number;
 
   getKey(): string {
     return format(this.start, 'DD/MM/YYYY');
