@@ -4,12 +4,18 @@
       <app-team-calendar formControlName="filter" [team]="team"></app-team-calendar>
     </form>
 
-    <div filter *ngIf="filter.value.user || filter.value.dueDate">
-      <ng-container *ngIf="filter.value.user">{{filter.value.user.name}}</ng-container>
-      <ng-container *ngIf="filter.value.dueDate"> {{filter.value.dueDate | date}}</ng-container>
-      <jnt-icon icon [icon]="ui.icons.close"
-                (click)="filter.patchValue({user: null, dueDate: null})"></jnt-icon>
-    </div>
+    <jnt-stack [type]="ui.stack.type.horizontal">
+      <div filter *ngIf="filter.value.user">
+        {{filter.value.user.name}}
+        <jnt-icon icon [icon]="ui.icons.close"
+                  (click)="filter.patchValue({user: null, dueDate: filter.value.dueDate})"></jnt-icon>
+      </div>
+      <div filter *ngIf="filter.value.dueDate">
+        {{filter.value.dueDate | date}}
+        <jnt-icon icon [icon]="ui.icons.close"
+                  (click)="filter.patchValue({user: filter.value.user,  dueDate: null})"></jnt-icon>
+      </div>
+    </jnt-stack>
 
     <jnt-menu>
       <jnt-menu-item link="issues" title="Issues"></jnt-menu-item>
