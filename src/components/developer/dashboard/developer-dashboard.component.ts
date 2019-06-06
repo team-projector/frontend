@@ -1,14 +1,14 @@
-import { Component, Inject, OnInit } from '@angular/core';
-import { format } from 'date-fns';
-import { FormBuilder, FormControl } from '@angular/forms';
-import { IMetricsService, metrics_service } from 'src/services/metrics/interface';
-import { ActivatedRoute, Router } from '@angular/router';
-import { distinctUntilChanged, filter } from 'rxjs/operators';
-import { MetricsGroup, UserProgressMetrics } from 'src/models/user-progress-metrics';
-import { User } from 'src/models/user';
-import { BehaviorSubject, combineLatest, zip } from 'rxjs';
-import { Period } from 'junte-ui/lib/components/calendar/models';
-import { UI } from 'junte-ui';
+import {Component, Inject, OnInit} from '@angular/core';
+import {format} from 'date-fns';
+import {FormBuilder, FormControl} from '@angular/forms';
+import {IMetricsService, metrics_service} from 'src/services/metrics/interface';
+import {ActivatedRoute, Router} from '@angular/router';
+import {distinctUntilChanged, filter} from 'rxjs/operators';
+import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metrics';
+import {User} from 'src/models/user';
+import {BehaviorSubject, combineLatest, zip} from 'rxjs';
+import {Period} from 'junte-ui/lib/components/calendar/models';
+import {UI} from 'junte-ui';
 import {DurationFormat} from '../../../pipes/date';
 
 const L = 'DD/MM/YYYY';
@@ -50,7 +50,7 @@ export class DeveloperDashboardComponent implements OnInit {
     new Map<string, UserProgressMetrics>(),
     new Map<string, UserProgressMetrics>()
   );
-  dueDate = new FormControl(new Date());
+  dueDate = new FormControl();
   filterForm = this.formBuilder.group({dueDate: this.dueDate});
 
   constructor(@Inject(metrics_service) private metricsService: IMetricsService,
@@ -66,9 +66,16 @@ export class DeveloperDashboardComponent implements OnInit {
     });
 
     this.dueDate.valueChanges.pipe(distinctUntilChanged())
-      .subscribe(date => this.router.navigate(
-        [{due_date: format(date, 'MM-DD-YYYY')}, 'issues'],
-        {relativeTo: this.route})
+      .subscribe(dueDate => {
+          // TODO: more optimal
+          const state = {};
+          if (!!dueDate) {
+            state['due_date'] = format(dueDate, 'MM-DD-YYYY');
+          }
+          this.router.navigate(
+            [state, 'issues'],
+            {relativeTo: this.route});
+        }
       );
 
     combineLatest(this.user$, this.period$)

@@ -51,10 +51,13 @@ export class TeamComponent implements OnInit {
     this.filter.valueChanges.pipe(distinctUntilChanged())
       .subscribe(filter => {
         // TODO: more optimal
-        const state = {
-          user: !!filter.user ? filter.user.id : null,
-          due_date: !!filter.dueDate ? format(filter.dueDate, 'MM-DD-YYYY') : null
-        };
+        const state = {};
+        if (!!filter.user) {
+          state['user'] = filter.user.id;
+        }
+        if (!!filter.dueDate) {
+          state['due_date'] = format(filter.dueDate, 'MM-DD-YYYY');
+        }
         this.router.navigate([state, 'issues'],
           {relativeTo: this.route});
       });

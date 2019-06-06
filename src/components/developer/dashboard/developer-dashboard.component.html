@@ -18,10 +18,13 @@
             <ng-template #metricTemplate let-metric="metric" let-date="date">
               <ng-container *ngIf="metrics.weeks.get(format(date, formatDate)) as weekMetric">
                 <ng-container [ngSwitch]="metric">
-                  <ng-container *ngSwitchCase="0">{{weekMetric.timeEstimate | duration:durationFormat.short}}</ng-container>
-                  <ng-container *ngSwitchCase="1">{{weekMetric.timeSpent | duration:durationFormat.short}}</ng-container>
+                  <ng-container *ngSwitchCase="0">{{weekMetric.timeEstimate | duration:durationFormat.short}}
+                  </ng-container>
+                  <ng-container *ngSwitchCase="1">{{weekMetric.timeSpent | duration:durationFormat.short}}
+                  </ng-container>
                   <ng-container *ngSwitchCase="2">{{weekMetric.efficiency | number:'1.2-2'}}x</ng-container>
-                  <ng-container *ngSwitchCase="3">{{weekMetric.payroll | currency:'RUB':'symbol':'4.0-0'}}</ng-container>
+                  <ng-container *ngSwitchCase="3">{{weekMetric.payroll | currency:'RUB':'symbol':'4.0-0'}}
+                  </ng-container>
                   <ng-container *ngSwitchCase="4">{{weekMetric.paid | currency:'RUB':'symbol':'4.0-0'}}</ng-container>
                 </ng-container>
               </ng-container>
@@ -30,6 +33,12 @@
         </jnt-block>
       </jnt-stack>
     </form>
+
+    <div filter *ngIf="dueDate.value">
+      {{dueDate.value | date}}
+      <jnt-icon icon [icon]="ui.icons.close"
+                (click)="dueDate.patchValue(null)"></jnt-icon>
+    </div>
 
     <jnt-menu>
       <jnt-menu-item link="issues" title="Issues"></jnt-menu-item>
@@ -41,7 +50,8 @@
 </jnt-container>
 
 <ng-template #dayMetricTemplate let-metric="metric" let-date="date">
-  <jnt-circle-bar class="metric" [title]="'Spent: ' + (metric?.timeSpent | duration) + ', estimate: ' + (metric?.timeEstimate | duration) + ', loading: ' + (metric?.loading | duration)">
+  <jnt-circle-bar class="metric"
+                  [title]="'Spent: ' + (metric?.timeSpent | duration) + ', estimate: ' + (metric?.timeEstimate | duration) + ', loading: ' + (metric?.loading | duration)">
     <ng-template #content>{{date | getDate}}</ng-template>
     <jnt-bar-indicator-group>
       <jnt-bar-indicator *ngIf="metric?.timeSpent" [color]="ui.colors.green"
