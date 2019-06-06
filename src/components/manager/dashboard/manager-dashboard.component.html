@@ -7,10 +7,6 @@
           <small>{{owner?.presentation}}</small>
         </ng-template>
       </jnt-table-column>
-      <jnt-table-column title="Owner">
-        <ng-template #cellTemplate let-owner="owner">
-        </ng-template>
-      </jnt-table-column>
       <jnt-table-column title="Budget">
         <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
           {{budget | currency:'RUB'}} / {{metrics.budgetRemains | currency:'RUB'}}
