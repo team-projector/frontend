@@ -13,6 +13,6 @@ export class TeamMembersResolver implements Resolve<Observable<PagingTeamMembers
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<PagingTeamMembers> {
     const team = +route.params['team'];
-    return !!team ? this.teamsService.teamMembers(team) : null;
+    return !!team ? this.teamsService.members(team) : null;
   }
 }

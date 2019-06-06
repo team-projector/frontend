@@ -13,6 +13,6 @@ export class TeamResolver implements Resolve<Observable<Team>> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<Team> {
     const team = +route.params['team'];
-    return !!team ? this.teamsService.getTeam(team) : null;
+    return !!team ? this.teamsService.get(team) : null;
   }
 }

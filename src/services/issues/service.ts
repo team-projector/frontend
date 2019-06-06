@@ -4,7 +4,7 @@ import {HttpService} from 'junte-angular';
 import {Observable} from 'rxjs';
 import {deserialize} from 'serialize-ts';
 import {map} from 'rxjs/operators';
-import {IssuesFilter, PagingIssues} from '../../models/issue';
+import {IssuesFilter, PagingIssues, PagingTeamIssues} from '../../models/issue';
 import {encodeModel} from '../../utils/http';
 import {IssueProblemsFilter, PagingIssueProblems} from '../../models/problem';
 import {HttpParams} from '@angular/common/http';
@@ -18,7 +18,8 @@ export class IssuesService implements IIssuesService {
   }
 
   list(filter: IssuesFilter): Observable<PagingIssues> {
-    return this.http.get('issues', encodeModel(filter))
+    // TODO: refactor API
+    return this.http.get(filter.team ? `teams/${filter.team}/issues` : 'issues', encodeModel(filter))
       .pipe(map(obj => deserialize(obj, PagingIssues)));
   }
 

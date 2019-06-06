@@ -1,18 +1,19 @@
-import { Component, forwardRef, Inject, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Team, TeamMemberCard } from 'src/models/team';
-import { UI } from 'junte-ui';
-import { addDays, addWeeks, format, startOfDay, startOfWeek, subWeeks } from 'date-fns';
-import { distinctUntilChanged, filter } from 'rxjs/operators';
-import { BehaviorSubject, zip } from 'rxjs';
-import { MetricsGroup, UserProgressMetrics } from 'src/models/user-progress-metrics';
-import { DurationFormat } from 'src/pipes/date';
-import { Period } from 'junte-ui/lib/components/calendar/models';
-import { IMetricsService, metrics_service } from 'src/services/metrics/interface';
-import { Router } from '@angular/router';
-import { isUndefined } from 'util';
-import { UserCard } from 'src/models/user';
-import { ITeamsService, teams_service } from 'src/services/teams/interface';
+import {Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
+import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Team, TeamMemberCard} from 'src/models/team';
+import {UI} from 'junte-ui';
+import {addDays, addWeeks, format, startOfDay, startOfWeek, subWeeks} from 'date-fns';
+import {distinctUntilChanged, filter} from 'rxjs/operators';
+import {BehaviorSubject, zip} from 'rxjs';
+import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metrics';
+import {DurationFormat} from 'src/pipes/date';
+import {Period} from 'junte-ui/lib/components/calendar/models';
+import {IMetricsService, metrics_service} from 'src/services/metrics/interface';
+import {Router} from '@angular/router';
+import {isUndefined} from 'util';
+import {UserCard} from 'src/models/user';
+import {ITeamsService, teams_service} from 'src/services/teams/interface';
+import {equals} from '../../../../utils/equals';
 
 const WEEKS_DISPLAYED = 2;
 const DAYS_IN_WEEK = 7;
@@ -51,26 +52,23 @@ class Metric {
 export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   ui = UI;
+  subWeeks = subWeeks;
+  addWeeks = addWeeks;
+  format = format;
   durationFormat = DurationFormat;
 
   private period$ = new BehaviorSubject<Period>(null);
   private _team: Team;
   private _date: Date;
 
-  subWeeks = subWeeks;
-  addWeeks = addWeeks;
-  format = format;
   formatDate = L;
   weeks: Week[] = [];
   metrics: Metric;
   metricLabels = ['Est', 'Sp', 'Ef'];
 
-  user: FormControl = new FormControl(null);
-  dueDate: FormControl = new FormControl(null);
-
-  filterUser: FormGroup = this.fb.group({
-    dueDate: this.dueDate,
-    user: this.user
+  form: FormGroup = this.fb.group({
+    dueDate: [],
+    user: []
   });
 
   members: TeamMemberCard[] = [];
@@ -78,9 +76,11 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   @Input()
   set team(team: Team) {
-    this._team = team;
-    if (!!team) {
-      this.loadMembers();
+    if (!equals(this._team, team)) {
+      this._team = team;
+      if (!!team) {
+        this.loadMembers();
+      }
     }
   }
 
@@ -104,7 +104,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   }
 
   ngOnInit() {
-    this.filterUser.valueChanges.pipe(distinctUntilChanged())
+    this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(f => this.onChange(f));
 
     this.period$.pipe(filter(period => !!period))
@@ -118,7 +118,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   }
 
   private loadMembers() {
-    this.teamsService.teamMembers(this.team.id)
+    this.teamsService.members(this.team.id)
       .subscribe(members => this.members = members.results);
   }
 
@@ -138,7 +138,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   writeValue(value: UserFilter) {
     if (!isUndefined(value)) {
-      this.filterUser.patchValue({user: value.user, dueDate: value.dueDate}, {emitEvent: false});
+      this.form.patchValue({user: value.user, dueDate: value.dueDate}, {emitEvent: false});
     }
   }
 

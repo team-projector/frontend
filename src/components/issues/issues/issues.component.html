@@ -2,21 +2,29 @@
   <jnt-table #table [search]="true">
     <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
       <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
-                   let-participants="participants">
-        <jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap" [gutter]="ui.stack.gutter.small">
+                   let-participants="participants" let-project="project">
+        <jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap"
+                   [gutter]="ui.stack.gutter.small">
           <jnt-avatars-list>
             <jnt-avatar *ngFor="let p of participants"
                         [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>
           </jnt-avatars-list>
-          <jnt-link [source]=url target="_blank" [class.closed]="state == issuesState.closed">{{title}}</jnt-link>
+          <div>
+            <jnt-link [source]=url target="_blank"
+                      [class.closed]="state == issuesState.closed">
+              {{title}}
+            </jnt-link>
+            <br>
+            <small>{{project.presentation}}</small>
+          </div>
           <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
         </jnt-stack>
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column i18n-title="@@issue_project" title="Project">
-      <ng-template #cellTemplate let-project="project">
-        {{project.presentation}}
+    <jnt-table-column *ngIf="!dueDate" i18n-title="@@dueDate" title="Due date">
+      <ng-template #cellTemplate let-dueDate="dueDate">
+        {{dueDate | date}}
       </ng-template>
     </jnt-table-column>
 

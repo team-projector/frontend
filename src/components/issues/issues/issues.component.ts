@@ -1,10 +1,10 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { IssuesFilter, IssueState } from 'src/models/issue';
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
-import { IIssuesService, issues_service } from 'src/services/issues/interface';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { distinctUntilChanged, filter as filtering } from 'rxjs/operators';
-import { TableComponent, UI } from 'junte-ui';
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {IssuesFilter, IssueState} from 'src/models/issue';
+import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
+import {IIssuesService, issues_service} from 'src/services/issues/interface';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {distinctUntilChanged, filter as filtering} from 'rxjs/operators';
+import {TableComponent, UI} from 'junte-ui';
 
 @Component({
   selector: 'app-issues',
@@ -17,17 +17,35 @@ export class IssuesComponent implements OnInit {
 
   issuesState = IssueState;
 
+  private team$ = new BehaviorSubject<number>(null);
   private user$ = new BehaviorSubject<number>(null);
   private dueDate$ = new BehaviorSubject<Date>(null);
+
+  @Input()
+  set team(team: number) {
+    this.team$.next(team);
+  }
+
+  get team() {
+    return this.team$.getValue();
+  }
 
   @Input()
   set user(user: number) {
     this.user$.next(user);
   }
 
+  get user() {
+    return this.user$.getValue();
+  }
+
   @Input()
   set dueDate(dueDate: Date) {
     this.dueDate$.next(dueDate);
+  }
+
+  get dueDate() {
+    return this.dueDate$.getValue();
   }
 
   filter: IssuesFilter = new IssuesFilter({page: DEFAULT_PAGE, pageSize: DEFAULT_PAGE_SIZE});
@@ -40,12 +58,14 @@ export class IssuesComponent implements OnInit {
   }
 
   ngOnInit() {
-    combineLatest(this.user$, this.dueDate$)
-      .pipe(filtering(([user, dueDate]) => !!user && !!dueDate), distinctUntilChanged())
-      .subscribe(([user, dueDate]) => {
+    combineLatest(this.team$, this.user$, this.dueDate$)
+      .pipe(distinctUntilChanged())
+      .subscribe(([team, user, dueDate]) => {
+        this.filter.team = team;
         this.filter.user = user;
         this.filter.dueDate = dueDate;
-        this.table.fetcher = (filter: IssuesFilter) => this.issuesService.list(Object.assign(this.filter, filter));
+        this.table.fetcher = (filter: IssuesFilter) =>
+          this.issuesService.list(Object.assign(this.filter, filter));
         this.table.load();
       });
   }

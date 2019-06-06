@@ -2,13 +2,13 @@
   <jnt-block [fluid]="true">
     <jnt-table #table [search]="true">
       <jnt-table-column title="Title">
-        <ng-template #cellTemplate let-title="title">
-          {{title}}
+        <ng-template #cellTemplate let-title="title" let-owner="owner">
+          {{title}}<br>
+          <small>{{owner?.presentation}}</small>
         </ng-template>
       </jnt-table-column>
       <jnt-table-column title="Owner">
         <ng-template #cellTemplate let-owner="owner">
-          {{owner?.presentation}}
         </ng-template>
       </jnt-table-column>
       <jnt-table-column title="Budget">

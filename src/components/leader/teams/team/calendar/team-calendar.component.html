@@ -40,13 +40,13 @@
           <jnt-avatar (click)="router.navigate(['leader', 'users', member.user.id])"
                       [image]="member.user.avatar"
                       [size]="ui.sizes.tiny"></jnt-avatar>
-          <jnt-link (click)="user.patchValue(member.user)" link>{{member.user.name}}</jnt-link>
+          <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>
         </jnt-stack>
       </td>
       <ng-container *ngFor="let week of weeks"
                     [attr.current-week]="(current | getISOWeek) === (week.date | getISOWeek)">
 
-        <td day *ngFor="let day of week.days" (click)="filterUser.patchValue({user: member.user, dueDate: day})">
+        <td day *ngFor="let day of week.days" (click)="form.patchValue({user: member.user, dueDate: day})">
           <div metric>
             <ng-container
               *ngTemplateOutlet="dayMetricTemplate; context: {metric: metrics?.days?.get(member.user.id)?.get(format(day, formatDate))}"></ng-container>
@@ -71,7 +71,9 @@
     </tr>
   </ng-container>
   <ng-template #noData>
-    <tr><td no-data colspan="21">No Data</td></tr>
+    <tr>
+      <td no-data colspan="21">No Data</td>
+    </tr>
   </ng-template>
   </tbody>
 </table>
@@ -99,7 +101,5 @@
   </jnt-circle-bar>
   <div class="issues" *ngIf="!!metric?.issuesCount"></div>
 </ng-template>
-<span *ngIf="!!user?.value" (click)="filterUser.patchValue({user: null, dueDate: null})">
-{{user.value.name}} [{{dueDate?.value ? format(dueDate.value, 'DD-MM-YYYY') : '-'}}]
-</span>
+
 

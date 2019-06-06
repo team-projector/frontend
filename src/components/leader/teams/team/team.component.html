@@ -1,9 +1,16 @@
 <jnt-container [fluid]="true">
   <jnt-stack>
-    <jnt-form [formGroup]="filterUser">
-      <app-team-calendar formControlName="filter" *ngIf="!!team" [team]="team">
-      </app-team-calendar>
-    </jnt-form>
+    <form [formGroup]="form">
+      <app-team-calendar formControlName="filter" [team]="team"></app-team-calendar>
+    </form>
+
+    <div filter *ngIf="filter.value.user || filter.value.dueDate">
+      <ng-container *ngIf="filter.value.user">{{filter.value.user.name}}</ng-container>
+      <ng-container *ngIf="filter.value.dueDate"> {{filter.value.dueDate | date}}</ng-container>
+      <jnt-icon icon [icon]="ui.icons.close"
+                (click)="filter.patchValue({user: null, dueDate: null})"></jnt-icon>
+    </div>
+
     <jnt-menu>
       <jnt-menu-item link="issues" title="Issues"></jnt-menu-item>
       <jnt-menu-item link="problems" title="Problems"></jnt-menu-item>

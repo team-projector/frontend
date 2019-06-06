@@ -178,6 +178,9 @@ export class IssuesFilter implements SearchFilter {
   user?: number;
 
   @Field()
+  team?: number;
+
+  @Field()
   @Name('q')
   query?: string;
 

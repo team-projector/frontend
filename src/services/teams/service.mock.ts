@@ -18,7 +18,7 @@ export class TeamsMockService implements ITeamsService {
   constructor(private http: HttpMockService) {
   }
 
-  getTeam(team: number): Observable<Team> {
+  get(team: number): Observable<Team> {
     return this.http.get('teams/team.json')
       .pipe(map(obj => deserialize(obj, Team)));
   }
@@ -33,12 +33,7 @@ export class TeamsMockService implements ITeamsService {
       .pipe(map(obj => deserialize(obj, PagingErrorCard)));
   }
 
-  issues(team: number, filter: TeamIssueFilter): Observable<PagingTeamIssues> {
-    return this.http.get('teams/list-issues.json')
-      .pipe(map(obj => deserialize(obj, PagingTeamIssues)));
-  }
-
-  teamMembers(team: number): Observable<PagingTeamMembers> {
+  members(team: number): Observable<PagingTeamMembers> {
     return this.http.get('teams/team-members.json')
       .pipe(map(obj => deserialize(obj, PagingTeamMembers)));
   }

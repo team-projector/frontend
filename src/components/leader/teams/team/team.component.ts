@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { UI } from 'junte-ui';
-import { ActivatedRoute, Router } from '@angular/router';
-import { format } from 'date-fns';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { BehaviorSubject } from 'rxjs';
-import { Team } from 'src/models/team';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
+import {UI} from 'junte-ui';
+import {ActivatedRoute, Router} from '@angular/router';
+import {format} from 'date-fns';
+import {distinctUntilChanged} from 'rxjs/operators';
+import {BehaviorSubject} from 'rxjs';
+import {Team} from 'src/models/team';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 class Params {
   constructor(defs: any = null) {
@@ -28,14 +28,10 @@ export class TeamComponent implements OnInit {
 
   private team$ = new BehaviorSubject<Team>(null);
 
-  dueDate = new FormControl(new Date());
-  user = new FormControl(null);
+  filter = new FormControl();
 
-  filterUser: FormGroup = this.fb.group({
-    filter: new FormControl({
-      dueDate: this.dueDate,
-      user: this.user
-    })
+  form: FormGroup = this.formBuilder.group({
+    filter: this.filter
   });
 
   set team(team: Team) {
@@ -46,27 +42,31 @@ export class TeamComponent implements OnInit {
     return this.team$.getValue();
   }
 
-  constructor(private fb: FormBuilder,
+  constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
   }
 
   ngOnInit() {
-    this.filterUser.valueChanges.pipe(distinctUntilChanged())
-      .subscribe(f => {
-        const params = new Params({
-          user: !!f.filter.user ? f.filter.user.id : null,
-          due_date: !!f.filter.dueDate ? format(f.filter.dueDate, 'MM-DD-YYYY') : null
-        });
-        this.router.navigate([params, 'issues'],
+    this.filter.valueChanges.pipe(distinctUntilChanged())
+      .subscribe(filter => {
+        // TODO: more optimal
+        const state = {
+          user: !!filter.user ? filter.user.id : null,
+          due_date: !!filter.dueDate ? format(filter.dueDate, 'MM-DD-YYYY') : null
+        };
+        this.router.navigate([state, 'issues'],
           {relativeTo: this.route});
       });
 
     this.route.data.subscribe(({team, dueDate, user}) => {
-      if (!!team) {
-        this.team = team;
-      }
-      this.filterUser.patchValue({filter: {user: user, dueDate: dueDate}}, {emitEvent: false});
+      this.team = team;
+      this.form.patchValue({
+        filter: {
+          user: user,
+          dueDate: dueDate
+        }
+      }, {emitEvent: false});
     });
   }
 }
