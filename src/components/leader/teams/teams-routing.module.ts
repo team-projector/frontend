@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TeamComponent } from 'src/components/leader/teams/team/team.component';
 import { TeamsComponent } from 'src/components/leader/teams/teams.component';
-import { TeamMembersResolver } from 'src/resolvers/team-members';
 import { TeamProblemsListComponent } from 'src/components/leader/teams/team/issues/problems-list/problems-list.component';
 import { TeamResolver } from 'src/resolvers/team';
 import { TeamIssuesListComponent } from 'src/components/leader/teams/team/issues/issues-list/issues-list.component';
@@ -22,13 +21,13 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: TeamsComponent,
+        component: TeamsComponent
       },
       {
         path: ':team',
         component: TeamComponent,
         data: {breadcrumb: getTeam},
-        resolve: {members: TeamMembersResolver, team: TeamResolver, user: UserResolver, dueDate: DueDateResolver},
+        resolve: {team: TeamResolver, user: UserResolver, dueDate: DueDateResolver},
         children: [
           {
             path: '',

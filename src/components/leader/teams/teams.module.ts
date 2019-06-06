@@ -13,6 +13,8 @@ import { TeamProblemsListComponent } from 'src/components/leader/teams/team/issu
 import { TeamIssuesListComponent } from 'src/components/leader/teams/team/issues/issues-list/issues-list.component';
 import { OutletModule } from 'src/components/outlet/outlet.module';
 import { UserResolver } from 'src/resolvers/user';
+import { TeamCalendarComponent } from 'src/components/leader/teams/team/team-calendar/team-calendar.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -22,10 +24,12 @@ import { UserResolver } from 'src/resolvers/user';
     TeamIssuesComponent,
     TeamProblemsListComponent,
     TeamIssuesListComponent,
+    TeamCalendarComponent,
     PercentagePipe
   ],
   imports: [
     CommonModule,
+    RouterModule,
     TeamsRoutingModule,
     JunteUiModule,
     DatePipesModule,
@@ -37,6 +41,7 @@ import { UserResolver } from 'src/resolvers/user';
     TeamIssuesProblemComponent,
     TeamIssuesComponent,
     TeamProblemsListComponent,
+    TeamCalendarComponent,
     TeamIssuesListComponent,
     PercentagePipe
   ],
