@@ -44,7 +44,7 @@ const routes: Routes = [
             path: 'problems',
             data: {breadcrumb: 'Problems'},
             component: TeamProblemsListComponent,
-            resolve: {team: TeamResolver, user: UserResolver, dueDate: DueDateResolver}
+            resolve: {user: UserResolver}
           }
         ]
       }
