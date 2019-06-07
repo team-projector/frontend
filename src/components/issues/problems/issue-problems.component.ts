@@ -1,11 +1,11 @@
 import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { IssuesFilter, IssueState } from 'src/models/issue';
+import { IssueState } from 'src/models/issue';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
 import { IIssuesService, issues_service } from 'src/services/issues/interface';
 import { BehaviorSubject } from 'rxjs';
-import { filter as filtering } from 'rxjs/operators';
 import { IssueProblemsFilter, IssueProblemType } from 'src/models/problem';
 import { TableComponent, UI } from 'junte-ui';
+import { filter as filtering } from 'rxjs/operators';
 
 @Component({
   selector: 'app-issue-problems',
@@ -38,7 +38,8 @@ export class IssueProblemsComponent implements OnInit {
   ngOnInit() {
     this.user$.pipe(filtering(u => !!u))
       .subscribe((user) => {
-        this.table.fetcher = (filter: IssuesFilter) => this.issuesService.problemsForUser(user, Object.assign(this.filter, filter));
+        this.table.fetcher = (filter: IssueProblemsFilter) =>
+          this.issuesService.problemsForUser(user, Object.assign(this.filter, filter));
         this.table.load();
       });
   }
