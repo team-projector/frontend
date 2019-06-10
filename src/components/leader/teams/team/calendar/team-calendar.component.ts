@@ -70,7 +70,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   private _team: Team;
   private _date: Date;
 
-  metric = MetricType.estimate;
+  metric = MetricType.all;
   formatDate = L;
   weeks: Week[] = [];
   metrics: Metric;
