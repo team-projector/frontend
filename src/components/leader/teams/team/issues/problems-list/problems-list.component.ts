@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserCard } from 'src/models/user';
-import { Team } from 'src/models/team';
 
 @Component({
   selector: 'app-team-list-problems-component',
@@ -12,15 +11,12 @@ import { Team } from 'src/models/team';
 export class TeamProblemsListComponent implements OnInit {
 
   user: UserCard;
-  team: Team;
-  dueDate: Date;
 
   constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(({team, dueDate, user}) =>
-      [this.team, this.dueDate, this.user] = [team, dueDate, user]);
+    this.route.data.subscribe(({user}) => this.user = user);
   }
 
 }

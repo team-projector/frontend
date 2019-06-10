@@ -4,6 +4,13 @@
   display: block;
 }
 
+[presentations] {
+  div {
+    padding: 0 $gutter-normal;
+    background-color: silver;
+  }
+}
+
 table {
   table-layout: auto;
   border: 0;

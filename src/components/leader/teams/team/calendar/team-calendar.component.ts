@@ -19,6 +19,14 @@ const WEEKS_DISPLAYED = 2;
 const DAYS_IN_WEEK = 7;
 const L = 'DD/MM/YYYY';
 
+export enum MetricType {
+  all = 'all',
+  spent = 'spent',
+  estimate = 'estimate',
+  remains = 'Remains',
+  loading = 'Loading'
+}
+
 export class UserFilter {
   user: UserCard;
   dueDate: Date;
@@ -56,11 +64,14 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   addWeeks = addWeeks;
   format = format;
   durationFormat = DurationFormat;
+  metricType = MetricType;
+  durationFormat = DurationFormat;
 
   private period$ = new BehaviorSubject<Period>(null);
   private _team: Team;
   private _date: Date;
 
+  metric = MetricType.estimate;
   formatDate = L;
   weeks: Week[] = [];
   metrics: Metric;
@@ -155,4 +166,5 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   registerOnTouched(fn) {
     this.onTouched = fn;
   }
+
 }
