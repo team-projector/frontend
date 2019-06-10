@@ -38,13 +38,11 @@ const routes: Routes = [
             path: 'issues',
             data: {breadcrumb: 'Issues'},
             component: TeamIssuesListComponent,
-            resolve: {team: TeamResolver, user: UserResolver, dueDate: DueDateResolver}
           },
           {
             path: 'problems',
             data: {breadcrumb: 'Problems'},
-            component: TeamProblemsListComponent,
-            resolve: {user: UserResolver}
+            component: TeamProblemsListComponent
           }
         ]
       }
