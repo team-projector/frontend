@@ -8,19 +8,23 @@
 <table>
   <thead>
   <tr rewind>
-    <td></td>
-    <td colspan="10" prev>
-      <button arrow (click)="date = subWeeks(date, 1)">
-        <jnt-icon [icon]="ui.icons.arrowLeft"></jnt-icon>
-      </button>
-      {{weeks[0].days[0] | getDate}}-{{weeks[0].days[6] | getDate}} {{date | format: 'MMMM'}}
-    </td>
-    <td colspan="10" next>
-      {{weeks[1].days[0] | getDate}}-{{weeks[1].days[6] | getDate}} {{date | format: 'MMMM'}}
-      <button arrow (click)="date = addWeeks(date, 1)">
-        <jnt-icon [icon]="ui.icons.arrowRight"></jnt-icon>
-      </button>
-    </td>
+    <th></th>
+    <th colspan="10">
+      <div date>
+        <button arrow (click)="date = subWeeks(date, 1)">
+          <jnt-icon [icon]="ui.icons.arrowLeft"></jnt-icon>
+        </button>
+        <span>{{weeks[0].days[0] | getDate}}-{{weeks[0].days[6] | getDate}} {{date | format: 'MMMM'}}</span>
+      </div>
+    </th>
+    <th colspan="10">
+      <div date>
+        <span>{{weeks[1].days[0] | getDate}}-{{weeks[1].days[6] | getDate}} {{date | format: 'MMMM'}}</span>
+        <button arrow (click)="date = addWeeks(date, 1)">
+          <jnt-icon [icon]="ui.icons.arrowRight"></jnt-icon>
+        </button>
+      </div>
+    </th>
   </tr>
   <tr timeline>
     <th>Developer</th>
@@ -77,9 +81,21 @@
     </tr>
   </ng-container>
   <ng-template #noData>
-    <tr>
-      <td no-data colspan="21">No Data</td>
-    </tr>
+    <ng-container *ngIf="!loading; else skeleton">
+      <tr nodata>
+        <td [attr.colspan]="21">
+          <jnt-icon [icon]="ui.icons.nodata" icon></jnt-icon>
+          <div message>No rows here</div>
+        </td>
+      </tr>
+    </ng-container>
+    <ng-template #skeleton>
+      <tr loading>
+        <td [attr.colspan]="21">
+          <jnt-skeleton [title]="false" [rows]="3"></jnt-skeleton>
+        </td>
+      </tr>
+    </ng-template>
   </ng-template>
   </tbody>
 </table>

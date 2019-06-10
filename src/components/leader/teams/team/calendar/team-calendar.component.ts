@@ -3,7 +3,7 @@ import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from 
 import { Team, TeamMemberCard } from 'src/models/team';
 import { UI } from 'junte-ui';
 import { addDays, addWeeks, format, startOfDay, startOfWeek, subWeeks } from 'date-fns';
-import { distinctUntilChanged, filter } from 'rxjs/operators';
+import {distinctUntilChanged, filter, finalize} from 'rxjs/operators';
 import { BehaviorSubject, zip } from 'rxjs';
 import { MetricsGroup, UserProgressMetrics } from 'src/models/user-progress-metrics';
 import { DurationFormat } from 'src/pipes/date';
@@ -75,6 +75,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   weeks: Week[] = [];
   metrics: Metric;
   metricLabels = ['Est', 'Sp', 'Ef'];
+  loading: boolean;
 
   form: FormGroup = this.fb.group({
     dueDate: [],
@@ -128,7 +129,9 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   }
 
   private loadMembers() {
+    this.loading = true;
     this.teamsService.members(this.team.id)
+      .pipe(finalize(() => this.loading = false))
       .subscribe(members => this.members = members.results);
   }
 

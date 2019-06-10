@@ -15,36 +15,48 @@ table {
   table-layout: auto;
   border: 0;
   border-spacing: 0;
-  box-shadow: $base-shadow;
+  box-shadow: $shadow-primary;
   background-color: $white-color;
   border-radius: $corner-normal;
-  font-size: $font-size-sm;
+  font-size: $font-size-small;
   padding: $gutter-normal 0;
-  tr {
-    [no-data] {
-      text-align: center;
-    }
-    td:first-child {
-      padding-left: $gutter-normal;
-    }
-    td:last-child {
-      padding-right: $gutter-normal;
-    }
-    /**th {
-      border: 0;
-      padding: $gutter-small $gutter-tiny;
-      [metric] {
-        color: $primary-dark-color;
-        font-weight: $font-weight-bold;
-      }
-    }**/
-  }
-
   thead {
     tr {
       &[rewind] {
-        td {
-          padding: 0 0 $gutter-normal 0;
+        th {
+          padding: 0 $gutter-tiny $gutter-normal $gutter-tiny;
+          [date] {
+            display: flex;
+            color: $gray-dark;
+            font-weight: $font-weight-bold;
+            span {
+              margin: auto;
+            }
+            [arrow] {
+              background-color: transparent;
+              border-width: 0;
+              font-size: 1rem;
+              color: $text-color;
+              cursor: pointer;
+              padding: 0;
+              vertical-align: middle;
+              border-radius: 50%;
+              width: 25px;
+              height: 25px;
+              display: inline-flex;
+              justify-content: center;
+              align-items: center;
+              transition: box-shadow .3s;
+              &:focus {
+                outline: none;
+                box-shadow: 0 0 6px rgba(8, 35, 202, 0.4);;
+                border: 1px solid $primary-color;
+              }
+              &:hover {
+                color: lighten($text-color, 10%);
+              }
+            }
+          }
         }
       }
       &[timeline] {
@@ -54,48 +66,54 @@ table {
         }
       }
     }
-    [prev] {
-      text-align: left;
-    }
-    [next] {
-      text-align: right;
-    }
-    [arrow] {
-      background-color: transparent;
-      border-width: 0;
-      font-size: 1rem;
-      color: $text-color;
-      cursor: pointer;
-      padding: 0;
-      vertical-align: middle;
-      border-radius: 50%;
-      width: 25px;
-      height: 25px;
-      display: inline-flex;
-      justify-content: center;
-      align-items: center;
-      transition: box-shadow .3s;
-      &:focus {
-        outline: none;
-        box-shadow: 0 0 6px rgba(8, 35, 202, 0.4);;
-        border: 1px solid $primary-color;
-      }
-      &:hover {
-        color: lighten($text-color, 10%);
-      }
-    }
-    [date] {
-      color: $gray-dark;
-      font-weight: $font-weight-bold;
-      text-align: center;
-    }
   }
 
   tbody {
     tr {
+      &[nodata] {
+        height: 200px;
+        pointer-events: none;
+        border-bottom: 0;
+        td {
+          vertical-align: middle;
+          text-align: center;
+          [icon] {
+            font-size: 80px;
+            color: $gray-400;
+          }
+          [message] {
+            color: $gray-800;
+          }
+        }
+      }
+      &[loading] {
+        pointer-events: none;
+      }
       td {
+        &:first-child {
+          padding-left: $gutter-normal;
+        }
+        &:last-child {
+          padding-right: $gutter-normal;
+        }
         &[day] {
           padding: 5px;
+          cursor: pointer;
+          &:nth-child(7),
+          &:nth-child(17),
+          &:nth-child(8),
+          &:nth-child(18) {
+            background-color: $gray-500;
+          }
+          &:hover {
+            background-color: $primary-light-color;
+            color: $white-color;
+          }
+          &[current-day='true'] {
+            background-color: $primary-light-color;
+            color: $white-color;
+          }
+
           [metric] {
             width: 35px;
             height: 35px;
@@ -109,9 +127,8 @@ table {
           border-bottom: 0;
         }
       }
-
       &:not(:last-child) td {
-        border-bottom: 1px solid $secondary-color;
+        border-bottom: 1px solid $gray-400;
       }
     }
   }
