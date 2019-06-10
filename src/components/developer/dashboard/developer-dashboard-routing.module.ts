@@ -27,19 +27,16 @@ const routes: Routes = [
         path: 'issues',
         data: { breadcrumb: 'Issues' },
         component: IssuesListComponent,
-        resolve: {user: UserWithMetricsResolver, dueDate: DueDateResolver}
       },
       {
         path: 'problems',
         data: { breadcrumb: 'Problems' },
         component: ProblemsListComponent,
-        resolve: {user: UserWithMetricsResolver}
       },
       {
         path: 'time-expenses',
         data: { breadcrumb: 'Time Expenses' },
         component: TimeExpensesListComponent,
-        resolve: {user: UserWithMetricsResolver, dueDate: DueDateResolver}
       }
     ]
   }
