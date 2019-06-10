@@ -65,7 +65,6 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   format = format;
   durationFormat = DurationFormat;
   metricType = MetricType;
-  durationFormat = DurationFormat;
 
   private period$ = new BehaviorSubject<Period>(null);
   private _team: Team;
