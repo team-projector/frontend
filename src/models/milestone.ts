@@ -4,7 +4,8 @@ import {Paging} from './paging';
 import {SearchFilter} from 'junte-ui';
 import {Name} from 'serialize-ts/dist';
 import {DateSerializer} from '../serializers/date';
-import {ObjectLink} from './object-link';
+import {ProjectCard, ProjectGroupCard} from './project';
+import {ProjectSerializer} from '../serializers/project';
 
 @Model()
 @MockClass()
@@ -79,8 +80,9 @@ export class MilestoneCard {
   title: string;
 
   @Field()
-  @MockFieldNested('{{> object_link presentation=(project)}}')
-  owner: ObjectLink;
+  @Type(new ProjectSerializer())
+  @MockFieldNested('{{> project_card}}')
+  owner: ProjectCard | ProjectGroupCard;
 
   @Field()
   @MockFieldNested('{{money}}')
@@ -100,6 +102,11 @@ export class MilestoneCard {
   @Field()
   @MockFieldNested('{{> milestone_metrics}}')
   metrics: MilestoneMetrics;
+
+  @Field()
+  @Name('gl_url')
+  @MockField('{{url}}')
+  glUrl: string;
 }
 
 @Model()

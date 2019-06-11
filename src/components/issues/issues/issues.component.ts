@@ -1,9 +1,9 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {IssuesFilter, IssueState} from 'src/models/issue';
-import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
+import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE, PLATFORM_DELAY} from 'src/consts';
 import {IIssuesService, issues_service} from 'src/services/issues/interface';
 import {BehaviorSubject, combineLatest} from 'rxjs';
-import {distinctUntilChanged, filter as filtering} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter as filtering} from 'rxjs/operators';
 import {TableComponent, UI} from 'junte-ui';
 
 @Component({
@@ -48,9 +48,8 @@ export class IssuesComponent implements OnInit {
     return this.dueDate$.getValue();
   }
 
-  filter: IssuesFilter = new IssuesFilter({page: DEFAULT_PAGE, pageSize: DEFAULT_PAGE_SIZE});
+  filter: IssuesFilter = new IssuesFilter();
 
-  // TODO: @ViewChild(TableComponent) == undefined in AOT
   @ViewChild('table')
   table: TableComponent;
 
@@ -59,7 +58,7 @@ export class IssuesComponent implements OnInit {
 
   ngOnInit() {
     combineLatest(this.team$, this.user$, this.dueDate$)
-      .pipe(distinctUntilChanged())
+      .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged())
       .subscribe(([team, user, dueDate]) => {
         this.filter.team = team;
         this.filter.user = user;

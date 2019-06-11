@@ -4,7 +4,7 @@
       <jnt-table-column title="Title">
         <ng-template #cellTemplate let-title="title" let-owner="owner">
           {{title}}<br>
-          <small>{{owner?.presentation}}</small>
+          <jnt-link [source]="owner.glUrl" target="_blank">{{owner?.title}}</jnt-link>
         </ng-template>
       </jnt-table-column>
       <jnt-table-column title="Budget">
