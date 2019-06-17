@@ -53,6 +53,10 @@
                       [size]="ui.sizes.tiny"></jnt-avatar>
           <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>
         </jnt-stack>
+        <small *ngIf="member.user.metrics">
+          {{member.user.metrics.payrollClosed | currency:'RUB'}} / {{member.user.metrics.issuesClosedSpent | duration}}
+          | {{member.user.metrics.payrollOpened | currency:'RUB'}} / {{member.user.metrics.issuesOpenedSpent | duration}}
+        </small>
       </td>
       <ng-container *ngFor="let week of weeks"
                     [attr.current-week]="(current | getISOWeek) === (week.date | getISOWeek)">

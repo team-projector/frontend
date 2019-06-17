@@ -31,5 +31,11 @@
         <span class="error" *ngIf="problems?.includes(issueProblemType.emptyEstimate)">empty</span>
       </ng-template>
     </jnt-table-column>
+
+    <jnt-table-column i18n-title="@@spent" title="Spent">
+      <ng-template #cellTemplate let-problems="problems" let-timeSpent="issue.timeSpent">
+        {{timeSpent | duration}}
+      </ng-template>
+    </jnt-table-column>
   </jnt-table>
 </jnt-block>
