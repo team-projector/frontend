@@ -33,7 +33,7 @@ export class TeamsMockService implements ITeamsService {
       .pipe(map(obj => deserialize(obj, PagingErrorCard)));
   }
 
-  members(team: number): Observable<PagingTeamMembers> {
+  members(team: number, roles: TeamMemberRole[]): Observable<PagingTeamMembers> {
     return this.http.get('teams/team-members.json')
       .pipe(map(obj => deserialize(obj, PagingTeamMembers)));
   }

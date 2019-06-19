@@ -6,7 +6,8 @@ import { PrimitiveSerializer } from 'serialize-ts/dist';
 
 export enum TeamMemberRole {
   developer = 'developer',
-  leader = 'leader'
+  leader = 'leader',
+  watcher = 'watcher'
 }
 
 @Model()

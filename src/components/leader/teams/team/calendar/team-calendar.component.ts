@@ -1,19 +1,19 @@
-import { Component, forwardRef, Inject, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { Team, TeamMemberCard } from 'src/models/team';
-import { UI } from 'junte-ui';
-import { addDays, addWeeks, format, startOfDay, startOfWeek, subWeeks } from 'date-fns';
+import {Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
+import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {Team, TeamMemberCard, TeamMemberRole} from 'src/models/team';
+import {UI} from 'junte-ui';
+import {addDays, addWeeks, format, isEqual, startOfDay, startOfWeek, subWeeks} from 'date-fns';
 import {distinctUntilChanged, filter, finalize} from 'rxjs/operators';
-import { BehaviorSubject, zip } from 'rxjs';
-import { MetricsGroup, UserProgressMetrics } from 'src/models/user-progress-metrics';
-import { DurationFormat } from 'src/pipes/date';
-import { Period } from 'junte-ui/lib/components/calendar/models';
-import { IMetricsService, metrics_service } from 'src/services/metrics/interface';
-import { Router } from '@angular/router';
-import { isUndefined } from 'util';
-import { UserCard } from 'src/models/user';
-import { ITeamsService, teams_service } from 'src/services/teams/interface';
-import { equals } from '../../../../utils/equals';
+import {BehaviorSubject, zip} from 'rxjs';
+import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metrics';
+import {DurationFormat} from 'src/pipes/date';
+import {Period} from 'junte-ui/lib/components/calendar/models';
+import {IMetricsService, metrics_service} from 'src/services/metrics/interface';
+import {Router} from '@angular/router';
+import {isUndefined} from 'util';
+import {UserCard} from 'src/models/user';
+import {ITeamsService, teams_service} from 'src/services/teams/interface';
+import {equals} from '../../../../utils/equals';
 
 const WEEKS_DISPLAYED = 2;
 const DAYS_IN_WEEK = 7;
@@ -62,6 +62,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   ui = UI;
   subWeeks = subWeeks;
   addWeeks = addWeeks;
+  isEqual = isEqual;
   format = format;
   durationFormat = DurationFormat;
   metricType = MetricType;
@@ -77,9 +78,12 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   metricLabels = ['Est', 'Sp', 'Ef'];
   loading: boolean;
 
+  user = new FormControl();
+  dueDate = new FormControl();
+
   form: FormGroup = this.fb.group({
-    dueDate: [],
-    user: []
+    dueDate: this.dueDate,
+    user: this.user
   });
 
   members: TeamMemberCard[] = [];
@@ -130,7 +134,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   private loadMembers() {
     this.loading = true;
-    this.teamsService.members(this.team.id)
+    this.teamsService.members(this.team.id, [TeamMemberRole.developer])
       .pipe(finalize(() => this.loading = false))
       .subscribe(members => this.members = members.results);
   }

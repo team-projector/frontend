@@ -35,8 +35,8 @@ export class TeamsService implements ITeamsService {
       .pipe(map(obj => deserialize(obj, PagingErrorCard)));
   }
 
-  members(team: number): Observable<PagingTeamMembers> {
-    return this.http.get(`teams/${team}/members`, new HttpParams({fromObject: {metrics: 'True'}}))
+  members(team: number, roles: TeamMemberRole[]): Observable<PagingTeamMembers> {
+    return this.http.get(`teams/${team}/members`, new HttpParams({fromObject: {roles: roles}}))
       .pipe(map(obj => deserialize(obj, PagingTeamMembers)));
   }
 

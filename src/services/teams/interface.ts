@@ -12,7 +12,7 @@ export interface ITeamsService {
 
   problems(team: number, filter: IssueProblemsFilter): Observable<PagingErrorCard>;
 
-  members(team: number): Observable<PagingTeamMembers>;
+  members(team: number, roles: TeamMemberRole[]): Observable<PagingTeamMembers>;
 
 }
 

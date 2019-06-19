@@ -63,6 +63,9 @@ table {
         background-color: $gray-500;
         th {
           padding: $gutter-normal $gutter-tiny;
+          &[day] {
+            cursor: pointer;
+          }
         }
       }
     }
@@ -70,6 +73,9 @@ table {
 
   tbody {
     tr {
+      th[gutter] {
+        width: $gutter-tiny;
+      }
       &[nodata] {
         height: 200px;
         pointer-events: none;
@@ -90,11 +96,16 @@ table {
         pointer-events: none;
       }
       td {
+        padding: $gutter-tiny;
+        border-top: 1px solid transparent;
+        border-bottom: 1px solid transparent;
         &:first-child {
           padding-left: $gutter-normal;
+          border-left: 1px solid transparent;
         }
         &:last-child {
           padding-right: $gutter-normal;
+          border-right: 1px solid transparent;
         }
         &[day] {
           padding: 5px;
@@ -105,7 +116,7 @@ table {
           &:nth-child(18) {
             background-color: $gray-500;
           }
-          &:hover {
+          &:hover, &[active='true'] {
             background-color: $primary-light-color;
             color: $white-color;
           }
@@ -127,8 +138,21 @@ table {
           border-bottom: 0;
         }
       }
-      &:not(:last-child) td {
-        border-bottom: 1px solid $gray-400;
+      &[active='true'] {
+        td:not([gutter]) {
+          border-top: 1px solid $primary-color;
+          border-bottom: 1px solid $primary-color;
+          &:nth-child(2) {
+            border-left: 1px solid $primary-color;
+            border-top-left-radius: $corner-small;
+            border-bottom-left-radius: $corner-small;
+          }
+          &:nth-child(22) {
+            border-right: 1px solid $primary-color;
+            border-top-right-radius: $corner-small;
+            border-bottom-right-radius: $corner-small;
+          }
+        }
       }
     }
   }

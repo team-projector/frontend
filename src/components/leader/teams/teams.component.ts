@@ -22,7 +22,7 @@ export class TeamsComponent implements OnInit {
   ngOnInit() {
     this.me.user$.pipe(filter(u => !!u))
       .subscribe(user => {
-        this.teamsService.list(user.id, [TeamMemberRole.leader])
+        this.teamsService.list(user.id, [TeamMemberRole.leader, TeamMemberRole.watcher])
           .subscribe((paging) => this.teams = paging.results);
       });
   }

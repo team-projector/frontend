@@ -8,6 +8,7 @@
 <table>
   <thead>
   <tr rewind>
+    <td></td>
     <th></th>
     <th colspan="10">
       <div date>
@@ -27,25 +28,50 @@
     </th>
   </tr>
   <tr timeline>
+    <th gutter></th>
     <th>Developer</th>
     <ng-container *ngFor="let week of weeks">
-      <th>Mo {{week.days[0] | getDate}}</th>
-      <th>Tu {{week.days[1] | getDate}}</th>
-      <th>We {{week.days[2] | getDate}}</th>
-      <th>Th {{week.days[3] | getDate}}</th>
-      <th>Fr {{week.days[4] | getDate}}</th>
-      <th>Sa {{week.days[5] | getDate}}</th>
-      <th>Su {{week.days[6] | getDate}}</th>
+      <th day (click)="form.patchValue({user: null, dueDate: week.days[0]})"
+          [attr.active]="isEqual(dueDate.value, week.days[0])">
+        Mo {{week.days[0] | getDate}}
+      </th>
+      <th day (click)="form.patchValue({user: null, dueDate: week.days[1]})"
+          [attr.active]="isEqual(dueDate.value, week.days[1])">
+        Tu {{week.days[1] | getDate}}
+      </th>
+      <th day (click)="form.patchValue({user: null, dueDate: week.days[2]})"
+          [attr.active]="isEqual(dueDate.value, week.days[2])">
+        We {{week.days[2] | getDate}}
+      </th>
+      <th day (click)="form.patchValue({user: null, dueDate: week.days[3]})"
+          [attr.active]="isEqual(dueDate.value, week.days[3])">
+        Th {{week.days[3] | getDate}}
+      </th>
+      <th day (click)="form.patchValue({user: null, dueDate: week.days[4]})"
+          [attr.active]="isEqual(dueDate.value, week.days[4])">
+        Fr {{week.days[4] | getDate}}
+      </th>
+      <th day (click)="form.patchValue({user: null, dueDate: week.days[5]})"
+          [attr.active]="isEqual(dueDate.value, week.days[5])">
+        Sa {{week.days[5] | getDate}}
+      </th>
+      <th day (click)="form.patchValue({user: null, dueDate: week.days[6]})"
+          [attr.active]="isEqual(dueDate.value, week.days[6])">
+        Su {{week.days[6] | getDate}}
+      </th>
       <th>Est</th>
       <th>Sp</th>
       <th>Eff</th>
     </ng-container>
+    <th gutter></th>
   </tr>
   </thead>
 
   <tbody>
   <ng-container *ngIf="!!members.length; else noData">
-    <tr *ngFor="let member of members">
+    <tr *ngFor="let member of members"
+        [attr.active]="user.value?.id === member.user.id">
+      <td gutter></td>
       <td>
         <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small">
           <jnt-avatar (click)="router.navigate(['leader', 'users', member.user.id])"
@@ -53,15 +79,13 @@
                       [size]="ui.sizes.tiny"></jnt-avatar>
           <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>
         </jnt-stack>
-        <small *ngIf="member.user.metrics">
-          {{member.user.metrics.payrollClosed | currency:'RUB'}} / {{member.user.metrics.issuesClosedSpent | duration}}
-          | {{member.user.metrics.payrollOpened | currency:'RUB'}} / {{member.user.metrics.issuesOpenedSpent | duration}}
-        </small>
       </td>
       <ng-container *ngFor="let week of weeks"
                     [attr.current-week]="(current | getISOWeek) === (week.date | getISOWeek)">
 
-        <td day *ngFor="let day of week.days" (click)="form.patchValue({user: member.user, dueDate: day})">
+        <td day *ngFor="let day of week.days"
+            (click)="form.patchValue({user: member.user, dueDate: day})"
+            [attr.active]="isEqual(dueDate.value, day) && (user.value?.id === member.user.id || !user.value)">
           <ng-container
             *ngTemplateOutlet="dayMetricTemplate; context:
                           {presentation: metric, metric: metrics?.days?.get(member.user.id)?.get(format(day, formatDate))}"></ng-container>
@@ -82,6 +106,7 @@
           </ng-container>
         </td>
       </ng-container>
+      <td gutter></td>
     </tr>
   </ng-container>
   <ng-template #noData>
@@ -147,6 +172,7 @@
     </ng-container>
     <ng-container *ngSwitchDefault>
       <jnt-circle-bar *ngIf="metric" circle>
+        <ng-template #content>{{metric?.issuesCount || ''}}</ng-template>
         <jnt-bar-indicator-group>
           <jnt-bar-indicator [color]="ui.colors.green"
                              [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
@@ -168,7 +194,6 @@
       </jnt-circle-bar>
     </ng-container>
   </div>
-  <div issues *ngIf="!!metric?.issuesCount"></div>
 </ng-template>
 
 
