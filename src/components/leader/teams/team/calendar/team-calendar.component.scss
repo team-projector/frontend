@@ -8,7 +8,10 @@
   div {
     padding: 0 $gutter-normal;
     background-color: silver;
+    cursor: pointer;
+    border-radius: $corner-small;
   }
+  margin-bottom: $gutter-normal;
 }
 
 table {

@@ -1,9 +1,17 @@
 <jnt-stack presentations [type]="ui.stack.type.horizontal"
            (mouseleave)="metric = metricType.all">
-  <div (mouseenter)="metric = metricType.spent">Spent</div>
-  <div (mouseenter)="metric = metricType.estimate">Estimated</div>
-  <div (mouseenter)="metric = metricType.remains">Remains</div>
-  <div (mouseenter)="metric = metricType.loading">Loading</div>
+  <div (mouseenter)="metric = metricType.spent"
+       [style.background]="ui.colors.green">Spent
+  </div>
+  <div (mouseenter)="metric = metricType.estimate"
+       [style.background]="ui.colors.red">Estimated
+  </div>
+  <div (mouseenter)="metric = metricType.remains"
+       [style.background]="ui.colors.yellow">Remains
+  </div>
+  <div (mouseenter)="metric = metricType.loading"
+       [style.background]="ui.colors.purpleDark" style="color:white">Loading
+  </div>
 </jnt-stack>
 <table>
   <thead>
@@ -79,6 +87,9 @@
                       [size]="ui.sizes.tiny"></jnt-avatar>
           <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>
         </jnt-stack>
+        <small *ngIf="member.user.metrics.issuesClosedSpent || member.user.metrics.issuesOpenedSpent">
+          {{member.user.metrics.issuesClosedSpent | duration}} &larr; {{member.user.metrics.issuesOpenedSpent | duration}}
+        </small>
       </td>
       <ng-container *ngFor="let week of weeks"
                     [attr.current-week]="(current | getISOWeek) === (week.date | getISOWeek)">
