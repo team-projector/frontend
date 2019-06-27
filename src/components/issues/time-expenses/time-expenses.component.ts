@@ -1,8 +1,8 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
+import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE, PLATFORM_DELAY} from 'src/consts';
 import {ITimeExpensesService, time_expenses_service} from 'src/services/time-expenses/interface';
 import {BehaviorSubject, combineLatest} from 'rxjs';
-import {filter as filtering} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, filter as filtering} from 'rxjs/operators';
 import {TimeExpensesFilter} from 'src/models/spent-time';
 import {IssueState} from 'src/models/issue';
 import {TableComponent, UI} from 'junte-ui';
@@ -19,11 +19,17 @@ export class TimeExpensesComponent implements OnInit {
   issuesState = IssueState;
 
   private user$ = new BehaviorSubject<number>(null);
+  private team$ = new BehaviorSubject<number>(null);
   private date$ = new BehaviorSubject<Date>(null);
 
   @Input()
   set user(user: number) {
     this.user$.next(user);
+  }
+
+  @Input()
+  set team(team: number) {
+    this.team$.next(team);
   }
 
   @Input()
@@ -41,9 +47,11 @@ export class TimeExpensesComponent implements OnInit {
   }
 
   ngOnInit() {
-    combineLatest(this.user$, this.date$)
-      .pipe(filtering(u => !!u))
-      .subscribe(([user, date]) => {
+    combineLatest(this.team$, this.user$, this.date$)
+      .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged())
+      .subscribe(([team, user, date]) => {
+        this.filter.team = team;
+        this.filter.user = user;
         this.filter.date = date;
         this.table.fetcher = (filter: TimeExpensesFilter) =>
           this.timeExpensesService.list(user, Object.assign(this.filter, filter));

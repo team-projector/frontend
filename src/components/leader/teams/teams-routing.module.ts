@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { TeamComponent } from 'src/components/leader/teams/team/team.component';
-import { TeamsComponent } from 'src/components/leader/teams/teams.component';
-import { TeamProblemsListComponent } from 'src/components/leader/teams/team/issues/problems-list/problems-list.component';
-import { TeamResolver } from 'src/resolvers/team';
-import { TeamIssuesListComponent } from 'src/components/leader/teams/team/issues/issues-list/issues-list.component';
-import { OutletComponent } from 'src/components/outlet/outlet.component';
-import { UserResolver } from 'src/resolvers/user';
-import { DueDateResolver } from 'src/resolvers/due-date';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {TeamComponent} from 'src/components/leader/teams/team/team.component';
+import {TeamsComponent} from 'src/components/leader/teams/teams.component';
+import {TeamTimeExpensesListComponent} from 'src/components/leader/teams/team/issues/time-expenses/time-expenses.component';
+import {TeamResolver} from 'src/resolvers/team';
+import {TeamIssuesListComponent} from 'src/components/leader/teams/team/issues/issues-list/issues-list.component';
+import {OutletComponent} from 'src/components/outlet/outlet.component';
+import {UserResolver} from 'src/resolvers/user';
+import {DueDateResolver} from 'src/resolvers/due-date';
 
 export function getTeam(data: any) {
   return data.team.title;
@@ -40,9 +40,9 @@ const routes: Routes = [
             component: TeamIssuesListComponent,
           },
           {
-            path: 'problems',
-            data: {breadcrumb: 'Problems'},
-            component: TeamProblemsListComponent
+            path: 'time-expenses',
+            data: {breadcrumb: 'Time Expenses'},
+            component: TeamTimeExpensesListComponent
           }
         ]
       }

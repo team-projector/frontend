@@ -7,7 +7,7 @@ import { JunteUiModule } from 'junte-ui';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { TeamsRoutingModule } from 'src/components/leader/teams/teams-routing.module';
 import { TeamResolver } from 'src/resolvers/team';
-import { TeamProblemsListComponent } from 'src/components/leader/teams/team/issues/problems-list/problems-list.component';
+import { TeamTimeExpensesListComponent } from 'src/components/leader/teams/team/issues/time-expenses/time-expenses.component';
 import { TeamIssuesListComponent } from 'src/components/leader/teams/team/issues/issues-list/issues-list.component';
 import { OutletModule } from 'src/components/outlet/outlet.module';
 import { UserResolver } from 'src/resolvers/user';
@@ -19,7 +19,7 @@ import { IssuesModule } from '../../issues/issues.module';
   declarations: [
     TeamsComponent,
     TeamComponent,
-    TeamProblemsListComponent,
+    TeamTimeExpensesListComponent,
     TeamIssuesListComponent,
     TeamCalendarComponent,
     PercentagePipe

@@ -1,9 +1,9 @@
-import { ArraySerializer, Field, Model, ModelSerializer, Name, Type } from 'serialize-ts';
-import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
-import { Paging } from './paging';
-import { DateSerializer } from '../serializers/date';
-import { IssueCard } from './issue';
-import { DATE_FORMAT } from '../consts';
+import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
+import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
+import {Paging} from './paging';
+import {DateSerializer} from '../serializers/date';
+import {IssueCard} from './issue';
+import {DATE_FORMAT} from '../consts';
 
 @Model()
 @MockClass()
@@ -55,6 +55,12 @@ export class PagingTimeExpenses implements Paging<SpentTimeCard> {
 
 @Model()
 export class TimeExpensesFilter {
+
+  @Field()
+  user?: number;
+
+  @Field()
+  team?: number;
 
   @Field()
   @Type(new DateSerializer(DATE_FORMAT))
