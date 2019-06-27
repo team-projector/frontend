@@ -2,7 +2,7 @@ import {Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Team, TeamMemberCard, TeamMemberRole} from 'src/models/team';
 import {UI} from 'junte-ui';
-import {addDays, addWeeks, format, isEqual, startOfDay, startOfWeek, subWeeks} from 'date-fns';
+import {addDays, addWeeks, endOfDay, format, isEqual, isFuture, isPast, startOfDay, startOfWeek, subWeeks} from 'date-fns';
 import {distinctUntilChanged, filter, finalize} from 'rxjs/operators';
 import {BehaviorSubject, zip} from 'rxjs';
 import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metrics';
@@ -63,9 +63,13 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   subWeeks = subWeeks;
   addWeeks = addWeeks;
   isEqual = isEqual;
+  isPast = isPast;
+  isFuture = isFuture;
   format = format;
+  endOfDay = endOfDay;
   durationFormat = DurationFormat;
   metricType = MetricType;
+  today = startOfDay(new Date());
 
   private period$ = new BehaviorSubject<Period>(null);
   private _team: Team;

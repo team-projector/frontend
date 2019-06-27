@@ -1,12 +1,11 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { DeveloperComponent } from 'src/components/developer/developer.component';
+import {NgModule} from '@angular/core';
+import {RouterModule, Routes} from '@angular/router';
+import {DeveloperComponent} from 'src/components/developer/developer.component';
 
 const routes: Routes = [
   {
     path: '',
     component: DeveloperComponent,
-    data: { breadcrumb: 'Developer'},
     children: [
       {
         path: '',
@@ -19,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'salaries',
-        data: { breadcrumb: 'Salaries' },
+        data: {breadcrumb: 'Salaries'},
         loadChildren: './salaries/salaries.module#SalariesModule'
       }
     ]

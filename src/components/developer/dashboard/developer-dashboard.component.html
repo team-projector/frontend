@@ -1,53 +1,57 @@
-<jnt-container >
-  <jnt-stack [gutter]="ui.stack.gutter.large">
-    <form [formGroup]="filterForm">
-      <jnt-stack>
-        <jnt-block>
-          <jnt-calendar formControlName="dueDate" (updated)="period = $event">
-            <jnt-week-metric i18n-title="@@est" title="Est"></jnt-week-metric>
-            <jnt-week-metric i18n-title="@@spent" title="Spent"></jnt-week-metric>
-            <jnt-week-metric i18n-title="@@eff" title="Eff"></jnt-week-metric>
-            <jnt-week-metric i18n-title="@@payroll" title="Payroll"></jnt-week-metric>
-            <jnt-week-metric i18n-title="@@paid" title="Paid"></jnt-week-metric>
-            <ng-template #dayTemplate let-date="date">
-              <div class="day">
-                <ng-container
-                  *ngTemplateOutlet="dayMetricTemplate; context: {date: date, metric: metrics.days.get(format(date, formatDate))}"></ng-container>
-              </div>
-            </ng-template>
-            <ng-template #metricTemplate let-metric="metric" let-date="date">
-              <ng-container *ngIf="metrics.weeks.get(format(date, formatDate)) as weekMetric">
-                <ng-container [ngSwitch]="metric">
-                  <ng-container *ngSwitchCase="0">{{weekMetric.timeEstimate | duration:durationFormat.short}}
-                  </ng-container>
-                  <ng-container *ngSwitchCase="1">{{weekMetric.timeSpent | duration:durationFormat.short}}
-                  </ng-container>
-                  <ng-container *ngSwitchCase="2">{{weekMetric.efficiency | number:'1.2-2'}}x</ng-container>
-                  <ng-container *ngSwitchCase="3">{{weekMetric.payroll | currency:'RUB':'symbol':'4.0-0'}}
-                  </ng-container>
-                  <ng-container *ngSwitchCase="4">{{weekMetric.paid | currency:'RUB':'symbol':'4.0-0'}}</ng-container>
+<jnt-stack [gutter]="ui.stack.gutter.large">
+  <form [formGroup]="filterForm">
+    <jnt-stack>
+      <jnt-block>
+        <jnt-calendar formControlName="dueDate" (updated)="period = $event">
+          <jnt-week-metric i18n-title="@@est" title="Est"></jnt-week-metric>
+          <jnt-week-metric i18n-title="@@spent" title="Spent"></jnt-week-metric>
+          <jnt-week-metric i18n-title="@@eff" title="Eff"></jnt-week-metric>
+          <jnt-week-metric i18n-title="@@payroll" title="Payroll"></jnt-week-metric>
+          <jnt-week-metric i18n-title="@@paid" title="Paid"></jnt-week-metric>
+          <ng-template #dayTemplate let-date="date">
+            <div class="day">
+              <ng-container
+                *ngTemplateOutlet="dayMetricTemplate; context: {date: date, metric: metrics.days.get(format(date, formatDate))}"></ng-container>
+            </div>
+          </ng-template>
+          <ng-template #metricTemplate let-metric="metric" let-date="date">
+            <ng-container *ngIf="metrics.weeks.get(format(date, formatDate)) as weekMetric">
+              <ng-container [ngSwitch]="metric">
+                <ng-container *ngSwitchCase="0">
+                  {{!!weekMetric.timeEstimate ? (weekMetric.timeEstimate | duration:durationFormat.short) : '&ndash;'}}
+                </ng-container>
+                <ng-container *ngSwitchCase="1">
+                  {{!!weekMetric.timeSpent ? (weekMetric.timeSpent | duration:durationFormat.short) : '&ndash;'}}
+                </ng-container>
+                <ng-container *ngSwitchCase="2">
+                  {{!!weekMetric.efficiency ? (weekMetric.efficiency | number:'1.2-2') : '&ndash;'}}
+                </ng-container>
+                <ng-container *ngSwitchCase="3">
+                  {{!!weekMetric.payroll ? (weekMetric.payroll | currency:'RUB') : '&ndash;'}}
+                </ng-container>
+                <ng-container *ngSwitchCase="4">
+                  {{!!weekMetric.paid ? (weekMetric.paid | currency:'RUB') :'&ndash;'}}
                 </ng-container>
               </ng-container>
-            </ng-template>
-          </jnt-calendar>
-        </jnt-block>
-      </jnt-stack>
-    </form>
+            </ng-container>
+          </ng-template>
+        </jnt-calendar>
+      </jnt-block>
+    </jnt-stack>
+  </form>
 
-    <div filter *ngIf="dueDate.value">
-      {{dueDate.value | date}}
-      <jnt-icon icon [icon]="ui.icons.close"
-                (click)="dueDate.patchValue(null)"></jnt-icon>
-    </div>
+  <div filter *ngIf="dueDate.value">
+    {{dueDate.value | date}}
+    <jnt-icon icon [icon]="ui.icons.close"
+              (click)="dueDate.patchValue(null)"></jnt-icon>
+  </div>
 
-    <jnt-menu>
-      <jnt-menu-item link="issues" title="Issues"></jnt-menu-item>
-      <jnt-menu-item link="problems" title="Problems"></jnt-menu-item>
-      <jnt-menu-item link="time-expenses" title="Time Expenses"></jnt-menu-item>
-    </jnt-menu>
-    <router-outlet></router-outlet>
-  </jnt-stack>
-</jnt-container>
+  <jnt-menu>
+    <jnt-menu-item link="issues" title="Issues"></jnt-menu-item>
+    <jnt-menu-item link="time-expenses" title="Time Expenses"></jnt-menu-item>
+  </jnt-menu>
+  <router-outlet></router-outlet>
+</jnt-stack>
 
 <ng-template #dayMetricTemplate let-metric="metric" let-date="date">
   <jnt-circle-bar class="metric"

@@ -59,7 +59,7 @@
       <jnt-table-column i18n-title="@@payroll" title="Payroll">
         <ng-template #cellTemplate let-metrics="metrics">
           <div style="text-align: right;">
-            {{!!metrics.payroll ? (metrics.payroll | currency:'RUB':'symbol':'0.0-0') : '&mdash;'}}
+            {{!!metrics.payroll ? (metrics.payroll | currency:'RUB') : '&mdash;'}}
           </div>
         </ng-template>
       </jnt-table-column>
@@ -67,7 +67,7 @@
       <jnt-table-column i18n-title="@@paid" title="Paid">
         <ng-template #cellTemplate let-metrics="metrics">
           <div style="text-align: right;">
-            {{!!metrics.paid ? (metrics.paid | currency:'RUB':'symbol':'0.0-0') : '&mdash;'}}
+            {{!!metrics.paid ? (metrics.paid | currency:'RUB') : '&mdash;'}}
           </div>
         </ng-template>
       </jnt-table-column>

@@ -68,6 +68,15 @@ table {
           padding: $gutter-normal $gutter-tiny;
           &[day] {
             cursor: pointer;
+            &:hover, &[active='true'] {
+              background-color: $primary-light-color;
+              color: $white-color;
+            }
+
+            &[today='true']:not(:hover):not([active='true']) {
+              background-color: $success-color;
+              color: $white-color;
+            }
           }
         }
       }
@@ -131,6 +140,17 @@ table {
           [metric] {
             width: 35px;
             height: 35px;
+            position: relative;
+            [issues] {
+              position: absolute;
+              top: 2px;
+              right: 2px;
+              background-color: blue;
+              width: 5px;
+              height: 5px;
+              border-radius: 50%;
+              z-index: 1;
+            }
             [circle] {
               width: 35px;
               height: 35px;

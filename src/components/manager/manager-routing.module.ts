@@ -6,6 +6,7 @@ const routes: Routes = [
   {
     path: '',
     component: ManagerComponent,
+    data: {breadcrumb: 'Manager'},
     children: [
       {
         path: '',

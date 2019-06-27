@@ -1,10 +1,8 @@
-<jnt-container >
-  <jnt-row>
-    <jnt-col [desktop]="9" [mobile]="12">
-      <app-salaries [user]="user?.id"></app-salaries>
-    </jnt-col>
-    <jnt-col [desktop]="3" [mobile]="12">
-      <app-salary-metrics [metrics]="user?.metrics"></app-salary-metrics>
-    </jnt-col>
-  </jnt-row>
-</jnt-container>
+<jnt-row>
+  <jnt-col [desktop]="9" [mobile]="12">
+    <app-salaries [user]="user?.id"></app-salaries>
+  </jnt-col>
+  <jnt-col [desktop]="3" [mobile]="12">
+    <app-salary-metrics [metrics]="user?.metrics"></app-salary-metrics>
+  </jnt-col>
+</jnt-row>

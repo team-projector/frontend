@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component} from '@angular/core';
+import {UI} from 'junte-ui';
 
 @Component({
   selector: 'app-leader',
@@ -6,10 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./leader.component.scss']
 })
 
-export class LeaderComponent implements OnInit {
-  constructor() {
-  }
+export class LeaderComponent {
 
-  ngOnInit() {
-  }
+  ui = UI;
+
 }
