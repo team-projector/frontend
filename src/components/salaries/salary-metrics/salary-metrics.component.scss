@@ -1,4 +1,4 @@
-@import "~junte-ui/lib/assets/styles/variables";
+@import "variables";
 
 :host {
   display: block;
@@ -37,7 +37,7 @@ h6 {
 }
 
 [label] ::ng-deep span[child-of=#{$jnt-label-host}] {
-  color: $text-color;
+  color: $primary-text-color;
 }
 
 [separator] {
