@@ -1,4 +1,4 @@
-<jnt-container >
+<jnt-container [width]="ui.width.fluid">
   <h3>Detail</h3>
   <jnt-row>
     <jnt-col [desktop]="3" [mobile]="12">
@@ -6,7 +6,7 @@
     </jnt-col>
 
     <jnt-col [desktop]="9" [mobile]="12">
-      <jnt-block>
+      <jnt-block [width]="ui.width.fluid">
         <jnt-table #table>
           <jnt-table-column i18n-title="@@date" title="Date">
             <ng-template #cellTemplate let-date="date">

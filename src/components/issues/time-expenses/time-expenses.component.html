@@ -1,4 +1,4 @@
-<jnt-block >
+<jnt-block [width]="ui.width.fluid">
   <jnt-table [filter]="filter" #table>
     <jnt-table-column i18n-title="@@created_at" title="Created at" sort="created_at">
       <ng-template #cellTemplate let-createdAt="createdAt">
