@@ -71,6 +71,12 @@
           </div>
         </ng-template>
       </jnt-table-column>
+
+      <ng-template #rowActions let-row="row">
+        <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
+          <jnt-menu-item title="Sync from GitLab" (click)="sync(row.id)"></jnt-menu-item>
+        </jnt-menu>
+      </ng-template>
     </jnt-table>
   </jnt-block>
 </form>

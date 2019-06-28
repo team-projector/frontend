@@ -1,11 +1,11 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {IssuesFilter, IssueState} from 'src/models/issue';
-import {PLATFORM_DELAY} from 'src/consts';
-import {IIssuesService, issues_service} from 'src/services/issues/interface';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {debounceTime, distinctUntilChanged} from 'rxjs/operators';
-import {TableComponent, UI} from 'junte-ui';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
+import { IssuesFilter, IssueState } from 'src/models/issue';
+import { PLATFORM_DELAY } from 'src/consts';
+import { IIssuesService, issues_service } from 'src/services/issues/interface';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
+import { TableComponent, UI } from 'junte-ui';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-issues',
@@ -15,10 +15,9 @@ import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 export class IssuesComponent implements OnInit {
 
   ui = UI;
-
   issuesState = IssueState;
-
   openedControl = new FormControl(true);
+  loading = false;
 
   form: FormGroup = this.formBuilder.group({
     opened: this.openedControl
@@ -88,6 +87,12 @@ export class IssuesComponent implements OnInit {
           this.issuesService.list(Object.assign(this.filter, filter));
         this.table.load();
       });
+  }
+
+  sync(id: number) {
+    this.loading = true;
+    this.issuesService.sync(arguments[0]).pipe(finalize(() => this.loading = false))
+      .subscribe(() => this.table.load());
   }
 
 }

@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {IIssuesService} from './interface';
-import {HttpService} from 'junte-angular';
-import {Observable} from 'rxjs';
-import {deserialize} from 'serialize-ts';
-import {map} from 'rxjs/operators';
-import {IssuesFilter, PagingIssues, PagingTeamIssues} from '../../models/issue';
-import {encodeModel} from '../../utils/http';
-import {IssueProblemsFilter, PagingIssueProblems} from '../../models/problem';
-import {HttpParams} from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { IIssuesService } from './interface';
+import { HttpService } from 'junte-angular';
+import { Observable } from 'rxjs';
+import { deserialize } from 'serialize-ts';
+import { map } from 'rxjs/operators';
+import { IssueCard, IssuesFilter, PagingIssues } from '../../models/issue';
+import { encodeModel } from '../../utils/http';
+import { IssueProblemsFilter, PagingIssueProblems } from '../../models/problem';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,11 @@ export class IssuesService implements IIssuesService {
     params = params.append('user', user.toString());
     return this.http.get('issues/problems', params)
       .pipe(map(obj => deserialize(obj, PagingIssueProblems)));
+  }
+
+  sync(id: number): Observable<IssueCard> {
+    return this.http.post(`issues/${id}/sync`)
+      .pipe(map(obj => deserialize(obj, IssueCard)));
   }
 
 }
