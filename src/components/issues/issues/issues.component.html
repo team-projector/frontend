@@ -1,5 +1,5 @@
 <form [formGroup]="form">
-  <jnt-block>
+  <jnt-block [width]="ui.width.fluid">
     <jnt-table #table [search]="true">
       <ng-template #filters>
         <jnt-switch [size]="ui.sizes.small" label="Opened" formControlName="opened"></jnt-switch>
