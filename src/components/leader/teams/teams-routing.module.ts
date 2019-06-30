@@ -7,7 +7,7 @@ import {TeamResolver} from 'src/resolvers/team';
 import {TeamIssuesListComponent} from 'src/components/leader/teams/team/issues/issues-list/issues-list.component';
 import {OutletComponent} from 'src/components/outlet/outlet.component';
 import {UserResolver} from 'src/resolvers/user';
-import {DueDateResolver} from 'src/resolvers/due-date';
+import {DueDateResolver, OpenedResolver, ProblemsResolver} from 'src/resolvers/issue';
 
 export function getTeam(data: any) {
   return data.team.title;
@@ -27,7 +27,11 @@ const routes: Routes = [
         path: ':team',
         component: TeamComponent,
         data: {breadcrumb: getTeam},
-        resolve: {team: TeamResolver, user: UserResolver, dueDate: DueDateResolver},
+        resolve: {
+          team: TeamResolver,
+          user: UserResolver,
+          dueDate: DueDateResolver
+        },
         children: [
           {
             path: '',
@@ -37,6 +41,10 @@ const routes: Routes = [
           {
             path: 'issues',
             data: {breadcrumb: 'Issues'},
+            resolve: {
+              opened: OpenedResolver,
+              problems: ProblemsResolver
+            },
             component: TeamIssuesListComponent,
           },
           {

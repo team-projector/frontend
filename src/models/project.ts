@@ -21,7 +21,44 @@ export class ProjectCard {
 
 @Model()
 @MockClass()
+export class Project {
+
+  @Field()
+  @MockField('{{id}}')
+  id: number;
+
+  @Field()
+  @MockField('{{project}}')
+  title: string;
+
+  @Field()
+  @Name('gl_url')
+  @MockField('{{url}}')
+  glUrl: string;
+}
+
+@Model()
+@MockClass()
 export class ProjectGroupCard {
+
+  @Field()
+  @MockField('{{id}}')
+  id: number;
+
+  @Field()
+  @MockField('{{project}}')
+  title: string;
+
+  @Field()
+  @Name('gl_url')
+  @MockField('{{url}}')
+  glUrl: string;
+
+}
+
+@Model()
+@MockClass()
+export class ProjectGroup {
 
   @Field()
   @MockField('{{id}}')

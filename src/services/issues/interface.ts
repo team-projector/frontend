@@ -1,15 +1,14 @@
-import { InjectionToken } from '@angular/core';
-import { Observable } from 'rxjs';
-import { IssueCard, IssuesFilter, PagingIssues } from '../../models/issue';
-import { IssueProblemsFilter, PagingIssueProblems } from '../../models/problem';
+import {InjectionToken} from '@angular/core';
+import {Observable} from 'rxjs';
+import {Issue, IssuesFilter, IssuesSummary, PagingIssues} from '../../models/issue';
 
 export interface IIssuesService {
 
   list(filter: IssuesFilter): Observable<PagingIssues>;
 
-  problemsForUser(user: number, filter: IssueProblemsFilter): Observable<PagingIssueProblems>;
+  summary(filter: IssuesFilter): Observable<IssuesSummary>;
 
-  sync(id: number): Observable<IssueCard>;
+  sync(id: number): Observable<Issue>;
 }
 
 export let issues_service = new InjectionToken('issues_service');

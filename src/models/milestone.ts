@@ -4,7 +4,7 @@ import {Paging} from './paging';
 import {SearchFilter} from 'junte-ui';
 import {Name} from 'serialize-ts/dist';
 import {DateSerializer} from '../serializers/date';
-import {ProjectCard, ProjectGroupCard} from './project';
+import {Project, ProjectCard, ProjectGroup, ProjectGroupCard} from './project';
 import {ProjectSerializer} from '../serializers/project';
 
 @Model()
@@ -83,6 +83,48 @@ export class MilestoneCard {
   @Type(new ProjectSerializer())
   @MockFieldNested('{{> project_card}}')
   owner: ProjectCard | ProjectGroupCard;
+
+  @Field()
+  @MockFieldNested('{{money}}')
+  budget: number;
+
+  @Field()
+  @Name('start_date')
+  @MockField('{{date \'2019\' \'2020\'}}')
+  startDate: Date;
+
+  @Field()
+  @Name('due_date')
+  @Type(new DateSerializer())
+  @MockField('{{date \'2019\' \'2020\'}}')
+  dueDate: Date;
+
+  @Field()
+  @MockFieldNested('{{> milestone_metrics}}')
+  metrics: MilestoneMetrics;
+
+  @Field()
+  @Name('gl_url')
+  @MockField('{{url}}')
+  glUrl: string;
+}
+
+@Model()
+@MockClass()
+export class Milestone {
+
+  @Field()
+  @MockField('{{id}}')
+  id: number;
+
+  @Field()
+  @MockField('{{title}}')
+  title: string;
+
+  @Field()
+  @Type(new ProjectSerializer())
+  @MockFieldNested('{{> project}}')
+  owner: Project | ProjectGroup;
 
   @Field()
   @MockFieldNested('{{money}}')

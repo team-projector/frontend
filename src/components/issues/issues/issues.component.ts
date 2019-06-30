@@ -1,11 +1,11 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { IssuesFilter, IssueState } from 'src/models/issue';
-import { PLATFORM_DELAY } from 'src/consts';
-import { IIssuesService, issues_service } from 'src/services/issues/interface';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
-import { TableComponent, UI } from 'junte-ui';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {IssueProblem, IssuesFilter, IssueState} from 'src/models/issue';
+import {PLATFORM_DELAY} from 'src/consts';
+import {IIssuesService, issues_service} from 'src/services/issues/interface';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {debounceTime, distinctUntilChanged, finalize} from 'rxjs/operators';
+import {TableComponent, UI} from 'junte-ui';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-issues',
@@ -16,17 +16,19 @@ export class IssuesComponent implements OnInit {
 
   ui = UI;
   issuesState = IssueState;
-  openedControl = new FormControl(true);
+  issueProblem = IssueProblem;
   loading = false;
 
   form: FormGroup = this.formBuilder.group({
-    opened: this.openedControl
+    opened: [true],
+    problems: [false]
   });
 
   private team$ = new BehaviorSubject<number>(null);
   private user$ = new BehaviorSubject<number>(null);
   private dueDate$ = new BehaviorSubject<Date>(null);
   private opened$ = new BehaviorSubject<boolean>(true);
+  private problems$ = new BehaviorSubject<boolean>(true);
 
   @Input()
   set team(team: number) {
@@ -64,34 +66,66 @@ export class IssuesComponent implements OnInit {
     return this.opened$.getValue();
   }
 
+  @Input()
+  set problems(problems: boolean) {
+    this.problems$.next(problems);
+  }
+
+  get problems() {
+    return this.problems$.getValue();
+  }
+
   filter: IssuesFilter = new IssuesFilter();
 
   @ViewChild('table')
   table: TableComponent;
+
+  @Output()
+  filtered = new EventEmitter<{ opened?, problems? }>();
 
   constructor(@Inject(issues_service) private issuesService: IIssuesService,
               private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    this.openedControl.valueChanges.subscribe(opened => this.opened = opened);
+    combineLatest(this.opened$, this.problems$)
+      .subscribe(([opened, problems]) => {
+        this.form.patchValue({
+          opened: opened,
+          problems: problems
+        }, {emitEvent: false});
+      });
 
-    combineLatest(this.team$, this.user$, this.dueDate$, this.opened$)
+    combineLatest(this.team$, this.user$, this.dueDate$, this.opened$, this.problems$)
       .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged())
-      .subscribe(([team, user, dueDate, opened]) => {
+      .subscribe(([team, user, dueDate, opened, problems]) => {
         this.filter.team = team;
         this.filter.user = user;
         this.filter.dueDate = dueDate;
-        this.filter.state = opened ? IssueState.opened : IssueState.closed;
+        this.filter.state = opened ? IssueState.opened : null;
+        this.filter.problems = problems ? problems : null;
         this.table.fetcher = (filter: IssuesFilter) =>
           this.issuesService.list(Object.assign(this.filter, filter));
         this.table.load();
       });
+
+    this.form.valueChanges.subscribe(({opened, problems}) => {
+      [this.opened, this.problems] = [opened, problems];
+      const state: { opened?, problems? } = {};
+      if (!opened) {
+        state.opened = false;
+      }
+      if (problems) {
+        state.problems = true;
+      }
+      this.filtered.emit(state);
+    });
   }
 
-  sync(id: number) {
+  sync(issue: number) {
     this.loading = true;
-    this.issuesService.sync(arguments[0]).pipe(finalize(() => this.loading = false))
+    this.issuesService.sync(issue)
+      .pipe(finalize(() => this.loading = false))
       .subscribe(() => this.table.load());
   }
 

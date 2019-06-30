@@ -16,7 +16,7 @@ export class TimeExpensesService implements ITimeExpensesService {
   }
 
   list(user: number, filter: TimeExpensesFilter): Observable<PagingTimeExpenses> {
-    return this.http.get(`/users/${user}/time-expenses`, encodeModel(filter))
+    return this.http.get(`time-expenses`, encodeModel(filter))
       .pipe(map(obj => deserialize(obj, PagingTimeExpenses)));
   }
 

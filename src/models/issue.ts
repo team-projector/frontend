@@ -1,17 +1,27 @@
-import { ArraySerializer, Field, Model, ModelSerializer, Name, Type } from 'serialize-ts';
-import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
-import { ObjectLink } from './object-link';
-import { LabelCard } from './label';
-import { Paging } from './paging';
-import { DateSerializer } from '../serializers/date';
-import { DATE_FORMAT } from '../consts';
-import { BooleanSerializer } from '../serializers/http';
-import { Order, SearchFilter } from 'junte-ui';
-import { UserCard } from './user';
+import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
+import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
+import {ObjectLink} from './object-link';
+import {LabelCard} from './label';
+import {Paging} from './paging';
+import {DateSerializer} from '../serializers/date';
+import {DATE_FORMAT} from '../consts';
+import {BooleanSerializer} from '../serializers/http';
+import {Order, SearchFilter} from 'junte-ui';
+import {User, UserCard} from './user';
+import {PrimitiveSerializer} from 'serialize-ts/dist';
+import {IssueProblemType} from './problem';
+import {Project} from './project';
+import {Milestone} from './milestone';
 
 export enum IssueState {
   opened = 'opened',
   closed = 'closed'
+}
+
+export enum IssueProblem {
+  overDueDate = 'over_due_date',
+  emptyDueDate = 'empty_due_date',
+  emptyEstimate = 'empty_estimate'
 }
 
 export enum ErrorType {
@@ -102,12 +112,91 @@ export class IssueCard {
 
   @Field()
   @Type(new ArraySerializer(new ModelSerializer(UserCard)))
-  @MockFieldNested('[{{#repeat 1 3}} {{> user}} {{/repeat}}]')
+  @MockFieldNested('[{{#repeat 1 3}} {{> user_card}} {{/repeat}}]')
   participants: UserCard[];
 
   @Field()
   @MockFieldNested('{{> user_card}}')
   user: UserCard;
+
+  @Field()
+  @Type(new ArraySerializer(new PrimitiveSerializer()))
+  @MockField('{{issue_problem}}')
+  problems: IssueProblem[];
+}
+
+@Model()
+@MockClass()
+export class Issue {
+
+  @Field()
+  @MockField('{{id}}')
+  id: number;
+
+  @Field()
+  @MockField('{{issue}}')
+  title: string;
+
+  @Field()
+  @Type(new ArraySerializer(new ModelSerializer(LabelCard)))
+  @MockFieldNested('[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]')
+  labels: LabelCard[];
+
+  @Field()
+  @MockFieldNested('{{> project}}')
+  project: Project;
+
+  @Field()
+  @Name('due_date')
+  @Type(new DateSerializer())
+  @MockField('{{date \'2019\' \'2020\'}}')
+  dueDate: Date;
+
+  @Field()
+  @Name('time_estimate')
+  @MockFieldNested('{{int 10 100}}')
+  timeEstimate: number;
+
+  @Field()
+  @Name('time_spent')
+  @MockFieldNested('{{int 10 100}}')
+  timeSpent: number;
+
+  @Field()
+  @Name('total_time_spent')
+  @MockFieldNested('{{int 10 100}}')
+  totalTimeSpent: number;
+
+  @Field()
+  @Name('gl_url')
+  @MockField('{{url}}')
+  glUrl: string;
+
+  @Field()
+  @MockField(IssueState.opened)
+  state: IssueState;
+
+  @Field()
+  @MockFieldNested('{{> issue_metrics}}')
+  metrics: IssueMetrics;
+
+  @Field()
+  @MockFieldNested('{{> object_link presentation=(milestone)}}')
+  milestone: Milestone;
+
+  @Field()
+  @Type(new ArraySerializer(new ModelSerializer(UserCard)))
+  @MockFieldNested('[{{#repeat 1 3}} {{> user_card}} {{/repeat}}]')
+  participants: UserCard[];
+
+  @Field()
+  @MockFieldNested('{{> user}}')
+  user: User;
+
+  @Field()
+  @Type(new ArraySerializer(new PrimitiveSerializer()))
+  @MockField('{{issue_problem}}')
+  problems: IssueProblem[];
 }
 
 @Model()
@@ -190,7 +279,10 @@ export class IssuesFilter implements SearchFilter {
   dueDate?: Date;
 
   @Field()
-  state?: IssueState;
+  state?: IssueState | null;
+
+  @Field()
+  problems?: boolean | null;
 
   @Field()
   sort?: string;
@@ -211,6 +303,28 @@ export class IssuesFilter implements SearchFilter {
       Object.assign(this, defs);
     }
   }
+
+}
+
+@Model()
+@MockClass()
+export class IssuesSummary {
+
+  @Field()
+  @Name('issues_count')
+  @MockFieldNested('{{int 10 100}}')
+  issuesCount: number;
+
+  @Field()
+  @Name('time_spent')
+  @MockFieldNested('{{int 10 100}}')
+  timeSpent: number;
+
+
+  @Field()
+  @Name('problems_count')
+  @MockFieldNested('{{int 10 100}}')
+  problemsCount: number;
 
 }
 

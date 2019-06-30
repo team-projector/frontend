@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {UI} from 'junte-ui';
 import {ActivatedRoute, Router} from '@angular/router';
 import {format} from 'date-fns';
@@ -6,16 +6,8 @@ import {distinctUntilChanged} from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs';
 import {Team} from 'src/models/team';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-
-class Params {
-  constructor(defs: any = null) {
-    for (const def in defs) {
-      if (!!defs[def]) {
-        this[def] = defs[def];
-      }
-    }
-  }
-}
+import {IIssuesService, issues_service} from '../../../../services/issues/interface';
+import {IssuesFilter, IssuesSummary} from '../../../../models/issue';
 
 @Component({
   selector: 'app-leader-team',
@@ -28,6 +20,7 @@ export class TeamComponent implements OnInit {
 
   private team$ = new BehaviorSubject<Team>(null);
 
+  summary: IssuesSummary;
   filter = new FormControl();
 
   form: FormGroup = this.formBuilder.group({
@@ -42,7 +35,8 @@ export class TeamComponent implements OnInit {
     return this.team$.getValue();
   }
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(@Inject(issues_service) private issuesService: IIssuesService,
+              private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -50,19 +44,18 @@ export class TeamComponent implements OnInit {
   ngOnInit() {
     this.filter.valueChanges.pipe(distinctUntilChanged())
       .subscribe(filter => {
-        // TODO: more optimal
-        const state = {};
+        const state: { user?, due_date? } = {};
         if (!!filter.user) {
-          state['user'] = filter.user.id;
+          state.user = filter.user.id;
         }
         if (!!filter.dueDate) {
-          state['due_date'] = format(filter.dueDate, 'MM-DD-YYYY');
+          state.due_date = format(filter.dueDate, 'MM-DD-YYYY');
         }
         this.router.navigate([state, 'issues'],
           {relativeTo: this.route});
       });
 
-    this.route.data.subscribe(({team, dueDate, user}) => {
+    this.route.data.subscribe(({team, user, dueDate}) => {
       this.team = team;
       this.form.patchValue({
         filter: {
@@ -70,6 +63,12 @@ export class TeamComponent implements OnInit {
           dueDate: dueDate
         }
       }, {emitEvent: false});
+
+      this.issuesService.summary(new IssuesFilter({
+        team: team.id,
+        user: !!user ? user.id : null,
+        dueDate: dueDate
+      })).subscribe(summary => this.summary = summary);
     });
   }
 }

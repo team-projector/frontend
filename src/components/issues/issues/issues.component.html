@@ -2,7 +2,10 @@
   <jnt-block [width]="ui.width.fluid">
     <jnt-table #table [search]="true">
       <ng-template #filters>
-        <jnt-switch [size]="ui.sizes.small" label="Opened" formControlName="opened"></jnt-switch>
+        <jnt-stack [type]="ui.stack.type.horizontal">
+          <jnt-switch [size]="ui.sizes.small" label="Opened" formControlName="opened"></jnt-switch>
+          <jnt-switch [size]="ui.sizes.small" label="Problems" formControlName="problems"></jnt-switch>
+        </jnt-stack>
       </ng-template>
       <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
         <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
@@ -31,20 +34,32 @@
       </jnt-table-column>
 
       <jnt-table-column i18n-title="@@dueDate" title="Due date">
-        <ng-template #cellTemplate let-dueDate="dueDate">
-          {{dueDate | date}}
+        <ng-template #cellTemplate let-dueDate="dueDate" let-problems="problems">
+          <div>{{dueDate | date}}</div>
+          <jnt-stack [type]="ui.stack.type.vertical">
+            <jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
+                       [color]="ui.colors.red" label="empty">
+            </jnt-label>
+            <jnt-label *ngIf="problems?.includes(issueProblem.overDueDate)"
+                       [color]="ui.colors.red" label="overdue">
+            </jnt-label>
+          </jnt-stack>
         </ng-template>
       </jnt-table-column>
 
       <jnt-table-column i18n-title="@@est" title="Est / Spent / Remains">
         <ng-template #cellTemplate let-timeEstimate="timeEstimate"
                      let-totalTimeSpent="totalTimeSpent"
-                     let-metrics="metrics">
+                     let-metrics="metrics"
+                     let-problems="problems">
           <div style="text-align: right;">
             {{!!timeEstimate ? (timeEstimate | duration) : '&ndash;'}} /
             {{!!totalTimeSpent ? (totalTimeSpent | duration) : '&ndash;'}} /
             {{!!metrics.remains ? (metrics.remains | duration) : '&ndash;'}}
           </div>
+          <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
+                     [color]="ui.colors.red" label="estimate">
+          </jnt-label>
         </ng-template>
       </jnt-table-column>
 

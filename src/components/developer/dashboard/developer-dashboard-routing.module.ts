@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DeveloperDashboardComponent} from './developer-dashboard.component';
 import {IssuesListComponent} from './issues/issues-list.component';
-import {DueDateResolver} from '../../../resolvers/due-date';
+import {DueDateResolver} from '../../../resolvers/issue';
 import {UserWithMetricsResolver} from '../../../resolvers/user';
 import {TimeExpensesListComponent} from './time-expenses/time-expenses-list.component';
 

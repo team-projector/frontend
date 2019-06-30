@@ -5,7 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {DeveloperDashboardComponent} from './developer-dashboard.component';
 import {JunteUiModule} from 'junte-ui';
 import {DatePipesModule} from 'src/pipes/date-pipes.module';
-import {DueDateResolver} from 'src/resolvers/due-date';
+import {DueDateResolver} from 'src/resolvers/issue';
 import {UserWithMetricsResolver} from 'src/resolvers/user';
 import {UsersServiceProvider} from 'src/services/users/provider';
 import {IssuesModule} from 'src/components/issues/issues.module';
