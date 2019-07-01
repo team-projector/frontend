@@ -7,11 +7,11 @@
     </ng-template>
     <ng-template #topMenu>
       <jnt-menu>
-        <jnt-menu-item link="/developer" [exact-link]="false" title="Developer"></jnt-menu-item>
-        <jnt-menu-item link="/leader" [exact-link]="false" title="Team Leader" ></jnt-menu-item>
-        <jnt-menu-item link="/manager" [exact-link]="false" title="Project Manager"></jnt-menu-item>
-        <jnt-menu-item link="customer" [exact-link]="false" title="Customer"></jnt-menu-item>
-        <jnt-menu-item link="/shareholder" [exact-link]="false" title="Shareholder"></jnt-menu-item>
+        <jnt-menu-item link="/developer" [matching]="ui.menu.matching.wildcard" title="Developer"></jnt-menu-item>
+        <jnt-menu-item link="/leader" [matching]="ui.menu.matching.wildcard" title="Team Leader" ></jnt-menu-item>
+        <jnt-menu-item link="/manager" [matching]="ui.menu.matching.wildcard" title="Project Manager"></jnt-menu-item>
+        <jnt-menu-item link="customer" [matching]="ui.menu.matching.wildcard" title="Customer"></jnt-menu-item>
+        <jnt-menu-item link="/shareholder" [matching]="ui.menu.matching.wildcard" title="Shareholder"></jnt-menu-item>
       </jnt-menu>
     </ng-template>
 
