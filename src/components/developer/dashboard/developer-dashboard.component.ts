@@ -77,7 +77,7 @@ export class DeveloperDashboardComponent implements OnInit {
 
     this.dueDate.valueChanges.pipe(distinctUntilChanged())
       .subscribe(dueDate => {
-          const state: { due_date } = {};
+          const state: { due_date? } = {};
           if (!!dueDate) {
             state.due_date = format(dueDate, 'MM-DD-YYYY');
           }
