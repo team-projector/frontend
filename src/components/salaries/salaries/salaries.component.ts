@@ -1,11 +1,10 @@
-import { Component, Inject, Input, OnInit, ViewChild } from '@angular/core';
-import { IssueState } from 'src/models/issue';
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { distinctUntilChanged, filter as filtering } from 'rxjs/operators';
-import { TableComponent, UI } from 'junte-ui';
-import { SalariesFilter } from 'src/models/salaries';
-import { ISalariesService, salaries_service } from 'src/services/salaries/interface';
+import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
+import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
+import {BehaviorSubject} from 'rxjs';
+import {distinctUntilChanged, filter as filtering} from 'rxjs/operators';
+import {TableComponent, UI} from 'junte-ui';
+import {SalariesFilter} from 'src/models/salaries';
+import {ISalariesService, salaries_service} from 'src/services/salaries/interface';
 
 @Component({
   selector: 'app-salaries',
@@ -35,8 +34,9 @@ export class SalariesComponent implements OnInit {
   ngOnInit() {
     this.user$.pipe(filtering(u => !!u), distinctUntilChanged())
       .subscribe(user => {
+        this.filter.user = user;
         this.table.fetcher = (filter: SalariesFilter) =>
-          this.salariesService.forUser(user, Object.assign(this.filter, filter));
+          this.salariesService.list(Object.assign(this.filter, filter));
         this.table.load();
       });
   }

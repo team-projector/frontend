@@ -1,9 +1,9 @@
-import { ArraySerializer, Field, Model, ModelSerializer, Name, Type } from 'serialize-ts';
-import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
-import { DateSerializer } from '../serializers/date';
-import { Paging } from './paging';
-import { SearchFilter } from 'junte-ui';
-import { IssueCard } from './issue';
+import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
+import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
+import {DateSerializer} from '../serializers/date';
+import {Paging} from './paging';
+import {SearchFilter} from 'junte-ui';
+import {IssueCard} from './issue';
 
 @Model()
 @MockClass()
@@ -83,6 +83,9 @@ export class PagingSalaries implements Paging<Salary> {
 
 @Model()
 export class SalariesFilter implements SearchFilter {
+
+  @Field()
+  user?: number;
 
   @Field()
   page?: number;

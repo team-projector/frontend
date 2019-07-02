@@ -7,37 +7,7 @@
 
     <jnt-col [desktop]="9" [mobile]="12">
       <jnt-block [width]="ui.width.fluid">
-        <jnt-table #table>
-          <jnt-table-column i18n-title="@@date" title="Date">
-            <ng-template #cellTemplate let-date="date">
-              {{date | date:'medium'}}
-            </ng-template>
-          </jnt-table-column>
-
-          <jnt-table-column i18n-title="@@spentTime" title="Spent Time">
-            <ng-template #cellTemplate let-timeSpent="timeSpent">
-              {{timeSpent | duration}}
-            </ng-template>
-          </jnt-table-column>
-
-          <jnt-table-column i18n-title="@@spentTime" title="Issue">
-            <ng-template #cellTemplate let-url="issue.glUrl" let-title="issue.title">
-              <jnt-link [source]="url" target="_blank">{{title}}</jnt-link>
-            </ng-template>
-          </jnt-table-column>
-
-          <jnt-table-column i18n-title="@@milestone" title="Milestone">
-            <ng-template #cellTemplate let-milestone="issue.milestone">
-              {{milestone?.presentation}}
-            </ng-template>
-          </jnt-table-column>
-
-          <jnt-table-column i18n-title="@@earnings" title="Earnings">
-            <ng-template #cellTemplate let-earnings="earnings">
-              {{earnings | currency:'RUB'}}
-            </ng-template>
-          </jnt-table-column>
-        </jnt-table>
+        <app-time-expenses [salary]="salary.id"></app-time-expenses>
       </jnt-block>
     </jnt-col>
   </jnt-row>

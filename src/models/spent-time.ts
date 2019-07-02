@@ -70,6 +70,9 @@ export class TimeExpensesFilter {
   date?: Date;
 
   @Field()
+  salary?: number;
+
+  @Field()
   page: number;
 
   @Field()
