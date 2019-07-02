@@ -1,9 +1,9 @@
 <jnt-block [width]="ui.width.fluid">
   <jnt-table [filter]="filter" #table>
     <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
-      <ng-template #cellTemplate let-title="issue.title" let-labels="issue.labels" let-url="issue.glUrl"
-                   let-state="issue.state"
-                   let-participants="issue.participants" let-project="issue.project">
+      <ng-template #cellTemplate let-title="owner.title" let-labels="owner.labels" let-url="owner.glUrl"
+                   let-state="owner.state"
+                   let-participants="owner.participants" let-project="owner.project">
         <jnt-stack [type]="ui.stack.type.horizontal"
                    [gutter]="ui.stack.gutter.small">
           <jnt-avatars-list>

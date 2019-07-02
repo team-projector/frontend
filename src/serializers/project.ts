@@ -2,10 +2,6 @@ import {deserialize, Serializer} from 'serialize-ts';
 import {ProjectCard, ProjectGroupCard} from '../models/project';
 
 export class ProjectSerializer implements Serializer<ProjectCard | ProjectGroupCard> {
-  constructor(private f: string = null) {
-
-  }
-
   serialize(date: ProjectCard | ProjectGroupCard): string {
     throw new Error('Was not implemented');
   }

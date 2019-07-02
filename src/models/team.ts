@@ -1,13 +1,29 @@
-import { ArraySerializer, Field, Model, ModelSerializer, Type } from 'serialize-ts';
-import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
-import { UserCard } from './user';
-import { Paging } from './paging';
-import { PrimitiveSerializer } from 'serialize-ts/dist';
+import {ArraySerializer, Field, Model, ModelSerializer, Type} from 'serialize-ts';
+import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
+import {UserCard} from './user';
+import {Paging} from './paging';
+import {Name, PrimitiveSerializer} from 'serialize-ts/dist';
 
 export enum TeamMemberRole {
   developer = 'developer',
   leader = 'leader',
   watcher = 'watcher'
+}
+
+@Model()
+@MockClass()
+export class TeamMetrics {
+
+  @Field()
+  @Name('issues_count')
+  @MockFieldNested('{{int 10 100}}')
+  issuesCount: number;
+
+  @Field()
+  @Name('problems_count')
+  @MockFieldNested('{{int 10 100}}')
+  problemsCount: number;
+
 }
 
 @Model()
@@ -22,6 +38,9 @@ export class Team {
   @MockField('{{team}}')
   title: string;
 
+  @Field()
+  @MockFieldNested('{{> team_metrics}}')
+  metrics: TeamMetrics;
 }
 
 @Model()
@@ -59,6 +78,10 @@ export class TeamCard {
   @Type(new ArraySerializer(new ModelSerializer(TeamMemberCard)))
   @MockFieldNested('[{{#repeat 5 15}} {{> team_member_card }} {{/repeat}}]')
   members: TeamMemberCard[];
+
+  @Field()
+  @MockFieldNested('{{> team_metrics}}')
+  metrics: TeamMetrics;
 }
 
 @Model()

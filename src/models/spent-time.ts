@@ -4,6 +4,8 @@ import {Paging} from './paging';
 import {DateSerializer} from '../serializers/date';
 import {IssueCard} from './issue';
 import {DATE_FORMAT} from '../consts';
+import {ProjectSerializer} from '../serializers/project';
+import {OwnerSerializer} from '../serializers/owner';
 
 @Model()
 @MockClass()
@@ -25,8 +27,9 @@ export class SpentTimeCard {
   date: Date;
 
   @Field()
+  @Type(new OwnerSerializer())
   @MockFieldNested('{{> issue_card}}')
-  issue: IssueCard;
+  owner: IssueCard;
 
   @Field()
   @Name('time_spent')
