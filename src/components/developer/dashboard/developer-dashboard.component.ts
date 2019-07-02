@@ -10,8 +10,8 @@ import {BehaviorSubject, combineLatest, zip} from 'rxjs';
 import {Period} from 'junte-ui/lib/components/calendar/models';
 import {UI} from 'junte-ui';
 import {DurationFormat} from '../../../pipes/date';
-
-const L = 'DD/MM/YYYY';
+import {IssuesFilter, IssuesSummary} from '../../../models/issue';
+import {IIssuesService, issues_service} from '../../../services/issues/interface';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,
@@ -25,6 +25,7 @@ class Metric {
   styleUrls: ['./developer-dashboard.component.scss']
 })
 export class DeveloperDashboardComponent implements OnInit {
+
   ui = UI;
   durationFormat = DurationFormat;
 
@@ -32,7 +33,9 @@ export class DeveloperDashboardComponent implements OnInit {
   period$ = new BehaviorSubject<Period>(null);
 
   format = format;
-  formatDate = L;
+  formatDate = 'DD/MM/YYYY';
+
+  summary: IssuesSummary;
 
   set user(user: User) {
     this.user$.next(user);
@@ -53,7 +56,8 @@ export class DeveloperDashboardComponent implements OnInit {
   dueDate = new FormControl();
   filterForm = this.formBuilder.group({dueDate: this.dueDate});
 
-  constructor(@Inject(metrics_service) private metricsService: IMetricsService,
+  constructor(@Inject(issues_service) private issuesService: IIssuesService,
+              @Inject(metrics_service) private metricsService: IMetricsService,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
@@ -62,19 +66,22 @@ export class DeveloperDashboardComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(({user, dueDate}) => {
       this.user = user;
-      this.filterForm.patchValue({dueDate: dueDate}, {emitEvent: false});
+      this.filterForm.patchValue({dueDate: dueDate},
+        {emitEvent: false});
+
+      this.issuesService.summary(new IssuesFilter({
+        user: user.id,
+        dueDate: dueDate
+      })).subscribe(summary => this.summary = summary);
     });
 
     this.dueDate.valueChanges.pipe(distinctUntilChanged())
       .subscribe(dueDate => {
-          // TODO: more optimal
-          const state = {};
+          const state: { due_date } = {};
           if (!!dueDate) {
-            state['due_date'] = format(dueDate, 'MM-DD-YYYY');
+            state.due_date = format(dueDate, 'MM-DD-YYYY');
           }
-          this.router.navigate(
-            [state, 'issues'],
-            {relativeTo: this.route});
+          this.router.navigate([state, 'issues'], {relativeTo: this.route});
         }
       );
 

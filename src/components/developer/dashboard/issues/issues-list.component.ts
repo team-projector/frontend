@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../../models/user';
 
 @Component({
@@ -11,13 +11,22 @@ export class IssuesListComponent implements OnInit {
 
   user: User;
   dueDate: Date;
+  opened: boolean;
+  problems: boolean;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(({user, dueDate}) =>
-      [this.user, this.dueDate] = [user, dueDate]);
+    this.route.data.subscribe(({dueDate, user, opened, problems}) =>
+      [this.dueDate, this.user, this.opened, this.problems] =
+        [dueDate, user, opened, problems]);
+  }
+
+  filtered(state: { opened?, problems? }) {
+    this.router.navigate([state],
+      {relativeTo: this.route});
   }
 
 }

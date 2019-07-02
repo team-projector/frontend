@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DeveloperDashboardComponent} from './developer-dashboard.component';
 import {IssuesListComponent} from './issues/issues-list.component';
-import {DueDateResolver} from '../../../resolvers/issue';
+import {DueDateResolver, OpenedResolver, ProblemsResolver} from '../../../resolvers/issue';
 import {UserWithMetricsResolver} from '../../../resolvers/user';
 import {TimeExpensesListComponent} from './time-expenses/time-expenses-list.component';
 
@@ -24,12 +24,16 @@ const routes: Routes = [
       },
       {
         path: 'issues',
-        data: { breadcrumb: 'Issues' },
+        data: {breadcrumb: 'Issues'},
         component: IssuesListComponent,
+        resolve: {
+          opened: OpenedResolver,
+          problems: ProblemsResolver
+        }
       },
       {
         path: 'time-expenses',
-        data: { breadcrumb: 'Time Expenses' },
+        data: {breadcrumb: 'Time Expenses'},
         component: TimeExpensesListComponent,
       }
     ]

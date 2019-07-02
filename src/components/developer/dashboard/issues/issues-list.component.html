@@ -1,1 +1,2 @@
-<app-issues [user]="user?.id" [dueDate]="dueDate"></app-issues>
+<app-issues [user]="user?.id" [dueDate]="dueDate" [opened]="opened" [problems]="problems"
+            (filtered)="filtered($event)"></app-issues>
