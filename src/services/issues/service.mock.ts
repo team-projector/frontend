@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {IIssuesService} from './interface';
-import {HttpMockService} from 'junte-angular';
-import {Observable} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {deserialize} from 'serialize-ts';
-import {Issue, IssuesFilter, IssuesSummary, PagingIssues} from '../../models/issue';
+import { Injectable } from '@angular/core';
+import { IIssuesService } from './interface';
+import { HttpMockService } from 'junte-angular';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { deserialize } from 'serialize-ts';
+import { Issue, IssuesFilter, IssuesSummary, PagingIssues } from '../../models/issue';
 
 @Injectable({
   providedIn: 'root'

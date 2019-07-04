@@ -1,11 +1,11 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {IssueProblem, IssuesFilter, IssueState} from 'src/models/issue';
-import {PLATFORM_DELAY} from 'src/consts';
-import {IIssuesService, issues_service} from 'src/services/issues/interface';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {debounceTime, distinctUntilChanged, finalize} from 'rxjs/operators';
-import {TableComponent, UI} from 'junte-ui';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { IssueProblem, IssuesFilter, IssueState } from 'src/models/issue';
+import { PLATFORM_DELAY } from 'src/consts';
+import { IIssuesService, issues_service } from 'src/services/issues/interface';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
+import { TableComponent, UI } from 'junte-ui';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-issues',
