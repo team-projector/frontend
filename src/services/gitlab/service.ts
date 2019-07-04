@@ -6,7 +6,7 @@ import { deserialize } from 'serialize-ts';
 import { map } from 'rxjs/operators';
 import { Status } from '../../models/status';
 
-@Injectable({providedIn: 'root'})
+@Injectable()
 export class GitlabService implements IGitlabService {
 
   constructor(private http: HttpService) {

@@ -5,9 +5,9 @@ import { DashboardComponent } from './dashboard.component';
 import { AuthorizationGuard } from '../../guards/authorization.guard';
 import { JunteUiModule } from 'junte-ui';
 import { ArrayPipesModule } from '../../pipes/array-pipes.module';
-import { GitlabService } from '../../services/gitlab/service';
 import { DifferencePipe } from './dashboard.pipe';
 import { DatePipesModule } from '../../pipes/date-pipes.module';
+import { GitlabServiceProvider } from 'src/services/gitlab/provider';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { DatePipesModule } from '../../pipes/date-pipes.module';
   ],
   providers: [
     AuthorizationGuard,
-    GitlabService
+    GitlabServiceProvider
   ]
 })
 export class DashboardModule {

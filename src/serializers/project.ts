@@ -8,12 +8,11 @@ export class ProjectSerializer implements Serializer<ProjectCard | ProjectGroupC
 
   deserialize(source: Object): ProjectCard | ProjectGroupCard {
     switch (source['__type__']) {
-      case 'Project':
-        return deserialize(source, ProjectCard);
       case 'ProjectGroup':
         return deserialize(source, ProjectGroupCard);
+      case 'Project':
       default:
-        throw new Error('Wrong object type');
+        return deserialize(source, ProjectCard);
     }
   }
 }

@@ -4,8 +4,7 @@ import { Config } from 'junte-angular';
 import { AppConfig } from '../../app-config';
 import { MeManager } from '../../managers/me.manager';
 import { Router } from '@angular/router';
-import { GitlabService } from '../../services/gitlab/service';
-import { IGitlabService } from '../../services/gitlab/interface';
+import { gitlab_service, IGitlabService } from '../../services/gitlab/interface';
 import { Status } from '../../models/status';
 
 const STATUS_TIMEOUT = 60000;
@@ -23,7 +22,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('status') statusEl: ElementRef;
 
   constructor(@Inject(Config) public config: AppConfig,
-              @Inject(GitlabService) public gitlabService: IGitlabService,
+              @Inject(gitlab_service) public gitlabService: IGitlabService,
               private router: Router,
               public me: MeManager) {
   }
