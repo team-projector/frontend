@@ -1,6 +1,6 @@
-import {deserialize, Serializer} from 'serialize-ts';
-import {IssueCard} from '../models/issue';
-import {MergeRequestCard} from '../models/merge_request';
+import { deserialize, Serializer } from 'serialize-ts';
+import { IssueCard } from '../models/issue';
+import { MergeRequestCard } from '../models/merge_request';
 
 export class OwnerSerializer implements Serializer<IssueCard | MergeRequestCard> {
   serialize(date: IssueCard | MergeRequestCard): string {
@@ -9,13 +9,11 @@ export class OwnerSerializer implements Serializer<IssueCard | MergeRequestCard>
 
   deserialize(source: Object): IssueCard | MergeRequestCard {
     switch (source['__type__']) {
-      case 'issue':
-        return deserialize(source, IssueCard);
       case 'merge_request':
         return deserialize(source, MergeRequestCard);
+      case 'issue':
       default:
         return deserialize(source, IssueCard);
-      // throw new Error('Wrong object type');
     }
   }
 }
