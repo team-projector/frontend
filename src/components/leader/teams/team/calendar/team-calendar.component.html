@@ -23,12 +23,12 @@
         <button arrow (click)="date = subWeeks(date, 1)">
           <jnt-icon [icon]="ui.icons.arrowLeft"></jnt-icon>
         </button>
-        <span>{{weeks[0].days[0] | getDate}}-{{weeks[0].days[6] | getDate}} {{date | format: 'MMMM'}}</span>
+        <span>{{weeks[0].days[0] | period:weeks[0].days[6]}}</span>
       </div>
     </th>
     <th colspan="10">
       <div date>
-        <span>{{weeks[1].days[0] | getDate}}-{{weeks[1].days[6] | getDate}} {{date | format: 'MMMM'}}</span>
+        <span>{{weeks[1].days[0] | period:weeks[1].days[6]}}</span>
         <button arrow (click)="date = addWeeks(date, 1)">
           <jnt-icon [icon]="ui.icons.arrowRight"></jnt-icon>
         </button>
