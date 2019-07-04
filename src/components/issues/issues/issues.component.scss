@@ -4,6 +4,10 @@
   display: block;
 }
 
-.closed ::ng-deep a[child-of=#{$jnt-link-host}] {
+[slow='true'] {
+  border-bottom: 2px solid $fail-color;
+}
+
+[closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
   text-decoration: line-through;
 }

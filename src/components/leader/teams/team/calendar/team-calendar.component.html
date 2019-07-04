@@ -116,20 +116,17 @@
                           {presentation: metric, date: endOfDay(day), metric: metrics?.days?.get(member.user.id)?.get(format(day, formatDate))}"></ng-container>
         </td>
 
-        <td *ngFor="let metric of metricLabels;let index = index;">
-          <ng-container *ngIf="metrics?.weeks?.get(member.user.id)?.get(format(week.date, formatDate)) as metric"
-                        [ngSwitch]="index">
-            <ng-container *ngSwitchCase="0">
-              {{!!metric?.timeEstimate ? (metric?.timeEstimate | duration:durationFormat.short) : '&ndash;'}}
-            </ng-container>
-            <ng-container *ngSwitchCase="1">
-              {{!!metric?.timeSpent ? (metric?.timeSpent | duration:durationFormat.short) : '&ndash;'}}
-            </ng-container>
-            <ng-container *ngSwitchCase="2">
-              {{metric.efficiency | number:'1.2-2'}}
-            </ng-container>
-          </ng-container>
-        </td>
+        <ng-container *ngIf="metrics?.weeks?.get(member.user.id)?.get(format(week.date, formatDate)) as metric">
+          <td>
+            {{!!metric?.timeEstimate ? (metric?.timeEstimate | duration:durationFormat.short) : '&ndash;'}}
+          </td>
+          <td>
+            {{!!metric?.timeSpent ? (metric?.timeSpent | duration:durationFormat.short) : '&ndash;'}}
+          </td>
+          <td [attr.slow]="metric.efficiency > 0 && metric.efficiency < 0.8">
+            <span>{{metric.efficiency | number:'1.2-2'}}</span>
+          </td>
+        </ng-container>
       </ng-container>
       <td gutter></td>
     </tr>

@@ -80,7 +80,6 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   formatDate = L;
   weeks: Week[] = [];
   metrics: Metric;
-  metricLabels = ['Est', 'Sp', 'Ef'];
   loading: boolean;
 
   user = new FormControl();
