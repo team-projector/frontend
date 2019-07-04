@@ -15,6 +15,10 @@ export enum UserRole {
   shareholder = 'shareholder'
 }
 
+export enum UserProblem {
+  payrollOpenedOverflow = 'payroll_opened_overflow'
+}
+
 @Model()
 @MockClass()
 export class User {
@@ -43,6 +47,11 @@ export class User {
   @Field()
   @MockFieldNested('{{> user_metrics}}')
   metrics: UserMetrics;
+
+  @Field()
+  @Type(new ArraySerializer(new PrimitiveSerializer()))
+  @MockField('{{user_problem}}')
+  problems: UserProblem[];
 
 }
 
@@ -74,5 +83,10 @@ export class UserCard {
   @Field()
   @MockFieldNested('{{> user_metrics}}')
   metrics: UserMetrics;
+
+  @Field()
+  @Type(new ArraySerializer(new PrimitiveSerializer()))
+  @MockField('{{user_problem}}')
+  problems: UserProblem[];
 
 }

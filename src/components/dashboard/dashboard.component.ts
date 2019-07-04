@@ -6,6 +6,7 @@ import { MeManager } from '../../managers/me.manager';
 import { Router } from '@angular/router';
 import { gitlab_service, IGitlabService } from '../../services/gitlab/interface';
 import { Status } from '../../models/status';
+import {UserRole} from '../../models/user';
 
 const STATUS_TIMEOUT = 60000;
 
@@ -17,6 +18,7 @@ const STATUS_TIMEOUT = 60000;
 export class DashboardComponent implements OnInit {
 
   ui = UI;
+  userRole = UserRole;
   status: Status;
 
   @ViewChild('status') statusEl: ElementRef;
