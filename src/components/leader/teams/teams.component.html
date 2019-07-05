@@ -1,15 +1,32 @@
-<jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap" [align]="ui.flex.align.center">
-  <jnt-link *ngFor="let team of teams" [source]="[team.id]">
-    <jnt-block [padding]="ui.padding.large">
-      <jnt-avatars-group [size]="ui.sizes.normal">
-        <jnt-avatar *ngFor="let member of team.members"
-                    [image]="member.user.avatar">
-        </jnt-avatar>
-      </jnt-avatars-group>
-      <p>{{team.title}}</p>
-      <jnt-label *ngIf="team.metrics.problemsCount" [color]="ui.colors.red"
-                 [label]="team.metrics.problemsCount"></jnt-label>
-    </jnt-block>
-  </jnt-link>
+<jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap" [align]="ui.flex.align.stretch">
+  <ng-container *ngIf="loading; then loadingTemplate; else teamsTemplate"></ng-container>
+  <ng-template #loadingTemplate>
+    <div *ngFor="let i of 5 | mockArray" team>
+      <jnt-block [width]="ui.width.fluid" [padding]="ui.padding.normal" block>
+        <jnt-stack [align]="ui.flex.align.center">
+          <jnt-skeleton [type]="ui.skeleton.type.avatar"></jnt-skeleton>
+          <jnt-skeleton [lines]="2"></jnt-skeleton>
+        </jnt-stack>
+      </jnt-block>
+    </div>
+  </ng-template>
+  <ng-template #teamsTemplate>
+    <jnt-link *ngFor="let team of teams" [source]="[team.id]" team>
+      <jnt-block [padding]="ui.padding.normal" block>
+        <jnt-stack [align]="ui.flex.align.center">
+          <jnt-avatars-group [size]="ui.sizes.normal">
+            <jnt-avatar *ngFor="let member of team.members"
+                        [image]="member.user.avatar">
+            </jnt-avatar>
+          </jnt-avatars-group>
+          <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.tiny" name>
+            <span>{{team.title}}</span>
+            <jnt-label *ngIf="team.metrics.problemsCount" [color]="ui.colors.red"
+                       [label]="team.metrics.problemsCount"></jnt-label>
+          </jnt-stack>
+        </jnt-stack>
+      </jnt-block>
+    </jnt-link>
+  </ng-template>
 </jnt-stack>
 <router-outlet></router-outlet>
