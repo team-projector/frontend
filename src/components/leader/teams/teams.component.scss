@@ -2,5 +2,31 @@
 
 :host {
   display: block;
-  margin: 10px;
 }
+
+[team] {
+  margin-bottom: $gutter-normal;
+  & ::ng-deep a[child-of=#{$jnt-link-host}] {
+    height: 100%;
+    align-items: stretch;
+  }
+
+  [block] {
+    height: 100%;
+    max-width: 160px;
+    width: 160px;
+    padding-top: $gutter-large;
+    padding-bottom: $gutter-large;
+    [name] {
+      max-width: 100%;
+      span {
+        display: inline-block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        box-sizing: border-box;
+      }
+    }
+  }
+}
+

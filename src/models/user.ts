@@ -77,7 +77,7 @@ export class UserCard {
 
   @Field()
   @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField([UserRole.developer])
+  @MockField([UserRole.developer, UserRole.customer, UserRole.projectManager, UserRole.shareholder, UserRole.teamLeader])
   roles: UserRole[];
 
   @Field()
