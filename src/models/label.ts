@@ -1,15 +1,12 @@
-import {Field} from 'serialize-ts';
-import {MockClass, MockField} from '../decorators/mock';
+import { field, model } from '@junte/mocker-library';
 
-@MockClass()
+@model()
 export class LabelCard {
 
-  @Field()
-  @MockField('{{label}}')
+  @field({mock: '{{label}}'})
   title: string;
 
-  @Field()
-  @MockField('{{color}}')
+  @field({mock: '{{color}}'})
   color: string;
 
 }

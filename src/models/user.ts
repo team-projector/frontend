@@ -1,7 +1,7 @@
-import {ArraySerializer, Field, Model, Name, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {PrimitiveSerializer} from 'serialize-ts/dist/serializers/primitive.serializer';
-import {UserMetrics} from './user-metrics';
+import { ArraySerializer } from 'serialize-ts';
+import { PrimitiveSerializer } from 'serialize-ts/dist/serializers/primitive.serializer';
+import { UserMetrics } from './user-metrics';
+import { field, model } from '@junte/mocker-library';
 
 export enum UserPermission {
   inviteUser = 'intite_user',
@@ -15,64 +15,54 @@ export enum UserRole {
   shareholder = 'shareholder'
 }
 
-@Model()
-@MockClass()
+@model()
 export class User {
 
-  @Field()
-  @MockFieldNested('{{int 0 100}}')
+  @field({mock: '{{int 0 100}}'})
   id: number;
 
-  @Field()
-  @MockField('{{login}}')
+  @field({mock: '{{login}}'})
   login: string;
 
-  @Field()
-  @MockField('{{firstName}} {{lastName}}')
+  @field({mock: '{{firstName}} {{lastName}}'})
   name: string;
 
-  @Field()
-  @MockField('{{avatar}}')
+  @field({mock: '{{avatar}}'})
   avatar: string;
 
-  @Field()
-  @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField([UserRole.developer])
+  @field({
+    serializer: new ArraySerializer(new PrimitiveSerializer()),
+    mock: [UserRole.developer]
+  })
   roles: UserRole[];
 
-  @Field()
-  @MockFieldNested('{{> user_metrics}}')
+  @field({mock: '{{> user_metrics}}'})
   metrics: UserMetrics;
 
 }
 
-@Model()
-@MockClass()
+@model()
 export class UserCard {
 
-  @Field()
-  @MockFieldNested('{{int 0 100}}')
+  @field({mock: '{{int 0 100}}'})
   id: number;
 
-  @Field()
-  @MockField('{{login}}')
+  @field({mock: '{{login}}'})
   login: string;
 
-  @Field()
-  @MockField('{{firstName}} {{lastName}}')
+  @field({mock: '{{firstName}} {{lastName}}'})
   name: string;
 
-  @Field()
-  @MockField('{{avatar}}')
+  @field({mock: '{{avatar}}'})
   avatar: string;
 
-  @Field()
-  @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField([UserRole.developer])
+  @field({
+    serializer: new ArraySerializer(new PrimitiveSerializer()),
+    mock: [UserRole.developer]
+  })
   roles: UserRole[];
 
-  @Field()
-  @MockFieldNested('{{> user_metrics}}')
+  @field({mock: '{{> user_metrics}}'})
   metrics: UserMetrics;
 
 }

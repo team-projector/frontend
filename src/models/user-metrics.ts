@@ -1,42 +1,42 @@
-import {Field, Model, Name, Type} from 'serialize-ts';
-import {MockClass, MockFieldNested} from '../decorators/mock';
+import { field, model } from '@junte/mocker-library';
 
-
-@Model()
-@MockClass()
+@model()
 export class UserMetrics {
 
-  @Field()
-  @MockFieldNested('{{money}}')
+  @field({mock: '{{money}}'})
   bonus: number;
 
-  @Field()
-  @MockFieldNested('{{money}}')
+  @field({mock: '{{money}}'})
   penalty: number;
 
-  @Field()
-  @Name('issues_opened_count')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'issues_opened_count',
+    mock: '{{int 10 100}}'
+  })
   issuesOpenedCount: number;
 
-  @Field()
-  @Name('payroll_closed')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'payroll_closed',
+    mock: '{{int 10 100}}'
+  })
   payrollClosed: number;
 
-  @Field()
-  @Name('payroll_opened')
-  @MockFieldNested('{{int 1000 20000}}')
+  @field({
+    name: 'payroll_opened',
+    mock: '{{int 1000 20000}}'
+  })
   payrollOpened: number;
 
-  @Field()
-  @Name('issues_closed_spent')
-  @MockFieldNested('{{int 3600 18000}}')
+  @field({
+    name: 'issues_closed_spent',
+    mock: '{{int 3600 18000}}'
+  })
   issuesClosedSpent: number;
 
-  @Field()
-  @Name('issues_opened_spent')
-  @MockFieldNested('{{int 3600 18000}}')
+  @field({
+    name: 'issues_opened_spent',
+    mock: '{{int 3600 18000}}'
+  })
   issuesOpenedSpent: number;
 
 }

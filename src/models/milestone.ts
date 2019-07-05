@@ -1,181 +1,186 @@
-import {ArraySerializer, Field, Model, ModelSerializer, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {Paging} from './paging';
-import {SearchFilter} from 'junte-ui';
-import {Name} from 'serialize-ts/dist';
-import {DateSerializer} from '../serializers/date';
-import {Project, ProjectCard, ProjectGroup, ProjectGroupCard} from './project';
-import {ProjectSerializer} from '../serializers/project';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { Paging } from './paging';
+import { SearchFilter } from 'junte-ui';
+import { DateSerializer } from '../serializers/date';
+import { Project, ProjectCard, ProjectGroup, ProjectGroupCard } from './project';
+import { ProjectSerializer } from '../serializers/project';
+import { field, model } from '@junte/mocker-library';
 
-@Model()
-@MockClass()
+@model()
 export class MilestoneMetrics {
 
-  @Field()
-  @Name('customer_payroll')
-  @MockFieldNested('{{money}}')
+  @field({
+    name: 'customer_payroll',
+    mock: '{{money}}'
+  })
   customerPayroll: number;
 
-  @Field()
-  @Name('payroll')
-  @MockFieldNested('{{money}}')
+  @field({
+    name: 'payroll',
+    mock: '{{money}}'
+  })
   payroll: number;
 
-  @Field()
-  @Name('budget_remains')
-  @MockFieldNested('{{money}}')
+  @field({
+    name: 'budget_remains',
+    mock: '{{money}}'
+  })
   budgetRemains: number;
 
-  @Field()
-  @Name('profit')
-  @MockFieldNested('{{money}}')
+  @field({
+    name: 'profit',
+    mock: '{{money}}'
+  })
   profit: number;
 
-  @Field()
-  @Name('time_estimate')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'time_estimate',
+    mock: '{{int 10 100}}'
+  })
   timeEstimate: number;
 
-  @Field()
-  @Name('time_spent')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'time_spent',
+    mock: '{{int 10 100}}'
+  })
   timeSpent: number;
 
-  @Field()
-  @Name('time_remains')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'time_remains',
+    mock: '{{int 10 100}}'
+  })
   timeRemains: number;
 
-  @Field()
-  @MockFieldNested('{{efficiency}}')
+  @field({mock: '{{efficiency}}'})
   efficiency: number;
 
-  @Field()
-  @Name('issues_count')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'issues_count',
+    mock: '{{int 10 100}}'
+  })
   issuesCount: number;
 
-  @Field()
-  @Name('issues_opened_count')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'issues_opened_count',
+    mock: '{{int 10 100}}'
+  })
   issuesOpenedCount: number;
 
-  @Field()
-  @Name('issues_closed_count')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'issues_closed_count',
+    mock: '{{int 10 100}}'
+  })
   issuesClosedCount: number;
 
 }
 
-@Model()
-@MockClass()
+@model()
 export class MilestoneCard {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{int 1 1000}}'})
   id: number;
 
-  @Field()
-  @MockField('{{title}}')
+  @field({mock: '{{title}}'})
   title: string;
 
-  @Field()
-  @Type(new ProjectSerializer())
-  @MockFieldNested('{{> project_card}}')
+  @field({
+    serializer: new ProjectSerializer(),
+    mock: '{{> project_card}}'
+  })
   owner: ProjectCard | ProjectGroupCard;
 
-  @Field()
-  @MockFieldNested('{{money}}')
+  @field({mock: '{{money}}'})
   budget: number;
 
-  @Field()
-  @Name('start_date')
-  @MockField('{{date \'2019\' \'2020\'}}')
+  @field({
+    name: 'start_date',
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
   startDate: Date;
 
-  @Field()
-  @Name('due_date')
-  @Type(new DateSerializer())
-  @MockField('{{date \'2019\' \'2020\'}}')
+  @field({
+    name: 'due_date',
+    serializer: new DateSerializer(),
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
   dueDate: Date;
 
-  @Field()
-  @MockFieldNested('{{> milestone_metrics}}')
+  @field({
+    mock: '{{> milestone_metrics}}'
+  })
   metrics: MilestoneMetrics;
 
-  @Field()
-  @Name('gl_url')
-  @MockField('{{url}}')
+  @field({
+    name: 'gl_url',
+    mock: '{{url}}'
+  })
   glUrl: string;
 }
 
-@Model()
-@MockClass()
+@model()
 export class Milestone {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{id}}'})
   id: number;
 
-  @Field()
-  @MockField('{{title}}')
+  @field({mock: '{{title}}'})
   title: string;
 
-  @Field()
-  @Type(new ProjectSerializer())
-  @MockFieldNested('{{> project}}')
+  @field({
+    serializer: new ProjectSerializer(),
+    mock: '{{> project}}'
+  })
   owner: Project | ProjectGroup;
 
-  @Field()
-  @MockFieldNested('{{money}}')
+  @field({mock: '{{money}}'})
   budget: number;
 
-  @Field()
-  @Name('start_date')
-  @MockField('{{date \'2019\' \'2020\'}}')
+  @field({
+    name: 'start_date',
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
   startDate: Date;
 
-  @Field()
-  @Name('due_date')
-  @Type(new DateSerializer())
-  @MockField('{{date \'2019\' \'2020\'}}')
+  @field({
+    name: 'due_date',
+    serializer: new DateSerializer(),
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
   dueDate: Date;
 
-  @Field()
-  @MockFieldNested('{{> milestone_metrics}}')
+  @field({mock: '{{> milestone_metrics}}'})
   metrics: MilestoneMetrics;
 
-  @Field()
-  @Name('gl_url')
-  @MockField('{{url}}')
+  @field({
+    name: 'gl_url',
+    mock: '{{url}}'
+  })
   glUrl: string;
 }
 
-@Model()
-@MockClass()
+@model()
 export class PagingMilestones implements Paging<MilestoneCard> {
 
-  @Field()
-  @MockFieldNested('{{int 3 10}}')
+  @field({mock: '{{int 3 10}}'})
   count: number;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(MilestoneCard)))
-  @MockFieldNested('[{{#repeat 3 10}} {{> milestone_card}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(MilestoneCard)),
+    mock: '[{{#repeat 3 10}} {{> milestone_card}} {{/repeat}}]'
+  })
   results: MilestoneCard[];
 }
 
-@Model()
+@model()
 export class MilestonesFilter implements SearchFilter {
 
-  @Field()
+  @field()
   active?: boolean;
 
-  @Field()
+  @field()
   page?: number;
 
-  @Field()
-  @Name('page_size')
+  @field({name: 'page_size'})
   pageSize?: number;
 
   constructor(defs: MilestonesFilter = null) {

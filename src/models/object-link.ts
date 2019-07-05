@@ -1,16 +1,12 @@
-import {Field, Model} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
+import { field, model } from '@junte/mocker-library';
 
-@Model()
-@MockClass()
+@model()
 export class ObjectLink {
 
-  @Field()
-  @MockFieldNested('{{int 1 100}}')
+  @field({mock: '{{int 1 100}}'})
   id: number;
 
-  @Field()
-  @MockField('{{presentation}}')
+  @field({mock: '{{presentation}}'})
   presentation: string;
 
 }

@@ -1,17 +1,16 @@
-import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {ObjectLink} from './object-link';
-import {LabelCard} from './label';
-import {Paging} from './paging';
-import {DateSerializer} from '../serializers/date';
-import {DATE_FORMAT} from '../consts';
-import {BooleanSerializer} from '../serializers/http';
-import {Order, SearchFilter} from 'junte-ui';
-import {User, UserCard} from './user';
-import {PrimitiveSerializer} from 'serialize-ts/dist';
-import {IssueProblemType} from './problem';
-import {Project} from './project';
-import {Milestone} from './milestone';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { ObjectLink } from './object-link';
+import { LabelCard } from './label';
+import { Paging } from './paging';
+import { DateSerializer } from '../serializers/date';
+import { DATE_FORMAT } from '../consts';
+import { BooleanSerializer } from '../serializers/http';
+import { Order, SearchFilter } from 'junte-ui';
+import { User, UserCard } from './user';
+import { PrimitiveSerializer } from 'serialize-ts/dist';
+import { Project } from './project';
+import { Milestone } from './milestone';
+import { field, model } from '@junte/mocker-library';
 
 export enum IssueState {
   opened = 'opened',
@@ -29,272 +28,261 @@ export enum ErrorType {
   issueWithoutEstimate = 'issue_without_estimate'
 }
 
-@Model()
-@MockClass()
+@model()
 export class IssueMetrics {
 
-  @Field()
-  @MockFieldNested('{{int 10 100}}')
+  @field({mock: '{{int 10 100}}'})
   remains: number;
 
-  @Field()
-  @MockFieldNested('{{efficiency}}')
+  @field({mock: '{{efficiency}}'})
   efficiency: number;
 
-  @Field()
-  @MockFieldNested('{{money}}')
+  @field({mock: '{{money}}'})
   paid: number;
 
-  @Field()
-  @MockFieldNested('{{money}}')
+  @field({mock: '{{money}}'})
   payroll: number;
 
 }
 
-@Model()
-@MockClass()
+@model()
 export class IssueCard {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{int 1 100}}'})
   id: number;
 
-  @Field()
-  @MockField('{{issue}}')
+  @field({mock: '{{issue}}'})
   title: string;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(LabelCard)))
-  @MockFieldNested('[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(LabelCard)),
+    mock: '[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]'
+  })
   labels: LabelCard[];
 
-  @Field()
-  @MockFieldNested('{{> object_link presentation=(project)}}')
+  @field({mock: '{{> object_link presentation=(project)}}'})
   project: ObjectLink;
 
-  @Field()
-  @Name('due_date')
-  @Type(new DateSerializer())
-  @MockField('{{date \'2019\' \'2020\'}}')
+  @field({
+    name: 'due_date',
+    serializer: new DateSerializer(),
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
   dueDate: Date;
 
-  @Field()
-  @Name('time_estimate')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'time_estimate',
+    mock: '{{int 10 100}}'
+  })
   timeEstimate: number;
 
-  @Field()
-  @Name('time_spent')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'time_spent',
+    mock: '{{int 10 100}}'
+  })
   timeSpent: number;
 
-  @Field()
-  @Name('total_time_spent')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'total_time_spent',
+    mock: '{{int 10 100}}'
+  })
   totalTimeSpent: number;
 
-  @Field()
-  @Name('gl_url')
-  @MockField('{{url}}')
+  @field({
+    name: 'gl_url',
+    mock: '{{url}}'
+  })
   glUrl: string;
 
-  @Field()
-  @MockField(IssueState.opened)
+  @field({mock: IssueState.opened})
   state: IssueState;
 
-  @Field()
-  @MockFieldNested('{{> issue_metrics}}')
+  @field({mock: '{{> issue_metrics}}'})
   metrics: IssueMetrics;
 
-  @Field()
-  @MockFieldNested('{{> object_link presentation=(milestone)}}')
+  @field({mock: '{{> object_link presentation=(milestone)}}'})
   milestone: ObjectLink;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(UserCard)))
-  @MockFieldNested('[{{#repeat 1 3}} {{> user_card}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(UserCard)),
+    mock: '[{{#repeat 1 3}} {{> user_card}} {{/repeat}}]'
+  })
   participants: UserCard[];
 
-  @Field()
-  @MockFieldNested('{{> user_card}}')
+  @field({mock: '{{> user_card}}'})
   user: UserCard;
 
-  @Field()
-  @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField('{{issue_problem}}')
+  @field({
+    serializer: new ArraySerializer(new PrimitiveSerializer()),
+    mock: '{{issue_problem}}'
+  })
   problems: IssueProblem[];
 }
 
-@Model()
-@MockClass()
+@model()
 export class Issue {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{int 1 1000}}'})
   id: number;
 
-  @Field()
-  @MockField('{{issue}}')
+  @field({mock: '{{issue}}'})
   title: string;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(LabelCard)))
-  @MockFieldNested('[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(LabelCard)),
+    mock: '[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]'
+  })
   labels: LabelCard[];
 
-  @Field()
-  @MockFieldNested('{{> project}}')
+  @field({mock: '{{> project}}'})
   project: Project;
 
-  @Field()
-  @Name('due_date')
-  @Type(new DateSerializer())
-  @MockField('{{date \'2019\' \'2020\'}}')
+  @field({
+    name: 'due_date',
+    serializer: new DateSerializer(),
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
   dueDate: Date;
 
-  @Field()
-  @Name('time_estimate')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'time_estimate',
+    mock: '{{int 10 100}}'
+  })
   timeEstimate: number;
 
-  @Field()
-  @Name('time_spent')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'time_spent',
+    mock: '{{int 10 100}}'
+  })
   timeSpent: number;
 
-  @Field()
-  @Name('total_time_spent')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'total_time_spent',
+    mock: '{{int 10 100}}'
+  })
   totalTimeSpent: number;
 
-  @Field()
-  @Name('gl_url')
-  @MockField('{{url}}')
+  @field({
+    name: 'gl_url',
+    mock: '{{url}}'
+  })
   glUrl: string;
 
-  @Field()
-  @MockField(IssueState.opened)
+  @field({mock: IssueState.opened})
   state: IssueState;
 
-  @Field()
-  @MockFieldNested('{{> issue_metrics}}')
+  @field({mock: '{{> issue_metrics}}'})
   metrics: IssueMetrics;
 
-  @Field()
-  @MockFieldNested('{{> object_link presentation=(milestone)}}')
+  @field({mock: '{{> object_link presentation=(milestone)}}'})
   milestone: Milestone;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(UserCard)))
-  @MockFieldNested('[{{#repeat 1 3}} {{> user_card}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(UserCard)),
+    mock: '[{{#repeat 1 3}} {{> user_card}} {{/repeat}}]'
+  })
   participants: UserCard[];
 
-  @Field()
-  @MockFieldNested('{{> user}}')
+  @field({mock: '{{> user}}'})
   user: User;
 
-  @Field()
-  @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField('{{issue_problem}}')
+  @field({
+    serializer: new ArraySerializer(new PrimitiveSerializer()),
+    mock: '{{issue_problem}}'
+  })
   problems: IssueProblem[];
 }
 
-@Model()
-@MockClass()
+@model()
 export class ErrorCard {
 
-  @Field()
-  @MockFieldNested('{{> issue_card}}')
+  @field({mock: '{{> issue_card}}'})
   issue: IssueCard;
 
-  @Field()
-  @MockField(ErrorType.issueWithoutDueDate)
+  @field({mock: ErrorType.issueWithoutDueDate})
   type: ErrorType;
 
 }
 
-@Model()
-@MockClass()
+@model()
 export class PagingTeamIssues implements Paging<IssueCard> {
-  @Field()
-  @MockFieldNested('{{int 50 1000}}')
+
+  @field({mock: '{{int 50 1000}}'})
   count: number;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(IssueCard)))
-  @MockFieldNested('[{{#repeat 10 20}} {{> issue_card}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(IssueCard)),
+    mock: '[{{#repeat 10 20}} {{> issue_card}} {{/repeat}}]'
+  })
   results: IssueCard[];
 }
 
 
-@Model()
-@MockClass()
+@model()
 export class PagingErrorCard implements Paging<ErrorCard> {
-  @Field()
-  @MockFieldNested('{{int 50 1000}}')
+
+  @field({mock: '{{int 50 1000}}'})
   count: number;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(ErrorCard)))
-  @MockFieldNested('[{{#repeat 10 20}} {{> error_card}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(ErrorCard)),
+    mock: '[{{#repeat 10 20}} {{> error_card}} {{/repeat}}]'
+  })
   results: ErrorCard[];
 }
 
 
-@Model()
-@MockClass()
+@model()
 export class PagingIssues implements Paging<IssueCard> {
 
-  @Field()
-  @MockFieldNested('{{int 50 1000}}')
+  @field({mock: '{{int 50 1000}}'})
   count: number;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(IssueCard)))
-  @MockFieldNested('[{{#repeat 10 20}} {{> issue_card}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(IssueCard)),
+    mock: '[{{#repeat 10 20}} {{> issue_card}} {{/repeat}}]'
+  })
   results: IssueCard[];
 
 }
 
-@Model()
+@model()
 export class IssuesFilter implements SearchFilter {
 
-  @Field()
-  @Type(new BooleanSerializer())
+  @field({serializer: new BooleanSerializer()})
   metrics?: boolean;
 
-  @Field()
+  @field()
   user?: number;
 
-  @Field()
+  @field()
   team?: number;
 
-  @Field()
-  @Name('q')
+  @field({name: 'q'})
   query?: string;
 
-  @Field()
-  @Type(new DateSerializer(DATE_FORMAT))
-  @Name('due_date')
+  @field({
+    name: 'due_date',
+    serializer: new DateSerializer(DATE_FORMAT)
+  })
   dueDate?: Date;
 
-  @Field()
+  @field()
   state?: IssueState | null;
 
-  @Field()
+  @field()
   problems?: boolean | null;
 
-  @Field()
+  @field()
   sort?: string;
 
-  @Field()
+  @field()
   order?: Order = Order.asc;
 
-  @Field()
+  @field()
   page?: number;
 
-  @Field()
-  @Name('page_size')
+  @field({name: 'page_size'})
   pageSize?: number;
 
   constructor(defs: IssuesFilter = null) {
@@ -306,24 +294,26 @@ export class IssuesFilter implements SearchFilter {
 
 }
 
-@Model()
-@MockClass()
+@model()
 export class IssuesSummary {
 
-  @Field()
-  @Name('issues_count')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'issues_count',
+    mock: '{{int 10 100}}'
+  })
   issuesCount: number;
 
-  @Field()
-  @Name('time_spent')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'time_spent',
+    mock: '{{int 10 100}}'
+  })
   timeSpent: number;
 
 
-  @Field()
-  @Name('problems_count')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'problems_count',
+    mock: '{{int 10 100}}'
+  })
   problemsCount: number;
 
 }

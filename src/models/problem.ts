@@ -1,11 +1,11 @@
-import { ArraySerializer, Field, Model, ModelSerializer, Name, Type } from 'serialize-ts';
-import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { IssueCard } from './issue';
 import { Paging } from './paging';
 import { PrimitiveSerializer } from 'serialize-ts/dist/serializers/primitive.serializer';
 import { SearchFilter } from 'junte-ui';
 import { DateSerializer } from '../serializers/date';
 import { DATE_FORMAT } from '../consts';
+import { field, model } from '@junte/mocker-library';
 
 export enum IssueProblemType {
   overDueDate = 'over_due_date',
@@ -13,43 +13,40 @@ export enum IssueProblemType {
   emptyEstimate = 'empty_estimate'
 }
 
-@Model()
-@MockClass()
+@model()
 export class IssueProblemCard {
 
-  @Field()
-  @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField('{{issue_problem}}')
+  @field({
+    serializer: new ArraySerializer(new PrimitiveSerializer()),
+    mock: '{{issue_problem}}'
+  })
   problems: IssueProblemType[];
 
-  @Field()
-  @MockFieldNested('{{> issue_card}}')
+  @field({mock: '{{> issue_card}}'})
   issue: IssueCard;
 }
 
-@Model()
-@MockClass()
+@model()
 export class PagingIssueProblems implements Paging<IssueProblemCard> {
 
-  @Field()
-  @MockFieldNested('{{int 50 1000}}')
+  @field({mock: '{{int 50 1000}}'})
   count: number;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(IssueProblemCard)))
-  @MockFieldNested('[{{#repeat 10 20}} {{> issue_problem_card}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(IssueProblemCard)),
+    mock: '[{{#repeat 10 20}} {{> issue_problem_card}} {{/repeat}}]'
+  })
   results: IssueProblemCard[];
 
 }
 
-@Model()
+@model()
 export class IssueProblemsFilter implements SearchFilter {
 
-  @Field()
+  @field()
   page?: number;
 
-  @Field()
-  @Name('page_size')
+  @field({name: 'page_size'})
   pageSize?: number;
 
   constructor(defs: IssueProblemsFilter = null) {
@@ -60,22 +57,22 @@ export class IssueProblemsFilter implements SearchFilter {
 
 }
 
-@Model()
+@model()
 export class TeamIssueFilter implements SearchFilter {
 
-  @Field()
+  @field()
   user?: number;
 
-  @Field()
-  @Type(new DateSerializer(DATE_FORMAT))
-  @Name('due_date')
+  @field({
+    name: 'due_date',
+    serializer: new DateSerializer(DATE_FORMAT)
+  })
   dueDate?: Date;
 
-  @Field()
+  @field()
   page?: number;
 
-  @Field()
-  @Name('page_size')
+  @field({name: 'page_size'})
   pageSize?: number;
 
   constructor(defs: TeamIssueFilter = null) {

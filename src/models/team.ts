@@ -1,8 +1,8 @@
-import {ArraySerializer, Field, Model, ModelSerializer, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {UserCard} from './user';
-import {Paging} from './paging';
-import {Name, PrimitiveSerializer} from 'serialize-ts/dist';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { UserCard } from './user';
+import { Paging } from './paging';
+import { PrimitiveSerializer } from 'serialize-ts/dist';
+import { field, model } from '@junte/mocker-library';
 
 export enum TeamMemberRole {
   developer = 'developer',
@@ -10,105 +10,95 @@ export enum TeamMemberRole {
   watcher = 'watcher'
 }
 
-@Model()
-@MockClass()
+@model()
 export class TeamMetrics {
 
-  @Field()
-  @Name('issues_count')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'issues_count',
+    mock: '{{int 10 100}}'
+  })
   issuesCount: number;
 
-  @Field()
-  @Name('problems_count')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'problems_count',
+    mock: '{{int 10 100}}'
+  })
   problemsCount: number;
 
 }
 
-@Model()
-@MockClass()
+@model()
 export class Team {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{int 1 1000}}'})
   id: number;
 
-  @Field()
-  @MockField('{{team}}')
+  @field({mock: '{{team}}'})
   title: string;
 
-  @Field()
-  @MockFieldNested('{{> team_metrics}}')
+  @field({mock: '{{> team_metrics}}'})
   metrics: TeamMetrics;
 }
 
-@Model()
-@MockClass()
+@model()
 export class TeamMemberCard {
 
-  @Field()
-  @MockFieldNested('{{> user_card}}')
+  @field({mock: '{{> user_card}}'})
   user: UserCard;
 
-  @Field()
-  @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField([TeamMemberRole.developer])
+  @field({
+    serializer: new ArraySerializer(new PrimitiveSerializer()),
+    mock: [TeamMemberRole.developer]
+  })
   roles: TeamMemberRole[];
 
 }
 
-@Model()
-@MockClass()
+@model()
 export class TeamCard {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{int 1 1000}}'})
   id: number;
 
-  @Field()
-  @MockField('{{team}}')
+  @field({mock: '{{team}}'})
   title: string;
 
-  @Field()
-  @MockField('{{int 3 10}}')
+  @field({mock: '{{int 3 10}}'})
   membersCount: number;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(TeamMemberCard)))
-  @MockFieldNested('[{{#repeat 5 15}} {{> team_member_card }} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(TeamMemberCard)),
+    mock: '[{{#repeat 5 15}} {{> team_member_card }} {{/repeat}}]'
+  })
   members: TeamMemberCard[];
 
-  @Field()
-  @MockFieldNested('{{> team_metrics}}')
+  @field({mock: '{{> team_metrics}}'})
   metrics: TeamMetrics;
 }
 
-@Model()
-@MockClass()
+@model()
 export class PagingTeams implements Paging<TeamCard> {
 
-  @Field()
-  @MockFieldNested('{{int 3 10}}')
+  @field({mock: '{{int 3 10}}'})
   count: number;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(TeamCard)))
-  @MockFieldNested('[{{#repeat 3 10}} {{> team_card}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(TeamCard)),
+    mock: '[{{#repeat 3 10}} {{> team_card}} {{/repeat}}]'
+  })
   results: TeamCard[];
 }
 
-@Model()
-@MockClass()
+@model()
 export class PagingTeamMembers implements Paging<TeamMemberCard> {
 
-  @Field()
-  @MockFieldNested('{{int 2 7}}')
+  @field({mock: '{{int 2 7}}'})
   count: number;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(TeamMemberCard)))
-  @MockFieldNested('[{{#repeat 2 7}} {{> team_member_card}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(TeamMemberCard)),
+    mock: '[{{#repeat 2 7}} {{> team_member_card}} {{/repeat}}]'
+  })
   results: TeamMemberCard[];
 
 }
