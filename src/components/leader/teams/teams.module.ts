@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TeamsComponent} from 'src/components/leader/teams/teams.component';
 import {TeamComponent} from 'src/components/leader/teams/team/team.component';
-import { PercentagePipe, PeriodPipe } from 'src/components/leader/teams/team/team.pipe';
+import {PercentagePipe, PeriodPipe} from 'src/components/leader/teams/team/team.pipe';
 import {JunteUiModule} from 'junte-ui';
 import {DatePipesModule} from 'src/pipes/date-pipes.module';
 import {TeamsRoutingModule} from 'src/components/leader/teams/teams-routing.module';
@@ -15,6 +15,7 @@ import {TeamCalendarComponent} from 'src/components/leader/teams/team/calendar/t
 import {RouterModule} from '@angular/router';
 import {IssuesModule} from '../../issues/issues.module';
 import {OpenedResolver, ProblemsResolver} from '../../../resolvers/issue';
+import {ArrayPipesModule} from '../../../pipes/array-pipes.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {OpenedResolver, ProblemsResolver} from '../../../resolvers/issue';
     JunteUiModule,
     DatePipesModule,
     OutletModule,
-    IssuesModule
+    IssuesModule,
+    ArrayPipesModule
   ],
   providers: [
     TeamResolver,
