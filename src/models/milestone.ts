@@ -119,7 +119,7 @@ export class PagingMilestones implements Paging<Milestone> {
 
   @Field()
   @Type(new ArraySerializer(new ModelSerializer(Milestone)))
-  @MockFieldNested('[{{#repeat 3 10}} {{> milestone_card}} {{/repeat}}]')
+  @MockFieldNested('[{{#repeat 3 10}} {{> milestone}} {{/repeat}}]')
   results: Milestone[];
 }
 

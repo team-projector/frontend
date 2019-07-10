@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {ITeamsService, teams_service} from 'src/services/teams/interface';
-import {TeamCard, TeamMemberRole} from 'src/models/team';
+import {Team, TeamMemberRole} from 'src/models/team';
 import {MeManager} from 'src/managers/me.manager';
 import {filter, finalize} from 'rxjs/operators';
 import {UI} from 'junte-ui';
@@ -13,7 +13,7 @@ import {UI} from 'junte-ui';
 export class TeamsComponent implements OnInit {
 
   ui = UI;
-  teams: TeamCard[] = [];
+  teams: Team[] = [];
   loading: boolean;
 
   constructor(@Inject(teams_service) private teamsService: ITeamsService,

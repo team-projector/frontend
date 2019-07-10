@@ -28,27 +28,10 @@ export class TeamMetrics {
 
 @Model()
 @MockClass()
-export class Team {
+export class TeamMember {
 
   @Field()
-  @MockField('{{id}}')
-  id: number;
-
-  @Field()
-  @MockField('{{team}}')
-  title: string;
-
-  @Field()
-  @MockFieldNested('{{> team_metrics}}')
-  metrics: TeamMetrics;
-}
-
-@Model()
-@MockClass()
-export class TeamMemberCard {
-
-  @Field()
-  @MockFieldNested('{{> user_card}}')
+  @MockFieldNested('{{> user}}')
   user: User;
 
   @Field()
@@ -60,7 +43,7 @@ export class TeamMemberCard {
 
 @Model()
 @MockClass()
-export class TeamCard {
+export class Team {
 
   @Field()
   @MockField('{{id}}')
@@ -75,9 +58,9 @@ export class TeamCard {
   membersCount: number;
 
   @Field()
-  @Type(new ArraySerializer(new ModelSerializer(TeamMemberCard)))
-  @MockFieldNested('[{{#repeat 5 15}} {{> team_member_card }} {{/repeat}}]')
-  members: TeamMemberCard[];
+  @Type(new ArraySerializer(new ModelSerializer(TeamMember)))
+  @MockFieldNested('[{{#repeat 5 15}} {{> team_member }} {{/repeat}}]')
+  members: TeamMember[];
 
   @Field()
   @MockFieldNested('{{> team_metrics}}')
@@ -86,29 +69,29 @@ export class TeamCard {
 
 @Model()
 @MockClass()
-export class PagingTeams implements Paging<TeamCard> {
+export class PagingTeams implements Paging<Team> {
 
   @Field()
   @MockFieldNested('{{int 3 10}}')
   count: number;
 
   @Field()
-  @Type(new ArraySerializer(new ModelSerializer(TeamCard)))
-  @MockFieldNested('[{{#repeat 3 10}} {{> team_card}} {{/repeat}}]')
-  results: TeamCard[];
+  @Type(new ArraySerializer(new ModelSerializer(Team)))
+  @MockFieldNested('[{{#repeat 3 10}} {{> team}} {{/repeat}}]')
+  results: Team[];
 }
 
 @Model()
 @MockClass()
-export class PagingTeamMembers implements Paging<TeamMemberCard> {
+export class PagingTeamMembers implements Paging<TeamMember> {
 
   @Field()
   @MockFieldNested('{{int 2 7}}')
   count: number;
 
   @Field()
-  @Type(new ArraySerializer(new ModelSerializer(TeamMemberCard)))
-  @MockFieldNested('[{{#repeat 2 7}} {{> team_member_card}} {{/repeat}}]')
-  results: TeamMemberCard[];
+  @Type(new ArraySerializer(new ModelSerializer(TeamMember)))
+  @MockFieldNested('[{{#repeat 2 7}} {{> team_member}} {{/repeat}}]')
+  results: TeamMember[];
 
 }

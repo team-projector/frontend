@@ -15,7 +15,7 @@ export class TeamProgressMetrics {
   @Field()
   @Field()
   @Type(new ArraySerializer(new ModelSerializer(UserProgressMetrics)))
-  @MockFieldNested('[{{#repeat 5 15}} {{> team_member_card }} {{/repeat}}]')
+  @MockFieldNested('[{{#repeat 5 15}} {{> team_member }} {{/repeat}}]')
   metrics: UserProgressMetrics[];
 }
 

@@ -23,7 +23,7 @@ export class MergeRequest {
 
   @Field()
   @Type(new ArraySerializer(new ModelSerializer(Label)))
-  @MockFieldNested('[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]')
+  @MockFieldNested('[{{#repeat 2 5}} {{> label}} {{/repeat}}]')
   labels: Label[];
 
   @Field()

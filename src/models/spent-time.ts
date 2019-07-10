@@ -28,7 +28,7 @@ export class SpentTime {
 
   @Field()
   @Type(new OwnerSerializer())
-  @MockFieldNested('{{> issue_card}}')
+  @MockFieldNested('{{> issue}}')
   owner: Issue | MergeRequest;
 
   @Field()
@@ -51,7 +51,7 @@ export class PagingTimeExpenses implements Paging<SpentTime> {
 
   @Field()
   @Type(new ArraySerializer(new ModelSerializer(SpentTime)))
-  @MockFieldNested('[{{#repeat 10 20}} {{> spent_time_card}} {{/repeat}}]')
+  @MockFieldNested('[{{#repeat 10 20}} {{> spent_time}} {{/repeat}}]')
   results: SpentTime[];
 
 }
