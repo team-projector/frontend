@@ -4,7 +4,7 @@ import {HttpService} from 'junte-angular';
 import {Observable} from 'rxjs';
 import {deserialize} from 'serialize-ts';
 import {map} from 'rxjs/operators';
-import {Issue, IssuesFilter, IssuesSummary, PagingIssues} from '../../models/issue';
+import {Issue, IssuesFilter, IssuesSummary} from '../../models/issue';
 import {encodeModel} from '../../utils/http';
 
 @Injectable({
@@ -13,11 +13,6 @@ import {encodeModel} from '../../utils/http';
 export class IssuesService implements IIssuesService {
 
   constructor(private http: HttpService) {
-  }
-
-  list(filter: IssuesFilter): Observable<PagingIssues> {
-    return this.http.get('issues', encodeModel(filter))
-      .pipe(map(obj => deserialize(obj, PagingIssues)));
   }
 
   summary(filter: IssuesFilter): Observable<IssuesSummary> {

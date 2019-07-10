@@ -3,7 +3,6 @@ import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
 import {DateSerializer} from '../serializers/date';
 import {Paging} from './paging';
 import {SearchFilter} from 'junte-ui';
-import {IssueCard} from './issue';
 
 @Model()
 @MockClass()
@@ -59,10 +58,6 @@ export class Salary {
   @Field()
   @MockFieldNested('{{int 30000 50000}}')
   total: number;
-
-  @Field()
-  @MockFieldNested('{{> issue_card}}')
-  issue: IssueCard;
 
 }
 

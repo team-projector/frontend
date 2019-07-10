@@ -2,14 +2,14 @@ import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serial
 import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
 import {Paging} from './paging';
 import {DateSerializer} from '../serializers/date';
-import {IssueCard} from './issue';
 import {DATE_FORMAT} from '../consts';
-import {ProjectSerializer} from '../serializers/project';
 import {OwnerSerializer} from '../serializers/owner';
+import {MergeRequest} from './merge-request';
+import {Issue} from './issue';
 
 @Model()
 @MockClass()
-export class SpentTimeCard {
+export class SpentTime {
 
   @Field()
   @MockField('{{id}}')
@@ -29,7 +29,7 @@ export class SpentTimeCard {
   @Field()
   @Type(new OwnerSerializer())
   @MockFieldNested('{{> issue_card}}')
-  owner: IssueCard;
+  owner: Issue | MergeRequest;
 
   @Field()
   @Name('time_spent')
@@ -43,16 +43,16 @@ export class SpentTimeCard {
 
 @Model()
 @MockClass()
-export class PagingTimeExpenses implements Paging<SpentTimeCard> {
+export class PagingTimeExpenses implements Paging<SpentTime> {
 
   @Field()
   @MockFieldNested('{{int 50 1000}}')
   count: number;
 
   @Field()
-  @Type(new ArraySerializer(new ModelSerializer(SpentTimeCard)))
+  @Type(new ArraySerializer(new ModelSerializer(SpentTime)))
   @MockFieldNested('[{{#repeat 10 20}} {{> spent_time_card}} {{/repeat}}]')
-  results: SpentTimeCard[];
+  results: SpentTime[];
 
 }
 

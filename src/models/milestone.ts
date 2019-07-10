@@ -4,7 +4,7 @@ import {Paging} from './paging';
 import {SearchFilter} from 'junte-ui';
 import {Name} from 'serialize-ts/dist';
 import {DateSerializer} from '../serializers/date';
-import {Project, ProjectCard, ProjectGroup, ProjectGroupCard} from './project';
+import {Project, ProjectGroup} from './project';
 import {ProjectSerializer} from '../serializers/project';
 
 @Model()
@@ -69,48 +69,6 @@ export class MilestoneMetrics {
 
 @Model()
 @MockClass()
-export class MilestoneCard {
-
-  @Field()
-  @MockField('{{id}}')
-  id: number;
-
-  @Field()
-  @MockField('{{title}}')
-  title: string;
-
-  @Field()
-  @Type(new ProjectSerializer())
-  @MockFieldNested('{{> project_card}}')
-  owner: ProjectCard | ProjectGroupCard;
-
-  @Field()
-  @MockFieldNested('{{money}}')
-  budget: number;
-
-  @Field()
-  @Name('start_date')
-  @MockField('{{date \'2019\' \'2020\'}}')
-  startDate: Date;
-
-  @Field()
-  @Name('due_date')
-  @Type(new DateSerializer())
-  @MockField('{{date \'2019\' \'2020\'}}')
-  dueDate: Date;
-
-  @Field()
-  @MockFieldNested('{{> milestone_metrics}}')
-  metrics: MilestoneMetrics;
-
-  @Field()
-  @Name('gl_url')
-  @MockField('{{url}}')
-  glUrl: string;
-}
-
-@Model()
-@MockClass()
 export class Milestone {
 
   @Field()
@@ -153,16 +111,16 @@ export class Milestone {
 
 @Model()
 @MockClass()
-export class PagingMilestones implements Paging<MilestoneCard> {
+export class PagingMilestones implements Paging<Milestone> {
 
   @Field()
   @MockFieldNested('{{int 3 10}}')
   count: number;
 
   @Field()
-  @Type(new ArraySerializer(new ModelSerializer(MilestoneCard)))
+  @Type(new ArraySerializer(new ModelSerializer(Milestone)))
   @MockFieldNested('[{{#repeat 3 10}} {{> milestone_card}} {{/repeat}}]')
-  results: MilestoneCard[];
+  results: Milestone[];
 }
 
 @Model()

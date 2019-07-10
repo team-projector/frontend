@@ -1,6 +1,6 @@
 import {ArraySerializer, Field, Model, ModelSerializer, Type} from 'serialize-ts';
 import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {UserCard} from './user';
+import {User} from './user';
 import {Paging} from './paging';
 import {Name, PrimitiveSerializer} from 'serialize-ts/dist';
 
@@ -49,7 +49,7 @@ export class TeamMemberCard {
 
   @Field()
   @MockFieldNested('{{> user_card}}')
-  user: UserCard;
+  user: User;
 
   @Field()
   @Type(new ArraySerializer(new PrimitiveSerializer()))

@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
   }
 
   load() {
-    this.gitlabService.getStatus().subscribe(status => this.status = status);
+    // this.gitlabService.getStatus().subscribe(status => this.status = status);
   }
 
 }

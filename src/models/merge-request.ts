@@ -1,8 +1,8 @@
 import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
 import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
 import {ObjectLink} from './object-link';
-import {LabelCard} from './label';
-import {UserCard} from './user';
+import {Label} from './label';
+import {User} from './user';
 
 export enum MergeRequestState {
   opened = 'opened',
@@ -11,7 +11,7 @@ export enum MergeRequestState {
 
 @Model()
 @MockClass()
-export class MergeRequestCard {
+export class MergeRequest {
 
   @Field()
   @MockField('{{id}}')
@@ -22,9 +22,9 @@ export class MergeRequestCard {
   title: string;
 
   @Field()
-  @Type(new ArraySerializer(new ModelSerializer(LabelCard)))
+  @Type(new ArraySerializer(new ModelSerializer(Label)))
   @MockFieldNested('[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]')
-  labels: LabelCard[];
+  labels: Label[];
 
   @Field()
   @MockFieldNested('{{> object_link presentation=(project)}}')
@@ -55,6 +55,6 @@ export class MergeRequestCard {
   state: MergeRequestState;
 
   @Field()
-  @MockFieldNested('{{> user_card}}')
-  user: UserCard;
+  @MockFieldNested('{{> user}}')
+  user: User;
 }

@@ -2,7 +2,7 @@ import {Field} from 'serialize-ts';
 import {MockClass, MockField} from '../decorators/mock';
 
 @MockClass()
-export class LabelCard {
+export class Label {
 
   @Field()
   @MockField('{{label}}')

@@ -11,7 +11,7 @@ import {Period} from 'junte-ui/lib/components/calendar/models';
 import {IMetricsService, metrics_service} from 'src/services/metrics/interface';
 import {Router} from '@angular/router';
 import {isUndefined} from 'util';
-import {UserCard, UserProblem} from 'src/models/user';
+import {User, UserProblem} from 'src/models/user';
 import {ITeamsService, teams_service} from 'src/services/teams/interface';
 import {equals} from '../../../../utils/equals';
 
@@ -28,7 +28,7 @@ export enum MetricType {
 }
 
 export class UserFilter {
-  user: UserCard;
+  user: User;
   dueDate: Date;
 }
 
