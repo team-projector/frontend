@@ -1,7 +1,6 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { UserCard } from './user';
 import { Paging } from './paging';
-import { PrimitiveSerializer } from 'serialize-ts/dist';
 import { field, model } from '@junte/mocker-library';
 
 export enum TeamMemberRole {

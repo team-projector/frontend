@@ -1,4 +1,4 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { ObjectLink } from './object-link';
 import { LabelCard } from './label';
 import { Paging } from './paging';
@@ -7,7 +7,6 @@ import { DATE_FORMAT } from '../consts';
 import { BooleanSerializer } from '../serializers/http';
 import { Order, SearchFilter } from 'junte-ui';
 import { User, UserCard } from './user';
-import { PrimitiveSerializer } from 'serialize-ts/dist';
 import { Project } from './project';
 import { Milestone } from './milestone';
 import { field, model } from '@junte/mocker-library';

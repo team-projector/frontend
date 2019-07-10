@@ -1,5 +1,4 @@
-import { ArraySerializer } from 'serialize-ts';
-import { PrimitiveSerializer } from 'serialize-ts/dist/serializers/primitive.serializer';
+import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
 import { UserMetrics } from './user-metrics';
 import { field, model } from '@junte/mocker-library';
 

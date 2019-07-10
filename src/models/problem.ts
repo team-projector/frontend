@@ -1,7 +1,6 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { IssueCard } from './issue';
 import { Paging } from './paging';
-import { PrimitiveSerializer } from 'serialize-ts/dist/serializers/primitive.serializer';
 import { SearchFilter } from 'junte-ui';
 import { DateSerializer } from '../serializers/date';
 import { DATE_FORMAT } from '../consts';

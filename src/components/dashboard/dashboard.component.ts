@@ -6,7 +6,7 @@ import { MeManager } from '../../managers/me.manager';
 import { Router } from '@angular/router';
 import { gitlab_service, IGitlabService } from '../../services/gitlab/interface';
 import { Status } from '../../models/status';
-import {UserRole} from '../../models/user';
+import { UserRole } from '../../models/user';
 
 const STATUS_TIMEOUT = 60000;
 
