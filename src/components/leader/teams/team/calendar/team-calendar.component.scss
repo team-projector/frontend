@@ -119,6 +119,9 @@ table {
           padding-right: $gutter-normal;
           border-right: 1px solid transparent;
         }
+        &[slow='true'] span {
+          border-bottom: 2px solid $fail-color;
+        }
         &[day] {
           padding: 5px;
           cursor: pointer;

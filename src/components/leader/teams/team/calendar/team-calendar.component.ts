@@ -11,7 +11,7 @@ import {Period} from 'junte-ui/lib/components/calendar/models';
 import {IMetricsService, metrics_service} from 'src/services/metrics/interface';
 import {Router} from '@angular/router';
 import {isUndefined} from 'util';
-import {UserCard} from 'src/models/user';
+import {UserCard, UserProblem} from 'src/models/user';
 import {ITeamsService, teams_service} from 'src/services/teams/interface';
 import {equals} from '../../../../utils/equals';
 
@@ -60,6 +60,7 @@ class Metric {
 export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   ui = UI;
+  userProblem = UserProblem;
   subWeeks = subWeeks;
   addWeeks = addWeeks;
   isEqual = isEqual;
@@ -79,7 +80,6 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   formatDate = L;
   weeks: Week[] = [];
   metrics: Metric;
-  metricLabels = ['Est', 'Sp', 'Ef'];
   loading: boolean;
 
   user = new FormControl();

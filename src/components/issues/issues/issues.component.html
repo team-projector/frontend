@@ -21,7 +21,7 @@
               <jnt-stack [type]="ui.stack.type.horizontal"
                          [gutter]="ui.stack.gutter.small">
                 <jnt-link [source]=url target="_blank"
-                          [class.closed]="state == issuesState.closed">
+                          [attr.closed]="state == issuesState.closed">
                   {{title}}
                 </jnt-link>
                 <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
@@ -66,7 +66,9 @@
       <jnt-table-column i18n-title="@@eff" title="Eff">
         <ng-template #cellTemplate let-metrics="metrics">
           <div style="text-align: right;">
-            {{!!metrics.efficiency ? (metrics.efficiency | number:'1.2-2') : '&mdash;'}}
+            <span [attr.slow]="metrics.efficiency > 0 && metrics.efficiency < 0.8">
+              {{!!metrics.efficiency ? (metrics.efficiency | number:'1.2-2') : '&mdash;'}}
+            </span>
           </div>
         </ng-template>
       </jnt-table-column>

@@ -23,12 +23,12 @@
         <button arrow (click)="date = subWeeks(date, 1)">
           <jnt-icon [icon]="ui.icons.arrowLeft"></jnt-icon>
         </button>
-        <span>{{weeks[0].days[0] | getDate}}-{{weeks[0].days[6] | getDate}} {{date | format: 'MMMM'}}</span>
+        <span>{{weeks[0].days[0] | period:weeks[0].days[6]}}</span>
       </div>
     </th>
     <th colspan="10">
       <div date>
-        <span>{{weeks[1].days[0] | getDate}}-{{weeks[1].days[6] | getDate}} {{date | format: 'MMMM'}}</span>
+        <span>{{weeks[1].days[0] | period:weeks[1].days[6]}}</span>
         <button arrow (click)="date = addWeeks(date, 1)">
           <jnt-icon [icon]="ui.icons.arrowRight"></jnt-icon>
         </button>
@@ -92,12 +92,18 @@
           <jnt-avatar (click)="router.navigate(['leader', 'users', member.user.id])"
                       [image]="member.user.avatar"
                       [size]="ui.sizes.tiny"></jnt-avatar>
-          <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>
+          <div>
+            <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>
+            <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.tiny">
+              <jnt-label *ngIf="member.user.metrics.issuesClosedSpent"
+                         [label]="member.user.metrics.issuesClosedSpent | duration"
+                         [color]="ui.colors.green"></jnt-label>
+              <jnt-label *ngIf="member.user.metrics.issuesOpenedSpent"
+                         [label]="member.user.metrics.issuesOpenedSpent | duration"
+                         [color]="member.user.problems.includes(userProblem.payrollOpenedOverflow) ? ui.colors.red : ui.colors.gray500"></jnt-label>
+            </jnt-stack>
+          </div>
         </jnt-stack>
-        <small *ngIf="member.user.metrics.issuesClosedSpent || member.user.metrics.issuesOpenedSpent">
-          {{member.user.metrics.issuesClosedSpent | duration}} &larr; {{member.user.metrics.issuesOpenedSpent |
-          duration}}
-        </small>
       </td>
       <ng-container *ngFor="let week of weeks"
                     [attr.current-week]="(current | getISOWeek) === (week.date | getISOWeek)">
@@ -110,20 +116,17 @@
                           {presentation: metric, date: endOfDay(day), metric: metrics?.days?.get(member.user.id)?.get(format(day, formatDate))}"></ng-container>
         </td>
 
-        <td *ngFor="let metric of metricLabels;let index = index;">
-          <ng-container *ngIf="metrics?.weeks?.get(member.user.id)?.get(format(week.date, formatDate)) as metric"
-                        [ngSwitch]="index">
-            <ng-container *ngSwitchCase="0">
-              {{!!metric?.timeEstimate ? (metric?.timeEstimate | duration:durationFormat.short) : '&ndash;'}}
-            </ng-container>
-            <ng-container *ngSwitchCase="1">
-              {{!!metric?.timeSpent ? (metric?.timeSpent | duration:durationFormat.short) : '&ndash;'}}
-            </ng-container>
-            <ng-container *ngSwitchCase="2">
-              {{metric.efficiency | number:'1.2-2'}}
-            </ng-container>
-          </ng-container>
-        </td>
+        <ng-container *ngIf="metrics?.weeks?.get(member.user.id)?.get(format(week.date, formatDate)) as metric">
+          <td>
+            {{!!metric?.timeEstimate ? (metric?.timeEstimate | duration:durationFormat.short) : '&ndash;'}}
+          </td>
+          <td>
+            {{!!metric?.timeSpent ? (metric?.timeSpent | duration:durationFormat.short) : '&ndash;'}}
+          </td>
+          <td [attr.slow]="metric.efficiency > 0 && metric.efficiency < 0.8">
+            <span>{{metric.efficiency | number:'1.2-2'}}</span>
+          </td>
+        </ng-container>
       </ng-container>
       <td gutter></td>
     </tr>
