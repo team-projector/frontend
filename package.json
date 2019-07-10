@@ -49,6 +49,7 @@
     "gulp-iconfont": "~10.0.2",
     "gulp-rename": "~1.4.0",
     "gulp-typescript": "~5.0.0",
+    "map-stream": "0.0.7",
     "gulpclass": "~0.2.0",
     "jasmine-core": "~2.99.1",
     "jasmine-spec-reporter": "~4.2.1",
