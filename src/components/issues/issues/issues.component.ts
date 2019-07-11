@@ -157,8 +157,8 @@ export class IssuesComponent implements OnInit {
             operation: 'allIssues',
             variables: this.filter,
             fields: this.query.issues
-          }).pipe(map(({data: {issues}}: { data: { issues } }) =>
-            deserialize(issues, PagingIssues)));
+          }).pipe(map(({data: {allIssues}}: { data: { allIssues } }) =>
+            deserialize(allIssues, PagingIssues)));
         };
         this.table.load();
       });
