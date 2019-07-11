@@ -10,4 +10,3 @@ export class ObjectLink {
   presentation: string;
 
 }
-

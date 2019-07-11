@@ -1,22 +1,6 @@
 import { field, model } from '@junte/mocker-library';
 
 @model()
-export class ProjectCard {
-
-  @field({mock: '{{id}}'})
-  id: number;
-
-  @field({mock: '{{project}}'})
-  title: string;
-
-  @field({
-    name: 'gl_url',
-    mock: '{{url}}'
-  })
-  glUrl: string;
-}
-
-@model()
 export class Project {
 
   @field({mock: '{{id}}'})
@@ -30,23 +14,6 @@ export class Project {
     mock: '{{url}}'
   })
   glUrl: string;
-}
-
-@model()
-export class ProjectGroupCard {
-
-  @field({mock: '{{id}}'})
-  id: number;
-
-  @field({mock: '{{project}}'})
-  title: string;
-
-  @field({
-    name: 'gl_url',
-    mock: '{{url}}'
-  })
-  glUrl: string;
-
 }
 
 @model()

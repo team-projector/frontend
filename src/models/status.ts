@@ -1,6 +1,4 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
-import { DateSerializer } from '../serializers/date';
-import { IssueCard } from './issue';
+import { ArraySerializer, DateSerializer, ModelSerializer } from 'serialize-ts';
 import { field, model } from '@junte/mocker-library';
 
 @model()
@@ -28,10 +26,10 @@ export class Status {
 
   @field({
     name: 'last_issues',
-    serializer: new ArraySerializer(new ModelSerializer(IssueCard)),
-    mock: '[{{#repeat 5 10}} {{> issue_card }} {{/repeat}}]'
+    serializer: new ArraySerializer(new ModelSerializer(Issue)),
+    mock: '[{{#repeat 5 10}} {{> issue }} {{/repeat}}]'
   })
-  lastIssues: IssueCard[];
+  lastIssues: Issue[];
 
   @field({
     name: 'last_sync',

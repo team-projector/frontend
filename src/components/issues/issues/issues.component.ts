@@ -1,11 +1,14 @@
-import { Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { IssueProblem, IssuesFilter, IssueState } from 'src/models/issue';
-import { PLATFORM_DELAY } from 'src/consts';
-import { IIssuesService, issues_service } from 'src/services/issues/interface';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { debounceTime, distinctUntilChanged, finalize } from 'rxjs/operators';
-import { TableComponent, UI } from 'junte-ui';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {PLATFORM_DELAY} from 'src/consts';
+import {IIssuesService, issues_service} from 'src/services/issues/interface';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {debounceTime, distinctUntilChanged, finalize, map} from 'rxjs/operators';
+import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
+import {FormBuilder, FormGroup} from '@angular/forms';
+import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
+import {deserialize} from 'serialize-ts/dist';
+import {IssueProblem, IssueState} from '../../../models/issue';
+import {PagingIssues, IssuesFilter} from './model';
 
 @Component({
   selector: 'app-issues',
@@ -23,6 +26,49 @@ export class IssuesComponent implements OnInit {
     opened: [true],
     problems: [false]
   });
+
+  private query = {
+    issues: [
+      'count',
+      {
+        edges: [
+          {
+            node: [
+              'title',
+              'id',
+              'dueDate',
+              {
+                labels: [
+                  'count',
+                  {edges: [{node: ['title', 'color']}]}]
+              },
+              {'project': ['fullTitle']},
+              'state',
+              'createdAt',
+              'totalTimeSpent',
+              'glUrl',
+              {user: ['id', 'name', 'glAvatar']},
+              {
+                participants: [
+                  'count',
+                  {edges: [{node: ['name', 'glAvatar']}]}
+                ]
+              },
+              'problems',
+              {
+                'metrics': [
+                  'remains',
+                  'efficiency',
+                  'payroll',
+                  'paid'
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  };
 
   private team$ = new BehaviorSubject<number>(null);
   private user$ = new BehaviorSubject<number>(null);
@@ -84,6 +130,7 @@ export class IssuesComponent implements OnInit {
   filtered = new EventEmitter<{ opened?, problems? }>();
 
   constructor(@Inject(issues_service) private issuesService: IIssuesService,
+              @Inject(graph_ql_service) private graphQL: IGraphQLService,
               private formBuilder: FormBuilder) {
   }
 
@@ -104,8 +151,15 @@ export class IssuesComponent implements OnInit {
         this.filter.dueDate = dueDate;
         this.filter.state = opened ? IssueState.opened : null;
         this.filter.problems = problems ? problems : null;
-        this.table.fetcher = (filter: IssuesFilter) =>
-          this.issuesService.list(Object.assign(this.filter, filter));
+        this.table.fetcher = (filter: DefaultSearchFilter) => {
+          Object.assign(this.filter, filter);
+          return this.graphQL.get({
+            operation: 'issues',
+            variables: this.filter,
+            fields: this.query.issues
+          }).pipe(map(({data: {issues}}: { data: { issues } }) =>
+            deserialize(issues, PagingIssues)));
+        };
         this.table.load();
       });
 

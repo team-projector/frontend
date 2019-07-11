@@ -2,7 +2,6 @@ import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { DateSerializer } from '../serializers/date';
 import { Paging } from './paging';
 import { SearchFilter } from 'junte-ui';
-import { IssueCard } from './issue';
 import { field, model } from '@junte/mocker-library';
 
 @model()
@@ -55,9 +54,6 @@ export class Salary {
 
   @field({mock: '{{int 30000 50000}}'})
   total: number;
-
-  @field({mock: '{{> issue_card}}'})
-  issue: IssueCard;
 
 }
 

@@ -26,6 +26,7 @@
     "core-js": "^2.5.4",
     "junte-angular": "~0.0.46",
     "junte-ui": "0.0.123",
+    "gql-query-builder": "^3.1.1",
     "date-fns": "1.30.1",
     "rxjs": "~6.3.3",
     "serialize-ts": "2.5.4",
@@ -49,6 +50,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "protractor": "~5.4.0",
+    "systemjs": "~3.0.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
     "typescript": "~3.2.2"

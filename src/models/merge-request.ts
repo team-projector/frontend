@@ -3,6 +3,7 @@ import { ObjectLink } from './object-link';
 import { LabelCard } from './label';
 import { UserCard } from './user';
 import { field, model } from '@junte/mocker-library';
+import { Label } from 'src/components/issues/issues/model';
 
 export enum MergeRequestState {
   opened = 'opened',
@@ -12,25 +13,19 @@ export enum MergeRequestState {
 @model()
 export class MergeRequestCard {
 
-  @field({
-    mock: '{{id}}'
-  })
+  @field({mock: '{{id}}'})
   id: number;
 
-  @field({
-    mock: '{{issue}}'
-  })
+  @field({mock: '{{issue}}'})
   title: string;
 
   @field({
-    serializer: new ArraySerializer(new ModelSerializer(LabelCard)),
-    mock: '[{{#repeat 2 5}} {{> label_card}} {{/repeat}}]'
+    serializer: new ArraySerializer(new ModelSerializer(Label)),
+    mock: '[{{#repeat 2 5}} {{> label}} {{/repeat}}]'
   })
-  labels: LabelCard[];
+  labels: Label[];
 
-  @field({
-    mock: '{{> object_link presentation=(project)}}'
-  })
+  @field({mock: '{{> object_link presentation=(project)}}'})
   project: ObjectLink;
 
   @field({
@@ -57,13 +52,9 @@ export class MergeRequestCard {
   })
   glUrl: string;
 
-  @field({
-    mock: MergeRequestState.opened
-  })
+  @field({mock: MergeRequestState.opened})
   state: MergeRequestState;
 
-  @field({
-    mock: '{{> user_card}}'
-  })
+  @field({mock: '{{> user_card}}'})
   user: UserCard;
 }

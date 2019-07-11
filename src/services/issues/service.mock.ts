@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { IIssuesService } from './interface';
-import { HttpMockService } from 'junte-angular';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { deserialize } from 'serialize-ts';
-import { Issue, IssuesFilter, IssuesSummary, PagingIssues } from '../../models/issue';
+import {Injectable} from '@angular/core';
+import {IIssuesService} from './interface';
+import {HttpMockService} from 'junte-angular';
+import {Observable} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {deserialize} from 'serialize-ts';
+import {Issue, IssuesFilter, IssuesSummary} from '../../models/issue';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,6 @@ import { Issue, IssuesFilter, IssuesSummary, PagingIssues } from '../../models/i
 export class IssuesMockService implements IIssuesService {
 
   constructor(private http: HttpMockService) {
-  }
-
-  list(filter: IssuesFilter): Observable<PagingIssues> {
-    return this.http.get('issues/list.json')
-      .pipe(map(obj => deserialize(obj, PagingIssues)));
   }
 
   summary(filter: IssuesFilter): Observable<IssuesSummary> {

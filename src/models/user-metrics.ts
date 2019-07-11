@@ -40,4 +40,3 @@ export class UserMetrics {
   issuesOpenedSpent: number;
 
 }
-

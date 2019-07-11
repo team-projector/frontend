@@ -2,7 +2,7 @@ import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { Paging } from './paging';
 import { SearchFilter } from 'junte-ui';
 import { DateSerializer } from '../serializers/date';
-import { Project, ProjectCard, ProjectGroup, ProjectGroupCard } from './project';
+import { Project, ProjectGroup } from './project';
 import { ProjectSerializer } from '../serializers/project';
 import { field, model } from '@junte/mocker-library';
 
@@ -75,49 +75,6 @@ export class MilestoneMetrics {
 }
 
 @model()
-export class MilestoneCard {
-
-  @field({mock: '{{int 1 1000}}'})
-  id: number;
-
-  @field({mock: '{{title}}'})
-  title: string;
-
-  @field({
-    serializer: new ProjectSerializer(),
-    mock: '{{> project_card}}'
-  })
-  owner: ProjectCard | ProjectGroupCard;
-
-  @field({mock: '{{money}}'})
-  budget: number;
-
-  @field({
-    name: 'start_date',
-    mock: '{{date \'2019\' \'2020\'}}'
-  })
-  startDate: Date;
-
-  @field({
-    name: 'due_date',
-    serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
-  })
-  dueDate: Date;
-
-  @field({
-    mock: '{{> milestone_metrics}}'
-  })
-  metrics: MilestoneMetrics;
-
-  @field({
-    name: 'gl_url',
-    mock: '{{url}}'
-  })
-  glUrl: string;
-}
-
-@model()
 export class Milestone {
 
   @field({mock: '{{id}}'})
@@ -159,16 +116,16 @@ export class Milestone {
 }
 
 @model()
-export class PagingMilestones implements Paging<MilestoneCard> {
+export class PagingMilestones implements Paging<Milestone> {
 
   @field({mock: '{{int 3 10}}'})
   count: number;
 
   @field({
-    serializer: new ArraySerializer(new ModelSerializer(MilestoneCard)),
+    serializer: new ArraySerializer(new ModelSerializer(Milestone)),
     mock: '[{{#repeat 3 10}} {{> milestone_card}} {{/repeat}}]'
   })
-  results: MilestoneCard[];
+  results: Milestone[];
 }
 
 @model()

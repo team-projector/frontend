@@ -10,7 +10,7 @@ export function encodeModel(source: any): any {
     if (!serialized.hasOwnProperty(key)) {
       continue;
     }
-    obj[key] = serialized[key].toString();
+    obj[key] = serialized[key];
   }
 
   return new HttpParams({fromObject: obj});

@@ -27,7 +27,7 @@
                 <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
 
               </jnt-stack>
-              <small>{{project.presentation}}</small>
+              <small>{{project?.fullTitle}}</small>
             </jnt-stack>
           </jnt-stack>
         </ng-template>

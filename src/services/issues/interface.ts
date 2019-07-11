@@ -1,10 +1,8 @@
 import {InjectionToken} from '@angular/core';
 import {Observable} from 'rxjs';
-import {Issue, IssuesFilter, IssuesSummary, PagingIssues} from '../../models/issue';
+import {Issue, IssuesFilter, IssuesSummary} from '../../models/issue';
 
 export interface IIssuesService {
-
-  list(filter: IssuesFilter): Observable<PagingIssues>;
 
   summary(filter: IssuesFilter): Observable<IssuesSummary>;
 

@@ -1,5 +1,4 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
-import { DateSerializer } from '../serializers/date';
+import { ArraySerializer, DateSerializer, ModelSerializer } from 'serialize-ts';
 import { DATE_FORMAT } from '../consts';
 import { MetricsGroup, UserProgressMetrics } from './user-progress-metrics';
 import { field, model } from '@junte/mocker-library';
@@ -12,7 +11,7 @@ export class TeamProgressMetrics {
 
   @field({
     serializer: new ArraySerializer(new ModelSerializer(UserProgressMetrics)),
-    mock: '[{{#repeat 5 15}} {{> team_member_card }} {{/repeat}}]'
+    mock: '[{{#repeat 5 15}} {{> team_member }} {{/repeat}}]'
   })
   metrics: UserProgressMetrics[];
 }

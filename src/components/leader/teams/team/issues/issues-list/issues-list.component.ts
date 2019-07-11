@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {UserCard} from 'src/models/user';
+import {User} from 'src/models/user';
 import {Team} from 'src/models/team';
 
 @Component({
@@ -11,7 +11,7 @@ import {Team} from 'src/models/team';
 
 export class TeamIssuesListComponent implements OnInit {
 
-  user: UserCard;
+  user: User;
   dueDate: Date;
   team: Team;
   opened: boolean;

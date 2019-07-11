@@ -1,5 +1,6 @@
-import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
+import { ArraySerializer, Field, Model, ModelSerializer, Name, PrimitiveSerializer, Type } from 'serialize-ts';
 import { UserMetrics } from './user-metrics';
+import { Paging } from 'src/models/paging';
 import { field, model } from '@junte/mocker-library';
 
 export enum UserPermission {
@@ -50,34 +51,16 @@ export class User {
 
 }
 
-@model()
-export class UserCard {
+@Model()
+@MockClass()
+export class PagingUsers implements Paging<User> {
 
-  @field({mock: '{{int 0 100}}'})
-  id: number;
+  @field({mock: '{{int 50 1000}}'})
+  count: number;
 
-  @field({mock: '{{login}}'})
-  login: string;
-
-  @field({mock: '{{firstName}} {{lastName}}'})
-  name: string;
-
-  @field({mock: '{{avatar}}'})
-  avatar: string;
-
-  @field({
-    serializer: new ArraySerializer(new PrimitiveSerializer()),
-    mock: [UserRole.developer]
+  @Field({
+    name: 'edges',
+    mock: '[{{#repeat 10 20}} {{> user}} {{/repeat}}]'
   })
-  roles: UserRole[];
-
-  @field({mock: '{{> user_metrics}}'})
-  metrics: UserMetrics;
-
-  @field({
-    serializer: new ArraySerializer(new PrimitiveSerializer()),
-    mock: '{{user_problem}}'
-  })
-  problems: UserProblem[];
-
+  results: User[];
 }
