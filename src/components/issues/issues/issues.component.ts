@@ -154,7 +154,7 @@ export class IssuesComponent implements OnInit {
         this.table.fetcher = (filter: DefaultSearchFilter) => {
           Object.assign(this.filter, filter);
           return this.graphQL.get({
-            operation: 'issues',
+            operation: 'allIssues',
             variables: this.filter,
             fields: this.query.issues
           }).pipe(map(({data: {issues}}: { data: { issues } }) =>
