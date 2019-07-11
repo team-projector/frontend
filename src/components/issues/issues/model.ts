@@ -1,209 +1,185 @@
-import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../../../decorators/mock';
-import {DateSerializer} from '../../../serializers/date';
-import {Order, SearchFilter} from 'junte-ui';
-import {PrimitiveSerializer} from 'serialize-ts/dist';
-import {EdgesToArray, EdgesToPaging, TypedDateVariable, TypedIdVariable} from '../../../serializers/graphql';
-import {DynamicField} from '../../../serializers/internal';
-import {IssueProblem, IssueState} from '../../../models/issue';
-import {UserMetrics} from '../../../models/user-metrics';
-import {UserProblem, UserRole} from '../../../models/user';
-import {Paging} from '../../../models/paging';
+import { DateSerializer } from '../../../serializers/date';
+import { Order, SearchFilter } from 'junte-ui';
+import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
+import { EdgesToArray, EdgesToPaging, TypedDateVariable, TypedIdVariable } from '../../../serializers/graphql';
+import { DynamicField } from '../../../serializers/internal';
+import { UserMetrics } from '../../../models/user-metrics';
+import { UserProblem, UserRole } from '../../../models/user';
+import { Paging } from '../../../models/paging';
+import { field, model } from '@junte/mocker-library';
+import { IssueProblem, IssueState } from '../../../models/issue';
 
-@MockClass()
+@model()
 export class Label {
 
-  @Field()
-  @MockField('{{label}}')
+  @field({mock: '{{label}}'})
   title: string;
 
-  @Field()
-  @MockField('{{color}}')
+  @field({mock: '{{color}}'})
   color: string;
 
 }
 
-@Model()
-@MockClass()
+@model()
 export class User {
 
-  @Field()
-  @MockFieldNested('{{int 0 100}}')
+  @field({mock: '{{int 0 100}}'})
   id: number;
 
-  @Field()
-  @MockField('{{login}}')
+  @field({mock: '{{login}}'})
   login: string;
 
-  @Field()
-  @MockField('{{firstName}} {{lastName}}')
+  @field({mock: '{{firstName}} {{lastName}}'})
   name: string;
 
-  @Field()
-  @Name('glAvatar')
-  @MockField('{{avatar}}')
+  @field({
+    name: 'glAvatar',
+    mock: '{{avatar}}'
+  })
   avatar: string;
 
-  @Field()
-  @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField([UserRole.developer, UserRole.customer, UserRole.projectManager, UserRole.shareholder, UserRole.teamLeader])
+  @field({
+    serializer: new ArraySerializer(new PrimitiveSerializer()),
+    mock: [UserRole.developer, UserRole.customer, UserRole.projectManager, UserRole.shareholder, UserRole.teamLeader]
+  })
   roles: UserRole[];
 
-  @Field()
-  @MockFieldNested('{{> user_metrics}}')
+  @field({mock: '{{> user_metrics}}'})
   metrics: UserMetrics;
 
-  @Field()
-  @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField('{{user_problem}}')
+  @field({
+    serializer: new ArraySerializer(new PrimitiveSerializer()),
+    mock: '{{user_problem}}'
+  })
   problems: UserProblem[];
 
 }
 
-@Model()
-@MockClass()
+@model()
 export class Project {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{id}}'})
   id: number;
 
-  @Field()
-  @MockField('{{project}}')
+  @field({mock: '{{project}}'})
   title: string;
 
-  @Field()
-  @MockField('{{project}}')
+  @field({mock: '{{project}}'})
   fullTitle: string;
 
-  @Field()
-  @Name('gl_url')
-  @MockField('{{url}}')
+  @field({
+    name: 'gl_url',
+    mock: '{{url}}'
+  })
   glUrl: string;
 }
 
-@Model()
-@MockClass()
+@model()
 export class IssueMetrics {
 
-  @Field()
-  @MockFieldNested('{{int 10 100}}')
+  @field({mock: '{{int 10 100}}'})
   remains: number;
 
-  @Field()
-  @MockFieldNested('{{efficiency}}')
+  @field({mock: '{{efficiency}}'})
   efficiency: number;
 
-  @Field()
-  @MockFieldNested('{{money}}')
+  @field({mock: '{{money}}'})
   payroll: number;
 
-  @Field()
-  @MockFieldNested('{{money}}')
+  @field({mock: '{{money}}'})
   paid: number;
 
 }
 
-@Model()
-@MockClass()
+@model()
 export class Issue {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{id}}'})
   id: number;
 
-  @Field()
-  @MockField('{{issue}}')
+  @field({mock: '{{issue}}'})
   title: string;
 
-  @Field()
-  @Type(new EdgesToArray(Label))
-  @MockFieldNested('[{{#repeat 2 5}} {{> label}} {{/repeat}}]')
+  @field({
+    serializer: new EdgesToArray(Label),
+    mock: '[{{#repeat 2 5}} {{> label}} {{/repeat}}]'
+  })
   labels: Label[];
 
-  @Field()
-  @MockFieldNested('{{> project}}')
+  @field({mock: '{{> project}}'})
   project: Project;
 
-  @Field()
-  @Type(new DateSerializer())
-  @MockField('{{date \'2019\' \'2020\'}}')
+  @field({
+    serializer: new DateSerializer(),
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
   dueDate: Date;
 
-  @Field()
-  @MockFieldNested('{{int 10 100}}')
+  @field({mock: '{{int 10 100}}'})
   timeEstimate: number;
 
-  @Field()
-  @MockFieldNested('{{int 10 100}}')
+  @field({mock: '{{int 10 100}}'})
   timeSpent: number;
 
-  @Field()
-  @MockFieldNested('{{int 10 100}}')
+  @field({mock: '{{int 10 100}}'})
   totalTimeSpent: number;
 
-  @Field()
-  @MockField('{{url}}')
+  @field({mock: '{{url}}'})
   glUrl: string;
 
-  @Field()
-  @MockField(IssueState.opened)
+  @field({mock: IssueState.opened})
   state: IssueState;
 
-  @Field()
-  @MockFieldNested('{{> issue_metrics}}')
+  @field({mock: '{{> issue_metrics}}'})
   metrics: IssueMetrics;
 
-  @Field()
-  @Type(new EdgesToArray(User))
-  @MockFieldNested('[{{#repeat 1 3}} {{> user}} {{/repeat}}]')
+  @field({
+    serializer: new EdgesToArray(User),
+    mock: '[{{#repeat 1 3}} {{> user}} {{/repeat}}]'
+  })
   participants: User[];
 
-  @Field()
-  @MockFieldNested('{{> user}}')
+  @field({mock: '{{> user}}'})
   user: User;
 
-  @Field()
-  @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField('{{issue_problem}}')
+  @field({
+    serializer: new ArraySerializer(new PrimitiveSerializer()),
+    mock: '{{issue_problem}}'
+  })
   problems: IssueProblem[];
 }
 
-@Model()
-@MockClass()
+@model()
 export class PagingIssues implements Paging<Issue> {
 
-  @Field()
-  @MockFieldNested('{{int 50 1000}}')
+  @field({mock: '{{int 50 1000}}'})
   count: number;
 
-  @Field()
-  @Name('edges')
-  @Type(new ArraySerializer(new EdgesToPaging<Issue>(Issue)))
-  @MockFieldNested('[{{#repeat 10 20}} {{> issue}} {{/repeat}}]')
+  @field({
+    name: 'edges',
+    serializer: new ArraySerializer(new EdgesToPaging<Issue>(Issue)),
+    mock: '[{{#repeat 10 20}} {{> issue}} {{/repeat}}]'
+  })
   results: Issue[];
 
 }
 
-@Model()
+@model()
 export class IssuesFilter implements SearchFilter {
 
-  @Field()
-  @Type(new TypedIdVariable())
+  @field({serializer: new TypedIdVariable()})
   team?: number;
 
-  @Field()
-  @Type(new TypedIdVariable())
+  @field({serializer: new TypedIdVariable()})
   user?: number;
 
-  @Field()
-  @Type(new TypedDateVariable())
+  @field({serializer: new TypedDateVariable()})
   dueDate?: Date;
 
-  @Field()
+  @field()
   state?: IssueState | null;
 
-  @Field()
+  @field()
   problems?: boolean | null;
 
   query?: string;
@@ -211,17 +187,18 @@ export class IssuesFilter implements SearchFilter {
   orderBy?: Order = Order.asc;
   page?: number;
 
-  @Field()
-  @Name('orderBy')
-  @Type(new DynamicField())
+  @field({
+    name: 'orderBy',
+    serializer: new DynamicField()
+  })
   ordering? = () => !!this.sort ? (this.orderBy === Order.asc ? '' : '-') + this.sort : '';
 
-  @Field()
-  @Type(new DynamicField())
+  @field({
+    serializer: new DynamicField()
+  })
   offset? = () => (this.page - 1) * this.pageSize;
 
-  @Field()
-  @Name('first')
+  @field({name: 'first'})
   pageSize?: number;
 
   constructor(defs: IssuesFilter = null) {

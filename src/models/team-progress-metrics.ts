@@ -1,4 +1,5 @@
-import { ArraySerializer, DateSerializer, ModelSerializer } from 'serialize-ts';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { DateSerializer } from '../serializers/date';
 import { DATE_FORMAT } from '../consts';
 import { MetricsGroup, UserProgressMetrics } from './user-progress-metrics';
 import { field, model } from '@junte/mocker-library';

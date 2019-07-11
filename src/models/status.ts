@@ -1,5 +1,6 @@
 import { ArraySerializer, DateSerializer, ModelSerializer } from 'serialize-ts';
 import { field, model } from '@junte/mocker-library';
+import { Issue } from '../components/issues/issues/model';
 
 @model()
 export class Service {

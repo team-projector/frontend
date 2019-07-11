@@ -1,17 +1,17 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {format} from 'date-fns';
-import {FormBuilder, FormControl} from '@angular/forms';
-import {IMetricsService, metrics_service} from 'src/services/metrics/interface';
-import {ActivatedRoute, Router} from '@angular/router';
-import {distinctUntilChanged, filter} from 'rxjs/operators';
-import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metrics';
-import {User} from 'src/models/user';
-import {BehaviorSubject, combineLatest, zip} from 'rxjs';
-import {Period} from 'junte-ui/lib/components/calendar/models';
-import {UI} from 'junte-ui';
-import {DurationFormat} from '../../../pipes/date';
-import {IssuesFilter, IssuesSummary} from '../../../models/issue';
-import {IIssuesService, issues_service} from '../../../services/issues/interface';
+import { Component, Inject, OnInit } from '@angular/core';
+import { format } from 'date-fns';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { IMetricsService, metrics_service } from 'src/services/metrics/interface';
+import { ActivatedRoute, Router } from '@angular/router';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
+import { MetricsGroup, UserProgressMetrics } from 'src/models/user-progress-metrics';
+import { User } from 'src/models/user';
+import { BehaviorSubject, combineLatest, zip } from 'rxjs';
+import { Period } from 'junte-ui/lib/components/calendar/models';
+import { UI } from 'junte-ui';
+import { DurationFormat } from '../../../pipes/date';
+import { IIssuesService, issues_service } from '../../../services/issues/interface';
+import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,

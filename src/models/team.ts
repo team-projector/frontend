@@ -32,9 +32,10 @@ export class TeamMember {
   @field({mock: '{{> user}}'})
   user: User;
 
-  @Field()
-  @Type(new ArraySerializer(new PrimitiveSerializer()))
-  @MockField([TeamMemberRole.developer])
+  @field({
+    serializer: new ArraySerializer(new PrimitiveSerializer()),
+    mock: [TeamMemberRole.developer]
+  })
   roles: TeamMemberRole[];
 
 }
@@ -75,7 +76,7 @@ export class PagingTeams implements Paging<Team> {
 }
 
 @model()
-export class PagingTeamMembers implements Paging<TeamMemberCard> {
+export class PagingTeamMembers implements Paging<TeamMember> {
 
   @field({mock: '{{int 2 7}}'})
   count: number;

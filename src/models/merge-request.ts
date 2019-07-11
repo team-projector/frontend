@@ -1,9 +1,8 @@
 import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { ObjectLink } from './object-link';
-import { LabelCard } from './label';
-import { UserCard } from './user';
 import { field, model } from '@junte/mocker-library';
-import { Label } from 'src/components/issues/issues/model';
+import { Label } from './label';
+import { User } from './user';
 
 export enum MergeRequestState {
   opened = 'opened',
@@ -11,7 +10,7 @@ export enum MergeRequestState {
 }
 
 @model()
-export class MergeRequestCard {
+export class MergeRequest {
 
   @field({mock: '{{id}}'})
   id: number;
@@ -55,6 +54,6 @@ export class MergeRequestCard {
   @field({mock: MergeRequestState.opened})
   state: MergeRequestState;
 
-  @field({mock: '{{> user_card}}'})
-  user: UserCard;
+  @field({mock: '{{> user}}'})
+  user: User;
 }
