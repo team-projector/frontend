@@ -61,7 +61,7 @@ export class Issue {
 
   @field({
     name: 'due_date',
-    serializer: new DateSerializer(),
+    serializer: new DateSerializer(DATE_FORMAT),
     mock: '{{date \'2019\' \'2020\'}}'
   })
   dueDate: Date;
@@ -129,7 +129,7 @@ export class IssuesFilter implements SearchFilter {
 
   @field({
     name: 'due_date',
-    serializer: new DateSerializer()
+    serializer: new DateSerializer(DATE_FORMAT)
   })
   dueDate?: Date;
 
