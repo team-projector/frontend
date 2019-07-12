@@ -45,6 +45,7 @@ export class IssuesComponent implements OnInit {
               {'project': ['fullTitle']},
               'state',
               'createdAt',
+              'timeEstimate',
               'totalTimeSpent',
               'glUrl',
               {user: ['id', 'name', 'glAvatar']},
