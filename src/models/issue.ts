@@ -1,12 +1,12 @@
-import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
-import { DateSerializer } from '../serializers/date';
-import { DATE_FORMAT } from '../consts';
-import { Order, SearchFilter } from 'junte-ui';
-import { User } from './user';
-import { Project } from './project';
-import { Milestone } from './milestone';
-import { field, model } from '@junte/mocker-library';
-import { Label } from './label';
+import {ArraySerializer, ModelSerializer, PrimitiveSerializer} from 'serialize-ts';
+import {DateSerializer} from '../serializers/date';
+import {DATE_FORMAT} from '../consts';
+import {Order, SearchFilter} from 'junte-ui';
+import {User} from './user';
+import {Project} from './project';
+import {Milestone} from './milestone';
+import {field, model} from '@junte/mocker-library';
+import {Label} from './label';
 
 export enum IssueState {
   opened = 'opened',
@@ -128,7 +128,8 @@ export class IssuesFilter implements SearchFilter {
   query?: string;
 
   @field({
-    name: 'due_date'
+    name: 'due_date',
+    serializer: new DateSerializer()
   })
   dueDate?: Date;
 
