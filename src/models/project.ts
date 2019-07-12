@@ -1,43 +1,34 @@
-import {Field, Name, Model} from 'serialize-ts';
-import {MockClass, MockField} from '../decorators/mock';
+import { field, model } from '@junte/mocker-library';
 
-@Model()
-@MockClass()
+@model()
 export class Project {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{id}}'})
   id: number;
 
-  @Field()
-  @MockField('{{project}}')
+  @field({mock: '{{project}}'})
   title: string;
 
-  @Field()
-  @MockField('{{project}}')
-  fullTitle: string;
-
-  @Field()
-  @Name('gl_url')
-  @MockField('{{url}}')
+  @field({
+    name: 'gl_url',
+    mock: '{{url}}'
+  })
   glUrl: string;
 }
 
-@Model()
-@MockClass()
+@model()
 export class ProjectGroup {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{int 1 1000}}'})
   id: number;
 
-  @Field()
-  @MockField('{{project}}')
+  @field({mock: '{{project}}'})
   title: string;
 
-  @Field()
-  @Name('gl_url')
-  @MockField('{{url}}')
+  @field({
+    name: 'gl_url',
+    mock: '{{url}}'
+  })
   glUrl: string;
 
 }

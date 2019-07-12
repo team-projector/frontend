@@ -41,7 +41,8 @@
                 "src/style"
               ]
             },
-            "scripts": []
+            "scripts": [],
+            "es5BrowserSupport": true
           },
           "configurations": {
             "production": {

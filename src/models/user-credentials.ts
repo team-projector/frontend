@@ -1,16 +1,12 @@
-import {Field, Model} from 'serialize-ts';
-import {MockClass, MockField} from '../decorators/mock';
+import { field, model } from '@junte/mocker-library';
 
-@Model()
-@MockClass()
+@model()
 export class UserCredentials {
 
-  @Field()
-  @MockField('{{login}}')
+  @field({mock: '{{login}}'})
   login: string;
 
-  @Field()
-  @MockField('{{password}}')
+  @field({mock: '{{password}}'})
   password: string;
 
   constructor(defs: UserCredentials = null) {
