@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "clean": "npm cache clean --force && rm -rf -- node_modules doc coverage dist dll package-lock.json",
     "refresh": "npm run clean && npm install",
-    "mocks": "tsc && gulp build --gulpfile node_modules/@junte/mocker-library/gulpfile.js --cwd ./src",
+    "mocks": "tsc && gulp build --gulpfile node_modules/@junte/mocker-library/gulpfile.js --cwd .",
     "e2e": "ng e2e"
   },
   "private": true,
@@ -22,7 +22,7 @@
     "@angular/platform-browser": "~7.2.0",
     "@angular/platform-browser-dynamic": "~7.2.0",
     "@angular/router": "~7.2.0",
-    "@junte/mocker-library": "0.0.55",
+    "@junte/mocker-library": "0.0.56",
     "core-js": "^2.5.4",
     "junte-angular": "~0.0.46",
     "junte-ui": "0.0.123",

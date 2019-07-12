@@ -123,7 +123,7 @@ export class PagingMilestones implements Paging<Milestone> {
 
   @field({
     serializer: new ArraySerializer(new ModelSerializer(Milestone)),
-    mock: '[{{#repeat 3 10}} {{> milestone_card}} {{/repeat}}]'
+    mock: '[{{#repeat 3 10}} {{> milestone}} {{/repeat}}]'
   })
   results: Milestone[];
 }
