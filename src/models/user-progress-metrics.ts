@@ -1,77 +1,80 @@
-import { Field, Model, Name, Type } from 'serialize-ts';
-import { MockClass, MockField, MockFieldNested } from '../decorators/mock';
 import { DateSerializer } from '../serializers/date';
 import { DATE_FORMAT } from '../consts';
 import { format } from 'date-fns';
+import { field, model } from '@junte/mocker-library';
 
 export enum MetricsGroup {
   day = 'day',
   week = 'week'
 }
 
-@Model()
-@MockClass()
+@model()
 export class UserProgressMetrics {
 
-  @Field()
-  @Type(new DateSerializer())
-  @MockField('{{date \'2019\' \'2020\'}}')
+  @field({
+    serializer: new DateSerializer(),
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
   start: Date;
 
-  @Field()
-  @Type(new DateSerializer())
-  @MockField('{{date \'2019\' \'2020\'}}')
+  @field({
+    serializer: new DateSerializer(),
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
   end: Date;
 
-  @Field()
-  @Name('time_estimate')
-  @MockFieldNested('{{int 10000 100000}}')
+  @field({
+    name: 'time_estimate',
+    mock: '{{int 10000 100000}}'
+  })
   timeEstimate: number;
 
-  @Field()
-  @Name('time_spent')
-  @MockFieldNested('{{int 10000 100000}}')
+  @field({
+    name: 'time_spent',
+    mock: '{{int 10000 100000}}'
+  })
   timeSpent: number;
 
-  @Field()
-  @Name('time_remains')
-  @MockFieldNested('{{int 10000 100000}}')
+  @field({
+    name: 'time_remains',
+    mock: '{{int 10000 100000}}'
+  })
   timeRemains: number;
 
-  @Field()
-  @Name('planned_work_hours')
-  @MockFieldNested('{{int 8 10}}')
+  @field({
+    name: 'planned_work_hours',
+    mock: '{{int 8 10}}'
+  })
   plannedWorkHours: number;
 
-  @Field()
-  @MockFieldNested('{{efficiency}}')
+  @field({mock: '{{efficiency}}'})
   efficiency: number;
 
-  @Field()
-  @MockFieldNested('{{int 200000 300000}}')
+  @field({mock: '{{int 200000 300000}}'})
   loading: number;
 
-  @Field()
-  @Name('payroll_closed')
-  @MockFieldNested('{{money}}')
+  @field({
+    name: 'payroll_closed',
+    mock: '{{money}}'
+  })
   payrollClosed: number;
 
-  @Field()
-  @Name('payroll_opened')
-  @MockFieldNested('{{money}}')
+  @field({
+    name: 'payroll_opened',
+    mock: '{{money}}'
+  })
   payrollOpened: number;
 
-  @Field()
-  @MockFieldNested('{{money}}')
+  @field({mock: '{{money}}'})
   payroll: number;
 
-  @Field()
-  @MockFieldNested('{{money}}')
+  @field({mock: '{{money}}'})
   paid: number;
 
-  @Field()
-  @Name('issues_count')
-  @MockFieldNested('{{int 50 1000}}')
+  @field({
+    name: 'issues_count',
+    mock: '{{int 50 1000}}'
+  })
   issuesCount: number;
 
   getKey(): string {
@@ -80,18 +83,16 @@ export class UserProgressMetrics {
 
 }
 
-@Model()
+@model()
 export class UserMetricsFilter {
 
-  @Field()
-  @Type(new DateSerializer(DATE_FORMAT))
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
   start?: Date;
 
-  @Field()
-  @Type(new DateSerializer(DATE_FORMAT))
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
   end?: Date;
 
-  @Field()
+  @field()
   group?: MetricsGroup;
 
   constructor(defs: UserMetricsFilter = null) {

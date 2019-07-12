@@ -1,82 +1,79 @@
-import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {Paging} from './paging';
-import {DateSerializer} from '../serializers/date';
-import {DATE_FORMAT} from '../consts';
-import {OwnerSerializer} from '../serializers/owner';
-import {MergeRequest} from './merge-request';
-import {Issue} from './issue';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { Paging } from './paging';
+import { DateSerializer } from '../serializers/date';
+import { DATE_FORMAT } from '../consts';
+import { field, model } from '@junte/mocker-library';
+import { OwnerSerializer } from '../serializers/owner';
+import { Issue } from './issue';
 
-@Model()
-@MockClass()
+@model()
 export class SpentTime {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{id}}'})
   id: number;
 
-  @Field()
-  @Name('created_at')
-  @Type(new DateSerializer())
-  @MockField('{{date \'2019\' \'2020\'}}')
+  @field({
+    name: 'created_at',
+    serializer: new DateSerializer(),
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
   createdAt: Date;
 
-  @Field()
-  @Type(new DateSerializer())
-  @MockField('{{date \'2019\' \'2020\'}}')
+  @field({
+    serializer: new DateSerializer(),
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
   date: Date;
 
-  @Field()
-  @Type(new OwnerSerializer())
-  @MockFieldNested('{{> issue}}')
-  owner: Issue | MergeRequest;
+  @field({
+    serializer: new OwnerSerializer(),
+    mock: '{{> issue}}'
+  })
+  owner: Issue;
 
-  @Field()
-  @Name('time_spent')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'time_spent',
+    mock: '{{int 10 100}}'
+  })
   timeSpent: number;
 
-  @Field()
-  @MockFieldNested('{{money}}')
+  @field({mock: '{{money}}'})
   earnings: number;
 }
 
-@Model()
-@MockClass()
+@model()
 export class PagingTimeExpenses implements Paging<SpentTime> {
 
-  @Field()
-  @MockFieldNested('{{int 50 1000}}')
+  @field({mock: '{{int 50 1000}}'})
   count: number;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(SpentTime)))
-  @MockFieldNested('[{{#repeat 10 20}} {{> spent_time}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(SpentTime)),
+    mock: '[{{#repeat 10 20}} {{> spent_time}} {{/repeat}}]'
+  })
   results: SpentTime[];
 
 }
 
-@Model()
+@model()
 export class TimeExpensesFilter {
 
-  @Field()
+  @field()
   team?: number;
 
-  @Field()
+  @field()
   user?: number;
 
-  @Field()
-  @Type(new DateSerializer(DATE_FORMAT))
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
   date?: Date;
 
-  @Field()
+  @field()
   salary?: number;
 
-  @Field()
+  @field()
   page: number;
 
-  @Field()
-  @Name('page_size')
+  @field({mock: 'page_size'})
   pageSize: number;
 
   constructor(defs: TimeExpensesFilter = null) {

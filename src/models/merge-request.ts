@@ -1,60 +1,59 @@
-import {ArraySerializer, Field, Model, ModelSerializer, Name, Type} from 'serialize-ts';
-import {MockClass, MockField, MockFieldNested} from '../decorators/mock';
-import {ObjectLink} from './object-link';
-import {Label} from './label';
-import {User} from './user';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { ObjectLink } from './object-link';
+import { field, model } from '@junte/mocker-library';
+import { Label } from './label';
+import { User } from './user';
 
 export enum MergeRequestState {
   opened = 'opened',
   closed = 'closed'
 }
 
-@Model()
-@MockClass()
+@model()
 export class MergeRequest {
 
-  @Field()
-  @MockField('{{id}}')
+  @field({mock: '{{id}}'})
   id: number;
 
-  @Field()
-  @MockField('{{issue}}')
+  @field({mock: '{{issue}}'})
   title: string;
 
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(Label)))
-  @MockFieldNested('[{{#repeat 2 5}} {{> label}} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(Label)),
+    mock: '[{{#repeat 2 5}} {{> label}} {{/repeat}}]'
+  })
   labels: Label[];
 
-  @Field()
-  @MockFieldNested('{{> object_link presentation=(project)}}')
+  @field({mock: '{{> object_link presentation=(project)}}'})
   project: ObjectLink;
 
-  @Field()
-  @Name('time_estimate')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'time_estimate',
+    mock: '{{int 10 100}}'
+  })
   timeEstimate: number;
 
-  @Field()
-  @Name('time_spent')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'time_spent',
+    mock: '{{int 10 100}}'
+  })
   timeSpent: number;
 
-  @Field()
-  @Name('total_time_spent')
-  @MockFieldNested('{{int 10 100}}')
+  @field({
+    name: 'total_time_spent',
+    mock: '{{int 10 100}}'
+  })
   totalTimeSpent: number;
 
-  @Field()
-  @Name('gl_url')
-  @MockField('{{url}}')
+  @field({
+    name: 'gl_url',
+    mock: '{{url}}'
+  })
   glUrl: string;
 
-  @Field()
-  @MockField(MergeRequestState.opened)
+  @field({mock: MergeRequestState.opened})
   state: MergeRequestState;
 
-  @Field()
-  @MockFieldNested('{{> user}}')
+  @field({mock: '{{> user}}'})
   user: User;
 }

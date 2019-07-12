@@ -1,36 +1,32 @@
-import { ArraySerializer, Field, Model, ModelSerializer, Type } from 'serialize-ts';
-import { MockClass, MockFieldNested } from '../decorators/mock';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { DateSerializer } from '../serializers/date';
 import { DATE_FORMAT } from '../consts';
 import { MetricsGroup, UserProgressMetrics } from './user-progress-metrics';
+import { field, model } from '@junte/mocker-library';
 
-@Model()
-@MockClass()
+@model()
 export class TeamProgressMetrics {
 
-  @Field()
-  @MockFieldNested('{{int 1 10}}')
+  @field({mock: '{{int 1 10}}'})
   user: number;
 
-  @Field()
-  @Field()
-  @Type(new ArraySerializer(new ModelSerializer(UserProgressMetrics)))
-  @MockFieldNested('[{{#repeat 5 15}} {{> team_member }} {{/repeat}}]')
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(UserProgressMetrics)),
+    mock: '[{{#repeat 5 15}} {{> team_member }} {{/repeat}}]'
+  })
   metrics: UserProgressMetrics[];
 }
 
-@Model()
+@model()
 export class TeamMetricsFilter {
 
-  @Field()
-  @Type(new DateSerializer(DATE_FORMAT))
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
   start?: Date;
 
-  @Field()
-  @Type(new DateSerializer(DATE_FORMAT))
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
   end?: Date;
 
-  @Field()
+  @field()
   group?: MetricsGroup;
 
   constructor(defs: TeamMetricsFilter = null) {
