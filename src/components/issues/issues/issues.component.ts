@@ -47,6 +47,7 @@ export class IssuesComponent implements OnInit {
               'createdAt',
               'timeEstimate',
               'totalTimeSpent',
+              'timeEstimate',
               'glUrl',
               {user: ['id', 'name', 'glAvatar']},
               {

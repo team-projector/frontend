@@ -11,3 +11,16 @@
 [closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
   text-decoration: line-through;
 }
+
+[metric] {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  &:first-of-type {
+    flex: 1;
+    text-align: left;
+  }
+  &[estimate] {
+    color: $primary-text-light-color;
+  }
+}
