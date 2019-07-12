@@ -52,16 +52,15 @@
                      let-totalTimeSpent="totalTimeSpent"
                      let-metrics="metrics"
                      let-problems="problems">
-          <div>
-            <jnt-progress-bar [value]="!!timeEstimate ? (totalTimeSpent / timeEstimate * 100) : 0">
-              <ng-template #legend>
-                <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center" [justify]="ui.flex.justify.between" [gutter]="ui.stack.gutter.normal">
-                  <div metric>{{totalTimeSpent | duration}}</div>
-                  <div metric estimate>{{timeEstimate | duration}}</div>
-                </jnt-stack>
-              </ng-template>
-            </jnt-progress-bar>
-          </div>
+          <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
+            <ng-template #legend>
+              <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
+                         [justify]="ui.flex.justify.between" [gutter]="ui.stack.gutter.normal">
+                <div metric>{{totalTimeSpent | duration}}</div>
+                <div metric estimate>{{timeEstimate | duration}}</div>
+              </jnt-stack>
+            </ng-template>
+          </jnt-progress-bar>
           <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
                      [color]="ui.colors.red" label="estimate">
           </jnt-label>

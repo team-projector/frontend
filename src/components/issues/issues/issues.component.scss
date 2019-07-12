@@ -12,6 +12,10 @@
   text-decoration: line-through;
 }
 
+[progress] {
+  min-width: 100px;
+}
+
 [metric] {
   overflow: hidden;
   white-space: nowrap;

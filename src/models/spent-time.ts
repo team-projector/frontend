@@ -5,6 +5,7 @@ import { DATE_FORMAT } from '../consts';
 import { field, model } from '@junte/mocker-library';
 import { OwnerSerializer } from '../serializers/owner';
 import { Issue } from './issue';
+import {MergeRequest} from './merge-request';
 
 @model()
 export class SpentTime {
@@ -29,7 +30,7 @@ export class SpentTime {
     serializer: new OwnerSerializer(),
     mock: '{{> issue}}'
   })
-  owner: Issue;
+  owner: Issue | MergeRequest;
 
   @field({
     name: 'time_spent',
