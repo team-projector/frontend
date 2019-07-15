@@ -1,11 +1,22 @@
 import {Inject, Injectable} from '@angular/core';
-import {Me} from '../models/me';
+import {Me} from '../models/graphql/user';
 import {BehaviorSubject} from 'rxjs';
-import {IMeService, me_service} from '../services/me/interface';
 import {Config} from 'junte-angular';
 import {AppConfig} from '../app-config';
 import {UserPermission} from '../models/user';
 import {jsonEquals} from '../utils/object';
+import {graph_ql_service, IGraphQLService} from '../services/graphql/interface';
+import {map} from 'rxjs/operators';
+import {deserialize} from 'serialize-ts';
+
+const query = `query {
+      me {
+        id
+        name
+        glAvatar
+        roles
+      }
+    }`;
 
 @Injectable()
 export class MeManager {
@@ -22,12 +33,13 @@ export class MeManager {
     return this.user$.getValue();
   }
 
-  constructor(@Inject(me_service) private meService: IMeService,
+  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService,
               @Inject(Config) private config: AppConfig) {
     this.config.authorization$.subscribe(token => {
       if (!!token) {
-        this.meService.getUser().subscribe(user => this.user = user,
-          () => this.user = null);
+        this.graphQL.get(query)
+          .pipe(map(({data: {me}}) => deserialize(me, Me)))
+          .subscribe(user => this.user = user);
       } else {
         this.user = null;
       }

@@ -24,13 +24,13 @@ export class MetricsMockService implements IMetricsService {
     }
   }
 
-  teamProgress(team: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<number, Map<string, UserProgressMetrics>>> {
-    const users = [93, 54, 61];
+  teamProgress(team: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<string, Map<string, UserProgressMetrics>>> {
+    const users = ['93', '54', '61'];
     switch (group) {
       case MetricsGroup.day: {
         return Observable.create((observer: any) => {
           this.days(start).subscribe(days => {
-            const dic = new Map<number, Map<string, UserProgressMetrics>>();
+            const dic = new Map<string, Map<string, UserProgressMetrics>>();
             users.forEach(user => dic.set(user, days));
             observer.next(dic);
             observer.complete();
@@ -38,12 +38,12 @@ export class MetricsMockService implements IMetricsService {
             observer.error(err);
             observer.complete();
           });
-        }) as Observable<Map<number, Map<string, UserProgressMetrics>>>;
+        }) as Observable<Map<string, Map<string, UserProgressMetrics>>>;
       }
       case MetricsGroup.week:
         return Observable.create((observer: any) => {
           this.weeks(start).subscribe(days => {
-            const dic = new Map<number, Map<string, UserProgressMetrics>>();
+            const dic = new Map<string, Map<string, UserProgressMetrics>>();
             users.forEach(user => dic.set(user, days));
             observer.next(dic);
             observer.complete();
@@ -51,7 +51,7 @@ export class MetricsMockService implements IMetricsService {
             observer.error(err);
             observer.complete();
           });
-        }) as Observable<Map<number, Map<string, UserProgressMetrics>>>;
+        }) as Observable<Map<string, Map<string, UserProgressMetrics>>>;
     }
   }
 

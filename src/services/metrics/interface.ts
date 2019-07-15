@@ -6,7 +6,7 @@ export interface IMetricsService {
 
   userProgress(user: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<string, UserProgressMetrics>>;
 
-  teamProgress(team: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<number, Map<string, UserProgressMetrics>>>;
+  teamProgress(team: number, start: Date, end: Date, group: MetricsGroup): Observable<Map<string, Map<string, UserProgressMetrics>>>;
 
 }
 

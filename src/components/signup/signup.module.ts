@@ -5,7 +5,6 @@ import {SignupRoutingModule} from './signup-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
 import {UsersServiceProvider} from '../../services/users/provider';
 import {FormPipesModule} from 'junte-angular';
-import {MeServiceProvider} from '../../services/me/provider';
 import {JunteUiModule} from 'junte-ui';
 
 @NgModule({
@@ -18,8 +17,7 @@ import {JunteUiModule} from 'junte-ui';
     JunteUiModule
   ],
   providers: [
-    UsersServiceProvider,
-    MeServiceProvider
+    UsersServiceProvider
   ]
 })
 export class SignupModule {

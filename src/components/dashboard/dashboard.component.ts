@@ -1,12 +1,12 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
-import { UI } from 'junte-ui';
-import { Config } from 'junte-angular';
-import { AppConfig } from '../../app-config';
-import { MeManager } from '../../managers/me.manager';
-import { Router } from '@angular/router';
-import { gitlab_service, IGitlabService } from '../../services/gitlab/interface';
-import { Status } from '../../models/status';
-import { UserRole } from '../../models/user';
+import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
+import {UI} from 'junte-ui';
+import {Config} from 'junte-angular';
+import {AppConfig} from '../../app-config';
+import {MeManager} from '../../managers/me.manager';
+import {Router} from '@angular/router';
+import {gitlab_service, IGitlabService} from '../../services/gitlab/interface';
+import {Status} from '../../models/status';
+import {UserRole} from '../../models/user';
 
 const STATUS_TIMEOUT = 60000;
 
@@ -40,7 +40,8 @@ export class DashboardComponent implements OnInit {
   }
 
   load() {
-    this.gitlabService.getStatus().subscribe(status => this.status = status);
+    this.gitlabService.getStatus()
+      .subscribe(status => this.status = status);
   }
 
 }

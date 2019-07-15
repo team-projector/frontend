@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {Config, HttpMockService, HttpService} from 'junte-angular';
 import {AppConfig} from '../app-config';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {MeServiceProvider} from '../services/me/provider';
 import {MeManager} from '../managers/me.manager';
 import {registerLocaleData} from '@angular/common';
 import localeDe from '@angular/common/locales/de';
@@ -35,7 +34,6 @@ registerLocaleData(localeDe);
     HttpMockService,
     GraphQLServiceProvider,
 
-    MeServiceProvider,
     MeManager
   ],
   bootstrap: [AppComponent]

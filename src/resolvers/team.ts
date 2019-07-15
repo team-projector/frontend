@@ -1,18 +1,29 @@
-import { Inject, Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { ITeamsService, teams_service } from '../services/teams/interface';
-import { Team } from '../models/team';
+import {Inject, Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs';
+import {Team} from '../models/graphql/team';
+import {graph_ql_service, IGraphQLService} from '../services/graphql/interface';
+import {map} from 'rxjs/operators';
+import {deserialize} from 'serialize-ts/dist';
+
+const query = `query ($team: ID!) {
+      team(id: $team) {
+        id
+        title
+      }
+    }`;
 
 @Injectable()
 export class TeamResolver implements Resolve<Observable<Team>> {
 
-  constructor(@Inject(teams_service) private teamsService: ITeamsService) {
+  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService) {
   }
 
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<Team> {
-    const team = +route.params['team'];
-    return !!team ? this.teamsService.get(team) : null;
+    const id = +route.params['team'];
+    return this.graphQL.get(query, {team: id})
+      .pipe(map(({data: {team}}) =>
+        deserialize(team, Team)));
   }
 }

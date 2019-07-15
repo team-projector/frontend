@@ -1,9 +1,9 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {ITeamsService, teams_service} from 'src/services/teams/interface';
-import {Team, TeamMemberRole} from 'src/models/team';
-import {MeManager} from 'src/managers/me.manager';
-import {filter, finalize} from 'rxjs/operators';
+import {finalize, map} from 'rxjs/operators';
 import {UI} from 'junte-ui';
+import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
+import {deserialize} from 'serialize-ts/dist';
+import {PagingTeams, Team} from '../../../models/graphql/team';
 
 @Component({
   selector: 'app-leader-teams',
@@ -16,17 +16,46 @@ export class TeamsComponent implements OnInit {
   teams: Team[] = [];
   loading: boolean;
 
-  constructor(@Inject(teams_service) private teamsService: ITeamsService,
-              private me: MeManager) {
+  private query = `query ($first: Int) {
+    allTeams(first: $first) {
+      count
+      edges {
+        node {
+          id
+          title
+          members (first: 4, roles: "developer") {
+            count
+            edges {
+              node {
+                user {
+                  name
+                  glAvatar
+                }
+              }
+            }
+          }
+          metrics {
+            issuesCount
+            problemsCount
+          }
+        }
+      }
+    }
+  }`;
+
+  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService) {
   }
 
   ngOnInit() {
+    this.load();
+  }
+
+  private load() {
     this.loading = true;
-    this.me.user$.pipe(filter(u => !!u)).subscribe(user => {
-      this.teamsService.list(user.id, [TeamMemberRole.leader, TeamMemberRole.watcher])
-        .pipe(finalize(() => this.loading = false))
-        .subscribe((paging) => this.teams = paging.results);
-    });
+    this.graphQL.get(this.query)
+      .pipe(map(({data: {allTeams}}: { data: { allTeams } }) =>
+        deserialize(allTeams, PagingTeams)), finalize(() => this.loading = false))
+      .subscribe(teams => this.teams = teams.results);
   }
 
 }

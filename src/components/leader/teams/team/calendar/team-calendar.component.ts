@@ -1,9 +1,9 @@
 import {Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Team, TeamMember, TeamMemberRole} from 'src/models/team';
+import {Team, TeamMember} from 'src/models/graphql/team';
 import {UI} from 'junte-ui';
 import {addDays, addWeeks, endOfDay, format, isEqual, isFuture, isPast, startOfDay, startOfWeek, subWeeks} from 'date-fns';
-import {distinctUntilChanged, filter, finalize} from 'rxjs/operators';
+import {distinctUntilChanged, filter, finalize, map} from 'rxjs/operators';
 import {BehaviorSubject, zip} from 'rxjs';
 import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metrics';
 import {DurationFormat} from 'src/pipes/date';
@@ -12,8 +12,34 @@ import {IMetricsService, metrics_service} from 'src/services/metrics/interface';
 import {Router} from '@angular/router';
 import {isUndefined} from 'util';
 import {User, UserProblem} from 'src/models/user';
-import {ITeamsService, teams_service} from 'src/services/teams/interface';
 import {equals} from '../../../../utils/equals';
+import {graph_ql_service, IGraphQLService} from '../../../../../services/graphql/interface';
+import {deserialize} from 'serialize-ts/dist';
+import {PagingTeamMembers} from '../../../../../models/graphql/team';
+
+const query = {
+  members: `query ($team: ID!) {
+      team(id: $team) {
+        members(roles: "developer", orderBy: "user__name") {
+          count
+          edges {
+            node {
+              user {
+                id
+                glAvatar
+                name
+                metrics {
+                  issuesClosedSpent
+                  issuesOpenedSpent
+                }
+              }
+            }
+          }
+        }
+      }
+    }`
+};
+
 
 const WEEKS_DISPLAYED = 2;
 const DAYS_IN_WEEK = 7;
@@ -39,8 +65,8 @@ class Week {
 }
 
 class Metric {
-  constructor(public days: Map<number, Map<string, UserProgressMetrics>>,
-              public weeks: Map<number, Map<string, UserProgressMetrics>>) {
+  constructor(public days: Map<string, Map<string, UserProgressMetrics>>,
+              public weeks: Map<string, Map<string, UserProgressMetrics>>) {
   }
 }
 
@@ -117,7 +143,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   }
 
   constructor(@Inject(metrics_service) private metricsService: IMetricsService,
-              @Inject(teams_service) private teamsService: ITeamsService,
+              @Inject(graph_ql_service) private graphQL: IGraphQLService,
               private fb: FormBuilder,
               public router: Router) {
   }
@@ -138,9 +164,10 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   private loadMembers() {
     this.loading = true;
-    this.teamsService.members(this.team.id, [TeamMemberRole.developer])
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(members => this.members = members.results);
+    this.graphQL.get(query.members, {team: this.team.id})
+      .pipe(map(({data: {team: {members}}}) =>
+        deserialize(members, PagingTeamMembers)), finalize(() => this.loading = false))
+      .subscribe(teams => this.members = teams.results);
   }
 
   private update() {

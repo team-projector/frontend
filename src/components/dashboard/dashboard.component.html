@@ -7,15 +7,15 @@
     </ng-template>
     <ng-template #topMenu>
       <jnt-menu>
-        <jnt-menu-item *ngIf="me.user?.roles.includes(userRole.developer)"
+        <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.developer)"
                        link="/developer" [matching]="ui.menu.matching.wildcard" title="Developer"></jnt-menu-item>
-        <jnt-menu-item *ngIf="me.user?.roles.includes(userRole.teamLeader)"
+        <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.teamLeader)"
                        link="/leader" [matching]="ui.menu.matching.wildcard" title="Team Leader"></jnt-menu-item>
-        <jnt-menu-item *ngIf="me.user?.roles.includes(userRole.projectManager)"
+        <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.projectManager)"
                        link="/manager" [matching]="ui.menu.matching.wildcard" title="Project Manager"></jnt-menu-item>
-        <jnt-menu-item *ngIf="me.user?.roles.includes(userRole.customer)"
+        <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.customer)"
                        link="customer" [matching]="ui.menu.matching.wildcard" title="Customer"></jnt-menu-item>
-        <jnt-menu-item *ngIf="me.user?.roles.includes(userRole.shareholder)"
+        <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.shareholder)"
                        link="/shareholder" [matching]="ui.menu.matching.wildcard" title="Shareholder"></jnt-menu-item>
       </jnt-menu>
     </ng-template>

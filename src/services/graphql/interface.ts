@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 
 export interface IGraphQLService {
 
-  get<T>(query: { operation: string, variables: Object, fields: Object[] }): Observable<T>;
+  get<T>(query: string, variables?: Object): Observable<T>;
 
 }
 

@@ -6,9 +6,9 @@ import {debounceTime, distinctUntilChanged, finalize, map} from 'rxjs/operators'
 import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
-import {deserialize} from 'serialize-ts/dist';
+import {deserialize, serialize} from 'serialize-ts/dist';
 import {IssueProblem, IssueState} from '../../../models/issue';
-import {PagingIssues, IssuesFilter} from './model';
+import {PagingIssues, IssuesFilter} from '../../../models/graphql/issue';
 
 @Component({
   selector: 'app-issues',
@@ -27,50 +27,57 @@ export class IssuesComponent implements OnInit {
     problems: [false]
   });
 
-  private query = {
-    issues: [
-      'count',
-      {
-        edges: [
-          {
-            node: [
-              'title',
-              'id',
-              'dueDate',
-              {
-                labels: [
-                  'count',
-                  {edges: [{node: ['title', 'color']}]}]
-              },
-              {'project': ['fullTitle']},
-              'state',
-              'createdAt',
-              'timeEstimate',
-              'totalTimeSpent',
-              'timeEstimate',
-              'glUrl',
-              {user: ['id', 'name', 'glAvatar']},
-              {
-                participants: [
-                  'count',
-                  {edges: [{node: ['name', 'glAvatar']}]}
-                ]
-              },
-              'problems',
-              {
-                'metrics': [
-                  'remains',
-                  'efficiency',
-                  'payroll',
-                  'paid'
-                ]
-              }
-            ]
+  private query = `query ($team: ID, $user: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int) {
+  allIssues(team: $team, user: $user, dueDate: $dueDate, state: $state, problems: $problems, orderBy: $orderBy, offset: $offset, first: $first) {
+    count
+    edges {
+      node {
+        title
+        id
+        dueDate
+        labels {
+          count
+          edges {
+            node {
+              title
+              color
+            }
           }
-        ]
+        }
+        project {
+          fullTitle
+        }
+        state
+        createdAt
+        timeEstimate
+        totalTimeSpent
+        timeEstimate
+        glUrl
+        user {
+          id
+          name
+          glAvatar
+        }
+        participants {
+          count
+          edges {
+            node {
+              name
+              glAvatar
+            }
+          }
+        }
+        problems
+        metrics {
+          remains
+          efficiency
+          payroll
+          paid
+        }
       }
-    ]
-  };
+    }
+  }
+}`;
 
   private team$ = new BehaviorSubject<number>(null);
   private user$ = new BehaviorSubject<number>(null);
@@ -155,12 +162,9 @@ export class IssuesComponent implements OnInit {
         this.filter.problems = problems ? problems : null;
         this.table.fetcher = (filter: DefaultSearchFilter) => {
           Object.assign(this.filter, filter);
-          return this.graphQL.get({
-            operation: 'allIssues',
-            variables: this.filter,
-            fields: this.query.issues
-          }).pipe(map(({data: {allIssues}}: { data: { allIssues } }) =>
-            deserialize(allIssues, PagingIssues)));
+          return this.graphQL.get(this.query, serialize(this.filter))
+            .pipe(map(({data: {allIssues}}: { data: { allIssues } }) =>
+              deserialize(allIssues, PagingIssues)));
         };
         this.table.load();
       });

@@ -1,13 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { LeaderRoutingModule } from './leader-routing.module';
-import { TeamsServiceProvider } from '../../services/teams/provider';
-import { JunteUiModule } from 'junte-ui';
-import { DeveloperDashboardModule } from '../developer/dashboard/developer-dashboard.module';
-import { DatePipesModule } from '../../pipes/date-pipes.module';
-import { TeamResolver } from 'src/resolvers/team';
-import { LeaderComponent } from 'src/components/leader/leader.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import {LeaderRoutingModule} from './leader-routing.module';
+import {JunteUiModule} from 'junte-ui';
+import {DeveloperDashboardModule} from '../developer/dashboard/developer-dashboard.module';
+import {DatePipesModule} from '../../pipes/date-pipes.module';
+import {TeamResolver} from 'src/resolvers/team';
+import {LeaderComponent} from 'src/components/leader/leader.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +21,6 @@ import { LeaderComponent } from 'src/components/leader/leader.component';
     DeveloperDashboardModule
   ],
   providers: [
-    TeamsServiceProvider,
     TeamResolver
   ]
 })

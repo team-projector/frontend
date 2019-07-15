@@ -6,7 +6,7 @@ import {DeveloperDashboardComponent} from './developer-dashboard.component';
 import {JunteUiModule} from 'junte-ui';
 import {DatePipesModule} from 'src/pipes/date-pipes.module';
 import {DueDateResolver, OpenedResolver, ProblemsResolver} from 'src/resolvers/issue';
-import {UserWithMetricsResolver} from 'src/resolvers/user';
+import {UserOrMeResolver} from 'src/resolvers/user';
 import {UsersServiceProvider} from 'src/services/users/provider';
 import {IssuesModule} from 'src/components/issues/issues.module';
 import {SalariesServiceProvider} from 'src/services/salaries/provider';
@@ -30,7 +30,7 @@ import {NumberModule} from '../../../pipes/number.module';
     NumberModule
   ],
   providers: [
-    UserWithMetricsResolver,
+    UserOrMeResolver,
     DueDateResolver,
     UsersServiceProvider,
     OpenedResolver,

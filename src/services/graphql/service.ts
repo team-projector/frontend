@@ -2,9 +2,7 @@ import {Injectable} from '@angular/core';
 import {IGraphQLService} from './interface';
 import {HttpService} from 'junte-angular';
 import {Observable} from 'rxjs';
-import {deserialize} from 'serialize-ts';
-import {query as graphql} from 'gql-query-builder';
-import {serialize} from 'serialize-ts/dist';
+import {serialize, deserialize} from 'serialize-ts';
 
 @Injectable()
 export class GraphQLService implements IGraphQLService {
@@ -12,13 +10,11 @@ export class GraphQLService implements IGraphQLService {
   constructor(private http: HttpService) {
   }
 
-  get<T>({operation, variables, fields}: { operation: string, variables: Object, fields: Object[] }): Observable<T> {
-    const query = graphql({
-      operation: operation,
-      variables: serialize(variables),
-      fields: fields
+  get<T>(query: string, variables: Object = {}): Observable<T> {
+    return this.http.post('graphql', {
+      query: query,
+      variables: variables
     });
-    return this.http.post('graphql', query);
   }
 
 }

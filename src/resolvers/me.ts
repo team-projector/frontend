@@ -1,17 +1,31 @@
 import {Inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {Me} from '../models/me';
-import {IMeService, me_service} from '../services/me/interface';
+import {graph_ql_service, IGraphQLService} from '../services/graphql/interface';
+import {Me} from '../models/graphql/user';
+import {map} from 'rxjs/operators';
+import {deserialize} from 'serialize-ts';
+
+const query = `query {
+      me {
+        id
+        name
+        glAvatar
+        roles
+        permissions
+      }
+    }`;
 
 @Injectable()
-export class MeUserWithMetricsResolver implements Resolve<Observable<Me>> {
+export class MeUserResolver implements Resolve<Observable<Me>> {
 
-  constructor(@Inject(me_service) private meService: IMeService) {
+  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService) {
   }
 
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<Me> {
-    return this.meService.getUser(true);
+    return this.graphQL.get(query)
+      .pipe(map(({data: {me}}) =>
+        deserialize(me, Me)));
   }
 }

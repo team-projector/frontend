@@ -1,7 +1,7 @@
-import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
-import { field, model } from '@junte/mocker-library';
-import { UserMetrics } from './user-metrics';
-import { Paging } from './paging';
+import {ArraySerializer, ModelSerializer, PrimitiveSerializer} from 'serialize-ts';
+import {field, model} from '@junte/mocker-library';
+import {UserMetrics} from './user-metrics';
+import {Paging} from './paging';
 
 export enum UserPermission {
   inviteUser = 'intite_user',

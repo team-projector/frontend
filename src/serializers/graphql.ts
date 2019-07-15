@@ -32,24 +32,3 @@ export class EdgesToArray<T> implements Serializer<T[]> {
   }
 }
 
-export class TypedIdVariable implements Serializer<Number> {
-
-  serialize(value: Number): Object {
-    return {type: 'ID', value: value};
-  }
-
-  deserialize(data: Object): Number {
-    throw new Error('Was not implemented');
-  }
-}
-
-export class TypedDateVariable implements Serializer<Date> {
-
-  serialize(value: Date): Object {
-    return {type: 'Date', value: format(value, DATE_FORMAT)};
-  }
-
-  deserialize(data: Object): Date {
-    throw new Error('Was not implemented');
-  }
-}
