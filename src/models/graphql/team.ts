@@ -1,9 +1,15 @@
 import {ArraySerializer, ModelSerializer, PrimitiveSerializer} from 'serialize-ts';
 import {field, model} from '@junte/mocker-library';
-import {TeamMemberRole} from '../team';
 import {User} from './user';
 import {EdgesToArray, EdgesToPaging} from '../../serializers/graphql';
 import {Paging} from '../paging';
+
+export enum TeamMemberRole {
+  developer = 'developer',
+  leader = 'leader',
+  watcher = 'watcher'
+}
+
 
 @model()
 export class TeamMetrics {

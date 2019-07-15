@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Team} from '../../../../../../models/team';
+import {Team} from '../../../../../../models/graphql/team';
 import {User} from '../../../../../../models/user';
 
 @Component({

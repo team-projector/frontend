@@ -18,3 +18,17 @@ export class Project {
   })
   glUrl: string;
 }
+
+@model()
+export class ProjectGroup {
+
+  @field({mock: '{{int 1 1000}}'})
+  id: number;
+
+  @field({mock: '{{project}}'})
+  title: string;
+
+  @field({mock: '{{url}}'})
+  glUrl: string;
+
+}

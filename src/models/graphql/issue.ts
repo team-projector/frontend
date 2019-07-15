@@ -137,3 +137,18 @@ export class IssuesFilter implements SearchFilter {
   }
 
 }
+
+@model()
+export class IssuesSummary {
+
+  @field({mock: '{{int 10 100}}'})
+  issuesCount: number;
+
+  @field({mock: '{{int 10 100}}'})
+  timeSpent: number;
+
+
+  @field({mock: '{{int 10 100}}'})
+  problemsCount: number;
+
+}

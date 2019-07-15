@@ -1,26 +1,14 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
-import { DateSerializer } from '../serializers/date';
-import { Paging } from './paging';
-import { SearchFilter } from 'junte-ui';
-import { field, model } from '@junte/mocker-library';
+import {ArraySerializer, ModelSerializer} from 'serialize-ts';
+import {DateSerializer} from '../serializers/date';
+import {Paging} from './paging';
+import {SearchFilter} from 'junte-ui';
+import {field, model} from '@junte/mocker-library';
 
 @model()
 export class Salary {
 
   @field({mock: '{{int 1 1000}}'})
   id: number;
-
-  @field({
-    name: 'charged_time',
-    mock: '{{int 144000 288000}}'
-  })
-  chargedTime: number;
-
-  @field({mock: '{{boolean}}'})
-  payed: boolean;
-
-  @field({mock: '{{int 1000 5000}}'})
-  bonus: number;
 
   @field({
     name: 'created_at',
@@ -43,6 +31,15 @@ export class Salary {
   })
   periodFrom: Date;
 
+  @field({
+    name: 'charged_time',
+    mock: '{{int 144000 288000}}'
+  })
+  chargedTime: number;
+
+  @field({mock: '{{int 1000 5000}}'})
+  bonus: number;
+
   @field({mock: '{{int 250 500}}'})
   taxes: number;
 
@@ -54,6 +51,9 @@ export class Salary {
 
   @field({mock: '{{int 30000 50000}}'})
   total: number;
+
+  @field({mock: '{{boolean}}'})
+  payed: boolean;
 
 }
 

@@ -2,7 +2,7 @@ import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { Paging } from './paging';
 import { SearchFilter } from 'junte-ui';
 import { DateSerializer } from '../serializers/date';
-import { Project, ProjectGroup } from './project';
+import { Project, ProjectGroup } from './graphql/project';
 import { ProjectSerializer } from '../serializers/project';
 import { field, model } from '@junte/mocker-library';
 

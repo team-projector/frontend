@@ -1,5 +1,5 @@
 import {deserialize, Serializer} from 'serialize-ts';
-import {Project, ProjectGroup} from '../models/project';
+import {Project, ProjectGroup} from '../models/graphql/project';
 
 export class ProjectSerializer implements Serializer<Project | ProjectGroup> {
   serialize(date: Project | ProjectGroup): string {
@@ -7,7 +7,7 @@ export class ProjectSerializer implements Serializer<Project | ProjectGroup> {
   }
 
   deserialize(source: Object): Project | ProjectGroup {
-    switch (source['__type__']) {
+    switch (source['__typename']) {
       case 'ProjectGroup':
         return deserialize(source, ProjectGroup);
       case 'Project':

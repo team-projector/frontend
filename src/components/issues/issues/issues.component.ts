@@ -1,33 +1,16 @@
 import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {PLATFORM_DELAY} from 'src/consts';
-import {IIssuesService, issues_service} from 'src/services/issues/interface';
 import {BehaviorSubject, combineLatest} from 'rxjs';
-import {debounceTime, distinctUntilChanged, finalize, map} from 'rxjs/operators';
+import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
 import {deserialize, serialize} from 'serialize-ts/dist';
 import {IssueProblem, IssueState} from '../../../models/issue';
-import {PagingIssues, IssuesFilter} from '../../../models/graphql/issue';
+import {IssuesFilter, PagingIssues} from '../../../models/graphql/issue';
 
-@Component({
-  selector: 'app-issues',
-  templateUrl: './issues.component.html',
-  styleUrls: ['./issues.component.scss']
-})
-export class IssuesComponent implements OnInit {
-
-  ui = UI;
-  issuesState = IssueState;
-  issueProblem = IssueProblem;
-  loading = false;
-
-  form: FormGroup = this.formBuilder.group({
-    opened: [true],
-    problems: [false]
-  });
-
-  private query = `query ($team: ID, $user: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int) {
+const query = {
+  issues: `query ($team: ID, $user: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int) {
   allIssues(team: $team, user: $user, dueDate: $dueDate, state: $state, problems: $problems, orderBy: $orderBy, offset: $offset, first: $first) {
     count
     edges {
@@ -77,7 +60,25 @@ export class IssuesComponent implements OnInit {
       }
     }
   }
-}`;
+}`
+};
+
+@Component({
+  selector: 'app-issues',
+  templateUrl: './issues.component.html',
+  styleUrls: ['./issues.component.scss']
+})
+export class IssuesComponent implements OnInit {
+
+  ui = UI;
+  issuesState = IssueState;
+  issueProblem = IssueProblem;
+  loading = false;
+
+  form: FormGroup = this.formBuilder.group({
+    opened: [true],
+    problems: [false]
+  });
 
   private team$ = new BehaviorSubject<number>(null);
   private user$ = new BehaviorSubject<number>(null);
@@ -138,8 +139,7 @@ export class IssuesComponent implements OnInit {
   @Output()
   filtered = new EventEmitter<{ opened?, problems? }>();
 
-  constructor(@Inject(issues_service) private issuesService: IIssuesService,
-              @Inject(graph_ql_service) private graphQL: IGraphQLService,
+  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService,
               private formBuilder: FormBuilder) {
   }
 
@@ -162,7 +162,7 @@ export class IssuesComponent implements OnInit {
         this.filter.problems = problems ? problems : null;
         this.table.fetcher = (filter: DefaultSearchFilter) => {
           Object.assign(this.filter, filter);
-          return this.graphQL.get(this.query, serialize(this.filter))
+          return this.graphQL.get(query.issues, serialize(this.filter))
             .pipe(map(({data: {allIssues}}: { data: { allIssues } }) =>
               deserialize(allIssues, PagingIssues)));
         };
@@ -184,9 +184,9 @@ export class IssuesComponent implements OnInit {
 
   sync(issue: number) {
     this.loading = true;
-    this.issuesService.sync(issue)
+    /*this.issuesService.sync(issue)
       .pipe(finalize(() => this.loading = false))
-      .subscribe(() => this.table.load());
+      .subscribe(() => this.table.load());*/
   }
 
 }

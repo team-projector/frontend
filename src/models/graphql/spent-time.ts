@@ -1,11 +1,13 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
-import { Paging } from './paging';
-import { DateSerializer } from '../serializers/date';
-import { DATE_FORMAT } from '../consts';
-import { field, model } from '@junte/mocker-library';
-import { OwnerSerializer } from '../serializers/owner';
-import { Issue } from './issue';
+import {ArraySerializer, ModelSerializer} from 'serialize-ts';
+import {Paging} from '../paging';
+import {DateSerializer} from '../../serializers/date';
+import {DATE_FORMAT} from '../../consts';
+import {field, model} from '@junte/mocker-library';
+import {OwnerSerializer} from '../../serializers/owner';
 import {MergeRequest} from './merge-request';
+import {Order} from 'junte-ui';
+import {EdgesToPaging} from '../../serializers/graphql';
+import {Issue} from './issue';
 
 @model()
 export class SpentTime {
@@ -14,7 +16,6 @@ export class SpentTime {
   id: number;
 
   @field({
-    name: 'created_at',
     serializer: new DateSerializer(),
     mock: '{{date \'2019\' \'2020\'}}'
   })
@@ -32,10 +33,7 @@ export class SpentTime {
   })
   owner: Issue | MergeRequest;
 
-  @field({
-    name: 'time_spent',
-    mock: '{{int 10 100}}'
-  })
+  @field({mock: '{{int 10 100}}'})
   timeSpent: number;
 
   @field({mock: '{{money}}'})
@@ -49,7 +47,8 @@ export class PagingTimeExpenses implements Paging<SpentTime> {
   count: number;
 
   @field({
-    serializer: new ArraySerializer(new ModelSerializer(SpentTime)),
+    name: 'edges',
+    serializer: new ArraySerializer(new EdgesToPaging<SpentTime>(SpentTime)),
     mock: '[{{#repeat 10 20}} {{> spent_time}} {{/repeat}}]'
   })
   results: SpentTime[];
@@ -65,17 +64,19 @@ export class TimeExpensesFilter {
   @field()
   user?: number;
 
-  @field({serializer: new DateSerializer(DATE_FORMAT)})
-  date?: Date;
-
   @field()
   salary?: number;
 
-  @field()
-  page: number;
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  date?: Date;
 
-  @field({mock: 'page_size'})
-  pageSize: number;
+  sort?: string;
+  orderBy?: Order = Order.asc;
+
+  page?: number;
+
+  @field({name: 'first'})
+  pageSize?: number;
 
   constructor(defs: TimeExpensesFilter = null) {
     if (!!defs) {

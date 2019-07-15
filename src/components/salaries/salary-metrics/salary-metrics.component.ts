@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { UserMetrics } from 'src/models/user-metrics';
-import { UI } from 'junte-ui';
+import {Component, Input} from '@angular/core';
+import {UI} from 'junte-ui';
+import {UserMetrics} from '../../../models/graphql/user';
 
 @Component({
   selector: 'app-salary-metrics',

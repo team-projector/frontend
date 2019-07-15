@@ -3,19 +3,20 @@ import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCE
 import {Team, TeamMember} from 'src/models/graphql/team';
 import {UI} from 'junte-ui';
 import {addDays, addWeeks, endOfDay, format, isEqual, isFuture, isPast, startOfDay, startOfWeek, subWeeks} from 'date-fns';
-import {distinctUntilChanged, filter, finalize, map} from 'rxjs/operators';
-import {BehaviorSubject, zip} from 'rxjs';
-import {MetricsGroup, UserProgressMetrics} from 'src/models/user-progress-metrics';
+import {distinctUntilChanged, filter as filtering, finalize, map} from 'rxjs/operators';
+import {BehaviorSubject, combineLatest, zip} from 'rxjs';
+import {MetricsGroup} from 'src/models/graphql/user-progress-metrics';
 import {DurationFormat} from 'src/pipes/date';
 import {Period} from 'junte-ui/lib/components/calendar/models';
-import {IMetricsService, metrics_service} from 'src/services/metrics/interface';
 import {Router} from '@angular/router';
 import {isUndefined} from 'util';
 import {User, UserProblem} from 'src/models/user';
 import {equals} from '../../../../utils/equals';
 import {graph_ql_service, IGraphQLService} from '../../../../../services/graphql/interface';
-import {deserialize} from 'serialize-ts/dist';
+import {deserialize, serialize} from 'serialize-ts/dist';
 import {PagingTeamMembers} from '../../../../../models/graphql/team';
+import {TeamMetricsFilter, TeamProgressMetrics} from '../../../../../models/graphql/team-progress-metrics';
+import {UserProgressMetrics} from '../../../../../models/graphql/user-progress-metrics';
 
 const query = {
   members: `query ($team: ID!) {
@@ -28,6 +29,7 @@ const query = {
                 id
                 glAvatar
                 name
+                problems
                 metrics {
                   issuesClosedSpent
                   issuesOpenedSpent
@@ -37,7 +39,28 @@ const query = {
           }
         }
       }
-    }`
+    }`,
+  metrics: `query ($team: ID!, $start: Date!, $end: Date!, $group: String!) {
+  teamProgressMetrics(team: $team, start: $start, end: $end, group: $group) {
+    user {
+      id
+      name
+    }
+    metrics {
+      start
+      end
+      timeEstimate
+      timeSpent
+      timeRemains
+      plannedWorkHours
+      loading
+      payroll
+      paid
+      issuesCount
+    }
+
+  }
+}`
 };
 
 
@@ -99,7 +122,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   today = startOfDay(new Date());
 
   private period$ = new BehaviorSubject<Period>(null);
-  private _team: Team;
+  private team$ = new BehaviorSubject<Team>(null);
   private _date: Date;
 
   metric = MetricType.all;
@@ -121,16 +144,13 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   @Input()
   set team(team: Team) {
-    if (!equals(this._team, team)) {
-      this._team = team;
-      if (!!team) {
-        this.loadMembers();
-      }
+    if (!equals(this.team, team)) {
+      this.team$.next(team);
     }
   }
 
   get team() {
-    return this._team;
+    return this.team$.getValue();
   }
 
   set date(date: Date) {
@@ -142,24 +162,48 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
     return this._date;
   }
 
-  constructor(@Inject(metrics_service) private metricsService: IMetricsService,
-              @Inject(graph_ql_service) private graphQL: IGraphQLService,
+  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService,
               private fb: FormBuilder,
               public router: Router) {
+    this.team$.pipe(filtering(t => !!t))
+      .subscribe(() => this.loadMembers());
+
+    this.date = new Date();
   }
 
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(f => this.onChange(f));
 
-    this.period$.pipe(filter(period => !!period))
-      .subscribe(period => {
-        zip(this.metricsService.teamProgress(this.team.id, period.start, period.end, MetricsGroup.day),
-          this.metricsService.teamProgress(this.team.id, period.start, period.end, MetricsGroup.week))
-          .subscribe(([days, weeks]) => this.metrics = new Metric(days, weeks));
-      });
+    combineLatest(this.team$, this.period$)
+      .pipe(filtering(([team, period]) => !!team && !!period))
+      .subscribe(([team, period]) => this.loadMetrics(team, period));
+  }
 
-    this.date = new Date();
+  private loadMetrics(team: Team, period: Period) {
+    const getMetric = (group: MetricsGroup) => {
+      const filter = new TeamMetricsFilter({
+        team: team.id,
+        start: period.start,
+        end: period.end,
+        group: group
+      });
+      return this.graphQL.get(query.metrics, serialize(filter))
+        .pipe(map(({data: {teamProgressMetrics}}) =>
+            teamProgressMetrics.map(el => deserialize(el, TeamProgressMetrics))),
+          map(metrics => {
+            const dic = new Map<string, Map<string, UserProgressMetrics>>();
+            metrics.forEach(m => {
+              const userDic = new Map<string, UserProgressMetrics>();
+              m.metrics.forEach(metric => userDic.set(metric.getKey(), metric));
+              dic.set(m.user.id.toString(), userDic);
+            });
+            return dic;
+          }));
+    };
+
+    zip(getMetric(MetricsGroup.day), getMetric(MetricsGroup.week))
+      .subscribe(([days, weeks]) => this.metrics = new Metric(days, weeks));
   }
 
   private loadMembers() {

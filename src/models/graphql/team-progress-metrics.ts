@@ -1,14 +1,16 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
-import { DateSerializer } from '../serializers/date';
-import { DATE_FORMAT } from '../consts';
-import { MetricsGroup, UserProgressMetrics } from './user-progress-metrics';
-import { field, model } from '@junte/mocker-library';
+import {ArraySerializer, ModelSerializer} from 'serialize-ts';
+import {DateSerializer} from '../../serializers/date';
+import {DATE_FORMAT} from '../../consts';
+import {field, model} from '@junte/mocker-library';
+import {UserProgressMetrics} from './user-progress-metrics';
+import {MetricsGroup} from './user-progress-metrics';
+import {User} from './user';
 
 @model()
 export class TeamProgressMetrics {
 
   @field({mock: '{{int 1 10}}'})
-  user: number;
+  user: User;
 
   @field({
     serializer: new ArraySerializer(new ModelSerializer(UserProgressMetrics)),
@@ -20,14 +22,17 @@ export class TeamProgressMetrics {
 @model()
 export class TeamMetricsFilter {
 
-  @field({serializer: new DateSerializer(DATE_FORMAT)})
-  start?: Date;
+  @field()
+  team: number;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
-  end?: Date;
+  start: Date;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  end: Date;
 
   @field()
-  group?: MetricsGroup;
+  group: MetricsGroup;
 
   constructor(defs: TeamMetricsFilter = null) {
     if (!!defs) {

@@ -3,7 +3,7 @@ import {DateSerializer} from '../serializers/date';
 import {DATE_FORMAT} from '../consts';
 import {Order, SearchFilter} from 'junte-ui';
 import {User} from './user';
-import {Project} from './project';
+import {Project} from './graphql/project';
 import {Milestone} from './milestone';
 import {field, model} from '@junte/mocker-library';
 import {Label} from './label';

@@ -2,12 +2,22 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {UI} from 'junte-ui';
 import {ActivatedRoute, Router} from '@angular/router';
 import {format} from 'date-fns';
-import {distinctUntilChanged} from 'rxjs/operators';
-import {BehaviorSubject} from 'rxjs';
-import {Team} from 'src/models/team';
+import {distinctUntilChanged, map} from 'rxjs/operators';
+import {Team} from 'src/models/graphql/team';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {IIssuesService, issues_service} from '../../../../services/issues/interface';
-import {IssuesFilter, IssuesSummary} from '../../../../models/issue';
+import {graph_ql_service, IGraphQLService} from '../../../../services/graphql/interface';
+import {deserialize, serialize} from 'serialize-ts/dist';
+import {IssuesFilter, IssuesSummary} from '../../../../models/graphql/issue';
+
+const query = {
+  summary: `query ($team: ID, $user: ID, $dueDate: Date, $state: String) {
+  issuesSummary(team: $team, user: $user, dueDate: $dueDate, state: $state) {
+    issuesCount
+    timeSpent
+    problemsCount
+  }
+}`
+};
 
 @Component({
   selector: 'app-leader-team',
@@ -18,8 +28,7 @@ export class TeamComponent implements OnInit {
 
   ui = UI;
 
-  private team$ = new BehaviorSubject<Team>(null);
-
+  team: Team;
   summary: IssuesSummary;
   filter = new FormControl();
 
@@ -27,15 +36,7 @@ export class TeamComponent implements OnInit {
     filter: this.filter
   });
 
-  set team(team: Team) {
-    this.team$.next(team);
-  }
-
-  get team() {
-    return this.team$.getValue();
-  }
-
-  constructor(@Inject(issues_service) private issuesService: IIssuesService,
+  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
@@ -64,11 +65,16 @@ export class TeamComponent implements OnInit {
         }
       }, {emitEvent: false});
 
-      this.issuesService.summary(new IssuesFilter({
+      const filter = new IssuesFilter({
         team: team.id,
         user: !!user ? user.id : null,
         dueDate: dueDate
-      })).subscribe(summary => this.summary = summary);
+      });
+
+      this.graphQL.get(query.summary, serialize(filter))
+        .pipe(map(({data: {issuesSummary}}: { data: { issuesSummary } }) =>
+          deserialize(issuesSummary, IssuesSummary)))
+        .subscribe(summary => this.summary = summary);
     });
   }
 }
