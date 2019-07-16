@@ -21,6 +21,15 @@ const query = {
         owner {
           __typename
           title
+          labels {
+            count
+            edges {
+              node {
+                title
+                color
+              }
+            }
+          }
           glUrl
           project {
             fullTitle

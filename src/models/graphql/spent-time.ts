@@ -37,7 +37,7 @@ export class SpentTime {
   timeSpent: number;
 
   @field({mock: '{{money}}'})
-  earnings: number;
+  sum: number;
 }
 
 @model()

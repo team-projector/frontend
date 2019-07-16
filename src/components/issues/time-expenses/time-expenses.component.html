@@ -6,10 +6,6 @@
                    let-participants="owner.participants" let-project="owner.project">
         <jnt-stack [type]="ui.stack.type.horizontal"
                    [gutter]="ui.stack.gutter.small">
-          <jnt-avatars-list>
-            <jnt-avatar *ngFor="let p of participants"
-                        [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>
-          </jnt-avatars-list>
           <jnt-stack [type]="ui.stack.type.vertical"
                      [gutter]="ui.stack.gutter.tiny">
             <jnt-stack [type]="ui.stack.type.horizontal"
@@ -40,8 +36,8 @@
     </jnt-table-column>
 
     <jnt-table-column i18n-title="@@earn" title="Earn">
-      <ng-template #cellTemplate let-earnings="earnings">
-        {{earnings | currency}}
+      <ng-template #cellTemplate let-sum="sum">
+        {{!!sum ? (sum | currency:'RUB') : '&mdash;'}}
       </ng-template>
     </jnt-table-column>
   </jnt-table>
