@@ -9,6 +9,11 @@ import {deserialize, serialize} from 'serialize-ts/dist';
 import {IssueProblem, IssueState} from '../../../models/graphql/issue';
 import {IssuesFilter, PagingIssues} from '../../../models/graphql/issue';
 
+export enum ViewType {
+  default,
+  extended
+}
+
 const query = {
   issues: `query ($team: ID, $user: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $pageSize: Int) {
   allIssues(team: $team, user: $user, dueDate: $dueDate, state: $state, problems: $problems, orderBy: $orderBy, offset: $offset, first: $pageSize) {
@@ -73,7 +78,11 @@ export class IssuesComponent implements OnInit {
   ui = UI;
   issuesState = IssueState;
   issueProblem = IssueProblem;
+  viewType = ViewType;
   loading = false;
+
+  @Input()
+  view = ViewType.default;
 
   form: FormGroup = this.formBuilder.group({
     opened: [true],

@@ -37,6 +37,7 @@ export const queries = {
       payroll
       paid
       issuesCount
+      efficiency
     }
   }
 }`

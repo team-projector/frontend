@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../../models/graphql/user';
+import {ViewType} from '../../../issues/issues/issues.component';
 
 @Component({
   selector: 'app-issues-list',
@@ -8,6 +9,8 @@ import {User} from '../../../../models/graphql/user';
   styleUrls: ['./issues-list.component.scss']
 })
 export class IssuesListComponent implements OnInit {
+
+  viewType = ViewType;
 
   user: User;
   dueDate: Date;

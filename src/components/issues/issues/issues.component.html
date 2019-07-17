@@ -77,7 +77,7 @@
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@payroll" title="Payroll">
+      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@payroll" title="Payroll">
         <ng-template #cellTemplate let-metrics="metrics">
           <div style="text-align: right;">
             {{!!metrics.payroll ? (metrics.payroll | currency:'RUB') : '&mdash;'}}
@@ -85,7 +85,7 @@
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@paid" title="Paid">
+      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@paid" title="Paid">
         <ng-template #cellTemplate let-metrics="metrics">
           <div style="text-align: right;">
             {{!!metrics.paid ? (metrics.paid | currency:'RUB') : '&mdash;'}}
