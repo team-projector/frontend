@@ -4,6 +4,43 @@
   display: block;
 }
 
+:host-context([theme='dark']) {
+  table {
+    background-color: #1A1A1A;
+    thead {
+      tr {
+        &[rewind] {
+          th {
+            [date] {
+              color: $gray-100;
+              [arrow] {
+                color: $gray-200;
+              }
+            }
+          }
+        }
+        &[timeline] {
+          background-color: $gray-800;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          &[day] {
+            &:nth-child(7),
+            &:nth-child(17),
+            &:nth-child(8),
+            &:nth-child(18) {
+              background-color: $gray-800;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
 [presentations] {
   div {
     padding: 0 $gutter-normal;
@@ -30,7 +67,7 @@ table {
           padding: 0 $gutter-tiny $gutter-normal $gutter-tiny;
           [date] {
             display: flex;
-            color: $gray-dark;
+            color: $primary-text-dark-color;
             font-weight: $font-weight-bold;
             span {
               margin: auto;
@@ -52,7 +89,7 @@ table {
               transition: box-shadow .3s;
               &:focus {
                 outline: none;
-                box-shadow: 0 0 6px rgba(8, 35, 202, 0.4);;
+                box-shadow: 0 0 6px rgba(8, 35, 202, 0.4);
                 border: 1px solid $primary-color;
               }
               &:hover {
@@ -63,7 +100,7 @@ table {
         }
       }
       &[timeline] {
-        background-color: $gray-500;
+        background-color: $secondary-background;
         th {
           padding: $gutter-normal $gutter-tiny;
           &[day] {
@@ -97,10 +134,10 @@ table {
           text-align: center;
           [icon] {
             font-size: 80px;
-            color: $gray-400;
+            color: $muted-color;
           }
           [message] {
-            color: $gray-800;
+            color: $primary-text-light-color;
           }
         }
       }
@@ -129,7 +166,7 @@ table {
           &:nth-child(17),
           &:nth-child(8),
           &:nth-child(18) {
-            background-color: $gray-500;
+            background-color: $secondary-background;
           }
           &:hover, &[active='true'] {
             background-color: $primary-light-color;

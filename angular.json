@@ -41,7 +41,9 @@
                 "src/style"
               ]
             },
-            "scripts": [],
+            "scripts": [
+              "src/assets/themes/themes.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

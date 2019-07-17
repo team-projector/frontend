@@ -4,11 +4,27 @@
   display: block;
 }
 
+:host-context([theme='dark']) {
+  h6 {
+    color: $gray-100;
+  }
+  table {
+    [title] {
+      color: $gray-600
+    }
+    tbody {
+      [value] {
+        color: $gray-100;
+      }
+    }
+  }
+}
+
 
 h6 {
   text-align: center;
   font-weight: $font-weight-bold;
-  color: $gray-dark;
+  color: $primary-text-dark-color;
 }
 
 table {
@@ -16,12 +32,11 @@ table {
   border-collapse: collapse;
 
   thead {
-    border-top: 1px solid $gray-400;
-    border-bottom: 1px solid $gray-400;
+    border-top: 1px solid $muted-color;
+    border-bottom: 1px solid $muted-color;
 
     [title] {
       padding-top: $gutter-normal;
-      color: $gray-800;
       font-size: 0.875rem;
       font-weight: $font-weight-normal;
     }
@@ -31,6 +46,10 @@ table {
       color: $primary-color;
       font-weight: $font-weight-bold;
     }
+  }
+
+  [title] {
+    color: $primary-text-light-color;
   }
 
   tbody {
@@ -44,12 +63,8 @@ table {
       padding: $gutter-small 0;
     }
 
-    [title] {
-      color: $gray-800;
-    }
-
     [value] {
-      color: $gray-dark;
+      color: $primary-text-dark-color;
       font-weight: $font-weight-bold;
     }
   }
