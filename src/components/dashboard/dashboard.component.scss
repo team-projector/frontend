@@ -4,15 +4,6 @@
   display: block;
 }
 
-[gitlab] [link] ::ng-deep a[child-of=#{$jnt-link-host}] {
-  border: none;
-  font-weight: $font-weight-bold;
-}
-
-[param] {
-  font-weight: $font-weight-bold;
-}
-
 [project] {
   font-size: 0.75rem;
   color: $gray-800;

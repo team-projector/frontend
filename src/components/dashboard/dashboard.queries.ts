@@ -10,6 +10,7 @@ export const query = `query {
         node {
           id
           title
+          glUrl
           project {
             fullTitle
           }
