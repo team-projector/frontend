@@ -10,7 +10,6 @@ import {Project} from './project';
 import {Label} from './label';
 import {DATE_FORMAT} from '../../consts';
 
-
 @model()
 export class IssueMetrics {
 
@@ -127,7 +126,7 @@ export class IssuesFilter implements SearchFilter {
 
   page?: number;
 
-  @field({name: 'first'})
+  @field()
   pageSize?: number;
 
   constructor(defs: IssuesFilter = null) {

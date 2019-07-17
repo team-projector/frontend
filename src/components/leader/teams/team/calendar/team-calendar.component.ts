@@ -17,52 +17,7 @@ import {deserialize, serialize} from 'serialize-ts/dist';
 import {PagingTeamMembers} from '../../../../../models/graphql/team';
 import {TeamMetricsFilter, TeamProgressMetrics} from '../../../../../models/graphql/team-progress-metrics';
 import {UserProgressMetrics} from '../../../../../models/graphql/user-progress-metrics';
-
-const query = {
-  members: `query ($team: ID!) {
-      team(id: $team) {
-        members(roles: "developer", orderBy: "user__name") {
-          count
-          edges {
-            node {
-              user {
-                id
-                glAvatar
-                name
-                problems
-                metrics {
-                  issuesClosedSpent
-                  issuesOpenedSpent
-                }
-              }
-            }
-          }
-        }
-      }
-    }`,
-  metrics: `query ($team: ID!, $start: Date!, $end: Date!, $group: String!) {
-  teamProgressMetrics(team: $team, start: $start, end: $end, group: $group) {
-    user {
-      id
-      name
-    }
-    metrics {
-      start
-      end
-      timeEstimate
-      timeSpent
-      timeRemains
-      plannedWorkHours
-      loading
-      payroll
-      paid
-      issuesCount
-    }
-
-  }
-}`
-};
-
+import {queries} from './team-calendar.queries';
 
 const WEEKS_DISPLAYED = 2;
 const DAYS_IN_WEEK = 7;
@@ -188,7 +143,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
         end: period.end,
         group: group
       });
-      return this.graphQL.get(query.metrics, serialize(filter))
+      return this.graphQL.get(queries.metrics, serialize(filter))
         .pipe(map(({data: {teamProgressMetrics}}) =>
             teamProgressMetrics.map(el => deserialize(el, TeamProgressMetrics))),
           map(metrics => {
@@ -208,7 +163,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   private loadMembers() {
     this.loading = true;
-    this.graphQL.get(query.members, {team: this.team.id})
+    this.graphQL.get(queries.members, {team: this.team.id})
       .pipe(map(({data: {team: {members}}}) =>
         deserialize(members, PagingTeamMembers)), finalize(() => this.loading = false))
       .subscribe(teams => this.members = teams.results);
@@ -230,7 +185,9 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   writeValue(value: UserFilter) {
     if (!isUndefined(value)) {
-      this.form.patchValue({user: value.user, dueDate: value.dueDate}, {emitEvent: false});
+      this.form.patchValue({
+        user: value.user, dueDate: value.dueDate
+      }, {emitEvent: false});
     }
   }
 

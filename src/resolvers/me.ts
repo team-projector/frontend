@@ -12,7 +12,15 @@ const query = `query {
         name
         glAvatar
         roles
-        permissions
+        metrics {
+          bonus
+          penalty
+          issuesOpenedCount
+          payrollClosed
+          payrollOpened
+          issuesClosedSpent
+          issuesOpenedSpent
+        }
       }
     }`;
 
@@ -25,7 +33,6 @@ export class MeUserResolver implements Resolve<Observable<Me>> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<Me> {
     return this.graphQL.get(query)
-      .pipe(map(({data: {me}}) =>
-        deserialize(me, Me)));
+      .pipe(map(({data: {me}}) => deserialize(me, Me)));
   }
 }

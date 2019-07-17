@@ -3,7 +3,6 @@ import {Me} from '../models/graphql/user';
 import {BehaviorSubject} from 'rxjs';
 import {Config} from 'junte-angular';
 import {AppConfig} from '../app-config';
-import {UserPermission} from '../models/user';
 import {jsonEquals} from '../utils/object';
 import {graph_ql_service, IGraphQLService} from '../services/graphql/interface';
 import {map} from 'rxjs/operators';
@@ -44,9 +43,5 @@ export class MeManager {
         this.user = null;
       }
     });
-  }
-
-  can(permission: UserPermission) {
-    return this.user && this.user.permissions.includes(permission);
   }
 }

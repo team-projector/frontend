@@ -3,12 +3,12 @@ import {FormBuilder, Validators} from '@angular/forms';
 import {AppConfig} from '../../../app-config';
 import {ActivatedRoute, Router} from '@angular/router';
 import {IUsersService, users_service} from '../../../services/users/interface';
-import {UserCredentials} from '../../../models/user-credentials';
-import {delay, filter, finalize} from 'rxjs/operators';
+import {filter, finalize, map} from 'rxjs/operators';
 import {Authorization, Config, Error, validate} from 'junte-angular';
-import {PLATFORM_DELAY} from '../../../consts';
 import 'reflect-metadata';
 import {UI} from 'junte-ui';
+import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
+import {queries} from './login.queries';
 
 @Component({
   selector: 'app-login',
@@ -19,14 +19,15 @@ export class LoginComponent implements OnInit {
 
   ui = UI;
 
-  progress: any = {};
+  progress = {gitlab: false, login: false};
   error: Error;
   loginForm = this.builder.group({
     login: [null, [Validators.required]],
     password: [null, [Validators.required]]
   });
 
-  constructor(@Inject(users_service) private usersService: IUsersService,
+  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService,
+              @Inject(users_service) private usersService: IUsersService,
               @Inject(Config) private config: AppConfig,
               private builder: FormBuilder,
               private route: ActivatedRoute,
@@ -39,23 +40,29 @@ export class LoginComponent implements OnInit {
       .subscribe(({code, state}) => {
         this.progress.gitlab = true;
         this.usersService.gitlab(code, state)
-          .pipe(delay(PLATFORM_DELAY), finalize(() => this.progress.gitlab = false))
-          .subscribe(this.logged.bind(this), error => this.error = error);
+          .pipe(finalize(() => this.progress.gitlab = false))
+          .subscribe(authorization => this.logged(authorization),
+            error => this.error = error);
       });
   }
 
   login() {
     if (validate(this.loginForm)) {
       this.progress.login = true;
-      this.usersService.login(new UserCredentials(this.loginForm.value))
-        .pipe(delay(PLATFORM_DELAY), finalize(() => this.progress.login = false))
-        .subscribe(this.logged.bind(this), error => this.error = error);
+      this.graphQL.get(queries.login, this.loginForm.value)
+        .pipe(finalize(() => this.progress.login = false),
+          map(({data: {login: {token: {key}}}}) => {
+            return {token: key, type: 'Bearer'} as Authorization;
+          }))
+        .subscribe(authorization => this.logged(authorization),
+          error => this.error = error);
     }
   }
 
   private logged(authorization: Authorization) {
     this.config.authorization = authorization;
-    this.router.navigate(['/']);
+    this.router.navigate(['/'])
+      .then(() => null);
   }
 
 }

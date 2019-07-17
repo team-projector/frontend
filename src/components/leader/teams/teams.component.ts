@@ -28,7 +28,6 @@ export class TeamsComponent implements OnInit {
             edges {
               node {
                 user {
-                  name
                   glAvatar
                 }
               }

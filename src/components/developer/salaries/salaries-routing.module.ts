@@ -3,13 +3,13 @@ import {RouterModule, Routes} from '@angular/router';
 import {SalariesListComponent} from './salaries-list.component';
 import {SalaryDetailComponent} from './salary-detail/salary-detail.component';
 import {SalaryResolver} from 'src/resolvers/salary';
-import {UserOrMeResolver} from 'src/resolvers/user';
+import {MeUserResolver} from '../../../resolvers/me';
 
 const routes: Routes = [
   {
     path: '',
     component: SalariesListComponent,
-    resolve: {user: UserOrMeResolver},
+    resolve: {user: MeUserResolver},
   },
   {
     path: ':salary',

@@ -89,8 +89,7 @@
       <td gutter></td>
       <td>
         <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small">
-          <jnt-avatar (click)="router.navigate(['leader', 'users', member.user.id])"
-                      [image]="member.user.avatar"
+          <jnt-avatar [image]="member.user.avatar"
                       [size]="ui.sizes.tiny"></jnt-avatar>
           <div>
             <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>

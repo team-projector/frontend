@@ -3,8 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {DeveloperDashboardComponent} from './developer-dashboard.component';
 import {IssuesListComponent} from './issues/issues-list.component';
 import {DueDateResolver, OpenedResolver, ProblemsResolver} from '../../../resolvers/issue';
-import {UserOrMeResolver} from '../../../resolvers/user';
 import {TimeExpensesListComponent} from './time-expenses/time-expenses-list.component';
+import {MeUserResolver} from '../../../resolvers/me';
 
 export function getUserName(data: any) {
   return data.user.name;
@@ -15,7 +15,7 @@ const routes: Routes = [
     path: '',
     component: DeveloperDashboardComponent,
     data: {breadcrumb: getUserName},
-    resolve: {user: UserOrMeResolver, dueDate: DueDateResolver},
+    resolve: {user: MeUserResolver, dueDate: DueDateResolver},
     children: [
       {
         path: '',

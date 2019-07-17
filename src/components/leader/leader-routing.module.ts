@@ -15,10 +15,6 @@ const routes: Routes = [
       {
         path: 'teams',
         loadChildren: './teams/teams.module#TeamsModule'
-      },
-      {
-        path: 'users/:user',
-        loadChildren: '../developer/dashboard/developer-dashboard.module#DeveloperDashboardModule'
       }
     ]
   }

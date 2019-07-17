@@ -10,7 +10,7 @@ import {DatePipesModule} from 'src/pipes/date-pipes.module';
 import {SalaryResolver} from 'src/resolvers/salary';
 import {SalaryDetailWidgetModule} from 'src/components/salaries/salary-detail-widget/salary-detail-widget.module';
 import {IssuesModule} from '../../issues/issues.module';
-import {UserOrMeResolver} from '../../../resolvers/user';
+import {MeUserResolver} from '../../../resolvers/me';
 
 
 @NgModule({
@@ -36,7 +36,7 @@ import {UserOrMeResolver} from '../../../resolvers/user';
   ],
   providers: [
     SalaryResolver,
-    UserOrMeResolver
+    MeUserResolver
   ]
 })
 export class SalariesModule {

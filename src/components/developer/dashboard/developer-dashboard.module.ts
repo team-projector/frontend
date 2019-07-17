@@ -6,13 +6,13 @@ import {DeveloperDashboardComponent} from './developer-dashboard.component';
 import {JunteUiModule} from 'junte-ui';
 import {DatePipesModule} from 'src/pipes/date-pipes.module';
 import {DueDateResolver, OpenedResolver, ProblemsResolver} from 'src/resolvers/issue';
-import {UserOrMeResolver} from 'src/resolvers/user';
 import {UsersServiceProvider} from 'src/services/users/provider';
 import {IssuesModule} from 'src/components/issues/issues.module';
 import {SalariesServiceProvider} from 'src/services/salaries/provider';
 import {TimeExpensesListComponent} from 'src/components/developer/dashboard/time-expenses/time-expenses-list.component';
 import {IssuesListComponent} from 'src/components/developer/dashboard/issues/issues-list.component';
 import {NumberModule} from '../../../pipes/number.module';
+import {MeUserResolver} from '../../../resolvers/me';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,7 @@ import {NumberModule} from '../../../pipes/number.module';
     NumberModule
   ],
   providers: [
-    UserOrMeResolver,
+    MeUserResolver,
     DueDateResolver,
     UsersServiceProvider,
     OpenedResolver,
