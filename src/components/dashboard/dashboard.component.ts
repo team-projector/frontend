@@ -21,6 +21,9 @@ export class DashboardComponent implements OnInit {
   userRole = UserRole;
   status: Status;
 
+  loading: { [name: string]: boolean } = {};
+
+
   @ViewChild('status') statusEl: ElementRef;
 
   constructor(@Inject(Config) public config: AppConfig,
@@ -42,6 +45,11 @@ export class DashboardComponent implements OnInit {
   load() {
     this.gitlabService.getStatus()
       .subscribe(status => this.status = status);
+  }
+
+  setTheme(theme: string = null) {
+    this.loading[theme] = true;
+    window['themes'](theme, () => this.loading[theme] = false);
   }
 
 }

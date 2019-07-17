@@ -6,14 +6,14 @@
 
 h6 {
   text-align: center;
-  color: $gray-dark;
+  color: $primary-text-dark-color;
 }
 
 [payroll] {
   font-size: 1.625rem;
 
   &[opened] {
-    color: $gray-800;
+    color: $primary-text-light-color;
   }
   &[closed] {
     color: $primary-dark-color;
@@ -21,7 +21,7 @@ h6 {
 }
 
 [metrics] {
-  color: $gray-dark;
+  color: $primary-text-dark-color;
 
   [like], [dislike] {
     font-size: 15px;
@@ -43,5 +43,5 @@ h6 {
 [separator] {
   min-width: 1px;
   min-height: 100%;
-  background-color: $gray-400;
+  background-color: $muted-color;
 }
