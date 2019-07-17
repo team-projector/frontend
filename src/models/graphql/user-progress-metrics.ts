@@ -67,7 +67,7 @@ export class UserProgressMetrics {
 export class UserMetricsFilter {
 
   @field()
-  user: number;
+  user: string;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
   start: Date;

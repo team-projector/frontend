@@ -4,7 +4,7 @@ import {FormBuilder, FormControl} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {distinctUntilChanged, filter as filtering, map} from 'rxjs/operators';
 import {UserProgressMetrics} from 'src/models/graphql/user-progress-metrics';
-import {User} from 'src/models/user';
+import {User} from 'src/models/graphql/user';
 import {BehaviorSubject, combineLatest, zip} from 'rxjs';
 import {Period} from 'junte-ui/lib/components/calendar/models';
 import {UI} from 'junte-ui';

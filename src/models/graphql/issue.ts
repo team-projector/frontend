@@ -4,11 +4,21 @@ import {ArraySerializer, PrimitiveSerializer} from 'serialize-ts';
 import {EdgesToArray, EdgesToPaging} from '../../serializers/graphql';
 import {Paging} from '../paging';
 import {field, model} from '@junte/mocker-library';
-import {IssueProblem, IssueState} from '../issue';
 import {User} from './user';
 import {Project} from './project';
 import {Label} from './label';
 import {DATE_FORMAT} from '../../consts';
+
+export enum IssueState {
+  opened = 'opened',
+  closed = 'closed'
+}
+
+export enum IssueProblem {
+  overDueDate = 'over_due_date',
+  emptyDueDate = 'empty_due_date',
+  emptyEstimate = 'empty_estimate'
+}
 
 @model()
 export class IssueMetrics {

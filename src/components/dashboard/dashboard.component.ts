@@ -4,9 +4,12 @@ import {Config} from 'junte-angular';
 import {AppConfig} from '../../app-config';
 import {MeManager} from '../../managers/me.manager';
 import {Router} from '@angular/router';
-import {gitlab_service, IGitlabService} from '../../services/gitlab/interface';
-import {Status} from '../../models/status';
-import {UserRole} from '../../models/user';
+import {GitLabStatus} from '../../models/graphql/gitlab';
+import {UserRole} from '../../models/graphql/user';
+import {graph_ql_service, IGraphQLService} from '../../services/graphql/interface';
+import {deserialize} from 'serialize-ts';
+import {map, tap} from 'rxjs/operators';
+import {query} from './dashboard.queries';
 
 const STATUS_TIMEOUT = 60000;
 
@@ -19,7 +22,7 @@ export class DashboardComponent implements OnInit {
 
   ui = UI;
   userRole = UserRole;
-  status: Status;
+  status: GitLabStatus;
 
   loading: { [name: string]: boolean } = {};
 
@@ -27,7 +30,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('status') statusEl: ElementRef;
 
   constructor(@Inject(Config) public config: AppConfig,
-              @Inject(gitlab_service) public gitlabService: IGitlabService,
+              @Inject(graph_ql_service) private graphQL: IGraphQLService,
               private router: Router,
               public me: MeManager) {
   }
@@ -43,7 +46,8 @@ export class DashboardComponent implements OnInit {
   }
 
   load() {
-    this.gitlabService.getStatus()
+    this.graphQL.get(query).pipe(map(({data: {gitlabStatus}}) =>
+      deserialize(gitlabStatus, GitLabStatus), tap(s => console.log(s))))
       .subscribe(status => this.status = status);
   }
 

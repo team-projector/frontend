@@ -10,7 +10,7 @@ import {DurationFormat} from 'src/pipes/date';
 import {Period} from 'junte-ui/lib/components/calendar/models';
 import {Router} from '@angular/router';
 import {isUndefined} from 'util';
-import {User, UserProblem} from 'src/models/user';
+import {User, UserProblem} from 'src/models/graphql/user';
 import {equals} from '../../../../utils/equals';
 import {graph_ql_service, IGraphQLService} from '../../../../../services/graphql/interface';
 import {deserialize, serialize} from 'serialize-ts/dist';

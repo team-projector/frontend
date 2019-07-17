@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Team} from '../../../../../../models/graphql/team';
-import {User} from '../../../../../../models/user';
+import {User} from '../../../../../../models/graphql/user';
 
 @Component({
   selector: 'app-team-time-expenses-component',

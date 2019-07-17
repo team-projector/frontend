@@ -2,7 +2,7 @@ import {Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {TableComponent, UI} from 'junte-ui';
 import {IMilestonesService, milestones_service} from '../../../services/milestones/interface';
 import {MilestonesFilter} from '../../../models/milestone';
-import {IssuesFilter} from '../../../models/issue';
+import {IssuesFilter} from '../../../models/graphql/issue';
 
 @Component({
   selector: 'app-manager-dashboard',

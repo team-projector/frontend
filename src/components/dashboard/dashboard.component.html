@@ -58,7 +58,7 @@
                          *ngFor="let issue of status.lastIssues">
                 <div>
                   <jnt-link link>{{issue.title}}</jnt-link>
-                  <div project>{{issue.project?.presentation}}</div>
+                  <div project>{{issue.project?.fullTitle}}</div>
                 </div>
                 <span user>{{issue.user?.name}}</span>
               </jnt-stack>

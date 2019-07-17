@@ -3,7 +3,7 @@ import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE, PLATFORM_DELAY} from 'src/consts';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
 import {TimeExpensesFilter} from 'src/models/graphql/spent-time';
-import {IssueState} from 'src/models/issue';
+import {IssueState} from 'src/models/graphql/issue';
 import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
 import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
 import {deserialize, serialize} from 'serialize-ts/dist';
