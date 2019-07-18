@@ -14,6 +14,6 @@ export class MockArrayPipe implements PipeTransform {
 @Pipe({name: 'includes'})
 export class IncludesPipe implements PipeTransform {
   transform(el: string, arr: string[]): boolean {
-    return !!arr && arr.indexOf(el) !== -1;
+    return !!arr && arr.includes(el);
   }
 }
