@@ -8,7 +8,6 @@ import {DatePipesModule} from 'src/pipes/date-pipes.module';
 import {DueDateResolver, OpenedResolver, ProblemsResolver} from 'src/resolvers/issue';
 import {UsersServiceProvider} from 'src/services/users/provider';
 import {IssuesModule} from 'src/components/issues/issues.module';
-import {SalariesServiceProvider} from 'src/services/salaries/provider';
 import {TimeExpensesListComponent} from 'src/components/developer/dashboard/time-expenses/time-expenses-list.component';
 import {IssuesListComponent} from 'src/components/developer/dashboard/issues/issues-list.component';
 import {NumberModule} from '../../../pipes/number.module';
@@ -34,8 +33,7 @@ import {MeUserResolver} from '../../../resolvers/me';
     DueDateResolver,
     UsersServiceProvider,
     OpenedResolver,
-    ProblemsResolver,
-    SalariesServiceProvider
+    ProblemsResolver
   ]
 })
 export class DeveloperDashboardModule {

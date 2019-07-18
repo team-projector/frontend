@@ -1,8 +1,9 @@
 import {ArraySerializer, ModelSerializer} from 'serialize-ts';
-import {DateSerializer} from '../serializers/date';
-import {Paging} from './paging';
+import {DateSerializer} from '../../serializers/date';
+import {Paging} from '../paging';
 import {SearchFilter} from 'junte-ui';
 import {field, model} from '@junte/mocker-library';
+import {EdgesToPaging} from '../../serializers/graphql';
 
 @model()
 export class Salary {
@@ -11,21 +12,18 @@ export class Salary {
   id: number;
 
   @field({
-    name: 'created_at',
     serializer: new DateSerializer(),
     mock: '{{date \'2019\' \'2020\'}}'
   })
   createdAt: Date;
 
   @field({
-    name: 'period_to',
     serializer: new DateSerializer(),
     mock: '{{date \'2019\' \'2020\'}}'
   })
   periodTo: Date;
 
   @field({
-    name: 'period_from',
     serializer: new DateSerializer(),
     mock: '{{date \'2019\' \'2020\'}}'
   })
@@ -64,7 +62,8 @@ export class PagingSalaries implements Paging<Salary> {
   count: number;
 
   @field({
-    serializer: new ArraySerializer(new ModelSerializer(Salary)),
+    name: 'edges',
+    serializer: new ArraySerializer(new EdgesToPaging<Salary>(Salary)),
     mock: '[{{#repeat 5 15}} {{> salary }} {{/repeat}}]'
   })
   results: Salary[];
@@ -80,7 +79,7 @@ export class SalariesFilter implements SearchFilter {
   @field()
   page?: number;
 
-  @field({name: 'page_size'})
+  @field()
   pageSize?: number;
 
   constructor(defs: SalariesFilter = null) {

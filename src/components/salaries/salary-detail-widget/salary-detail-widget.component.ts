@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { Salary } from 'src/models/salaries';
+import { Salary } from 'src/models/graphql/salary';
 import { UI } from 'junte-ui';
 
 @Component({

@@ -1,10 +1,12 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
 import {BehaviorSubject} from 'rxjs';
-import {distinctUntilChanged, filter as filtering} from 'rxjs/operators';
+import {distinctUntilChanged, filter as filtering, map, tap} from 'rxjs/operators';
 import {TableComponent, UI} from 'junte-ui';
-import {SalariesFilter} from 'src/models/salaries';
-import {ISalariesService, salaries_service} from 'src/services/salaries/interface';
+import {PagingSalaries, SalariesFilter} from 'src/models/graphql/salary';
+import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
+import {deserialize, serialize} from 'serialize-ts/dist';
+import {queries} from './salaries.queries';
 
 @Component({
   selector: 'app-salaries',
@@ -28,15 +30,19 @@ export class SalariesComponent implements OnInit {
   @ViewChild('table')
   table: TableComponent;
 
-  constructor(@Inject(salaries_service) private salariesService: ISalariesService) {
+  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService) {
   }
 
   ngOnInit() {
     this.user$.pipe(filtering(u => !!u), distinctUntilChanged())
       .subscribe(user => {
         this.filter.user = user;
-        this.table.fetcher = (filter: SalariesFilter) =>
-          this.salariesService.list(Object.assign(this.filter, filter));
+        this.table.fetcher = (filter: SalariesFilter) => {
+          Object.assign(this.filter, filter);
+          return this.graphQL.get(queries.salaries, serialize(this.filter))
+            .pipe(map(({data: {allSalaries}}: { data: { allSalaries } }) =>
+              deserialize(allSalaries, PagingSalaries)));
+        };
         this.table.load();
       });
   }
