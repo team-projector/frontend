@@ -134,10 +134,11 @@ export class IssuesFilter implements SearchFilter {
   sort?: string;
   orderBy?: Order = Order.asc;
 
-  page?: number;
+  @field()
+  first?: number;
 
   @field()
-  pageSize?: number;
+  offset?: number;
 
   constructor(defs: IssuesFilter = null) {
     if (!!defs) {

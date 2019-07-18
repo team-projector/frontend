@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {User} from '../../../../models/graphql/user';
+import {User} from '../../../../models/user';
 import {ViewType} from '../../../issues/issues/issues.component';
 
 @Component({

@@ -135,10 +135,10 @@ export class MilestonesFilter implements SearchFilter {
   active?: boolean;
 
   @field()
-  page?: number;
+  first?: number;
 
-  @field({name: 'page_size'})
-  pageSize?: number;
+  @field()
+  offset?: number;
 
   constructor(defs: MilestonesFilter = null) {
     if (!!defs) {

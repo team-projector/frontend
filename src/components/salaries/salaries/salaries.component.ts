@@ -24,7 +24,7 @@ export class SalariesComponent implements OnInit {
     this.user$.next(user);
   }
 
-  filter: SalariesFilter = new SalariesFilter({page: DEFAULT_PAGE, pageSize: DEFAULT_PAGE_SIZE});
+  filter: SalariesFilter = new SalariesFilter({offset: DEFAULT_PAGE, first: DEFAULT_PAGE_SIZE});
 
   // TODO: @ViewChild(TableComponent) == undefined in AOT
   @ViewChild('table')

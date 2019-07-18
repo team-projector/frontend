@@ -3,17 +3,16 @@ import {format} from 'date-fns';
 import {FormBuilder, FormControl} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {distinctUntilChanged, filter as filtering, map} from 'rxjs/operators';
-import {UserProgressMetrics} from 'src/models/graphql/user-progress-metrics';
-import {User} from 'src/models/graphql/user';
+import {UserProgressMetrics} from 'src/models/metrics';
+import {User} from 'src/models/user';
 import {BehaviorSubject, combineLatest, zip} from 'rxjs';
 import {Period} from 'junte-ui/lib/components/calendar/models';
 import {UI} from 'junte-ui';
 import {DurationFormat} from '../../../pipes/date';
-import {IssuesFilter, IssuesSummary} from 'src/models/graphql/issue';
+import {IssuesFilter, IssuesSummary} from 'src/models/issue';
 import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
 import {deserialize, serialize} from 'serialize-ts/dist';
-import {UserMetricsFilter} from '../../../models/graphql/user-progress-metrics';
-import {MetricsGroup} from '../../../models/graphql/user-progress-metrics';
+import {MetricsGroup, UserMetricsFilter} from '../../../models/metrics';
 
 const query = {
   summary: `query ($user: ID, $dueDate: Date, $state: String) {
