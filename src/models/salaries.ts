@@ -78,10 +78,10 @@ export class SalariesFilter implements SearchFilter {
   user?: number;
 
   @field()
-  page?: number;
+  first?: number;
 
-  @field({name: 'page_size'})
-  pageSize?: number;
+  @field()
+  offset?: number;
 
   constructor(defs: SalariesFilter = null) {
     if (!!defs) {

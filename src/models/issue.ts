@@ -1,13 +1,12 @@
-import {DateSerializer} from '../../serializers/date';
-import {Order, SearchFilter} from 'junte-ui';
-import {ArraySerializer, PrimitiveSerializer} from 'serialize-ts';
-import {EdgesToArray, EdgesToPaging} from '../../serializers/graphql';
-import {Paging} from '../paging';
-import {field, model} from '@junte/mocker-library';
-import {User} from './user';
-import {Project} from './project';
-import {Label} from './label';
-import {DATE_FORMAT} from '../../consts';
+import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
+import { DateSerializer } from '../serializers/date';
+import { DATE_FORMAT } from '../consts';
+import { Order, SearchFilter } from 'junte-ui';
+import { Project } from './graphql/project';
+import { Milestone } from './milestone';
+import { field, model } from '@junte/mocker-library';
+import { User } from './graphql/user';
+import { Label } from './graphql/label';
 
 export enum IssueState {
   opened = 'opened',
@@ -20,6 +19,11 @@ export enum IssueProblem {
   emptyEstimate = 'empty_estimate'
 }
 
+export enum ErrorType {
+  issueWithoutDueDate = 'issue_without_due_date',
+  issueWithoutEstimate = 'issue_without_estimate'
+}
+
 @model()
 export class IssueMetrics {
 
@@ -30,24 +34,24 @@ export class IssueMetrics {
   efficiency: number;
 
   @field({mock: '{{money}}'})
-  payroll: number;
+  paid: number;
 
   @field({mock: '{{money}}'})
-  paid: number;
+  payroll: number;
 
 }
 
 @model()
 export class Issue {
 
-  @field({mock: '{{id}}'})
+  @field({mock: '{{int 1 1000}}'})
   id: number;
 
   @field({mock: '{{issue}}'})
   title: string;
 
   @field({
-    serializer: new EdgesToArray(Label),
+    serializer: new ArraySerializer(new ModelSerializer(Label)),
     mock: '[{{#repeat 2 5}} {{> label}} {{/repeat}}]'
   })
   labels: Label[];
@@ -56,21 +60,34 @@ export class Issue {
   project: Project;
 
   @field({
-    serializer: new DateSerializer(),
+    name: 'due_date',
+    serializer: new DateSerializer(DATE_FORMAT),
     mock: '{{date \'2019\' \'2020\'}}'
   })
   dueDate: Date;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({
+    name: 'time_estimate',
+    mock: '{{int 10 100}}'
+  })
   timeEstimate: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({
+    name: 'time_spent',
+    mock: '{{int 10 100}}'
+  })
   timeSpent: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({
+    name: 'total_time_spent',
+    mock: '{{int 10 100}}'
+  })
   totalTimeSpent: number;
 
-  @field({mock: '{{url}}'})
+  @field({
+    name: 'gl_url',
+    mock: '{{url}}'
+  })
   glUrl: string;
 
   @field({mock: IssueState.opened})
@@ -79,8 +96,11 @@ export class Issue {
   @field({mock: '{{> issue_metrics}}'})
   metrics: IssueMetrics;
 
+  @field({mock: '{{> object_link presentation=(milestone)}}'})
+  milestone: Milestone;
+
   @field({
-    serializer: new EdgesToArray(User),
+    serializer: new ArraySerializer(new ModelSerializer(User)),
     mock: '[{{#repeat 1 3}} {{> user}} {{/repeat}}]'
   })
   participants: User[];
@@ -96,30 +116,21 @@ export class Issue {
 }
 
 @model()
-export class PagingIssues implements Paging<Issue> {
-
-  @field({mock: '{{int 50 1000}}'})
-  count: number;
-
-  @field({
-    name: 'edges',
-    serializer: new ArraySerializer(new EdgesToPaging<Issue>(Issue)),
-    mock: '[{{#repeat 10 20}} {{> issue}} {{/repeat}}]'
-  })
-  results: Issue[];
-
-}
-
-@model()
 export class IssuesFilter implements SearchFilter {
-
-  @field()
-  team?: number;
 
   @field()
   user?: number;
 
-  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  @field()
+  team?: number;
+
+  @field({name: 'q'})
+  query?: string;
+
+  @field({
+    name: 'due_date',
+    serializer: new DateSerializer(DATE_FORMAT)
+  })
   dueDate?: Date;
 
   @field()
@@ -129,9 +140,9 @@ export class IssuesFilter implements SearchFilter {
   problems?: boolean | null;
 
   @field()
-  title?: string;
-
   sort?: string;
+
+  @field()
   orderBy?: Order = Order.asc;
 
   @field()
@@ -151,14 +162,23 @@ export class IssuesFilter implements SearchFilter {
 @model()
 export class IssuesSummary {
 
-  @field({mock: '{{int 10 100}}'})
+  @field({
+    name: 'issues_count',
+    mock: '{{int 10 100}}'
+  })
   issuesCount: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({
+    name: 'time_spent',
+    mock: '{{int 10 100}}'
+  })
   timeSpent: number;
 
 
-  @field({mock: '{{int 10 100}}'})
+  @field({
+    name: 'problems_count',
+    mock: '{{int 10 100}}'
+  })
   problemsCount: number;
 
 }
