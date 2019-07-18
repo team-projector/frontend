@@ -2,15 +2,14 @@ import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE, PLATFORM_DELAY} from 'src/consts';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
-import {TimeExpensesFilter} from 'src/models/graphql/spent-time';
-import {IssueState} from 'src/models/graphql/issue';
+import {TimeExpensesFilter} from 'src/models/spent-time';
+import {IssueState} from 'src/models/issue';
 import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
 import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
 import {deserialize, serialize} from 'serialize-ts/dist';
-import {PagingTimeExpenses} from '../../../models/graphql/spent-time';
+import {PagingTimeExpenses} from '../../../models/spent-time';
 
-const query = {
-  spent: `query ($team: ID, $user: ID, $salary: ID, $date: Date, $offset: Int, $first: Int) {
+const query = `query ($team: ID, $user: ID, $salary: ID, $date: Date, $offset: Int, $first: Int) {
   allSpentTimes(team: $team, user: $user, salary: $salary, date: $date, offset: $offset, first: $first) {
     count
     edges {
@@ -40,8 +39,7 @@ const query = {
       }
     }
   }
-}`
-};
+}`;
 
 @Component({
   selector: 'app-time-expenses',
@@ -97,7 +95,7 @@ export class TimeExpensesComponent implements OnInit {
         this.filter.salary = salary;
         this.table.fetcher = (filter: DefaultSearchFilter) => {
           Object.assign(this.filter, filter);
-          return this.graphQL.get(query.spent, serialize(this.filter))
+          return this.graphQL.get(query, serialize(this.filter))
             .pipe(map(({data: {allSpentTimes}}) =>
               deserialize(allSpentTimes, PagingTimeExpenses)));
         };

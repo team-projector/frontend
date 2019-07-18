@@ -1,22 +1,21 @@
 import {Component, forwardRef, Inject, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Team, TeamMember} from 'src/models/graphql/team';
+import {Team, TeamMember} from 'src/models/team';
 import {UI} from 'junte-ui';
 import {addDays, addWeeks, endOfDay, format, isEqual, isFuture, isPast, startOfDay, startOfWeek, subWeeks} from 'date-fns';
 import {distinctUntilChanged, filter as filtering, finalize, map} from 'rxjs/operators';
 import {BehaviorSubject, combineLatest, zip} from 'rxjs';
-import {MetricsGroup} from 'src/models/graphql/user-progress-metrics';
+import {MetricsGroup} from 'src/models/metrics';
 import {DurationFormat} from 'src/pipes/date';
 import {Period} from 'junte-ui/lib/components/calendar/models';
 import {Router} from '@angular/router';
 import {isUndefined} from 'util';
-import {User, UserProblem} from 'src/models/graphql/user';
+import {User, UserProblem} from 'src/models/user';
 import {equals} from '../../../../utils/equals';
 import {graph_ql_service, IGraphQLService} from '../../../../../services/graphql/interface';
 import {deserialize, serialize} from 'serialize-ts/dist';
-import {PagingTeamMembers} from '../../../../../models/graphql/team';
-import {TeamMetricsFilter, TeamProgressMetrics} from '../../../../../models/graphql/team-progress-metrics';
-import {UserProgressMetrics} from '../../../../../models/graphql/user-progress-metrics';
+import {PagingTeamMembers} from '../../../../../models/team';
+import {TeamMetricsFilter, TeamProgressMetrics, UserProgressMetrics} from '../../../../../models/metrics';
 import {queries} from './team-calendar.queries';
 
 const WEEKS_DISPLAYED = 2;

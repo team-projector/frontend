@@ -1,5 +1,5 @@
 import {deserialize, Serializer} from 'serialize-ts';
-import {Project, ProjectGroup} from '../models/graphql/project';
+import {Project, ProjectGroup} from '../models/project';
 
 export class ProjectSerializer implements Serializer<Project | ProjectGroup> {
   serialize(date: Project | ProjectGroup): string {

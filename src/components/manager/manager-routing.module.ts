@@ -11,11 +11,11 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard'
+        redirectTo: 'milestones'
       },
       {
-        path: 'dashboard',
-        loadChildren: './dashboard/manager-dashboard.module#ManagerDashboardModule'
+        path: 'milestones',
+        loadChildren: './milestones/milestones.module#MilestonesModule'
       }
     ]
   }

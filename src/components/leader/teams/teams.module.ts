@@ -14,7 +14,7 @@ import {UserResolver} from 'src/resolvers/user';
 import {TeamCalendarComponent} from 'src/components/leader/teams/team/calendar/team-calendar.component';
 import {RouterModule} from '@angular/router';
 import {IssuesModule} from '../../issues/issues.module';
-import {OpenedResolver, ProblemsResolver} from '../../../resolvers/issue';
+import {DueDateResolver, OpenedResolver, ProblemsResolver} from '../../../resolvers/issue';
 import {ArrayPipesModule} from '../../../pipes/array-pipes.module';
 
 @NgModule({
@@ -40,6 +40,7 @@ import {ArrayPipesModule} from '../../../pipes/array-pipes.module';
   providers: [
     TeamResolver,
     UserResolver,
+    DueDateResolver,
     OpenedResolver,
     ProblemsResolver
   ]

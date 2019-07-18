@@ -3,11 +3,11 @@ import {UI} from 'junte-ui';
 import {ActivatedRoute, Router} from '@angular/router';
 import {format} from 'date-fns';
 import {distinctUntilChanged, map} from 'rxjs/operators';
-import {Team} from 'src/models/graphql/team';
+import {Team} from 'src/models/team';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {graph_ql_service, IGraphQLService} from '../../../../services/graphql/interface';
 import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssuesFilter, IssuesSummary} from '../../../../models/graphql/issue';
+import {IssuesFilter, IssuesSummary} from '../../../../models/issue';
 
 const query = {
   summary: `query ($team: ID, $user: ID, $dueDate: Date, $state: String) {

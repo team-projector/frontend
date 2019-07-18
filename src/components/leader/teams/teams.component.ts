@@ -3,7 +3,7 @@ import {finalize, map} from 'rxjs/operators';
 import {UI} from 'junte-ui';
 import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
 import {deserialize} from 'serialize-ts/dist';
-import {PagingTeams, Team} from '../../../models/graphql/team';
+import {PagingTeams, Team} from '../../../models/team';
 
 @Component({
   selector: 'app-leader-teams',

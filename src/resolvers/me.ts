@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
 import {graph_ql_service, IGraphQLService} from '../services/graphql/interface';
-import {Me} from '../models/graphql/user';
+import {Me} from '../models/user';
 import {map} from 'rxjs/operators';
 import {deserialize} from 'serialize-ts';
 

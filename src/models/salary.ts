@@ -1,9 +1,9 @@
 import {ArraySerializer, ModelSerializer} from 'serialize-ts';
-import {DateSerializer} from '../../serializers/date';
-import {Paging} from '../paging';
+import {DateSerializer} from '../serializers/date';
+import {Paging} from './paging';
 import {SearchFilter} from 'junte-ui';
 import {field, model} from '@junte/mocker-library';
-import {EdgesToPaging} from '../../serializers/graphql';
+import {EdgesToPaging} from '../serializers/graphql';
 
 @model()
 export class Salary {

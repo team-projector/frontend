@@ -1,13 +1,13 @@
-import {DateSerializer} from '../../serializers/date';
+import {DateSerializer} from '../serializers/date';
 import {Order, SearchFilter} from 'junte-ui';
 import {ArraySerializer, PrimitiveSerializer} from 'serialize-ts';
-import {EdgesToArray, EdgesToPaging} from '../../serializers/graphql';
-import {Paging} from '../paging';
+import {EdgesToArray, EdgesToPaging} from '../serializers/graphql';
+import {Paging} from './paging';
 import {field, model} from '@junte/mocker-library';
 import {User} from './user';
 import {Project} from './project';
 import {Label} from './label';
-import {DATE_FORMAT} from '../../consts';
+import {DATE_FORMAT} from '../consts';
 
 export enum IssueState {
   opened = 'opened',

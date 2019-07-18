@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {Salary} from 'src/models/graphql/salary';
+import {Salary} from 'src/models/salary';
 import {graph_ql_service, IGraphQLService} from '../services/graphql/interface';
 import {deserialize} from 'serialize-ts/dist';
 import {map} from 'rxjs/operators';

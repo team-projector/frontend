@@ -1,27 +1,23 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ManagerDashboardRoutingModule} from './manager-dashboard-routing.module';
+import {MilestonesRoutingModule} from './milestones-routing.module';
 import {ReactiveFormsModule} from '@angular/forms';
-import {ManagerDashboardComponent} from './manager-dashboard.component';
+import {MilestonesComponent} from './milestones.component';
 import {JunteUiModule} from 'junte-ui';
-import {MilestonesServiceProvider} from '../../../services/milestones/provider';
 import {DatePipesModule} from '../../../pipes/date-pipes.module';
 
 @NgModule({
   declarations: [
-    ManagerDashboardComponent
+    MilestonesComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     JunteUiModule,
-    ManagerDashboardRoutingModule,
+    MilestonesRoutingModule,
     DatePipesModule
-  ],
-  providers: [
-    MilestonesServiceProvider
   ]
 })
-export class ManagerDashboardModule {
+export class MilestonesModule {
 
 }

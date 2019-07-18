@@ -1,75 +1,46 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
-import { Paging } from './paging';
-import { SearchFilter } from 'junte-ui';
-import { DateSerializer } from '../serializers/date';
-import { Project, ProjectGroup } from './graphql/project';
-import { ProjectSerializer } from '../serializers/project';
-import { field, model } from '@junte/mocker-library';
+import {ArraySerializer, ModelSerializer} from 'serialize-ts';
+import {Paging} from './paging';
+import {SearchFilter} from 'junte-ui';
+import {DateSerializer} from '../serializers/date';
+import {Project, ProjectGroup} from './project';
+import {ProjectSerializer} from '../serializers/project';
+import {field, model} from '@junte/mocker-library';
+import {EdgesToPaging} from '../serializers/graphql';
 
 @model()
 export class MilestoneMetrics {
 
-  @field({
-    name: 'customer_payroll',
-    mock: '{{money}}'
-  })
+  @field({mock: '{{money}}'})
   customerPayroll: number;
 
-  @field({
-    name: 'payroll',
-    mock: '{{money}}'
-  })
+  @field({mock: '{{money}}'})
   payroll: number;
 
-  @field({
-    name: 'budget_remains',
-    mock: '{{money}}'
-  })
+  @field({mock: '{{money}}'})
   budgetRemains: number;
 
-  @field({
-    name: 'profit',
-    mock: '{{money}}'
-  })
+  @field({mock: '{{money}}'})
   profit: number;
 
-  @field({
-    name: 'time_estimate',
-    mock: '{{int 10 100}}'
-  })
+  @field({mock: '{{int 10 100}}'})
   timeEstimate: number;
 
-  @field({
-    name: 'time_spent',
-    mock: '{{int 10 100}}'
-  })
+  @field({mock: '{{int 10 100}}'})
   timeSpent: number;
 
-  @field({
-    name: 'time_remains',
-    mock: '{{int 10 100}}'
-  })
+  @field({mock: '{{int 10 100}}'})
   timeRemains: number;
 
   @field({mock: '{{efficiency}}'})
   efficiency: number;
 
-  @field({
-    name: 'issues_count',
-    mock: '{{int 10 100}}'
-  })
+  @field({mock: '{{int 10 100}}'})
   issuesCount: number;
 
-  @field({
-    name: 'issues_opened_count',
-    mock: '{{int 10 100}}'
-  })
+  @field({mock: '{{int 10 100}}'})
   issuesOpenedCount: number;
 
-  @field({
-    name: 'issues_closed_count',
-    mock: '{{int 10 100}}'
-  })
+  @field({mock: '{{int 10 100}}'})
   issuesClosedCount: number;
 
 }
@@ -92,14 +63,10 @@ export class Milestone {
   @field({mock: '{{money}}'})
   budget: number;
 
-  @field({
-    name: 'start_date',
-    mock: '{{date \'2019\' \'2020\'}}'
-  })
+  @field({mock: '{{date \'2019\' \'2020\'}}'})
   startDate: Date;
 
   @field({
-    name: 'due_date',
     serializer: new DateSerializer(),
     mock: '{{date \'2019\' \'2020\'}}'
   })
@@ -108,10 +75,7 @@ export class Milestone {
   @field({mock: '{{> milestone_metrics}}'})
   metrics: MilestoneMetrics;
 
-  @field({
-    name: 'gl_url',
-    mock: '{{url}}'
-  })
+  @field({mock: '{{url}}'})
   glUrl: string;
 }
 
@@ -122,7 +86,8 @@ export class PagingMilestones implements Paging<Milestone> {
   count: number;
 
   @field({
-    serializer: new ArraySerializer(new ModelSerializer(Milestone)),
+    name: 'edges',
+    serializer: new ArraySerializer(new EdgesToPaging<Milestone>(Milestone)),
     mock: '[{{#repeat 3 10}} {{> milestone}} {{/repeat}}]'
   })
   results: Milestone[];

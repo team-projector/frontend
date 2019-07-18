@@ -6,16 +6,15 @@ import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
 import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssueProblem, IssueState} from '../../../models/graphql/issue';
-import {IssuesFilter, PagingIssues} from '../../../models/graphql/issue';
+import {IssueProblem, IssueState} from '../../../models/issue';
+import {IssuesFilter, PagingIssues} from '../../../models/issue';
 
 export enum ViewType {
   default,
   extended
 }
 
-const query = {
-  issues: `query ($team: ID, $user: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int) {
+const query = `query ($team: ID, $user: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int) {
   allIssues(team: $team, user: $user, dueDate: $dueDate, state: $state, problems: $problems, orderBy: $orderBy, offset: $offset, first: $first) {
     count
     edges {
@@ -65,8 +64,7 @@ const query = {
       }
     }
   }
-}`
-};
+}`;
 
 @Component({
   selector: 'app-issues',
@@ -171,7 +169,7 @@ export class IssuesComponent implements OnInit {
         this.filter.problems = problems ? problems : null;
         this.table.fetcher = (filter: DefaultSearchFilter) => {
           Object.assign(this.filter, filter);
-          return this.graphQL.get(query.issues, serialize(this.filter))
+          return this.graphQL.get(query, serialize(this.filter))
             .pipe(map(({data: {allIssues}}: { data: { allIssues } }) =>
               deserialize(allIssues, PagingIssues)));
         };

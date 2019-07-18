@@ -1,7 +1,7 @@
 import {ArraySerializer, DateSerializer, ModelSerializer, Serializer} from 'serialize-ts';
 import {field, model} from '@junte/mocker-library';
 import {Issue} from './issue';
-import {EdgesToArray} from '../../serializers/graphql';
+import {EdgesToArray} from '../serializers/graphql';
 
 export class GitLabServicesSerializer implements Serializer<GitLabServices> {
   serialize(services: GitLabServices): Object {

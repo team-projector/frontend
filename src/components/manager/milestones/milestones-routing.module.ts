@@ -1,11 +1,12 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {ManagerDashboardComponent} from './manager-dashboard.component';
+import {MilestonesComponent} from './milestones.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: ManagerDashboardComponent
+    component: MilestonesComponent,
+    data: {breadcrumb: 'Milestones'}
   }
 ];
 
@@ -13,5 +14,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class ManagerDashboardRoutingModule {
+export class MilestonesRoutingModule {
 }

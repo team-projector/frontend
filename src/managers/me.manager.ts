@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {Me} from '../models/graphql/user';
+import {Me} from '../models/user';
 import {BehaviorSubject} from 'rxjs';
 import {Config} from 'junte-angular';
 import {AppConfig} from '../app-config';

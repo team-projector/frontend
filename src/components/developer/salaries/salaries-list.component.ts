@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/models/graphql/user';
+import { User } from 'src/models/user';
 import { ActivatedRoute } from '@angular/router';
 import { UI } from 'junte-ui';
 

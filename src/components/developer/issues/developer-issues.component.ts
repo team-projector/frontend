@@ -46,10 +46,10 @@ class Metric {
 
 @Component({
   selector: 'app-issues-list',
-  templateUrl: './developer-dashboard.component.html',
-  styleUrls: ['./developer-dashboard.component.scss']
+  templateUrl: './developer-issues.component.html',
+  styleUrls: ['./developer-issues.component.scss']
 })
-export class DeveloperDashboardComponent implements OnInit {
+export class DeveloperIssuesComponent implements OnInit {
 
   ui = UI;
   durationFormat = DurationFormat;
@@ -94,7 +94,7 @@ export class DeveloperDashboardComponent implements OnInit {
           if (!!filter.dueDate) {
             state.due_date = format(filter.dueDate, 'MM-DD-YYYY');
           }
-          this.router.navigate([state, 'issues'], {relativeTo: this.route});
+          this.router.navigate([state], {relativeTo: this.route});
         }
       );
 

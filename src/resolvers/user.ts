@@ -3,7 +3,7 @@ import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/rou
 import {Observable, of} from 'rxjs';
 import {graph_ql_service, IGraphQLService} from '../services/graphql/interface';
 import {map} from 'rxjs/operators';
-import {User} from '../models/graphql/user';
+import {User} from '../models/user';
 import {deserialize} from 'serialize-ts';
 
 const query = `query ($user: ID!) {

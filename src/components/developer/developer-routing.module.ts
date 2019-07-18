@@ -10,11 +10,11 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'dashboard'
+        redirectTo: 'issues'
       },
       {
-        path: 'dashboard',
-        loadChildren: './dashboard/developer-dashboard.module#DeveloperDashboardModule'
+        path: 'issues',
+        loadChildren: './issues/developer-issues.module#DeveloperIssuesModule'
       },
       {
         path: 'salaries',

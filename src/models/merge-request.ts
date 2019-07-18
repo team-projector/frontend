@@ -3,7 +3,7 @@ import {field, model} from '@junte/mocker-library';
 import {Label} from './label';
 import {User} from './user';
 import {Project} from './project';
-import {EdgesToArray} from '../../serializers/graphql';
+import {EdgesToArray} from '../serializers/graphql';
 
 export enum MergeRequestState {
   opened = 'opened',

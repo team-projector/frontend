@@ -1,29 +1,19 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
-import {DeveloperDashboardComponent} from './developer-dashboard.component';
-import {IssuesListComponent} from './issues/issues-list.component';
+import {DeveloperIssuesComponent} from './developer-issues.component';
+import {IssuesListComponent} from './issues-list/issues-list.component';
 import {DueDateResolver, OpenedResolver, ProblemsResolver} from '../../../resolvers/issue';
-import {TimeExpensesListComponent} from './time-expenses/time-expenses-list.component';
+import {TimeExpensesListComponent} from './time-expenses-list/time-expenses-list.component';
 import {MeUserResolver} from '../../../resolvers/me';
-
-export function getUserName(data: any) {
-  return data.user.name;
-}
 
 const routes: Routes = [
   {
     path: '',
-    component: DeveloperDashboardComponent,
-    data: {breadcrumb: getUserName},
+    component: DeveloperIssuesComponent,
     resolve: {user: MeUserResolver, dueDate: DueDateResolver},
     children: [
       {
         path: '',
-        pathMatch: 'full',
-        redirectTo: 'issues'
-      },
-      {
-        path: 'issues',
         data: {breadcrumb: 'Issues'},
         component: IssuesListComponent,
         resolve: {
@@ -44,5 +34,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DeveloperDashboardRoutingModule {
+export class DeveloperIssuesRoutingModule {
 }

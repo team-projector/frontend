@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
-import {Team} from '../models/graphql/team';
+import {Team} from '../models/team';
 import {graph_ql_service, IGraphQLService} from '../services/graphql/interface';
 import {map} from 'rxjs/operators';
 import {deserialize} from 'serialize-ts/dist';

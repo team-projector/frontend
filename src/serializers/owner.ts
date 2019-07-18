@@ -1,6 +1,6 @@
 import {deserialize, Serializer} from 'serialize-ts';
-import {Issue} from '../models/graphql/issue';
-import {MergeRequest} from '../models/graphql/merge-request';
+import {Issue} from '../models/issue';
+import {MergeRequest} from '../models/merge-request';
 
 export class OwnerSerializer implements Serializer<Issue | MergeRequest> {
   serialize(source: Issue | MergeRequest): string {

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {User} from 'src/models/graphql/user';
-import {Team} from 'src/models/graphql/team';
+import {User} from 'src/models/user';
+import {Team} from 'src/models/team';
 
 @Component({
   selector: 'app-team-list-issues-component',

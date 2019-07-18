@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {Salary} from 'src/models/graphql/salary';
+import {Salary} from 'src/models/salary';
 import {UI} from 'junte-ui';
 
 @Component({
