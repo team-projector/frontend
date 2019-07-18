@@ -73,10 +73,11 @@ export class TimeExpensesFilter {
   sort?: string;
   orderBy?: Order = Order.asc;
 
-  page?: number;
+  @field()
+  first?: number;
 
-  @field({name: 'first'})
-  pageSize?: number;
+  @field()
+  offset?: number;
 
   constructor(defs: TimeExpensesFilter = null) {
     if (!!defs) {
