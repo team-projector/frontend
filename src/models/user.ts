@@ -18,6 +18,20 @@ export enum UserProblem {
 }
 
 @model()
+export class IssuesMetrics {
+
+  @field({mock: '{{int 1000 20000}}'})
+  openedCount: number;
+
+  @field({mock: '{{int 3600 18000}}'})
+  openedSpent: number;
+
+  @field({mock: '{{int 3600 18000}}'})
+  closedSpent: number;
+
+}
+
+@model()
 export class UserMetrics {
 
   @field({mock: '{{money}}'})
@@ -27,19 +41,16 @@ export class UserMetrics {
   penalty: number;
 
   @field({mock: '{{int 10 100}}'})
-  issuesOpenedCount: number;
-
-  @field({mock: '{{int 10 100}}'})
   payrollClosed: number;
 
   @field({mock: '{{int 1000 20000}}'})
   payrollOpened: number;
 
-  @field({mock: '{{int 3600 18000}}'})
-  issuesClosedSpent: number;
+  @field({mock: '{{> issues_metrics}}'})
+  issues: IssuesMetrics;
 
-  @field({mock: '{{int 3600 18000}}'})
-  issuesOpenedSpent: number;
+  @field({mock: '{{> issues_metrics}}'})
+  mergeRequests: IssuesMetrics;
 
 }
 

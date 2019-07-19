@@ -7,22 +7,29 @@ import {map} from 'rxjs/operators';
 import {deserialize} from 'serialize-ts';
 
 const query = `query {
-      me {
-        id
-        name
-        glAvatar
-        roles
-        metrics {
-          bonus
-          penalty
-          issuesOpenedCount
-          payrollClosed
-          payrollOpened
-          issuesClosedSpent
-          issuesOpenedSpent
-        }
+  me {
+    id
+    name
+    glAvatar
+    roles
+    metrics {
+      bonus
+      penalty
+      issues {
+        openedCount
+        openedSpent
+        closedSpent
       }
-    }`;
+      mergeRequests {
+        openedCount
+        openedSpent
+        closedSpent
+      }
+      payrollClosed
+      payrollOpened
+    }
+  }
+}`;
 
 @Injectable()
 export class MeUserResolver implements Resolve<Observable<Me>> {

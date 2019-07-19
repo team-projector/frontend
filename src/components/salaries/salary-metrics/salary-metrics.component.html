@@ -1,16 +1,17 @@
-<jnt-block *ngIf="metrics" [padding]="ui.padding.large" >
+<jnt-block *ngIf="metrics" [padding]="ui.padding.large">
   <jnt-stack [gutter]="ui.stack.gutter.large" [align]="ui.flex.align.stretch">
     <h6>Payroll</h6>
     <jnt-stack [gutter]="ui.stack.gutter.small" [align]="ui.flex.justify.end">
       <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
         <span payroll closed>{{metrics.payrollClosed | currency:'RUB'}}</span>
-        <jnt-label label [label]="metrics.issuesClosedSpent | duration" color="#F3F4FC"></jnt-label>
+        <jnt-label label [label]="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) | duration"
+                   [color]="ui.colors.gray500"></jnt-label>
       </jnt-stack>
 
       <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
         <span payroll opened>{{metrics.payrollOpened | currency:'RUB'}}</span>
-        <jnt-label label [label]="metrics.issuesOpenedSpent | duration" color="#F3F4FC"
-                   [title]="metrics.issuesOpenedCount + ' issues'"></jnt-label>
+        <jnt-label label [label]="(metrics.issues.openedSpent + metrics.mergeRequests.openedSpent ) | duration"
+                   [color]="ui.colors.gray500"></jnt-label>
       </jnt-stack>
     </jnt-stack>
 
