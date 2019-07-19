@@ -28,7 +28,7 @@
     "@junte/mocker-library": "0.0.57",
     "core-js": "^2.5.4",
     "junte-angular": "~0.0.46",
-    "junte-ui": "0.0.129",
+    "junte-ui": "0.0.137",
     "gql-query-builder": "^3.1.1",
     "date-fns": "1.30.1",
     "rxjs": "~6.3.3",
