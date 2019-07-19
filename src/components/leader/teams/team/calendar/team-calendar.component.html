@@ -95,16 +95,16 @@
           <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small">
             <jnt-avatar [image]="member.user.avatar"
                         [size]="ui.sizes.tiny"></jnt-avatar>
-              <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>
+            <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>
           </jnt-stack>
         </td>
         <td>
           <jnt-stack [gutter]="ui.stack.gutter.tiny" [align]="ui.flex.align.stretch">
-            <jnt-label *ngIf="member.user.metrics.issuesClosedSpent"
-                       [label]="member.user.metrics.issuesClosedSpent | duration"
+            <jnt-label *ngIf="member.user.metrics.issues.closedSpent"
+                       [label]="member.user.metrics.issues.closedSpent | duration"
                        [color]="ui.colors.green"></jnt-label>
-            <jnt-label *ngIf="member.user.metrics.issuesOpenedSpent"
-                       [label]="member.user.metrics.issuesOpenedSpent | duration"
+            <jnt-label *ngIf="member.user.metrics.issues.openedSpent"
+                       [label]="member.user.metrics.issues.openedSpent | duration"
                        [color]="member.user.problems?.includes(userProblem.payrollOpenedOverflow) ? ui.colors.red : ui.colors.gray500"></jnt-label>
           </jnt-stack>
         </td>

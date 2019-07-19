@@ -1,25 +1,27 @@
 export const queries = {
   members: `query ($team: ID!) {
-      team(id: $team) {
-        members(roles: "developer", orderBy: "user__name") {
-          count
-          edges {
-            node {
-              user {
-                id
-                glAvatar
-                name
-                problems
-                metrics {
-                  issuesClosedSpent
-                  issuesOpenedSpent
-                }
+  team(id: $team) {
+    members(roles: "developer", orderBy: "user__name") {
+      count
+      edges {
+        node {
+          user {
+            id
+            glAvatar
+            name
+            problems
+            metrics {
+              issues {
+                closedSpent
+                openedSpent
               }
             }
           }
         }
       }
-    }`,
+    }
+  }
+}`,
   metrics: `query ($team: ID!, $start: Date!, $end: Date!, $group: String!) {
   teamProgressMetrics(team: $team, start: $start, end: $end, group: $group) {
     user {
