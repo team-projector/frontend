@@ -1,7 +1,7 @@
 import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
 import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
 import {BehaviorSubject} from 'rxjs';
-import {distinctUntilChanged, filter as filtering, map, tap} from 'rxjs/operators';
+import {distinctUntilChanged, filter as filtering, map} from 'rxjs/operators';
 import {TableComponent, UI} from 'junte-ui';
 import {PagingSalaries, SalariesFilter} from 'src/models/salary';
 import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';

@@ -1,7 +1,7 @@
-import { Component, Inject } from '@angular/core';
-import { Config, HttpMockService, HttpService, InvalidGrantError } from 'junte-angular';
-import { Router } from '@angular/router';
-import { AppConfig } from '../app-config';
+import {Component, Inject} from '@angular/core';
+import {Config, HttpMockService, HttpService, InvalidGrantError} from 'junte-angular';
+import {Router} from '@angular/router';
+import {AppConfig} from '../app-config';
 
 @Component({
   selector: 'app-root',

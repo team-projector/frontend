@@ -5,16 +5,15 @@ import {graph_ql_service, IGraphQLService} from '../../../services/graphql/inter
 import {deserialize} from 'serialize-ts/dist';
 import {map} from 'rxjs/operators';
 
-export const query = `query ($offset: Int, $first: Int){
-  allMilestones (offset: $offset, first: $first) {
+export const query = `query ($orderBy: String, $offset: Int, $first: Int) {
+  allMilestones(active: true, orderBy: $orderBy, offset: $offset, first: $first) {
     count
     edges {
       node {
         id
         title
         owner {
-          __typename
-          title
+          fullTitle
           glUrl
         }
         budget
@@ -22,8 +21,16 @@ export const query = `query ($offset: Int, $first: Int){
         dueDate
         glUrl
         metrics {
+          customerPayroll
+          payroll
           budgetRemains
           profit
+          timeEstimate
+          timeSpent
+          timeRemains
+          issuesCount
+          issuesOpenedCount
+          issuesClosedCount
         }
       }
     }

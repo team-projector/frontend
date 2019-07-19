@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { User } from 'src/models/user';
-import { ActivatedRoute } from '@angular/router';
-import { UI } from 'junte-ui';
+import {Component, OnInit} from '@angular/core';
+import {User} from 'src/models/user';
+import {ActivatedRoute} from '@angular/router';
+import {UI} from 'junte-ui';
 
 @Component({
   selector: 'app-salaries-list',

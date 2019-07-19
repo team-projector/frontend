@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { DurationPipe } from './date';
+import {NgModule} from '@angular/core';
+import {DurationPipe} from './date';
 
 @NgModule({
   declarations: [

@@ -1,5 +1,5 @@
-import { format, getDate, isSameMonth } from 'date-fns';
-import { Pipe, PipeTransform } from '@angular/core';
+import {format, getDate, isSameMonth} from 'date-fns';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({name: 'percentage'})
 export class PercentagePipe implements PipeTransform {

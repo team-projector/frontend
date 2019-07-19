@@ -1,6 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { Salary } from 'src/models/salary';
-import { UI } from 'junte-ui';
+import {Component, Input} from '@angular/core';
+import {Salary} from 'src/models/salary';
+import {UI} from 'junte-ui';
 
 @Component({
   selector: 'app-salary-detail-widget',

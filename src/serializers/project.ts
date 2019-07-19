@@ -2,7 +2,7 @@ import {deserialize, Serializer} from 'serialize-ts';
 import {Project, ProjectGroup} from '../models/project';
 
 export class ProjectSerializer implements Serializer<Project | ProjectGroup> {
-  serialize(date: Project | ProjectGroup): string {
+  serialize(project: Project | ProjectGroup): string {
     throw new Error('Was not implemented');
   }
 

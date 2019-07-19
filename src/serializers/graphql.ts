@@ -1,6 +1,4 @@
-import {deserialize, Serializer, Constructor} from 'serialize-ts';
-import {format} from 'date-fns';
-import {DATE_FORMAT} from '../consts';
+import {Constructor, deserialize, Serializer} from 'serialize-ts';
 
 export class EdgesToPaging<T> implements Serializer<T> {
 

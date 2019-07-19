@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {IGraphQLService} from './interface';
 import {HttpService} from 'junte-angular';
 import {Observable} from 'rxjs';
-import {serialize, deserialize} from 'serialize-ts';
+import {deserialize, serialize} from 'serialize-ts';
 
 @Injectable()
 export class GraphQLService implements IGraphQLService {

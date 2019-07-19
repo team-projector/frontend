@@ -3,7 +3,7 @@ import {Issue} from '../models/issue';
 import {MergeRequest} from '../models/merge-request';
 
 export class OwnerSerializer implements Serializer<Issue | MergeRequest> {
-  serialize(source: Issue | MergeRequest): string {
+  serialize(issue: Issue | MergeRequest): string {
     throw new Error('Was not implemented');
   }
 

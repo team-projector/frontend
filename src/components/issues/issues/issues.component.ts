@@ -6,8 +6,7 @@ import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
 import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssueProblem, IssueState} from '../../../models/issue';
-import {IssuesFilter, PagingIssues} from '../../../models/issue';
+import {IssueProblem, IssuesFilter, IssueState, PagingIssues} from '../../../models/issue';
 
 export enum ViewType {
   default,
