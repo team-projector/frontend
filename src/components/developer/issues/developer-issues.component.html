@@ -1,6 +1,22 @@
 <jnt-stack [gutter]="ui.stack.gutter.large">
   <form [formGroup]="form">
     <jnt-stack>
+      <jnt-stack presentations [type]="ui.stack.type.horizontal"
+                 (mouseleave)="metric = metricType.all">
+        <div (mouseenter)="metric = metricType.spent"
+             [style.background]="ui.colors.green">Spent
+        </div>
+        <div (mouseenter)="metric = metricType.estimate"
+             [style.background]="ui.colors.red">Estimated
+        </div>
+        <div (mouseenter)="metric = metricType.remains"
+             [style.background]="ui.colors.yellow">Remains
+        </div>
+        <div (mouseenter)="metric = metricType.loading"
+             [style.background]="ui.colors.purpleDark" style="color:white">Loading
+        </div>
+      </jnt-stack>
+
       <jnt-block>
         <jnt-calendar formControlName="dueDate" (updated)="period = $event">
           <jnt-week-metric i18n-title="@@est" title="Est"></jnt-week-metric>
@@ -10,8 +26,9 @@
           <jnt-week-metric i18n-title="@@paid" title="Paid"></jnt-week-metric>
           <ng-template #dayTemplate let-date="date">
             <div class="day">
-              <ng-container
-                *ngTemplateOutlet="dayMetricTemplate; context: {date: date, metric: metrics.days.get(format(date, formatDate))}"></ng-container>
+              <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric,
+                date: date, metric: metrics.days.get(format(date, formatDate))}">
+              </ng-container>
             </div>
           </ng-template>
           <ng-template #metricTemplate let-metric="metric" let-date="date">
@@ -30,7 +47,7 @@
                   {{!!weekMetric.payroll ? (weekMetric.payroll | currency:'RUB') : '&ndash;'}}
                 </ng-container>
                 <ng-container *ngSwitchCase="4">
-                  {{!!weekMetric.paid ? (weekMetric.paid | currency:'RUB') :'&ndash;'}}
+                  {{!!weekMetric.paid ? (weekMetric.paid | currency:'RUB') : '&ndash;'}}
                 </ng-container>
               </ng-container>
             </ng-container>
@@ -42,8 +59,7 @@
 
   <div filter *ngIf="dueDate.value">
     {{dueDate.value | date}}
-    <jnt-icon icon [icon]="ui.icons.close"
-              (click)="dueDate.patchValue(null)"></jnt-icon>
+    <jnt-icon icon [icon]="ui.icons.close" (click)="dueDate.patchValue(null)"></jnt-icon>
   </div>
 
   <jnt-menu>
@@ -52,34 +68,77 @@
       <jnt-badge *ngIf="summary?.problemsCount" [count]="summary?.problemsCount" [scheme]="ui.schemes.fail"></jnt-badge>
     </jnt-menu-item>
     <jnt-menu-item link="time-expenses" title="Time Expenses">
-      <jnt-badge *ngIf="summary?.timeSpent" [count]="summary?.timeSpent | duration"></jnt-badge>
+      <jnt-badge *ngIf="summary?.timeSpent" [count]="+(summary?.timeSpent | duration)"></jnt-badge>
     </jnt-menu-item>
   </jnt-menu>
   <router-outlet></router-outlet>
 </jnt-stack>
 
-<ng-template #dayMetricTemplate let-metric="metric" let-date="date">
-  <jnt-circle-bar class="metric"
-                  [title]="'Spent: ' + (metric?.timeSpent | duration) + ', estimate: ' + (metric?.timeEstimate | duration) + ', loading: ' + (metric?.loading | duration)">
-    <ng-template #content>{{date | getDate}}</ng-template>
-    <jnt-bar-indicator-group>
-      <jnt-bar-indicator *ngIf="metric?.timeSpent" [color]="ui.colors.green"
-                         [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
-      </jnt-bar-indicator>
-      <jnt-bar-indicator *ngIf="metric?.timeRemains" [color]="ui.colors.yellow"
-                         [value]="metric.timeRemains | percentage:(metric.plannedWorkHours * 3600)">
-      </jnt-bar-indicator>
-    </jnt-bar-indicator-group>
-    <jnt-bar-indicator-group>
-      <jnt-bar-indicator *ngIf="metric?.timeEstimate" [color]="ui.colors.red"
-                         [value]="metric.timeEstimate | percentage:(metric.plannedWorkHours * 3600)">
-      </jnt-bar-indicator>
-    </jnt-bar-indicator-group>
-    <jnt-bar-indicator-group>
-      <jnt-bar-indicator *ngIf="metric?.loading" [color]="ui.colors.purpleDark"
-                         [value]="metric.loading | percentage:(metric.plannedWorkHours * 3600)">
-      </jnt-bar-indicator>
-    </jnt-bar-indicator-group>
-  </jnt-circle-bar>
-  <div class="issues" *ngIf="!!metric?.issuesCount"></div>
+<ng-template #dayMetricTemplate let-metric="metric" let-date="date" let-presentation="presentation">
+  <div issues *ngIf="!!metric?.issuesCount"></div>
+  <div *ngIf="!!metric" metric [ngSwitch]="presentation">
+
+    <ng-template #no_metric>{{date | getDate}}</ng-template>
+
+    <ng-template #metrics let-metric="metric" let-color="color" let-planned="planned" let-show="show">
+      <jnt-circle-bar *ngIf="show && !!metric; else no_metric" circle time>
+        <ng-template #content>{{metric | duration:durationFormat.short}}</ng-template>
+        <jnt-bar-indicator-group>
+          <jnt-bar-indicator [color]="color"
+                             [value]="metric | percentage:(planned * 3600)">
+          </jnt-bar-indicator>
+        </jnt-bar-indicator-group>
+      </jnt-circle-bar>
+    </ng-template>
+
+    <ng-container *ngSwitchCase="metricType.spent">
+      <ng-container *ngTemplateOutlet="metrics; context: {metric: metric.timeSpent, color: ui.colors.green,
+        planned: metric.plannedWorkHours, show: !isFuture(date)}">
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="metricType.estimate">
+      <ng-container *ngTemplateOutlet="metrics; context: {metric: metric.timeEstimate, color: ui.colors.red,
+        planned: metric.plannedWorkHours, show: isFuture(date)}">
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="metricType.remains">
+      <ng-container *ngTemplateOutlet="metrics; context: {metric: metric.timeRemains, color: ui.colors.yellow,
+        planned: metric.plannedWorkHours, show: isFuture(date)}">
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="metricType.loading">
+      <ng-container *ngTemplateOutlet="metrics; context: {metric: metric.loading, color: ui.colors.purpleDark,
+        planned: metric.plannedWorkHours, show: isFuture(date)}">
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+      <ng-container>
+        <jnt-circle-bar circle>
+          <ng-template #content>{{date | getDate}}</ng-template>
+          <jnt-bar-indicator-group>
+            <jnt-bar-indicator [color]="ui.colors.green"
+                               [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
+            </jnt-bar-indicator>
+            <jnt-bar-indicator *ngIf="isFuture(date)" [color]="ui.colors.yellow"
+                               [value]="metric.timeRemains | percentage:(metric.plannedWorkHours * 3600)">
+            </jnt-bar-indicator>
+          </jnt-bar-indicator-group>
+          <jnt-bar-indicator-group *ngIf="isFuture(date)">
+            <jnt-bar-indicator [color]="ui.colors.red"
+                               [value]="metric.timeEstimate | percentage:(metric.plannedWorkHours * 3600)">
+            </jnt-bar-indicator>
+          </jnt-bar-indicator-group>
+          <jnt-bar-indicator-group *ngIf="isFuture(date)">
+            <jnt-bar-indicator [color]="ui.colors.purpleDark"
+                               [value]="metric.loading | percentage:(metric.plannedWorkHours * 3600)">
+            </jnt-bar-indicator>
+          </jnt-bar-indicator-group>
+        </jnt-circle-bar>
+      </ng-container>
+    </ng-container>
+  </div>
 </ng-template>

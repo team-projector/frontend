@@ -10,6 +10,7 @@
   color: $white-color;
   padding: $gutter-normal;
   border-radius: $corner-normal;
+
   [icon] {
     position: absolute;
     top: $gutter-small;
@@ -17,6 +18,18 @@
     cursor: pointer;
     font-size: 8px;
   }
+}
+
+[presentations] {
+  div {
+    padding: $gutter-tiny $gutter-normal;
+    background-color: silver;
+    color: $primary-text-color;
+    cursor: pointer;
+    border-radius: $corner-small;
+  }
+
+  margin-bottom: $gutter-normal;
 }
 
 .user-metrics {
@@ -56,15 +69,12 @@
 .day {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   flex-direction: column;
+  width: 45px;
+  height: 45px;
 
-  .metric {
-    width: 40px;
-    height: 40px;
-  }
-
-  .issues {
+  [issues] {
     position: absolute;
     top: 2px;
     right: 2px;
@@ -72,6 +82,21 @@
     width: 5px;
     height: 5px;
     border-radius: 50%;
+    z-index: 1;
+  }
+
+  [metric] {
+    position: relative;
+    display: inline-block;
+
+    [circle] {
+      width: 40px;
+      height: 40px;
+
+      &[time] {
+        color: $primary-text-light-color
+      }
+    }
   }
 }
 
