@@ -22,7 +22,8 @@
           <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.tiny" name>
             <span>{{team.title}}</span>
             <jnt-label *ngIf="team.metrics.problemsCount" [color]="ui.colors.red"
-                       [label]="team.metrics.problemsCount"></jnt-label>
+                       [label]="team.metrics.problemsCount.toString()">
+            </jnt-label>
           </jnt-stack>
         </jnt-stack>
       </jnt-block>

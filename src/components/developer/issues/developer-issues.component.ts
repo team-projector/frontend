@@ -1,18 +1,19 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {format} from 'date-fns';
-import {FormBuilder, FormControl} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {distinctUntilChanged, filter as filtering, map} from 'rxjs/operators';
-import {UserProgressMetrics} from 'src/models/metrics';
-import {User} from 'src/models/user';
-import {BehaviorSubject, combineLatest, zip} from 'rxjs';
-import {Period} from 'junte-ui/lib/components/calendar/models';
-import {UI} from 'junte-ui';
-import {DurationFormat} from '../../../pipes/date';
-import {IssuesFilter, IssuesSummary} from 'src/models/issue';
-import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {MetricsGroup, UserMetricsFilter} from '../../../models/metrics';
+import { Component, Inject, OnInit } from '@angular/core';
+import { format, isFuture } from 'date-fns';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
+import { UserProgressMetrics } from 'src/models/metrics';
+import { User } from 'src/models/user';
+import { BehaviorSubject, combineLatest, zip } from 'rxjs';
+import { Period } from 'junte-ui/lib/components/calendar/models';
+import { UI } from 'junte-ui';
+import { DurationFormat } from '../../../pipes/date';
+import { IssuesFilter, IssuesSummary } from 'src/models/issue';
+import { graph_ql_service, IGraphQLService } from '../../../services/graphql/interface';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { MetricsGroup, UserMetricsFilter } from '../../../models/metrics';
+import { MetricType } from '../../leader/teams/team/calendar/team-calendar.component';
 
 const query = {
   summary: `query ($user: ID, $dueDate: Date, $state: String) {
@@ -53,6 +54,8 @@ export class DeveloperIssuesComponent implements OnInit {
 
   ui = UI;
   durationFormat = DurationFormat;
+  metricType = MetricType;
+  isFuture = isFuture;
 
   user$ = new BehaviorSubject<User>(null);
   period$ = new BehaviorSubject<Period>(null);
@@ -61,6 +64,7 @@ export class DeveloperIssuesComponent implements OnInit {
   formatDate = 'DD/MM/YYYY';
 
   summary: IssuesSummary;
+  metric = MetricType.all;
 
   set user(user: User) {
     this.user$.next(user);
