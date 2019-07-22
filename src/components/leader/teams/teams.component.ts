@@ -1,9 +1,22 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {finalize, map} from 'rxjs/operators';
+import {distinctUntilChanged, finalize, map} from 'rxjs/operators';
 import {UI} from 'junte-ui';
 import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
-import {deserialize} from 'serialize-ts/dist';
+import {deserialize, serialize} from 'serialize-ts/dist';
 import {PagingTeams, Team} from '../../../models/team';
+import {IssuesFilter, IssuesSummary} from '../../../models/issue';
+import {format} from "date-fns";
+import {FormControl, FormGroup} from '@angular/forms';
+
+const query = {
+  summary: `query ($team: ID, $user: ID, $dueDate: Date, $state: String) {
+  issuesSummary(team: $team, user: $user, dueDate: $dueDate, state: $state) {
+    issuesCount
+    timeSpent
+    problemsCount
+  }
+}`
+};
 
 @Component({
   selector: 'app-leader-teams',

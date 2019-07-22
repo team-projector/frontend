@@ -12,20 +12,17 @@
   </ng-template>
   <ng-template #teamsTemplate>
     <jnt-link *ngFor="let team of teams" [source]="[team.id]" team>
-      <jnt-block [padding]="ui.padding.normal" block>
-        <jnt-stack [align]="ui.flex.align.center">
-          <jnt-avatars-group [size]="ui.sizes.normal">
-            <jnt-avatar *ngFor="let member of team.members"
-                        [image]="member.user.avatar">
-            </jnt-avatar>
-          </jnt-avatars-group>
-          <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.tiny" name>
-            <span>{{team.title}}</span>
-            <jnt-label *ngIf="team.metrics.problemsCount" [color]="ui.colors.red"
-                       [label]="team.metrics.problemsCount.toString()">
-            </jnt-label>
-          </jnt-stack>
-        </jnt-stack>
+      <jnt-block [padding]="ui.padding.normal" [title]="team.title" block>
+        <jnt-avatars-group [size]="ui.sizes.normal">
+          <jnt-avatar *ngFor="let member of team.members"
+                      [image]="member.user.avatar">
+          </jnt-avatar>
+        </jnt-avatars-group>
+        <ng-template #footerBlock>
+          <div footer>
+            <div><span>120</span> hours for <span>{{team.metrics.issuesCount}}</span> tasks</div>
+          </div>
+        </ng-template>
       </jnt-block>
     </jnt-link>
   </ng-template>

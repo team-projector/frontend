@@ -4,6 +4,17 @@
   display: block;
 }
 
+:host-context([theme="dark"]) {
+  [team] {
+    [block] {
+      [footer] {
+        color: $gray-200;
+        background-color: $gray-800;
+      }
+    }
+  }
+}
+
 [team] {
   margin-bottom: $gutter-normal;
   & ::ng-deep a[child-of=#{$jnt-link-host}] {
@@ -13,18 +24,40 @@
 
   [block] {
     height: 100%;
-    max-width: 160px;
-    width: 160px;
-    padding-top: $gutter-large;
-    padding-bottom: $gutter-large;
-    [name] {
+    max-width: 170px;
+    width: 170px;
+    text-align: center;
+    & ::ng-deep {
+      [title] {
+        > div {
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+      }
+    }
+    [title] {
       max-width: 100%;
+      display: inline-block;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      box-sizing: border-box;
+    }
+    [footer] {
+      padding: $gutter-normal $gutter-small;
+      background-color: $secondary-background;
+      color: $primary-text-color;
+      border-bottom-left-radius: $corner-normal;
+      border-bottom-right-radius: $corner-normal;
+      font-size: 12px;
+      font-weight: $font-weight-light;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex: 1;
       span {
-        display: inline-block;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        box-sizing: border-box;
+        font-weight: $font-weight-bold;
       }
     }
   }
