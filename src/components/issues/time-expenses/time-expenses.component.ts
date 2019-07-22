@@ -77,7 +77,7 @@ export class TimeExpensesComponent implements OnInit {
     this.salary$.next(salary);
   }
 
-  filter: TimeExpensesFilter = new TimeExpensesFilter({offset: DEFAULT_PAGE, first: DEFAULT_PAGE_SIZE});
+  filter: TimeExpensesFilter = new TimeExpensesFilter({offset: DEFAULT_PAGE * DEFAULT_PAGE_SIZE, first: DEFAULT_PAGE_SIZE});
 
   @ViewChild('table')
   table: TableComponent;
