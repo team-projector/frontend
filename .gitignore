@@ -47,3 +47,4 @@ Thumbs.db
 
 /src/mocks/objects/*.json
 /src/assets/mocks
+/src/assets/themes/*.css
