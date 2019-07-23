@@ -1,21 +1,11 @@
-import {Inject, Injectable} from '@angular/core';
-import {Me} from '../models/user';
-import {BehaviorSubject} from 'rxjs';
-import {Config} from 'junte-angular';
-import {AppConfig} from '../app-config';
-import {jsonEquals} from '../utils/object';
-import {graph_ql_service, IGraphQLService} from '../services/graphql/interface';
-import {map} from 'rxjs/operators';
-import {deserialize} from 'serialize-ts';
-
-const query = `query {
-      me {
-        id
-        name
-        glAvatar
-        roles
-      }
-    }`;
+import { Inject, Injectable } from '@angular/core';
+import { Me } from '../models/user';
+import { BehaviorSubject } from 'rxjs';
+import { jsonEquals } from '../utils/object';
+import { map } from 'rxjs/operators';
+import { deserialize } from 'serialize-ts/dist';
+import { MeManagerGQL } from './me-manager.graphql';
+import { AppConfig2 } from 'src/app-config2';
 
 @Injectable()
 export class MeManager {
@@ -32,11 +22,11 @@ export class MeManager {
     return this.user$.getValue();
   }
 
-  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService,
-              @Inject(Config) private config: AppConfig) {
-    this.config.authorization$.subscribe(token => {
+  constructor(@Inject(AppConfig2) private config: AppConfig2,
+              private meManagerApollo: MeManagerGQL) {
+    this.config.token$.subscribe(token => {
       if (!!token) {
-        this.graphQL.get(query)
+        this.meManagerApollo.fetch()
           .pipe(map(({data: {me}}) => deserialize(me, Me)))
           .subscribe(user => this.user = user);
       } else {

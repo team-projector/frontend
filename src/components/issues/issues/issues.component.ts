@@ -1,69 +1,18 @@
-import {Component, EventEmitter, Inject, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {PLATFORM_DELAY} from 'src/consts';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
-import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssueProblem, IssuesFilter, IssueState, PagingIssues} from '../../../models/issue';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { PLATFORM_DELAY } from 'src/consts';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { IssueProblem, IssuesFilter, IssueState, PagingIssues } from '../../../models/issue';
+import { IssuesGQL } from './issues.graphql';
+import { R } from 'apollo-angular/types';
 
 export enum ViewType {
   default,
   extended
 }
-
-const query = `query ($team: ID, $user: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int) {
-  allIssues(team: $team, user: $user, dueDate: $dueDate, state: $state, problems: $problems, orderBy: $orderBy, offset: $offset, first: $first) {
-    count
-    edges {
-      node {
-        title
-        id
-        dueDate
-        labels {
-          count
-          edges {
-            node {
-              title
-              color
-            }
-          }
-        }
-        project {
-          fullTitle
-        }
-        state
-        createdAt
-        timeEstimate
-        totalTimeSpent
-        timeEstimate
-        glUrl
-        user {
-          id
-          name
-          glAvatar
-        }
-        participants {
-          count
-          edges {
-            node {
-              name
-              glAvatar
-            }
-          }
-        }
-        problems
-        metrics {
-          remains
-          efficiency
-          payroll
-          paid
-        }
-      }
-    }
-  }
-}`;
 
 @Component({
   selector: 'app-issues',
@@ -145,8 +94,8 @@ export class IssuesComponent implements OnInit {
   @Output()
   filtered = new EventEmitter<{ opened?, problems? }>();
 
-  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService,
-              private formBuilder: FormBuilder) {
+  constructor(private formBuilder: FormBuilder,
+              private issuesApollo: IssuesGQL) {
   }
 
   ngOnInit() {
@@ -168,7 +117,7 @@ export class IssuesComponent implements OnInit {
         this.filter.problems = problems ? problems : null;
         this.table.fetcher = (filter: DefaultSearchFilter) => {
           Object.assign(this.filter, filter);
-          return this.graphQL.get(query, serialize(this.filter))
+          return this.issuesApollo.fetch(serialize(this.filter) as R)
             .pipe(map(({data: {allIssues}}: { data: { allIssues } }) =>
               deserialize(allIssues, PagingIssues)));
         };

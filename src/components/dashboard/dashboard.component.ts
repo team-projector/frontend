@@ -1,15 +1,14 @@
-import {Component, ElementRef, Inject, OnInit, ViewChild} from '@angular/core';
-import {UI} from 'junte-ui';
-import {Config} from 'junte-angular';
-import {AppConfig} from '../../app-config';
-import {MeManager} from '../../managers/me.manager';
-import {Router} from '@angular/router';
-import {GitLabStatus} from '../../models/gitlab';
-import {UserRole} from '../../models/user';
-import {graph_ql_service, IGraphQLService} from '../../services/graphql/interface';
-import {deserialize} from 'serialize-ts';
-import {map, tap} from 'rxjs/operators';
-import {query} from './dashboard.queries';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { UI } from 'junte-ui';
+import { MeManager } from '../../managers/me.manager';
+import { Router } from '@angular/router';
+import { GitLabStatus } from '../../models/gitlab';
+import { UserRole } from '../../models/user';
+import { deserialize } from 'serialize-ts/dist';
+import { map } from 'rxjs/operators';
+import { GitlabStatusGQL } from './gitlab-status.graphql';
+import { interval } from 'rxjs';
+import { AppConfig2 } from '../../app-config2';
 
 const STATUS_TIMEOUT = 60000;
 
@@ -29,25 +28,27 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('status') statusEl: ElementRef;
 
-  constructor(@Inject(Config) public config: AppConfig,
-              @Inject(graph_ql_service) private graphQL: IGraphQLService,
+  constructor(@Inject(AppConfig2) public config: AppConfig2,
               private router: Router,
+              private gitlabStatusApollo: GitlabStatusGQL,
               public me: MeManager) {
   }
 
   logout() {
-    this.router.navigate(['/signup/login'])
-      .then(() => this.config.authorization = null);
+    // this.router.navigate(['/signup/login'])
+    //   .then(() => this.config.token = null);
+    this.config.token = null;
   }
 
   ngOnInit() {
     this.load();
-    setInterval(() => this.load(), STATUS_TIMEOUT);
+    interval(STATUS_TIMEOUT).subscribe(() => this.load());
   }
 
   load() {
-    this.graphQL.get(query).pipe(map(({data: {gitlabStatus}}) =>
-      deserialize(gitlabStatus, GitLabStatus), tap(s => console.log(s))))
+    this.gitlabStatusApollo.fetch()
+      .pipe(map(({data: {gitlabStatus}}) =>
+        deserialize(gitlabStatus, GitLabStatus)))
       .subscribe(status => this.status = status);
   }
 

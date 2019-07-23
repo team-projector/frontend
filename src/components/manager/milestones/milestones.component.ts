@@ -1,41 +1,10 @@
-import {Component, Inject, OnInit, ViewChild} from '@angular/core';
-import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
-import {PagingMilestones} from '../../../models/milestone';
-import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
-import {deserialize} from 'serialize-ts/dist';
-import {map} from 'rxjs/operators';
-
-export const query = `query ($orderBy: String, $offset: Int, $first: Int) {
-  allMilestones(active: true, orderBy: $orderBy, offset: $offset, first: $first) {
-    count
-    edges {
-      node {
-        id
-        title
-        owner {
-          fullTitle
-          glUrl
-        }
-        budget
-        startDate
-        dueDate
-        glUrl
-        metrics {
-          customerPayroll
-          payroll
-          budgetRemains
-          profit
-          timeEstimate
-          timeSpent
-          timeRemains
-          issuesCount
-          issuesOpenedCount
-          issuesClosedCount
-        }
-      }
-    }
-  }
-}`;
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
+import { PagingMilestones } from '../../../models/milestone';
+import { deserialize } from 'serialize-ts/dist';
+import { map } from 'rxjs/operators';
+import { AllMilestonesGQL } from './milestones.graphql';
+import { R } from 'apollo-angular/types';
 
 @Component({
   selector: 'app-manager-dashboard',
@@ -49,13 +18,12 @@ export class MilestonesComponent implements OnInit {
   @ViewChild('table')
   table: TableComponent;
 
-  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService) {
-
+  constructor(private allMilestonesApollo: AllMilestonesGQL) {
   }
 
   ngOnInit() {
     this.table.fetcher = (filter: DefaultSearchFilter) => {
-      return this.graphQL.get(query, filter)
+      return this.allMilestonesApollo.fetch(filter as R)
         .pipe(map(({data: {allMilestones}}) =>
           deserialize(allMilestones, PagingMilestones)));
     };

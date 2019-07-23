@@ -1,17 +1,15 @@
-import {BrowserModule} from '@angular/platform-browser';
-import {LOCALE_ID, NgModule} from '@angular/core';
-import {AppRoutingModule} from './app-routing.module';
-import {AppComponent} from './app.component';
-import {Config, HttpMockService, HttpService} from 'junte-angular';
-import {AppConfig} from '../app-config';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {MeManager} from '../managers/me.manager';
-import {registerLocaleData} from '@angular/common';
-import localeDe from '@angular/common/locales/de';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {GraphQLServiceProvider} from '../services/graphql/provider';
+import { BrowserModule } from '@angular/platform-browser';
+import { LOCALE_ID, NgModule } from '@angular/core';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { MeManager } from '../managers/me.manager';
+import { registerLocaleData } from '@angular/common';
+import localeRu from '@angular/common/locales/ru';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { GraphQLModule } from './graphql.module';
+import { HttpClientModule } from '@angular/common/http';
 
-registerLocaleData(localeDe);
+registerLocaleData(localeRu);
 
 @NgModule({
   declarations: [
@@ -21,19 +19,14 @@ registerLocaleData(localeDe);
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
+    GraphQLModule,
     HttpClientModule
   ],
   providers: [
     {
-      provide: Config,
-      useClass: AppConfig,
+      provide: LOCALE_ID,
+      useValue: 'ru'
     },
-    {provide: LOCALE_ID, useValue: 'ru'},
-    HttpClient,
-    HttpService,
-    HttpMockService,
-    GraphQLServiceProvider,
-
     MeManager
   ],
   bootstrap: [AppComponent]

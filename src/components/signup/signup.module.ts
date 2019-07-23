@@ -1,11 +1,10 @@
-import {NgModule} from '@angular/core';
-import {CommonModule} from '@angular/common';
-import {LoginComponent} from './login/login.component';
-import {SignupRoutingModule} from './signup-routing.module';
-import {ReactiveFormsModule} from '@angular/forms';
-import {UsersServiceProvider} from '../../services/users/provider';
-import {FormPipesModule} from 'junte-angular';
-import {JunteUiModule} from 'junte-ui';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { LoginComponent } from './login/login.component';
+import { SignupRoutingModule } from './signup-routing.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { JunteUiModule } from 'junte-ui';
+import { FormPipesModule } from 'junte-angular';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -15,9 +14,6 @@ import {JunteUiModule} from 'junte-ui';
     SignupRoutingModule,
     FormPipesModule,
     JunteUiModule
-  ],
-  providers: [
-    UsersServiceProvider
   ]
 })
 export class SignupModule {

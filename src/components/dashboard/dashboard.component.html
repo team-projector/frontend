@@ -76,7 +76,7 @@
         </ng-template>
         <ng-template #userMenu>
           <jnt-user-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
-            <jnt-button *ngIf="config.authorization" (click)="logout()"
+            <jnt-button *ngIf="config.token" (click)="logout()"
                         text="Logout"></jnt-button>
           </jnt-user-menu>
         </ng-template>

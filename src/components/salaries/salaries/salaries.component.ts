@@ -1,12 +1,12 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE} from 'src/consts';
-import {BehaviorSubject} from 'rxjs';
-import {distinctUntilChanged, filter as filtering, map} from 'rxjs/operators';
-import {TableComponent, UI} from 'junte-ui';
-import {PagingSalaries, SalariesFilter} from 'src/models/salary';
-import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {queries} from './salaries.queries';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
+import { BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
+import { TableComponent, UI } from 'junte-ui';
+import { PagingSalaries, SalariesFilter } from 'src/models/salary';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { AllSalariesGQL } from './salaries.graphql';
+import { R } from 'apollo-angular/types';
 
 @Component({
   selector: 'app-salaries',
@@ -30,7 +30,7 @@ export class SalariesComponent implements OnInit {
   @ViewChild('table')
   table: TableComponent;
 
-  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService) {
+  constructor(private allSalaries: AllSalariesGQL) {
   }
 
   ngOnInit() {
@@ -39,7 +39,7 @@ export class SalariesComponent implements OnInit {
         this.filter.user = user;
         this.table.fetcher = (filter: SalariesFilter) => {
           Object.assign(this.filter, filter);
-          return this.graphQL.get(queries.salaries, serialize(this.filter))
+          return this.allSalaries.fetch(serialize(this.filter) as R)
             .pipe(map(({data: {allSalaries}}: { data: { allSalaries } }) =>
               deserialize(allSalaries, PagingSalaries)));
         };

@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { format, isFuture } from 'date-fns';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,34 +10,12 @@ import { Period } from 'junte-ui/lib/components/calendar/models';
 import { UI } from 'junte-ui';
 import { DurationFormat } from '../../../pipes/date';
 import { IssuesFilter, IssuesSummary } from 'src/models/issue';
-import { graph_ql_service, IGraphQLService } from '../../../services/graphql/interface';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MetricsGroup, UserMetricsFilter } from '../../../models/metrics';
 import { MetricType } from '../../leader/teams/team/calendar/team-calendar.component';
-
-const query = {
-  summary: `query ($user: ID, $dueDate: Date, $state: String) {
-  issuesSummary(user: $user, dueDate: $dueDate, state: $state) {
-    issuesCount
-    timeSpent
-    problemsCount
-  }
-}`,
-  metrics: `query ($user: ID!, $start: Date!, $end: Date!, $group: String!) {
-  userProgressMetrics(user: $user, start: $start, end: $end, group: $group) {
-    start
-    end
-    timeEstimate
-    timeSpent
-    timeRemains
-    plannedWorkHours
-    loading
-    payroll
-    paid
-    issuesCount
-  }
-}`
-};
+import { IssuesSummaryGQL } from './issues-summary.graphql';
+import { IssuesMetricsGQL } from './issues-metrics.graphql';
+import { R } from 'apollo-angular/types';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,
@@ -85,10 +63,11 @@ export class DeveloperIssuesComponent implements OnInit {
   dueDate = new FormControl();
   form = this.formBuilder.group({dueDate: this.dueDate});
 
-  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService,
-              private formBuilder: FormBuilder,
+  constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private issuesSummaryApollo: IssuesSummaryGQL,
+              private issuesMetricsApollo: IssuesMetricsGQL) {
   }
 
   ngOnInit() {
@@ -112,7 +91,7 @@ export class DeveloperIssuesComponent implements OnInit {
         dueDate: dueDate
       });
 
-      this.graphQL.get(query.summary, serialize(filter))
+      this.issuesSummaryApollo.fetch(serialize(filter) as R)
         .pipe(map(({data: {issuesSummary}}: { data: { issuesSummary } }) =>
           deserialize(issuesSummary, IssuesSummary)))
         .subscribe(summary => this.summary = summary);
@@ -131,7 +110,7 @@ export class DeveloperIssuesComponent implements OnInit {
         end: period.end,
         group: group
       });
-      return this.graphQL.get(query.metrics, serialize(filter))
+      return this.issuesMetricsApollo.fetch(serialize(filter) as R)
         .pipe(map(({data: {userProgressMetrics}}) =>
             userProgressMetrics.map(el => deserialize(el, UserProgressMetrics))),
           map(metrics => {
