@@ -1,23 +1,14 @@
-import {Component, Inject, OnInit} from '@angular/core';
-import {UI} from 'junte-ui';
-import {ActivatedRoute, Router} from '@angular/router';
-import {format} from 'date-fns';
-import {distinctUntilChanged, map} from 'rxjs/operators';
-import {Team} from 'src/models/team';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {graph_ql_service, IGraphQLService} from '../../../../services/graphql/interface';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssuesFilter, IssuesSummary} from '../../../../models/issue';
-
-const query = {
-  summary: `query ($team: ID, $user: ID, $dueDate: Date, $state: String) {
-  issuesSummary(team: $team, user: $user, dueDate: $dueDate, state: $state) {
-    issuesCount
-    timeSpent
-    problemsCount
-  }
-}`
-};
+import { Component, OnInit } from '@angular/core';
+import { UI } from 'junte-ui';
+import { ActivatedRoute, Router } from '@angular/router';
+import { format } from 'date-fns';
+import { distinctUntilChanged, map } from 'rxjs/operators';
+import { Team } from 'src/models/team';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { IssuesFilter, IssuesSummary } from '../../../../models/issue';
+import { TeamIssuesSummaryGQL } from './team.graphql';
+import { R } from 'apollo-angular/types';
 
 @Component({
   selector: 'app-leader-team',
@@ -36,7 +27,7 @@ export class TeamComponent implements OnInit {
     filter: this.filter
   });
 
-  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService,
+  constructor(private teamIssuesSummaryApollo: TeamIssuesSummaryGQL,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
@@ -71,7 +62,7 @@ export class TeamComponent implements OnInit {
         dueDate: dueDate
       });
 
-      this.graphQL.get(query.summary, serialize(filter))
+      this.teamIssuesSummaryApollo.fetch(serialize(filter) as R)
         .pipe(map(({data: {issuesSummary}}: { data: { issuesSummary } }) =>
           deserialize(issuesSummary, IssuesSummary)))
         .subscribe(summary => this.summary = summary);

@@ -3,7 +3,6 @@ import {DeveloperRoutingModule} from './developer-routing.module';
 import {DeveloperComponent} from './developer.component';
 import {JunteUiModule} from 'junte-ui';
 import {UserResolver} from 'src/resolvers/user';
-import {UsersServiceProvider} from 'src/services/users/provider';
 import {SalariesModule} from 'src/components/developer/salaries/salaries.module';
 
 @NgModule({
@@ -16,7 +15,6 @@ import {SalariesModule} from 'src/components/developer/salaries/salaries.module'
     SalariesModule
   ],
   providers: [
-    UsersServiceProvider,
     UserResolver
   ]
 })

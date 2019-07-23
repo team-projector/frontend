@@ -1,45 +1,14 @@
-import {Component, Inject, Input, OnInit, ViewChild} from '@angular/core';
-import {DEFAULT_PAGE, DEFAULT_PAGE_SIZE, PLATFORM_DELAY} from 'src/consts';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {debounceTime, distinctUntilChanged, map} from 'rxjs/operators';
-import {TimeExpensesFilter} from 'src/models/spent-time';
-import {IssueState} from 'src/models/issue';
-import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
-import {graph_ql_service, IGraphQLService} from '../../../services/graphql/interface';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {PagingTimeExpenses} from '../../../models/spent-time';
-
-const query = `query ($team: ID, $user: ID, $salary: ID, $date: Date, $offset: Int, $first: Int) {
-  allSpentTimes(team: $team, user: $user, salary: $salary, date: $date, offset: $offset, first: $first) {
-    count
-    edges {
-      node {
-        id
-        createdAt
-        date
-        owner {
-          __typename
-          title
-          labels {
-            count
-            edges {
-              node {
-                title
-                color
-              }
-            }
-          }
-          glUrl
-          project {
-            fullTitle
-          }
-        }
-        timeSpent
-        sum
-      }
-    }
-  }
-}`;
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, PLATFORM_DELAY } from 'src/consts';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { TimeExpensesFilter } from 'src/models/spent-time';
+import { IssueState } from 'src/models/issue';
+import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { PagingTimeExpenses } from '../../../models/spent-time';
+import { TimeExpensesGQL } from './time-expenses.graphql';
+import { R } from 'apollo-angular/types';
 
 @Component({
   selector: 'app-time-expenses',
@@ -82,7 +51,7 @@ export class TimeExpensesComponent implements OnInit {
   @ViewChild('table')
   table: TableComponent;
 
-  constructor(@Inject(graph_ql_service) private graphQL: IGraphQLService) {
+  constructor(private timeExpansesApollo: TimeExpensesGQL) {
   }
 
   ngOnInit() {
@@ -95,8 +64,10 @@ export class TimeExpensesComponent implements OnInit {
         this.filter.salary = salary;
         this.table.fetcher = (filter: DefaultSearchFilter) => {
           Object.assign(this.filter, filter);
-          return this.graphQL.get(query, serialize(this.filter))
-            .pipe(map(({data: {allSpentTimes}}) =>
+          return this.timeExpansesApollo.fetch(serialize(this.filter) as R)
+            .pipe(
+              tap(({data: {allSpentTimes}}) => console.log(allSpentTimes)),
+              map(({data: {allSpentTimes}}) =>
               deserialize(allSpentTimes, PagingTimeExpenses)));
         };
 

@@ -1,21 +1,20 @@
-import {Inject, Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
-import {Config} from 'junte-angular';
-import {AppConfig} from '../app-config';
-import {Observable, of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { AppConfig2 } from '../app-config2';
 
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
 
-  constructor(@Inject(Config) public config: AppConfig,
+  constructor(public config: AppConfig2,
               private router: Router) {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    if (!this.config.authorization) {
+    if (!this.config.token) {
       this.router.navigate(['/signup/login', {redirect: route.url}]);
     }
-    return of(!!this.config.authorization);
+    return of(!!this.config.token);
   }
 }
