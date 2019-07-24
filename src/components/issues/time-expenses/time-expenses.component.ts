@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { DEFAULT_PAGE_SIZE, PLATFORM_DELAY } from 'src/consts';
+import { PLATFORM_DELAY } from 'src/consts';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { TimeExpensesFilter } from 'src/models/spent-time';
 import { IssueState } from 'src/models/issue';
 import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
@@ -46,7 +46,7 @@ export class TimeExpensesComponent implements OnInit {
     this.salary$.next(salary);
   }
 
-  filter: TimeExpensesFilter = new TimeExpensesFilter({offset: 0, first: DEFAULT_PAGE_SIZE});
+  filter: TimeExpensesFilter = new TimeExpensesFilter();
 
   @ViewChild('table')
   table: TableComponent;

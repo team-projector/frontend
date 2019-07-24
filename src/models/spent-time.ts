@@ -1,13 +1,14 @@
-import {ArraySerializer, ModelSerializer} from 'serialize-ts';
-import {Paging} from './paging';
-import {DateSerializer} from '../serializers/date';
-import {DATE_FORMAT} from '../consts';
-import {field, model} from '@junte/mocker-library';
-import {OwnerSerializer} from '../serializers/owner';
-import {MergeRequest} from './merge-request';
-import {Order} from 'junte-ui';
-import {EdgesToPaging} from '../serializers/graphql';
-import {Issue} from './issue';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { Paging } from './paging';
+import { DateSerializer } from '../serializers/date';
+import { DATE_FORMAT } from '../consts';
+import { field, model } from '@junte/mocker-library';
+import { OwnerSerializer } from '../serializers/owner';
+import { MergeRequest } from './merge-request';
+import { Order } from 'junte-ui';
+import { EdgesToPaging } from '../serializers/graphql';
+import { Issue } from './issue';
+import { DEFAULT_PAGE_SIZE } from 'src/consts';
 
 @model()
 export class SpentTime {
@@ -80,9 +81,7 @@ export class TimeExpensesFilter {
   offset?: number;
 
   constructor(defs: TimeExpensesFilter = null) {
-    if (!!defs) {
-      Object.assign(this, defs);
-    }
+      Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});
   }
 
 }
