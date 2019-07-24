@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE } from 'src/consts';
+import { DEFAULT_PAGE_SIZE } from 'src/consts';
 import { BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
 import { TableComponent, UI } from 'junte-ui';
@@ -24,7 +24,7 @@ export class SalariesComponent implements OnInit {
     this.user$.next(user);
   }
 
-  filter: SalariesFilter = new SalariesFilter({offset: DEFAULT_PAGE, first: DEFAULT_PAGE_SIZE});
+  filter: SalariesFilter = new SalariesFilter({offset: 0, first: DEFAULT_PAGE_SIZE});
 
   // TODO: @ViewChild(TableComponent) == undefined in AOT
   @ViewChild('table')

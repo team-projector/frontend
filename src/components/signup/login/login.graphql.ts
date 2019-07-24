@@ -7,8 +7,23 @@ import gql from 'graphql-tag';
 })
 export class LoginGQL extends Mutation<{ login: {token} }> {
   document = gql`
-    mutation login($login: String!, $password: String!) {
+    mutation Login($login: String!, $password: String!) {
       login(login: $login, password: $password) {
+        token {
+          key
+          created
+        }
+      }
+    }`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GitlabLoginGQL extends Mutation<{ login: {token} }> {
+  document = gql`
+    mutation GitlabLogin($code: String!, $state: String!) {
+      completeGitlabAuth(code: $code, state: $state) {
         token {
           key
           created
