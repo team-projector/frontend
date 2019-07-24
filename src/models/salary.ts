@@ -1,9 +1,10 @@
-import {ArraySerializer, ModelSerializer} from 'serialize-ts';
-import {DateSerializer} from '../serializers/date';
-import {Paging} from './paging';
-import {SearchFilter} from 'junte-ui';
-import {field, model} from '@junte/mocker-library';
-import {EdgesToPaging} from '../serializers/graphql';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { DateSerializer } from '../serializers/date';
+import { Paging } from './paging';
+import { SearchFilter } from 'junte-ui';
+import { field, model } from '@junte/mocker-library';
+import { EdgesToPaging } from '../serializers/graphql';
+import { DEFAULT_PAGE_SIZE } from 'src/consts';
 
 @model()
 export class Salary {
@@ -83,9 +84,7 @@ export class SalariesFilter implements SearchFilter {
   offset?: number;
 
   constructor(defs: SalariesFilter = null) {
-    if (!!defs) {
-      Object.assign(this, defs);
-    }
+    Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});
   }
 
 }
