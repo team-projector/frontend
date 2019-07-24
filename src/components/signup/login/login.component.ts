@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit {
         this.loginGitlabApollo.mutate({code: code, state: state})
           .pipe(
             finalize(() => this.progress.gitlab = false),
-            map(({data: {login: {token}}}) =>
+            map(({data: {completeGitlabAuth: {token}}}) =>
               deserialize(token, AccessToken))
           )
           .subscribe((token: AccessToken) => this.logged(token),
