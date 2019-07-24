@@ -114,10 +114,10 @@ export class PagingIssues implements Paging<Issue> {
 export class IssuesFilter implements SearchFilter {
 
   @field()
-  team?: number;
+  team?: string;
 
   @field()
-  user?: number;
+  user?: string;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
   dueDate?: Date;

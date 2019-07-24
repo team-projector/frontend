@@ -44,7 +44,7 @@ export class TeamMember {
 export class Team {
 
   @field({mock: '{{int 1 1000}}'})
-  id: number;
+  id: string;
 
   @field({mock: '{{team}}'})
   title: string;

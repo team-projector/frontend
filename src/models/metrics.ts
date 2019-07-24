@@ -104,7 +104,7 @@ export class TeamProgressMetrics {
 export class TeamMetricsFilter {
 
   @field()
-  team: number;
+  team: string;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
   start: Date;

@@ -1,3 +1,16 @@
-<app-issues [team]="team?.id" [user]="user?.id" [dueDate]="dueDate" [opened]="opened" [problems]="problems"
-            (filtered)="filtered($event)">
-</app-issues>
+<jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.large">
+  <jnt-chart>
+    <jnt-chart-indicator *ngFor="let p of summary;let i = index"
+                         [title]="p.project.fullTitle"
+                         [data]="1"
+                         [value]="p.issues.percentage * 100"
+                         [label]="p.issues.remains  | duration:durationFormat.short"
+                         [color]="colors[i % colors.length]">
+    </jnt-chart-indicator>
+  </jnt-chart>
+
+  <app-issues [team]="team?.id" [user]="user?.id" [dueDate]="dueDate" [opened]="opened" [problems]="problems"
+              (filtered)="filtered($event)">
+  </app-issues>
+
+</jnt-stack>

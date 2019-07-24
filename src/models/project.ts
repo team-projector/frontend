@@ -30,5 +30,29 @@ export class ProjectGroup {
 
   @field({mock: '{{url}}'})
   glUrl: string;
+}
+
+@model()
+export class ProjectIssuesSummary {
+
+  @field()
+  remains: number;
+
+  @field()
+  percentage: number;
+
+  @field()
+  openedCount: number;
+
+}
+
+@model()
+export class ProjectSummary {
+
+  @field()
+  project: Project;
+
+  @field()
+  issues: ProjectIssuesSummary;
 
 }

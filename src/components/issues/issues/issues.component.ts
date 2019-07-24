@@ -35,14 +35,14 @@ export class IssuesComponent implements OnInit {
     problems: [false]
   });
 
-  private team$ = new BehaviorSubject<number>(null);
-  private user$ = new BehaviorSubject<number>(null);
+  private team$ = new BehaviorSubject<string>(null);
+  private user$ = new BehaviorSubject<string>(null);
   private dueDate$ = new BehaviorSubject<Date>(null);
   private opened$ = new BehaviorSubject<boolean>(true);
   private problems$ = new BehaviorSubject<boolean>(true);
 
   @Input()
-  set team(team: number) {
+  set team(team: string) {
     this.team$.next(team);
   }
 
@@ -51,7 +51,7 @@ export class IssuesComponent implements OnInit {
   }
 
   @Input()
-  set user(user: number) {
+  set user(user: string) {
     this.user$.next(user);
   }
 

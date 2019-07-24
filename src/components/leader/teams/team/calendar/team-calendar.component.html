@@ -91,7 +91,8 @@
       <tr *ngFor="let member of members" [attr.active]="user.value?.id == member.user.id">
         <td gutter></td>
         <td>
-          <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small">
+          <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small"
+                     [align]="ui.flex.align.center">
             <jnt-avatar [image]="member.user.avatar"
                         [size]="ui.sizes.tiny"></jnt-avatar>
             <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>

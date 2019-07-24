@@ -1,5 +1,5 @@
 import { BehaviorSubject } from 'rxjs';
-import { AccessToken } from './models/authorization';
+import { AccessToken } from './models/access-token';
 import { Injectable } from '@angular/core';
 
 export const GRAPHQL_URI = 'https://teamprojector.com/api/graphql';

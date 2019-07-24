@@ -6,7 +6,7 @@ import { validate } from 'junte-angular';
 import 'reflect-metadata';
 import { UI } from 'junte-ui';
 import { GitlabLoginGQL, LoginGQL } from './login.graphql';
-import { AccessToken } from 'src/models/authorization';
+import { AccessToken } from 'src/models/access-token';
 import { AppConfig } from 'src/app-config';
 import { deserialize } from 'serialize-ts/dist';
 import { ApolloError } from 'apollo-client';
