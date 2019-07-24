@@ -20,7 +20,7 @@ export class LoginGQL extends Mutation<{ login: {token} }> {
 @Injectable({
   providedIn: 'root'
 })
-export class GitlabLoginGQL extends Mutation<{ login: {token} }> {
+export class GitlabLoginGQL extends Mutation<{ completeGitlabAuth: {token} }> {
   document = gql`
     mutation GitlabLogin($code: String!, $state: String!) {
       completeGitlabAuth(code: $code, state: $state) {
