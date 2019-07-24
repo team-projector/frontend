@@ -3,7 +3,7 @@ import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
-import { AppConfig2, GRAPHQL_URI } from '../app-config2';
+import { AppConfig, GRAPHQL_URI } from '../app-config';
 import { ErrorResponse, onError } from 'apollo-link-error';
 import { Router } from '@angular/router';
 
@@ -13,11 +13,11 @@ import { Router } from '@angular/router';
     HttpLinkModule
   ],
   providers: [
-    AppConfig2
+    AppConfig
   ]
 })
 export class GraphQLModule {
-  constructor(@Inject(AppConfig2) config: AppConfig2,
+  constructor(@Inject(AppConfig) config: AppConfig,
               apollo: Apollo,
               httpLink: HttpLink,
               router: Router) {

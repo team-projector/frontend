@@ -8,7 +8,7 @@ import { deserialize } from 'serialize-ts/dist';
 import { map } from 'rxjs/operators';
 import { GitlabStatusGQL } from './gitlab-status.graphql';
 import { interval } from 'rxjs';
-import { AppConfig2 } from '../../app-config2';
+import { AppConfig } from '../../app-config';
 
 const STATUS_TIMEOUT = 60000;
 
@@ -28,16 +28,15 @@ export class DashboardComponent implements OnInit {
 
   @ViewChild('status') statusEl: ElementRef;
 
-  constructor(@Inject(AppConfig2) public config: AppConfig2,
+  constructor(@Inject(AppConfig) public config: AppConfig,
               private router: Router,
               private gitlabStatusApollo: GitlabStatusGQL,
               public me: MeManager) {
   }
 
   logout() {
-    // this.router.navigate(['/signup/login'])
-    //   .then(() => this.config.token = null);
-    this.config.token = null;
+    this.router.navigate(['/signup/login'])
+      .then(() => this.config.token = null);
   }
 
   ngOnInit() {

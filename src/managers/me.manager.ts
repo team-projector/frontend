@@ -5,7 +5,7 @@ import { jsonEquals } from '../utils/object';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { MeManagerGQL } from './me-manager.graphql';
-import { AppConfig2 } from 'src/app-config2';
+import { AppConfig } from 'src/app-config';
 
 @Injectable()
 export class MeManager {
@@ -22,7 +22,7 @@ export class MeManager {
     return this.user$.getValue();
   }
 
-  constructor(@Inject(AppConfig2) private config: AppConfig2,
+  constructor(@Inject(AppConfig) private config: AppConfig,
               private meManagerApollo: MeManagerGQL) {
     this.config.token$.subscribe(token => {
       if (!!token) {
