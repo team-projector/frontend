@@ -65,8 +65,7 @@ export class TimeExpensesComponent implements OnInit {
         this.table.fetcher = (filter: DefaultSearchFilter) => {
           Object.assign(this.filter, filter);
           return this.timeExpansesApollo.fetch(serialize(this.filter) as R)
-            .pipe(
-              map(({data: {allSpentTimes}}) =>
+            .pipe(map(({data: {allSpentTimes}}) =>
               deserialize(allSpentTimes, PagingTimeExpenses)));
         };
 
