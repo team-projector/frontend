@@ -35,7 +35,7 @@ export class CalendarMembersGQL extends Query<{team: {members}}> {
 @Injectable({
   providedIn: 'root'
 })
-export class CalendarMetricsGQL extends Query<any> {
+export class CalendarMetricsGQL extends Query<{teamProgressMetrics}> {
   document = gql`
     query CalendarMetrics($team: ID!, $start: Date!, $end: Date!, $group: String!) {
       teamProgressMetrics(team: $team, start: $start, end: $end, group: $group) {
