@@ -39,7 +39,7 @@ docker:
     GIT_STRATEGY: fetch
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest -t $DOCKER_TEST_IMAGE -t $CI_REGISTRY_IMAGE:latest -f deploy/Dockerfile .
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest -t $DOCKER_IMAGE -t $CI_REGISTRY_IMAGE:latest -f deploy/Dockerfile .
     - docker push $DOCKER_IMAGE
     - docker push $CI_REGISTRY_IMAGE:latest
 
@@ -73,6 +73,25 @@ deploy_dev:
     SSH_PRIVATE_KEY: $SSH_DEV_PRIVATE_KEY
   script:
   - ssh deploy@${DEV_HOST} "/opt/deploy/deploy.sh"
+  environment:
+    name: dev
+    url: https://${DEV_HOST}
+  only:
+  - master
+
+deploy_k8s:  
+  stage: deploy
+  dependencies: []
+  before_script:
+    - mkdir -p /etc/deploy
+    - echo ${kube_config} | base64 -d > ${KUBECONFIG}
+    - kubectl config use-context homekube
+    - helm init --client-only
+  script:
+    - export API_VERSION="$(grep "appVersion" Chart.yaml | cut -d" " -f2)"
+    - export RELEASE_NAME="libr-files-v${API_VERSION/./-}"
+    - export DEPLOYS=$(helm ls | grep $RELEASE_NAME | wc -l)
+    - if [ ${DEPLOYS}  -eq 0 ]; then helm install --name=${RELEASE_NAME} . --namespace=${STAGING_NAMESPACE}; else helm upgrade ${RELEASE_NAME} . --namespace=${STAGING_NAMESPACE}; fi
   environment:
     name: dev
     url: https://${DEV_HOST}
