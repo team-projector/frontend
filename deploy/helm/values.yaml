@@ -1,0 +1,4 @@
+global:
+  image:
+    name: registry.gitlab.com/junte/team-projector/frontend
+    tag: dev

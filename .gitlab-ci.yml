@@ -2,7 +2,7 @@ image: docker:18
 variables:
   DOCKER_DRIVER: overlay
   DOCKER_IMAGE: $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
-  DOCKER_PROD_IMAGE: $$CI_REGISTRY_IMAGE:prod
+  DOCKER_PROD_IMAGE: $CI_REGISTRY_IMAGE:prod
   DOCKER_DEV_IMAGE: $CI_REGISTRY_IMAGE:dev
   GIT_STRATEGY: none
 
@@ -39,8 +39,9 @@ docker:
     GIT_STRATEGY: fetch
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
-    - docker build --pull -t $DOCKER_IMAGE -f deploy/Dockerfile .
+    - docker build --cache-from $CI_REGISTRY_IMAGE:latest -t $DOCKER_TEST_IMAGE -t $CI_REGISTRY_IMAGE:latest -f deploy/Dockerfile .
     - docker push $DOCKER_IMAGE
+    - docker push $CI_REGISTRY_IMAGE:latest
 
 publish_dev:
   stage: publish
