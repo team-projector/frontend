@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class AllTeamsGQL extends Query<any> {
+export class AllTeamsGQL extends Query<{allTeams}> {
   document = gql`
     query AllTeams($first: Int) {
       allTeams(first: $first) {

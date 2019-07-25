@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class MeManagerGQL extends Query<any> {
+export class MeManagerGQL extends Query<{me}> {
   document = gql`
     query MeManager {
       me {
