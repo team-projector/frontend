@@ -13,6 +13,9 @@
   <ng-template #teamsTemplate>
     <jnt-link *ngFor="let team of teams" [source]="[team.id]" team>
       <jnt-block [padding]="ui.padding.normal" [title]="team.title" block>
+        <jnt-label *ngIf="team.metrics.problemsCount" problems [icon]="ui.icons.warning"
+                   [color]="ui.colors.red"
+                   [label]="team.metrics.problemsCount"></jnt-label>
         <jnt-avatars-group [size]="ui.sizes.normal">
           <jnt-avatar *ngFor="let member of team.members"
                       [image]="member.user.avatar">
@@ -20,7 +23,7 @@
         </jnt-avatars-group>
         <ng-template #footerBlock>
           <div footer>
-            <div><span>120</span> hours for <span>{{team.metrics.issuesCount}}</span> tasks</div>
+            <div><b>120</b> hours for <b>{{team.metrics.issuesCount}}</b> tasks</div>
           </div>
         </ng-template>
       </jnt-block>

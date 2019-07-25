@@ -2,7 +2,7 @@
   <jnt-chart>
     <jnt-chart-indicator *ngFor="let p of summary;let i = index"
                          [title]="p.project.fullTitle"
-                         [data]="1"
+                         [data]="p.project.id"
                          [value]="p.issues.percentage * 100"
                          [label]="p.issues.remains  | duration:durationFormat.short"
                          [color]="colors[i % colors.length]">
