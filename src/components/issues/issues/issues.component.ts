@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { PLATFORM_DELAY } from 'src/consts';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { IssueProblem, IssuesFilter, IssueState, PagingIssues } from '../../../models/issue';
-import { IssuesGQL } from './issues.graphql';
+import { IssuesGQL, SyncIssueGQL } from './issues.graphql';
 import { R } from 'apollo-angular/types';
 
 export enum ViewType {
@@ -95,7 +95,8 @@ export class IssuesComponent implements OnInit {
   filtered = new EventEmitter<{ opened?, problems? }>();
 
   constructor(private formBuilder: FormBuilder,
-              private issuesApollo: IssuesGQL) {
+              private issuesApollo: IssuesGQL,
+              private syncIssueApollo: SyncIssueGQL) {
   }
 
   ngOnInit() {
@@ -139,9 +140,9 @@ export class IssuesComponent implements OnInit {
 
   sync(issue: number) {
     this.loading = true;
-    /*this.issuesService.sync(issue)
+    this.syncIssueApollo.mutate({id: issue})
       .pipe(finalize(() => this.loading = false))
-      .subscribe(() => this.table.load());*/
+      .subscribe(() => this.table.load());
   }
 
 }
