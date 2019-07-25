@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import gql from 'graphql-tag';
 import { Mutation, Query } from 'apollo-angular';
+import {ProjectSummary} from '../../../models/project';
 
 @Injectable({
   providedIn: 'root'
@@ -74,4 +75,26 @@ export class IssuesGQL extends Query<{allIssues}> {
         }
       }
     }`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ProjectsSummaryGQL extends Query<{ issuesSummary: { projects: ProjectSummary[] } }> {
+  document = gql`
+    query IssuesSummary($team: ID, $user: ID, $dueDate: Date, $state: String) {
+  issuesSummary(team: $team, user: $user, dueDate: $dueDate, state: $state) {
+    projects {
+      project {
+        id
+        fullTitle
+      }
+      issues {
+        remains
+        percentage
+        openedCount
+      }
+    }
+  }
+}`;
 }
