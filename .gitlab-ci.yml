@@ -79,7 +79,7 @@ deploy_dev:
   only:
   - master
 
-deploy_k8s:  
+.deploy_k8s:  
   stage: deploy
   dependencies: []
   before_script:
