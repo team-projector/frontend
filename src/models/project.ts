@@ -4,7 +4,7 @@ import {field, model} from '@junte/mocker-library';
 export class Project {
 
   @field({mock: '{{id}}'})
-  id: number;
+  id: string;
 
   @field({mock: '{{project}}'})
   title: string;
@@ -23,7 +23,7 @@ export class Project {
 export class ProjectGroup {
 
   @field({mock: '{{int 1 1000}}'})
-  id: number;
+  id: string;
 
   @field({mock: '{{project}}'})
   title: string;

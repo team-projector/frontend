@@ -15,7 +15,7 @@ export class TeamResolver implements Resolve<Observable<Team>> {
 
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<Team> {
-    const id = +route.params['team'];
+    const id = route.params['team'];
     return this.teamApollo.fetch({team: id})
       .pipe(map(({data: {team}}) =>
         deserialize(team, Team)));

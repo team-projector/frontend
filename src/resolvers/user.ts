@@ -14,7 +14,7 @@ export class UserResolver implements Resolve<Observable<User>> {
 
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<User> {
-    const id = +route.params['user'];
+    const id = route.params['user'];
     return !!id ? this.userApollo.fetch({user: id})
         .pipe(map(({data: {user}}) => deserialize(user, User)))
       : of(null);

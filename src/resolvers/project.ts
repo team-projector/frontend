@@ -16,7 +16,7 @@ export class ProjectResolver implements Resolve<Observable<Project>> {
 
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<Project> {
-    const id = +route.params['project'];
+    const id = route.params['project'];
 
     return !!id ? of(deserialize({id: id}, Project))
       : of(null);

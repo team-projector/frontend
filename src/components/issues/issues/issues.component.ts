@@ -119,9 +119,10 @@ export class IssuesComponent implements OnInit {
   }
 
   ngOnInit() {
-    combineLatest(this.opened$, this.problems$)
-      .subscribe(([opened, problems]) => {
+    combineLatest(this.project$, this.opened$, this.problems$)
+      .subscribe(([project, opened, problems]) => {
         this.form.patchValue({
+          project: project,
           opened: opened,
           problems: problems
         }, {emitEvent: false});
