@@ -123,6 +123,9 @@ export class IssuesFilter implements SearchFilter {
   dueDate?: Date;
 
   @field()
+  project?: string;
+
+  @field()
   state?: IssueState | null;
 
   @field()

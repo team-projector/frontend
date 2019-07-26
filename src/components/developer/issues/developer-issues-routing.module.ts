@@ -5,6 +5,8 @@ import {IssuesListComponent} from './issues-list/issues-list.component';
 import {DueDateResolver, OpenedResolver, ProblemsResolver} from '../../../resolvers/issue';
 import {TimeExpensesListComponent} from './time-expenses-list/time-expenses-list.component';
 import {MeUserResolver} from '../../../resolvers/me';
+import {Project} from '../../../models/project';
+import {ProjectResolver} from '../../../resolvers/project';
 
 const routes: Routes = [
   {
@@ -17,6 +19,7 @@ const routes: Routes = [
         data: {breadcrumb: 'Issues'},
         component: IssuesListComponent,
         resolve: {
+          project: ProjectResolver,
           opened: OpenedResolver,
           problems: ProblemsResolver
         }

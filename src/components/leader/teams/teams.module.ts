@@ -16,6 +16,7 @@ import {RouterModule} from '@angular/router';
 import {IssuesModule} from '../../issues/issues.module';
 import {DueDateResolver, OpenedResolver, ProblemsResolver} from '../../../resolvers/issue';
 import {ArrayPipesModule} from '../../../pipes/array-pipes.module';
+import {ProjectResolver} from '../../../resolvers/project';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,7 @@ import {ArrayPipesModule} from '../../../pipes/array-pipes.module';
   providers: [
     TeamResolver,
     UserResolver,
+    ProjectResolver,
     DueDateResolver,
     OpenedResolver,
     ProblemsResolver

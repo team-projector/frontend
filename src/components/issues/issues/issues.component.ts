@@ -38,11 +38,13 @@ export class IssuesComponent implements OnInit {
 
   form: FormGroup = this.formBuilder.group({
     opened: [true],
-    problems: [false]
+    problems: [false],
+    project: []
   });
 
   private team$ = new BehaviorSubject<string>(null);
   private user$ = new BehaviorSubject<string>(null);
+  private project$ = new BehaviorSubject<string>(null);
   private dueDate$ = new BehaviorSubject<Date>(null);
   private opened$ = new BehaviorSubject<boolean>(true);
   private problems$ = new BehaviorSubject<boolean>(true);
@@ -63,6 +65,15 @@ export class IssuesComponent implements OnInit {
 
   get user() {
     return this.user$.getValue();
+  }
+
+  @Input()
+  set project(project: string) {
+    this.project$.next(project);
+  }
+
+  get project() {
+    return this.project$.getValue();
   }
 
   @Input()
@@ -123,11 +134,12 @@ export class IssuesComponent implements OnInit {
           deserialize(allIssues, PagingIssues)));
     };
 
-    combineLatest(this.team$, this.user$, this.dueDate$, this.opened$, this.problems$)
+    combineLatest(this.team$, this.user$, this.project$, this.dueDate$, this.opened$, this.problems$)
       .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged())
-      .subscribe(([team, user, dueDate, opened, problems]) => {
+      .subscribe(([team, user, project, dueDate, opened, problems]) => {
         this.filter.team = team;
         this.filter.user = user;
+        this.filter.project = project;
         this.filter.dueDate = dueDate;
         this.filter.state = opened ? IssueState.opened : null;
         this.filter.problems = problems ? problems : null;
@@ -136,9 +148,12 @@ export class IssuesComponent implements OnInit {
         this.table.load();
       });
 
-    this.form.valueChanges.subscribe(({opened, problems}) => {
+    this.form.valueChanges.subscribe(({opened, problems, project}) => {
       [this.opened, this.problems] = [opened, problems];
-      const state: { opened?, problems? } = {};
+      const state: { project?, opened?, problems? } = {};
+      if (!!project) {
+        state.project = project;
+      }
       if (!opened) {
         state.opened = false;
       }

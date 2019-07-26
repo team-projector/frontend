@@ -24,8 +24,8 @@ export class SyncIssueGQL extends Mutation<{syncIssue: {issue: {id}}}> {
 })
 export class IssuesGQL extends Query<{allIssues}> {
   document = gql`
-    query Issues ($team: ID, $user: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int) {
-      allIssues(team: $team, user: $user, dueDate: $dueDate, state: $state, problems: $problems, orderBy: $orderBy, offset: $offset, first: $first) {
+    query Issues ($team: ID, $user: ID, $project: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int) {
+      allIssues(team: $team, user: $user, project: $project, dueDate: $dueDate, state: $state, problems: $problems, orderBy: $orderBy, offset: $offset, first: $first) {
         count
         edges {
           node {

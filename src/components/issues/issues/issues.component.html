@@ -1,16 +1,17 @@
-<jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.large">
-  <jnt-chart>
-    <jnt-chart-indicator *ngFor="let p of summary;let i = index"
-                         [title]="p.project.fullTitle"
-                         [data]="p.project.id"
-                         [value]="p.issues.percentage * 100"
-                         [label]="p.issues.remains  | duration:durationFormat.short"
-                         [color]="colors[i % colors.length]">
-    </jnt-chart-indicator>
-  </jnt-chart>
+<form [formGroup]="form">
+  <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.large">
+    <jnt-chart formControlName="project">
+      <jnt-chart-indicator *ngFor="let p of summary;let i = index"
+                           [title]="p.project.fullTitle"
+                           [data]="p.project.id"
+                           [value]="p.issues.percentage * 100"
+                           [label]="p.issues.remains  | duration:durationFormat.short"
+                           [color]="colors[i % colors.length]">
+      </jnt-chart-indicator>
+    </jnt-chart>
 
-  <jnt-block [width]="ui.width.fluid">
-    <form [formGroup]="form">
+    <jnt-block [width]="ui.width.fluid">
+
       <jnt-table #table [search]="true">
         <ng-template #filters>
           <jnt-stack [type]="ui.stack.type.horizontal">
@@ -72,19 +73,14 @@
                 </jnt-stack>
               </ng-template>
             </jnt-progress-bar>
+            <div style="text-align: center;">
+            <span [attr.slow]="metrics.efficiency > 0 && metrics.efficiency < 0.8">
+              {{!!metrics.efficiency ? (metrics.efficiency | number:'1.2-2') : ''}}
+            </span>
+            </div>
             <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
                        [color]="ui.colors.red" label="estimate">
             </jnt-label>
-          </ng-template>
-        </jnt-table-column>
-
-        <jnt-table-column i18n-title="@@eff" title="Eff">
-          <ng-template #cellTemplate let-metrics="metrics">
-            <div style="text-align: right;">
-            <span [attr.slow]="metrics.efficiency > 0 && metrics.efficiency < 0.8">
-              {{!!metrics.efficiency ? (metrics.efficiency | number:'1.2-2') : '&mdash;'}}
-            </span>
-            </div>
           </ng-template>
         </jnt-table-column>
 
@@ -92,13 +88,7 @@
           <ng-template #cellTemplate let-metrics="metrics">
             <div style="text-align: right;">
               {{!!metrics.payroll ? (metrics.payroll | currency:'RUB') : '&mdash;'}}
-            </div>
-          </ng-template>
-        </jnt-table-column>
-
-        <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@paid" title="Paid">
-          <ng-template #cellTemplate let-metrics="metrics">
-            <div style="text-align: right;">
+              /
               {{!!metrics.paid ? (metrics.paid | currency:'RUB') : '&mdash;'}}
             </div>
           </ng-template>
@@ -110,6 +100,6 @@
           </jnt-menu>
         </ng-template>
       </jnt-table>
-    </form>
-  </jnt-block>
-</jnt-stack>
+    </jnt-block>
+  </jnt-stack>
+</form>

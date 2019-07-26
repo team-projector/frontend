@@ -8,6 +8,7 @@ import {TeamIssuesListComponent} from 'src/components/leader/teams/team/issues/i
 import {OutletComponent} from 'src/components/outlet/outlet.component';
 import {UserResolver} from 'src/resolvers/user';
 import {DueDateResolver, OpenedResolver, ProblemsResolver} from 'src/resolvers/issue';
+import {ProjectResolver} from '../../../resolvers/project';
 
 export function getTeam(data: any) {
   return data.team.title;
@@ -42,6 +43,7 @@ const routes: Routes = [
             path: 'issues',
             data: {breadcrumb: 'Issues'},
             resolve: {
+              project: ProjectResolver,
               opened: OpenedResolver,
               problems: ProblemsResolver
             },

@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {User} from '../../../../models/user';
 import {ViewType} from '../../../issues/issues/issues.component';
+import {Project} from '../../../../models/project';
 
 @Component({
   selector: 'app-issues-list',
@@ -13,6 +14,7 @@ export class IssuesListComponent implements OnInit {
   viewType = ViewType;
 
   user: User;
+  project: Project;
   dueDate: Date;
   opened: boolean;
   problems: boolean;
@@ -22,9 +24,9 @@ export class IssuesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(({dueDate, user, opened, problems}) =>
-      [this.dueDate, this.user, this.opened, this.problems] =
-        [dueDate, user, opened, problems]);
+    this.route.data.subscribe(({user, project, dueDate, opened, problems}) =>
+      [this.user, this.project, this.dueDate, this.opened, this.problems] =
+        [user, project, dueDate, opened, problems]);
   }
 
   filtered(state: { opened?, problems? }) {

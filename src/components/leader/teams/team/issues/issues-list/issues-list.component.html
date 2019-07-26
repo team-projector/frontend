@@ -1,3 +1,8 @@
-<app-issues [team]="team?.id" [user]="user?.id" [dueDate]="dueDate" [opened]="opened" [problems]="problems"
+<app-issues [team]="team?.id"
+            [user]="user?.id"
+            [project]="project?.id"
+            [dueDate]="dueDate"
+            [opened]="opened"
+            [problems]="problems"
             (filtered)="filtered($event)">
 </app-issues>
