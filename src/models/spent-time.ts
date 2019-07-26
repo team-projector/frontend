@@ -5,7 +5,6 @@ import { DATE_FORMAT } from '../consts';
 import { field, model } from '@junte/mocker-library';
 import { OwnerSerializer } from '../serializers/owner';
 import { MergeRequest } from './merge-request';
-import { Order } from 'junte-ui';
 import { EdgesToPaging } from '../serializers/graphql';
 import { Issue } from './issue';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
@@ -72,7 +71,6 @@ export class TimeExpensesFilter {
   date?: Date;
 
   sort?: string;
-  orderBy?: Order = Order.asc;
 
   @field()
   first?: number;

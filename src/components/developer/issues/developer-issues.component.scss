@@ -74,6 +74,10 @@
   width: 45px;
   height: 45px;
 
+  &[today='true'] {
+    border: 3px $red solid;
+  }
+
   [issues] {
     position: absolute;
     top: 2px;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { format, isFuture } from 'date-fns';
+import {format, isFuture, isToday} from 'date-fns';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
@@ -34,6 +34,7 @@ export class DeveloperIssuesComponent implements OnInit {
   durationFormat = DurationFormat;
   metricType = MetricType;
   isFuture = isFuture;
+  isToday = isToday;
 
   user$ = new BehaviorSubject<User>(null);
   period$ = new BehaviorSubject<Period>(null);
