@@ -25,7 +25,7 @@
           <jnt-week-metric i18n-title="@@payroll" title="Payroll"></jnt-week-metric>
           <jnt-week-metric i18n-title="@@paid" title="Paid"></jnt-week-metric>
           <ng-template #dayTemplate let-date="date">
-            <div class="day">
+            <div class="day" [attr.today]="isToday(date)">
               <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric,
                 date: date, metric: metrics.days.get(format(date, formatDate))}">
               </ng-container>

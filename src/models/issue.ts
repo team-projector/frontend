@@ -1,5 +1,5 @@
 import {DateSerializer} from '../serializers/date';
-import {Order, SearchFilter} from 'junte-ui';
+import {SearchFilter} from 'junte-ui';
 import {ArraySerializer, PrimitiveSerializer} from 'serialize-ts';
 import {EdgesToArray, EdgesToPaging} from '../serializers/graphql';
 import {Paging} from './paging';
@@ -132,7 +132,6 @@ export class IssuesFilter implements SearchFilter {
   title?: string;
 
   sort?: string;
-  orderBy?: Order = Order.asc;
 
   @field()
   first?: number;
