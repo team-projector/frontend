@@ -1,54 +1,34 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, Inject, ViewChild } from '@angular/core';
 import { UI } from 'junte-ui';
 import { MeManager } from '../../managers/me.manager';
 import { Router } from '@angular/router';
-import { GitLabStatus } from '../../models/gitlab';
 import { UserRole } from '../../models/user';
-import { deserialize } from 'serialize-ts/dist';
-import { map } from 'rxjs/operators';
-import { GitlabStatusGQL } from './gitlab-status.graphql';
-import { interval } from 'rxjs';
 import { AppConfig } from '../../app-config';
-
-const STATUS_TIMEOUT = 60000;
+import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
 
   ui = UI;
   userRole = UserRole;
-  status: GitLabStatus;
 
   loading: { [name: string]: boolean } = {};
 
-
-  @ViewChild('status') statusEl: ElementRef;
+  @ViewChild(GitlabStatusComponent)
+  gitlabStatus: GitlabStatusComponent;
 
   constructor(@Inject(AppConfig) public config: AppConfig,
               private router: Router,
-              private gitlabStatusApollo: GitlabStatusGQL,
               public me: MeManager) {
   }
 
   logout() {
     this.router.navigate(['/signup/login'])
       .then(() => this.config.token = null);
-  }
-
-  ngOnInit() {
-    this.load();
-    interval(STATUS_TIMEOUT).subscribe(() => this.load());
-  }
-
-  load() {
-    this.gitlabStatusApollo.fetch()
-      .pipe(map(({data: {gitlabStatus}}) =>
-        deserialize(gitlabStatus, GitLabStatus)))
-      .subscribe(status => this.status = status);
   }
 
   setTheme(theme: string = null) {
