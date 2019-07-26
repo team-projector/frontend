@@ -1,0 +1,24 @@
+<jnt-stack [align]="ui.flex.align.stretch" *ngIf="status">
+  <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
+    <div>Last Sync Time</div>
+    <div>{{status.lastSync | format:'HH:mm:ss'}}</div>
+  </jnt-stack>
+  <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
+    <div>WEB</div>
+    <div>{{status.services.webHooks | diff | duration}}</div>
+  </jnt-stack>
+  <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
+    <div>API</div>
+    <div>{{status.services.api | diff | duration}}</div>
+  </jnt-stack>
+  <hr>
+  <jnt-stack [type]="ui.stack.type.horizontal"
+             [justify]="ui.flex.justify.between"
+             *ngFor="let issue of status.lastIssues">
+    <jnt-stack [gutter]="ui.stack.gutter.tiny">
+      <jnt-link [source]="issue.glUrl" target="_blank">{{issue.title}}</jnt-link>
+      <div project>{{issue.project?.fullTitle}}</div>
+    </jnt-stack>
+    <span user>{{issue.user?.name}}</span>
+  </jnt-stack>
+</jnt-stack>
