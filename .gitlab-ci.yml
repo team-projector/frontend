@@ -73,6 +73,7 @@ deploy_k8s:
   dependencies: []
   before_script:
     - mkdir -p /etc/deploy
+    - echo $KUBECONFIG
     - echo ${kube_config} | base64 -d > ${KUBECONFIG}
     - kubectl config use-context homekube
     - helm init --client-only
