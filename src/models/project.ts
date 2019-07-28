@@ -9,7 +9,7 @@ export class Project {
   @field({mock: '{{project}}'})
   title: string;
 
-  @field({mock: '{{project}}'})
+  @field({mock: '{{title}}'})
   fullTitle: string;
 
   @field({
@@ -27,6 +27,9 @@ export class ProjectGroup {
 
   @field({mock: '{{project}}'})
   title: string;
+
+  @field({mock: '{{title}}'})
+  fullTitle: string;
 
   @field({mock: '{{url}}'})
   glUrl: string;
