@@ -54,7 +54,7 @@ stages:
   only:
   - master
 
-deploy_dev:
+.deploy_dev:
   image: junte/ssh-agent
   stage: deploy
   dependencies: []
