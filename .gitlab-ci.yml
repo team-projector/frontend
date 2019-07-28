@@ -68,15 +68,15 @@ stages:
   only:
   - master
 
-deploy_k8s:  
+deploy_k8s:
+  image: dtzar/helm-kubectl
   stage: deploy
   dependencies: []
   before_script:
     - mkdir -p /etc/deploy
     - cat $KUBECONFIG
-    - echo ${kube_config} | base64 -d > ${KUBECONFIG}
-    - kubectl config use-context homekube
-    - helm init --client-only
+    # - echo ${kube_config} | base64 -d > ${KUBECONFIG}
+    # - helm init --client-only
   script:
     - kubectl get all
     # - export API_VERSION="$(grep "appVersion" Chart.yaml | cut -d" " -f2)"
