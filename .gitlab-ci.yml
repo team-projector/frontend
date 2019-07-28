@@ -15,7 +15,7 @@ stages:
   - publish
   - deploy
 
-.build:
+build:
   image: node:8
   stage: build
   variables:
@@ -32,7 +32,7 @@ stages:
     paths:
       - node_modules/
 
-.docker:
+docker:
   stage: docker
   variables:
     GIT_DEPTH: 5
@@ -43,7 +43,7 @@ stages:
     - docker push $DOCKER_IMAGE
     - docker push $CI_REGISTRY_IMAGE:latest
 
-.publish_dev:
+publish_dev:
   stage: publish
   dependencies: []
   script:
@@ -54,7 +54,7 @@ stages:
   only:
   - master
 
-.deploy_dev:
+deploy_dev:
   image: junte/ssh-agent
   stage: deploy
   dependencies: []
