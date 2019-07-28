@@ -78,7 +78,7 @@ deploy_k8s:
     # - echo ${kube_config} | base64 -d > ${KUBECONFIG}
     # - helm init --client-only
   script:
-    - kubectl get all
+    - kubectl get all  -n default
     # - export API_VERSION="$(grep "appVersion" Chart.yaml | cut -d" " -f2)"
     # - export RELEASE_NAME="libr-files-v${API_VERSION/./-}"
     # - export DEPLOYS=$(helm ls | grep $RELEASE_NAME | wc -l)
