@@ -20,4 +20,4 @@ spec:
           limits:
             memory: 10Mi
             cpu: 10m
-        image: {{ .Values.global.image.name }}:{{ .Values.global.image.tag }}
+        image: {{ .Values.image.name }}:{{ .Values.image.tag }}
