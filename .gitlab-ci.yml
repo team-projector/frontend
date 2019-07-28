@@ -73,11 +73,10 @@ deploy_k8s:
   stage: deploy
   dependencies: []
   before_script:
-    - kubectl config set-cluster prod —-server="${K8S_URL}" —-insecure-skip-tls-verify
-    - kubectl config set-credentials admin —-token="$K8S_TOKEN"
-    - kubectl config set-context default-context —-cluster=prod —-user=admin
+    - kubectl config set-cluster prod --server="${K8S_URL}" --insecure-skip-tls-verify
+    - kubectl config set-credentials admin --token="$K8S_TOKEN"
+    - kubectl config set-context default-context --cluster=prod --user=admin
     - kubectl config use-context default-context
-    # - cat $KUBECONFIG
     # - echo ${kube_config} | base64 -d > ${KUBECONFIG}
     # - helm init --client-only
   script:
