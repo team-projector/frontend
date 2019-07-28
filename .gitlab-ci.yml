@@ -81,6 +81,7 @@ deploy_k8s:
     - kubectl config set-context default-context --cluster=prod --user=deploy
     - kubectl config use-context default-context
     - helm init --client-only
+    - helm repo update
   script:
     - kubectl get all
     - cd deploy/helm
