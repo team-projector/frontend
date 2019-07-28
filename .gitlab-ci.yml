@@ -81,10 +81,10 @@ deploy_k8s:
     - kubectl config set-context default-context --cluster=prod --user=deploy
     - kubectl config use-context default-context
     - helm init --client-only
-    - helm repo update
   script:
     - kubectl get all
     - cd deploy/helm
+    - helm repo update
     - export RELEASE_NAME=frontend
     - export DEPLOYS=$(helm ls | grep $RELEASE_NAME | wc -l)
     - if [ ${DEPLOYS}  -eq 0 ]; then helm install --set image.tag=$CI_PIPELINE_IID --name=${RELEASE_NAME} . ; else helm upgrade --set image.tag=$CI_PIPELINE_IID . ${RELEASE_NAME}; fi
