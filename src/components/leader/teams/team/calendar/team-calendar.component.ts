@@ -79,7 +79,6 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   private team$ = new BehaviorSubject<Team>(null);
   private _date: Date;
 
-  metric = MetricType.all;
   formatDate = L;
   weeks: Week[] = [];
   metrics: Metric;
@@ -87,10 +86,12 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   user = new FormControl();
   dueDate = new FormControl();
+  metric = new FormControl(MetricType.all);
 
   form: FormGroup = this.fb.group({
     dueDate: this.dueDate,
-    user: this.user
+    user: this.user,
+    metric: this.metric
   });
 
   members: TeamMember[] = [];

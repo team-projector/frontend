@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {format, isFuture, isToday} from 'date-fns';
+import { format, isFuture, isToday } from 'date-fns';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
@@ -24,7 +24,7 @@ class Metric {
 }
 
 @Component({
-  selector: 'app-issues-list',
+  selector: 'app-developer-issues',
   templateUrl: './developer-issues.component.html',
   styleUrls: ['./developer-issues.component.scss']
 })
@@ -43,7 +43,6 @@ export class DeveloperIssuesComponent implements OnInit {
   formatDate = 'DD/MM/YYYY';
 
   summary: IssuesSummary;
-  metric = MetricType.all;
 
   set user(user: User) {
     this.user$.next(user);
@@ -62,7 +61,11 @@ export class DeveloperIssuesComponent implements OnInit {
     new Map<string, UserProgressMetrics>()
   );
   dueDate = new FormControl();
-  form = this.formBuilder.group({dueDate: this.dueDate});
+  metric = new FormControl(MetricType.all);
+  form = this.formBuilder.group({
+    dueDate: this.dueDate,
+    metric: this.metric
+  });
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
@@ -74,7 +77,7 @@ export class DeveloperIssuesComponent implements OnInit {
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(filter => {
-          const state: { due_date? } = {};
+          const state: { due_date?, metric? } = {};
           if (!!filter.dueDate) {
             state.due_date = format(filter.dueDate, 'MM-DD-YYYY');
           }
