@@ -63,217 +63,205 @@
   margin-bottom: $gutter-normal;
 }
 
-[wrapper] {
-  overflow-x: auto;
+table {
+  table-layout: auto;
+  border: 0;
+  border-spacing: 0;
+  background-color: $white-color;
   border-radius: $corner-normal;
   box-shadow: $shadow-normal;
-  table {
-    table-layout: auto;
-    width: 100%;
-    border: 0;
-    border-spacing: 0;
-    background-color: $white-color;
-    border-radius: $corner-normal;
-    font-size: $font-size-small;
-    thead {
-      tr {
-        &[rewind] {
-          th {
-            [date] {
-              display: flex;
-              color: $primary-text-dark-color;
-              font-weight: $font-weight-bold;
-              span {
-                margin: auto;
-              }
-              [arrow] {
-                background-color: transparent;
-                border-width: 0;
-                font-size: 1rem;
-                color: $primary-text-color;
-                cursor: pointer;
-                padding: 0;
-                vertical-align: middle;
-                border-radius: 50%;
-                width: 25px;
-                height: 25px;
-                display: inline-flex;
-                justify-content: center;
-                align-items: center;
-                transition: box-shadow .3s;
-                &:focus {
-                  outline: none;
-                  box-shadow: 0 0 6px rgba(8, 35, 202, 0.4);
-                  border: 1px solid $primary-color;
-                }
-                &:hover {
-                  color: lighten($primary-text-color, 10%);
-                }
-              }
-            }
-            &:nth-child(4) {
-              border-right: 1px solid $muted-color;
-            }
-          }
-        }
-        &[timeline] {
-          background-color: $secondary-background;
-          th {
-            &[day] {
-              cursor: pointer;
-              &:hover, &[active='true'] {
-                background-color: $secondary-dark-color;
-              }
-              &[today='true']:not(:hover):not([active='true']) {
-                background-color: $success-color;
-                color: $white-color;
-              }
-            }
-            &[name-metric] {
-              color: $primary-dark-color;
-            }
-          }
-        }
+  font-size: $font-size-small;
+  thead {
+    tr {
+      &[rewind] {
         th {
-          padding: $gutter-normal $gutter-tiny;
-          &[gutter] {
-            width: $gutter-tiny;
+          [date] {
+            display: flex;
+            color: $primary-text-dark-color;
+            font-weight: $font-weight-bold;
+            span {
+              margin: auto;
+            }
+            [arrow] {
+              background-color: transparent;
+              border-width: 0;
+              font-size: 1rem;
+              color: $primary-text-color;
+              cursor: pointer;
+              padding: 0;
+              vertical-align: middle;
+              border-radius: 50%;
+              width: 25px;
+              height: 25px;
+              display: inline-flex;
+              justify-content: center;
+              align-items: center;
+              transition: box-shadow .3s;
+              &:focus {
+                outline: none;
+                box-shadow: 0 0 6px rgba(8, 35, 202, 0.4);
+                border: 1px solid $primary-color;
+              }
+              &:hover {
+                color: lighten($primary-text-color, 10%);
+              }
+            }
           }
         }
       }
-    }
-
-    tbody {
-      tr {
-        td {
-          border-top-color: $muted-color;
-        }
-        &[nodata] {
-          height: 200px;
-          pointer-events: none;
-          border-bottom: 0;
-          td {
-            vertical-align: middle;
-            text-align: center;
-            [icon] {
-              font-size: 80px;
-              color: $muted-color;
-            }
-            [message] {
-              color: $primary-text-light-color;
-            }
-          }
-        }
-        &[loading] {
-          pointer-events: none;
-          td {
-            padding: $gutter-tiny $gutter-normal;
-          }
-        }
-        td {
-          padding: $gutter-tiny;
-          &[slow='true'] span {
-            border-bottom: 2px solid $fail-color;
-          }
+      &[timeline] {
+        background-color: $secondary-background;
+        th {
           &[day] {
             cursor: pointer;
-            &[active-day='true'] {
-              background: $secondary-background;
-            }
-            &:hover {
+            &:hover, &[active='true'] {
               background-color: $secondary-dark-color;
             }
-
-            &[active='true'] {
-              background-color: rgba($primary-light-color, .5);
-              border: 1px solid $primary-color;
-              border-radius: 3px;
+            &[today='true']:not(:hover):not([active='true']) {
+              background-color: $success-color;
               color: $white-color;
             }
-            [metric] {
-              position: relative;
-              display: inline-block;
-              [issues] {
-                position: absolute;
-                top: 2px;
-                right: 2px;
-                background-color: blue;
-                width: 5px;
-                height: 5px;
-                border-radius: 50%;
-                z-index: 1;
-              }
-              [circle] {
-                width: 35px;
-                height: 35px;
-              }
-            }
           }
-          [link] ::ng-deep {
-            width: 100%;
-            text-align: left;
-            a[child-of=#{$jnt-link-host}][active='true'] {
-              border-bottom: 0;
-            }
-          }
-          jnt-label ::ng-deep {
-            justify-content: center;
+          &[name-metric] {
+            color: $primary-dark-color;
           }
         }
-        &[active='true'] {
-          td {
-            background-color: $secondary-background;
+      }
+      th {
+        padding: $gutter-normal $gutter-tiny;
+        &[gutter] {
+          width: $gutter-tiny;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td {
+        border-top-color: $muted-color;
+      }
+      &[nodata] {
+        height: 200px;
+        pointer-events: none;
+        border-bottom: 0;
+        td {
+          vertical-align: middle;
+          text-align: center;
+          [icon] {
+            font-size: 80px;
+            color: $muted-color;
           }
-          &:last-child {
-            td:first-child {
-              border-bottom-left-radius: $corner-normal;
+          [message] {
+            color: $primary-text-light-color;
+          }
+        }
+      }
+      &[loading] {
+        pointer-events: none;
+        td {
+          padding: $gutter-tiny $gutter-normal;
+        }
+      }
+      td {
+        padding: $gutter-tiny;
+        &[slow='true'] span {
+          border-bottom: 2px solid $fail-color;
+        }
+        &[day] {
+          cursor: pointer;
+          &[active-day='true'] {
+            background: $secondary-background;
+          }
+          &:hover {
+            background-color: $secondary-dark-color;
+          }
+
+          &[active='true'] {
+            background-color: rgba($primary-light-color, .5);
+            border: 1px solid $primary-color;
+            border-radius: 3px;
+            color: $white-color;
+          }
+          [metric] {
+            position: relative;
+            display: inline-block;
+            [issues] {
+              position: absolute;
+              top: 2px;
+              right: 2px;
+              background-color: blue;
+              width: 5px;
+              height: 5px;
+              border-radius: 50%;
+              z-index: 1;
             }
-            td:last-child {
-              border-bottom-right-radius: $corner-normal;
+            [circle] {
+              width: 35px;
+              height: 35px;
             }
+          }
+        }
+        [link] ::ng-deep {
+          width: 100%;
+          text-align: left;
+          a[child-of=#{$jnt-link-host}][active='true'] {
+            border-bottom: 0;
+          }
+        }
+        jnt-label ::ng-deep {
+          justify-content: center;
+        }
+      }
+      &[active='true'] {
+        td {
+          background-color: $secondary-background;
+        }
+        &:last-child {
+          td:first-child {
+            border-bottom-left-radius: $corner-normal;
+          }
+          td:last-child {
+            border-bottom-right-radius: $corner-normal;
           }
         }
       }
     }
+  }
 
-    td, th {
-      border: 1px solid transparent;
-      text-align: center;
-      vertical-align: middle;
-      line-height: 1;
-      box-sizing: border-box;
-    }
+  td, th {
+    border: 1px solid transparent;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1;
+    box-sizing: border-box;
+  }
 
-    th:not([gutter]), td:not([gutter]) {
-      min-width: 48px;
-      width: 48px;
-    }
+  th:not([gutter]), td:not([gutter]) {
+    min-width: 48px;
+    width: 48px;
+  }
 
-    td {
-      min-height: 62px;
-    }
+  td {
+    min-height: 62px;
+  }
 
-    th:nth-child(2),
-    td:nth-child(2) {
-      min-width: 155px;
-      width: 155px;
-    }
+  th:nth-child(2),
+  td:nth-child(2) {
+    min-width: 155px;
+    width: 155px;
+  }
 
-    th:nth-child(3),
-    td:nth-child(3) {
-      min-width: 76px;
-      width: 76px;
-    }
+  th:nth-child(3),
+  td:nth-child(3) {
+    min-width: 76px;
+    width: 76px;
+  }
 
-    th:nth-child(3),
-    td:nth-child(3),
-    th:nth-child(10),
-    td:nth-child(10),
-    th:nth-child(13),
-    td:nth-child(13),
-    th:nth-child(20),
-    td:nth-child(20) {
-      border-right: 1px solid $muted-color;
-    }
+  th:nth-child(3),
+  td:nth-child(3),
+  th:nth-child(10),
+  td:nth-child(10) {
+    border-right: 1px solid $muted-color;
   }
 }

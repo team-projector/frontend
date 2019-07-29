@@ -1,12 +1,11 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import gql from 'graphql-tag';
-import { Mutation, Query } from 'apollo-angular';
-import {ProjectSummary} from '../../../models/project';
+import {Mutation, Query} from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SyncIssueGQL extends Mutation<{syncIssue: {issue: {id}}}> {
+export class SyncIssueGQL extends Mutation<{ syncIssue: { issue: { id } } }> {
   document = gql`
     mutation SyncIssue($id: ID) {
       syncIssue(id: $id) {
@@ -22,7 +21,7 @@ export class SyncIssueGQL extends Mutation<{syncIssue: {issue: {id}}}> {
 @Injectable({
   providedIn: 'root'
 })
-export class IssuesGQL extends Query<{allIssues}> {
+export class IssuesGQL extends Query<{ issuesSummary, allIssues }> {
   document = gql`
     query Issues ($team: ID, $user: ID, $project: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int) {
       allIssues(team: $team, user: $user, project: $project, dueDate: $dueDate, state: $state, problems: $problems, orderBy: $orderBy, offset: $offset, first: $first) {
@@ -80,7 +79,7 @@ export class IssuesGQL extends Query<{allIssues}> {
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectsSummaryGQL extends Query<{ issuesSummary: { projects: ProjectSummary[] } }> {
+export class ProjectsSummaryGQL extends Query<{ issuesSummary }> {
   document = gql`
     query IssuesSummary($team: ID, $user: ID, $dueDate: Date, $state: String) {
   issuesSummary(team: $team, user: $user, dueDate: $dueDate, state: $state) {
@@ -95,6 +94,19 @@ export class ProjectsSummaryGQL extends Query<{ issuesSummary: { projects: Proje
         openedCount
       }
     }
+  }
+}`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class IssuesSummaryGQL extends Query<{ issuesSummary }> {
+  document = gql`
+    query IssuesSummary($team: ID, $user: ID, $dueDate: Date, $state: String) {
+  issuesSummary(team: $team, user: $user, dueDate: $dueDate, state: $state) {
+    issuesCount
+    problemsCount
   }
 }`;
 }

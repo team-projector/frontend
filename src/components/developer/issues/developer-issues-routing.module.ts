@@ -2,10 +2,9 @@ import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {DeveloperIssuesComponent} from './developer-issues.component';
 import {IssuesListComponent} from './issues-list/issues-list.component';
-import {DueDateResolver, OpenedResolver, ProblemsResolver} from '../../../resolvers/issue';
+import {DueDateResolver, IssuesTypeResolver} from '../../../resolvers/issue';
 import {TimeExpensesListComponent} from './time-expenses-list/time-expenses-list.component';
 import {MeUserResolver} from '../../../resolvers/me';
-import {Project} from '../../../models/project';
 import {ProjectResolver} from '../../../resolvers/project';
 
 const routes: Routes = [
@@ -20,8 +19,7 @@ const routes: Routes = [
         component: IssuesListComponent,
         resolve: {
           project: ProjectResolver,
-          opened: OpenedResolver,
-          problems: ProblemsResolver
+          type: IssuesTypeResolver
         }
       },
       {

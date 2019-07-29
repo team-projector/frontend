@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {parse} from 'date-fns';
+import {IssuesType} from '../models/issue';
 
 @Injectable()
 export class DueDateResolver implements Resolve<Date> {
@@ -12,17 +13,9 @@ export class DueDateResolver implements Resolve<Date> {
 }
 
 @Injectable()
-export class OpenedResolver implements Resolve<boolean> {
+export class IssuesTypeResolver implements Resolve<IssuesType> {
   resolve(route: ActivatedRouteSnapshot,
-          state: RouterStateSnapshot): boolean {
-    return route.params['opened'] === undefined;
-  }
-}
-
-@Injectable()
-export class ProblemsResolver implements Resolve<boolean> {
-  resolve(route: ActivatedRouteSnapshot,
-          state: RouterStateSnapshot): boolean {
-    return !!route.params['problems'];
+          state: RouterStateSnapshot): IssuesType {
+    return route.params['type'] || IssuesType.opened;
   }
 }

@@ -1,7 +1,6 @@
 <app-issues [user]="user?.id"
             [project]="project?.id"
             [dueDate]="dueDate"
-            [opened]="opened"
-            [problems]="problems"
+            [type]="type"
             [view]="viewType.extended"
             (filtered)="filtered($event)"></app-issues>

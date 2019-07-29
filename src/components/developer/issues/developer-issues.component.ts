@@ -70,8 +70,8 @@ export class DeveloperIssuesComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private issuesSummaryApollo: IssuesSummaryGQL,
-              private issuesMetricsApollo: IssuesMetricsGQL) {
+              private issuesSummary: IssuesSummaryGQL,
+              private issuesMetrics: IssuesMetricsGQL) {
   }
 
   ngOnInit() {
@@ -95,7 +95,7 @@ export class DeveloperIssuesComponent implements OnInit {
         dueDate: dueDate
       });
 
-      this.issuesSummaryApollo.fetch(serialize(filter) as R)
+      this.issuesSummary.fetch(serialize(filter) as R)
         .pipe(map(({data: {issuesSummary}}: { data: { issuesSummary } }) =>
           deserialize(issuesSummary, IssuesSummary)))
         .subscribe(summary => this.summary = summary);
@@ -114,7 +114,7 @@ export class DeveloperIssuesComponent implements OnInit {
         end: period.end,
         group: group
       });
-      return this.issuesMetricsApollo.fetch(serialize(filter) as R)
+      return this.issuesMetrics.fetch(serialize(filter) as R)
         .pipe(map(({data: {userProgressMetrics}}) =>
             userProgressMetrics.map(el => deserialize(el, UserProgressMetrics))),
           map(metrics => {

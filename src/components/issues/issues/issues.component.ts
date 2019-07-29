@@ -5,15 +5,19 @@ import {debounceTime, distinctUntilChanged, finalize, map} from 'rxjs/operators'
 import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssueProblem, IssuesFilter, IssueState, PagingIssues} from '../../../models/issue';
-import {IssuesGQL, ProjectsSummaryGQL, SyncIssueGQL} from './issues.graphql';
+import {IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues} from '../../../models/issue';
+import {IssuesGQL, IssuesSummaryGQL, ProjectsSummaryGQL, SyncIssueGQL} from './issues.graphql';
 import {R} from 'apollo-angular/types';
-import {ProjectSummary} from '../../../models/project';
 import {DurationFormat} from '../../../pipes/date';
 
 export enum ViewType {
   default,
   extended
+}
+
+enum SummaryType {
+  issues,
+  projects
 }
 
 @Component({
@@ -24,12 +28,13 @@ export enum ViewType {
 export class IssuesComponent implements OnInit {
 
   ui = UI;
+  issuesType = IssuesType;
   issuesState = IssueState;
   issueProblem = IssueProblem;
   viewType = ViewType;
   durationFormat = DurationFormat;
 
-  summary: ProjectSummary[] = [];
+  summary: IssuesSummary;
   progress = {loading: false, sync: false};
   colors = [UI.colors.purple, UI.colors.red, UI.colors.green, UI.colors.yellow];
 
@@ -37,17 +42,15 @@ export class IssuesComponent implements OnInit {
   view = ViewType.default;
 
   form: FormGroup = this.formBuilder.group({
-    opened: [true],
-    problems: [false],
-    project: []
+    project: [],
+    type: [IssuesType.opened]
   });
 
   private team$ = new BehaviorSubject<string>(null);
   private user$ = new BehaviorSubject<string>(null);
   private project$ = new BehaviorSubject<string>(null);
   private dueDate$ = new BehaviorSubject<Date>(null);
-  private opened$ = new BehaviorSubject<boolean>(true);
-  private problems$ = new BehaviorSubject<boolean>(true);
+  private type$ = new BehaviorSubject<IssuesType>(IssuesType.opened);
 
   @Input()
   set team(team: string) {
@@ -86,21 +89,12 @@ export class IssuesComponent implements OnInit {
   }
 
   @Input()
-  set opened(opened: boolean) {
-    this.opened$.next(opened);
+  set type(type: IssuesType) {
+    this.type$.next(type);
   }
 
-  get opened() {
-    return this.opened$.getValue();
-  }
-
-  @Input()
-  set problems(problems: boolean) {
-    this.problems$.next(problems);
-  }
-
-  get problems() {
-    return this.problems$.getValue();
+  get type() {
+    return this.type$.getValue();
   }
 
   filter: IssuesFilter = new IssuesFilter();
@@ -109,74 +103,78 @@ export class IssuesComponent implements OnInit {
   table: TableComponent;
 
   @Output()
-  filtered = new EventEmitter<{ opened?, problems? }>();
+  filtered = new EventEmitter<{ type? }>();
 
-  constructor(private issuesApollo: IssuesGQL,
-              private projectsSummary: ProjectsSummaryGQL,
-              private syncIssueApollo: SyncIssueGQL,
-              private formBuilder: FormBuilder,
-  ) {
+  constructor(private issuesGQL: IssuesGQL,
+              private issuesSummaryGQL: IssuesSummaryGQL,
+              private projectsSummaryGQL: ProjectsSummaryGQL,
+              private syncIssueGQL: SyncIssueGQL,
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    combineLatest(this.project$, this.opened$, this.problems$)
-      .subscribe(([project, opened, problems]) => {
+    combineLatest(this.project$, this.type$)
+      .subscribe(([project, type]) => {
         this.form.patchValue({
           project: project,
-          opened: opened,
-          problems: problems
+          type: type
         }, {emitEvent: false});
       });
 
     this.table.fetcher = (filter: DefaultSearchFilter) => {
       Object.assign(this.filter, filter);
-      return this.issuesApollo.fetch(serialize(this.filter) as R)
+      return this.issuesGQL.fetch(serialize(this.filter) as R)
         .pipe(map(({data: {allIssues}}: { data: { allIssues } }) =>
           deserialize(allIssues, PagingIssues)));
     };
 
-    combineLatest(this.team$, this.user$, this.project$, this.dueDate$, this.opened$, this.problems$)
+    combineLatest(this.team$, this.user$, this.project$, this.dueDate$, this.type$)
       .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged())
-      .subscribe(([team, user, project, dueDate, opened, problems]) => {
+      .subscribe(([team, user, project, dueDate, type]) => {
         this.filter.team = team;
         this.filter.user = user;
         this.filter.project = project;
         this.filter.dueDate = dueDate;
-        this.filter.state = opened ? IssueState.opened : null;
-        this.filter.problems = problems ? problems : null;
+        this.filter.state = type === IssuesType.opened ? IssueState.opened : null;
+        this.filter.problems = type === IssuesType.problems ? true : null;
 
-        this.loadProjectsSummary();
+        this.loadSummary(SummaryType.projects);
+        this.loadSummary(SummaryType.issues);
         this.table.load();
       });
 
-    this.form.valueChanges.subscribe(({opened, problems, project}) => {
-      [this.opened, this.problems] = [opened, problems];
-      const state: { project?, opened?, problems? } = {};
-      if (!!project) {
-        state.project = project;
-      }
-      if (!opened) {
-        state.opened = false;
-      }
-      if (problems) {
-        state.problems = true;
-      }
-      this.filtered.emit(state);
-    });
+    this.form.valueChanges
+      .pipe(distinctUntilChanged())
+      .subscribe(({project, type}) => {
+        // TODO: why?
+        // [this.project, this.type] = [project, type];
+        const state: { project?, type? } = {};
+        if (!!project) {
+          state.project = project;
+        }
+        if (type !== IssuesType.opened) {
+          state.type = type;
+        }
+        this.filtered.emit(state);
+      });
   }
 
-  private loadProjectsSummary() {
+  private loadSummary(type: SummaryType) {
     this.progress.loading = true;
-    this.projectsSummary.fetch(serialize(this.filter) as R)
-      .pipe(map(({data: {issuesSummary: {projects}}}) =>
-          projects.map(p => deserialize(p, ProjectSummary))),
+    const fetcher = type === SummaryType.issues
+      ? this.issuesSummaryGQL : this.projectsSummaryGQL;
+    fetcher.fetch(serialize(this.filter) as R)
+      .pipe(map(({data: {issuesSummary}}) =>
+          deserialize(issuesSummary, IssuesSummary)),
         finalize(() => this.progress.loading = false))
-      .subscribe(summary => this.summary = summary);
+      .subscribe(summary =>
+        !!this.summary ? Object.assign(this.summary, summary)
+          : this.summary = summary);
   }
 
   sync(issue: number) {
     this.progress.sync = true;
-    this.syncIssueApollo.mutate({id: issue})
+    this.syncIssueGQL.mutate({id: issue})
       .pipe(finalize(() => this.progress.sync = false))
       .subscribe(() => this.table.load());
   }
