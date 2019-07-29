@@ -19,7 +19,6 @@ import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component'
     CommonModule,
     DashboardRoutingModule,
     JunteUiModule,
-    DashboardRoutingModule,
     ArrayPipesModule,
     DatePipesModule
   ],
