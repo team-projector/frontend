@@ -6,6 +6,12 @@ import { UserRole } from '../../models/user';
 import { AppConfig } from '../../app-config';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
 
+
+enum Themes {
+  light = 'light',
+  dark = 'dark'
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -15,6 +21,19 @@ export class DashboardComponent {
 
   ui = UI;
   userRole = UserRole;
+  private _theme = Themes.light;
+
+  themes = Themes;
+
+  set theme(theme: Themes) {
+    this._theme = theme;
+    this.load(theme);
+  }
+
+  get theme() {
+    return this._theme;
+  }
+
 
   loading: { [name: string]: boolean } = {};
 
@@ -31,7 +50,7 @@ export class DashboardComponent {
       .then(() => this.config.token = null);
   }
 
-  setTheme(theme: string = null) {
+  private load(theme: Themes) {
     this.loading[theme] = true;
     window['themes'](theme, () => this.loading[theme] = false);
   }
