@@ -1,18 +1,21 @@
-<jnt-stack presentations [type]="ui.stack.type.horizontal"
-           (mouseleave)="metric = metricType.all">
-  <div (mouseenter)="metric = metricType.spent"
-       [style.background]="ui.colors.green">Spent
-  </div>
-  <div (mouseenter)="metric = metricType.estimate"
-       [style.background]="ui.colors.red">Estimated
-  </div>
-  <div (mouseenter)="metric = metricType.remains"
-       [style.background]="ui.colors.yellow">Remains
-  </div>
-  <div (mouseenter)="metric = metricType.loading"
-       [style.background]="ui.colors.purpleDark" style="color:white">Loading
-  </div>
-</jnt-stack>
+<jnt-form [formGroup]="form">
+  <jnt-stack presentations [type]="ui.stack.type.horizontal">
+    <jnt-switcher formControlName="metric">
+      <jnt-switcher-option [value]="metricType.spent" label="Spent">
+        <jnt-dot [color]="ui.colors.green"></jnt-dot>
+      </jnt-switcher-option>
+      <jnt-switcher-option [value]="metricType.estimate" label="Estimated">
+        <jnt-dot [color]="ui.colors.red"></jnt-dot>
+      </jnt-switcher-option>
+      <jnt-switcher-option [value]="metricType.remains" label="Remains">
+        <jnt-dot [color]="ui.colors.yellow"></jnt-dot>
+      </jnt-switcher-option>
+      <jnt-switcher-option [value]="metricType.loading" label="Loading">
+        <jnt-dot [color]="ui.colors.purpleDark"></jnt-dot>
+      </jnt-switcher-option>
+    </jnt-switcher>
+  </jnt-stack>
+</jnt-form>
 <div wrapper>
   <table>
     <thead>
@@ -115,7 +118,7 @@
               (click)="form.patchValue({user: member.user, dueDate: day})"
               [attr.active]="isEqual(dueDate.value, day) && (user.value?.id === member.user.id)"
               [attr.active-day]="isEqual(dueDate.value, day)">
-            <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric, date: endOfDay(day),
+            <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric.value, date: endOfDay(day),
               metric: metrics?.days?.get(member.user.id)?.get(format(day, formatDate))}">
             </ng-container>
           </td>

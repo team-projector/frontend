@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<jnt-form [formGroup]="form">
   <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.large">
     <jnt-chart formControlName="project">
       <jnt-chart-indicator *ngFor="let p of summary;let i = index"
@@ -102,4 +102,4 @@
       </jnt-table>
     </jnt-block>
   </jnt-stack>
-</form>
+</jnt-form>
