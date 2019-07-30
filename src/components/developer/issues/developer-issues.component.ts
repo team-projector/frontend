@@ -88,22 +88,9 @@ export class DeveloperIssuesComponent implements OnInit {
       this.user = user;
       this.form.patchValue({dueDate: dueDate}, {emitEvent: false});
 
-      // const filter = new IssuesFilter({
-      //   user: user.id,
-      //   dueDate: dueDate
-      // });
-      //
-      // this.issuesSummaryApollo.fetch(serialize(filter) as R)
-      //   .pipe(map(({data: {issuesSummary}}: { data: { issuesSummary } }) =>
-      //     deserialize(issuesSummary, IssuesSummary)))
-      //   .subscribe(summary => this.summary = summary);
-    });
-
-    this.route.params.subscribe(() => {
-      console.log('calc summary');
       const filter = new IssuesFilter({
-        user: this.user.id,
-        dueDate: this.form.get('dueDate').value
+        user: user.id,
+        dueDate: dueDate
       });
 
       this.issuesSummary.fetch(serialize(filter) as R)
