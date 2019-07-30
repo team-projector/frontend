@@ -14,9 +14,10 @@ import {UserResolver} from 'src/resolvers/user';
 import {TeamCalendarComponent} from 'src/components/leader/teams/team/calendar/team-calendar.component';
 import {RouterModule} from '@angular/router';
 import {IssuesModule} from '../../issues/issues.module';
-import {DueDateResolver, OpenedResolver, ProblemsResolver} from '../../../resolvers/issue';
+import {DueDateResolver, IssuesTypeResolver} from '../../../resolvers/issue';
 import {ArrayPipesModule} from '../../../pipes/array-pipes.module';
 import {ProjectResolver} from '../../../resolvers/project';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import {ProjectResolver} from '../../../resolvers/project';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     RouterModule,
     TeamsRoutingModule,
     JunteUiModule,
@@ -43,8 +45,7 @@ import {ProjectResolver} from '../../../resolvers/project';
     UserResolver,
     ProjectResolver,
     DueDateResolver,
-    OpenedResolver,
-    ProblemsResolver
+    IssuesTypeResolver
   ]
 })
 export class TeamsModule {

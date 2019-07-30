@@ -1,7 +1,7 @@
 <jnt-stack [align]="ui.flex.align.stretch">
-  <form [formGroup]="form">
+  <jnt-form [formGroup]="form">
     <app-team-calendar formControlName="filter" [team]="team"></app-team-calendar>
-  </form>
+  </jnt-form>
 
   <jnt-stack [type]="ui.stack.type.horizontal">
     <div filter *ngIf="filter.value.user">

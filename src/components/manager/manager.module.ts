@@ -4,6 +4,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {ManagerRoutingModule} from './manager-routing.module';
 import {JunteUiModule} from 'junte-ui';
 import {ManagerComponent} from './manager.component';
+import { AppFooterModule } from '../app-footer/app-footer.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import {ManagerComponent} from './manager.component';
     CommonModule,
     ReactiveFormsModule,
     ManagerRoutingModule,
-    JunteUiModule
+    JunteUiModule,
+    AppFooterModule
   ],
   providers: []
 })

@@ -23,7 +23,7 @@ class Metric {
 }
 
 @Component({
-  selector: 'app-issues-list',
+  selector: 'app-developer-issues',
   templateUrl: './developer-issues.component.html',
   styleUrls: ['./developer-issues.component.scss']
 })
@@ -42,7 +42,6 @@ export class DeveloperIssuesComponent implements OnInit {
   formatDate = 'DD/MM/YYYY';
 
   summary: IssuesSummary;
-  metric = MetricType.all;
 
   set user(user: User) {
     this.user$.next(user);
@@ -61,19 +60,23 @@ export class DeveloperIssuesComponent implements OnInit {
     new Map<string, UserProgressMetrics>()
   );
   dueDate = new FormControl();
-  form = this.formBuilder.group({dueDate: this.dueDate});
+  metric = new FormControl(MetricType.all);
+  form = this.formBuilder.group({
+    dueDate: this.dueDate,
+    metric: this.metric
+  });
 
   constructor(private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router,
-              private issuesSummaryApollo: IssuesSummaryGQL,
-              private issuesMetricsApollo: IssuesMetricsGQL) {
+              private issuesSummary: IssuesSummaryGQL,
+              private issuesMetrics: IssuesMetricsGQL) {
   }
 
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(filter => {
-          const state: { due_date? } = {};
+          const state: { due_date?, metric? } = {};
           if (!!filter.dueDate) {
             state.due_date = format(filter.dueDate, 'MM-DD-YYYY');
           }
@@ -103,7 +106,7 @@ export class DeveloperIssuesComponent implements OnInit {
         dueDate: this.form.get('dueDate').value
       });
 
-      this.issuesSummaryApollo.fetch(serialize(filter) as R)
+      this.issuesSummary.fetch(serialize(filter) as R)
         .pipe(map(({data: {issuesSummary}}: { data: { issuesSummary } }) =>
           deserialize(issuesSummary, IssuesSummary)))
         .subscribe(summary => this.summary = summary);
@@ -122,7 +125,7 @@ export class DeveloperIssuesComponent implements OnInit {
         end: period.end,
         group: group
       });
-      return this.issuesMetricsApollo.fetch(serialize(filter) as R)
+      return this.issuesMetrics.fetch(serialize(filter) as R)
         .pipe(map(({data: {userProgressMetrics}}) =>
             userProgressMetrics.map(el => deserialize(el, UserProgressMetrics))),
           map(metrics => {

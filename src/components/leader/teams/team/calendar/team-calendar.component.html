@@ -1,166 +1,154 @@
-<jnt-stack presentations [type]="ui.stack.type.horizontal"
-           (mouseleave)="metric = metricType.all">
-  <div (mouseenter)="metric = metricType.spent"
-       [style.background]="ui.colors.green">Spent
-  </div>
-  <div (mouseenter)="metric = metricType.estimate"
-       [style.background]="ui.colors.red">Estimated
-  </div>
-  <div (mouseenter)="metric = metricType.remains"
-       [style.background]="ui.colors.yellow">Remains
-  </div>
-  <div (mouseenter)="metric = metricType.loading"
-       [style.background]="ui.colors.purpleDark" style="color:white">Loading
-  </div>
-</jnt-stack>
-<div wrapper>
-  <table>
-    <thead>
-    <tr rewind>
-      <th gutter></th>
-      <th></th>
-      <th></th>
-      <th colspan="10">
-        <div date>
-          <button arrow (click)="date = subWeeks(date, 1)">
-            <jnt-icon [icon]="ui.icons.arrowLeft"></jnt-icon>
-          </button>
-          <span>{{weeks[0].days[0] | period:weeks[0].days[6]}}</span>
-        </div>
-      </th>
-      <th colspan="10">
-        <div date>
-          <span>{{weeks[1].days[0] | period:weeks[1].days[6]}}</span>
-          <button arrow (click)="date = addWeeks(date, 1)">
-            <jnt-icon [icon]="ui.icons.arrowRight"></jnt-icon>
-          </button>
-        </div>
-      </th>
-      <th gutter></th>
-    </tr>
-    <tr timeline>
-      <th gutter></th>
-      <th>Developer</th>
-      <th></th>
-      <ng-container *ngFor="let week of weeks">
-        <th day (click)="form.patchValue({user: null, dueDate: week.days[0]})"
-            [attr.today]="isEqual(today, week.days[0])"
-            [attr.active]="isEqual(dueDate.value, week.days[0])">
-          Mo {{week.days[0] | getDate}}
-        </th>
-        <th day (click)="form.patchValue({user: null, dueDate: week.days[1]})"
-            [attr.today]="isEqual(today, week.days[1])"
-            [attr.active]="isEqual(dueDate.value, week.days[1])">
-          Tu {{week.days[1] | getDate}}
-        </th>
-        <th day (click)="form.patchValue({user: null, dueDate: week.days[2]})"
-            [attr.today]="isEqual(today, week.days[2])"
-            [attr.active]="isEqual(dueDate.value, week.days[2])">
-          We {{week.days[2] | getDate}}
-        </th>
-        <th day (click)="form.patchValue({user: null, dueDate: week.days[3]})"
-            [attr.today]="isEqual(today, week.days[3])"
-            [attr.active]="isEqual(dueDate.value, week.days[3])">
-          Th {{week.days[3] | getDate}}
-        </th>
-        <th day (click)="form.patchValue({user: null, dueDate: week.days[4]})"
-            [attr.today]="isEqual(today, week.days[4])"
-            [attr.active]="isEqual(dueDate.value, week.days[4])">
-          Fr {{week.days[4] | getDate}}
-        </th>
-        <th day (click)="form.patchValue({user: null, dueDate: week.days[5]})"
-            [attr.today]="isEqual(today, week.days[5])"
-            [attr.active]="isEqual(dueDate.value, week.days[5])">
-          Sa {{week.days[5] | getDate}}
-        </th>
-        <th day (click)="form.patchValue({user: null, dueDate: week.days[6]})"
-            [attr.today]="isEqual(today, week.days[6])"
-            [attr.active]="isEqual(dueDate.value, week.days[6])">
-          Su {{week.days[6] | getDate}}
-        </th>
-        <th name-metric>Est</th>
-        <th name-metric>Sp</th>
-        <th name-metric>Eff</th>
-      </ng-container>
-      <th gutter></th>
-    </tr>
-    </thead>
+<jnt-form [formGroup]="form">
+  <jnt-stack presentations [type]="ui.stack.type.horizontal">
+    <jnt-switcher formControlName="metric">
+      <jnt-switcher-option [value]="metricType.spent" label="Spent">
+        <jnt-dot [color]="ui.colors.green"></jnt-dot>
+      </jnt-switcher-option>
+      <jnt-switcher-option [value]="metricType.estimate" label="Estimated">
+        <jnt-dot [color]="ui.colors.red"></jnt-dot>
+      </jnt-switcher-option>
+      <jnt-switcher-option [value]="metricType.remains" label="Remains">
+        <jnt-dot [color]="ui.colors.yellow"></jnt-dot>
+      </jnt-switcher-option>
+      <jnt-switcher-option [value]="metricType.loading" label="Loading">
+        <jnt-dot [color]="ui.colors.purpleDark"></jnt-dot>
+      </jnt-switcher-option>
+    </jnt-switcher>
+  </jnt-stack>
+</jnt-form>
 
-    <tbody>
-    <ng-container *ngIf="!!members.length; else noData">
-      <tr *ngFor="let member of members" [attr.active]="user.value?.id == member.user.id">
-        <td gutter></td>
-        <td>
-          <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small"
-                     [align]="ui.flex.align.center">
-            <jnt-avatar [image]="member.user.avatar"
-                        [size]="ui.sizes.tiny"></jnt-avatar>
-            <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>
-          </jnt-stack>
-        </td>
-        <td>
-          <jnt-stack [gutter]="ui.stack.gutter.tiny" [align]="ui.flex.align.stretch">
-            <jnt-label *ngIf="member.user.metrics.issues.closedSpent"
-                       [label]="member.user.metrics.issues.closedSpent | duration"
-                       [color]="ui.colors.green"></jnt-label>
-            <jnt-label *ngIf="member.user.metrics.issues.openedSpent"
-                       [label]="member.user.metrics.issues.openedSpent | duration"
-                       [color]="member.user.problems?.includes(userProblem.payrollOpenedOverflow) ? ui.colors.red : ui.colors.gray500"></jnt-label>
-          </jnt-stack>
-        </td>
-        <ng-container *ngFor="let week of weeks"
-                      [attr.current-week]="(current | getISOWeek) === (week.date | getISOWeek)">
+<table>
+  <thead>
+  <tr rewind>
+    <th gutter></th>
+    <th></th>
+    <th></th>
+    <th colspan="10">
+      <div date>
+        <button arrow (click)="date = subWeeks(date, 1)">
+          <jnt-icon [icon]="ui.icons.arrowLeft"></jnt-icon>
+        </button>
+        <span>{{days[0] | period:days[6]}}</span>
+        <button arrow (click)="date = addWeeks(date, 1)">
+          <jnt-icon [icon]="ui.icons.arrowRight"></jnt-icon>
+        </button>
+      </div>
+    </th>
+    <th gutter></th>
+  </tr>
+  <tr timeline>
+    <th gutter></th>
+    <th>Developer</th>
+    <th></th>
+    <th day (click)="form.patchValue({user: null, dueDate: days[0]})"
+        [attr.today]="isEqual(today, days[0])"
+        [attr.active]="isEqual(dueDate.value, days[0])">
+      Mo {{days[0] | getDate}}
+    </th>
+    <th day (click)="form.patchValue({user: null, dueDate: days[1]})"
+        [attr.today]="isEqual(today, days[1])"
+        [attr.active]="isEqual(dueDate.value, days[1])">
+      Tu {{days[1] | getDate}}
+    </th>
+    <th day (click)="form.patchValue({user: null, dueDate: days[2]})"
+        [attr.today]="isEqual(today, days[2])"
+        [attr.active]="isEqual(dueDate.value, days[2])">
+      We {{days[2] | getDate}}
+    </th>
+    <th day (click)="form.patchValue({user: null, dueDate: days[3]})"
+        [attr.today]="isEqual(today, days[3])"
+        [attr.active]="isEqual(dueDate.value, days[3])">
+      Th {{days[3] | getDate}}
+    </th>
+    <th day (click)="form.patchValue({user: null, dueDate: days[4]})"
+        [attr.today]="isEqual(today, days[4])"
+        [attr.active]="isEqual(dueDate.value, days[4])">
+      Fr {{days[4] | getDate}}
+    </th>
+    <th day (click)="form.patchValue({user: null, dueDate: days[5]})"
+        [attr.today]="isEqual(today, days[5])"
+        [attr.active]="isEqual(dueDate.value, days[5])">
+      Sa {{days[5] | getDate}}
+    </th>
+    <th day (click)="form.patchValue({user: null, dueDate: days[6]})"
+        [attr.today]="isEqual(today, days[6])"
+        [attr.active]="isEqual(dueDate.value, days[6])">
+      Su {{days[6] | getDate}}
+    </th>
+    <th name-metric>Est</th>
+    <th name-metric>Sp</th>
+    <th name-metric>Eff</th>
+    <th gutter></th>
+  </tr>
+  </thead>
 
-          <td day *ngFor="let day of week.days"
-              (click)="form.patchValue({user: member.user, dueDate: day})"
-              [attr.active]="isEqual(dueDate.value, day) && (user.value?.id === member.user.id)"
-              [attr.active-day]="isEqual(dueDate.value, day)">
-            <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric, date: endOfDay(day),
+  <tbody>
+  <ng-container *ngIf="!!members.length; else noData">
+    <tr *ngFor="let member of members" [attr.active]="user.value?.id == member.user.id">
+      <td gutter></td>
+      <td>
+        <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small"
+                   [align]="ui.flex.align.center">
+          <jnt-avatar [image]="member.user.avatar"
+                      [size]="ui.sizes.tiny"></jnt-avatar>
+          <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>
+        </jnt-stack>
+      </td>
+      <td>
+        <jnt-stack [gutter]="ui.stack.gutter.tiny" [align]="ui.flex.align.stretch">
+          <jnt-label *ngIf="member.user.metrics.issues.closedSpent"
+                     [label]="member.user.metrics.issues.closedSpent | duration"
+                     [color]="ui.colors.green"></jnt-label>
+          <jnt-label *ngIf="member.user.metrics.issues.openedSpent"
+                     [label]="member.user.metrics.issues.openedSpent | duration"
+                     [color]="member.user.problems?.includes(userProblem.payrollOpenedOverflow) ? ui.colors.red : ui.colors.gray500"></jnt-label>
+        </jnt-stack>
+      </td>
+      <td day *ngFor="let day of days"
+          (click)="form.patchValue({user: member.user, dueDate: day})"
+          [attr.active]="isEqual(dueDate.value, day) && (user.value?.id === member.user.id)"
+          [attr.active-day]="isEqual(dueDate.value, day)">
+        <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric.value, date: endOfDay(day),
               metric: metrics?.days?.get(member.user.id)?.get(format(day, formatDate))}">
-            </ng-container>
-          </td>
-
-
-          <ng-container
-            *ngIf="metrics?.weeks?.get(member.user.id)?.get(format(week.date, formatDate)) as metric; else loadMetrics">
-            <td>
-              {{!!metric?.timeEstimate ? (metric?.timeEstimate | duration:durationFormat.short) : '&ndash;'}}
-            </td>
-            <td>
-              {{!!metric?.timeSpent ? (metric?.timeSpent | duration:durationFormat.short) : '&ndash;'}}
-            </td>
-            <td [attr.slow]="metric.efficiency > 0 && metric.efficiency < 0.8">
-              <span>{{metric.efficiency | number:'1.2-2'}}</span>
-            </td>
-          </ng-container>
-
-          <ng-template #loadMetrics>
-            <td *ngFor="let d of 3 | mockArray"></td>
-          </ng-template>
         </ng-container>
-        <td gutter></td>
+      </td>
+
+      <ng-container
+        *ngTemplateOutlet="weekMetricTemplate; context: {metric: metrics?.weeks?.get(member.user.id)?.get(format(date, formatDate))}">
+      </ng-container>
+      <td gutter></td>
+    </tr>
+  </ng-container>
+  <ng-template #noData>
+    <ng-container *ngIf="!loading; else skeleton">
+      <tr nodata>
+        <td [attr.colspan]="17">
+          <jnt-icon [icon]="ui.icons.stopping" icon></jnt-icon>
+        </td>
       </tr>
     </ng-container>
-    <ng-template #noData>
-      <ng-container *ngIf="!loading; else skeleton">
-        <tr nodata>
-          <td [attr.colspan]="24">
-            <jnt-icon [icon]="ui.icons.stopping" icon></jnt-icon>
-            <div message>No rows here</div>
-          </td>
-        </tr>
-      </ng-container>
-      <ng-template #skeleton>
-        <tr loading>
-          <td [attr.colspan]="24">
-            <jnt-skeleton [lines]="6"></jnt-skeleton>
-          </td>
-        </tr>
-      </ng-template>
+    <ng-template #skeleton>
+      <tr loading>
+        <td [attr.colspan]="17">
+          <jnt-skeleton [lines]="6"></jnt-skeleton>
+        </td>
+      </tr>
     </ng-template>
-    </tbody>
-  </table>
-</div>
+  </ng-template>
+  </tbody>
+</table>
+
+<ng-template #weekMetricTemplate let-metric="metric">
+  <td>
+    {{!!metric?.timeEstimate ? (metric?.timeEstimate | duration:durationFormat.short) : '&ndash;'}}
+  </td>
+  <td>
+    {{!!metric?.timeSpent ? (metric?.timeSpent | duration:durationFormat.short) : '&ndash;'}}
+  </td>
+  <td [attr.slow]="metric?.efficiency > 0 && metric?.efficiency < 0.8">
+    <span>{{!!metric?.efficiency ? (metric?.efficiency | number:'1.2-2') : '&ndash;'}}</span>
+  </td>
+</ng-template>
 <ng-template #dayMetricTemplate let-presentation="presentation" let-metric="metric" let-date="date">
   <div *ngIf="!!metric" metric [ngSwitch]="presentation">
     <div issues *ngIf="!!metric?.issuesCount"></div>

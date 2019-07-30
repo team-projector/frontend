@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ViewType } from 'src/components/issues/issues/issues.component';
 import { Project } from 'src/models/project';
 import { User } from 'src/models/user';
+import { IssuesType } from 'src/models/issue';
 
 @Component({
   selector: 'app-issues-list',
@@ -16,7 +17,7 @@ export class IssuesListComponent implements OnInit {
   user: User;
   project: Project;
   dueDate: Date;
-  opened: boolean;
+  type: IssuesType;
   problems: boolean;
 
   constructor(private route: ActivatedRoute,
@@ -24,16 +25,14 @@ export class IssuesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(({user, project, dueDate, opened, problems}) =>
-      [this.user, this.project, this.dueDate, this.opened, this.problems] =
-        [user, project, dueDate, opened, problems]);
+    this.route.data.subscribe(({user, project, dueDate, type}) =>
+      [this.user, this.project, this.dueDate, this.type] =
+        [user, project, dueDate, type]);
   }
 
-  filtered(state: { opened?, problems? }) {
-    this.router.navigate(['.', state], {
-      relativeTo: this.route,
-      state: {data: this.route.snapshot.data}
-    });
+  filtered(state: { type? }) {
+    this.router.navigate([state], {relativeTo: this.route})
+      .then(() => null);
   }
 
 }

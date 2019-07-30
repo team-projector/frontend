@@ -5,7 +5,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {DeveloperIssuesComponent} from './developer-issues.component';
 import {JunteUiModule} from 'junte-ui';
 import {DatePipesModule} from 'src/pipes/date-pipes.module';
-import {DueDateResolver, OpenedResolver, ProblemsResolver} from 'src/resolvers/issue';
+import {DueDateResolver, IssuesTypeResolver} from 'src/resolvers/issue';
 import {IssuesModule} from 'src/components/issues/issues.module';
 import {NumberModule} from '../../../pipes/number.module';
 import {MeUserResolver} from '../../../resolvers/me';
@@ -32,8 +32,7 @@ import {ProjectResolver} from '../../../resolvers/project';
     MeUserResolver,
     ProjectResolver,
     DueDateResolver,
-    OpenedResolver,
-    ProblemsResolver
+    IssuesTypeResolver
   ]
 })
 export class DeveloperIssuesModule {

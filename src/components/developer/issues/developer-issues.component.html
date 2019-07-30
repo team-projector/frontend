@@ -1,19 +1,21 @@
 <jnt-stack [gutter]="ui.stack.gutter.large">
   <form [formGroup]="form">
     <jnt-stack>
-      <jnt-stack presentations [type]="ui.stack.type.horizontal" (mouseleave)="metric = metricType.all">
-        <div (mouseenter)="metric = metricType.spent"
-             [style.background]="ui.colors.green">Spent
-        </div>
-        <div (mouseenter)="metric = metricType.estimate"
-             [style.background]="ui.colors.red">Estimated
-        </div>
-        <div (mouseenter)="metric = metricType.remains"
-             [style.background]="ui.colors.yellow">Remains
-        </div>
-        <div (mouseenter)="metric = metricType.loading"
-             [style.background]="ui.colors.purpleDark" style="color:white">Loading
-        </div>
+      <jnt-stack presentations [type]="ui.stack.type.horizontal">
+        <jnt-switcher formControlName="metric">
+          <jnt-switcher-option label="Spent" [value]="metricType.spent">
+            <jnt-dot [color]="ui.colors.green"></jnt-dot>
+          </jnt-switcher-option>
+          <jnt-switcher-option label="Estimated" [value]="metricType.estimate">
+            <jnt-dot [color]="ui.colors.red"></jnt-dot>
+          </jnt-switcher-option>
+          <jnt-switcher-option label="Remains" [value]="metricType.remains">
+            <jnt-dot [color]="ui.colors.yellow"></jnt-dot>
+          </jnt-switcher-option>
+          <jnt-switcher-option label="Loading" [value]="metricType.loading">
+            <jnt-dot [color]="ui.colors.purpleDark"></jnt-dot>
+          </jnt-switcher-option>
+        </jnt-switcher>
       </jnt-stack>
 
       <jnt-block>
@@ -25,7 +27,7 @@
           <jnt-week-metric i18n-title="@@paid" title="Paid"></jnt-week-metric>
           <ng-template #dayTemplate let-date="date">
             <div class="day" [attr.today]="isToday(date)">
-              <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric,
+              <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric.value,
                 date: date, metric: metrics.days.get(format(date, formatDate))}">
               </ng-container>
             </div>

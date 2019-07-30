@@ -1,22 +1,22 @@
-<form [formGroup]="form">
+<jnt-form [formGroup]="form">
   <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.large">
-    <jnt-chart formControlName="project">
-      <jnt-chart-indicator *ngFor="let p of summary;let i = index"
-                           [title]="p.project.fullTitle"
-                           [data]="p.project.id"
-                           [value]="p.issues.percentage * 100"
-                           [label]="p.issues.remains  | duration:durationFormat.short"
-                           [color]="colors[i % colors.length]">
-      </jnt-chart-indicator>
-    </jnt-chart>
-
     <jnt-block [width]="ui.width.fluid">
-
       <jnt-table #table [search]="true" (reloaded)="reload()">
         <ng-template #filters>
           <jnt-stack [type]="ui.stack.type.horizontal">
-            <jnt-switch [size]="ui.sizes.small" label="Opened" formControlName="opened"></jnt-switch>
-            <jnt-switch [size]="ui.sizes.small" label="Problems" formControlName="problems"></jnt-switch>
+            <jnt-switcher formControlName="type">
+              <jnt-switcher-option label="All" [value]="issuesType.all">
+                <jnt-badge *ngIf="summary?.issuesCount"
+                           [count]="summary?.issuesCount"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Opened" [value]="issuesType.opened">
+                <jnt-badge *ngIf="0" [count]="0"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Problems" [value]="issuesType.problems">
+                <jnt-badge *ngIf="summary?.problemsCount" [scheme]="ui.schemes.fail"
+                           [count]="summary?.problemsCount"></jnt-badge>
+              </jnt-switcher-option>
+            </jnt-switcher>
           </jnt-stack>
         </ng-template>
         <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
@@ -101,5 +101,15 @@
         </ng-template>
       </jnt-table>
     </jnt-block>
+
+    <jnt-chart formControlName="project">
+      <jnt-chart-indicator *ngFor="let p of summary?.projects;let i = index"
+                           [title]="p.project.fullTitle"
+                           [data]="p.project.id"
+                           [value]="p.issues.percentage * 100"
+                           [label]="p.issues.remains  | duration:durationFormat.short"
+                           [color]="colors[i % colors.length]">
+      </jnt-chart-indicator>
+    </jnt-chart>
   </jnt-stack>
-</form>
+</jnt-form>

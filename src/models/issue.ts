@@ -1,6 +1,6 @@
 import {DateSerializer} from '../serializers/date';
 import {SearchFilter} from 'junte-ui';
-import {ArraySerializer, PrimitiveSerializer} from 'serialize-ts';
+import {ArraySerializer, PrimitiveSerializer, ModelSerializer} from 'serialize-ts';
 import {EdgesToArray, EdgesToPaging} from '../serializers/graphql';
 import {Paging} from './paging';
 import {field, model} from '@junte/mocker-library';
@@ -18,6 +18,12 @@ export enum IssueProblem {
   overDueDate = 'over_due_date',
   emptyDueDate = 'empty_due_date',
   emptyEstimate = 'empty_estimate'
+}
+
+export enum IssuesType {
+  all = 'all',
+  opened = 'opened',
+  problems = 'problems'
 }
 
 @model()
@@ -151,6 +157,31 @@ export class IssuesFilter implements SearchFilter {
 }
 
 @model()
+export class ProjectIssuesSummary {
+
+  @field()
+  remains: number;
+
+  @field()
+  percentage: number;
+
+  @field()
+  openedCount: number;
+
+}
+
+@model()
+export class ProjectSummary {
+
+  @field()
+  project: Project;
+
+  @field()
+  issues: ProjectIssuesSummary;
+
+}
+
+@model()
 export class IssuesSummary {
 
   @field({mock: '{{int 10 100}}'})
@@ -162,5 +193,8 @@ export class IssuesSummary {
 
   @field({mock: '{{int 10 100}}'})
   problemsCount: number;
+
+  @field({serializer: new ArraySerializer(new ModelSerializer(ProjectSummary))})
+  projects: ProjectSummary[];
 
 }

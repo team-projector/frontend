@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {User} from '../../../../models/user';
 
 @Component({
-  selector: 'app-issues-list',
+  selector: 'app-issues-epxenses-time-list',
   templateUrl: './time-expenses-list.component.html',
   styleUrls: ['./time-expenses-list.component.scss']
 })

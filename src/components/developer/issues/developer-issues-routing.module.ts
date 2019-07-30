@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DueDateResolver, OpenedResolver, ProblemsResolver } from 'src/resolvers/issue';
+import { DueDateResolver, IssuesTypeResolver } from 'src/resolvers/issue';
 import { MeUserResolver } from 'src/resolvers/me';
 import { ProjectResolver } from 'src/resolvers/project';
 import { DeveloperIssuesComponent } from './developer-issues.component';
@@ -19,8 +19,7 @@ const routes: Routes = [
         component: IssuesListComponent,
         resolve: {
           project: ProjectResolver,
-          opened: OpenedResolver,
-          problems: ProblemsResolver
+          type: IssuesTypeResolver
         }
       },
       {
