@@ -1,15 +1,15 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {PLATFORM_DELAY} from 'src/consts';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {debounceTime, distinctUntilChanged, finalize, map} from 'rxjs/operators';
-import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
-import {FormBuilder, FormGroup} from '@angular/forms';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssueProblem, IssuesFilter, IssueState, PagingIssues} from '../../../models/issue';
-import {IssuesGQL, ProjectsSummaryGQL, SyncIssueGQL} from './issues.graphql';
-import {R} from 'apollo-angular/types';
-import {ProjectSummary} from '../../../models/project';
-import {DurationFormat} from '../../../pipes/date';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { R } from 'apollo-angular/types';
+import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { PLATFORM_DELAY } from 'src/consts';
+import { IssueProblem, IssuesFilter, IssueState, PagingIssues } from 'src/models/issue';
+import { ProjectSummary } from 'src/models/project';
+import { DurationFormat } from 'src/pipes/date';
+import { IssuesGQL, ProjectsSummaryGQL, SyncIssueGQL } from './issues.graphql';
 
 export enum ViewType {
   default,
@@ -114,8 +114,7 @@ export class IssuesComponent implements OnInit {
   constructor(private issuesApollo: IssuesGQL,
               private projectsSummary: ProjectsSummaryGQL,
               private syncIssueApollo: SyncIssueGQL,
-              private formBuilder: FormBuilder,
-  ) {
+              private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -172,6 +171,10 @@ export class IssuesComponent implements OnInit {
           projects.map(p => deserialize(p, ProjectSummary))),
         finalize(() => this.progress.loading = false))
       .subscribe(summary => this.summary = summary);
+  }
+
+  reload() {
+
   }
 
   sync(issue: number) {

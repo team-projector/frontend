@@ -12,7 +12,7 @@
 
     <jnt-block [width]="ui.width.fluid">
 
-      <jnt-table #table [search]="true">
+      <jnt-table #table [search]="true" (reloaded)="reload()">
         <ng-template #filters>
           <jnt-stack [type]="ui.stack.type.horizontal">
             <jnt-switch [size]="ui.sizes.small" label="Opened" formControlName="opened"></jnt-switch>

@@ -1,8 +1,7 @@
 <jnt-stack [gutter]="ui.stack.gutter.large">
   <form [formGroup]="form">
     <jnt-stack>
-      <jnt-stack presentations [type]="ui.stack.type.horizontal"
-                 (mouseleave)="metric = metricType.all">
+      <jnt-stack presentations [type]="ui.stack.type.horizontal" (mouseleave)="metric = metricType.all">
         <div (mouseenter)="metric = metricType.spent"
              [style.background]="ui.colors.green">Spent
         </div>
@@ -64,11 +63,13 @@
 
   <jnt-menu>
     <jnt-menu-item link="./" title="Issues">
-      <jnt-badge *ngIf="summary?.issuesCount" [count]="summary?.issuesCount"></jnt-badge>
-      <jnt-badge *ngIf="summary?.problemsCount" [count]="summary?.problemsCount" [scheme]="ui.schemes.fail"></jnt-badge>
+      <jnt-badge *ngIf="!!summary?.issuesCount" [count]="summary?.issuesCount.toString()"></jnt-badge>
+      <jnt-badge *ngIf="!!summary?.problemsCount" [count]="summary?.problemsCount.toString()"
+                 [scheme]="ui.schemes.fail">
+      </jnt-badge>
     </jnt-menu-item>
     <jnt-menu-item link="time-expenses" title="Time Expenses">
-      <jnt-badge *ngIf="summary?.timeSpent" [count]="summary?.timeSpent | duration"></jnt-badge>
+      <jnt-badge *ngIf="!!summary?.timeSpent" [count]="summary?.timeSpent | duration"></jnt-badge>
     </jnt-menu-item>
   </jnt-menu>
   <router-outlet></router-outlet>

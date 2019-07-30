@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {User} from '../../../../models/user';
-import {ViewType} from '../../../issues/issues/issues.component';
-import {Project} from '../../../../models/project';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ViewType } from 'src/components/issues/issues/issues.component';
+import { Project } from 'src/models/project';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-issues-list',
@@ -30,8 +30,10 @@ export class IssuesListComponent implements OnInit {
   }
 
   filtered(state: { opened?, problems? }) {
-    this.router.navigate([state],
-      {relativeTo: this.route});
+    this.router.navigate(['.', state], {
+      relativeTo: this.route,
+      state: {data: this.route.snapshot.data}
+    });
   }
 
 }
