@@ -6,12 +6,12 @@
   <jnt-stack fields [gutter]="ui.stack.gutter.normal">
     <fieldset [class.error]="loginForm.get('login') | fieldTouchedHasError:'required'">
       <p class="message">Field is required!</p>
-      <jnt-input formControlName="login" placeholder="Login" required></jnt-input>
+      <jnt-input formControlName="login" placeholder="Login" [icon]="ui.icons.user" required></jnt-input>
     </fieldset>
 
     <fieldset [class.error]="loginForm.get('password') | fieldTouchedHasError:'required'">
       <p class="message">Field is requred!</p>
-      <jnt-input formControlName="password" placeholder="Password" required [type]="ui.form.input.password"></jnt-input>
+      <jnt-input formControlName="password" placeholder="Password" [icon]="ui.icons.accessLock" required [type]="ui.form.input.password"></jnt-input>
     </fieldset>
     <jnt-button [loading]="progress.login" type="submit" text="Login"
                 [width]="ui.width.fluid"></jnt-button>
