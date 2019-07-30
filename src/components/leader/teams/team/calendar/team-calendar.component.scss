@@ -5,47 +5,45 @@
 }
 
 :host-context([theme='dark']) {
-  [wrapper] {
-    table {
-      background-color: #1A1A1A;
-      thead {
-        tr {
-          &[rewind] {
-            th {
-              [date] {
-                color: $gray-100;
-                [arrow] {
-                  color: $gray-200;
-                }
-              }
-            }
-          }
-          &[timeline] {
-            background-color: $gray-800;
-            th[day] {
-              &:hover, &[active='true'] {
-                background-color: $gray-700;
+  table {
+    background-color: #1A1A1A;
+    thead {
+      tr {
+        &[rewind] {
+          th {
+            [date] {
+              color: $gray-100;
+              [arrow] {
+                color: $gray-200;
               }
             }
           }
         }
-      }
-      tbody {
-        tr {
-          td {
-            &[day] {
-              &:hover, &[active='true'] {
-                background-color: $gray-700;
-              }
-              &[active-day='true'] {
-                background: $gray-800;
-              }
+        &[timeline] {
+          background-color: $gray-800;
+          th[day] {
+            &:hover, &[active='true'] {
+              background-color: $gray-700;
             }
           }
-          &[active='true'] {
-            td {
-              background-color: $gray-800;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          &[day] {
+            &:hover, &[active='true'] {
+              background-color: $gray-700;
             }
+            &[active-day='true'] {
+              background: $gray-800;
+            }
+          }
+        }
+        &[active='true'] {
+          td {
+            background-color: $gray-800;
           }
         }
       }
@@ -114,6 +112,7 @@ table {
         th {
           &[day] {
             cursor: pointer;
+            user-select: none;
             &:hover, &[active='true'] {
               background-color: $secondary-dark-color;
             }
@@ -139,7 +138,7 @@ table {
   tbody {
     tr {
       td {
-        border-top-color: $muted-color;
+        border-top: 1px solid $muted-color;
       }
       &[nodata] {
         height: 200px;
@@ -230,7 +229,6 @@ table {
   }
 
   td, th {
-    border: 1px solid transparent;
     text-align: center;
     vertical-align: middle;
     line-height: 1;
