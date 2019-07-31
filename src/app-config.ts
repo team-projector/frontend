@@ -2,8 +2,9 @@ import { BehaviorSubject } from 'rxjs';
 import { AccessToken } from './models/access-token';
 import { Injectable } from '@angular/core';
 
-export const GRAPHQL_URI = 'https://teamprojector.com/api/graphql';
+const GRAPHQL_URL = 'https://teamprojector.com/api/graphql';
 const AUTHORIZATION_KEY = 'Authorization';
+const LOCALHOST_REGEX = /(localhost|127.\0\.0\.1)/ig;
 
 @Injectable()
 export class AppConfig {
@@ -38,8 +39,15 @@ export class AppConfig {
     if (localStorage.useMocks !== undefined) {
       return localStorage.useMocks;
     }
-    const href = window.location.href;
+    const href = location.href;
     return /use-mocks/i.test(href);
   }
 
+  localMode: boolean = (() => {
+    const href = location.href;
+    // href = 'http://localhost/';
+    return LOCALHOST_REGEX.test(href);
+  })();
+
+  graphqlUrl = this.localMode ? GRAPHQL_URL : `${location.origin}/api/graphql`;
 }
