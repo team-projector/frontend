@@ -16,7 +16,7 @@
              [justify]="ui.flex.justify.between"
              *ngFor="let issue of status.lastIssues">
     <jnt-stack [gutter]="ui.stack.gutter.tiny">
-      <jnt-link [source]="issue.glUrl" target="_blank">{{issue.title}}</jnt-link>
+      <jnt-link [source]="issue.glUrl" target="_blank" [title]="issue.title"></jnt-link>
       <div project>{{issue.project?.fullTitle}}</div>
     </jnt-stack>
     <span user>{{issue.user?.name}}</span>
