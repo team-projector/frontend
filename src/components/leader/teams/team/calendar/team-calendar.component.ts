@@ -1,22 +1,21 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {Team, TeamMember} from 'src/models/team';
-import {UI} from 'junte-ui';
-import {addDays, addWeeks, endOfDay, endOfWeek, format, isEqual, isFuture, isPast, startOfDay, startOfWeek, subWeeks} from 'date-fns';
-import {distinctUntilChanged, filter as filtering, finalize, map} from 'rxjs/operators';
-import {BehaviorSubject, combineLatest, zip} from 'rxjs';
-import {MetricsGroup} from 'src/models/metrics';
-import {DurationFormat} from 'src/pipes/date';
-import {Period} from 'junte-ui/lib/components/calendar/models';
-import {Router} from '@angular/router';
-import {isUndefined} from 'util';
-import {User, UserProblem} from 'src/models/user';
-import {equals} from '../../../../utils/equals';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {PagingTeamMembers} from '../../../../../models/team';
-import {TeamMetricsFilter, TeamProgressMetrics, UserProgressMetrics} from '../../../../../models/metrics';
-import {CalendarMembersGQL, CalendarMetricsGQL} from './team-calendar.graphql';
-import {R} from 'apollo-angular/types';
+import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Team, TeamMember } from 'src/models/team';
+import { UI } from 'junte-ui';
+import { addDays, addWeeks, endOfDay, endOfWeek, format, isEqual, isFuture, isPast, startOfDay, startOfWeek, subWeeks } from 'date-fns';
+import { distinctUntilChanged, filter as filtering, finalize, map } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, zip } from 'rxjs';
+import { MetricsGroup } from 'src/models/metrics';
+import { DurationFormat } from 'src/pipes/date';
+import { Router } from '@angular/router';
+import { isUndefined } from 'util';
+import { User, UserProblem } from 'src/models/user';
+import { equals } from '../../../../utils/equals';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { PagingTeamMembers } from '../../../../../models/team';
+import { TeamMetricsFilter, TeamProgressMetrics, UserProgressMetrics } from '../../../../../models/metrics';
+import { CalendarMembersGQL, CalendarMetricsGQL } from './team-calendar.graphql';
+import { R } from 'apollo-angular/types';
 
 const DAYS_IN_WEEK = 7;
 const L = 'DD/MM/YYYY';
@@ -79,7 +78,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   user = new FormControl();
   dueDate = new FormControl();
-  metric = new FormControl(MetricType.all);
+  metric = new FormControl();
 
   form: FormGroup = this.fb.group({
     dueDate: this.dueDate,
