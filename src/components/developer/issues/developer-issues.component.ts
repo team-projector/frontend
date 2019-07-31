@@ -61,7 +61,7 @@ export class DeveloperIssuesComponent implements OnInit {
     new Map<string, UserProgressMetrics>()
   );
   dueDate = new FormControl();
-  metric = new FormControl(MetricType.all);
+  metric = new FormControl();
   form = this.formBuilder.group({
     dueDate: this.dueDate,
     metric: this.metric

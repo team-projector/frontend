@@ -2,20 +2,7 @@
   <form [formGroup]="form">
     <jnt-stack>
       <jnt-stack presentations [type]="ui.stack.type.horizontal">
-        <jnt-switcher formControlName="metric">
-          <jnt-switcher-option label="Spent" [value]="metricType.spent">
-            <jnt-dot [color]="ui.colors.green"></jnt-dot>
-          </jnt-switcher-option>
-          <jnt-switcher-option label="Estimated" [value]="metricType.estimate">
-            <jnt-dot [color]="ui.colors.red"></jnt-dot>
-          </jnt-switcher-option>
-          <jnt-switcher-option label="Remains" [value]="metricType.remains">
-            <jnt-dot [color]="ui.colors.yellow"></jnt-dot>
-          </jnt-switcher-option>
-          <jnt-switcher-option label="Loading" [value]="metricType.loading">
-            <jnt-dot [color]="ui.colors.purpleDark"></jnt-dot>
-          </jnt-switcher-option>
-        </jnt-switcher>
+        <app-metrics-type formControlName="metric"></app-metrics-type>
       </jnt-stack>
 
       <jnt-block>
