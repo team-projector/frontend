@@ -11,7 +11,7 @@
     </div>
   </ng-template>
   <ng-template #teamsTemplate>
-    <jnt-link *ngFor="let team of teams" [source]="[team.id]" team>
+    <a *ngFor="let team of teams" [routerLink]="[team.id]" team>
       <jnt-block [padding]="ui.padding.normal" [title]="team.title" block>
         <jnt-label *ngIf="team.metrics.problemsCount" problems [icon]="ui.icons.warning"
                    [color]="ui.colors.red"
@@ -27,7 +27,7 @@
           </div>
         </ng-template>
       </jnt-block>
-    </jnt-link>
+    </a>
   </ng-template>
 </jnt-stack>
 <router-outlet></router-outlet>

@@ -3,7 +3,7 @@
     <jnt-table-column title="Title">
       <ng-template #cellTemplate let-title="title" let-owner="owner">
         {{title}}<br>
-        <jnt-link [source]="owner.glUrl" target="_blank">{{owner?.fullTitle}}</jnt-link>
+        <jnt-link [source]="owner.glUrl" target="_blank" [title]="owner?.fullTitle"></jnt-link>
       </ng-template>
     </jnt-table-column>
     <jnt-table-column title="Budget">

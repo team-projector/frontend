@@ -17,11 +17,7 @@
 
 [team] {
   margin-bottom: $gutter-normal;
-  & ::ng-deep a[child-of=#{$jnt-link-host}] {
-    height: 100%;
-    align-items: stretch;
-  }
-
+  text-decoration: none;
   [block] {
     height: 100%;
     max-width: 170px;

@@ -91,7 +91,7 @@
                    [align]="ui.flex.align.center">
           <jnt-avatar [image]="member.user.avatar"
                       [size]="ui.sizes.tiny"></jnt-avatar>
-          <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link>{{member.user.name}}</jnt-link>
+          <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link [title]="member.user.name"></jnt-link>
         </jnt-stack>
       </td>
       <td>

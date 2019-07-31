@@ -205,7 +205,9 @@ table {
           width: 100%;
           text-align: left;
           a[child-of=#{$jnt-link-host}][active='true'] {
-            border-bottom: 0;
+            span {
+              border-bottom: 0;
+            }
           }
         }
         jnt-label ::ng-deep {
@@ -247,7 +249,7 @@ table {
   th:nth-child(2),
   td:nth-child(2) {
     min-width: 155px;
-    width: 155px;
+    width: 200px;
   }
 
   th:nth-child(3),
