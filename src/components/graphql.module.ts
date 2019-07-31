@@ -3,7 +3,7 @@ import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
-import { AppConfig, GRAPHQL_URI } from '../app-config';
+import { AppConfig } from '../app-config';
 import { ErrorResponse, onError } from 'apollo-link-error';
 import { Router } from '@angular/router';
 
@@ -21,7 +21,7 @@ export class GraphQLModule {
               apollo: Apollo,
               httpLink: HttpLink,
               router: Router) {
-    const http = httpLink.create({uri: GRAPHQL_URI});
+    const http = httpLink.create({uri: config.graphqlUrl});
     const authLink = new ApolloLink((operation, forward) => {
       if (config.token) {
         operation.setContext({
