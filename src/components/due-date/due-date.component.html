@@ -1,0 +1,4 @@
+<span style="display: block">{{today | dueDatePipe: dueDate}}</span>
+<jnt-dot *ngFor="let day of 7 | mockArray"
+         [color]="(getDay(today) === day + 1) ? ui.colors.red : ui.colors.gray">
+</jnt-dot>
