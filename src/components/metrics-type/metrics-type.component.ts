@@ -3,8 +3,7 @@ import { ControlValueAccessor, FormBuilder, FormControl, NG_VALUE_ACCESSOR } fro
 import { MetricType } from 'src/components/leader/teams/team/calendar/team-calendar.component';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { UI } from 'junte-ui';
-
-const METRIC_TYPE = 'metric_type';
+import { METRIC_TYPE } from 'src/components/metrics-type/consts';
 
 @Component({
   selector: 'app-metrics-type',
@@ -36,13 +35,12 @@ export class MetricsTypeComponent implements OnInit, ControlValueAccessor {
     this.metric.valueChanges.pipe(distinctUntilChanged())
       .subscribe(metric => {
         this.onChange(metric);
-        localStorage.setItem(METRIC_TYPE, JSON.stringify(metric));
+        localStorage.setItem(METRIC_TYPE, metric);
       });
   }
 
   writeValue(value: MetricType) {
-    const state = JSON.parse(localStorage.getItem(METRIC_TYPE));
-    this.metric.patchValue(!value ? (!!state ? state : MetricType.all) : value);
+    this.metric.patchValue(value, {emitEvent: false});
   }
 
   onChange(value: MetricType) {

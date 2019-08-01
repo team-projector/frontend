@@ -16,6 +16,7 @@ import { PagingTeamMembers } from '../../../../../models/team';
 import { TeamMetricsFilter, TeamProgressMetrics, UserProgressMetrics } from '../../../../../models/metrics';
 import { CalendarMembersGQL, CalendarMetricsGQL } from './team-calendar.graphql';
 import { R } from 'apollo-angular/types';
+import { METRIC_TYPE } from 'src/components/metrics-type/consts';
 
 const DAYS_IN_WEEK = 7;
 const L = 'DD/MM/YYYY';
@@ -78,7 +79,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   user = new FormControl();
   dueDate = new FormControl();
-  metric = new FormControl();
+  metric = new FormControl(localStorage.getItem(METRIC_TYPE) || MetricType.all);
 
   form: FormGroup = this.fb.group({
     dueDate: this.dueDate,
