@@ -12,6 +12,9 @@ export class ProjectGQL extends Query<{project}> {
         id
         title
         fullTitle
+        group {
+          fullTitle
+        }
       }
     }`;
 }

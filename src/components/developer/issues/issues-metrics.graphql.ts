@@ -22,3 +22,17 @@ export class IssuesMetricsGQL extends Query<{userProgressMetrics}> {
       }
     }`;
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class IssuesSummaryGQL extends Query<{issuesSummary}> {
+  document = gql`
+    query IssuesSummary($user: ID, $dueDate: Date, $state: String) {
+      issuesSummary(user: $user, dueDate: $dueDate, state: $state) {
+        openedCount
+        problemsCount
+        timeSpent
+      }
+    }`;
+}

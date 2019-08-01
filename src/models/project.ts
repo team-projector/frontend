@@ -1,25 +1,6 @@
 import {field, model} from '@junte/mocker-library';
 
 @model()
-export class Project {
-
-  @field({mock: '{{id}}'})
-  id: string;
-
-  @field({mock: '{{project}}'})
-  title: string;
-
-  @field({mock: '{{title}}'})
-  fullTitle: string;
-
-  @field({
-    name: 'gl_url',
-    mock: '{{url}}'
-  })
-  glUrl: string;
-}
-
-@model()
 export class ProjectGroup {
 
   @field({mock: '{{int 1 1000}}'})
@@ -35,3 +16,25 @@ export class ProjectGroup {
   glUrl: string;
 }
 
+
+@model()
+export class Project {
+
+  @field({mock: '{{id}}'})
+  id: string;
+
+  @field({mock: '{{project}}'})
+  title: string;
+
+  @field({mock: '{{title}}'})
+  fullTitle: string;
+
+  @field()
+  group: ProjectGroup;
+
+  @field({
+    name: 'gl_url',
+    mock: '{{url}}'
+  })
+  glUrl: string;
+}

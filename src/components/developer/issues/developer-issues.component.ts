@@ -13,8 +13,7 @@ import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MetricsGroup, UserMetricsFilter } from '../../../models/metrics';
 import { MetricType } from '../../leader/teams/team/calendar/team-calendar.component';
-import { IssuesSummaryGQL } from './issues-summary.graphql';
-import { IssuesMetricsGQL } from './issues-metrics.graphql';
+import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
 import { R } from 'apollo-angular/types';
 import { METRIC_TYPE } from 'src/components/metrics-type/consts';
 
@@ -72,7 +71,7 @@ export class DeveloperIssuesComponent implements OnInit {
               private route: ActivatedRoute,
               private router: Router,
               private issuesSummary: IssuesSummaryGQL,
-              private issuesMetrics: IssuesMetricsGQL) {
+              private issuesMetricsGQL: IssuesMetricsGQL) {
   }
 
   ngOnInit() {
@@ -114,7 +113,7 @@ export class DeveloperIssuesComponent implements OnInit {
         end: period.end,
         group: group
       });
-      return this.issuesMetrics.fetch(serialize(filter) as R)
+      return this.issuesMetricsGQL.fetch(serialize(filter) as R)
         .pipe(map(({data: {userProgressMetrics}}) =>
             userProgressMetrics.map(el => deserialize(el, UserProgressMetrics))),
           map(metrics => {

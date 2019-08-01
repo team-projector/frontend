@@ -52,8 +52,10 @@
 
   <jnt-menu>
     <jnt-menu-item link="./" title="Issues">
-      <jnt-badge *ngIf="summary?.issuesCount" [count]="summary?.issuesCount"></jnt-badge>
-      <jnt-badge *ngIf="summary?.problemsCount" [count]="summary?.problemsCount" [scheme]="ui.schemes.fail"></jnt-badge>
+      <jnt-badge *ngIf="summary?.openedCount" [count]="summary?.openedCount"
+                 [scheme]="ui.schemes.success"></jnt-badge>
+      <jnt-badge *ngIf="summary?.problemsCount" [count]="summary?.problemsCount"
+                 [scheme]="ui.schemes.fail"></jnt-badge>
     </jnt-menu-item>
     <jnt-menu-item link="time-expenses" title="Time Expenses">
       <jnt-badge *ngIf="summary?.timeSpent" [count]="summary?.timeSpent | duration"></jnt-badge>

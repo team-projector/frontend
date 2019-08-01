@@ -23,7 +23,9 @@
         </jnt-avatars-group>
         <ng-template #footerBlock>
           <div footer>
-            <div><b>120</b> hours for <b>{{team.metrics.issuesCount}}</b> tasks</div>
+            <div><b>{{!!team.metrics.issues.openedEstimated ? (team.metrics.issues.openedEstimated | duration:durationFormat.short) : '&ndash;'}}</b>
+              hours for <b>{{team.metrics.issues.openedCount || '&ndash;'}}</b> tasks
+            </div>
           </div>
         </ng-template>
       </jnt-block>

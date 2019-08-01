@@ -74,11 +74,15 @@
     <tr *ngFor="let member of members" [attr.active]="user.value?.id == member.user.id">
       <td gutter></td>
       <td>
-        <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small"
-                   [align]="ui.flex.align.center">
+        <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small">
           <jnt-avatar [image]="member.user.avatar"
                       [size]="ui.sizes.tiny"></jnt-avatar>
-          <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link [title]="member.user.name"></jnt-link>
+          <div>
+            <jnt-link (click)="form.patchValue({user: member.user, dueDate: null})" link
+                      [title]="member.user.name"></jnt-link>
+            <br>
+            <small>{{member.roles.join(', ')}}</small>
+          </div>
         </jnt-stack>
       </td>
       <td>
@@ -101,7 +105,7 @@
       </td>
 
       <ng-container
-        *ngTemplateOutlet="weekMetricTemplate; context: {metric: metrics?.weeks?.get(member.user.id)?.get(format(date, formatDate))}">
+        *ngTemplateOutlet="weekMetricTemplate; context: {metric: metrics?.weeks?.get(member.user.id)?.get(format(start, formatDate))}">
       </ng-container>
       <td gutter></td>
     </tr>

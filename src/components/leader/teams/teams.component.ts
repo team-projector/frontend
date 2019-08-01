@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { finalize, map } from 'rxjs/operators';
-import { UI } from 'junte-ui';
-import { deserialize } from 'serialize-ts/dist';
-import { PagingTeams, Team } from '../../../models/team';
-import { AllTeamsGQL } from './teams.graphql';
+import {Component, OnInit} from '@angular/core';
+import {finalize, map} from 'rxjs/operators';
+import {UI} from 'junte-ui';
+import {deserialize} from 'serialize-ts/dist';
+import {PagingTeams, Team} from '../../../models/team';
+import {AllTeamsGQL} from './teams.graphql';
+import {DurationFormat} from '../../../pipes/date';
 
 @Component({
   selector: 'app-leader-teams',
@@ -13,6 +14,7 @@ import { AllTeamsGQL } from './teams.graphql';
 export class TeamsComponent implements OnInit {
 
   ui = UI;
+  durationFormat = DurationFormat;
   teams: Team[] = [];
   loading: boolean;
 
@@ -26,7 +28,7 @@ export class TeamsComponent implements OnInit {
   private load() {
     this.loading = true;
     this.allTeamsApollo.fetch()
-      .pipe(map(({data: {allTeams}}: { data: { allTeams } }) => deserialize(allTeams, PagingTeams)),
+      .pipe(map(({data: {teams}}) => deserialize(teams, PagingTeams)),
         finalize(() => this.loading = false)
       )
       .subscribe(teams => this.teams = teams.results);

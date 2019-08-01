@@ -3,21 +3,15 @@ import {PLATFORM_DELAY} from 'src/consts';
 import {BehaviorSubject, combineLatest} from 'rxjs';
 import {debounceTime, distinctUntilChanged, finalize, map} from 'rxjs/operators';
 import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {deserialize, serialize} from 'serialize-ts/dist';
 import {IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues} from '../../../models/issue';
-import {IssuesGQL, IssuesSummaryGQL, ProjectsSummaryGQL, SyncIssueGQL} from './issues.graphql';
+import {IssuesGQL, IssuesSummaryGQL, SyncIssueGQL} from './issues.graphql';
 import {R} from 'apollo-angular/types';
-import {DurationFormat} from '../../../pipes/date';
 
 export enum ViewType {
   default,
   extended
-}
-
-enum SummaryType {
-  issues,
-  projects
 }
 
 @Component({
@@ -30,19 +24,19 @@ export class IssuesComponent implements OnInit {
   ui = UI;
   issuesState = IssueState;
   issueProblem = IssueProblem;
+  issuesType = IssuesType;
   viewType = ViewType;
-  durationFormat = DurationFormat;
 
   summary: IssuesSummary;
-  progress = {loading: false, sync: false};
-  colors = [UI.colors.purple, UI.colors.red, UI.colors.green, UI.colors.yellow];
+  progress = {summary: false, sync: false};
 
   @Input()
   view = ViewType.default;
 
+  typeControl = new FormControl(IssuesType.opened);
+
   form: FormGroup = this.formBuilder.group({
-    project: [],
-    type: [IssuesType.opened]
+    type: this.typeControl
   });
 
   private team$ = new BehaviorSubject<string>(null);
@@ -106,25 +100,18 @@ export class IssuesComponent implements OnInit {
 
   constructor(private issuesGQL: IssuesGQL,
               private issuesSummaryGQL: IssuesSummaryGQL,
-              private projectsSummaryGQL: ProjectsSummaryGQL,
               private syncIssueGQL: SyncIssueGQL,
               private formBuilder: FormBuilder) {
   }
 
   ngOnInit() {
-    combineLatest(this.project$, this.type$)
-      .subscribe(([project, type]) => {
-        this.form.patchValue({
-          project: project,
-          type: type
-        }, {emitEvent: false});
-      });
+    this.type$.subscribe(type =>
+      this.typeControl.patchValue(type, {emitEvent: false}));
 
     this.table.fetcher = (filter: DefaultSearchFilter) => {
       Object.assign(this.filter, filter);
       return this.issuesGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {allIssues}}: { data: { allIssues } }) =>
-          deserialize(allIssues, PagingIssues)));
+        .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)));
     };
 
     combineLatest(this.team$, this.user$, this.project$, this.dueDate$, this.type$)
@@ -137,20 +124,14 @@ export class IssuesComponent implements OnInit {
         this.filter.state = type === IssuesType.opened ? IssueState.opened : null;
         this.filter.problems = type === IssuesType.problems ? true : null;
 
-        this.loadSummary(SummaryType.projects);
-        this.loadSummary(SummaryType.issues);
+        this.loadSummary();
         this.table.load();
       });
 
     this.form.valueChanges
       .pipe(distinctUntilChanged())
-      .subscribe(({project, type}) => {
-        // TODO: why?
-        // [this.project, this.type] = [project, type];
-        const state: { project?, type? } = {};
-        if (!!project) {
-          state.project = project;
-        }
+      .subscribe(({type}) => {
+        const state: { type? } = {};
         if (type !== IssuesType.opened) {
           state.type = type;
         }
@@ -158,17 +139,13 @@ export class IssuesComponent implements OnInit {
       });
   }
 
-  private loadSummary(type: SummaryType) {
-    this.progress.loading = true;
-    const fetcher = type === SummaryType.issues
-      ? this.issuesSummaryGQL : this.projectsSummaryGQL;
-    fetcher.fetch(serialize(this.filter) as R)
-      .pipe(map(({data: {issuesSummary}}) =>
-          deserialize(issuesSummary, IssuesSummary)),
-        finalize(() => this.progress.loading = false))
-      .subscribe(summary =>
-        !!this.summary ? Object.assign(this.summary, summary)
-          : this.summary = summary);
+  private loadSummary() {
+    this.progress.summary = true;
+    this.issuesSummaryGQL.fetch(serialize(this.filter) as R)
+      .pipe(map(({data: {summary}}) =>
+          deserialize(summary, IssuesSummary)),
+        finalize(() => this.progress.summary = false))
+      .subscribe(summary => this.summary = summary);
   }
 
   sync(issue: number) {

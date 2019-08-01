@@ -3,6 +3,7 @@ import {field, model} from '@junte/mocker-library';
 import {User} from './user';
 import {EdgesToArray, EdgesToPaging} from '../serializers/graphql';
 import {Paging} from './paging';
+import {IssueMetrics, IssuesMetrics} from './issue';
 
 export enum TeamMemberRole {
   developer = 'developer',
@@ -10,14 +11,11 @@ export enum TeamMemberRole {
   watcher = 'watcher'
 }
 
-
 @model()
 export class TeamMetrics {
 
-  @field({
-    mock: '{{int 10 100}}'
-  })
-  issuesCount: number;
+  @field()
+  issues: IssuesMetrics;
 
   @field({
     mock: '{{int 10 100}}'

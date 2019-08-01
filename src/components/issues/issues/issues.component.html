@@ -1,5 +1,27 @@
 <jnt-block [width]="ui.width.fluid">
   <jnt-table #table [search]="true">
+    <ng-template #filters>
+      <jnt-stack [type]="ui.stack.type.horizontal">
+        <jnt-form [formGroup]="form">
+          <jnt-switcher formControlName="type">
+            <jnt-switcher-option label="All" [value]="issuesType.all">
+              <jnt-badge *ngIf="summary?.issuesCount"
+                         [count]="summary?.issuesCount"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Opened" [value]="issuesType.opened">
+              <jnt-badge *ngIf="summary?.openedCount"
+                         [count]="summary?.openedCount"
+                         [scheme]="ui.schemes.success"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Problems" [value]="issuesType.problems">
+              <jnt-badge *ngIf="summary?.problemsCount"
+                         [count]="summary?.problemsCount"
+                         [scheme]="ui.schemes.fail"></jnt-badge>
+            </jnt-switcher-option>
+          </jnt-switcher>
+        </jnt-form>
+      </jnt-stack>
+    </ng-template>
     <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
       <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
                    let-participants="participants" let-project="project">
@@ -27,14 +49,16 @@
 
     <jnt-table-column i18n-title="@@dueDate" title="Due date">
       <ng-template #cellTemplate let-dueDate="dueDate" let-problems="problems">
-        <div>{{dueDate | date}}</div>
-        <jnt-stack [type]="ui.stack.type.vertical">
-          <jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
-                     [color]="ui.colors.red" label="empty">
-          </jnt-label>
-          <jnt-label *ngIf="problems?.includes(issueProblem.overDueDate)"
-                     [color]="ui.colors.red" label="overdue">
-          </jnt-label>
+        <jnt-stack [gutter]="ui.stack.gutter.tiny">
+          <app-due-date [dueDate]="dueDate"></app-due-date>
+          <jnt-stack [type]="ui.stack.type.vertical">
+            <jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
+                       [color]="ui.colors.red" label="empty">
+            </jnt-label>
+            <jnt-label *ngIf="problems?.includes(issueProblem.overDueDate)"
+                       [color]="ui.colors.red" label="overdue">
+            </jnt-label>
+          </jnt-stack>
         </jnt-stack>
       </ng-template>
     </jnt-table-column>

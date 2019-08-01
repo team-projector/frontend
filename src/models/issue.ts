@@ -27,6 +27,20 @@ export enum IssuesType {
 }
 
 @model()
+export class IssuesMetrics {
+
+  @field()
+  count: number;
+
+  @field()
+  openedCount: number;
+
+  @field()
+  openedEstimated: number;
+
+}
+
+@model()
 export class IssueMetrics {
 
   @field({mock: '{{int 10 100}}'})
@@ -192,7 +206,6 @@ export class IssuesSummary {
 
   @field({mock: '{{int 10 100}}'})
   timeSpent: number;
-
 
   @field({mock: '{{int 10 100}}'})
   problemsCount: number;

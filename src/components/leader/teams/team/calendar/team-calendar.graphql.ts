@@ -13,6 +13,7 @@ export class CalendarMembersGQL extends Query<{team: {members}}> {
           count
           edges {
             node {
+              roles
               user {
                 id
                 glAvatar

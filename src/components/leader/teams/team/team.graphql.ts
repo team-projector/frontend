@@ -14,6 +14,10 @@ export class FirstSummaryGQL extends Query<{ summary }> {
             id
             title
             fullTitle
+            glUrl
+            group {
+              fullTitle
+            }
           }
           issues {
             remains
@@ -30,23 +34,11 @@ export class FirstSummaryGQL extends Query<{ summary }> {
 })
 export class SecondSummaryGQL extends Query<{ summary }> {
   document = gql`
-    query IssuesSummary($team: ID, $user: ID, $dueDate: Date) {
-      summary: issuesSummary(team: $team, user: $user, dueDate: $dueDate) {
+    query IssuesSummary($team: ID, $user: ID, $project: ID, $dueDate: Date) {
+      summary: issuesSummary(team: $team, user: $user, project: $project, dueDate: $dueDate, state: "opened") {
         issuesCount
         openedCount
         problemsCount
-      }
-    }`;
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-export class ThirdSummaryGQL extends Query<{ summary }> {
-  document = gql`
-    query IssuesSummary($team: ID, $user: ID, $dueDate: Date, $state: String, $problems: Boolean) {
-      summary: issuesSummary(team: $team, user: $user, dueDate: $dueDate, state: $state, problems: $problems) {
-        issuesCount
         timeSpent
       }
     }`;

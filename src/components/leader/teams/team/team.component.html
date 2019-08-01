@@ -1,55 +1,49 @@
 <jnt-stack>
   <jnt-form [formGroup]="form">
     <jnt-stack>
-      <jnt-stack [type]="ui.stack.type.horizontal">
+      <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.large">
         <jnt-stack>
           <app-team-calendar formControlName="filter" [team]="team"></app-team-calendar>
           <jnt-stack [type]="ui.stack.type.horizontal">
             <div filter *ngIf="filter.value.user">
+              <jnt-avatar avatar [image]="filter.value.user.avatar"
+                          [size]="ui.sizes.tiny"></jnt-avatar>
               {{filter.value.user.name}}
-              <jnt-icon icon [icon]="ui.icons.close"
+              <jnt-icon reset [icon]="ui.icons.close"
                         (click)="filter.patchValue({user: null, dueDate: filter.value.dueDate})"></jnt-icon>
             </div>
             <div filter *ngIf="filter.value.dueDate">
               {{filter.value.dueDate | date}}
-              <jnt-icon icon [icon]="ui.icons.close"
+              <jnt-icon reset [icon]="ui.icons.close"
                         (click)="filter.patchValue({user: filter.value.user,  dueDate: null})"></jnt-icon>
             </div>
             <div filter *ngIf="!!project.value">
-              {{project.value.fullTitle}}
-              <jnt-icon icon [icon]="ui.icons.close"
+              <div>
+                {{project.value.title}}<br>
+                <small>{{project.value.group?.fullTitle}}</small>
+              </div>
+              <jnt-icon reset [icon]="ui.icons.close"
                         (click)="project.patchValue(null)"></jnt-icon>
             </div>
           </jnt-stack>
 
-          <jnt-switcher formControlName="type">
-            <jnt-switcher-option label="All" [value]="issuesType.all">
-              <jnt-badge *ngIf="summary.second?.issuesCount"
-                         [count]="summary.second?.issuesCount"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Opened" [value]="issuesType.opened">
-              <jnt-badge *ngIf="summary.second?.openedCount"
-                         [count]="summary.second?.openedCount"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Problems" [value]="issuesType.problems">
-              <jnt-badge *ngIf="summary.second?.problemsCount" [scheme]="ui.schemes.fail"
-                         [count]="summary.second?.problemsCount"></jnt-badge>
-            </jnt-switcher-option>
-          </jnt-switcher>
-
           <jnt-menu>
             <jnt-menu-item link="issues" title="Issues">
-              <jnt-badge *ngIf="summary?.third?.issuesCount"
-                         [count]="summary?.third?.issuesCount"></jnt-badge>
+              <jnt-badge *ngIf="summary?.second?.issuesCount"
+                         [count]="summary?.second?.issuesCount"
+                         [scheme]="ui.schemes.success"></jnt-badge>
+              <jnt-badge *ngIf="summary?.second?.problemsCount"
+                         [count]="summary?.second?.problemsCount"
+                         [scheme]="ui.schemes.fail"></jnt-badge>
             </jnt-menu-item>
             <jnt-menu-item link="time-expenses" title="Time Expenses">
-              <jnt-badge *ngIf="summary?.third?.timeSpent"
-                         [count]="summary?.third?.timeSpent | duration"></jnt-badge>
+              <jnt-badge *ngIf="summary?.second?.timeSpent"
+                         [count]="summary?.second?.timeSpent | duration"></jnt-badge>
             </jnt-menu-item>
           </jnt-menu>
           <router-outlet></router-outlet>
         </jnt-stack>
-        <jnt-chart formControlName="project">
+        <jnt-chart formControlName="project" title="Opened project" metric="Hours">
           <jnt-chart-indicator *ngFor="let p of summary.first?.projects;let i = index"
                                [title]="p.project.fullTitle"
                                [data]="p.project"

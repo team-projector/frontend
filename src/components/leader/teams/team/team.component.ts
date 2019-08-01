@@ -7,7 +7,7 @@ import {Team} from 'src/models/team';
 import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
 import {deserialize, serialize} from 'serialize-ts/dist';
 import {IssuesFilter, IssuesSummary, IssueState, IssuesType} from '../../../../models/issue';
-import {FirstSummaryGQL, SecondSummaryGQL, ThirdSummaryGQL} from './team.graphql';
+import {FirstSummaryGQL, SecondSummaryGQL} from './team.graphql';
 import {R} from 'apollo-angular/types';
 import {DurationFormat} from '../../../../pipes/date';
 import {User} from '../../../../models/user';
@@ -22,7 +22,6 @@ import {combineLatest} from 'rxjs';
 export class TeamComponent implements OnInit {
 
   ui = UI;
-  issuesType = IssuesType;
   durationFormat = DurationFormat;
   colors = [UI.colors.purple, UI.colors.red, UI.colors.green, UI.colors.yellow];
 
@@ -30,19 +29,17 @@ export class TeamComponent implements OnInit {
   filter = new FormControl();
   project = new FormControl();
 
-  summary: { first?: IssuesSummary, second?: IssuesSummary, third?: IssuesSummary } = {};
+  summary: { first?: IssuesSummary, second?: IssuesSummary } = {};
 
   filter2 = new IssuesFilter();
 
   form: FormGroup = this.formBuilder.group({
     filter: this.filter,
-    project: this.project,
-    type: [IssuesType.opened]
+    project: this.project
   });
 
   constructor(private firstSummaryGQL: FirstSummaryGQL,
               private secondSummaryGQL: SecondSummaryGQL,
-              private thirdSummaryGQL: ThirdSummaryGQL,
               private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
@@ -50,8 +47,8 @@ export class TeamComponent implements OnInit {
 
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
-      .subscribe(({filter: {user, dueDate}, project, type}) => {
-        const state: { user?, due_date?, project?, type? } = {};
+      .subscribe(({filter: {user, dueDate}, project}) => {
+        const state: { user?, due_date?, project? } = {};
         if (!!user) {
           state.user = user.id;
         }
@@ -60,9 +57,6 @@ export class TeamComponent implements OnInit {
         }
         if (!!project) {
           state.project = project.id;
-        }
-        if (type !== IssuesType.opened) {
-          state.type = type;
         }
         this.router.navigate([state, 'issues'],
           {relativeTo: this.route});
@@ -106,25 +100,6 @@ export class TeamComponent implements OnInit {
         this.secondSummaryGQL.fetch(serialize(this.filter2) as R)
           .pipe(map(({data: {summary}}) => deserialize(summary, IssuesSummary)))
           .subscribe(summary => this.summary.second = summary);
-      });
-
-    const third = this.route.data.pipe(map(({type}: { type: IssuesType }) =>
-      ({
-        type: type
-      })), distinctUntilChanged(), tap(({type}) => {
-      this.form.patchValue({
-        type: type
-      }, {emitEvent: false});
-      this.filter2.state = type === IssuesType.opened ? IssueState.opened : null;
-      this.filter2.problems = type === IssuesType.problems ? true : null;
-    }));
-
-    combineLatest(first, second, third)
-      .pipe(distinctUntilChanged())
-      .subscribe(() => {
-        this.thirdSummaryGQL.fetch(serialize(this.filter2) as R)
-          .pipe(map(({data: {summary}}) => deserialize(summary, IssuesSummary)))
-          .subscribe(summary => this.summary.third = summary);
       });
   }
 }
