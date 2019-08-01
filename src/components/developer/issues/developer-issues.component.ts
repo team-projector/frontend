@@ -16,6 +16,7 @@ import { MetricType } from '../../leader/teams/team/calendar/team-calendar.compo
 import { IssuesSummaryGQL } from './issues-summary.graphql';
 import { IssuesMetricsGQL } from './issues-metrics.graphql';
 import { R } from 'apollo-angular/types';
+import { METRIC_TYPE } from 'src/components/metrics-type/consts';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,
@@ -61,7 +62,7 @@ export class DeveloperIssuesComponent implements OnInit {
     new Map<string, UserProgressMetrics>()
   );
   dueDate = new FormControl();
-  metric = new FormControl();
+  metric = new FormControl(localStorage.getItem(METRIC_TYPE) || MetricType.all);
   form = this.formBuilder.group({
     dueDate: this.dueDate,
     metric: this.metric
@@ -77,13 +78,12 @@ export class DeveloperIssuesComponent implements OnInit {
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(filter => {
-          const state: { due_date?, metric? } = {};
-          if (!!filter.dueDate) {
-            state.due_date = format(filter.dueDate, 'MM-DD-YYYY');
-          }
-          this.router.navigate([state], {relativeTo: this.route});
+        const state: { due_date? } = {};
+        if (!!filter.dueDate) {
+          state.due_date = format(filter.dueDate, 'MM-DD-YYYY');
         }
-      );
+        this.router.navigate([state], {relativeTo: this.route});
+      });
 
     this.route.data.subscribe(({user, dueDate}) => {
       this.user = user;
