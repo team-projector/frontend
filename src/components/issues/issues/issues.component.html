@@ -1,114 +1,83 @@
-<jnt-form [formGroup]="form">
-  <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.large">
-    <jnt-block [width]="ui.width.fluid">
-      <jnt-table #table [search]="true">
-        <ng-template #filters>
-          <jnt-stack [type]="ui.stack.type.horizontal">
-            <jnt-switcher formControlName="type">
-              <jnt-switcher-option label="All" [value]="issuesType.all">
-                <jnt-badge *ngIf="summary?.issuesCount"
-                           [count]="summary?.issuesCount"></jnt-badge>
-              </jnt-switcher-option>
-              <jnt-switcher-option label="Opened" [value]="issuesType.opened">
-                <jnt-badge *ngIf="0" [count]="0"></jnt-badge>
-              </jnt-switcher-option>
-              <jnt-switcher-option label="Problems" [value]="issuesType.problems">
-                <jnt-badge *ngIf="summary?.problemsCount" [scheme]="ui.schemes.fail"
-                           [count]="summary?.problemsCount"></jnt-badge>
-              </jnt-switcher-option>
-            </jnt-switcher>
-          </jnt-stack>
-        </ng-template>
-        <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
-          <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
-                       let-participants="participants" let-project="project">
+<jnt-block [width]="ui.width.fluid">
+  <jnt-table #table [search]="true">
+    <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
+      <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
+                   let-participants="participants" let-project="project">
+        <jnt-stack [type]="ui.stack.type.horizontal"
+                   [gutter]="ui.stack.gutter.small">
+          <jnt-avatars-list>
+            <jnt-avatar *ngFor="let p of participants"
+                        [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>
+          </jnt-avatars-list>
+          <jnt-stack [type]="ui.stack.type.vertical"
+                     [gutter]="ui.stack.gutter.tiny">
             <jnt-stack [type]="ui.stack.type.horizontal"
                        [gutter]="ui.stack.gutter.small">
-              <jnt-avatars-list>
-                <jnt-avatar *ngFor="let p of participants"
-                            [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>
-              </jnt-avatars-list>
-              <jnt-stack [type]="ui.stack.type.vertical"
-                         [gutter]="ui.stack.gutter.tiny">
-                <jnt-stack [type]="ui.stack.type.horizontal"
-                           [gutter]="ui.stack.gutter.small">
-                  <jnt-link [source]=url target="_blank"
-                            [attr.closed]="state == issuesState.closed" [title]="title">
-                  </jnt-link>
-                  <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
+              <jnt-link [source]=url target="_blank"
+                        [attr.closed]="state == issuesState.closed" [title]="title">
+              </jnt-link>
+              <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
 
-                </jnt-stack>
-                <small>{{project?.fullTitle}}</small>
-              </jnt-stack>
+            </jnt-stack>
+            <small>{{project?.fullTitle}}</small>
+          </jnt-stack>
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column i18n-title="@@dueDate" title="Due date">
+      <ng-template #cellTemplate let-dueDate="dueDate" let-problems="problems">
+        <div>{{dueDate | date}}</div>
+        <jnt-stack [type]="ui.stack.type.vertical">
+          <jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
+                     [color]="ui.colors.red" label="empty">
+          </jnt-label>
+          <jnt-label *ngIf="problems?.includes(issueProblem.overDueDate)"
+                     [color]="ui.colors.red" label="overdue">
+          </jnt-label>
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column i18n-title="@@est" title="Progress">
+      <ng-template #cellTemplate let-timeEstimate="timeEstimate"
+                   let-totalTimeSpent="totalTimeSpent"
+                   let-metrics="metrics"
+                   let-problems="problems">
+        <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
+          <ng-template #legend>
+            <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
+                       [justify]="ui.flex.justify.between" [gutter]="ui.stack.gutter.normal">
+              <div metric>{{totalTimeSpent | duration}}</div>
+              <div metric estimate>{{timeEstimate | duration}}</div>
             </jnt-stack>
           </ng-template>
-        </jnt-table-column>
-
-        <jnt-table-column i18n-title="@@dueDate" title="Due date">
-          <ng-template #cellTemplate let-dueDate="dueDate" let-problems="problems">
-            <div>{{dueDate | date}}</div>
-            <jnt-stack [type]="ui.stack.type.vertical">
-              <jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
-                         [color]="ui.colors.red" label="empty">
-              </jnt-label>
-              <jnt-label *ngIf="problems?.includes(issueProblem.overDueDate)"
-                         [color]="ui.colors.red" label="overdue">
-              </jnt-label>
-            </jnt-stack>
-          </ng-template>
-        </jnt-table-column>
-
-        <jnt-table-column i18n-title="@@est" title="Progress">
-          <ng-template #cellTemplate let-timeEstimate="timeEstimate"
-                       let-totalTimeSpent="totalTimeSpent"
-                       let-metrics="metrics"
-                       let-problems="problems">
-            <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
-              <ng-template #legend>
-                <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
-                           [justify]="ui.flex.justify.between" [gutter]="ui.stack.gutter.normal">
-                  <div metric>{{totalTimeSpent | duration}}</div>
-                  <div metric estimate>{{timeEstimate | duration}}</div>
-                </jnt-stack>
-              </ng-template>
-            </jnt-progress-bar>
-            <div style="text-align: center;">
+        </jnt-progress-bar>
+        <div style="text-align: center;">
             <span [attr.slow]="metrics.efficiency > 0 && metrics.efficiency < 0.8">
               {{!!metrics.efficiency ? (metrics.efficiency | number:'1.2-2') : ''}}
             </span>
-            </div>
-            <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
-                       [color]="ui.colors.red" label="estimate">
-            </jnt-label>
-          </ng-template>
-        </jnt-table-column>
+        </div>
+        <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
+                   [color]="ui.colors.red" label="estimate">
+        </jnt-label>
+      </ng-template>
+    </jnt-table-column>
 
-        <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@payroll" title="Payroll">
-          <ng-template #cellTemplate let-metrics="metrics">
-            <div style="text-align: right;">
-              {{!!metrics.payroll ? (metrics.payroll | currency:'RUB') : '&mdash;'}}
-              /
-              {{!!metrics.paid ? (metrics.paid | currency:'RUB') : '&mdash;'}}
-            </div>
-          </ng-template>
-        </jnt-table-column>
+    <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@payroll" title="Payroll">
+      <ng-template #cellTemplate let-metrics="metrics">
+        <div style="text-align: right;">
+          {{!!metrics.payroll ? (metrics.payroll | currency:'RUB') : '&mdash;'}}
+          /
+          {{!!metrics.paid ? (metrics.paid | currency:'RUB') : '&mdash;'}}
+        </div>
+      </ng-template>
+    </jnt-table-column>
 
-        <ng-template #rowActions let-row="row">
-          <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
-            <jnt-menu-item title="Sync from GitLab" (click)="sync(row.id)"></jnt-menu-item>
-          </jnt-menu>
-        </ng-template>
-      </jnt-table>
-    </jnt-block>
-
-    <jnt-chart formControlName="project">
-      <jnt-chart-indicator *ngFor="let p of summary?.projects;let i = index"
-                           [title]="p.project.fullTitle"
-                           [data]="p.project.id"
-                           [value]="p.issues.percentage * 100"
-                           [label]="p.issues.remains  | duration:durationFormat.short"
-                           [color]="colors[i % colors.length]">
-      </jnt-chart-indicator>
-    </jnt-chart>
-  </jnt-stack>
-</jnt-form>
+    <ng-template #rowActions let-row="row">
+      <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
+        <jnt-menu-item title="Sync from GitLab" (click)="sync(row.id)"></jnt-menu-item>
+      </jnt-menu>
+    </ng-template>
+  </jnt-table>
+</jnt-block>

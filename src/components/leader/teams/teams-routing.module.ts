@@ -31,7 +31,9 @@ const routes: Routes = [
         resolve: {
           team: TeamResolver,
           user: UserResolver,
-          dueDate: DueDateResolver
+          dueDate: DueDateResolver,
+          project: ProjectResolver,
+          type: IssuesTypeResolver
         },
         children: [
           {
@@ -42,10 +44,6 @@ const routes: Routes = [
           {
             path: 'issues',
             data: {breadcrumb: 'Issues'},
-            resolve: {
-              project: ProjectResolver,
-              type: IssuesTypeResolver
-            },
             component: TeamIssuesListComponent,
           },
           {

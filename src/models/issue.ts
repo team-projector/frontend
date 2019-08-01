@@ -188,6 +188,9 @@ export class IssuesSummary {
   issuesCount: number;
 
   @field({mock: '{{int 10 100}}'})
+  openedCount: number;
+
+  @field({mock: '{{int 10 100}}'})
   timeSpent: number;
 
 

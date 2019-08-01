@@ -81,8 +81,8 @@ export class IssuesGQL extends Query<{ issuesSummary, allIssues }> {
 })
 export class ProjectsSummaryGQL extends Query<{ issuesSummary }> {
   document = gql`
-    query IssuesSummary($team: ID, $user: ID, $dueDate: Date, $state: String) {
-  issuesSummary(team: $team, user: $user, dueDate: $dueDate, state: $state) {
+    query IssuesSummary($team: ID, $user: ID, $dueDate: Date, $state: String, $problems: Boolean) {
+  issuesSummary(team: $team, user: $user, dueDate: $dueDate, state: $state, problems: $problems) {
     projects {
       project {
         id

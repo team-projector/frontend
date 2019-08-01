@@ -28,7 +28,6 @@ enum SummaryType {
 export class IssuesComponent implements OnInit {
 
   ui = UI;
-  issuesType = IssuesType;
   issuesState = IssueState;
   issueProblem = IssueProblem;
   viewType = ViewType;
