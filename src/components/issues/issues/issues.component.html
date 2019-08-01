@@ -46,7 +46,7 @@
 
         <jnt-table-column i18n-title="@@dueDate" title="Due date">
           <ng-template #cellTemplate let-dueDate="dueDate" let-problems="problems">
-            <div>{{dueDate | date}}</div>
+            <app-due-date [dueDate]="dueDate"></app-due-date>
             <jnt-stack [type]="ui.stack.type.vertical">
               <jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
                          [color]="ui.colors.red" label="empty">
