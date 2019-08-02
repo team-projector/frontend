@@ -1,9 +1,3 @@
-<jnt-form [formGroup]="form">
-  <jnt-stack presentations [type]="ui.stack.type.horizontal">
-    <app-metrics-type formControlName="metric"></app-metrics-type>
-  </jnt-stack>
-</jnt-form>
-
 <table>
   <thead>
   <tr rewind>
@@ -99,7 +93,7 @@
           (click)="form.patchValue({user: member.user, dueDate: day})"
           [attr.active]="isEqual(dueDate.value, day) && (user.value?.id === member.user.id)"
           [attr.active-day]="isEqual(dueDate.value, day)">
-        <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric.value, date: endOfDay(day),
+        <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric, date: endOfDay(day),
               metric: metrics?.days?.get(member.user.id)?.get(format(day, formatDate))}">
         </ng-container>
       </td>

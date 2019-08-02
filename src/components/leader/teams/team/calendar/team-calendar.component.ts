@@ -79,15 +79,16 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   user = new FormControl();
   dueDate = new FormControl();
-  metric = new FormControl(localStorage.getItem(METRIC_TYPE) || MetricType.all);
 
   form: FormGroup = this.fb.group({
     dueDate: this.dueDate,
-    user: this.user,
-    metric: this.metric
+    user: this.user
   });
 
   members: TeamMember[] = [];
+
+  @Input()
+  metric: MetricType;
 
   @Input()
   set team(team: Team) {

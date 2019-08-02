@@ -1,18 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {UI} from 'junte-ui';
-import {ActivatedRoute, Router} from '@angular/router';
-import {format} from 'date-fns';
-import {distinctUntilChanged, map, tap} from 'rxjs/operators';
-import {Team} from 'src/models/team';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssuesFilter, IssuesSummary, IssueState, IssuesType} from '../../../../models/issue';
-import {FirstSummaryGQL, SecondSummaryGQL} from './team.graphql';
-import {R} from 'apollo-angular/types';
-import {DurationFormat} from '../../../../pipes/date';
-import {User} from '../../../../models/user';
-import {Project} from '../../../../models/project';
-import {combineLatest} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { UI } from 'junte-ui';
+import { ActivatedRoute, Router } from '@angular/router';
+import { format } from 'date-fns';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { Team } from 'src/models/team';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { IssuesFilter, IssuesSummary } from '../../../../models/issue';
+import { FirstSummaryGQL, SecondSummaryGQL } from './team.graphql';
+import { R } from 'apollo-angular/types';
+import { DurationFormat } from '../../../../pipes/date';
+import { User } from '../../../../models/user';
+import { Project } from '../../../../models/project';
+import { combineLatest } from 'rxjs';
+import { METRIC_TYPE } from 'src/components/metrics-type/consts';
+import { MetricType } from 'src/components/leader/teams/team/calendar/team-calendar.component';
 
 @Component({
   selector: 'app-leader-team',
@@ -32,10 +34,11 @@ export class TeamComponent implements OnInit {
   summary: { first?: IssuesSummary, second?: IssuesSummary } = {};
 
   filter2 = new IssuesFilter();
-
+  metric = new FormControl(localStorage.getItem(METRIC_TYPE) || MetricType.all);
   form: FormGroup = this.formBuilder.group({
     filter: this.filter,
-    project: this.project
+    project: this.project,
+    metric: this.metric
   });
 
   constructor(private firstSummaryGQL: FirstSummaryGQL,
@@ -72,7 +75,7 @@ export class TeamComponent implements OnInit {
       this.form.patchValue({
         filter: {
           user: user,
-          dueDate: dueDate,
+          dueDate: dueDate
         }
       }, {emitEvent: false});
       this.filter2.team = team.id;

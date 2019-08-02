@@ -1,9 +1,12 @@
 <jnt-stack>
   <jnt-form [formGroup]="form">
     <jnt-stack>
+      <jnt-stack presentations [type]="ui.stack.type.horizontal">
+        <app-metrics-type formControlName="metric"></app-metrics-type>
+      </jnt-stack>
       <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.large">
         <jnt-stack>
-          <app-team-calendar formControlName="filter" [team]="team"></app-team-calendar>
+          <app-team-calendar formControlName="filter" [metric]="metric.value" [team]="team"></app-team-calendar>
           <jnt-stack [type]="ui.stack.type.horizontal">
             <div filter *ngIf="filter.value.user">
               <jnt-avatar avatar [image]="filter.value.user.avatar"
