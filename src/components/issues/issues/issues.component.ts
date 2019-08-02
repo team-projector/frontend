@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {PLATFORM_DELAY} from 'src/consts';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {debounceTime, distinctUntilChanged, finalize, map} from 'rxjs/operators';
-import {DefaultSearchFilter, TableComponent, UI} from 'junte-ui';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues} from '../../../models/issue';
-import {IssuesGQL, IssuesSummaryGQL, SyncIssueGQL} from './issues.graphql';
-import {R} from 'apollo-angular/types';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { PLATFORM_DELAY } from 'src/consts';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues } from '../../../models/issue';
+import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
+import { R } from 'apollo-angular/types';
 
 export enum ViewType {
   default,
@@ -26,6 +26,7 @@ export class IssuesComponent implements OnInit {
   issueProblem = IssueProblem;
   issuesType = IssuesType;
   viewType = ViewType;
+  features = TableFeatures;
 
   summary: IssuesSummary;
   progress = {summary: false, sync: false};

@@ -154,7 +154,7 @@ export class IssuesFilter implements SearchFilter {
   @field()
   title?: string;
 
-  sort?: string;
+  orderBy?: string;
 
   @field()
   first?: number;

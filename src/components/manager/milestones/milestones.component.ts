@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
+import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
 import { PagingMilestones } from '../../../models/milestone';
 import { deserialize } from 'serialize-ts/dist';
 import { map } from 'rxjs/operators';
@@ -14,6 +14,7 @@ import { R } from 'apollo-angular/types';
 export class MilestonesComponent implements OnInit {
 
   ui = UI;
+  features = TableFeatures;
 
   @ViewChild('table')
   table: TableComponent;
