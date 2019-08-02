@@ -1,13 +1,13 @@
-import {DateSerializer} from '../serializers/date';
-import {SearchFilter} from 'junte-ui';
-import {ArraySerializer, PrimitiveSerializer, ModelSerializer} from 'serialize-ts';
-import {EdgesToArray, EdgesToPaging} from '../serializers/graphql';
-import {Paging} from './paging';
-import {field, model} from '@junte/mocker-library';
-import {User} from './user';
-import {Project} from './project';
-import {Label} from './label';
-import {DATE_FORMAT} from '../consts';
+import { DateSerializer } from '../serializers/date';
+import { SearchFilter } from 'junte-ui';
+import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
+import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { Paging } from './paging';
+import { field, model } from '@junte/mocker-library';
+import { User } from './user';
+import { Project } from './project';
+import { Label } from './label';
+import { DATE_FORMAT } from '../consts';
 
 export enum IssueState {
   opened = 'opened',
@@ -152,8 +152,6 @@ export class IssuesFilter implements SearchFilter {
   problems?: boolean | null;
 
   @field()
-  title?: string;
-
   orderBy?: string;
 
   @field()
@@ -161,6 +159,9 @@ export class IssuesFilter implements SearchFilter {
 
   @field()
   offset?: number;
+
+  @field()
+  q?: string;
 
   constructor(defs: IssuesFilter = null) {
     if (!!defs) {
