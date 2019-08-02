@@ -1,5 +1,5 @@
 <jnt-stack [gutter]="ui.stack.gutter.large">
-  <form [formGroup]="form">
+  <jnt-form [formGroup]="form">
     <jnt-stack>
       <jnt-stack presentations [type]="ui.stack.type.horizontal">
         <app-metrics-type formControlName="metric"></app-metrics-type>
@@ -43,7 +43,7 @@
         </jnt-calendar>
       </jnt-block>
     </jnt-stack>
-  </form>
+  </jnt-form>
 
   <div filter *ngIf="dueDate.value">
     {{dueDate.value | date}}
