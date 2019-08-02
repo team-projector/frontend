@@ -9,6 +9,8 @@ import {OutletComponent} from 'src/components/outlet/outlet.component';
 import {UserResolver} from 'src/resolvers/user';
 import {DueDateResolver, IssuesTypeResolver} from 'src/resolvers/issue';
 import {ProjectResolver} from '../../../resolvers/project';
+import {TeamMergeRequestsListComponent} from './team/issues/merge-requests/merge-requests.component';
+import {MergeRequestStateResolver} from '../../../resolvers/merge-request';
 
 export function getTeam(data: any) {
   return data.team.title;
@@ -46,7 +48,15 @@ const routes: Routes = [
             component: TeamIssuesListComponent,
             resolve: {
               type: IssuesTypeResolver
-            },
+            }
+          },
+          {
+            path: 'merge-requests',
+            data: {breadcrumb: 'Merge Requests'},
+            component: TeamMergeRequestsListComponent,
+            resolve: {
+              state: MergeRequestStateResolver
+            }
           },
           {
             path: 'time-expenses',

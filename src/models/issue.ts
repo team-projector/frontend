@@ -63,6 +63,15 @@ export class Issue {
   @field({mock: '{{id}}'})
   id: number;
 
+  @field({mock: '{{> user}}'})
+  user: User;
+
+  @field({
+    serializer: new EdgesToArray(User),
+    mock: '[{{#repeat 1 3}} {{> user}} {{/repeat}}]'
+  })
+  participants: User[];
+
   @field({mock: '{{issue}}'})
   title: string;
 
@@ -96,23 +105,14 @@ export class Issue {
   @field({mock: IssueState.opened})
   state: IssueState;
 
-  @field({mock: '{{> issue_metrics}}'})
-  metrics: IssueMetrics;
-
-  @field({
-    serializer: new EdgesToArray(User),
-    mock: '[{{#repeat 1 3}} {{> user}} {{/repeat}}]'
-  })
-  participants: User[];
-
-  @field({mock: '{{> user}}'})
-  user: User;
-
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
     mock: '{{issue_problem}}'
   })
   problems: IssueProblem[];
+
+  @field({mock: '{{> issue_metrics}}'})
+  metrics: IssueMetrics;
 }
 
 @model()
@@ -139,11 +139,11 @@ export class IssuesFilter implements SearchFilter {
   @field()
   user?: string;
 
-  @field({serializer: new DateSerializer(DATE_FORMAT)})
-  dueDate?: Date;
-
   @field()
   project?: string;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  dueDate?: Date;
 
   @field()
   state?: IssueState | null;

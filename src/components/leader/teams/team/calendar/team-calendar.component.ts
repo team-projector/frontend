@@ -155,7 +155,6 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
               m.metrics.forEach(metric => userDic.set(metric.getKey(), metric));
               dic.set(m.user.id.toString(), userDic);
             });
-            console.log(dic);
             return dic;
           }));
     };

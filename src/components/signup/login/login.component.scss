@@ -9,6 +9,17 @@
   right: 0;
   bottom: 0;
   left: 0;
+  background-image: url('/assets/images/login.jpg');
+  background-size: 100% auto;
+}
+
+[admin] {
+  position: absolute;
+  top: $gutter-normal;
+  right: $gutter-normal;
+  padding: $gutter-small;
+  background: rgba(255, 255, 255, .75);
+  border-radius: $corner-normal;
 }
 
 [form] {

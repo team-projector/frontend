@@ -39,6 +39,9 @@
                          [count]="summary?.second?.problemsCount"
                          [scheme]="ui.schemes.fail"></jnt-badge>
             </jnt-menu-item>
+            <jnt-menu-item link="merge-requests" title="Merge Requests">
+
+            </jnt-menu-item>
             <jnt-menu-item link="time-expenses" title="Time Expenses">
               <jnt-badge *ngIf="summary?.second?.timeSpent"
                          [count]="summary?.second?.timeSpent | duration"></jnt-badge>
@@ -48,11 +51,15 @@
         </jnt-stack>
         <jnt-chart formControlName="project" title="Opened project" metric="Hours">
           <jnt-chart-indicator *ngFor="let p of summary.first?.projects;let i = index"
-                               [title]="p.project.fullTitle"
                                [data]="p.project"
                                [value]="p.issues.percentage * 100"
                                [label]="p.issues.remains  | duration:durationFormat.short"
                                [color]="colors[i % colors.length]">
+            <ng-template #titleTemplate>
+              {{p.project.title}}
+              <br>
+              <small>{{p.project.group?.fullTitle}}</small>
+            </ng-template>
           </jnt-chart-indicator>
         </jnt-chart>
       </jnt-stack>

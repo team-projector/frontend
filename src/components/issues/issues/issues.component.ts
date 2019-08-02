@@ -31,9 +31,6 @@ export class IssuesComponent implements OnInit {
   summary: IssuesSummary;
   progress = {summary: false, sync: false};
 
-  @Input()
-  view = ViewType.default;
-
   typeControl = new FormControl(IssuesType.opened);
 
   form: FormGroup = this.formBuilder.group({
@@ -45,6 +42,9 @@ export class IssuesComponent implements OnInit {
   private project$ = new BehaviorSubject<string>(null);
   private dueDate$ = new BehaviorSubject<Date>(null);
   private type$ = new BehaviorSubject<IssuesType>(IssuesType.opened);
+
+  @Input()
+  view = ViewType.default;
 
   @Input()
   set team(team: string) {

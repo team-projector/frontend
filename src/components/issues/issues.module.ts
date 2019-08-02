@@ -8,11 +8,13 @@ import { TimeExpensesComponent } from './time-expenses/time-expenses.component';
 import { JunteUiModule } from 'junte-ui';
 import { RouterModule } from '@angular/router';
 import { DueDateModule } from 'src/components/due-date/due-date.module';
+import {MergeRequestsComponent} from './merge-requests/merge-requests.component';
 
 @NgModule({
   declarations: [
     IssuesComponent,
-    TimeExpensesComponent
+    TimeExpensesComponent,
+    MergeRequestsComponent
   ],
   imports: [
     CommonModule,
@@ -25,7 +27,8 @@ import { DueDateModule } from 'src/components/due-date/due-date.module';
   ],
   exports: [
     IssuesComponent,
-    TimeExpensesComponent
+    TimeExpensesComponent,
+    MergeRequestsComponent
   ]
 })
 export class IssuesModule {
