@@ -1,5 +1,5 @@
 <jnt-block>
-  <jnt-table #table [search]="true">
+  <jnt-table #table [features]="[features.search]">
     <jnt-table-column title="Title">
       <ng-template #cellTemplate let-title="title" let-owner="owner">
         {{title}}<br>
