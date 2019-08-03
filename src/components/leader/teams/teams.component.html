@@ -4,8 +4,9 @@
     <div *ngFor="let i of 5 | mockArray" team>
       <jnt-block [width]="ui.width.fluid" [padding]="ui.padding.normal" block>
         <jnt-stack [align]="ui.flex.align.center">
+          <jnt-skeleton [lines]="1"></jnt-skeleton>
           <jnt-skeleton [type]="ui.skeleton.type.avatar"></jnt-skeleton>
-          <jnt-skeleton [lines]="2"></jnt-skeleton>
+          <jnt-skeleton [lines]="1"></jnt-skeleton>
         </jnt-stack>
       </jnt-block>
     </div>

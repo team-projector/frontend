@@ -34,9 +34,6 @@ export class DashboardComponent {
     return this._theme;
   }
 
-
-  loading: { [name: string]: boolean } = {};
-
   @ViewChild(GitlabStatusComponent)
   gitlabStatus: GitlabStatusComponent;
 
@@ -51,8 +48,7 @@ export class DashboardComponent {
   }
 
   private load(theme: Themes) {
-    this.loading[theme] = true;
-    window['themes'](theme, () => this.loading[theme] = false);
+    window['themes'](theme);
   }
 
 }
