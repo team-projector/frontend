@@ -11,12 +11,12 @@
             <jnt-switcher-option label="Opened" [value]="issuesType.opened">
               <jnt-badge *ngIf="summary?.openedCount"
                          [count]="summary?.openedCount"
-                         [scheme]="ui.schemes.success"></jnt-badge>
+                         [color]="ui.colors.green"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Problems" [value]="issuesType.problems">
               <jnt-badge *ngIf="summary?.problemsCount"
                          [count]="summary?.problemsCount"
-                         [scheme]="ui.schemes.fail"></jnt-badge>
+                         [color]="ui.colors.red"></jnt-badge>
             </jnt-switcher-option>
           </jnt-switcher>
         </jnt-form>
