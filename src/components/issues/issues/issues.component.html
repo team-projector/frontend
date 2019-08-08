@@ -34,11 +34,19 @@
           <jnt-stack [type]="ui.stack.type.vertical"
                      [gutter]="ui.stack.gutter.tiny">
             <jnt-stack [type]="ui.stack.type.horizontal"
-                       [gutter]="ui.stack.gutter.small">
+                       [gutter]="ui.stack.gutter.small"
+                       [align]="ui.flex.align.center">
               <jnt-link [source]=url target="_blank"
                         [attr.closed]="state == issuesState.closed" [title]="title">
               </jnt-link>
-              <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
+              <jnt-label *ngFor="let l of (labels | labels)"
+                         [color]="l.color" [label]="l.title"></jnt-label>
+              <jnt-icon *ngIf="labels | hasLabel:standardLabel.doing"
+                        state
+                        [icon]="ui.icons.playButton"></jnt-icon>
+              <jnt-icon *ngIf="labels | hasLabel:standardLabel.done"
+                        state
+                        [icon]="ui.icons.check"></jnt-icon>
 
             </jnt-stack>
             <small>{{project?.fullTitle}}</small>
@@ -77,7 +85,7 @@
             </jnt-stack>
           </ng-template>
         </jnt-progress-bar>
-        <div style="text-align: center;">
+        <div efficiency style="text-align: center;">
             <span [attr.slow]="metrics.efficiency > 0 && metrics.efficiency < 0.8">
               {{!!metrics.efficiency ? (metrics.efficiency | number:'1.2-2') : ''}}
             </span>

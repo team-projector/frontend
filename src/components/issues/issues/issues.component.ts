@@ -8,6 +8,7 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues } from '../../../models/issue';
 import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
 import { R } from 'apollo-angular/types';
+import {StandardLabel} from '../../../models/label';
 
 export enum ViewType {
   default,
@@ -27,6 +28,7 @@ export class IssuesComponent implements OnInit {
   issuesType = IssuesType;
   viewType = ViewType;
   features = TableFeatures;
+  standardLabel = StandardLabel;
 
   summary: IssuesSummary;
   progress = {summary: false, sync: false};

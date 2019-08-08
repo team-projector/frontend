@@ -4,8 +4,8 @@
   display: block;
 }
 
-[slow='true'] {
-  border-bottom: 2px solid $fail-color;
+[state] {
+  color: $success-color;
 }
 
 [closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
@@ -14,6 +14,17 @@
 
 [progress] {
   min-width: 100px;
+}
+
+[efficiency] {
+  margin-top: $gutter-tiny;
+  font-size: .85em;
+  [slow='true'] {
+    border: 2px solid $fail-color;
+    border-radius: $gutter-tiny;
+    line-height: 1em;
+    padding: 0 $gutter-tiny;
+  }
 }
 
 [metric] {

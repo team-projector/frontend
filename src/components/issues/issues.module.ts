@@ -9,12 +9,15 @@ import { JunteUiModule } from 'junte-ui';
 import { RouterModule } from '@angular/router';
 import { DueDateModule } from 'src/components/due-date/due-date.module';
 import {MergeRequestsComponent} from './merge-requests/merge-requests.component';
+import {HasLabelPipe, LabelsPipe} from './issues.pipes';
 
 @NgModule({
   declarations: [
     IssuesComponent,
     TimeExpensesComponent,
-    MergeRequestsComponent
+    MergeRequestsComponent,
+    LabelsPipe,
+    HasLabelPipe
   ],
   imports: [
     CommonModule,
