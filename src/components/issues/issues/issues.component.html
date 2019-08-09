@@ -5,8 +5,8 @@
         <jnt-form [formGroup]="form">
           <jnt-switcher formControlName="type">
             <jnt-switcher-option label="All" [value]="issuesType.all">
-              <jnt-badge *ngIf="summary?.issuesCount"
-                         [count]="summary?.issuesCount"></jnt-badge>
+              <jnt-badge *ngIf="summary?.count"
+                         [count]="summary?.count"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Opened" [value]="issuesType.opened">
               <jnt-badge *ngIf="summary?.openedCount"

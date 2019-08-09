@@ -200,7 +200,7 @@ export class ProjectSummary {
 export class IssuesSummary {
 
   @field({mock: '{{int 10 100}}'})
-  issuesCount: number;
+  count: number;
 
   @field({mock: '{{int 10 100}}'})
   openedCount: number;

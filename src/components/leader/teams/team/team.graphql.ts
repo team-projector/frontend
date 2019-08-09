@@ -36,7 +36,7 @@ export class SecondSummaryGQL extends Query<{ summary }> {
   document = gql`
     query IssuesSummary($team: ID, $user: ID, $project: ID, $dueDate: Date) {
       summary: issuesSummary(team: $team, user: $user, project: $project, dueDate: $dueDate, state: "opened") {
-        issuesCount
+        count
         problemsCount
         timeSpent
       }

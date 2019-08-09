@@ -32,8 +32,8 @@
 
           <jnt-menu>
             <jnt-menu-item link="issues" title="Issues">
-              <jnt-badge *ngIf="summary?.second?.issuesCount"
-                         [count]="summary?.second?.issuesCount"
+              <jnt-badge *ngIf="summary?.second?.count"
+                         [count]="summary?.second?.count"
                          [color]="ui.colors.green"></jnt-badge>
               <jnt-badge *ngIf="summary?.second?.problemsCount"
                          [count]="summary?.second?.problemsCount"
