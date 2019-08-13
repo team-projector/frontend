@@ -1,7 +1,7 @@
 <jnt-app-layout>
   <jnt-app-header>
-    <ng-template #logo>
-      <img [src]="'/assets/images/logo-' + theme + '.svg'" logo>
+    <ng-template #logo *ngIf="!!themeControl.value">
+      <img [src]="'/assets/images/logo-' + themeControl.value + '.svg'" logo>
     </ng-template>
     <ng-template #topMenu>
       <jnt-menu>
@@ -18,8 +18,9 @@
       </jnt-menu>
     </ng-template>
 
-    <jnt-theme-switcher [checked]="theme === themes.light"
-                        (checkedChange)="theme = $event ? themes.light : themes.dark"></jnt-theme-switcher>
+    <jnt-form [formGroup]="themeForm" theme>
+      <jnt-theme-switcher formControlName="theme"></jnt-theme-switcher>
+    </jnt-form>
 
     <ng-template #actions>
       <jnt-actions>

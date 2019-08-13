@@ -1,9 +1,10 @@
-import { Component, Inject, ViewChild } from '@angular/core';
-import { UI } from 'junte-ui';
-import { MeManager } from '../../managers/me.manager';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserRole } from '../../models/user';
+import { UI } from 'junte-ui';
 import { AppConfig } from '../../app-config';
+import { MeManager } from '../../managers/me.manager';
+import { UserRole } from '../../models/user';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
 
 
@@ -17,29 +18,28 @@ enum Themes {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
 
   ui = UI;
   userRole = UserRole;
-  private _theme = Themes.light;
-
   themes = Themes;
+  themeControl = new FormControl(Themes[localStorage.getItem('theme')]);
 
-  set theme(theme: Themes) {
-    this._theme = theme;
-    this.load(theme);
-  }
-
-  get theme() {
-    return this._theme;
-  }
+  themeForm = this.fb.group({
+    theme: this.themeControl
+  });
 
   @ViewChild(GitlabStatusComponent)
   gitlabStatus: GitlabStatusComponent;
 
   constructor(@Inject(AppConfig) public config: AppConfig,
               private router: Router,
+              private fb: FormBuilder,
               public me: MeManager) {
+  }
+
+  ngOnInit() {
+    this.themeControl.valueChanges.subscribe(theme => this.load(theme));
   }
 
   logout() {
