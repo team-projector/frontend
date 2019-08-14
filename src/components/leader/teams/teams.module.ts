@@ -21,6 +21,7 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MetricsTypeModule} from 'src/components/metrics-type/metrics-type.module';
 import {TeamMergeRequestsListComponent} from './team/issues/merge-requests/merge-requests.component';
 import {MergeRequestStateResolver} from '../../../resolvers/merge-request';
+import {DueDateModule} from '../../due-date/due-date.module';
 
 @NgModule({
   imports: [
@@ -33,7 +34,8 @@ import {MergeRequestStateResolver} from '../../../resolvers/merge-request';
     DatePipesModule,
     OutletModule,
     IssuesModule,
-    ArrayPipesModule
+    ArrayPipesModule,
+    DueDateModule
   ],
   declarations: [
     TeamsComponent,

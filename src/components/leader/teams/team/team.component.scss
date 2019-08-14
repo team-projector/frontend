@@ -24,3 +24,18 @@
     font-size: 8px;
   }
 }
+
+[project] {
+
+}
+
+[milestones] {
+  font-size: .75rem;
+  margin: 0;
+  padding: 0;
+  li {
+    ::ng-deep span[child-of=#{$jnt-link-host}] {
+      font-size: .75rem;
+    }
+  }
+}

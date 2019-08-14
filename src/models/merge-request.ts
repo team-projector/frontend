@@ -5,7 +5,7 @@ import {User} from './user';
 import {Project} from './project';
 import {EdgesToArray, EdgesToPaging} from '../serializers/graphql';
 import {Paging} from './paging';
-import {Issue, IssueMetrics, IssueState} from './issue';
+import {Issue, IssueMetrics, IssueState, ProjectSummary} from './issue';
 import {SearchFilter} from 'junte-ui';
 import {DateSerializer} from '../serializers/date';
 import {DATE_FORMAT} from '../consts';
@@ -77,6 +77,19 @@ export class MergeRequest {
 
   @field({mock: '{{> issue_metrics}}'})
   metrics: MergeRequestMetrics;
+}
+
+@model()
+export class MergeRequestSummary {
+
+  @field({mock: '{{int 10 100}}'})
+  count: number;
+
+  @field({mock: '{{int 10 100}}'})
+  openedCount: number;
+
+  @field({mock: '{{int 10 100}}'})
+  mergedCount: number;
 }
 
 @model()

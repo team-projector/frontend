@@ -1,20 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { UI } from 'junte-ui';
-import { ActivatedRoute, Router } from '@angular/router';
-import { format } from 'date-fns';
-import { distinctUntilChanged, map, tap } from 'rxjs/operators';
-import { Team } from 'src/models/team';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssuesFilter, IssuesSummary } from '../../../../models/issue';
-import { FirstSummaryGQL, SecondSummaryGQL } from './team.graphql';
-import { R } from 'apollo-angular/types';
-import { DurationFormat } from '../../../../pipes/date';
-import { User } from '../../../../models/user';
-import { Project } from '../../../../models/project';
-import { combineLatest } from 'rxjs';
-import { METRIC_TYPE } from 'src/components/metrics-type/consts';
-import { MetricType } from 'src/components/leader/teams/team/calendar/team-calendar.component';
+import {Component, OnInit} from '@angular/core';
+import {UI} from 'junte-ui';
+import {ActivatedRoute, Router} from '@angular/router';
+import {format} from 'date-fns';
+import {distinctUntilChanged, map, tap} from 'rxjs/operators';
+import {Team} from 'src/models/team';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {deserialize, serialize} from 'serialize-ts/dist';
+import {IssuesFilter, IssuesSummary} from '../../../../models/issue';
+import {FirstSummaryGQL, SecondSummaryGQL} from './team.graphql';
+import {R} from 'apollo-angular/types';
+import {DurationFormat} from '../../../../pipes/date';
+import {User} from '../../../../models/user';
+import {Project} from '../../../../models/project';
+import {combineLatest} from 'rxjs';
+import {METRIC_TYPE} from 'src/components/metrics-type/consts';
+import {MetricType} from 'src/components/leader/teams/team/calendar/team-calendar.component';
+import {MergeRequestSummary} from '../../../../models/merge-request';
+import {TimeExpensesSummary} from '../../../../models/spent-time';
 
 @Component({
   selector: 'app-leader-team',
@@ -31,7 +33,13 @@ export class TeamComponent implements OnInit {
   filter = new FormControl();
   project = new FormControl();
 
-  summary: { first?: IssuesSummary, second?: IssuesSummary } = {};
+  summary: {
+    first?: IssuesSummary, second?: {
+      issues: IssuesSummary,
+      mergeRequests: MergeRequestSummary
+      spentTimes: TimeExpensesSummary
+    }
+  } = {};
 
   filter2 = new IssuesFilter();
   metric = new FormControl(localStorage.getItem(METRIC_TYPE) || MetricType.all);
@@ -101,7 +109,11 @@ export class TeamComponent implements OnInit {
       .pipe(distinctUntilChanged())
       .subscribe(() => {
         this.secondSummaryGQL.fetch(serialize(this.filter2) as R)
-          .pipe(map(({data: {summary}}) => deserialize(summary, IssuesSummary)))
+          .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({
+            issues: deserialize(issues, IssuesSummary),
+            mergeRequests: deserialize(mergeRequests, MergeRequestSummary),
+            spentTimes: deserialize(spentTimes, TimeExpensesSummary),
+          })))
           .subscribe(summary => this.summary.second = summary);
       });
   }

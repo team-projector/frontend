@@ -56,6 +56,13 @@ export class PagingTimeExpenses implements Paging<SpentTime> {
 }
 
 @model()
+export class TimeExpensesSummary {
+
+  @field({mock: '{{int 10 100}}'})
+  spent: number;
+}
+
+@model()
 export class TimeExpensesFilter {
 
   @field()

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {getDay, isThisWeek, startOfDay} from 'date-fns';
+import {getDay, isThisWeek} from 'date-fns';
 import {UI} from 'junte-ui';
 
 @Component({
@@ -11,7 +11,6 @@ import {UI} from 'junte-ui';
 export class DueDateComponent implements OnInit {
 
   ui = UI;
-  today = startOfDay(new Date());
   getDay = getDay;
   isThisWeek = isThisWeek;
 

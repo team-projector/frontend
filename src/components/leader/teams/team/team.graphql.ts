@@ -15,8 +15,17 @@ export class FirstSummaryGQL extends Query<{ summary }> {
             title
             fullTitle
             glUrl
+            milestones(active: true) {
+              edges {
+                node {
+                  title
+                  dueDate
+                  glUrl
+                }
+              }
+            }
             group {
-              fullTitle
+              title
             }
           }
           issues {
@@ -32,13 +41,18 @@ export class FirstSummaryGQL extends Query<{ summary }> {
 @Injectable({
   providedIn: 'root'
 })
-export class SecondSummaryGQL extends Query<{ summary }> {
+export class SecondSummaryGQL extends Query<{ issues, mergeRequests, spentTimes }> {
   document = gql`
-    query IssuesSummary($team: ID, $user: ID, $project: ID, $dueDate: Date) {
-      summary: issuesSummary(team: $team, user: $user, project: $project, dueDate: $dueDate, state: "opened") {
+    query Summary($team: ID, $user: ID, $project: ID, $dueDate: Date) {
+      issues: issuesSummary(team: $team, user: $user, project: $project, dueDate: $dueDate, state: "opened") {
         count
         problemsCount
-        timeSpent
+      }
+      mergeRequests: mergeRequestsSummary(team: $team, user: $user, project: $project, state: "opened") {
+        count
+      }
+      spentTimes: spentTimesSummary(team: $team, user: $user, project: $project) {
+        spent
       }
     }`;
 }

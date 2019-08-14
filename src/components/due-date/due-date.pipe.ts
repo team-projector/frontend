@@ -9,17 +9,20 @@ import {
   isThisYear,
   isToday,
   isTomorrow,
-  isYesterday
+  isYesterday, startOfDay
 } from 'date-fns';
 
 export const DATE_FNS_OPTIONS = {weekStartsOn: 1};
 
 @Pipe({
-  name: 'dueDatePipe'
+  name: 'dueDate'
 })
 
 export class DueDatePipe implements PipeTransform {
-  transform(today: Date, dueDate: Date): string {
+  transform(dueDate: Date): string {
+
+    const today = startOfDay(new Date());
+
     const endNextWeek = endOfWeek(addDays(today, 7), DATE_FNS_OPTIONS);
     const difference = differenceInDays(dueDate, today);
     const comingDay = (d) => isTomorrow(d) ? 'Tommorow' : isToday(d) ? 'Today' :

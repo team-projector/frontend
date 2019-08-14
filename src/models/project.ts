@@ -1,4 +1,7 @@
 import {field, model} from '@junte/mocker-library';
+import {EdgesToArray} from '../serializers/graphql';
+import {Label} from './label';
+import {Milestone} from './milestone';
 
 @model()
 export class ProjectGroup {
@@ -37,4 +40,10 @@ export class Project {
     mock: '{{url}}'
   })
   glUrl: string;
+
+  @field({
+    serializer: new EdgesToArray(Milestone),
+    mock: '[{{#repeat 2 5}} {{> milestone}} {{/repeat}}]'
+  })
+  milestones: Milestone[];
 }

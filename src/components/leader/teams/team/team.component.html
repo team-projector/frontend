@@ -32,19 +32,22 @@
 
           <jnt-menu>
             <jnt-menu-item link="issues" title="Issues">
-              <jnt-badge *ngIf="summary?.second?.count"
-                         [count]="summary?.second?.count"
+              <jnt-badge *ngIf="summary?.second?.issues.count"
+                         [count]="summary?.second?.issues.count"
                          [color]="ui.colors.green"></jnt-badge>
-              <jnt-badge *ngIf="summary?.second?.problemsCount"
-                         [count]="summary?.second?.problemsCount"
+              <jnt-badge *ngIf="summary?.second?.issues.problemsCount"
+                         [count]="summary?.second?.issues.problemsCount"
                          [color]="ui.colors.red"></jnt-badge>
             </jnt-menu-item>
             <jnt-menu-item link="merge-requests" title="Merge Requests">
-
+              <jnt-badge *ngIf="summary?.second?.mergeRequests.count"
+                         [count]="summary?.second?.mergeRequests.count"
+                         [color]="ui.colors.green"></jnt-badge>
             </jnt-menu-item>
             <jnt-menu-item link="time-expenses" title="Time Expenses">
-              <jnt-badge *ngIf="summary?.second?.timeSpent"
-                         [count]="summary?.second?.timeSpent | duration"></jnt-badge>
+              <jnt-badge *ngIf="summary?.second?.spentTimes.spent"
+                         [count]="summary?.second?.spentTimes.spent | duration"
+                         [color]="ui.colors.green"></jnt-badge>
             </jnt-menu-item>
           </jnt-menu>
           <router-outlet></router-outlet>
@@ -56,9 +59,21 @@
                                [label]="p.issues.remains  | duration:durationFormat.short"
                                [color]="colors[i % colors.length]">
             <ng-template #titleTemplate>
-              {{p.project.title}}
-              <br>
-              <small>{{p.project.group?.fullTitle}}</small>
+              <div project>
+                <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
+                {{p.project.title}}
+              </div>
+              <ul milestones>
+                <li *ngFor="let m of p.project.milestones">
+                  <jnt-stack [type]="ui.stack.type.horizontal"
+                             [gutter]="ui.stack.gutter.tiny"
+                             [align]="ui.flex.align.center">
+                    <jnt-link [source]="m.glUrl" [title]="m.title"></jnt-link>
+                    <jnt-label *ngIf="m.dueDate" [label]="m.dueDate | dueDate"
+                               [color]="ui.colors.gray500"></jnt-label>
+                  </jnt-stack>
+                </li>
+              </ul>
             </ng-template>
           </jnt-chart-indicator>
         </jnt-chart>
