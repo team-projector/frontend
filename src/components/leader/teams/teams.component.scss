@@ -4,14 +4,14 @@
   display: block;
 }
 
+[manage] {
+  margin-bottom: $gutter-normal;
+}
+
 :host-context([theme="dark"]) {
-  [team] {
-    [block] {
-      [footer] {
-        color: $gray-200;
-        background-color: $gray-800;
-      }
-    }
+  [team] [block] [footer] {
+    color: $gray-200;
+    background-color: $gray-800;
   }
 }
 
@@ -58,6 +58,7 @@
     }
   }
 }
+
 [problems] {
   position: absolute;
   top: -$gutter-small;

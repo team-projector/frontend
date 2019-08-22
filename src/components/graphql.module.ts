@@ -1,11 +1,13 @@
-import { Inject, NgModule } from '@angular/core';
-import { Apollo, ApolloModule } from 'apollo-angular';
-import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { ApolloLink } from 'apollo-link';
-import { AppConfig } from '../app-config';
-import { ErrorResponse, onError } from 'apollo-link-error';
-import { Router } from '@angular/router';
+import {Inject, NgModule} from '@angular/core';
+import {Apollo, ApolloModule} from 'apollo-angular';
+import {HttpLink, HttpLinkModule} from 'apollo-angular-link-http';
+import {InMemoryCache} from 'apollo-cache-inmemory';
+import {ApolloLink} from 'apollo-link';
+import {AppConfig} from '../app-config';
+import {ErrorResponse, onError} from 'apollo-link-error';
+import {Router} from '@angular/router';
+import {makeExecutableSchema, mockServer} from 'graphql-tools';
+import {SchemaLink} from 'apollo-link-schema';
 
 @NgModule({
   exports: [

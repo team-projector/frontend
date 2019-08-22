@@ -60,6 +60,9 @@ export class TimeExpensesSummary {
 
   @field({mock: '{{int 10 100}}'})
   spent: number;
+
+  @field({mock: '{{int 10 100}}'})
+  openedSpent: number;
 }
 
 @model()

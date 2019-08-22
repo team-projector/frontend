@@ -8,20 +8,24 @@
   position: relative;
   display: flex;
   align-items: center;
-  background-color: $primary-light-color;
-  color: $white-color;
-  padding: $gutter-small $gutter-big $gutter-small $gutter-small;
+  min-height: 40px;
+  color: $primary-text-light-color;
+  padding: $gutter-small $gutter-normal;
+  border: 1px dashed $secondary-dark-color;
   border-radius: $corner-normal;
   line-height: 1em;
-  [avatar] {
+  &[active='true'] {
+    border: 1px solid $secondary-dark-color;
+    background: $secondary-color;
+    padding-right: $gutter-huge;
+  }
+  [avatar], [host=#{$jnt-icon-host}] {
     margin-right: $gutter-small;
   }
   [reset] {
     position: absolute;
     top: $gutter-small;
     right: $gutter-small;
-    cursor: pointer;
-    font-size: 8px;
   }
 }
 
