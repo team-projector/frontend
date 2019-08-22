@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Mutation, Query } from 'apollo-angular';
 import gql from 'graphql-tag';
-import {Mutation, Query} from 'apollo-angular';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,7 @@ export class SyncIssueGQL extends Mutation<{ syncIssue: { issue: { id } } }> {
           id
         }
       }
-    }
-  `;
+    }`;
 }
 
 
@@ -82,10 +81,10 @@ export class IssuesGQL extends Query<{ issues }> {
 export class IssuesSummaryGQL extends Query<{ summary }> {
   document = gql`
     query IssuesSummary($team: ID, $user: ID, $project: ID, $dueDate: Date) {
-  summary: issuesSummary(team: $team, user: $user, project: $project, dueDate: $dueDate) {
-    count
-    openedCount
-    problemsCount
-  }
-}`;
+      summary: issuesSummary(team: $team, user: $user, project: $project, dueDate: $dueDate) {
+        count
+        openedCount
+        problemsCount
+      }
+    }`;
 }

@@ -1,14 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { PLATFORM_DELAY } from 'src/consts';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { R } from 'apollo-angular/types';
+import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs/operators';
-import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { deserialize, serialize } from 'serialize-ts/dist';
+import { PLATFORM_DELAY } from 'src/consts';
 import { IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues } from '../../../models/issue';
+import { StandardLabel } from '../../../models/label';
 import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
-import { R } from 'apollo-angular/types';
-import {StandardLabel} from '../../../models/label';
 
 export enum ViewType {
   default,
@@ -144,11 +144,10 @@ export class IssuesComponent implements OnInit {
 
   private loadSummary() {
     this.progress.summary = true;
-    this.issuesSummaryGQL.fetch(serialize(this.filter) as R)
-      .pipe(map(({data: {summary}}) =>
-          deserialize(summary, IssuesSummary)),
-        finalize(() => this.progress.summary = false))
-      .subscribe(summary => this.summary = summary);
+    this.issuesSummaryGQL.fetch(serialize(this.filter) as R).pipe(
+      map(({data: {summary}}) => deserialize(summary, IssuesSummary)),
+      finalize(() => this.progress.summary = false)
+    ).subscribe(summary => this.summary = summary);
   }
 
   sync(issue: number) {
