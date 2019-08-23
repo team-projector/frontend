@@ -15,9 +15,11 @@
   border-radius: $corner-normal;
   line-height: 1em;
   &[active='true'] {
-    border: 1px solid $secondary-dark-color;
-    background: $secondary-color;
+    border-color: transparent;
+    background: $primary-light-color;
+    color: $white-color;
     padding-right: $gutter-huge;
+    box-shadow: $shadow-normal;
   }
   [avatar], [host=#{$jnt-icon-host}] {
     margin-right: $gutter-small;
