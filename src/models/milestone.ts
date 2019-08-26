@@ -1,11 +1,11 @@
-import {ArraySerializer, ModelSerializer} from 'serialize-ts';
-import {Paging} from './paging';
-import {SearchFilter} from 'junte-ui';
-import {DateSerializer} from '../serializers/date';
-import {Project, ProjectGroup} from './project';
-import {ProjectSerializer} from '../serializers/project';
-import {field, model} from '@junte/mocker-library';
-import {EdgesToPaging} from '../serializers/graphql';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { Paging } from './paging';
+import { SearchFilter } from 'junte-ui';
+import { DateSerializer } from '../serializers/date';
+import { Project, ProjectGroup } from './project';
+import { ProjectSerializer } from '../serializers/project';
+import { field, model } from '@junte/mocker-library';
+import { EdgesToPaging } from '../serializers/graphql';
 
 @model()
 export class MilestoneMetrics {
