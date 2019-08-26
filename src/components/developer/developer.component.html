@@ -1,8 +1,8 @@
 <jnt-app-aside #aside>
   <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
-    <jnt-menu-item link="/developer/issues" [matching]="ui.menu.matching.wildcard" title="Issues"
+    <jnt-menu-item [link]="['/developer', 'issues']" [matching]="ui.menu.matching.wildcard" title="Issues"
                    [icon]="ui.icons.dashboard"></jnt-menu-item>
-    <jnt-menu-item link="/developer/salaries" [matching]="ui.menu.matching.wildcard" title="Salaries"
+    <jnt-menu-item [link]="['/developer', 'salaries']" [matching]="ui.menu.matching.wildcard" title="Salaries"
                    [icon]="ui.icons.money"></jnt-menu-item>
   </jnt-menu>
 </jnt-app-aside>

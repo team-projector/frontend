@@ -36,7 +36,7 @@
             <jnt-stack [type]="ui.stack.type.horizontal"
                        [gutter]="ui.stack.gutter.small"
                        [align]="ui.flex.align.center">
-              <jnt-link [source]=url target="_blank"
+              <jnt-link [source]="url" target="_blank"
                         [attr.closed]="state == issuesState.closed" [title]="title">
               </jnt-link>
               <jnt-label *ngFor="let l of (labels | labels)"
