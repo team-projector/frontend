@@ -56,7 +56,10 @@ export class LoginComponent implements OnInit {
       this.loginApollo.mutate(this.loginForm.value)
         .pipe(
           finalize(() => this.progress.login = false),
-          map(({data: {login: {token}}}) => deserialize(token, AccessToken))
+          map(({data: {login: {token}}}) => {
+            console.log(token);
+            return deserialize(token, AccessToken);
+          })
         ).subscribe((token: AccessToken) => this.logged(token),
         (error: ApolloError) => this.error = error);
     }

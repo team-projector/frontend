@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { format, isFuture, isToday } from 'date-fns';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
-import { UserProgressMetrics } from 'src/models/metrics';
-import { User } from 'src/models/user';
-import { BehaviorSubject, combineLatest, zip } from 'rxjs';
-import { Period } from 'junte-ui/lib/components/calendar/models';
-import { UI } from 'junte-ui';
-import { DurationFormat } from '../../../pipes/date';
-import { IssuesFilter, IssuesSummary } from 'src/models/issue';
-import { deserialize, serialize } from 'serialize-ts/dist';
-import { MetricsGroup, UserMetricsFilter } from '../../../models/metrics';
-import { MetricType } from '../../leader/teams/team/calendar/team-calendar.component';
-import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
 import { R } from 'apollo-angular/types';
+import { format, isFuture, isToday } from 'date-fns';
+import { UI } from 'junte-ui';
+import { Period } from 'junte-ui/lib/components/calendar/models';
+import { BehaviorSubject, combineLatest, zip } from 'rxjs';
+import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { MetricType } from 'src/components/leader/teams/team/calendar/team-calendar.component';
 import { METRIC_TYPE } from 'src/components/metrics-type/consts';
+import { IssuesFilter, IssuesSummary } from 'src/models/issue';
+import { MetricsGroup, UserMetricsFilter, UserProgressMetrics } from 'src/models/metrics';
+import { User } from 'src/models/user';
+import { DurationFormat } from 'src/pipes/date';
+import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,

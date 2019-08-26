@@ -1,48 +1,78 @@
-import { filter, find } from 'lodash';
+import { GraphQLScalarType, Kind } from 'graphql';
+import { IResolvers } from 'graphql-tools';
+import { find } from 'lodash';
 
-// example data
-const authors = [
-  {id: 1, firstName: 'Tom', lastName: 'Coleman'},
-  {id: 2, firstName: 'Sashko', lastName: 'Stubailo'},
-  {id: 3, firstName: 'Mikhail', lastName: 'Novikov'},
+const token = {
+  key: 'mock_key',
+  created: (new Date()).toString()
+};
+
+const tokenResult = {
+  token: token
+};
+
+const issuesMetrics = {
+  openedCount: 5,
+  openedSpent: 6,
+  closedSpent: 7,
+};
+
+const userMetrics = {
+  bonus: 1000,
+  penalty: 0,
+  payrollClosed: 10000,
+  payrollOpened: 3000,
+  issues: issuesMetrics,
+  mergeRequests: issuesMetrics
+};
+
+const me = {
+  // id: '1',
+  // name: 'User name',
+  glAvatar: null,
+  metrics: userMetrics
+};
+
+const projectsResults = [
+  {
+    project: {
+      id: '1',
+      title: 'Project title',
+      fullTitle: 'Project full title',
+      group: {
+        fullTitle: 'Group full title'
+      }
+    }
+  }
 ];
 
-const posts = [
-  {id: 1, authorId: 1, title: 'Introduction to GraphQL', votes: 2},
-  {id: 2, authorId: 2, title: 'Welcome to Meteor', votes: 3},
-  {id: 3, authorId: 2, title: 'Advanced GraphQL', votes: 1},
-  {id: 4, authorId: 3, title: 'Launchpad is Cool', votes: 7},
-];
-
-const token = {key: 'mock_key', created: (new Date()).toString()};
-
-export const mocks = {
+export const mocks: IResolvers = {
   Query: () => ({
-    posts: () => posts,
-    author: (_, {id}) => find(authors, {id}),
-    token: () => token
+    // token: () => token,
+    me: () => me,
+    project: (_, {id}) => find(projectsResults, {id})
   }),
 
   Mutation: () => ({
-    upvotePost: (_, {postId}) => {
-      const post = find(posts, {id: postId});
-      if (!post) {
-        throw new Error(`Couldn't find post with id ${postId}`);
-      }
-      post.votes += 1;
-      return post;
+    login: (_, login: String, password: String) => tokenResult
+  }),
+
+  Date: () => new GraphQLScalarType({
+    name: 'Date',
+    description: 'Date custom scalar type',
+    parseValue(value) {
+      return new Date(value); // value from the client
     },
-    login: (_, login: String, password: String) => {
-      console.log('token: ', token);
-      return token;
-    }
+    serialize(value) {
+      return value.getTime(); // value sent to the client
+    },
+    parseLiteral(ast) {
+      if (ast.kind === Kind.INT) {
+        return new Date(ast.value); // ast value is always in string format
+      }
+      return null;
+    },
   }),
 
-  Author: () => ({
-    posts: author => filter(posts, {authorId: author.id}),
-  }),
-
-  Post: () => ({
-    author: post => find(authors, {id: post.authorId}),
-  })
+  User: () => ({name: 'eee'})
 };
