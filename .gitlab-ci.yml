@@ -38,6 +38,7 @@ docker:
     - docker:dind
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+    - docker pull $DOCKER_CACHE_IMAGE || true
     - docker build --cache-from $DOCKER_CACHE_IMAGE -t $DOCKER_IMAGE -t $DOCKER_CACHE_IMAGE -f deploy/Dockerfile .
     - docker push $DOCKER_IMAGE
     - docker push $DOCKER_CACHE_IMAGE
