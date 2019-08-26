@@ -17,6 +17,7 @@ import {METRIC_TYPE} from 'src/components/metrics-type/consts';
 import {MetricType} from 'src/components/leader/teams/team/calendar/team-calendar.component';
 import {MergeRequestSummary} from '../../../../models/merge-request';
 import {TimeExpensesSummary} from '../../../../models/spent-time';
+import {MilestoneProblem} from '../../../../models/milestone';
 
 @Component({
   selector: 'app-leader-team',
@@ -27,6 +28,7 @@ export class TeamComponent implements OnInit {
 
   ui = UI;
   durationFormat = DurationFormat;
+  milestoneProblem = MilestoneProblem;
   colors = [UI.colors.purple, UI.colors.red, UI.colors.green, UI.colors.yellow];
 
   team: Team;

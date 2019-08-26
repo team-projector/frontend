@@ -21,6 +21,7 @@ export class FirstSummaryGQL extends Query<{ summary }> {
                   title
                   dueDate
                   glUrl
+                  problems
                 }
               }
             }
@@ -51,7 +52,7 @@ export class SecondSummaryGQL extends Query<{ issues, mergeRequests, spentTimes 
       mergeRequests: mergeRequestsSummary(team: $team, user: $user, project: $project, state: "opened") {
         count
       }
-      spentTimes: spentTimesSummary(team: $team, user: $user, project: $project) {
+      spentTimes: spentTimesSummary(team: $team, user: $user, project: $project, date: $dueDate) {
         spent
         openedSpent
       }

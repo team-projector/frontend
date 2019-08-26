@@ -6,6 +6,11 @@ import {Project, ProjectGroup} from './project';
 import {ProjectSerializer} from '../serializers/project';
 import {field, model} from '@junte/mocker-library';
 import {EdgesToPaging} from '../serializers/graphql';
+import {PrimitiveSerializer} from 'serialize-ts/dist';
+
+export enum MilestoneProblem {
+  overDueDate = 'over_due_date'
+}
 
 @model()
 export class MilestoneMetrics {
@@ -77,6 +82,12 @@ export class Milestone {
 
   @field({mock: '{{url}}'})
   glUrl: string;
+
+  @field({
+    serializer: new ArraySerializer(new PrimitiveSerializer()),
+    mock: '{{milestone_problem}}'
+  })
+  problems: MilestoneProblem[];
 }
 
 @model()
