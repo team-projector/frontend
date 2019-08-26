@@ -2,12 +2,9 @@ image: docker:18
 variables:
   DOCKER_DRIVER: overlay
   DOCKER_IMAGE: $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
-  DOCKER_PROD_IMAGE: $CI_REGISTRY_IMAGE:prod
   DOCKER_DEV_IMAGE: $CI_REGISTRY_IMAGE:dev
+  DOCKER_CACHE_IMAGE: $CI_REGISTRY_IMAGE:latest
   GIT_STRATEGY: none
-
-services:
-  - docker:dind
 
 stages:
   - build
@@ -37,22 +34,26 @@ docker:
   variables:
     GIT_DEPTH: 5
     GIT_STRATEGY: fetch
+  services:
+    - docker:dind
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest -t $DOCKER_IMAGE -t $CI_REGISTRY_IMAGE:latest -f deploy/Dockerfile .
+    - docker build --cache-from $DOCKER_CACHE_IMAGE -t $DOCKER_IMAGE -t $DOCKER_CACHE_IMAGE -f deploy/Dockerfile .
     - docker push $DOCKER_IMAGE
-    - docker push $CI_REGISTRY_IMAGE:latest
+    - docker push $DOCKER_CACHE_IMAGE
 
 publish_dev:
   stage: publish
   dependencies: []
+  services:
+    - docker:dind
   script:
-  - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
-  - docker pull $DOCKER_IMAGE
-  - docker tag $DOCKER_IMAGE $DOCKER_DEV_IMAGE
-  - docker push $DOCKER_DEV_IMAGE
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+    - docker pull $DOCKER_IMAGE
+    - docker tag $DOCKER_IMAGE $DOCKER_DEV_IMAGE
+    - docker push $DOCKER_DEV_IMAGE
   only:
-  - master
+    - master
 
 deploy_dev:
   image: junte/ssh-agent
