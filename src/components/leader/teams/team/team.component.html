@@ -56,7 +56,7 @@
             </div>
           </jnt-stack>
           <jnt-menu>
-            <jnt-menu-item link="issues" title="Issues">
+            <jnt-menu-item [link]="['issues']" title="Issues">
               <jnt-badge *ngIf="summary?.second?.issues.count"
                          [count]="summary?.second?.issues.count"
                          [color]="ui.colors.green"></jnt-badge>
@@ -64,12 +64,12 @@
                          [count]="summary?.second?.issues.problemsCount"
                          [color]="ui.colors.red"></jnt-badge>
             </jnt-menu-item>
-            <jnt-menu-item link="merge-requests" title="Merge Requests">
+            <jnt-menu-item [link]="['merge-requests']" title="Merge Requests">
               <jnt-badge *ngIf="summary?.second?.mergeRequests.count"
                          [count]="summary?.second?.mergeRequests.count"
                          [color]="ui.colors.green"></jnt-badge>
             </jnt-menu-item>
-            <jnt-menu-item link="time-expenses" title="Time Expenses">
+            <jnt-menu-item [link]="['time-expenses']" title="Time Expenses">
               <jnt-badge
                 *ngIf="(filter.value.user || filter.value.dueDate || project.value) && summary?.second?.spentTimes.spent"
                 [count]="summary?.second?.spentTimes.spent | duration"
