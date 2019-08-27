@@ -1,11 +1,13 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {DeveloperIssuesComponent} from './developer-issues.component';
-import {IssuesListComponent} from './issues-list/issues-list.component';
-import {DueDateResolver, IssuesTypeResolver} from '../../../resolvers/issue';
-import {TimeExpensesListComponent} from './time-expenses-list/time-expenses-list.component';
-import {MeUserResolver} from '../../../resolvers/me';
-import {ProjectResolver} from '../../../resolvers/project';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { DeveloperIssuesComponent } from './developer-issues.component';
+import { IssuesListComponent } from './issues-list/issues-list.component';
+import { DueDateResolver, IssuesTypeResolver } from '../../../resolvers/issue';
+import { TimeExpensesListComponent } from './time-expenses-list/time-expenses-list.component';
+import { MeUserResolver } from 'src/resolvers/me';
+import { ProjectResolver } from 'src/resolvers/project';
+import { MergeRequestStateResolver } from 'src/resolvers/merge-request';
+import { DeveloperMergeRequestsListComponent } from 'src/components/developer/issues/merge-requests-list/merge-requests-list.component';
 
 const routes: Routes = [
   {
@@ -26,6 +28,14 @@ const routes: Routes = [
         path: 'time-expenses',
         data: {breadcrumb: 'Time Expenses'},
         component: TimeExpensesListComponent,
+      },
+      {
+        path: 'merge-requests',
+        data: {breadcrumb: 'Merge Requests'},
+        resolve: {
+          state: MergeRequestStateResolver
+        },
+        component: DeveloperMergeRequestsListComponent
       }
     ]
   }
