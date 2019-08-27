@@ -51,13 +51,13 @@
   </div>
 
   <jnt-menu>
-    <jnt-menu-item [link]="['/developer', 'issues']" title="Issues">
+    <jnt-menu-item [link]="['.']" title="Issues">
       <jnt-badge *ngIf="summary?.openedCount" [count]="summary?.openedCount"
                  [color]="ui.colors.green"></jnt-badge>
       <jnt-badge *ngIf="summary?.problemsCount" [count]="summary?.problemsCount"
                  [color]="ui.colors.red"></jnt-badge>
     </jnt-menu-item>
-    <jnt-menu-item [link]="['/developer', 'issues', 'time-expenses']" title="Time Expenses">
+    <jnt-menu-item [link]="['time-expenses']" title="Time Expenses">
       <jnt-badge *ngIf="summary?.timeSpent" [count]="summary?.timeSpent | duration"></jnt-badge>
     </jnt-menu-item>
   </jnt-menu>
