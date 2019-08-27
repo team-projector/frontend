@@ -1,4 +1,4 @@
-FROM node:8 as build
+FROM node:8-jessie as build
 
 WORKDIR /src
 
