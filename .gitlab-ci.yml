@@ -3,7 +3,8 @@ variables:
   DOCKER_DRIVER: overlay
   DOCKER_IMAGE: $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
   DOCKER_DEV_IMAGE: $CI_REGISTRY_IMAGE:dev
-  DOCKER_CACHE_IMAGE: $CI_REGISTRY_IMAGE:latest
+  DOCKER_BUILD_CACHE_IMAGE: $CI_REGISTRY_IMAGE:cache-build
+  DOCKER_CACHE_IMAGE: $CI_REGISTRY_IMAGE:cache
   GIT_STRATEGY: none
 
 stages:
@@ -11,23 +12,6 @@ stages:
   - docker
   - publish
   - deploy
-
-# build:
-#   image: node:8
-#   stage: build
-#   variables:
-#     GIT_DEPTH: 5
-#     GIT_STRATEGY: fetch
-#   before_script:
-#     - npm install
-#   script:
-#     - npm run build
-#   artifacts:
-#     paths:
-#     - dist/
-#   cache:
-#     paths:
-#       - node_modules/
 
 build:
   stage: build
@@ -39,7 +23,8 @@ build:
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
     - docker pull $DOCKER_CACHE_IMAGE || true
-    - docker build --cache-from $DOCKER_CACHE_IMAGE -t $DOCKER_IMAGE -t $DOCKER_CACHE_IMAGE -f deploy/Dockerfile .
+    - docker build --cache-from $DOCKER_CACHE_IMAGE --target build -t $DOCKER_CACHE_IMAGE -f deploy/Dockerfile .
+    - docker build --cache-from $DOCKER_CACHE_IMAGE -t $DOCKER_IMAGE -f deploy/Dockerfile .
     - docker push $DOCKER_IMAGE
     - docker push $DOCKER_CACHE_IMAGE
 
