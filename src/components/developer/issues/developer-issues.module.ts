@@ -7,18 +7,21 @@ import { JunteUiModule } from 'junte-ui';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { DueDateResolver, IssuesTypeResolver } from 'src/resolvers/issue';
 import { IssuesModule } from 'src/components/issues/issues.module';
-import { NumberModule } from '../../../pipes/number.module';
-import { MeUserResolver } from '../../../resolvers/me';
+import { NumberModule } from 'src/pipes/number.module';
+import { MeUserResolver } from 'src/resolvers/me';
 import { IssuesListComponent } from './issues-list/issues-list.component';
 import { TimeExpensesListComponent } from './time-expenses-list/time-expenses-list.component';
-import { ProjectResolver } from '../../../resolvers/project';
+import { ProjectResolver } from 'src/resolvers/project';
 import { MetricsTypeModule } from 'src/components/metrics-type/metrics-type.module';
+import { DeveloperMergeRequestsListComponent } from 'src/components/developer/issues/merge-requests-list/merge-requests-list.component';
+import { MergeRequestStateResolver } from 'src/resolvers/merge-request';
 
 @NgModule({
   declarations: [
     DeveloperIssuesComponent,
     IssuesListComponent,
-    TimeExpensesListComponent
+    TimeExpensesListComponent,
+    DeveloperMergeRequestsListComponent
   ],
   imports: [
     CommonModule,
@@ -34,7 +37,8 @@ import { MetricsTypeModule } from 'src/components/metrics-type/metrics-type.modu
     MeUserResolver,
     ProjectResolver,
     DueDateResolver,
-    IssuesTypeResolver
+    IssuesTypeResolver,
+    MergeRequestStateResolver
   ]
 })
 export class DeveloperIssuesModule {
