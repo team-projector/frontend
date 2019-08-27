@@ -12,25 +12,25 @@ stages:
   - publish
   - deploy
 
-build:
-  image: node:8
-  stage: build
-  variables:
-    GIT_DEPTH: 5
-    GIT_STRATEGY: fetch
-  before_script:
-    - npm install
-  script:
-    - npm run build
-  artifacts:
-    paths:
-    - dist/
-  cache:
-    paths:
-      - node_modules/
+# build:
+#   image: node:8
+#   stage: build
+#   variables:
+#     GIT_DEPTH: 5
+#     GIT_STRATEGY: fetch
+#   before_script:
+#     - npm install
+#   script:
+#     - npm run build
+#   artifacts:
+#     paths:
+#     - dist/
+#   cache:
+#     paths:
+#       - node_modules/
 
-docker:
-  stage: docker
+build:
+  stage: build
   variables:
     GIT_DEPTH: 5
     GIT_STRATEGY: fetch
