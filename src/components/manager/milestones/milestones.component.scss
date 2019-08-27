@@ -3,3 +3,30 @@
 :host {
   display: block;
 }
+
+[remains] {
+  margin-top: $gutter-tiny;
+  text-align: center;
+  font-size: .85em;
+  [overflow='true'] {
+    background: $fail-color;
+    color: $white-color;
+    border-radius: $gutter-tiny;
+    line-height: 1em;
+    padding: 0 $gutter-tiny;
+  }
+}
+
+[metric] {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: .85em;
+  &:first-of-type {
+    flex: 1;
+    text-align: left;
+  }
+  &[budget] {
+    color: $primary-text-light-color;
+  }
+}

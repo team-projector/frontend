@@ -71,7 +71,7 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column i18n-title="@@est" title="Progress">
+    <jnt-table-column i18n-title="@@progress" title="Progress">
       <ng-template #cellTemplate let-timeEstimate="timeEstimate"
                    let-totalTimeSpent="totalTimeSpent"
                    let-metrics="metrics"
@@ -85,7 +85,7 @@
             </jnt-stack>
           </ng-template>
         </jnt-progress-bar>
-        <div efficiency style="text-align: center;">
+        <div efficiency>
             <span [attr.slow]="metrics.efficiency > 0 && metrics.efficiency < 0.8">
               {{!!metrics.efficiency ? (metrics.efficiency | number:'1.2-2') : ''}}
             </span>

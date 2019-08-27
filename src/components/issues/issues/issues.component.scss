@@ -18,9 +18,11 @@
 
 [efficiency] {
   margin-top: $gutter-tiny;
+  text-align: center;
   font-size: .85em;
   [slow='true'] {
-    border: 2px solid $fail-color;
+    background: $fail-color;
+    color: $white-color;
     border-radius: $gutter-tiny;
     line-height: 1em;
     padding: 0 $gutter-tiny;

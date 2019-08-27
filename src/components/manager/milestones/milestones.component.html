@@ -1,46 +1,94 @@
-<jnt-block>
-  <jnt-table #table [features]="[features.search]">
-    <jnt-table-column title="Title">
-      <ng-template #cellTemplate let-title="title" let-owner="owner">
-        {{title}}<br>
-        <jnt-link [source]="owner.glUrl" target="_blank" [title]="owner?.fullTitle"></jnt-link>
-      </ng-template>
-    </jnt-table-column>
-    <jnt-table-column title="Budget">
-      <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
-        {{budget | currency:'RUB'}} / {{metrics.budgetRemains | currency:'RUB'}}
-      </ng-template>
-    </jnt-table-column>
-    <jnt-table-column title="Payroll">
-      <ng-template #cellTemplate let-metrics="metrics">
-        {{metrics.payroll | currency:'RUB'}}
-      </ng-template>
-    </jnt-table-column>
-    <jnt-table-column title="Profit">
-      <ng-template #cellTemplate let-metrics="metrics">
-        {{metrics.profit | currency:'RUB'}}
-      </ng-template>
-    </jnt-table-column>
-    <jnt-table-column title="Est.">
-      <ng-template #cellTemplate let-metrics="metrics">
-        {{metrics.timeEstimate | duration}}
-      </ng-template>
-    </jnt-table-column>
-    <jnt-table-column title="Spent">
-      <ng-template #cellTemplate let-metrics="metrics">
-        {{metrics.timeSpent | duration}}
-      </ng-template>
-    </jnt-table-column>
-    <jnt-table-column title="Remains">
-      <ng-template #cellTemplate let-metrics="metrics">
-        {{metrics.timeRemains | duration}}
-      </ng-template>
-    </jnt-table-column>
-    <jnt-table-column title="Issues">
-      <ng-template #cellTemplate let-metrics="metrics">
-        {{metrics.issuesCount}} <sup> {{metrics.issuesOpenedCount}} &rarr; <b>{{metrics.issuesClosedCount}}</b></sup>
-      </ng-template>
-    </jnt-table-column>
-  </jnt-table>
-</jnt-block>
+<jnt-stack [gutter]="ui.stack.gutter.large">
+  <jnt-link [icon]="ui.icons.settings" source="/admin/development/milestone/"
+            title="Manage"></jnt-link>
+  <jnt-block>
+    <jnt-table #table [features]="[features.search]">
+      <jnt-table-column title="Title">
+        <ng-template #cellTemplate let-title="title" let-owner="owner">
+          <jnt-stack [type]="ui.stack.type.horizontal">
+            <jnt-avatar [size]="ui.sizes.small"></jnt-avatar>
+            <jnt-stack [gutter]="ui.stack.gutter.tiny">
+              <div>{{title}}</div>
+              <jnt-link [source]="owner.glUrl" target="_blank" [title]="owner?.fullTitle"></jnt-link>
+            </jnt-stack>
+          </jnt-stack>
+        </ng-template>
+      </jnt-table-column>
+      <jnt-table-column title="Budget">
+        <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
+          <ng-container *ngIf="budget">
+            <jnt-progress-bar progress [value]="(budget - metrics.budgetRemains) / budget * 100">
+              <ng-template #legend>
+                <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
+                           [justify]="ui.flex.justify.between" [gutter]="ui.stack.gutter.normal">
+                  <div metric>{{budget - metrics.budgetRemains | currency:'RUB':'symbol':'0.0-0'}}</div>
+                  <div metric budget>{{budget | currency:'RUB':'symbol':'0.0-0'}}</div>
+                </jnt-stack>
+              </ng-template>
+            </jnt-progress-bar>
+            <div remains>
+            <span [attr.overflow]="metrics.budgetRemains < 0">
+              {{metrics.budgetRemains | currency:'RUB'}}
+            </span>
+            </div>
+          </ng-container>
+        </ng-template>
+      </jnt-table-column>
+      <jnt-table-column title="Profit">
+        <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
+          <jnt-progress-bar progress [value]="metrics.payroll / budget * 100">
+            <ng-template #legend>
+              <jnt-stack [type]="ui.stack.type.horizontal"
+                         [align]="ui.flex.align.center"
+                         [justify]="ui.flex.justify.between"
+                         [gutter]="ui.stack.gutter.normal">
+                <div metric>{{metrics.payroll | currency:'RUB':'symbol':'0.0-0'}}</div>
+                <div metric budget>{{budget | currency:'RUB':'symbol':'0.0-0'}}</div>
+              </jnt-stack>
+            </ng-template>
+          </jnt-progress-bar>
+          <div remains>
+            <span [attr.overflow]="metrics.profit < 0">
+              {{metrics.profit | currency:'RUB'}}
+            </span>
+          </div>
+        </ng-template>
+      </jnt-table-column>
+      <jnt-table-column i18n-title="@@progress" title="Progress">
+        <ng-template #cellTemplate let-metrics="metrics">
+          <jnt-progress-bar progress *ngIf="!!metrics.timeEstimate"
+                            [value]="metrics.timeSpent / metrics.timeEstimate * 100">
+            <ng-template #legend>
+              <jnt-stack [type]="ui.stack.type.horizontal"
+                         [align]="ui.flex.align.center"
+                         [justify]="ui.flex.justify.between"
+                         [gutter]="ui.stack.gutter.normal">
+                <div metric>{{metrics.timeSpent | duration}}</div>
+                <div metric estimate>{{metrics.timeEstimate | duration}}</div>
+              </jnt-stack>
+            </ng-template>
+          </jnt-progress-bar>
+          <div remains>
+            <span [attr.overflow]="metrics.timeRemains < 0">
+              {{metrics.timeRemains | duration}}
+            </span>
+          </div>
+        </ng-template>
+      </jnt-table-column>
+      <jnt-table-column title="Issues">
+        <ng-template #cellTemplate let-metrics="metrics">
+          <jnt-stack [justify]="ui.flex.justify.center"
+                     [type]="ui.stack.type.horizontal"
+                     [gutter]="ui.stack.gutter.tiny">
+            <jnt-label *ngIf="metrics.issuesOpenedCount" [label]="metrics.issuesOpenedCount"
+                       [color]="ui.colors.green"></jnt-label>
+            <jnt-label *ngIf="metrics.issuesClosedCount" [label]="metrics.issuesClosedCount"
+                       [color]="ui.colors.gray500"></jnt-label>
+          </jnt-stack>
+        </ng-template>
+      </jnt-table-column>
+    </jnt-table>
+  </jnt-block>
+
+</jnt-stack>
 

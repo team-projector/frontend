@@ -1,41 +1,41 @@
-<div manage>
+<jnt-stack [gutter]="ui.stack.gutter.large">
   <jnt-link [icon]="ui.icons.settings" source="/admin/development/team/"
-            title="Manage Teams"></jnt-link>
-</div>
+            title="Manage"></jnt-link>
 
-<jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap" [align]="ui.flex.align.stretch">
-  <ng-container *ngIf="loading; then loadingTemplate; else teamsTemplate"></ng-container>
-  <ng-template #loadingTemplate>
-    <div *ngFor="let i of 5 | mockArray" team>
-      <jnt-block [width]="ui.width.fluid" [padding]="ui.padding.normal" block>
-        <jnt-stack [align]="ui.flex.align.center">
-          <jnt-skeleton [lines]="1"></jnt-skeleton>
-          <jnt-skeleton [type]="ui.skeleton.type.avatar"></jnt-skeleton>
-          <jnt-skeleton [lines]="1"></jnt-skeleton>
-        </jnt-stack>
-      </jnt-block>
-    </div>
-  </ng-template>
-  <ng-template #teamsTemplate>
-    <a *ngFor="let team of teams" [routerLink]="[team.id]" team>
-      <jnt-block [padding]="ui.padding.normal" [title]="team.title" block>
-        <jnt-label *ngIf="team.metrics.problemsCount" problems [icon]="ui.icons.warning"
-                   [color]="ui.colors.red"
-                   [label]="team.metrics.problemsCount"></jnt-label>
-        <jnt-avatars-group [size]="ui.sizes.normal">
-          <jnt-avatar *ngFor="let member of team.members"
-                      [image]="member.user.avatar">
-          </jnt-avatar>
-        </jnt-avatars-group>
-        <ng-template #footerBlock>
-          <div footer>
-            <div><b>{{!!team.metrics.issues.openedEstimated ? (team.metrics.issues.openedEstimated | duration:durationFormat.short) : '&ndash;'}}</b>
-              hours for <b>{{team.metrics.issues.openedCount || '&ndash;'}}</b> tasks
+  <jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap" [align]="ui.flex.align.stretch">
+    <ng-container *ngIf="loading; then loadingTemplate; else teamsTemplate"></ng-container>
+    <ng-template #loadingTemplate>
+      <div *ngFor="let i of 5 | mockArray" team>
+        <jnt-block [width]="ui.width.fluid" [padding]="ui.padding.normal" block>
+          <jnt-stack [align]="ui.flex.align.center">
+            <jnt-skeleton [lines]="1"></jnt-skeleton>
+            <jnt-skeleton [type]="ui.skeleton.type.avatar"></jnt-skeleton>
+            <jnt-skeleton [lines]="1"></jnt-skeleton>
+          </jnt-stack>
+        </jnt-block>
+      </div>
+    </ng-template>
+    <ng-template #teamsTemplate>
+      <a *ngFor="let team of teams" [routerLink]="[team.id]" team>
+        <jnt-block [padding]="ui.padding.normal" [title]="team.title" block>
+          <jnt-label *ngIf="team.metrics.problemsCount" problems [icon]="ui.icons.warning"
+                     [color]="ui.colors.red"
+                     [label]="team.metrics.problemsCount"></jnt-label>
+          <jnt-avatars-group [size]="ui.sizes.normal">
+            <jnt-avatar *ngFor="let member of team.members"
+                        [image]="member.user.avatar">
+            </jnt-avatar>
+          </jnt-avatars-group>
+          <ng-template #footerBlock>
+            <div footer>
+              <div><b>{{!!team.metrics.issues.openedEstimated ? (team.metrics.issues.openedEstimated |
+                duration:durationFormat.short) : '&ndash;'}}</b>
+                hours for <b>{{team.metrics.issues.openedCount || '&ndash;'}}</b> tasks
+              </div>
             </div>
-          </div>
-        </ng-template>
-      </jnt-block>
-    </a>
-  </ng-template>
+          </ng-template>
+        </jnt-block>
+      </a>
+    </ng-template>
+  </jnt-stack>
 </jnt-stack>
-<router-outlet></router-outlet>

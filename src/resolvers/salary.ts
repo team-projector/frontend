@@ -15,6 +15,7 @@ export class SalaryResolver implements Resolve<Observable<Salary>> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<Salary> {
     const id = +route.params['salary'];
+    return null;
     return this.salaryApollo.fetch({salary: id})
       .pipe(map(({data: {salary}}) =>
         deserialize(salary, Salary)));
