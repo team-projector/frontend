@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class IssuesMetricsGQL extends Query<{userProgressMetrics}> {
+export class IssuesMetricsGQL extends Query<{ userProgressMetrics }> {
   document = gql`
     query UserProgressMetrics($user: ID!, $start: Date!, $end: Date!, $group: String!) {
       userProgressMetrics(user: $user, start: $start, end: $end, group: $group) {
@@ -26,13 +26,19 @@ export class IssuesMetricsGQL extends Query<{userProgressMetrics}> {
 @Injectable({
   providedIn: 'root'
 })
-export class IssuesSummaryGQL extends Query<{issuesSummary}> {
+export class IssuesSummaryGQL extends Query<{ issues, mergeRequests, spentTimes }> {
   document = gql`
-    query IssuesSummary($user: ID, $dueDate: Date, $state: String) {
-      issuesSummary(user: $user, dueDate: $dueDate, state: $state) {
-        openedCount
+    query IssuesSummary($user: ID, $dueDate: Date) {
+      issues: issuesSummary(user: $user, dueDate: $dueDate, state: "opened") {
+        count
         problemsCount
-        timeSpent
+      }
+      mergeRequests: mergeRequestsSummary(user: $user, state: "opened") {
+        count
+      }
+      spentTimes: spentTimesSummary(user: $user, date: $dueDate) {
+        spent
+        openedSpent
       }
     }`;
 }

@@ -16,6 +16,8 @@ import { MetricType } from '../../leader/teams/team/calendar/team-calendar.compo
 import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
 import { R } from 'apollo-angular/types';
 import { METRIC_TYPE } from 'src/components/metrics-type/consts';
+import { MergeRequestSummary } from 'src/models/merge-request';
+import { TimeExpensesSummary } from 'src/models/spent-time';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,
@@ -42,7 +44,11 @@ export class DeveloperIssuesComponent implements OnInit {
   format = format;
   formatDate = 'DD/MM/YYYY';
 
-  summary: IssuesSummary;
+  summary: {
+    issues?: IssuesSummary,
+    mergeRequests?: MergeRequestSummary
+    spentTimes?: TimeExpensesSummary
+  } = {};
 
   set user(user: User) {
     this.user$.next(user);
@@ -102,8 +108,11 @@ export class DeveloperIssuesComponent implements OnInit {
       });
 
       this.issuesSummary.fetch(serialize(filter) as R)
-        .pipe(map(({data: {issuesSummary}}: { data: { issuesSummary } }) =>
-          deserialize(issuesSummary, IssuesSummary)))
+        .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({
+          issues: deserialize(issues, IssuesSummary),
+          mergeRequests: deserialize(mergeRequests, MergeRequestSummary),
+          spentTimes: deserialize(spentTimes, TimeExpensesSummary),
+        })))
         .subscribe(summary => this.summary = summary);
     });
 
