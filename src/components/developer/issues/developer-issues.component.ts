@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { format, isFuture, isToday } from 'date-fns';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
 import { UserProgressMetrics } from 'src/models/metrics';
@@ -61,10 +61,12 @@ export class DeveloperIssuesComponent implements OnInit {
     new Map<string, UserProgressMetrics>()
   );
   dueDate = new FormControl();
+  project = new FormControl();
   metric = new FormControl(localStorage.getItem(METRIC_TYPE) || MetricType.all);
   form = this.formBuilder.group({
     dueDate: this.dueDate,
-    metric: this.metric
+    metric: this.metric,
+    project: this.project
   });
 
   constructor(private formBuilder: FormBuilder,
@@ -77,21 +79,26 @@ export class DeveloperIssuesComponent implements OnInit {
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(filter => {
-        const state: { due_date? } = {};
+        const state: { due_date?, project? } = {};
         if (!!filter.dueDate) {
           state.due_date = format(filter.dueDate, 'MM-DD-YYYY');
+        }
+
+        if (!!filter.project) {
+          state.project = filter.project;
         }
         this.router.navigate([state], {relativeTo: this.route});
       });
 
-    this.route.data.subscribe(({user, dueDate}) => {
+    this.route.data.subscribe(({user, dueDate, project}) => {
       this.user = user;
-      this.form.patchValue({dueDate: dueDate},
+      this.form.patchValue({dueDate: dueDate, project: project},
         {emitEvent: false});
 
       const filter = new IssuesFilter({
         user: user.id,
-        dueDate: dueDate
+        dueDate: dueDate,
+        project: project
       });
 
       this.issuesSummary.fetch(serialize(filter) as R)
