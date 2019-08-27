@@ -4,8 +4,14 @@
   display: block;
 }
 
+app-metrics-type {
+  align-self: start;
+}
+
 [calendar] {
-  width: 100%;
+  @media screen and (max-width: map_get($grid-breakpoints, wide)) {
+    margin-bottom: $gutter-normal;
+  }
 }
 
 [filter] {
