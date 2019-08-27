@@ -40,7 +40,7 @@
     "graphql-tag": "^2.10.0",
     "graphql-tools": "^4.0.5",
     "junte-angular": "~0.0.46",
-    "junte-ui": "0.0.228",
+    "junte-ui": "0.0.231",
     "rxjs": "~6.3.3",
     "serialize-ts": "2.5.4",
     "tslib": "~1.9.0",
