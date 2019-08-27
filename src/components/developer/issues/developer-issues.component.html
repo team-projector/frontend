@@ -45,10 +45,40 @@
     </jnt-stack>
   </jnt-form>
 
-  <div filter *ngIf="dueDate.value">
-    {{dueDate.value | date}}
-    <jnt-icon icon [icon]="ui.icons.close" (click)="dueDate.patchValue(null)"></jnt-icon>
-  </div>
+  <jnt-stack [type]="ui.stack.type.horizontal">
+    <div filter [attr.active]="!!dueDate.value">
+      <ng-container *ngIf="dueDate.value;else noFilterDueDate">
+        <jnt-icon icon [icon]="ui.icons.calendar"></jnt-icon>
+        {{dueDate.value | date}}
+        <jnt-button reset [scheme]="ui.schemes.secondary"
+                    [size]="ui.sizes.tiny"
+                    [icon]="ui.icons.close"
+                    (click)="form.patchValue({dueDate: null, project: null})"></jnt-button>
+      </ng-container>
+      <ng-template #noFilterDueDate>
+        <jnt-icon icon [icon]="ui.icons.calendar"></jnt-icon>
+        Pick a due date
+      </ng-template>
+    </div>
+
+    <div filter [attr.active]="!!project.value">
+      <ng-container *ngIf="!!project.value;else noFilterProject">
+        <jnt-icon icon [icon]="ui.icons.project"></jnt-icon>
+        <div>
+          {{project.value.title}}<br>
+          <small>{{project.value.group?.fullTitle}}</small>
+        </div>
+        <jnt-button reset [scheme]="ui.schemes.secondary"
+                    [size]="ui.sizes.tiny"
+                    [icon]="ui.icons.close"
+                    (click)="project.patchValue(null)"></jnt-button>
+      </ng-container>
+      <ng-template #noFilterProject>
+        <jnt-icon icon [icon]="ui.icons.project"></jnt-icon>
+        Pick a project
+      </ng-template>
+    </div>
+  </jnt-stack>
 
   <jnt-menu>
     <jnt-menu-item [link]="['.']" title="Issues">

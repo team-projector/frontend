@@ -6,17 +6,28 @@
 
 [filter] {
   position: relative;
-  background-color: $primary-light-color;
-  color: $white-color;
-  padding: $gutter-normal;
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  color: $primary-text-light-color;
+  padding: $gutter-small $gutter-normal;
+  border: 1px dashed $secondary-dark-color;
   border-radius: $corner-normal;
-
-  [icon] {
+  line-height: 1em;
+  &[active='true'] {
+    border-color: transparent;
+    background: $primary-light-color;
+    color: $white-color;
+    padding-right: $gutter-huge;
+    box-shadow: $shadow-normal;
+  }
+  [avatar], [host=#{$jnt-icon-host}] {
+    margin-right: $gutter-small;
+  }
+  [reset] {
     position: absolute;
     top: $gutter-small;
     right: $gutter-small;
-    cursor: pointer;
-    font-size: 8px;
   }
 }
 
