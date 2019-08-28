@@ -15,9 +15,9 @@ export class DurationPipe implements PipeTransform {
 
     switch (format) {
       case DurationFormat.short:
-        if (hours > 0) {
+        if (Math.abs(hours) > 0) {
           return `${hours}h` + (min > 0 ? '+' : '');
-        } else if (min > 0) {
+        } else if (Math.abs(min) > 0) {
           return `${min}m` + (sec > 0 ? '+' : '');
         } else if (sec > 0) {
           return `${sec}s`;

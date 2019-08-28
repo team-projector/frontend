@@ -22,6 +22,9 @@ export class MilestoneMetrics {
   payroll: number;
 
   @field({mock: '{{money}}'})
+  budgetSpent: number;
+
+  @field({mock: '{{money}}'})
   budgetRemains: number;
 
   @field({mock: '{{money}}'})

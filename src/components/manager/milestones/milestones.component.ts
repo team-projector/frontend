@@ -5,6 +5,7 @@ import { deserialize } from 'serialize-ts/dist';
 import { map } from 'rxjs/operators';
 import { AllMilestonesGQL } from './milestones.graphql';
 import { R } from 'apollo-angular/types';
+import {DurationFormat} from '../../../pipes/date';
 
 @Component({
   selector: 'app-manager-dashboard',
@@ -14,6 +15,7 @@ import { R } from 'apollo-angular/types';
 export class MilestonesComponent implements OnInit {
 
   ui = UI;
+  durationFormat = DurationFormat;
   features = TableFeatures;
 
   @ViewChild('table')

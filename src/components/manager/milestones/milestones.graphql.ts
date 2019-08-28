@@ -15,6 +15,7 @@ export class AllMilestonesGQL extends Query<{allMilestones}> {
             id
             title
             owner {
+              glAvatar
               fullTitle
               glUrl
             }
@@ -23,9 +24,9 @@ export class AllMilestonesGQL extends Query<{allMilestones}> {
             dueDate
             glUrl
             metrics {
-              customerPayroll
-              payroll
+              budgetSpent
               budgetRemains
+              payroll
               profit
               timeEstimate
               timeSpent

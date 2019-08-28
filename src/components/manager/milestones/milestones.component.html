@@ -1,15 +1,15 @@
 <jnt-stack [gutter]="ui.stack.gutter.large">
   <jnt-link [icon]="ui.icons.settings" source="/admin/development/milestone/"
-            title="Manage"></jnt-link>
+            target="_blank" title="Manage"></jnt-link>
   <jnt-block>
     <jnt-table #table [features]="[features.search]">
       <jnt-table-column title="Title">
-        <ng-template #cellTemplate let-title="title" let-owner="owner">
+        <ng-template #cellTemplate let-title="title" let-glUrl="glUrl" let-owner="owner">
           <jnt-stack [type]="ui.stack.type.horizontal">
-            <jnt-avatar [size]="ui.sizes.small"></jnt-avatar>
+            <jnt-avatar [size]="ui.sizes.small" [image]="owner.glAvatar"></jnt-avatar>
             <jnt-stack [gutter]="ui.stack.gutter.tiny">
-              <div>{{title}}</div>
-              <jnt-link [source]="owner.glUrl" target="_blank" [title]="owner?.fullTitle"></jnt-link>
+              <jnt-link [source]="glUrl" target="_blank" [title]="title"></jnt-link>
+              <small>{{owner?.fullTitle}}</small>
             </jnt-stack>
           </jnt-stack>
         </ng-template>
@@ -17,7 +17,7 @@
       <jnt-table-column title="Budget">
         <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
           <ng-container *ngIf="budget">
-            <jnt-progress-bar progress [value]="(budget - metrics.budgetRemains) / budget * 100">
+            <jnt-progress-bar progress [value]="metrics.budgetSpent / budget * 100">
               <ng-template #legend>
                 <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
                            [justify]="ui.flex.justify.between" [gutter]="ui.stack.gutter.normal">
@@ -63,14 +63,14 @@
                          [align]="ui.flex.align.center"
                          [justify]="ui.flex.justify.between"
                          [gutter]="ui.stack.gutter.normal">
-                <div metric>{{metrics.timeSpent | duration}}</div>
-                <div metric estimate>{{metrics.timeEstimate | duration}}</div>
+                <div metric>{{metrics.timeSpent | duration:durationFormat.short}}</div>
+                <div metric estimate>{{metrics.timeEstimate | duration:durationFormat.short}}</div>
               </jnt-stack>
             </ng-template>
           </jnt-progress-bar>
           <div remains>
             <span [attr.overflow]="metrics.timeRemains < 0">
-              {{metrics.timeRemains | duration}}
+              {{metrics.timeRemains | duration:durationFormat.short}}
             </span>
           </div>
         </ng-template>
@@ -87,6 +87,14 @@
           </jnt-stack>
         </ng-template>
       </jnt-table-column>
+      <ng-template #rowActions let-row="row">
+        <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
+          <jnt-menu-item [icon]="ui.icons.externalLink" title="View on GitLab"
+                         [link]="row.glUrl"></jnt-menu-item>
+          <jnt-menu-item [icon]="ui.icons.edit" title="Edit"
+                         [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
+        </jnt-menu>
+      </ng-template>
     </jnt-table>
   </jnt-block>
 

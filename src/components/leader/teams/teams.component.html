@@ -1,6 +1,6 @@
 <jnt-stack [gutter]="ui.stack.gutter.large">
   <jnt-link [icon]="ui.icons.settings" source="/admin/development/team/"
-            title="Manage"></jnt-link>
+            target="_blank" title="Manage"></jnt-link>
 
   <jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap" [align]="ui.flex.align.stretch">
     <ng-container *ngIf="loading; then loadingTemplate; else teamsTemplate"></ng-container>
