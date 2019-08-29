@@ -29,7 +29,7 @@ export class TeamComponent implements OnInit {
   ui = UI;
   durationFormat = DurationFormat;
   milestoneProblem = MilestoneProblem;
-  colors = [UI.colors.purple, UI.colors.red, UI.colors.green, UI.colors.yellow];
+  colors = [UI.colors.purple, UI.colors.red, UI.colors.green, UI.colors.yellow, UI.colors.teal, UI.colors.orange, UI.colors.purpleLight];
 
   team: Team;
   filter = new FormControl();
