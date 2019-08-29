@@ -3,7 +3,7 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MeManager } from '../managers/me.manager';
-import { registerLocaleData } from '@angular/common';
+import { CurrencyPipe, registerLocaleData } from '@angular/common';
 import localeRu from '@angular/common/locales/ru';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { GraphQLModule } from './graphql.module';
@@ -27,7 +27,8 @@ registerLocaleData(localeRu);
       provide: LOCALE_ID,
       useValue: 'ru'
     },
-    MeManager
+    MeManager,
+    CurrencyPipe
   ],
   bootstrap: [AppComponent]
 })

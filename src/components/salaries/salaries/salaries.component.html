@@ -15,19 +15,19 @@
 
     <jnt-table-column i18n-title="@@bonus" title="Bonus">
       <ng-template #cellTemplate let-bonus="bonus">
-        {{bonus | currency:'RUB'}}
+        {{bonus | currency}}
       </ng-template>
     </jnt-table-column>
 
     <jnt-table-column i18n-title="@@penalty" title="Penalty">
       <ng-template #cellTemplate let-penalty="penalty">
-        {{penalty | currency:'RUB'}}
+        {{penalty | currency}}
       </ng-template>
     </jnt-table-column>
 
     <jnt-table-column i18n-title="@@total" title="Total">
       <ng-template #cellTemplate let-total="total">
-        {{total | currency:'RUB'}}
+        {{total | currency}}
       </ng-template>
     </jnt-table-column>
 

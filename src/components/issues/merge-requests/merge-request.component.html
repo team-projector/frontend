@@ -67,9 +67,9 @@
     <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@payroll" title="Payroll">
       <ng-template #cellTemplate let-metrics="metrics">
         <div style="text-align: right;">
-          {{!!metrics.payroll ? (metrics.payroll | currency:'RUB') : '&mdash;'}}
+          {{!!metrics.payroll ? (metrics.payroll | currency) : '&mdash;'}}
           /
-          {{!!metrics.paid ? (metrics.paid | currency:'RUB') : '&mdash;'}}
+          {{!!metrics.paid ? (metrics.paid | currency) : '&mdash;'}}
         </div>
       </ng-template>
     </jnt-table-column>
