@@ -8,8 +8,9 @@ import { TimeExpensesComponent } from './time-expenses/time-expenses.component';
 import { JunteUiModule } from 'junte-ui';
 import { RouterModule } from '@angular/router';
 import { DueDateModule } from 'src/components/due-date/due-date.module';
-import {MergeRequestsComponent} from './merge-requests/merge-requests.component';
-import {HasLabelPipe, LabelsPipe} from './issues.pipes';
+import { MergeRequestsComponent } from './merge-requests/merge-requests.component';
+import { HasLabelPipe, LabelsPipe } from './issues.pipes';
+import { CurrencyRublePipeModule } from 'src/pipes/currency-ruble.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import {HasLabelPipe, LabelsPipe} from './issues.pipes';
     DatePipesModule,
     ArrayPipesModule,
     JunteUiModule,
-    DueDateModule
+    DueDateModule,
+    CurrencyRublePipeModule
   ],
   exports: [
     IssuesComponent,

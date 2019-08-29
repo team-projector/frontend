@@ -3,13 +3,13 @@
     <h6>Payroll</h6>
     <jnt-stack [gutter]="ui.stack.gutter.small" [align]="ui.flex.justify.end">
       <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
-        <span payroll closed>{{metrics.payrollClosed | currency:'RUB'}}</span>
+        <span payroll closed>{{metrics.payrollClosed | currency}}</span>
         <jnt-label label [label]="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) | duration"
                    [color]="ui.colors.gray500"></jnt-label>
       </jnt-stack>
 
       <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
-        <span payroll opened>{{metrics.payrollOpened | currency:'RUB'}}</span>
+        <span payroll opened>{{metrics.payrollOpened | currency}}</span>
         <jnt-label label [label]="(metrics.issues.openedSpent + metrics.mergeRequests.openedSpent ) | duration"
                    [color]="ui.colors.gray500"></jnt-label>
       </jnt-stack>
@@ -20,7 +20,7 @@
         <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small"
                    [align]="ui.flex.align.center">
           <jnt-icon like [icon]="ui.icons.like"></jnt-icon>
-          <span>{{metrics.bonus | currency:'RUB'}}</span>
+          <span>{{metrics.bonus | currency}}</span>
         </jnt-stack>
       </div>
       <div separator></div>
@@ -28,7 +28,7 @@
         <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.stack.gutter.small"
                    [align]="ui.flex.align.center">
           <jnt-icon dislike [icon]="ui.icons.dislike"></jnt-icon>
-          <span>{{metrics.penalty | currency:'RUB'}}</span>
+          <span>{{metrics.penalty | currency}}</span>
         </jnt-stack>
       </div>
     </jnt-stack>

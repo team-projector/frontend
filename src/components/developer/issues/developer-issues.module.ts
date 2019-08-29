@@ -15,6 +15,7 @@ import { ProjectResolver } from 'src/resolvers/project';
 import { MetricsTypeModule } from 'src/components/metrics-type/metrics-type.module';
 import { DeveloperMergeRequestsListComponent } from 'src/components/developer/issues/merge-requests-list/merge-requests-list.component';
 import { MergeRequestStateResolver } from 'src/resolvers/merge-request';
+import { CurrencyRublePipeModule } from 'src/pipes/currency-ruble.module';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MergeRequestStateResolver } from 'src/resolvers/merge-request';
     DeveloperIssuesRoutingModule,
     MetricsTypeModule,
     IssuesModule,
-    NumberModule
+    NumberModule,
+    CurrencyRublePipeModule
   ],
   providers: [
     MeUserResolver,
