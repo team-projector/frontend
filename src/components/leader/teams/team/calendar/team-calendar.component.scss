@@ -221,6 +221,17 @@ table {
         jnt-label ::ng-deep {
           justify-content: center;
         }
+
+        [developer] {
+          cursor: pointer;
+          padding: $gutter-small;
+          &:focus {
+            outline: 0;
+            border: 1px solid $primary-color;
+            border-radius: $corner-small;
+            box-shadow: $shadow-primary-dark;
+          }
+        }
       }
       &[active='true'] {
         td {
@@ -255,7 +266,8 @@ table {
   }
 
   th:nth-child(2),
-  td:nth-child(2) {
+  tbody tr td:nth-child(2) {
+    padding: $gutter-tiny 0;
     min-width: 120px;
     width: 200px;
   }
