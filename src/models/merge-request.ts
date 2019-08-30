@@ -1,19 +1,33 @@
-import {ArraySerializer, ModelSerializer} from 'serialize-ts';
-import {field, model} from '@junte/mocker-library';
-import {Label} from './label';
-import {User} from './user';
-import {Project} from './project';
-import {EdgesToArray, EdgesToPaging} from '../serializers/graphql';
-import {Paging} from './paging';
-import {Issue, IssueMetrics, IssueState, ProjectSummary} from './issue';
-import {SearchFilter} from 'junte-ui';
-import {DateSerializer} from '../serializers/date';
-import {DATE_FORMAT} from '../consts';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { field, model } from '@junte/mocker-library';
+import { Label } from './label';
+import { User } from './user';
+import { Project } from './project';
+import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { Paging } from './paging';
+import { SearchFilter } from 'junte-ui';
 
 export enum MergeRequestState {
   opened = 'opened',
   merged = 'merged',
   closed = 'closed'
+}
+
+@model()
+export class MergeRequestSummary {
+
+  @field({mock: '{{int1 10}}'})
+  count: number;
+
+  @field({mock: '{{int1 10}}'})
+  openedCount: number;
+
+  @field({mock: '{{int1 10}}'})
+  closedCount: number;
+
+  @field({mock: '{{int1 10}}'})
+  mergedCount: number;
+
 }
 
 @model()
@@ -77,19 +91,6 @@ export class MergeRequest {
 
   @field({mock: '{{> issue_metrics}}'})
   metrics: MergeRequestMetrics;
-}
-
-@model()
-export class MergeRequestSummary {
-
-  @field({mock: '{{int 10 100}}'})
-  count: number;
-
-  @field({mock: '{{int 10 100}}'})
-  openedCount: number;
-
-  @field({mock: '{{int 10 100}}'})
-  mergedCount: number;
 }
 
 @model()

@@ -5,10 +5,18 @@
         <jnt-form [formGroup]="form">
           <jnt-switcher formControlName="state">
             <jnt-switcher-option label="Closed" [value]="mergeRequestState.closed">
+              <jnt-badge *ngIf="summary?.closedCount"
+                         [count]="summary?.closedCount"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Opened" [value]="mergeRequestState.opened">
+              <jnt-badge *ngIf="summary?.openedCount"
+                         [count]="summary?.openedCount"
+                         [color]="ui.colors.green"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Merged" [value]="mergeRequestState.merged">
+              <jnt-badge *ngIf="summary?.mergedCount"
+                         [count]="summary?.mergedCount"
+                         [color]="ui.colors.red"></jnt-badge>
             </jnt-switcher-option>
           </jnt-switcher>
         </jnt-form>

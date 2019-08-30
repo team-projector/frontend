@@ -1,14 +1,13 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {PLATFORM_DELAY} from 'src/consts';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {debounceTime, distinctUntilChanged, finalize, map} from 'rxjs/operators';
-import {DefaultSearchFilter, TableComponent, TableFeatures, UI} from 'junte-ui';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues} from '../../../models/issue';
-import {MergeRequestsGQL} from './merge-requests.graphql';
-import {R} from 'apollo-angular/types';
-import {MergeRequest, MergeRequestsFilter, MergeRequestState, PagingMergeRequest} from '../../../models/merge-request';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { PLATFORM_DELAY } from 'src/consts';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { MergeRequestsGQL, MergeRequestSummaryGQL } from './merge-requests.graphql';
+import { R } from 'apollo-angular/types';
+import { MergeRequestsFilter, MergeRequestState, MergeRequestSummary, PagingMergeRequest } from '../../../models/merge-request';
 
 export enum ViewType {
   default,
@@ -25,6 +24,7 @@ export class MergeRequestsComponent implements OnInit {
   ui = UI;
   mergeRequestState = MergeRequestState;
   viewType = ViewType;
+  summary: MergeRequestSummary;
   features = TableFeatures;
 
   stateControl = new FormControl(MergeRequestState.opened);
@@ -86,6 +86,7 @@ export class MergeRequestsComponent implements OnInit {
   filtered = new EventEmitter<{ state? }>();
 
   constructor(private mergeRequestsGQL: MergeRequestsGQL,
+              private mergeRequestsSummaryGQL: MergeRequestSummaryGQL,
               private formBuilder: FormBuilder) {
   }
 
@@ -108,6 +109,7 @@ export class MergeRequestsComponent implements OnInit {
         this.filter.state = state;
 
         this.table.load();
+        this.loadSummary();
       });
 
     this.form.valueChanges
@@ -119,6 +121,13 @@ export class MergeRequestsComponent implements OnInit {
         }
         this.filtered.emit(filtering);
       });
+  }
+
+  private loadSummary() {
+    this.mergeRequestsSummaryGQL.fetch(serialize(this.filter) as R)
+      .pipe(map(({data: {summary}}) =>
+        deserialize(summary, MergeRequestSummary)))
+      .subscribe(summary => this.summary = summary);
   }
 
 }
