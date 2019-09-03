@@ -69,7 +69,7 @@ export class TeamComponent implements OnInit {
           state.due_date = format(dueDate, 'MM-DD-YYYY');
         }
         if (!!project) {
-          state.project = project.id;
+          state.project = project;
         }
         this.router.navigate([state, 'issues'],
           {relativeTo: this.route});
