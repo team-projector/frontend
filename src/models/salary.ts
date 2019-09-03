@@ -30,10 +30,7 @@ export class Salary {
   })
   periodFrom: Date;
 
-  @field({
-    name: 'charged_time',
-    mock: '{{int 144000 288000}}'
-  })
+  @field({mock: '{{int 144000 288000}}'})
   chargedTime: number;
 
   @field({mock: '{{int 1000 5000}}'})

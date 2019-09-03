@@ -1,7 +1,7 @@
 <jnt-stack [gutter]="ui.stack.gutter.large">
   <jnt-link [icon]="ui.icons.settings" source="/admin/development/milestone/"
             target="_blank" title="Manage"></jnt-link>
-  <jnt-block>
+  <jnt-block [width]="ui.width.fluid">
     <jnt-table #table [features]="[features.search]">
       <jnt-table-column title="Title">
         <ng-template #cellTemplate let-title="title" let-glUrl="glUrl" let-owner="owner">

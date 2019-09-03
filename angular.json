@@ -29,6 +29,11 @@
                 "glob": "**/*",
                 "input": "node_modules/junte-ui/lib/assets/fonts/icons/",
                 "output": "./assets/fonts/icons/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/junte-ui/lib/assets/icons/",
+                "output": "./assets/icons/"
               }
             ],
             "styles": [

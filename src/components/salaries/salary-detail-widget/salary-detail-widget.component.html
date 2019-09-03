@@ -1,5 +1,4 @@
-<jnt-block *ngIf="salary" [padding]="ui.padding.normal">
-  <h6>Details</h6>
+<jnt-block *ngIf="salary" title="Details" [padding]="ui.padding.normal">
   <table>
     <thead>
     <tr>
@@ -34,7 +33,9 @@
     </tr>
     <tr>
       <td title>Payed</td>
-      <td value><jnt-icon *ngIf="salary.payed" [icon]="ui.icons.check"></jnt-icon></td>
+      <td value>
+        <jnt-icon *ngIf="salary.payed" [icon]="ui.icons.check"></jnt-icon>
+      </td>
     </tr>
     </tbody>
   </table>
