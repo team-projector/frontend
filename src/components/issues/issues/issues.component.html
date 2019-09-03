@@ -22,7 +22,7 @@
         </jnt-form>
       </jnt-stack>
     </ng-template>
-    <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
+    <jnt-table-column i18n-title="@@issue_title" title="Title">
       <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
                    let-participants="participants" let-project="project">
         <jnt-stack [type]="ui.stack.type.horizontal"
@@ -43,7 +43,7 @@
                          [color]="l.color" [label]="l.title"></jnt-label>
               <jnt-icon *ngIf="labels | hasLabel:standardLabel.doing"
                         state
-                        [icon]="ui.animatedIcons.runningMan"></jnt-icon>
+                        [icon]="ui.icons.playButton"></jnt-icon>
               <jnt-icon *ngIf="labels | hasLabel:standardLabel.done"
                         state
                         [icon]="ui.icons.check"></jnt-icon>
