@@ -32,7 +32,7 @@
               }
             ],
             "styles": [
-              "node_modules/junte-ui/lib/assets/styles/icons.scss",
+              "node_modules/junte-ui/lib/assets/fonts/icons/icons-font.scss",
               "node_modules/junte-ui/lib/assets/fonts/open-sans/import.scss",
               "src/styles.scss"
             ],
