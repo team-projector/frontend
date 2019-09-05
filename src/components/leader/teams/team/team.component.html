@@ -45,42 +45,42 @@
           {{filter.value.user.name}}
           <jnt-button reset [scheme]="ui.schemes.secondary"
                       [size]="ui.sizes.tiny"
-                      [icon]="ui.icons.close"
+                      [icon]="ui.icons.font.close"
                       (click)="filter.patchValue({user: null, dueDate: filter.value.dueDate})"></jnt-button>
         </ng-container>
         <ng-template #noFilterUser>
-          <jnt-icon icon [icon]="ui.icons.user"></jnt-icon>
+          <jnt-icon icon [icon]="ui.icons.font.user"></jnt-icon>
           Pick a user
         </ng-template>
       </div>
       <div filter [attr.active]="!!filter.value.dueDate">
         <ng-container *ngIf="filter.value.dueDate;else noFilterDueDate">
-          <jnt-icon icon [icon]="ui.icons.calendar"></jnt-icon>
+          <jnt-icon icon [icon]="ui.icons.font.calendar"></jnt-icon>
           {{filter.value.dueDate | date}}
           <jnt-button reset [scheme]="ui.schemes.secondary"
                       [size]="ui.sizes.tiny"
-                      [icon]="ui.icons.close"
+                      [icon]="ui.icons.font.close"
                       (click)="filter.patchValue({user: filter.value.user,  dueDate: null})"></jnt-button>
         </ng-container>
         <ng-template #noFilterDueDate>
-          <jnt-icon icon [icon]="ui.icons.calendar"></jnt-icon>
+          <jnt-icon icon [icon]="ui.icons.font.calendar"></jnt-icon>
           Pick a due date
         </ng-template>
       </div>
       <div filter [attr.active]="!!project.value">
         <ng-container *ngIf="!!project.value;else noFilterProject">
-          <jnt-icon icon [icon]="ui.icons.project"></jnt-icon>
+          <jnt-icon icon [icon]="ui.icons.font.project"></jnt-icon>
           <div>
             {{project.value.title}}<br>
             <small>{{project.value.group?.fullTitle}}</small>
           </div>
           <jnt-button reset [scheme]="ui.schemes.secondary"
                       [size]="ui.sizes.tiny"
-                      [icon]="ui.icons.close"
+                      [icon]="ui.icons.font.close"
                       (click)="project.patchValue(null)"></jnt-button>
         </ng-container>
         <ng-template #noFilterProject>
-          <jnt-icon icon [icon]="ui.icons.project"></jnt-icon>
+          <jnt-icon icon [icon]="ui.icons.font.project"></jnt-icon>
           Pick a project
         </ng-template>
       </div>

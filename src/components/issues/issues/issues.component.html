@@ -41,12 +41,12 @@
               </jnt-link>
               <jnt-label *ngFor="let l of (labels | labels)"
                          [color]="l.color" [label]="l.title"></jnt-label>
-              <jnt-icon *ngIf="labels | hasLabel:standardLabel.doing"
-                        state
-                        [icon]="ui.icons.playButton"></jnt-icon>
+              <jnt-animated-icon *ngIf="labels | hasLabel:standardLabel.doing"
+                        state doing
+                        [icon]="ui.icons.animated.runningMan"></jnt-animated-icon>
               <jnt-icon *ngIf="labels | hasLabel:standardLabel.done"
                         state
-                        [icon]="ui.icons.check"></jnt-icon>
+                        [icon]="ui.icons.font.check"></jnt-icon>
 
             </jnt-stack>
             <small>{{project?.fullTitle}}</small>

@@ -6,6 +6,14 @@
 
 [state] {
   color: $success-color;
+  &[doing] {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    fill: $success-color;
+    padding: 1px;
+    border: 1px solid $success-color;
+  }
 }
 
 [closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {

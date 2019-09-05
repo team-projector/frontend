@@ -7,11 +7,11 @@
     <th colspan="10">
       <div date>
         <button arrow (click)="date = subWeeks(date, 1)">
-          <jnt-icon [icon]="ui.icons.arrowLeft"></jnt-icon>
+          <jnt-icon [icon]="ui.icons.font.arrowLeft"></jnt-icon>
         </button>
         <span>{{days[0] | period:days[6]}}</span>
         <button arrow (click)="date = addWeeks(date, 1)">
-          <jnt-icon [icon]="ui.icons.arrowRight"></jnt-icon>
+          <jnt-icon [icon]="ui.icons.font.arrowRight"></jnt-icon>
         </button>
       </div>
     </th>
@@ -109,7 +109,7 @@
     <ng-container *ngIf="!loading; else skeleton">
       <tr nodata>
         <td [attr.colspan]="17">
-          <jnt-icon [icon]="ui.icons.stopping" icon></jnt-icon>
+          <jnt-icon [icon]="ui.icons.font.stopping" icon></jnt-icon>
         </td>
       </tr>
     </ng-container>
