@@ -9,7 +9,7 @@
         <button arrow (click)="date = subWeeks(date, 1)">
           <jnt-icon [icon]="ui.icons.font.arrowLeft"></jnt-icon>
         </button>
-        <span>{{days[0] | period:days[6]}}</span>
+        <span [innerHTML]="days[0] | period:days[6]"></span>
         <button arrow (click)="date = addWeeks(date, 1)">
           <jnt-icon [icon]="ui.icons.font.arrowRight"></jnt-icon>
         </button>

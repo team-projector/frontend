@@ -14,6 +14,11 @@
           </jnt-stack>
         </ng-template>
       </jnt-table-column>
+      <jnt-table-column title="Period">
+        <ng-template #cellTemplate let-startDate="budget" let-dueDate="dueDate">
+          <span [innerHTML]="startDate | period:dueDate"></span>
+        </ng-template>
+      </jnt-table-column>
       <jnt-table-column title="Budget">
         <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
           <ng-container *ngIf="budget">
@@ -90,9 +95,13 @@
       <ng-template #rowActions let-row="row">
         <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
           <jnt-menu-item [icon]="ui.icons.font.externalLink" title="View on GitLab"
+                         target="_blank"
                          [link]="row.glUrl"></jnt-menu-item>
           <jnt-menu-item [icon]="ui.icons.font.edit" title="Edit"
+                         target="_blank"
                          [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
+          <jnt-menu-item [icon]="ui.icons.font.sync" title="Sync from GitLab"
+                         (click)="sync(row.id)"></jnt-menu-item>
         </jnt-menu>
       </ng-template>
     </jnt-table>

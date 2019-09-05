@@ -17,7 +17,6 @@ export class SyncIssueGQL extends Mutation<{ syncIssue: { issue: { id } } }> {
   `;
 }
 
-
 @Injectable({
   providedIn: 'root'
 })

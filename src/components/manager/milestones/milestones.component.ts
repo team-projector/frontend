@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
-import { PagingMilestones } from '../../../models/milestone';
-import { deserialize } from 'serialize-ts/dist';
-import { map } from 'rxjs/operators';
-import { AllMilestonesGQL } from './milestones.graphql';
-import { R } from 'apollo-angular/types';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {DefaultSearchFilter, TableComponent, TableFeatures, UI} from 'junte-ui';
+import {PagingMilestones} from '../../../models/milestone';
+import {deserialize} from 'serialize-ts/dist';
+import {finalize, map} from 'rxjs/operators';
+import {AllMilestonesGQL, SyncMilestoneGQL} from './milestones.graphql';
+import {R} from 'apollo-angular/types';
 import {DurationFormat} from '../../../pipes/date';
 
 @Component({
@@ -17,19 +17,28 @@ export class MilestonesComponent implements OnInit {
   ui = UI;
   durationFormat = DurationFormat;
   features = TableFeatures;
+  progress = {sync: false};
 
   @ViewChild('table')
   table: TableComponent;
 
-  constructor(private allMilestonesApollo: AllMilestonesGQL) {
+  constructor(private allMilestonesGQL: AllMilestonesGQL,
+              private syncMilestoneGQL: SyncMilestoneGQL) {
   }
 
   ngOnInit() {
     this.table.fetcher = (filter: DefaultSearchFilter) => {
-      return this.allMilestonesApollo.fetch(filter as R)
+      return this.allMilestonesGQL.fetch(filter as R)
         .pipe(map(({data: {allMilestones}}) =>
           deserialize(allMilestones, PagingMilestones)));
     };
     this.table.load();
+  }
+
+  sync(issue: number) {
+    this.progress.sync = true;
+    this.syncMilestoneGQL.mutate({id: issue})
+      .pipe(finalize(() => this.progress.sync = false))
+      .subscribe(() => this.table.load());
   }
 }

@@ -1,6 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Query } from 'apollo-angular';
+import {Mutation, Query} from 'apollo-angular';
 import gql from 'graphql-tag';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class SyncMilestoneGQL extends Mutation<{ syncMilestone: { milestone: { id } } }> {
+  document = gql`
+    mutation SyncMilestone($id: ID) {
+      syncMilestone(id: $id) {
+        milestone {
+          id
+        }
+      }
+    }
+  `;
+}
 
 @Injectable({
   providedIn: 'root'

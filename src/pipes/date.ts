@@ -1,4 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
+import {format as fnsFormat, getDate, isSameMonth} from 'date-fns';
 
 export enum DurationFormat {
   full = 'full',
@@ -33,5 +34,14 @@ export class DurationPipe implements PipeTransform {
         return units.filter(m => !!m.value)
           .map(u => [u.value, u.unit].join('')).join(' ');
     }
+  }
+}
+
+@Pipe({name: 'period'})
+export class PeriodPipe implements PipeTransform {
+  transform(start: Date, end: Date): string {
+    const from = !!start ? (isSameMonth(start, end) ? getDate(start) : `${getDate(start)} ${fnsFormat(start, 'MMMM')}`) : '*';
+    const to = !!end ? `${getDate(end)} ${fnsFormat(end, 'MMMM')}` : '*';
+    return `${from} &mdash; ${to}`;
   }
 }

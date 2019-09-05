@@ -42,8 +42,8 @@
               <jnt-label *ngFor="let l of (labels | labels)"
                          [color]="l.color" [label]="l.title"></jnt-label>
               <jnt-animated-icon *ngIf="labels | hasLabel:standardLabel.doing"
-                        state doing
-                        [icon]="ui.icons.animated.runningMan"></jnt-animated-icon>
+                                 state doing
+                                 [icon]="ui.icons.animated.runningMan"></jnt-animated-icon>
               <jnt-icon *ngIf="labels | hasLabel:standardLabel.done"
                         state
                         [icon]="ui.icons.font.check"></jnt-icon>
@@ -108,7 +108,8 @@
 
     <ng-template #rowActions let-row="row">
       <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
-        <jnt-menu-item title="Sync from GitLab" (click)="sync(row.id)"></jnt-menu-item>
+        <jnt-menu-item [icon]="ui.icons.font.sync" title="Sync from GitLab"
+                       (click)="sync(row.id)"></jnt-menu-item>
       </jnt-menu>
     </ng-template>
   </jnt-table>

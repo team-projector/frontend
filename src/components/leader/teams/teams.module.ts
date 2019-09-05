@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {TeamsComponent} from 'src/components/leader/teams/teams.component';
 import {TeamComponent} from 'src/components/leader/teams/team/team.component';
-import {PercentagePipe, PeriodPipe} from 'src/components/leader/teams/team/team.pipe';
+import {PercentagePipe} from 'src/components/leader/teams/team/team.pipe';
 import {JunteUiModule} from 'junte-ui';
 import {DatePipesModule} from 'src/pipes/date-pipes.module';
 import {TeamsRoutingModule} from 'src/components/leader/teams/teams-routing.module';
@@ -44,8 +44,7 @@ import {DueDateModule} from '../../due-date/due-date.module';
     TeamMergeRequestsListComponent,
     TeamIssuesListComponent,
     TeamCalendarComponent,
-    PercentagePipe,
-    PeriodPipe
+    PercentagePipe
   ],
   providers: [
     TeamResolver,
