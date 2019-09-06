@@ -87,7 +87,7 @@ export class DeveloperIssuesComponent implements OnInit {
       .subscribe(filter => {
         const state: { due_date?, project? } = {};
         if (!!filter.dueDate) {
-          state.due_date = format(filter.dueDate, 'MM-DD-YYYY');
+          state.due_date = format(filter.dueDate, 'YYYY-MM-DD');
         }
 
         if (!!filter.project) {
