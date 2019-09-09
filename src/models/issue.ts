@@ -22,6 +22,7 @@ export enum IssueProblem {
 
 export enum IssuesType {
   all = 'all',
+  closed = 'closed',
   opened = 'opened',
   problems = 'problems'
 }
@@ -201,6 +202,9 @@ export class IssuesSummary {
 
   @field({mock: '{{int 10 100}}'})
   count: number;
+
+  @field({mock: '{{int 10 100}}'})
+  closedCount: number;
 
   @field({mock: '{{int 10 100}}'})
   openedCount: number;

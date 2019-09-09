@@ -112,7 +112,9 @@ export class IssuesComponent implements OnInit {
       this.typeControl.patchValue(type, {emitEvent: false}));
 
     this.table.fetcher = (filter: DefaultSearchFilter) => {
-      Object.assign(this.filter, filter);
+      this.filter.q = filter.q;
+      this.filter.first = filter.first;
+      this.filter.offset = filter.offset;
       return this.issuesGQL.fetch(serialize(this.filter) as R)
         .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)));
     };
@@ -126,6 +128,7 @@ export class IssuesComponent implements OnInit {
         this.filter.dueDate = dueDate;
         this.filter.state = type === IssuesType.opened ? IssueState.opened : null;
         this.filter.problems = type === IssuesType.problems ? true : null;
+        this.filter.orderBy = type === IssuesType.opened ? 'dueDate' : '-dueDate';
 
         this.loadSummary();
         this.table.load();

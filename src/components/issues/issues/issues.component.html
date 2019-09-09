@@ -8,6 +8,10 @@
               <jnt-badge *ngIf="summary?.count"
                          [count]="summary?.count"></jnt-badge>
             </jnt-switcher-option>
+            <jnt-switcher-option label="Closed" [value]="issuesType.closed">
+              <jnt-badge *ngIf="summary?.closedCount"
+                         [count]="summary?.closedCount"></jnt-badge>
+            </jnt-switcher-option>
             <jnt-switcher-option label="Opened" [value]="issuesType.opened">
               <jnt-badge *ngIf="summary?.openedCount"
                          [count]="summary?.openedCount"
