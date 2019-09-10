@@ -14,7 +14,7 @@ const routes: Routes = [
       },
       {
         path: 'teams',
-        loadChildren: './teams/teams.module#TeamsModule'
+        loadChildren: () => import('./teams/teams.module').then(m => m.TeamsModule)
       }
     ]
   }

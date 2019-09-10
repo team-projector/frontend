@@ -26,7 +26,7 @@ export class SalariesComponent implements OnInit {
   filter: SalariesFilter = new SalariesFilter();
 
   // TODO: @ViewChild(TableComponent) == undefined in AOT
-  @ViewChild('table')
+  @ViewChild('table', {static: true})
   table: TableComponent;
 
   constructor(private allSalaries: AllSalariesGQL) {

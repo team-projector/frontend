@@ -1,12 +1,12 @@
-import {ArraySerializer, ModelSerializer} from 'serialize-ts';
-import {Paging} from './paging';
-import {SearchFilter} from 'junte-ui';
-import {DateSerializer} from '../serializers/date';
-import {Project, ProjectGroup} from './project';
-import {ProjectSerializer} from '../serializers/project';
-import {field, model} from '@junte/mocker-library';
-import {EdgesToPaging} from '../serializers/graphql';
-import {PrimitiveSerializer} from 'serialize-ts/dist';
+import { field, model } from '@junte/mocker-library';
+import { SearchFilter } from 'junte-ui';
+import { ArraySerializer } from 'serialize-ts';
+import { PrimitiveSerializer } from 'serialize-ts/dist';
+import { DateSerializer } from '../serializers/date';
+import { EdgesToPaging } from '../serializers/graphql';
+import { ProjectSerializer } from '../serializers/project';
+import { Paging } from './paging';
+import { Project, ProjectGroup } from './project';
 
 export enum MilestoneProblem {
   overDueDate = 'over_due_date'

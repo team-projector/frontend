@@ -95,7 +95,7 @@ export class IssuesComponent implements OnInit {
 
   filter: IssuesFilter = new IssuesFilter();
 
-  @ViewChild('table')
+  @ViewChild('table', {static: true})
   table: TableComponent;
 
   @Output()
