@@ -1,6 +1,6 @@
-import {field, model} from '@junte/mocker-library';
-import {EdgesToArray} from '../serializers/graphql';
-import {Milestone} from './milestone';
+import { field, model } from '@junte/mocker-library';
+import { EdgesToArray } from '../serializers/graphql';
+import { Milestone } from './milestone';
 
 @model()
 export class ProjectGroup {

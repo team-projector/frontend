@@ -48,7 +48,7 @@ export class TimeExpensesComponent implements OnInit {
 
   filter: TimeExpensesFilter = new TimeExpensesFilter();
 
-  @ViewChild('table')
+  @ViewChild('table', {static: true})
   table: TableComponent;
 
   constructor(private timeExpansesApollo: TimeExpensesGQL) {

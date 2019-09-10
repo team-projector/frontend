@@ -8,11 +8,11 @@ export function dashboardMatcher() {
 const routes: Routes = [
   {
     path: 'signup',
-    loadChildren: './signup/signup.module#SignupModule'
+    loadChildren: () => import('./signup/signup.module').then(m => m.SignupModule)
   },
   {
     matcher: dashboardMatcher,
-    loadChildren: './dashboard/dashboard.module#DashboardModule'
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
   }
 ];
 

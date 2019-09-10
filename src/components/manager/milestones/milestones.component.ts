@@ -19,7 +19,7 @@ export class MilestonesComponent implements OnInit {
   features = TableFeatures;
   progress = {sync: false};
 
-  @ViewChild('table')
+  @ViewChild('table', {static: true})
   table: TableComponent;
 
   constructor(private allMilestonesGQL: AllMilestonesGQL,
