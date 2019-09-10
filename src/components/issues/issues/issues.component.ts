@@ -1,13 +1,13 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { PLATFORM_DELAY } from 'src/consts';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs/operators';
-import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues } from '../../../models/issue';
-import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
-import { R } from 'apollo-angular/types';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {PLATFORM_DELAY} from 'src/consts';
+import {BehaviorSubject, combineLatest} from 'rxjs';
+import {debounceTime, distinctUntilChanged, finalize, map} from 'rxjs/operators';
+import {DefaultSearchFilter, TableComponent, TableFeatures, UI} from 'junte-ui';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {deserialize, serialize} from 'serialize-ts/dist';
+import {IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues} from '../../../models/issue';
+import {IssuesGQL, IssuesSummaryGQL, SyncIssueGQL} from './issues.graphql';
+import {R} from 'apollo-angular/types';
 import {StandardLabel} from '../../../models/label';
 
 export enum ViewType {
@@ -126,9 +126,10 @@ export class IssuesComponent implements OnInit {
         this.filter.user = user;
         this.filter.project = project;
         this.filter.dueDate = dueDate;
-        this.filter.state = type === IssuesType.opened ? IssueState.opened : null;
+        this.filter.state = type === IssuesType.opened ? IssueState.opened
+          : (type === IssuesType.closed ? IssueState.closed : null);
         this.filter.problems = type === IssuesType.problems ? true : null;
-        this.filter.orderBy = type === IssuesType.opened ? 'dueDate' : '-dueDate';
+        this.filter.orderBy = type === IssuesType.opened ? 'dueDate' : '-closedAt';
 
         this.loadSummary();
         this.table.load();

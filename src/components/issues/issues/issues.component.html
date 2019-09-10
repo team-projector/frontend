@@ -28,7 +28,7 @@
     </ng-template>
     <jnt-table-column i18n-title="@@issue_title" title="Title">
       <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
-                   let-participants="participants" let-project="project">
+                   let-participants="participants" let-project="project" let-closedAt="closedAt">
         <jnt-stack [type]="ui.stack.type.horizontal"
                    [gutter]="ui.stack.gutter.small">
           <jnt-avatars-list>
@@ -45,12 +45,13 @@
               </jnt-link>
               <jnt-label *ngFor="let l of (labels | labels)"
                          [color]="l.color" [label]="l.title"></jnt-label>
-              <jnt-animated-icon *ngIf="labels | hasLabel:standardLabel.doing"
+              <jnt-animated-icon *ngIf="state == issuesState.opened && (labels | hasLabel:standardLabel.doing)"
                                  state doing
                                  [icon]="ui.icons.animated.runningMan"></jnt-animated-icon>
               <jnt-icon *ngIf="labels | hasLabel:standardLabel.done"
                         state
                         [icon]="ui.icons.font.check"></jnt-icon>
+              <small *ngIf="state == issuesState.closed">{{closedAt | fromNow}}</small>
 
             </jnt-stack>
             <small>{{project?.fullTitle}}</small>

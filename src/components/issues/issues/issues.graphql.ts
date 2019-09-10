@@ -30,6 +30,7 @@ export class IssuesGQL extends Query<{ issues }> {
             title
             id
             dueDate
+            closedAt
             labels {
               count
               edges {

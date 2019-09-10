@@ -91,6 +91,12 @@ export class Issue {
   })
   dueDate: Date;
 
+  @field({
+    serializer: new DateSerializer(),
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
+  closedAt: Date;
+
   @field({mock: '{{int 10 100}}'})
   timeEstimate: number;
 
