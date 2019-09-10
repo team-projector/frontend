@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
     theme: this.themeControl
   });
 
-  @ViewChild(GitlabStatusComponent)
+  @ViewChild(GitlabStatusComponent, {static: false})
   gitlabStatus: GitlabStatusComponent;
 
   constructor(@Inject(AppConfig) public config: AppConfig,

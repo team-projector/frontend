@@ -15,7 +15,7 @@ const routes: Routes = [
       },
       {
         path: 'milestones',
-        loadChildren: './milestones/milestones.module#MilestonesModule'
+        loadChildren: () => import('./milestones/milestones.module').then(m => m.MilestonesModule)
       }
     ]
   }

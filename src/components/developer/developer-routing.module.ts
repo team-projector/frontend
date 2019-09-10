@@ -14,12 +14,12 @@ const routes: Routes = [
       },
       {
         path: 'issues',
-        loadChildren: './issues/developer-issues.module#DeveloperIssuesModule'
+        loadChildren: () => import('./issues/developer-issues.module').then(m => m.DeveloperIssuesModule)
       },
       {
         path: 'salaries',
         data: {breadcrumb: 'Salaries'},
-        loadChildren: './salaries/salaries.module#SalariesModule'
+        loadChildren: () => import('./salaries/salaries.module').then(m => m.SalariesModule)
       }
     ]
   }

@@ -16,15 +16,15 @@ const routes: Routes = [
       },
       {
         path: 'developer',
-        loadChildren: '../developer/developer.module#DeveloperModule',
+        loadChildren: () => import('../developer/developer.module').then(m => m.DeveloperModule),
       },
       {
         path: 'leader',
-        loadChildren: '../leader/leader.module#LeaderModule',
+        loadChildren: () => import('../leader/leader.module').then(m => m.LeaderModule),
       },
       {
         path: 'manager',
-        loadChildren: '../manager/manager.module#ManagerModule',
+        loadChildren: () => import('../manager/manager.module').then(m => m.ManagerModule),
       }
     ]
   }];

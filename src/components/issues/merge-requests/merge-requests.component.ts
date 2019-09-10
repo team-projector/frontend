@@ -79,7 +79,7 @@ export class MergeRequestsComponent implements OnInit {
 
   filter: MergeRequestsFilter = new MergeRequestsFilter();
 
-  @ViewChild('table')
+  @ViewChild('table', {static: true})
   table: TableComponent;
 
   @Output()
