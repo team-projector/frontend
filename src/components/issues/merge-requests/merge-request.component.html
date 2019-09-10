@@ -24,9 +24,14 @@
     </ng-template>
     <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
       <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
-                   let-participants="participants" let-project="project">
+                   let-issue="issue" let-participants="participants" let-project="project">
         <jnt-stack [type]="ui.stack.type.horizontal"
                    [gutter]="ui.stack.gutter.small">
+          <ng-container *ngIf="issue?.user">
+            <jnt-avatar [text]="issue.user.name"
+                        [image]="issue.user.avatar" [size]="ui.sizes.small"></jnt-avatar>
+
+          </ng-container>
           <jnt-avatars-list>
             <jnt-avatar *ngFor="let p of participants"
                         [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>

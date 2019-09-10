@@ -15,8 +15,13 @@
         </ng-template>
       </jnt-table-column>
       <jnt-table-column title="Period">
-        <ng-template #cellTemplate let-startDate="budget" let-dueDate="dueDate">
-          <span [innerHTML]="startDate | period:dueDate"></span>
+        <ng-template #cellTemplate let-startDate="budget" let-problems="problems" let-dueDate="dueDate">
+          <jnt-stack [gutter]="ui.stack.gutter.tiny" [align]="ui.flex.align.center">
+            <div [innerHTML]="startDate | period:dueDate"></div>
+            <jnt-label *ngIf="problems?.includes(milestoneProblem.overDueDate)"
+                       [color]="ui.colors.red" label="overdue">
+            </jnt-label>
+          </jnt-stack>
         </ng-template>
       </jnt-table-column>
       <jnt-table-column title="Budget">

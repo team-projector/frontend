@@ -6,6 +6,7 @@ import { Project } from './project';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
 import { Paging } from './paging';
 import { SearchFilter } from 'junte-ui';
+import {Issue} from './issue';
 
 export enum MergeRequestState {
   opened = 'opened',
@@ -55,6 +56,9 @@ export class MergeRequest {
 
   @field({mock: '{{> user}}'})
   user: User;
+
+  @field({mock: '{{> issue}}'})
+  issue: Issue;
 
   @field({
     serializer: new EdgesToArray(User),

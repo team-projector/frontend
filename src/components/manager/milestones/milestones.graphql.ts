@@ -38,6 +38,7 @@ export class AllMilestonesGQL extends Query<{allMilestones}> {
             startDate
             dueDate
             glUrl
+            problems
             metrics {
               budgetSpent
               budgetRemains

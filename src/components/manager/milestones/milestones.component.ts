@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {DefaultSearchFilter, TableComponent, TableFeatures, UI} from 'junte-ui';
-import {PagingMilestones} from '../../../models/milestone';
+import {MilestoneProblem, PagingMilestones} from '../../../models/milestone';
 import {deserialize} from 'serialize-ts/dist';
 import {finalize, map} from 'rxjs/operators';
 import {AllMilestonesGQL, SyncMilestoneGQL} from './milestones.graphql';
@@ -17,6 +17,7 @@ export class MilestonesComponent implements OnInit {
   ui = UI;
   durationFormat = DurationFormat;
   features = TableFeatures;
+  milestoneProblem = MilestoneProblem;
   progress = {sync: false};
 
   @ViewChild('table')
