@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {User} from 'src/models/user';
-import {Team} from 'src/models/team';
-import {UI} from 'junte-ui';
-import {ArraySerializer, deserialize, ModelSerializer, serialize} from 'serialize-ts';
-import {Project} from '../../../../../../models/project';
-import {MergeRequestState} from '../../../../../../models/merge-request';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from 'src/models/user';
+import { Team } from 'src/models/team';
+import { UI } from 'junte-ui';
+import { ArraySerializer, deserialize, ModelSerializer, serialize } from 'serialize-ts';
+import { Project } from '../../../../../../models/project';
+import { MergeRequestState } from '../../../../../../models/merge-request';
 
 @Component({
   selector: 'app-team-merge-requests-list',

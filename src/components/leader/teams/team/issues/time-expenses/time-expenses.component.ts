@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Team} from '../../../../../../models/team';
-import {User} from '../../../../../../models/user';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Team } from '../../../../../../models/team';
+import { User } from '../../../../../../models/user';
 
 @Component({
   selector: 'app-team-time-expenses-component',

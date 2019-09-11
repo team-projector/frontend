@@ -1,23 +1,23 @@
-import {Component, OnInit} from '@angular/core';
-import {UI} from 'junte-ui';
-import {ActivatedRoute, Router} from '@angular/router';
-import {format} from 'date-fns';
-import {distinctUntilChanged, map, tap} from 'rxjs/operators';
-import {Team} from 'src/models/team';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssuesFilter, IssuesSummary} from '../../../../models/issue';
-import {FirstSummaryGQL, SecondSummaryGQL} from './team.graphql';
-import {R} from 'apollo-angular/types';
-import {DurationFormat} from '../../../../pipes/date';
-import {User} from '../../../../models/user';
-import {Project} from '../../../../models/project';
-import {combineLatest} from 'rxjs';
-import {METRIC_TYPE} from 'src/components/metrics-type/consts';
-import {MetricType} from 'src/components/leader/teams/team/calendar/team-calendar.component';
-import {MergeRequestSummary} from '../../../../models/merge-request';
-import {TimeExpensesSummary} from '../../../../models/spent-time';
-import {MilestoneProblem} from '../../../../models/milestone';
+import { Component, OnInit } from '@angular/core';
+import { UI } from 'junte-ui';
+import { ActivatedRoute, Router } from '@angular/router';
+import { format } from 'date-fns';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { Team } from 'src/models/team';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { IssuesFilter, IssuesSummary } from '../../../../models/issue';
+import { FirstSummaryGQL, SecondSummaryGQL } from './team.graphql';
+import { R } from 'apollo-angular/types';
+import { DurationFormat } from '../../../../pipes/date';
+import { User } from '../../../../models/user';
+import { Project } from '../../../../models/project';
+import { combineLatest } from 'rxjs';
+import { METRIC_TYPE } from 'src/components/metrics-type/consts';
+import { MetricType } from 'src/components/leader/teams/team/calendar/team-calendar.component';
+import { MergeRequestSummary } from '../../../../models/merge-request';
+import { TimeExpensesSummary } from '../../../../models/spent-time';
+import { MilestoneProblem } from '../../../../models/milestone';
 
 @Component({
   selector: 'app-leader-team',
@@ -69,7 +69,7 @@ export class TeamComponent implements OnInit {
           state.due_date = format(dueDate, 'MM-DD-YYYY');
         }
         if (!!project) {
-          state.project = project;
+          state.project = project.id || project;
         }
         this.router.navigate([state, 'issues'],
           {relativeTo: this.route});

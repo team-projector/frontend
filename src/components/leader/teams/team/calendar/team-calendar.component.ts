@@ -2,13 +2,11 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { Team, TeamMember } from 'src/models/team';
 import { UI } from 'junte-ui';
-import { addDays, addWeeks, endOfDay, endOfWeek, format, isEqual, isFuture, isPast, startOfDay, startOfWeek, subWeeks } from 'date-fns';
+import { addDays, addWeeks, endOfWeek, getDate, startOfDay, startOfWeek, subWeeks } from 'date-fns';
 import { distinctUntilChanged, filter as filtering, finalize, map } from 'rxjs/operators';
 import { BehaviorSubject, combineLatest, zip } from 'rxjs';
 import { MetricsGroup } from 'src/models/metrics';
 import { DurationFormat } from 'src/pipes/date';
-import { Router } from '@angular/router';
-import { isUndefined } from 'util';
 import { User, UserProblem } from 'src/models/user';
 import { equals } from '../../../../../utils/equals';
 import { deserialize, serialize } from 'serialize-ts/dist';
@@ -16,9 +14,9 @@ import { PagingTeamMembers } from '../../../../../models/team';
 import { TeamMetricsFilter, TeamProgressMetrics, UserProgressMetrics } from '../../../../../models/metrics';
 import { CalendarMembersGQL, CalendarMetricsGQL } from './team-calendar.graphql';
 import { R } from 'apollo-angular/types';
-import { METRIC_TYPE } from 'src/components/metrics-type/consts';
 
 const DAYS_IN_WEEK = 7;
+const DAYS_WEEK = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 const L = 'DD/MM/YYYY';
 
 export enum MetricType {
@@ -59,21 +57,19 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   userProblem = UserProblem;
   subWeeks = subWeeks;
   addWeeks = addWeeks;
-  isEqual = isEqual;
-  isPast = isPast;
-  isFuture = isFuture;
-  format = format;
-  endOfDay = endOfDay;
+  getDate = getDate;
   formatDate = L;
   durationFormat = DurationFormat;
   metricType = MetricType;
   today = startOfDay(new Date());
+  daysOfWeek = DAYS_WEEK;
 
   private team$ = new BehaviorSubject<Team>(null);
   private start$ = new BehaviorSubject<Date>(null);
   private _date: Date;
 
   days: Date[] = [];
+  members: TeamMember[] = [];
   metrics: Metric;
   loading: boolean;
 
@@ -84,8 +80,6 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
     dueDate: this.dueDate,
     user: this.user
   });
-
-  members: TeamMember[] = [];
 
   @Input()
   metric: MetricType;
@@ -120,15 +114,14 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   constructor(private calendarMember: CalendarMembersGQL,
               private calendarMetrics: CalendarMetricsGQL,
-              private fb: FormBuilder,
-              public router: Router) {
-    this.team$.pipe(filtering(t => !!t))
-      .subscribe(() => this.loadMembers());
-
-    this.date = new Date();
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {
+    this.date = new Date();
+    this.team$.pipe(filtering(t => !!t))
+      .subscribe(() => this.loadMembers());
+
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(f => this.onChange(f));
 
@@ -166,8 +159,10 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   private loadMembers() {
     this.loading = true;
     this.calendarMember.fetch({team: this.team.id} as R)
-      .pipe(map(({data: {team: {members}}}) =>
-        deserialize(members, PagingTeamMembers)), finalize(() => this.loading = false))
+      .pipe(
+        map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers)),
+        finalize(() => this.loading = false)
+      )
       .subscribe(teams => this.members = teams.results);
   }
 
