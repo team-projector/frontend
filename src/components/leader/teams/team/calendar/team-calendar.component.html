@@ -21,40 +21,10 @@
     <th gutter></th>
     <th>Developer</th>
     <th></th>
-    <th day (click)="form.patchValue({user: null, dueDate: days[0]})"
-        [attr.today]="isEqual(today, days[0])"
-        [attr.active]="isEqual(dueDate.value, days[0])">
-      Mo {{days[0] | getDate}}
-    </th>
-    <th day (click)="form.patchValue({user: null, dueDate: days[1]})"
-        [attr.today]="isEqual(today, days[1])"
-        [attr.active]="isEqual(dueDate.value, days[1])">
-      Tu {{days[1] | getDate}}
-    </th>
-    <th day (click)="form.patchValue({user: null, dueDate: days[2]})"
-        [attr.today]="isEqual(today, days[2])"
-        [attr.active]="isEqual(dueDate.value, days[2])">
-      We {{days[2] | getDate}}
-    </th>
-    <th day (click)="form.patchValue({user: null, dueDate: days[3]})"
-        [attr.today]="isEqual(today, days[3])"
-        [attr.active]="isEqual(dueDate.value, days[3])">
-      Th {{days[3] | getDate}}
-    </th>
-    <th day (click)="form.patchValue({user: null, dueDate: days[4]})"
-        [attr.today]="isEqual(today, days[4])"
-        [attr.active]="isEqual(dueDate.value, days[4])">
-      Fr {{days[4] | getDate}}
-    </th>
-    <th day (click)="form.patchValue({user: null, dueDate: days[5]})"
-        [attr.today]="isEqual(today, days[5])"
-        [attr.active]="isEqual(dueDate.value, days[5])">
-      Sa {{days[5] | getDate}}
-    </th>
-    <th day (click)="form.patchValue({user: null, dueDate: days[6]})"
-        [attr.today]="isEqual(today, days[6])"
-        [attr.active]="isEqual(dueDate.value, days[6])">
-      Su {{days[6] | getDate}}
+    <th *ngFor="let day of daysOfWeek; let i = index" day (click)="form.patchValue({user: null, dueDate: days[i]})"
+        [attr.today]="(today | isEqualDate: days[i])"
+        [attr.active]="(dueDate.value | isEqualDate: days[i])">
+      <span i18n>{{day}}</span> {{days[i] | getDate}}
     </th>
     <th name-metric>Est</th>
     <th name-metric>Sp</th>
@@ -92,15 +62,15 @@
       </td>
       <td day *ngFor="let day of days"
           (click)="form.patchValue({user: member.user, dueDate: day})"
-          [attr.active]="isEqual(dueDate.value, day) && (user.value?.id === member.user.id)"
-          [attr.active-day]="isEqual(dueDate.value, day)">
-        <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric, date: endOfDay(day),
-              metric: metrics?.days?.get(member.user.id)?.get(format(day, formatDate))}">
+          [attr.active]="(dueDate.value | isEqualDate: day) && (user.value?.id === member.user.id)"
+          [attr.active-day]="(dueDate.value | isEqualDate: day)">
+        <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric, date: (day | endOfDay),
+              metric: metrics?.days?.get(member.user.id)?.get((day | format: formatDate))}">
         </ng-container>
       </td>
 
       <ng-container
-        *ngTemplateOutlet="weekMetricTemplate; context: {metric: metrics?.weeks?.get(member.user.id)?.get(format(start, formatDate))}">
+        *ngTemplateOutlet="weekMetricTemplate; context: {metric: metrics?.weeks?.get(member.user.id)?.get((start | format: formatDate))}">
       </ng-container>
       <td gutter></td>
     </tr>
@@ -149,7 +119,7 @@
       </jnt-circle-bar>
     </ng-container>
     <ng-container *ngSwitchCase="metricType.estimate">
-      <jnt-circle-bar *ngIf="isFuture(date)" circle>
+      <jnt-circle-bar *ngIf="(date | isFuture)" circle>
         <ng-template #content>{{metric.timeEstimate | duration:durationFormat.short}}</ng-template>
         <jnt-bar-indicator-group>
           <jnt-bar-indicator [color]="ui.colors.red"
@@ -159,7 +129,7 @@
       </jnt-circle-bar>
     </ng-container>
     <ng-container *ngSwitchCase="metricType.remains">
-      <jnt-circle-bar *ngIf="isFuture(date)" circle>
+      <jnt-circle-bar *ngIf="(date | isFuture)" circle>
         <ng-template #content>{{metric.timeRemains | duration:durationFormat.short}}</ng-template>
         <jnt-bar-indicator-group>
           <jnt-bar-indicator [color]="ui.colors.yellow"
@@ -179,7 +149,7 @@
       </jnt-circle-bar>
     </ng-container>
     <ng-container *ngSwitchDefault>
-      <ng-container *ngIf="isPast(date); else futureMetrics">
+      <ng-container *ngIf="(date | isPast); else futureMetrics">
         <jnt-circle-bar circle>
           <jnt-bar-indicator-group>
             <jnt-bar-indicator [color]="ui.colors.green"

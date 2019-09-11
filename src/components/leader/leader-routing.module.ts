@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {LeaderComponent} from 'src/components/leader/leader.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { LeaderComponent } from 'src/components/leader/leader.component';
 
 const routes: Routes = [
   {
