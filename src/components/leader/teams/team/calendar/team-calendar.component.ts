@@ -10,7 +10,7 @@ import { DurationFormat } from 'src/pipes/date';
 import { Router } from '@angular/router';
 import { isUndefined } from 'util';
 import { User, UserProblem } from 'src/models/user';
-import { equals } from '../../../../utils/equals';
+import { equals } from '../../../../../utils/equals';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { PagingTeamMembers } from '../../../../../models/team';
 import { TeamMetricsFilter, TeamProgressMetrics, UserProgressMetrics } from '../../../../../models/metrics';
@@ -181,7 +181,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: UserFilter) {
-    if (!isUndefined(value)) {
+    if (value !== undefined) {
       this.form.patchValue({
         user: value.user, dueDate: value.dueDate
       }, {emitEvent: false});

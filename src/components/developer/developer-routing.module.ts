@@ -1,6 +1,6 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {DeveloperComponent} from 'src/components/developer/developer.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { DeveloperComponent } from 'src/components/developer/developer.component';
 
 const routes: Routes = [
   {

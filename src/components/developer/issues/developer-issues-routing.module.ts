@@ -13,14 +13,17 @@ const routes: Routes = [
   {
     path: '',
     component: DeveloperIssuesComponent,
-    resolve: {user: MeUserResolver, dueDate: DueDateResolver},
+    resolve: {
+      user: MeUserResolver,
+      dueDate: DueDateResolver,
+      project: ProjectResolver
+    },
     children: [
       {
         path: '',
         data: {breadcrumb: 'Issues'},
         component: IssuesListComponent,
         resolve: {
-          project: ProjectResolver,
           type: IssuesTypeResolver
         }
       },

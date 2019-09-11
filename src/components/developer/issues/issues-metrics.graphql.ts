@@ -31,7 +31,33 @@ export class IssuesSummaryGQL extends Query<{ issues, mergeRequests, spentTimes 
     query IssuesSummary($user: ID, $dueDate: Date) {
       issues: issuesSummary(user: $user, dueDate: $dueDate, state: "opened") {
         count
-        problemsCount
+        problemsCount,
+        projects {
+          project {
+            id
+            title
+            fullTitle
+            glUrl
+            milestones(active: true) {
+              edges {
+                node {
+                  title
+                  dueDate
+                  glUrl
+                  problems
+                }
+              }
+            }
+            group {
+              title
+            }
+          }
+          issues {
+            remains
+            percentage
+            openedCount
+          }
+        }
       }
       mergeRequests: mergeRequestsSummary(user: $user, state: "opened") {
         count

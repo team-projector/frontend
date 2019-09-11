@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { format, isFuture, isToday } from 'date-fns';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { format } from 'date-fns';
+import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
 import { UserProgressMetrics } from 'src/models/metrics';
@@ -35,13 +35,19 @@ export class DeveloperIssuesComponent implements OnInit {
   ui = UI;
   durationFormat = DurationFormat;
   metricType = MetricType;
-  isFuture = isFuture;
-  isToday = isToday;
+  colors = [
+    UI.colors.purple,
+    UI.colors.red,
+    UI.colors.green,
+    UI.colors.yellow,
+    UI.colors.teal,
+    UI.colors.orange,
+    UI.colors.purpleLight
+  ];
 
   user$ = new BehaviorSubject<User>(null);
   period$ = new BehaviorSubject<Period>(null);
 
-  format = format;
   formatDate = 'DD/MM/YYYY';
 
   summary: {
@@ -91,8 +97,9 @@ export class DeveloperIssuesComponent implements OnInit {
         }
 
         if (!!filter.project) {
-          state.project = filter.project;
+          state.project = filter.project.id || filter.project;
         }
+
         this.router.navigate([state], {relativeTo: this.route});
       });
 
@@ -104,8 +111,8 @@ export class DeveloperIssuesComponent implements OnInit {
       const filter = new IssuesFilter({
         user: user.id,
         dueDate: dueDate,
-        project: project
-      });
+        project: !!project ? project.id : null
+    });
 
       this.issuesSummary.fetch(serialize(filter) as R)
         .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({

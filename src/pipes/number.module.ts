@@ -1,5 +1,5 @@
-import {NgModule} from '@angular/core';
-import {PercentagePipe} from './number';
+import { NgModule } from '@angular/core';
+import { PercentagePipe } from './number';
 
 @NgModule({
   declarations: [
