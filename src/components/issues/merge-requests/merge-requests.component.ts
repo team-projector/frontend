@@ -21,6 +21,11 @@ export enum ViewType {
 })
 export class MergeRequestsComponent implements OnInit {
 
+  private team$ = new BehaviorSubject<string>(null);
+  private user$ = new BehaviorSubject<string>(null);
+  private project$ = new BehaviorSubject<string>(null);
+  private state$ = new BehaviorSubject<MergeRequestState>(MergeRequestState.opened);
+
   ui = UI;
   mergeRequestState = MergeRequestState;
   viewType = ViewType;
@@ -32,11 +37,6 @@ export class MergeRequestsComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     state: this.stateControl
   });
-
-  private team$ = new BehaviorSubject<string>(null);
-  private user$ = new BehaviorSubject<string>(null);
-  private project$ = new BehaviorSubject<string>(null);
-  private state$ = new BehaviorSubject<MergeRequestState>(MergeRequestState.opened);
 
   @Input()
   view = ViewType.default;

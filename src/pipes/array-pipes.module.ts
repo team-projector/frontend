@@ -1,5 +1,5 @@
-import {NgModule} from '@angular/core';
-import {IncludesPipe, MockArrayPipe} from './array';
+import { NgModule } from '@angular/core';
+import { IncludesPipe, MockArrayPipe } from './array';
 
 @NgModule({
   declarations: [

@@ -1,5 +1,5 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {Label, StandardLabel} from '../../models/label';
+import { Pipe, PipeTransform } from '@angular/core';
+import { Label, StandardLabel } from '../../models/label';
 
 @Pipe({name: 'labels'})
 export class LabelsPipe implements PipeTransform {

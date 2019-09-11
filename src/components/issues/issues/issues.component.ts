@@ -1,14 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {PLATFORM_DELAY} from 'src/consts';
-import {BehaviorSubject, combineLatest} from 'rxjs';
-import {debounceTime, distinctUntilChanged, finalize, map} from 'rxjs/operators';
-import {DefaultSearchFilter, TableComponent, TableFeatures, UI} from 'junte-ui';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues} from '../../../models/issue';
-import {IssuesGQL, IssuesSummaryGQL, SyncIssueGQL} from './issues.graphql';
-import {R} from 'apollo-angular/types';
-import {StandardLabel} from '../../../models/label';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { PLATFORM_DELAY } from 'src/consts';
+import { BehaviorSubject, combineLatest } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues } from '../../../models/issue';
+import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
+import { R } from 'apollo-angular/types';
+import { StandardLabel } from '../../../models/label';
+import { ActivatedRoute } from '@angular/router';
+import { format } from 'date-fns';
 
 export enum ViewType {
   default,
@@ -21,6 +23,12 @@ export enum ViewType {
   styleUrls: ['./issues.component.scss']
 })
 export class IssuesComponent implements OnInit {
+
+  private team$ = new BehaviorSubject<string>(null);
+  private user$ = new BehaviorSubject<string>(null);
+  private project$ = new BehaviorSubject<string>(null);
+  private dueDate$ = new BehaviorSubject<Date>(null);
+  private type$ = new BehaviorSubject<IssuesType>(IssuesType.opened);
 
   ui = UI;
   issuesState = IssueState;
@@ -38,12 +46,6 @@ export class IssuesComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     type: this.typeControl
   });
-
-  private team$ = new BehaviorSubject<string>(null);
-  private user$ = new BehaviorSubject<string>(null);
-  private project$ = new BehaviorSubject<string>(null);
-  private dueDate$ = new BehaviorSubject<Date>(null);
-  private type$ = new BehaviorSubject<IssuesType>(IssuesType.opened);
 
   @Input()
   view = ViewType.default;
@@ -104,7 +106,8 @@ export class IssuesComponent implements OnInit {
   constructor(private issuesGQL: IssuesGQL,
               private issuesSummaryGQL: IssuesSummaryGQL,
               private syncIssueGQL: SyncIssueGQL,
-              private formBuilder: FormBuilder) {
+              private formBuilder: FormBuilder,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -119,7 +122,7 @@ export class IssuesComponent implements OnInit {
         .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)));
     };
 
-    combineLatest(this.team$, this.user$, this.project$, this.dueDate$, this.type$)
+    combineLatest(this.team$, this.user$, this.project$, this.dueDate$, this.type$, this.route.params)
       .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged())
       .subscribe(([team, user, project, dueDate, type]) => {
         this.filter.team = team;
@@ -138,9 +141,15 @@ export class IssuesComponent implements OnInit {
     this.form.valueChanges
       .pipe(distinctUntilChanged())
       .subscribe(({type}) => {
-        const state: { type? } = {};
+        const state: { type?, due_date?, project? } = {};
         if (type !== IssuesType.opened) {
           state.type = type;
+        }
+        if (!!this.filter.dueDate) {
+          state.due_date = format(this.filter.dueDate, 'YYYY-MM-DD');
+        }
+        if (!!this.filter.project) {
+          state.project = this.filter.project;
         }
         this.filtered.emit(state);
       });

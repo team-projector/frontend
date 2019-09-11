@@ -1,12 +1,10 @@
-import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
-import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
-import {User} from '../models/user';
-import {deserialize} from 'serialize-ts/dist';
-import {UserGQL} from './user.graphql';
-import {ProjectGQL} from './project.graphql';
-import {Project} from '../models/project';
+import { Injectable } from '@angular/core';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { deserialize } from 'serialize-ts/dist';
+import { ProjectGQL } from './project.graphql';
+import { Project } from '../models/project';
 
 @Injectable()
 export class ProjectResolver implements Resolve<Observable<Project>> {

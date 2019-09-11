@@ -33,7 +33,7 @@ export class TeamIssuesListComponent implements OnInit {
         [team, user, project, dueDate, type]);
   }
 
-  filtered(state: { type? }) {
+  filtered(state: { type?, due_date?, project? }) {
     this.router.navigate([state],
       {relativeTo: this.route});
   }

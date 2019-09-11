@@ -1,7 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Salary} from 'src/models/salary';
-import {UI} from 'junte-ui';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Salary } from 'src/models/salary';
+import { UI } from 'junte-ui';
 
 @Component({
   selector: 'app-salary-detail',
@@ -12,7 +12,6 @@ import {UI} from 'junte-ui';
 export class SalaryDetailComponent implements OnInit {
 
   ui = UI;
-
   salary: Salary;
 
   constructor(private route: ActivatedRoute) {

@@ -1,5 +1,5 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {format as fnsFormat, getDate, isSameMonth} from 'date-fns';
+import { Pipe, PipeTransform } from '@angular/core';
+import { format as fnsFormat, getDate, isFuture, isSameMonth, isToday } from 'date-fns';
 
 export enum DurationFormat {
   full = 'full',
@@ -81,4 +81,27 @@ export class FromNowPipe implements PipeTransform {
     }
   }
 
+}
+
+@Pipe({name: 'isFuture'})
+export class IsFuturePipe implements PipeTransform {
+  transform(date: Date | string | number): boolean {
+    return isFuture(date);
+  }
+}
+
+@Pipe({name: 'isToday'})
+export class IsTodayPipe implements PipeTransform {
+  transform(date: Date | string | number): boolean {
+    return isToday(date);
+  }
+}
+
+@Pipe({name: 'format'})
+export class FormatPipe implements PipeTransform {
+  transform(date: Date | string | number,
+            format?: string,
+            options?: { locale?: Object }): string {
+    return fnsFormat(date, format, options);
+  }
 }

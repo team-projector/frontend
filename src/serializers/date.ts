@@ -1,5 +1,5 @@
-import {Serializer} from 'serialize-ts';
-import {format} from 'date-fns';
+import { Serializer } from 'serialize-ts';
+import { format } from 'date-fns';
 
 export class DateSerializer implements Serializer<Date> {
   constructor(private f: string = null) {

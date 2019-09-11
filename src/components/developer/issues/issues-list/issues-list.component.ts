@@ -1,9 +1,9 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {User} from '../../../../models/user';
-import {ViewType} from '../../../issues/issues/issues.component';
-import {Project} from '../../../../models/project';
-import {IssuesType} from '../../../../models/issue';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { User } from '../../../../models/user';
+import { ViewType } from '../../../issues/issues/issues.component';
+import { Project } from '../../../../models/project';
+import { IssuesType } from '../../../../models/issue';
 
 @Component({
   selector: 'app-issues-list',

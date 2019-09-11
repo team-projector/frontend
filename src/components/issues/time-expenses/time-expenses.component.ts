@@ -17,14 +17,13 @@ import { R } from 'apollo-angular/types';
 })
 export class TimeExpensesComponent implements OnInit {
 
-  ui = UI;
-
-  issuesState = IssueState;
-
   private user$ = new BehaviorSubject<number>(null);
   private team$ = new BehaviorSubject<number>(null);
   private date$ = new BehaviorSubject<Date>(null);
   private salary$ = new BehaviorSubject<number>(null);
+
+  ui = UI;
+  issuesState = IssueState;
 
   @Input()
   set user(user: number) {

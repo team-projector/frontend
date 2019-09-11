@@ -1,4 +1,4 @@
-import {Constructor, deserialize, Serializer} from 'serialize-ts';
+import { Constructor, deserialize, Serializer } from 'serialize-ts';
 
 export class EdgesToPaging<T> implements Serializer<T> {
 

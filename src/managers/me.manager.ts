@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 import { Me } from '../models/user';
 import { BehaviorSubject } from 'rxjs';
-import { jsonEquals } from '../utils/object';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { MeManagerGQL } from './me-manager.graphql';
 import { AppConfig } from 'src/app-config';
+import { equals } from '../utils/equals';
 
 @Injectable()
 export class MeManager {
@@ -13,7 +13,7 @@ export class MeManager {
   user$: BehaviorSubject<Me> = new BehaviorSubject<Me>(null);
 
   set user(user: Me) {
-    if (!jsonEquals(this.user, user)) {
+    if (!equals(this.user, user)) {
       this.user$.next(user);
     }
   }
