@@ -6,6 +6,7 @@ import { AppConfig } from '../../app-config';
 import { MeManager } from '../../managers/me.manager';
 import { UserRole } from '../../models/user';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
+import { APPLICATION_READY } from '../../consts';
 
 
 enum Themes {
@@ -39,6 +40,7 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.postMessage(APPLICATION_READY, location.origin);
     this.themeControl.valueChanges.subscribe(theme => this.load(theme));
   }
 

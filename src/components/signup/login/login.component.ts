@@ -9,6 +9,7 @@ import { AccessToken } from 'src/models/access-token';
 import { AppConfig } from 'src/app-config';
 import { deserialize } from 'serialize-ts/dist';
 import { ApolloError } from 'apollo-client';
+import { APPLICATION_READY } from '../../../consts';
 
 @Component({
   selector: 'app-login',
@@ -35,6 +36,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    window.postMessage(APPLICATION_READY, location.origin);
     this.route.queryParams
       .pipe(filter(({code, state}) => !!code && !!state))
       .subscribe(({code, state}) => {
