@@ -7,7 +7,9 @@
 [state] {
   color: $success-color;
   &[doing] {
+    min-width: 18px;
     width: 18px;
+    min-height: 18px;
     height: 18px;
     border-radius: 50%;
     fill: $success-color;
