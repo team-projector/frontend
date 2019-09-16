@@ -8,6 +8,12 @@
   align-self: start;
 }
 
+[calendar] {
+  @media screen and (max-width: map_get($grid-breakpoints, wide)) {
+    margin-bottom: $gutter-normal;
+  }
+}
+
 [filter] {
   position: relative;
   display: flex;
@@ -86,7 +92,6 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  width: 45px;
   height: 45px;
 
   &[today='true'] {
