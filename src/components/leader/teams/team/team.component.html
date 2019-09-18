@@ -9,7 +9,7 @@
                            [team]="team"></app-team-calendar>
       </jnt-col>
       <jnt-col [mobile]="12" [wide]="5">
-        <jnt-chart formControlName="project" title="Opened project" metric="Hours" valueField="id">
+        <jnt-chart formControlName="project" title="Opened project" metric="Hours" valueField="id" [widthMark]="50">
           <jnt-chart-indicator *ngFor="let p of summary.first?.projects;let i = index"
                                [data]="p.project"
                                [value]="p.issues.percentage * 100"
