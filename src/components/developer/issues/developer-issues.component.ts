@@ -18,6 +18,7 @@ import { R } from 'apollo-angular/types';
 import { METRIC_TYPE } from 'src/components/metrics-type/consts';
 import { MergeRequestSummary } from 'src/models/merge-request';
 import { TimeExpensesSummary } from 'src/models/spent-time';
+import {MilestoneProblem} from '../../../models/milestone';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,
@@ -34,6 +35,7 @@ export class DeveloperIssuesComponent implements OnInit {
 
   ui = UI;
   durationFormat = DurationFormat;
+  milestoneProblem = MilestoneProblem;
   metricType = MetricType;
   colors = [
     UI.colors.purple,

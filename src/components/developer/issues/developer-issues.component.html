@@ -49,6 +49,22 @@
                                [value]="p.issues.percentage * 100"
                                [label]="p.issues.remains  | duration:durationFormat.short"
                                [color]="colors[i % colors.length]">
+            <ng-template #titleTemplate>
+              <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
+              {{p.project.title}}
+              <ul milestones>
+                <li *ngFor="let m of p.project.milestones">
+                  <jnt-stack [type]="ui.stack.type.horizontal"
+                             [gutter]="ui.stack.gutter.tiny"
+                             [align]="ui.flex.align.center">
+                    <jnt-link [source]="m.glUrl" [title]="m.title"
+                              target="_blank"></jnt-link>
+                    <jnt-label *ngIf="m.dueDate" [label]="m.dueDate | dueDate"
+                               [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.colors.red : ui.colors.gray500"></jnt-label>
+                  </jnt-stack>
+                </li>
+              </ul>
+            </ng-template>
           </jnt-chart-indicator>
         </jnt-chart>
       </jnt-col>

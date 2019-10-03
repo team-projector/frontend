@@ -16,6 +16,7 @@ import { MetricsTypeModule } from 'src/components/metrics-type/metrics-type.modu
 import { DeveloperMergeRequestsListComponent } from 'src/components/developer/issues/merge-requests-list/merge-requests-list.component';
 import { MergeRequestStateResolver } from 'src/resolvers/merge-request';
 import { CurrencyRublePipeModule } from 'src/pipes/currency-ruble.module';
+import {DueDateModule} from '../../due-date/due-date.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { CurrencyRublePipeModule } from 'src/pipes/currency-ruble.module';
     MetricsTypeModule,
     IssuesModule,
     NumberModule,
-    CurrencyRublePipeModule
+    CurrencyRublePipeModule,
+    DueDateModule
   ],
   providers: [
     MeUserResolver,

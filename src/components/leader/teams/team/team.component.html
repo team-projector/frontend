@@ -16,10 +16,8 @@
                                [label]="p.issues.remains  | duration:durationFormat.short"
                                [color]="colors[i % colors.length]">
             <ng-template #titleTemplate>
-              <div project>
-                <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
-                {{p.project.title}}
-              </div>
+              <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
+              {{p.project.title}}
               <ul milestones>
                 <li *ngFor="let m of p.project.milestones">
                   <jnt-stack [type]="ui.stack.type.horizontal"
