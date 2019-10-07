@@ -9,8 +9,8 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-image: url('/assets/images/login.jpg');
-  background-size: 100% auto;
+  background: url('/assets/images/login.jpg') no-repeat center;
+  background-size: cover;
 }
 
 [admin] {
