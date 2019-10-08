@@ -8,7 +8,7 @@
   align-self: start;
 }
 
-[calendar] {
+[block] {
   @media screen and (max-width: map_get($grid-breakpoints, wide)) {
     margin-bottom: $gutter-normal;
   }
@@ -93,6 +93,7 @@
   justify-content: center;
   flex-direction: column;
   height: 45px;
+  width: 45px;
 
   &[today='true'] {
     background-color: $success-color;
