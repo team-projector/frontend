@@ -124,5 +124,93 @@ export class MilestonesFilter implements SearchFilter {
       Object.assign(this, defs);
     }
   }
+}
 
+export enum MilestoneTicketTypes {
+  feature = 'feature',
+  improvements = 'improvements',
+  bugFixes = 'bug_fixes'
+}
+
+@model()
+export class MilestoneTicket {
+
+  @field()
+  id: number;
+
+  @field()
+  type: MilestoneTicketTypes;
+
+  @field()
+  title: string;
+
+  @field()
+  startDate: Date;
+
+  @field()
+  dueDate: Date;
+
+  @field()
+  url: string;
+
+  @field({mock: '{{> milestone_metrics}}'})
+  metrics: MilestoneMetrics;
+}
+
+@model()
+export class MilestoneTicketUpdate {
+
+  @field()
+  id: number;
+
+  @field()
+  type: MilestoneTicketTypes;
+
+  @field()
+  title: string;
+
+  @field()
+  startDate: Date;
+
+  @field()
+  dueDate: Date;
+
+  @field()
+  url: string;
+}
+
+@model()
+export class PagingMilestoneTickets implements Paging<MilestoneTicket> {
+
+  @field({mock: '{{int 3 10}}'})
+  count: number;
+
+  @field({
+    name: 'edges',
+    serializer: new ArraySerializer(new EdgesToPaging<MilestoneTicket>(MilestoneTicket)),
+    mock: '[{{#repeat 3 10}} {{> milestone_ticket}} {{/repeat}}]'
+  })
+  results: MilestoneTicket[];
+}
+
+@model()
+export class MilestoneTicketsFilter implements SearchFilter {
+
+  @field()
+  milestone: number;
+
+  @field()
+  orderBy?: string;
+
+  @field()
+  first?: number;
+
+  @field()
+  offset?: number;
+
+  constructor(defs: MilestoneTicketsFilter = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
 }

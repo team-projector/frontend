@@ -40,11 +40,11 @@
     "graphql-tag": "^2.10.0",
     "graphql-tools": "^4.0.5",
     "junte-angular": "~0.0.46",
-    "junte-ui": "0.0.276",
     "rxjs": "~6.5.3",
     "serialize-ts": "2.5.4",
     "tslib": "~1.10.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.9.1",
+    "junte-ui": "0.0.276"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.3",

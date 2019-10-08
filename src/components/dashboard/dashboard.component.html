@@ -1,4 +1,6 @@
-<jnt-app-layout>
+<jnt-modal #modal [backdrop]="backdrop"></jnt-modal>
+<jnt-popover #popover></jnt-popover>
+<jnt-app-layout #layout>
   <jnt-app-header>
     <ng-template #logo *ngIf="!!themeControl.value">
       <img [src]="'/assets/images/logo-' + themeControl.value + '.svg'" logo>
@@ -10,11 +12,13 @@
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.teamLeader)"
                        [link]="['/leader']" [matching]="ui.menu.matching.wildcard" title="Team Leader"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.projectManager)"
-                       [link]="['/manager']" [matching]="ui.menu.matching.wildcard" title="Project Manager"></jnt-menu-item>
+                       [link]="['/manager']" [matching]="ui.menu.matching.wildcard"
+                       title="Project Manager"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.customer)"
                        [link]="['/customer']" [matching]="ui.menu.matching.wildcard" title="Customer"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.shareholder)"
-                       [link]="['/shareholder']" [matching]="ui.menu.matching.wildcard" title="Shareholder"></jnt-menu-item>
+                       [link]="['/shareholder']" [matching]="ui.menu.matching.wildcard"
+                       title="Shareholder"></jnt-menu-item>
       </jnt-menu>
     </ng-template>
 

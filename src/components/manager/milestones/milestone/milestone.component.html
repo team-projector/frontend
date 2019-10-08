@@ -1,0 +1,36 @@
+<jnt-form [formGroup]="form">
+  <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.stack.gutter.big">
+    <jnt-stack [type]="ui.stack.type.horizontal">
+      <div filter [attr.active]="!!filter.value.ticket">
+        <ng-container *ngIf="filter.value.ticket;else noFilterUser">
+          {{filter.value.ticket.title}}
+          <jnt-button reset [scheme]="ui.schemes.secondary"
+                      [size]="ui.sizes.tiny"
+                      [icon]="ui.icons.font.close"
+                      (click)="filter.patchValue({ticket: null})"></jnt-button>
+        </ng-container>
+        <ng-template #noFilterUser>
+          <jnt-icon icon [icon]="ui.icons.font.project"></jnt-icon>
+          Tickets
+        </ng-template>
+      </div>
+
+      <div filter [attr.active]="!!team">
+        <ng-container *ngIf="!!team;else noFilterTeam">
+          <jnt-icon icon [icon]="ui.icons.font.team"></jnt-icon>
+          <div>{{team.title}}</div>
+          <jnt-button reset [scheme]="ui.schemes.secondary"
+                      [size]="ui.sizes.tiny"
+                      [icon]="ui.icons.font.close"
+                      (click)="team = null">
+          </jnt-button>
+        </ng-container>
+        <ng-template #noFilterTeam>
+          <jnt-icon icon [icon]="ui.icons.font.team"></jnt-icon>
+          Pick a team
+        </ng-template>
+      </div>
+    </jnt-stack>
+    <router-outlet></router-outlet>
+  </jnt-stack>
+</jnt-form>
