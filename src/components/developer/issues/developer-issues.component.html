@@ -3,7 +3,7 @@
     <app-metrics-type formControlName="metric" metrics></app-metrics-type>
     <jnt-row>
       <jnt-col [mobile]="12" [wide]="7">
-        <jnt-block [width]="ui.width.fluid" calendar>
+        <jnt-block [width]="ui.width.fluid" block>
           <jnt-calendar formControlName="dueDate" (updated)="period = $event">
             <jnt-week-metric i18n-title="@@est" title="Est"></jnt-week-metric>
             <jnt-week-metric i18n-title="@@spent" title="Spent"></jnt-week-metric>

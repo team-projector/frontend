@@ -1,12 +1,12 @@
 @import 'variables';
 
 :host {
-  display: block;
+  display: block
 }
 
 [project] {
   font-size: 0.75rem;
-  color: $gray-800;
+  color: $gray-color-800;
 }
 
 [user] {
@@ -15,7 +15,7 @@
 
 hr {
   width: 100%;
-  border: 1px solid $gray-400;
+  border: 1px solid $gray-color-400;
 }
 
 [logo] {
