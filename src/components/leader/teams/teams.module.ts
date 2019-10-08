@@ -13,15 +13,15 @@ import { OutletModule } from 'src/components/outlet/outlet.module';
 import { UserResolver } from 'src/resolvers/user';
 import { TeamCalendarComponent } from 'src/components/leader/teams/team/calendar/team-calendar.component';
 import { RouterModule } from '@angular/router';
-import { IssuesModule } from '../../issues/issues.module';
-import { DueDateResolver, IssuesTypeResolver } from '../../../resolvers/issue';
-import { ArrayPipesModule } from '../../../pipes/array-pipes.module';
-import { ProjectResolver } from '../../../resolvers/project';
+import { IssuesModule } from 'src/components/issues/issues.module';
+import { DueDateResolver, IssuesTypeResolver } from 'src/resolvers/issue';
+import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
+import { ProjectResolver } from 'src/resolvers/project';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MetricsTypeModule } from 'src/components/metrics-type/metrics-type.module';
 import { TeamMergeRequestsListComponent } from './team/issues/merge-requests/merge-requests.component';
-import { MergeRequestStateResolver } from '../../../resolvers/merge-request';
-import { DueDateModule } from '../../due-date/due-date.module';
+import { MergeRequestStateResolver } from 'src/resolvers/merge-request';
+import { DueDateModule } from 'src/components/due-date/due-date.module';
 
 @NgModule({
   imports: [

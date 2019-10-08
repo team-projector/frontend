@@ -1,0 +1,27 @@
+@import "variables";
+
+[filter] {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  color: $primary-text-light-color;
+  padding: $gutter-small $gutter-normal;
+  border: 1px dashed $secondary-dark-color;
+  border-radius: $corner-normal;
+  line-height: 1em;
+
+  &[active='true'] {
+    border-color: transparent;
+    background: $primary-light-color;
+    color: $white-color;
+    padding-right: $gutter-huge;
+    box-shadow: $shadow-normal;
+  }
+
+  [reset] {
+    position: absolute;
+    top: $gutter-small;
+    right: $gutter-small;
+  }
+}

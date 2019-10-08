@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UI } from 'junte-ui';
+import { ModalComponent, ModalService, PopoverComponent, PopoverService, UI } from 'junte-ui';
 import { AppConfig } from '../../app-config';
 import { MeManager } from '../../managers/me.manager';
 import { UserRole } from '../../models/user';
@@ -30,10 +30,16 @@ export class DashboardComponent implements OnInit {
     theme: this.themeControl
   });
 
+  @ViewChild('layout', {read: ElementRef, static: true}) backdrop;
+  @ViewChild('modal', {static: true}) modal: ModalComponent;
+  @ViewChild('popover', {static: true}) popover: PopoverComponent;
+
   @ViewChild(GitlabStatusComponent, {static: false})
   gitlabStatus: GitlabStatusComponent;
 
   constructor(@Inject(AppConfig) public config: AppConfig,
+              private modalService: ModalService,
+              private popoverService: PopoverService,
               private router: Router,
               private fb: FormBuilder,
               public me: MeManager) {
@@ -42,6 +48,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     window.postMessage(APPLICATION_READY, location.origin);
     this.themeControl.valueChanges.subscribe(theme => this.load(theme));
+    this.modalService.register(this.modal);
+    this.popoverService.register(this.popover);
   }
 
   logout() {

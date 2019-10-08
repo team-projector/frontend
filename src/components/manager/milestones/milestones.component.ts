@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {DefaultSearchFilter, TableComponent, TableFeatures, UI} from 'junte-ui';
-import {MilestoneProblem, PagingMilestones} from '../../../models/milestone';
-import {deserialize} from 'serialize-ts/dist';
-import {finalize, map} from 'rxjs/operators';
-import {AllMilestonesGQL, SyncMilestoneGQL} from './milestones.graphql';
-import {R} from 'apollo-angular/types';
-import {DurationFormat} from '../../../pipes/date';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { R } from 'apollo-angular/types';
+import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
+import { finalize, map } from 'rxjs/operators';
+import { deserialize } from 'serialize-ts/dist';
+import { MilestoneProblem, PagingMilestones } from 'src/models/milestone';
+import { DurationFormat } from 'src/pipes/date';
+import { AllMilestonesGQL, SyncMilestoneGQL } from './milestones.graphql';
 
 @Component({
   selector: 'app-manager-dashboard',
