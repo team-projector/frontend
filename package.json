@@ -44,7 +44,7 @@
     "serialize-ts": "2.5.4",
     "tslib": "~1.10.0",
     "zone.js": "~0.9.1",
-    "junte-ui": "0.0.276"
+    "junte-ui": "0.0.280"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.3",

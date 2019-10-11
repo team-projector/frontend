@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from 'junte-ui';
+import { EditTicketComponent } from 'src/components/manager/milestones/milestone/milestone-tickets/edit-ticket/edit-ticket.component';
 import { OutletModule } from 'src/components/outlet/outlet.module';
 import { CurrencyRublePipeModule } from 'src/pipes/currency-ruble.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
@@ -10,6 +11,8 @@ import { MilestoneResolver } from 'src/resolvers/milestone';
 import { ProjectResolver } from 'src/resolvers/project';
 import { TeamResolver } from 'src/resolvers/team';
 import { UserResolver } from 'src/resolvers/user';
+import { MilestoneIssuesComponent } from './milestone/milestone-issues/milestone-issues.component';
+import { MilestoneTicketsComponent } from './milestone/milestone-tickets/milestone-tickets.component';
 import { MilestoneComponent } from './milestone/milestone.component';
 import { MilestonesRoutingModule } from './milestones-routing.module';
 import { MilestonesComponent } from './milestones.component';
@@ -17,7 +20,10 @@ import { MilestonesComponent } from './milestones.component';
 @NgModule({
   declarations: [
     MilestonesComponent,
-    MilestoneComponent
+    MilestoneComponent,
+    MilestoneIssuesComponent,
+    MilestoneTicketsComponent,
+    EditTicketComponent
   ],
   imports: [
     CommonModule,
@@ -28,6 +34,7 @@ import { MilestonesComponent } from './milestones.component';
     CurrencyRublePipeModule,
     OutletModule
   ],
+  entryComponents: [EditTicketComponent],
   providers: [
     TeamResolver,
     MilestoneResolver,

@@ -36,9 +36,9 @@ export class GraphQLModule {
 
     const errorLink = onError(({graphQLErrors, networkError}: ErrorResponse) => {
       if (networkError) {
-        console.log(`[Network error]: ${networkError}`);
-        config.token = null;
-        router.navigate(['/signup/login']);
+        console.log('[Network error]: ', networkError);
+        // config.token = null;
+        // router.navigate(['/signup/login']);
       }
       if (graphQLErrors) {
         graphQLErrors.map(({message, locations, path}) =>

@@ -2,6 +2,7 @@ import { field, model } from '@junte/mocker-library';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { PrimitiveSerializer } from 'serialize-ts/dist';
+import { DATE_FORMAT } from 'src/consts';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { ProjectSerializer } from '../serializers/project';
@@ -128,8 +129,8 @@ export class MilestonesFilter implements SearchFilter {
 
 export enum MilestoneTicketTypes {
   feature = 'feature',
-  improvements = 'improvements',
-  bugFixes = 'bug_fixes'
+  improvement = 'improvement',
+  bugFixing = 'bug_fixing'
 }
 
 @model()
@@ -164,19 +165,26 @@ export class MilestoneTicketUpdate {
   id: number;
 
   @field()
+  milestone: number;
+
+  @field()
   type: MilestoneTicketTypes;
 
   @field()
   title: string;
 
-  @field()
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
   startDate: Date;
 
-  @field()
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
   dueDate: Date;
 
   @field()
   url: string;
+
+  constructor(update: MilestoneTicketUpdate) {
+    Object.assign(this, update);
+  }
 }
 
 @model()
