@@ -1,5 +1,9 @@
 <jnt-form [formGroup]="form">
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.stack.gutter.big">
+    <app-milestone-tickets tickets
+                           formControlName="filter"
+                           [milestone]="milestone">
+    </app-milestone-tickets>
     <jnt-stack [type]="ui.stack.type.horizontal">
       <div filter [attr.active]="!!filter.value.ticket">
         <ng-container *ngIf="filter.value.ticket;else noFilterUser">

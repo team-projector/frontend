@@ -1,0 +1,63 @@
+<jnt-form [formGroup]="form" jntValidation (submitted)="save()" [footerForm]="footerForm">
+  <jnt-form-item>
+    <jnt-form-control name="type">
+      <jnt-switcher formControlName="type">
+        <jnt-switcher-option [value]="milestoneTicketTypes.feature" label="Feature"></jnt-switcher-option>
+        <jnt-switcher-option [value]="milestoneTicketTypes.improvement" label="Improvement"></jnt-switcher-option>
+        <jnt-switcher-option [value]="milestoneTicketTypes.bugFixing" label="Bug fixing"></jnt-switcher-option>
+      </jnt-switcher>
+      <jnt-form-message [type]="ui.form.validators.typeError.required">
+        This field is required
+      </jnt-form-message>
+    </jnt-form-control>
+  </jnt-form-item>
+
+  <jnt-form-item>
+    <jnt-form-label for="title">Title</jnt-form-label>
+    <jnt-form-control name="title">
+      <jnt-input placeholder="Title" formControlName="title"></jnt-input>
+      <jnt-form-message [type]="ui.form.validators.typeError.required">
+        This field is required
+      </jnt-form-message>
+    </jnt-form-control>
+  </jnt-form-item>
+
+  <jnt-stack [type]="ui.stack.type.horizontal">
+    <jnt-form-item>
+      <jnt-form-label for="startDate">Start date</jnt-form-label>
+      <jnt-form-control name="startDate">
+        <jnt-date-picker placeholder="Start date" formControlName="startDate"></jnt-date-picker>
+        <jnt-form-message [type]="ui.form.validators.typeError.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+
+    <jnt-form-item>
+      <jnt-form-label for="dueDate">Due date</jnt-form-label>
+      <jnt-form-control name="dueDate">
+        <jnt-date-picker placeholder="Due date" formControlName="dueDate"></jnt-date-picker>
+        <jnt-form-message [type]="ui.form.validators.typeError.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+  </jnt-stack>
+
+  <jnt-form-item>
+    <jnt-form-label for="url">Url</jnt-form-label>
+    <jnt-form-control name="url">
+      <jnt-input placeholder="Url" formControlName="url"></jnt-input>
+      <jnt-form-message [type]="ui.form.validators.typeError.required">
+        This field is required
+      </jnt-form-message>
+    </jnt-form-control>
+  </jnt-form-item>
+
+  <ng-template #footerForm>
+    <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.center" footer>
+      <jnt-button text="Save" [type]="ui.form.button.type.submit"></jnt-button>
+      <jnt-button text="Cancel" (click)="canceled.emit()" [scheme]="ui.schemes.secondary"></jnt-button>
+    </jnt-stack>
+  </ng-template>
+</jnt-form>
