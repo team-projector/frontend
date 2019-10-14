@@ -1,16 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { PLATFORM_DELAY } from 'src/consts';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute } from '@angular/router';
+import { R } from 'apollo-angular/types';
+import { format } from 'date-fns';
+import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs/operators';
-import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues } from '../../../models/issue';
+import { PLATFORM_DELAY } from 'src/consts';
+import { IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues } from 'src/models/issue';
+import { StandardLabel } from 'src/models/label';
 import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
-import { R } from 'apollo-angular/types';
-import { StandardLabel } from '../../../models/label';
-import { ActivatedRoute } from '@angular/router';
-import { format } from 'date-fns';
 
 export enum ViewType {
   default,
@@ -27,6 +27,8 @@ export class IssuesComponent implements OnInit {
   private team$ = new BehaviorSubject<string>(null);
   private user$ = new BehaviorSubject<string>(null);
   private project$ = new BehaviorSubject<string>(null);
+  private milestone$ = new BehaviorSubject<string>(null);
+  private ticket$ = new BehaviorSubject<string>(null);
   private dueDate$ = new BehaviorSubject<Date>(null);
   private type$ = new BehaviorSubject<IssuesType>(IssuesType.opened);
 
@@ -78,6 +80,24 @@ export class IssuesComponent implements OnInit {
   }
 
   @Input()
+  set milestone(milestone: string) {
+    this.milestone$.next(milestone);
+  }
+
+  get milestone() {
+    return this.milestone$.getValue();
+  }
+
+  @Input()
+  set ticket(ticket: string) {
+    this.ticket$.next(ticket);
+  }
+
+  get ticket() {
+    return this.ticket$.getValue();
+  }
+
+  @Input()
   set dueDate(dueDate: Date) {
     this.dueDate$.next(dueDate);
   }
@@ -122,12 +142,15 @@ export class IssuesComponent implements OnInit {
         .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)));
     };
 
-    combineLatest(this.team$, this.user$, this.project$, this.dueDate$, this.type$, this.route.params)
+    combineLatest(this.team$, this.user$, this.project$, this.milestone$,
+      this.ticket$, this.dueDate$, this.type$, this.route.params)
       .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged())
-      .subscribe(([team, user, project, dueDate, type]) => {
+      .subscribe(([team, user, project, milestone, ticket, dueDate, type]) => {
         this.filter.team = team;
         this.filter.user = user;
         this.filter.project = project;
+        this.filter.milestone = milestone;
+        this.filter.ticket = ticket;
         this.filter.dueDate = dueDate;
         this.filter.state = type === IssuesType.opened ? IssueState.opened
           : (type === IssuesType.closed ? IssueState.closed : null);
@@ -138,10 +161,9 @@ export class IssuesComponent implements OnInit {
         this.table.load();
       });
 
-    this.form.valueChanges
-      .pipe(distinctUntilChanged())
+    this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(({type}) => {
-        const state: { type?, due_date?, project? } = {};
+        const state: { type?, due_date?, project?, milestone?, ticket? } = {};
         if (type !== IssuesType.opened) {
           state.type = type;
         }
@@ -150,6 +172,12 @@ export class IssuesComponent implements OnInit {
         }
         if (!!this.filter.project) {
           state.project = this.filter.project;
+        }
+        if (!!this.filter.milestone) {
+          state.milestone = this.filter.milestone;
+        }
+        if (!!this.filter.ticket) {
+          state.ticket = this.filter.ticket;
         }
         this.filtered.emit(state);
       });

@@ -149,6 +149,12 @@ export class IssuesFilter implements SearchFilter {
   @field()
   project?: string;
 
+  @field()
+  milestone?: string;
+
+  @field()
+  ticket?: string;
+
   @field({serializer: new DateSerializer(DATE_FORMAT)})
   dueDate?: Date;
 

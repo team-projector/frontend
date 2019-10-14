@@ -7,11 +7,11 @@ import { filter as filtering, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { EditTicketComponent } from 'src/components/manager/milestones/milestone/milestone-tickets/edit-ticket/edit-ticket.component';
 import { AllTicketsGQL } from 'src/components/manager/milestones/milestone/milestone-tickets/milestone-tickets.graphql';
-import { Milestone, MilestoneTicket, MilestoneTicketsFilter, PagingMilestoneTickets } from 'src/models/milestone';
+import { Milestone, Ticket, MilestoneTicketsFilter, PagingMilestoneTickets } from 'src/models/milestone';
 import { equals } from 'src/utils/equals';
 
 class TicketFilter {
-  ticket: MilestoneTicket;
+  ticket: Ticket;
 }
 
 @Component({
@@ -35,8 +35,8 @@ export class MilestoneTicketsComponent implements OnInit {
 
   ui = UI;
   loading = false;
-  tickets: MilestoneTicket[] = [];
-  ticket: MilestoneTicket;
+  tickets: Ticket[] = [];
+  ticket: Ticket;
 
   @ViewChild('content', {static: false})
   content: TemplateRef<any>;
@@ -131,12 +131,11 @@ export class MilestoneTicketsComponent implements OnInit {
     this.open('Add ticket', 'add');
   }
 
-  edit(ticket: MilestoneTicket) {
-    console.log(ticket);
+  edit(ticket: Ticket) {
     this.open('Edit ticket', 'edit', ticket);
   }
 
-  open(title: string, icon: string, ticket: MilestoneTicket = null) {
+  open(title: string, icon: string, ticket: Ticket = null) {
     const component = this.cfr.resolveComponentFactory(EditTicketComponent).create(this.injector);
     component.instance.canceled.subscribe(() => this.modalService.close());
     component.instance.saved.subscribe(() => {

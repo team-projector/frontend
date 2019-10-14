@@ -22,8 +22,8 @@ export class SyncIssueGQL extends Mutation<{ syncIssue: { issue: { id } } }> {
 })
 export class IssuesGQL extends Query<{ issues }> {
   document = gql`
-    query Issues ($team: ID, $user: ID, $project: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int, $q: String) {
-      issues: allIssues(team: $team, user: $user, project: $project, dueDate: $dueDate, state: $state, problems: $problems, orderBy: $orderBy, offset: $offset, first: $first, q: $q) {
+    query Issues ($milestone: ID, $ticket: ID, $team: ID, $user: ID, $project: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int, $q: String) {
+      issues: allIssues(milestone: $milestone, ticket: $ticket, team: $team, user: $user, project: $project, dueDate: $dueDate, state: $state, problems: $problems, orderBy: $orderBy, offset: $offset, first: $first, q: $q) {
         count
         edges {
           node {
@@ -81,12 +81,12 @@ export class IssuesGQL extends Query<{ issues }> {
 })
 export class IssuesSummaryGQL extends Query<{ summary }> {
   document = gql`
-    query IssuesSummary($team: ID, $user: ID, $project: ID, $dueDate: Date) {
-  summary: issuesSummary(team: $team, user: $user, project: $project, dueDate: $dueDate) {
-    count
-    closedCount
-    openedCount
-    problemsCount
-  }
-}`;
+    query IssuesSummary($milestone: ID,$ticket: ID, $team: ID, $user: ID, $project: ID, $dueDate: Date) {
+      summary: issuesSummary(milestone: $milestone, ticket: $ticket, team: $team, user: $user, project: $project, dueDate: $dueDate) {
+        count
+        closedCount
+        openedCount
+        problemsCount
+      }
+    }`;
 }

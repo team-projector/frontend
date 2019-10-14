@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import { Milestone, MilestoneTicket } from 'src/models/milestone';
+import { Milestone, Ticket } from 'src/models/milestone';
 import { Team } from 'src/models/team';
 import { equals } from 'src/utils/equals';
 
@@ -50,17 +50,23 @@ export class MilestoneComponent implements OnInit {
         if (!!team) {
           state.team = team.id;
         }
-        this.router.navigate([state, 'issues'], {relativeTo: this.route});
+        this.router.navigate([state], {relativeTo: this.route});
       });
 
     this.route.data.pipe(
-      map(({milestone, team, ticket}: { milestone: Milestone, team: Team, ticket: MilestoneTicket }) =>
+      map(({milestone, team, ticket}: { milestone: Milestone, team: Team, ticket: Ticket }) =>
         ({milestone: milestone, team: team, ticket: ticket})),
       distinctUntilChanged()
     ).subscribe(({milestone, team, ticket}) => {
-      this.milestone = milestone;
-      this.team = team;
-      this.form.patchValue({filter: {ticket: ticket}}, {emitEvent: false});
+      if (!!milestone) {
+        this.milestone = milestone;
+      }
+      if (!!team) {
+        this.team = team;
+      }
+      if (!!ticket) {
+        this.form.patchValue({filter: {ticket: ticket}}, {emitEvent: false});
+      }
     });
   }
 

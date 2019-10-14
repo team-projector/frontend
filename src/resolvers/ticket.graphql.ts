@@ -5,10 +5,10 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class MilestoneGQL extends Query<{ milestone }> {
+export class TicketGQL extends Query<{ ticket }> {
   document = gql`
-    query Milestone($milestone: ID!) {
-      milestone(id: $milestone) {
+    query Ticket($ticket: ID!) {
+      ticket(id: $ticket) {
         id
         title
       }

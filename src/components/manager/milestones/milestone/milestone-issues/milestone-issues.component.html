@@ -1,1 +1,7 @@
-<p>milestone-issues works!</p>
+<app-issues [team]="team?.id"
+            [milestone]="milestone?.id"
+            [ticket]="ticket?.id"
+            [type]="type"
+            [view]="viewType.default"
+            (filtered)="filtered($event)">
+</app-issues>

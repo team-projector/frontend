@@ -3,6 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
+import { Team } from 'src/models/team';
 import { ProjectGQL } from './project.graphql';
 import { Project } from '../models/project';
 
@@ -15,8 +16,9 @@ export class ProjectResolver implements Resolve<Observable<Project>> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<Project> {
     const id = route.params['project'];
-    return !!id ? this.projectGQL.fetch({project: id})
-        .pipe(map(({data: {project}}) => deserialize(project, Project)))
-      : of(null);
+    const action = this.projectGQL.fetch({project: id})
+      .pipe(map(({data: {project}}) => deserialize(project, Project)));
+
+    return !!id ? action : of(null);
   }
 }
