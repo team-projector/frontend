@@ -6,7 +6,6 @@ import { deserialize } from 'serialize-ts/dist';
 import { Milestone } from 'src/models/milestone';
 import { MilestoneGQL } from 'src/resolvers/milestone.graphql';
 
-
 @Injectable()
 export class MilestoneResolver implements Resolve<Observable<Milestone>> {
 

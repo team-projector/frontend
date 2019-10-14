@@ -58,7 +58,7 @@ export class MilestoneMetrics {
 export class Milestone {
 
   @field({mock: '{{id}}'})
-  id: number;
+  id: string;
 
   @field({mock: '{{title}}'})
   title: string;
@@ -134,10 +134,10 @@ export enum MilestoneTicketTypes {
 }
 
 @model()
-export class MilestoneTicket {
+export class Ticket {
 
   @field()
-  id: number;
+  id: string;
 
   @field()
   type: MilestoneTicketTypes;
@@ -188,24 +188,24 @@ export class MilestoneTicketUpdate {
 }
 
 @model()
-export class PagingMilestoneTickets implements Paging<MilestoneTicket> {
+export class PagingMilestoneTickets implements Paging<Ticket> {
 
   @field({mock: '{{int 3 10}}'})
   count: number;
 
   @field({
     name: 'edges',
-    serializer: new ArraySerializer(new EdgesToPaging<MilestoneTicket>(MilestoneTicket)),
+    serializer: new ArraySerializer(new EdgesToPaging<Ticket>(Ticket)),
     mock: '[{{#repeat 3 10}} {{> milestone_ticket}} {{/repeat}}]'
   })
-  results: MilestoneTicket[];
+  results: Ticket[];
 }
 
 @model()
 export class MilestoneTicketsFilter implements SearchFilter {
 
   @field()
-  milestone: number;
+  milestone: string;
 
   @field()
   orderBy?: string;

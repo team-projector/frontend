@@ -7,7 +7,7 @@ import {
   CreateTicketGQL,
   EditTicketGQL
 } from 'src/components/manager/milestones/milestone/milestone-tickets/edit-ticket/edit-ticket.graphql';
-import { MilestoneTicket, MilestoneTicketTypes, MilestoneTicketUpdate } from 'src/models/milestone';
+import { Ticket, MilestoneTicketTypes, MilestoneTicketUpdate } from 'src/models/milestone';
 
 @Component({
   selector: 'app-edit-ticket',
@@ -20,8 +20,8 @@ export class EditTicketComponent {
   milestoneTicketTypes = MilestoneTicketTypes;
 
   form = this.fb.group({
-    id: [],
-    milestone: [],
+    id: [null],
+    milestone: [null],
     type: [null, Validators.required],
     title: [null, Validators.required],
     startDate: [new Date(), Validators.required],
@@ -29,13 +29,13 @@ export class EditTicketComponent {
     url: [null, Validators.required]
   });
 
-  @Input() set milestone(milestone: number) {
+  @Input() set milestone(milestone: string) {
     this.form.get('milestone').setValue(milestone);
   }
 
-  @Input() set ticket(ticket: MilestoneTicket) {
+  @Input() set ticket(ticket: Ticket) {
     if (!!ticket) {
-      this.form.setValue({
+      this.form.patchValue({
         id: ticket.id,
         type: ticket.type,
         title: ticket.title,
