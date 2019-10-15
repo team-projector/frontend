@@ -15,7 +15,7 @@ export class UserResolver implements Resolve<Observable<User>> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<User> {
     const id = route.params['user'];
-    const action = this.userGQL.fetch({project: id})
+    const action = this.userGQL.fetch({user: id})
       .pipe(map(({data: {user}}) => deserialize(user, User)));
 
     return !!id ? action : of(null);
