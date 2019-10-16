@@ -1,5 +1,5 @@
-import {field, model} from '@junte/mocker-library';
-import {ArraySerializer, PrimitiveSerializer} from 'serialize-ts';
+import { field, model } from '@junte/mocker-library';
+import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
 
 export enum UserPermission {
   inviteUser = 'intite_user',

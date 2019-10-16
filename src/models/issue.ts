@@ -1,13 +1,14 @@
-import { DateSerializer } from '../serializers/date';
+import { field, model } from '@junte/mocker-library';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
-import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
-import { Paging } from './paging';
-import { field, model } from '@junte/mocker-library';
-import { User } from './user';
-import { Project } from './project';
-import { Label } from './label';
+import { Team } from 'src/models/team';
 import { DATE_FORMAT } from '../consts';
+import { DateSerializer } from '../serializers/date';
+import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { Label } from './label';
+import { Paging } from './paging';
+import { Project } from './project';
+import { User } from './user';
 
 export enum IssueState {
   opened = 'opened',
@@ -25,20 +26,6 @@ export enum IssuesType {
   closed = 'closed',
   opened = 'opened',
   problems = 'problems'
-}
-
-@model()
-export class IssuesMetrics {
-
-  @field()
-  count: number;
-
-  @field()
-  openedCount: number;
-
-  @field()
-  openedEstimated: number;
-
 }
 
 @model()
@@ -186,7 +173,6 @@ export class IssuesFilter implements SearchFilter {
 
 @model()
 export class ProjectIssuesSummary {
-
   @field()
   remains: number;
 
@@ -195,7 +181,18 @@ export class ProjectIssuesSummary {
 
   @field()
   openedCount: number;
+}
 
+@model()
+export class TeamIssuesSummary {
+  @field()
+  remains: number;
+
+  @field()
+  percentage: number;
+
+  @field()
+  openedCount: number;
 }
 
 @model()
@@ -206,6 +203,17 @@ export class ProjectSummary {
 
   @field()
   issues: ProjectIssuesSummary;
+
+}
+
+@model()
+export class TeamSummary {
+
+  @field()
+  team: Team;
+
+  @field()
+  issues: TeamIssuesSummary;
 
 }
 
@@ -229,5 +237,8 @@ export class IssuesSummary {
 
   @field({serializer: new ArraySerializer(new ModelSerializer(ProjectSummary))})
   projects: ProjectSummary[];
+
+  @field({serializer: new ArraySerializer(new ModelSerializer(TeamSummary))})
+  teams: TeamSummary[];
 
 }

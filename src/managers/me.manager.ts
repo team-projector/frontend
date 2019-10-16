@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
-import { Me } from '../models/user';
 import { BehaviorSubject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
-import { MeManagerGQL } from './me-manager.graphql';
 import { AppConfig } from 'src/app-config';
+import { Me } from '../models/user';
 import { equals } from '../utils/equals';
+import { MeManagerGQL } from './me-manager.graphql';
 
 @Injectable()
 export class MeManager {
