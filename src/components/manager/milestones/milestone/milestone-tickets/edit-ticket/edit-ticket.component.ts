@@ -7,7 +7,7 @@ import {
   CreateTicketGQL,
   EditTicketGQL
 } from 'src/components/manager/milestones/milestone/milestone-tickets/edit-ticket/edit-ticket.graphql';
-import { Ticket, MilestoneTicketTypes, MilestoneTicketUpdate } from 'src/models/milestone';
+import { Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
 
 @Component({
   selector: 'app-edit-ticket',
@@ -17,7 +17,7 @@ import { Ticket, MilestoneTicketTypes, MilestoneTicketUpdate } from 'src/models/
 export class EditTicketComponent {
 
   ui = UI;
-  milestoneTicketTypes = MilestoneTicketTypes;
+  milestoneTicketTypes = TicketTypes;
 
   form = this.fb.group({
     id: [null],
@@ -46,7 +46,7 @@ export class EditTicketComponent {
     }
   }
 
-  @Output() saved = new EventEmitter<MilestoneTicketUpdate>();
+  @Output() saved = new EventEmitter<TicketUpdate>();
   @Output() canceled = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder,
@@ -56,7 +56,7 @@ export class EditTicketComponent {
 
   save() {
     const mutation = !!this.ticket ? this.editTicketGQL : this.createTicketGQL;
-    mutation.mutate(serialize(new MilestoneTicketUpdate(this.form.getRawValue())) as R)
+    mutation.mutate(serialize(new TicketUpdate(this.form.getRawValue())) as R)
       .subscribe(() => this.saved.emit());
   }
 }

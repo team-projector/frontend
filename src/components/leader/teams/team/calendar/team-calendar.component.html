@@ -38,7 +38,8 @@
     <tr *ngFor="let member of members" [attr.active]="user.value?.id == member.user.id">
       <td gutter></td>
       <td>
-        <jnt-stack (click)="form.patchValue({user: member.user, dueDate: null})" [type]="ui.stack.type.horizontal"
+        <jnt-stack (click)="form.patchValue({user: member.user, dueDate: null})"
+                   [type]="ui.stack.type.horizontal"
                    [gutter]="ui.stack.gutter.small" developer tabindex="0">
           <jnt-avatar [image]="member.user.avatar"
                       [size]="ui.sizes.tiny"></jnt-avatar>

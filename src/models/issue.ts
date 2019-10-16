@@ -1,6 +1,7 @@
 import { field, model } from '@junte/mocker-library';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
+import { Ticket } from 'src/models/ticket';
 import { Team } from 'src/models/team';
 import { DATE_FORMAT } from '../consts';
 import { DateSerializer } from '../serializers/date';
@@ -71,6 +72,9 @@ export class Issue {
 
   @field({mock: '{{> project}}'})
   project: Project;
+
+  @field({mock: '{{> ticket}}'})
+  ticket: Ticket;
 
   @field({
     serializer: new DateSerializer(),

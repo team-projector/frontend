@@ -3,13 +3,14 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
-import { BehaviorSubject, combineLatest } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MilestoneIssuesSummaryGQL } from 'src/components/manager/milestones/milestone/milestone.graphql';
 import { IssuesFilter, IssuesSummary } from 'src/models/issue';
-import { Milestone, Ticket } from 'src/models/milestone';
+import { Milestone } from 'src/models/milestone';
 import { Team } from 'src/models/team';
+import { Ticket } from 'src/models/ticket';
 import { DurationFormat } from 'src/pipes/date';
 
 @Component({

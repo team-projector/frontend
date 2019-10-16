@@ -52,3 +52,14 @@
     color: $primary-text-light-color;
   }
 }
+
+.cdk-drag-preview {
+  border-radius: $corner-normal;
+  box-shadow: $shadow-normal;
+  padding: $gutter-normal;
+  background-color: $primary-background;
+}
+
+.cdk-drag-placeholder {
+  display: none;
+}

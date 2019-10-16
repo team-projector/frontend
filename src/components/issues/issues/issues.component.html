@@ -28,9 +28,13 @@
     </ng-template>
     <jnt-table-column i18n-title="@@issue_title" title="Title">
       <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
-                   let-participants="participants" let-project="project" let-closedAt="closedAt">
+                   let-participants="participants" let-project="project" let-closedAt="closedAt" let-id="id">
         <jnt-stack [type]="ui.stack.type.horizontal"
-                   [gutter]="ui.stack.gutter.small">
+                   [gutter]="ui.stack.gutter.small"
+                   [align]="ui.flex.align.center"
+                   [cdkDragDisabled]="!draggable"
+                   cdkDropList cdkDrag [cdkDragData]="{issue: id}">
+          <jnt-icon *ngIf="draggable" icon="burger" cdkDragHandle></jnt-icon>
           <jnt-avatars-list>
             <jnt-avatar *ngFor="let p of participants"
                         [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>
@@ -57,6 +61,12 @@
             <small>{{project?.fullTitle}}</small>
           </jnt-stack>
         </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column *ngIf="view === viewType.manager" i18n-title="@@ticket" title="Ticket">
+      <ng-template #cellTemplate let-ticket="ticket">
+        {{ticket?.title}}
       </ng-template>
     </jnt-table-column>
 

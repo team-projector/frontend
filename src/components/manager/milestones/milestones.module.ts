@@ -1,3 +1,4 @@
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -31,6 +32,7 @@ import { MilestonesComponent } from './milestones.component';
     CommonModule,
     ReactiveFormsModule,
     JunteUiModule,
+    DragDropModule,
     MilestonesRoutingModule,
     DatePipesModule,
     CurrencyRublePipeModule,
