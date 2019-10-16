@@ -1,13 +1,15 @@
+import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ComponentFactoryResolver, forwardRef, Injector, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { ModalOptions, ModalService, UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { filter as filtering, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { EditTicketComponent } from 'src/components/manager/milestones/milestone/milestone-tickets/edit-ticket/edit-ticket.component';
-import { AllTicketsGQL } from 'src/components/manager/milestones/milestone/milestone-tickets/milestone-tickets.graphql';
-import { Milestone, MilestoneTicketsFilter, PagingMilestoneTickets, Ticket } from 'src/models/milestone';
+import { AllTicketsGQL, AttachIssueGQL } from 'src/components/manager/milestones/milestone/milestone-tickets/milestone-tickets.graphql';
+import { Milestone } from 'src/models/milestone';
+import { PagingTickets, Ticket, TicketsFilter } from 'src/models/ticket';
 import { equals } from 'src/utils/equals';
 
 @Component({
@@ -22,7 +24,7 @@ import { equals } from 'src/utils/equals';
     }
   ]
 })
-export class MilestoneTicketsComponent implements OnInit {
+export class MilestoneTicketsComponent implements OnInit, ControlValueAccessor {
 
   private milestone$ = new BehaviorSubject<Milestone>(null);
   private orderBy$ = new BehaviorSubject<string>(null);
@@ -76,6 +78,7 @@ export class MilestoneTicketsComponent implements OnInit {
   }
 
   constructor(private allTicketsGQL: AllTicketsGQL,
+              private attachIssueGQL: AttachIssueGQL,
               private cfr: ComponentFactoryResolver,
               private injector: Injector,
               public modalService: ModalService) {
@@ -90,7 +93,7 @@ export class MilestoneTicketsComponent implements OnInit {
   private load() {
     this.loading = true;
 
-    const filter = new MilestoneTicketsFilter({
+    const filter = new TicketsFilter({
       milestone: this.milestone.id,
       orderBy: this.orderBy,
       first: this.first,
@@ -98,7 +101,7 @@ export class MilestoneTicketsComponent implements OnInit {
     });
 
     this.allTicketsGQL.fetch(serialize(filter) as R).pipe(
-      map(({data: {allTickets}}) => deserialize(allTickets, PagingMilestoneTickets)),
+      map(({data: {allTickets}}) => deserialize(allTickets, PagingTickets)),
       finalize(() => this.loading = false)
     ).subscribe(tickets => this.tickets = tickets.results);
   }
@@ -147,5 +150,16 @@ export class MilestoneTicketsComponent implements OnInit {
     });
 
     this.modalService.open(component, null, options);
+  }
+
+  predicate(item: CdkDrag<number>) {
+    return !!item.data['issue'];
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    this.attachIssueGQL.fetch({
+      id: event.item.data['issue'],
+      ticket: event.container.element.nativeElement.attributes.getNamedItem('ticket').value
+    }).subscribe(() => this.load());
   }
 }

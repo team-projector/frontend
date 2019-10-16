@@ -2,6 +2,7 @@
             [milestone]="milestone?.id"
             [ticket]="ticket?.id"
             [type]="type"
-            [view]="viewType.default"
+            [view]="viewType.manager"
+            [draggable]="true"
             (filtered)="filtered($event)">
 </app-issues>

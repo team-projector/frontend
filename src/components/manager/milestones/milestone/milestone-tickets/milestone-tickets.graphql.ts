@@ -35,3 +35,17 @@ export class AllTicketsGQL extends Query<{ allTickets }> {
       }
     }`;
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AttachIssueGQL extends Query<{ issue }> {
+  document = gql`
+    mutation ($id: ID!, $ticket: ID!) {
+      updateIssue(id: $id, ticket: $ticket) {
+        issue {
+          id
+        }
+      }
+    }`;
+}

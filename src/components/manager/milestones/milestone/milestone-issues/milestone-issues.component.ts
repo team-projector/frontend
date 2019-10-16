@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewType } from 'src/components/issues/issues/issues.component';
 import { IssuesType } from 'src/models/issue';
-import { Milestone, Ticket } from 'src/models/milestone';
+import { Milestone } from 'src/models/milestone';
 import { Team } from 'src/models/team';
+import { Ticket } from 'src/models/ticket';
 
 @Component({
   selector: 'app-milestone-issues',

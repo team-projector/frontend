@@ -14,7 +14,8 @@ import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
 
 export enum ViewType {
   default,
-  extended
+  extended,
+  manager
 }
 
 @Component({
@@ -51,6 +52,9 @@ export class IssuesComponent implements OnInit {
 
   @Input()
   view = ViewType.default;
+
+  @Input()
+  draggable = false;
 
   @Input()
   set team(team: string) {
