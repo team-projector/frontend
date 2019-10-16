@@ -1,9 +1,9 @@
-import {ArraySerializer, ModelSerializer} from 'serialize-ts';
-import {DateSerializer} from '../serializers/date';
-import {DATE_FORMAT} from '../consts';
-import {field, model} from '@junte/mocker-library';
-import {User} from './user';
-import {format} from 'date-fns';
+import { field, model } from '@junte/mocker-library';
+import { format } from 'date-fns';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { DATE_FORMAT } from '../consts';
+import { DateSerializer } from '../serializers/date';
+import { User } from './user';
 
 export enum MetricsGroup {
   day = 'day',
@@ -121,4 +121,17 @@ export class TeamMetricsFilter {
     }
   }
 
+}
+
+@model()
+export class IssuesMetrics {
+
+  @field()
+  count: number;
+
+  @field()
+  openedCount: number;
+
+  @field()
+  openedEstimated: number;
 }

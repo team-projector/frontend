@@ -1,32 +1,32 @@
 <jnt-form [formGroup]="form">
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.stack.gutter.big">
     <app-milestone-tickets tickets
-                           formControlName="filter"
+                           formControlName="tickets"
                            [milestone]="milestone">
     </app-milestone-tickets>
     <jnt-stack [type]="ui.stack.type.horizontal">
-      <div filter [attr.active]="!!filter.value?.ticket">
-        <ng-container *ngIf="filter.value?.ticket;else noFilterUser">
-          {{filter.value.ticket.title}}
+      <div filter [attr.active]="!!tickets?.value">
+        <ng-container *ngIf="!!tickets?.value; else noFilterTickets">
+          {{tickets.value.title}}
           <jnt-button reset [scheme]="ui.schemes.secondary"
                       [size]="ui.sizes.tiny"
                       [icon]="ui.icons.font.close"
-                      (click)="filter.patchValue({ticket: null})"></jnt-button>
+                      (click)="tickets.patchValue(null)"></jnt-button>
         </ng-container>
-        <ng-template #noFilterUser>
+        <ng-template #noFilterTickets>
           <jnt-icon icon [icon]="ui.icons.font.project"></jnt-icon>
           Tickets
         </ng-template>
       </div>
 
-      <div filter [attr.active]="!!team">
-        <ng-container *ngIf="!!team;else noFilterTeam">
+      <div filter [attr.active]="!!team?.value">
+        <ng-container *ngIf="!!team?.value;else noFilterTeam">
           <jnt-icon icon [icon]="ui.icons.font.team"></jnt-icon>
-          <div>{{team.title}}</div>
+          <div>{{team.value.title}}</div>
           <jnt-button reset [scheme]="ui.schemes.secondary"
                       [size]="ui.sizes.tiny"
                       [icon]="ui.icons.font.close"
-                      (click)="team = null">
+                      (click)="team.patchValue(null)">
           </jnt-button>
         </ng-container>
         <ng-template #noFilterTeam>
@@ -35,6 +35,21 @@
         </ng-template>
       </div>
     </jnt-stack>
-    <app-milestone-issues></app-milestone-issues>
+    <jnt-row>
+      <jnt-col [mobile]="12" [wide]="8">
+        <app-milestone-issues></app-milestone-issues>
+      </jnt-col>
+      <jnt-col [mobile]="12" [wide]="4">
+        <jnt-chart formControlName="team" title="Teams" metric="Hours" [widthMark]="50">
+          <jnt-chart-indicator *ngFor="let team of summary?.teams; let i = index"
+                               [title]="team.team.title"
+                               [data]="team.team"
+                               [value]="team.issues.percentage * 100"
+                               [label]="team.issues.remains  | duration:durationFormat.short"
+                               [color]="colors[i % colors.length]">
+          </jnt-chart-indicator>
+        </jnt-chart>
+      </jnt-col>
+    </jnt-row>
   </jnt-stack>
 </jnt-form>

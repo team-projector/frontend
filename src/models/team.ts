@@ -1,9 +1,9 @@
-import {ArraySerializer, ModelSerializer, PrimitiveSerializer} from 'serialize-ts';
-import {field, model} from '@junte/mocker-library';
-import {User} from './user';
-import {EdgesToArray, EdgesToPaging} from '../serializers/graphql';
-import {Paging} from './paging';
-import {IssueMetrics, IssuesMetrics} from './issue';
+import { field, model } from '@junte/mocker-library';
+import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
+import { IssuesMetrics } from 'src/models/metrics';
+import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { Paging } from './paging';
+import { User } from './user';
 
 export enum TeamMemberRole {
   developer = 'developer',

@@ -7,12 +7,8 @@ import { filter as filtering, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { EditTicketComponent } from 'src/components/manager/milestones/milestone/milestone-tickets/edit-ticket/edit-ticket.component';
 import { AllTicketsGQL } from 'src/components/manager/milestones/milestone/milestone-tickets/milestone-tickets.graphql';
-import { Milestone, Ticket, MilestoneTicketsFilter, PagingMilestoneTickets } from 'src/models/milestone';
+import { Milestone, MilestoneTicketsFilter, PagingMilestoneTickets, Ticket } from 'src/models/milestone';
 import { equals } from 'src/utils/equals';
-
-class TicketFilter {
-  ticket: Ticket;
-}
 
 @Component({
   selector: 'app-milestone-tickets',
@@ -107,13 +103,13 @@ export class MilestoneTicketsComponent implements OnInit {
     ).subscribe(tickets => this.tickets = tickets.results);
   }
 
-  writeValue(value: TicketFilter) {
+  writeValue(value: Ticket) {
     if (!!value) {
-      this.ticket = value.ticket;
+      this.ticket = value;
     }
   }
 
-  onChange(value: TicketFilter) {
+  onChange(value: Ticket) {
   }
 
   onTouched() {

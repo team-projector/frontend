@@ -18,7 +18,7 @@
             <jnt-stack [type]="ui.stack.type.horizontal"
                        [justify]="ui.flex.justify.between"
                        [align]="ui.flex.align.center">
-              <jnt-link (click)="onChange({ticket: ticket})" source="javascript:;" [title]="ticket.title"></jnt-link>
+              <jnt-link (click)="onChange(ticket)" source="javascript:;" [title]="ticket.title"></jnt-link>
               <jnt-button [icon]="ui.icons.font.edit" (click)="edit(ticket)" [size]="ui.sizes.small"></jnt-button>
             </jnt-stack>
           </ng-template>

@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/models/user';
-import { Team } from 'src/models/team';
 import { UI } from 'junte-ui';
-import { ArraySerializer, deserialize, ModelSerializer, serialize } from 'serialize-ts';
-import { Project } from '../../../../../../models/project';
-import { IssuesType } from '../../../../../../models/issue';
+import { Team } from 'src/models/team';
+import { User } from 'src/models/user';
+import { IssuesType } from 'src/models/issue';
+import { Project } from 'src/models/project';
 
 @Component({
   selector: 'app-team-list-issues-component',

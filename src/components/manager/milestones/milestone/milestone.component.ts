@@ -1,12 +1,16 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { MilestoneIssuesSummaryGQL } from 'src/components/manager/milestones/milestone/milestone.graphql';
+import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { Milestone, Ticket } from 'src/models/milestone';
 import { Team } from 'src/models/team';
-import { equals } from 'src/utils/equals';
+import { DurationFormat } from 'src/pipes/date';
 
 @Component({
   selector: 'app-milestone',
@@ -15,37 +19,41 @@ import { equals } from 'src/utils/equals';
 })
 export class MilestoneComponent implements OnInit {
 
-  private team$ = new BehaviorSubject<Team>(null);
   ui = UI;
+  durationFormat = DurationFormat;
+  tickets = new FormControl(null);
+  team = new FormControl(null);
+  filter = new IssuesFilter();
+  summary: IssuesSummary;
   milestone: Milestone;
-  filter = new FormControl();
+  colors = [
+    UI.colors.purple,
+    UI.colors.red,
+    UI.colors.green,
+    UI.colors.yellow,
+    UI.colors.teal,
+    UI.colors.orange,
+    UI.colors.purpleLight
+  ];
 
   form: FormGroup = this.formBuilder.group({
-    filter: this.filter
+    tickets: this.tickets,
+    team: this.team
   });
 
-  @Input()
-  set team(team: Team) {
-    if (!equals(this.team, team)) {
-      this.team$.next(team);
-    }
-  }
-
-  get team() {
-    return this.team$.getValue();
-  }
-
-  constructor(private formBuilder: FormBuilder,
+  constructor(private milestoneIssuesSummaryGQL: MilestoneIssuesSummaryGQL,
+              private formBuilder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
   }
 
   ngOnInit() {
-    combineLatest([this.form.valueChanges, this.team$]).pipe(distinctUntilChanged())
-      .subscribe(([{filter: {ticket}}, team]) => {
+    combineLatest([this.form.valueChanges])
+      .pipe(distinctUntilChanged())
+      .subscribe(([{tickets, team}]) => {
         const state: { ticket?, team? } = {};
-        if (!!ticket) {
-          state.ticket = ticket.id;
+        if (!!tickets) {
+          state.ticket = tickets.id;
         }
         if (!!team) {
           state.team = team.id;
@@ -53,20 +61,27 @@ export class MilestoneComponent implements OnInit {
         this.router.navigate([state], {relativeTo: this.route});
       });
 
-    this.route.data.pipe(
-      map(({milestone, team, ticket}: { milestone: Milestone, team: Team, ticket: Ticket }) =>
+    this.route.data.pipe(map(({milestone, team, ticket}: { milestone: Milestone, team: Team, ticket: Ticket }) =>
         ({milestone: milestone, team: team, ticket: ticket})),
       distinctUntilChanged()
     ).subscribe(({milestone, team, ticket}) => {
+      this.filter = new IssuesFilter();
+
       if (!!milestone) {
         this.milestone = milestone;
+        this.filter.milestone = milestone.id;
       }
       if (!!team) {
-        this.team = team;
+        this.team.patchValue(team, {emitEvent: false});
       }
       if (!!ticket) {
-        this.form.patchValue({filter: {ticket: ticket}}, {emitEvent: false});
+        this.tickets.patchValue(ticket, {emitEvent: false});
+        this.filter.ticket = ticket.id;
       }
+
+      this.milestoneIssuesSummaryGQL.fetch(serialize(this.filter) as R)
+        .pipe(map(({data: {summary}}) => deserialize(summary, IssuesSummary)))
+        .subscribe(summary => this.summary = summary);
     });
   }
 

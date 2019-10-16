@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { finalize, map } from 'rxjs/operators';
 import { UI } from 'junte-ui';
 import { deserialize } from 'serialize-ts/dist';
-import { PagingTeams, Team } from '../../../models/team';
+import { PagingTeams, Team } from 'src/models/team';
 import { AllTeamsGQL } from './teams.graphql';
-import { DurationFormat } from '../../../pipes/date';
+import { DurationFormat } from 'src/pipes/date';
 
 @Component({
   selector: 'app-leader-teams',

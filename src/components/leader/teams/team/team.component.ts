@@ -6,18 +6,18 @@ import { distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { Team } from 'src/models/team';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssuesFilter, IssuesSummary } from '../../../../models/issue';
+import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { FirstSummaryGQL, SecondSummaryGQL } from './team.graphql';
 import { R } from 'apollo-angular/types';
-import { DurationFormat } from '../../../../pipes/date';
-import { User } from '../../../../models/user';
-import { Project } from '../../../../models/project';
+import { DurationFormat } from 'src/pipes/date';
+import { User } from 'src/models/user';
+import { Project } from 'src/models/project';
 import { combineLatest } from 'rxjs';
 import { METRIC_TYPE } from 'src/components/metrics-type/consts';
 import { MetricType } from 'src/components/leader/teams/team/calendar/team-calendar.component';
-import { MergeRequestSummary } from '../../../../models/merge-request';
-import { TimeExpensesSummary } from '../../../../models/spent-time';
-import { MilestoneProblem } from '../../../../models/milestone';
+import { MergeRequestSummary } from 'src/models/merge-request';
+import { TimeExpensesSummary } from 'src/models/spent-time';
+import { MilestoneProblem } from 'src/models/milestone';
 
 @Component({
   selector: 'app-leader-team',
