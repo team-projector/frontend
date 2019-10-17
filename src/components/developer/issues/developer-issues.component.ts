@@ -1,24 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import { format } from 'date-fns';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
-import { UserProgressMetrics } from 'src/models/metrics';
-import { User } from 'src/models/user';
-import { BehaviorSubject, combineLatest, zip } from 'rxjs';
-import { Period } from 'junte-ui/lib/components/calendar/models';
-import { UI } from 'junte-ui';
-import { DurationFormat } from '../../../pipes/date';
-import { IssuesFilter, IssuesSummary } from 'src/models/issue';
-import { deserialize, serialize } from 'serialize-ts/dist';
-import { MetricsGroup, UserMetricsFilter } from '../../../models/metrics';
-import { MetricType } from '../../leader/teams/team/calendar/team-calendar.component';
-import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
 import { R } from 'apollo-angular/types';
+import { format } from 'date-fns';
+import { UI } from 'junte-ui';
+import { Period } from 'junte-ui/lib/components/calendar/models';
+import { BehaviorSubject, combineLatest, zip } from 'rxjs';
+import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { MetricType } from 'src/components/leader/teams/team/calendar/team-calendar.component';
 import { METRIC_TYPE } from 'src/components/metrics-type/consts';
+import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { MergeRequestSummary } from 'src/models/merge-request';
+import { MetricsGroup, UserMetricsFilter, UserProgressMetrics } from 'src/models/metrics';
+import { MilestoneProblem } from 'src/models/milestone';
 import { TimeExpensesSummary } from 'src/models/spent-time';
-import {MilestoneProblem} from '../../../models/milestone';
+import { User } from 'src/models/user';
+import { DurationFormat } from 'src/pipes/date';
+import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,
@@ -92,14 +91,14 @@ export class DeveloperIssuesComponent implements OnInit {
 
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
-      .subscribe(filter => {
+      .subscribe(({dueDate, project}) => {
         const state: { due_date?, project? } = {};
-        if (!!filter.dueDate) {
-          state.due_date = format(filter.dueDate, 'YYYY-MM-DD');
+        if (!!dueDate) {
+          state.due_date = format(dueDate, 'YYYY-MM-DD');
         }
 
-        if (!!filter.project) {
-          state.project = filter.project.id || filter.project;
+        if (!!project) {
+          state.project = project.id;
         }
 
         this.router.navigate([state], {relativeTo: this.route});
@@ -107,14 +106,13 @@ export class DeveloperIssuesComponent implements OnInit {
 
     this.route.data.subscribe(({user, dueDate, project}) => {
       this.user = user;
-      this.form.patchValue({dueDate: dueDate, project: project},
-        {emitEvent: false});
+      this.form.patchValue({dueDate: dueDate, project: project}, {emitEvent: false});
 
       const filter = new IssuesFilter({
         user: user.id,
         dueDate: dueDate,
         project: !!project ? project.id : null
-    });
+      });
 
       this.issuesSummary.fetch(serialize(filter) as R)
         .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({

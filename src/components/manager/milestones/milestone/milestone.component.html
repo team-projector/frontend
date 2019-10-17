@@ -40,7 +40,7 @@
         <app-milestone-issues></app-milestone-issues>
       </jnt-col>
       <jnt-col [mobile]="12" [wide]="4">
-        <jnt-chart formControlName="team" title="Teams" metric="Hours" [widthMark]="50">
+        <jnt-chart formControlName="team" title="Teams" metric="Hours" [widthMark]="50" keyField="id">
           <jnt-chart-indicator *ngFor="let team of summary?.teams; let i = index"
                                [title]="team.team.title"
                                [data]="team.team"

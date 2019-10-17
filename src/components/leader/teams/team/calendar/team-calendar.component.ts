@@ -136,18 +136,17 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
         end: endOfWeek(this.start, {weekStartsOn: 1}),
         group: group
       });
-      return this.calendarMetrics.fetch(serialize(filter) as R)
-        .pipe(map(({data: {teamProgressMetrics}}) =>
-            teamProgressMetrics.map(el => deserialize(el, TeamProgressMetrics))),
-          map(metrics => {
-            const dic = new Map<string, Map<string, UserProgressMetrics>>();
-            metrics.forEach(m => {
-              const userDic = new Map<string, UserProgressMetrics>();
-              m.metrics.forEach(metric => userDic.set(metric.getKey(), metric));
-              dic.set(m.user.id.toString(), userDic);
-            });
-            return dic;
-          }));
+      return this.calendarMetrics.fetch(serialize(filter) as R).pipe(
+        map(({data: {teamProgressMetrics}}) => teamProgressMetrics.map(el => deserialize(el, TeamProgressMetrics))),
+        map(metrics => {
+          const dic = new Map<string, Map<string, UserProgressMetrics>>();
+          metrics.forEach(m => {
+            const userDic = new Map<string, UserProgressMetrics>();
+            m.metrics.forEach(metric => userDic.set(metric.getKey(), metric));
+            dic.set(m.user.id.toString(), userDic);
+          });
+          return dic;
+        }));
     };
 
     zip(getMetric(MetricsGroup.day), getMetric(MetricsGroup.week))
@@ -156,12 +155,10 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   private loadMembers() {
     this.loading = true;
-    this.calendarMember.fetch({team: this.team.id} as R)
-      .pipe(
-        map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers)),
-        finalize(() => this.loading = false)
-      )
-      .subscribe(teams => this.members = teams.results);
+    this.calendarMember.fetch({team: this.team.id} as R).pipe(
+      map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers)),
+      finalize(() => this.loading = false)
+    ).subscribe(teams => this.members = teams.results);
   }
 
   private update() {
