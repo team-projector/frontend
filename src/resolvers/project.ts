@@ -3,9 +3,8 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
-import { Team } from 'src/models/team';
-import { ProjectGQL } from './project.graphql';
 import { Project } from '../models/project';
+import { ProjectGQL } from './project.graphql';
 
 @Injectable()
 export class ProjectResolver implements Resolve<Observable<Project>> {
