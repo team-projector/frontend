@@ -21,7 +21,6 @@ export class ProjectGroup {
   glAvatar: string;
 }
 
-
 @model()
 export class Project {
 
