@@ -1,5 +1,5 @@
 <jnt-block [width]="ui.width.fluid">
-  <jnt-table [filter]="filter" #table>
+  <jnt-table [filter]="filter" #table (reloaded)="reloaded.emit()">
     <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
       <ng-template #cellTemplate let-title="owner.title" let-labels="owner.labels" let-url="owner.glUrl"
                    let-state="owner.state"

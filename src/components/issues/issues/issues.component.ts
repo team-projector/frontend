@@ -56,6 +56,8 @@ export class IssuesComponent implements OnInit {
   @Input()
   draggable = false;
 
+  @Output() reloaded = new EventEmitter();
+
   @Input()
   set team(team: string) {
     this.team$.next(team);
@@ -187,7 +189,7 @@ export class IssuesComponent implements OnInit {
       });
   }
 
-  private loadSummary() {
+  loadSummary() {
     this.progress.summary = true;
     this.issuesSummaryGQL.fetch(serialize(this.filter) as R)
       .pipe(map(({data: {summary}}) =>

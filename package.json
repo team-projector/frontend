@@ -4,8 +4,8 @@
   "scripts": {
     "ng": "ng",
     "gulp": "gulp",
-    "start": "ng serve",
-    "build": "gulp themes && ng build --prod",
+    "start": "npm run themes && ng serve",
+    "build": "npm run themes && ng build --prod",
     "test": "ng test",
     "lint": "ng lint",
     "clean": "npm cache clean --force && rm -rf -- node_modules doc coverage dist dll package-lock.json",

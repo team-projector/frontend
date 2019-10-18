@@ -32,6 +32,8 @@ class Metric {
 })
 export class DeveloperIssuesComponent implements OnInit {
 
+  private user$ = new BehaviorSubject<User>(null);
+  private period$ = new BehaviorSubject<Period>(null);
   ui = UI;
   durationFormat = DurationFormat;
   milestoneProblem = MilestoneProblem;
@@ -46,10 +48,8 @@ export class DeveloperIssuesComponent implements OnInit {
     UI.colors.purpleLight
   ];
 
-  user$ = new BehaviorSubject<User>(null);
-  period$ = new BehaviorSubject<Period>(null);
-
   formatDate = 'DD/MM/YYYY';
+  filter: IssuesFilter;
 
   summary: {
     issues?: IssuesSummary,
@@ -67,6 +67,10 @@ export class DeveloperIssuesComponent implements OnInit {
 
   set period(period: Period) {
     this.period$.next(period);
+  }
+
+  get period() {
+    return this.period$.getValue();
   }
 
   metrics = new Metric(
@@ -108,32 +112,36 @@ export class DeveloperIssuesComponent implements OnInit {
       this.user = user;
       this.form.patchValue({dueDate: dueDate, project: project}, {emitEvent: false});
 
-      const filter = new IssuesFilter({
+      this.filter = new IssuesFilter({
         user: user.id,
         dueDate: dueDate,
         project: !!project ? project.id : null
       });
 
-      this.issuesSummary.fetch(serialize(filter) as R)
-        .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({
-          issues: deserialize(issues, IssuesSummary),
-          mergeRequests: deserialize(mergeRequests, MergeRequestSummary),
-          spentTimes: deserialize(spentTimes, TimeExpensesSummary),
-        })))
-        .subscribe(summary => this.summary = summary);
+      this.loadSummary();
     });
 
     combineLatest(this.user$, this.period$)
       .pipe(filtering(([user, period]) => !!user && !!period))
-      .subscribe(([user, period]) => this.loadMetrics(user, period));
+      .subscribe(() => this.loadMetrics());
   }
 
-  private loadMetrics(user: User, period: Period) {
+  private loadSummary() {
+    this.issuesSummary.fetch(serialize(this.filter) as R)
+      .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({
+          issues: deserialize(issues, IssuesSummary),
+          mergeRequests: deserialize(mergeRequests, MergeRequestSummary),
+          spentTimes: deserialize(spentTimes, TimeExpensesSummary),
+        }))
+      ).subscribe(summary => this.summary = summary);
+  }
+
+  private loadMetrics() {
     const getMetric = (group: MetricsGroup) => {
       const filter = new UserMetricsFilter({
-        user: user.id,
-        start: period.start,
-        end: period.end,
+        user: this.user.id,
+        start: this.period.start,
+        end: this.period.end,
         group: group
       });
       return this.issuesMetricsGQL.fetch(serialize(filter) as R)
@@ -150,4 +158,9 @@ export class DeveloperIssuesComponent implements OnInit {
       .subscribe(([days, weeks]) => this.metrics = new Metric(days, weeks));
   }
 
+  onActivate(component) {
+    if (!!component.reloaded) {
+      component.reloaded.subscribe(() => this.loadSummary());
+    }
+  }
 }

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { User } from '../../../../models/user';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-issues-epxenses-time-list',
@@ -11,6 +11,8 @@ export class TimeExpensesListComponent implements OnInit {
 
   user: User;
   dueDate: Date;
+
+  @Output() reloaded = new EventEmitter();
 
   constructor(private route: ActivatedRoute) {
   }

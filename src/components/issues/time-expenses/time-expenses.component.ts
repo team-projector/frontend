@@ -1,14 +1,14 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { PLATFORM_DELAY } from 'src/consts';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { R } from 'apollo-angular/types';
+import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { TimeExpensesFilter } from 'src/models/spent-time';
-import { IssueState } from 'src/models/issue';
-import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { PagingTimeExpenses } from '../../../models/spent-time';
+import { PLATFORM_DELAY } from 'src/consts';
+import { IssueState } from 'src/models/issue';
+import { TimeExpensesFilter } from 'src/models/spent-time';
+import { PagingTimeExpenses } from 'src/models/spent-time';
 import { TimeExpensesGQL } from './time-expenses.graphql';
-import { R } from 'apollo-angular/types';
 
 @Component({
   selector: 'app-time-expenses',
@@ -24,6 +24,8 @@ export class TimeExpensesComponent implements OnInit {
 
   ui = UI;
   issuesState = IssueState;
+
+  @Output() reloaded = new EventEmitter();
 
   @Input()
   set user(user: number) {
