@@ -1,5 +1,6 @@
 <app-merge-requests [user]="user?.id"
                     [project]="project?.id"
                     [state]="state"
-                    (filtered)="filtered($event)">
+                    (filtered)="filtered($event)"
+                    (reloaded)="reloaded.emit()">
 </app-merge-requests>

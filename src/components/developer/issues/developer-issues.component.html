@@ -121,7 +121,7 @@
         <jnt-badge *ngIf="summary?.spentTimes?.spent" [count]="summary?.spentTimes.spent | duration"></jnt-badge>
       </jnt-menu-item>
     </jnt-menu>
-    <router-outlet></router-outlet>
+    <router-outlet (activate)="onActivate($event)"></router-outlet>
     <ng-template #dayMetricTemplate let-metric="metric" let-date="date" let-presentation="presentation">
       <div issues *ngIf="!!metric?.issuesCount"></div>
       <ng-template #no_metric>{{date | getDate}}</ng-template>

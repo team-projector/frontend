@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { PLATFORM_DELAY } from 'src/consts';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { R } from 'apollo-angular/types';
+import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
-import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { deserialize, serialize } from 'serialize-ts/dist';
+import { PLATFORM_DELAY } from 'src/consts';
+import { MergeRequestsFilter, MergeRequestState, MergeRequestSummary, PagingMergeRequest } from 'src/models/merge-request';
 import { MergeRequestsGQL, MergeRequestSummaryGQL } from './merge-requests.graphql';
-import { R } from 'apollo-angular/types';
-import { MergeRequestsFilter, MergeRequestState, MergeRequestSummary, PagingMergeRequest } from '../../../models/merge-request';
 
 export enum ViewType {
   default,
@@ -37,6 +37,8 @@ export class MergeRequestsComponent implements OnInit {
   form: FormGroup = this.formBuilder.group({
     state: this.stateControl
   });
+
+  @Output() reloaded = new EventEmitter();
 
   @Input()
   view = ViewType.default;
@@ -91,8 +93,7 @@ export class MergeRequestsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.state$.subscribe(state =>
-      this.stateControl.patchValue(state, {emitEvent: false}));
+    this.state$.subscribe(state => this.stateControl.patchValue(state, {emitEvent: false}));
 
     this.table.fetcher = (filter: DefaultSearchFilter) => {
       Object.assign(this.filter, filter);
@@ -100,20 +101,17 @@ export class MergeRequestsComponent implements OnInit {
         .pipe(map(({data: {mergeRequests}}) => deserialize(mergeRequests, PagingMergeRequest)));
     };
 
-    combineLatest(this.team$, this.user$, this.project$, this.state$)
-      .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged())
-      .subscribe(([team, user, project, state]) => {
-        this.filter.team = team;
-        this.filter.user = user;
-        this.filter.project = project;
-        this.filter.state = state;
+    combineLatest([this.team$, this.user$, this.project$, this.state$]).pipe(
+      debounceTime(PLATFORM_DELAY),
+      distinctUntilChanged(),
+      map(([team, user, project, state]) => ({team, user, project, state}))
+    ).subscribe(filter => {
+      Object.assign(this.filter, filter);
+      this.table.load();
+      this.loadSummary();
+    });
 
-        this.table.load();
-        this.loadSummary();
-      });
-
-    this.form.valueChanges
-      .pipe(distinctUntilChanged())
+    this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(({state}) => {
         const filtering: { state? } = {};
         if (state !== MergeRequestState.opened) {
@@ -123,7 +121,7 @@ export class MergeRequestsComponent implements OnInit {
       });
   }
 
-  private loadSummary() {
+  loadSummary() {
     this.mergeRequestsSummaryGQL.fetch(serialize(this.filter) as R)
       .pipe(map(({data: {summary}}) =>
         deserialize(summary, MergeRequestSummary)))

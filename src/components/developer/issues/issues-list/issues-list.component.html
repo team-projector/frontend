@@ -3,5 +3,6 @@
             [dueDate]="dueDate"
             [type]="type"
             [view]="viewType.extended"
-            (filtered)="filtered($event)">
+            (filtered)="filtered($event)"
+            (reloaded)="reloaded.emit()">
 </app-issues>

@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { User } from 'src/models/user';
 import { UI } from 'junte-ui';
-import { ArraySerializer, deserialize, ModelSerializer, serialize } from 'serialize-ts';
-import { Project } from 'src/models/project';
 import { MergeRequestState } from 'src/models/merge-request';
+import { Project } from 'src/models/project';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-developer-merge-requests-list',
@@ -19,6 +18,8 @@ export class DeveloperMergeRequestsListComponent implements OnInit {
   user: User;
   project: Project;
   state: MergeRequestState;
+
+  @Output() reloaded = new EventEmitter();
 
   constructor(private route: ActivatedRoute,
               private router: Router) {
