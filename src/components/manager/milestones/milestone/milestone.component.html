@@ -1,6 +1,6 @@
 <jnt-form [formGroup]="form" cdkDropListGroup>
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.stack.gutter.big">
-    <app-milestone-tickets tickets
+    <app-milestone-tickets #milestoneTickets
                            formControlName="tickets"
                            [milestone]="milestone">
     </app-milestone-tickets>
@@ -37,7 +37,7 @@
     </jnt-stack>
     <jnt-row>
       <jnt-col [mobile]="12" [wide]="8">
-        <app-milestone-issues></app-milestone-issues>
+        <app-milestone-issues (reloaded)="loadSummary(); milestoneTickets.load()"></app-milestone-issues>
       </jnt-col>
       <jnt-col [mobile]="12" [wide]="4">
         <jnt-chart formControlName="team" title="Teams" metric="Hours" [widthMark]="50" keyField="id">

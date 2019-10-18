@@ -3,5 +3,6 @@
             [project]="project?.id"
             [dueDate]="dueDate"
             [type]="type"
-            (filtered)="filtered($event)">
+            (filtered)="filtered($event)"
+            (reloaded)="reloaded.emit()">
 </app-issues>

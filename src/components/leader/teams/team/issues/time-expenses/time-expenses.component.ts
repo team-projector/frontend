@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Team } from '../../../../../../models/team';
-import { User } from '../../../../../../models/user';
+import { Team } from 'src/models/team';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-team-time-expenses-component',
@@ -14,6 +14,8 @@ export class TeamTimeExpensesListComponent implements OnInit {
   team: Team;
   user: User;
   dueDate: Date;
+
+  @Output() reloaded = new EventEmitter();
 
   constructor(private route: ActivatedRoute) {
   }
