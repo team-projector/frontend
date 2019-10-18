@@ -13,6 +13,47 @@ export enum TicketTypes {
 }
 
 @model()
+export class TicketMetrics {
+
+  @field({mock: '{{money}}'})
+  customerPayroll: number;
+
+  @field({mock: '{{money}}'})
+  payroll: number;
+
+  @field({mock: '{{money}}'})
+  budgetSpent: number;
+
+  @field({mock: '{{money}}'})
+  budgetRemains: number;
+
+  @field({mock: '{{money}}'})
+  profit: number;
+
+  @field({mock: '{{int 10 100}}'})
+  timeEstimate: number;
+
+  @field({mock: '{{int 10 100}}'})
+  timeSpent: number;
+
+  @field({mock: '{{int 10 100}}'})
+  timeRemains: number;
+
+  @field({mock: '{{efficiency}}'})
+  efficiency: number;
+
+  @field({mock: '{{int 10 100}}'})
+  issuesCount: number;
+
+  @field({mock: '{{int 10 100}}'})
+  issuesOpenedCount: number;
+
+  @field({mock: '{{int 10 100}}'})
+  issuesClosedCount: number;
+
+}
+
+@model()
 export class Ticket {
 
   @field()
@@ -32,6 +73,9 @@ export class Ticket {
 
   @field()
   url: string;
+
+  @field({mock: '{{> milestone_metrics}}'})
+  metrics: TicketMetrics;
 }
 
 @model()

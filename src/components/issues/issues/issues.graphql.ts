@@ -7,7 +7,7 @@ import { Mutation, Query } from 'apollo-angular';
 })
 export class SyncIssueGQL extends Mutation<{ syncIssue: { issue: { id } } }> {
   document = gql`
-    mutation SyncIssue($id: ID) {
+    mutation SyncIssue($id: ID!) {
       syncIssue(id: $id) {
         issue {
           id

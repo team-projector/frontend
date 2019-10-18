@@ -1,39 +1,41 @@
-<jnt-container>
-  <jnt-block>
-    <jnt-form>
-      <jnt-gantt title="Tickets">
-        <jnt-gantt-line *ngFor="let ticket of tickets"
-                        [period]="ticket"
-                        [from]="ticket.startDate"
-                        [to]="ticket.dueDate">
-          <ng-template #indicator let-period="period" let-current="current">
-            <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
-                 [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)" period>
+<jnt-block [loading]="loading">
+  <jnt-form>
+    <jnt-gantt title="Tickets">
+      <jnt-gantt-line *ngFor="let ticket of tickets"
+                      [period]="ticket"
+                      [from]="ticket.startDate"
+                      [to]="ticket.dueDate">
+        <ng-template #indicator let-period="period" let-current="current">
+          <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
+               [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)" period>
               <span label>
                 {{(period['dueDate'] | dateDiff:period['startDate']) + 1 }} days
               </span>
-            </div>
-          </ng-template>
-          <ng-template #title>
-            <jnt-stack [type]="ui.stack.type.horizontal"
-                       [justify]="ui.flex.justify.between"
-                       [align]="ui.flex.align.center"
-                       [attr.ticket]="ticket.id"
-                       [cdkDropListEnterPredicate]="predicate"
-                       cdkDropList (cdkDropListDropped)="drop($event)">
-              <jnt-link (click)="onChange(ticket)" [title]="ticket.title"></jnt-link>
+          </div>
+        </ng-template>
+        <ng-template #title>
+          <jnt-stack [type]="ui.stack.type.horizontal"
+                     [justify]="ui.flex.justify.between"
+                     [align]="ui.flex.align.center"
+                     [attr.ticket]="ticket.id"
+                     [cdkDropListEnterPredicate]="predicate"
+                     cdkDropList (cdkDropListDropped)="drop($event)">
+            <jnt-link (click)="onChange(ticket)" [title]="ticket.title"></jnt-link>
+            <jnt-stack [type]="ui.stack.type.horizontal">
+              <jnt-label *ngIf="ticket.metrics.issuesCount as count" [color]="ui.colors.gray500"
+                         [label]="count.toString()"></jnt-label>
               <jnt-button [icon]="ui.icons.font.edit" (click)="edit(ticket)" [size]="ui.sizes.small"></jnt-button>
             </jnt-stack>
-          </ng-template>
-        </jnt-gantt-line>
-        <jnt-gantt-line>
-          <ng-template #title>
-            <div title>
-              <jnt-button [icon]="ui.icons.font.plus" (click)="add()"></jnt-button>
-            </div>
-          </ng-template>
-        </jnt-gantt-line>
-      </jnt-gantt>
-    </jnt-form>
-  </jnt-block>
-</jnt-container>
+          </jnt-stack>
+        </ng-template>
+      </jnt-gantt-line>
+      <jnt-gantt-line>
+        <ng-template #title>
+          <div title>
+            <jnt-button [icon]="ui.icons.font.plus" (click)="add()"></jnt-button>
+          </div>
+        </ng-template>
+      </jnt-gantt-line>
+    </jnt-gantt>
+  </jnt-form>
+</jnt-block>
