@@ -24,6 +24,7 @@
   border: 1px dashed $secondary-dark-color;
   border-radius: $corner-normal;
   line-height: 1em;
+
   &[active='true'] {
     border-color: transparent;
     background: $primary-light-color;
@@ -31,9 +32,11 @@
     padding-right: $gutter-huge;
     box-shadow: $shadow-normal;
   }
+
   [avatar], [host=#{$jnt-icon-host}] {
     margin-right: $gutter-small;
   }
+
   [reset] {
     position: absolute;
     top: $gutter-small;
@@ -92,17 +95,19 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin: auto;
   height: 45px;
   width: 45px;
 
   &[today='true'] {
-    background-color: $success-color;
+    border-radius: $corner-normal;
+    border: 2px solid $warning-color;
   }
 
   [issues] {
     position: absolute;
     top: 2px;
-    right: 2px;
+    right: 3px;
     background-color: blue;
     width: 5px;
     height: 5px;
@@ -129,6 +134,7 @@
   font-size: .75rem;
   margin: 0;
   padding: 0;
+
   li {
     ::ng-deep span[child-of=#{$jnt-link-host}] {
       font-size: .75rem;
