@@ -121,7 +121,7 @@ export class DeveloperIssuesComponent implements OnInit {
       this.loadSummary();
     });
 
-    combineLatest(this.user$, this.period$)
+    combineLatest([this.user$, this.period$])
       .pipe(filtering(([user, period]) => !!user && !!period))
       .subscribe(() => this.loadMetrics());
   }
@@ -160,7 +160,10 @@ export class DeveloperIssuesComponent implements OnInit {
 
   onActivate(component) {
     if (!!component.reloaded) {
-      component.reloaded.subscribe(() => this.loadSummary());
+      component.reloaded.subscribe(() => {
+        this.loadSummary();
+        this.loadMetrics();
+      });
     }
   }
 }

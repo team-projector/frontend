@@ -90,7 +90,7 @@ export class MilestoneTicketsComponent implements OnInit, ControlValueAccessor {
       .subscribe(() => this.load());
   }
 
-  private load() {
+  load() {
     this.loading = true;
 
     const filter = new TicketsFilter({

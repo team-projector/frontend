@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from 'junte-ui';
-import { Team } from 'src/models/team';
-import { User } from 'src/models/user';
 import { IssuesType } from 'src/models/issue';
 import { Project } from 'src/models/project';
+import { Team } from 'src/models/team';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-team-list-issues-component',
@@ -21,6 +21,8 @@ export class TeamIssuesListComponent implements OnInit {
   project: Project;
   dueDate: Date;
   type: IssuesType;
+
+  @Output() reloaded = new EventEmitter();
 
   constructor(private route: ActivatedRoute,
               private router: Router) {

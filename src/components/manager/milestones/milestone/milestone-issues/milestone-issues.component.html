@@ -4,5 +4,6 @@
             [type]="type"
             [view]="viewType.manager"
             [draggable]="true"
-            (filtered)="filtered($event)">
+            (filtered)="filtered($event)"
+            (reloaded)="reloaded.emit()">
 </app-issues>

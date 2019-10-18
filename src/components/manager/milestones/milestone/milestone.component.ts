@@ -80,10 +80,14 @@ export class MilestoneComponent implements OnInit {
         this.filter.ticket = ticket.id;
       }
 
-      this.milestoneIssuesSummaryGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {summary}}) => deserialize(summary, IssuesSummary)))
-        .subscribe(summary => this.summary = summary);
+      this.loadSummary();
     });
+  }
+
+  loadSummary() {
+    this.milestoneIssuesSummaryGQL.fetch(serialize(this.filter) as R)
+      .pipe(map(({data: {summary}}) => deserialize(summary, IssuesSummary)))
+      .subscribe(summary => this.summary = summary);
   }
 
 }

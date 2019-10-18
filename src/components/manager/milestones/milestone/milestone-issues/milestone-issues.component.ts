@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ViewType } from 'src/components/issues/issues/issues.component';
 import { IssuesType } from 'src/models/issue';
@@ -19,6 +19,8 @@ export class MilestoneIssuesComponent implements OnInit {
   ticket: Ticket;
   type: IssuesType;
   problems: boolean;
+
+  @Output() reloaded = new EventEmitter();
 
   constructor(private route: ActivatedRoute,
               private router: Router) {
