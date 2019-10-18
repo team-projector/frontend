@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { tick } from '@angular/core/testing';
 import { FormBuilder, Validators } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
@@ -16,6 +17,7 @@ import { Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
 })
 export class EditTicketComponent {
 
+  private _ticket: Ticket;
   ui = UI;
   milestoneTicketTypes = TicketTypes;
 
@@ -26,7 +28,7 @@ export class EditTicketComponent {
     title: [null, Validators.required],
     startDate: [new Date(), Validators.required],
     dueDate: [new Date(), Validators.required],
-    url: [null, Validators.required]
+    url: [null]
   });
 
   @Input() set milestone(milestone: string) {
@@ -35,6 +37,8 @@ export class EditTicketComponent {
 
   @Input() set ticket(ticket: Ticket) {
     if (!!ticket) {
+      this._ticket = ticket;
+
       this.form.patchValue({
         id: ticket.id,
         type: ticket.type,
@@ -44,6 +48,10 @@ export class EditTicketComponent {
         url: ticket.url,
       });
     }
+  }
+
+  get ticket() {
+    return this._ticket;
   }
 
   @Output() saved = new EventEmitter<TicketUpdate>();

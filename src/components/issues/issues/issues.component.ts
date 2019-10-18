@@ -1,3 +1,4 @@
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -203,6 +204,12 @@ export class IssuesComponent implements OnInit {
     this.syncIssueGQL.mutate({id: issue})
       .pipe(finalize(() => this.progress.sync = false))
       .subscribe(() => this.table.load());
+  }
+
+  dropped(event: CdkDragDrop<any>) {
+    if (!!event.container.element.nativeElement.attributes.getNamedItem('ticket')) {
+      this.sync(event.item.data.issue);
+    }
   }
 
 }

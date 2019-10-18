@@ -33,6 +33,7 @@
                    [gutter]="ui.stack.gutter.small"
                    [align]="ui.flex.align.center"
                    [cdkDragDisabled]="!draggable"
+                   (cdkDragDropped)="dropped($event)"
                    cdkDropList cdkDrag [cdkDragData]="{issue: id}">
           <jnt-icon *ngIf="draggable" icon="burger" cdkDragHandle></jnt-icon>
           <jnt-avatars-list>
