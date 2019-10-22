@@ -28,23 +28,23 @@
     </ng-template>
     <jnt-table-column i18n-title="@@issue_title" title="Title">
       <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
-                   let-participants="participants" let-project="project" let-closedAt="closedAt" let-id="id">
+                   let-user="user" let-project="project" let-ticket="ticket"
+                   let-closedAt="closedAt" let-id="id">
         <jnt-stack [type]="ui.stack.type.horizontal"
                    [gutter]="ui.stack.gutter.small"
-                   [align]="ui.flex.align.center"
                    [cdkDragDisabled]="!draggable"
                    (cdkDragDropped)="dropped($event)"
                    cdkDropList cdkDrag [cdkDragData]="{issue: id}">
-          <jnt-icon *ngIf="draggable" icon="burger" cdkDragHandle></jnt-icon>
-          <jnt-avatars-list>
-            <jnt-avatar *ngFor="let p of participants"
-                        [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>
-          </jnt-avatars-list>
+          <jnt-button *ngIf="draggable" [icon]="ui.icons.burger" [scheme]="ui.schemes.secondary"
+                      [size]="ui.sizes.tiny" cdkDragHandle></jnt-button>
+          <jnt-avatar [text]="user.name" [image]="user.avatar" [size]="ui.sizes.tiny"></jnt-avatar>
           <jnt-stack [type]="ui.stack.type.vertical"
                      [gutter]="ui.stack.gutter.tiny">
+            <jnt-label *ngIf="ticket" [color]="ui.colors.purpleLight"
+                       [label]="ticket.title"></jnt-label>
             <jnt-stack [type]="ui.stack.type.horizontal"
                        [gutter]="ui.stack.gutter.small"
-                       [align]="ui.flex.align.center">
+                       [justify]="ui.flex.justify.start">
               <jnt-link [source]="url" target="_blank"
                         [attr.closed]="state == issuesState.closed" [title]="title">
               </jnt-link>
@@ -57,17 +57,10 @@
                         state
                         [icon]="ui.icons.font.check"></jnt-icon>
               <small *ngIf="state == issuesState.closed">{{closedAt | fromNow}}</small>
-
             </jnt-stack>
             <small>{{project?.fullTitle}}</small>
           </jnt-stack>
         </jnt-stack>
-      </ng-template>
-    </jnt-table-column>
-
-    <jnt-table-column *ngIf="view === viewType.manager" i18n-title="@@ticket" title="Ticket">
-      <ng-template #cellTemplate let-ticket="ticket">
-        {{ticket?.title}}
       </ng-template>
     </jnt-table-column>
 

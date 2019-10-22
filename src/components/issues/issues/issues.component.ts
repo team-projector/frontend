@@ -15,8 +15,7 @@ import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
 
 export enum ViewType {
   default,
-  extended,
-  manager
+  extended
 }
 
 @Component({

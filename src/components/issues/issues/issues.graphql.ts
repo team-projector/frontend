@@ -52,6 +52,7 @@ export class IssuesGQL extends Query<{ issues }> {
             ticket {
               id
               title
+              url
             }
             user {
               id
