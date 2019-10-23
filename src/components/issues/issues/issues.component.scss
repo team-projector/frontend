@@ -4,6 +4,17 @@
   display: block;
 }
 
+[ticket] ::ng-deep {
+  border: 1px solid $primary-color;
+  padding: 0 $gutter-small;
+  border-radius: $corner-small;
+  background-color: $secondary-color;
+  // TODO: why do need use span?
+  a[child-of=#{$jnt-link-host}], span[child-of=#{$jnt-link-host}] {
+    font-size: .75rem;
+  }
+}
+
 [state] {
   color: $success-color;
   &[doing] {

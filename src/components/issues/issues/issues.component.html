@@ -40,8 +40,10 @@
           <jnt-avatar [text]="user.name" [image]="user.avatar" [size]="ui.sizes.tiny"></jnt-avatar>
           <jnt-stack [type]="ui.stack.type.vertical"
                      [gutter]="ui.stack.gutter.tiny">
-            <jnt-label *ngIf="ticket" [color]="ui.colors.purpleLight"
-                       [label]="ticket.title"></jnt-label>
+            <jnt-link *ngIf="ticket" ticket [icon]="ui.icons.externalLink"
+                      target="_blank"
+                      [source]="ticket.url"
+                      [title]="ticket.title"></jnt-link>
             <jnt-stack [type]="ui.stack.type.horizontal"
                        [gutter]="ui.stack.gutter.small"
                        [justify]="ui.flex.justify.start">

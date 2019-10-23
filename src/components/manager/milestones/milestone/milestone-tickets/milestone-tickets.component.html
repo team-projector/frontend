@@ -22,8 +22,14 @@
                      cdkDropList (cdkDropListDropped)="drop($event)">
             <jnt-link (click)="onChange(ticket)" [title]="ticket.title"></jnt-link>
             <jnt-stack [type]="ui.stack.type.horizontal">
-              <jnt-label *ngIf="ticket.metrics.issuesCount as count" [color]="ui.colors.gray500"
-                         [label]="count.toString()"></jnt-label>
+              <jnt-link *ngIf="ticket.url" [icon]="ui.icons.externalLink"
+                        [source]="ticket.url" target="_blank"></jnt-link>
+              <jnt-label *ngIf="ticket.metrics.issuesClosedCount as issuesClosedCount"
+                         [color]="ui.colors.green"
+                         [label]="issuesClosedCount"></jnt-label>
+              <jnt-label *ngIf="ticket.metrics.issuesOpenedCount as issuesOpenedCount"
+                         [color]="ui.colors.gray500"
+                         [label]="issuesOpenedCount"></jnt-label>
               <jnt-button [icon]="ui.icons.font.edit" (click)="edit(ticket)" [size]="ui.sizes.small"></jnt-button>
             </jnt-stack>
           </jnt-stack>
