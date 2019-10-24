@@ -15,7 +15,7 @@
   <jnt-stack [type]="ui.stack.type.horizontal"
              [justify]="ui.flex.justify.between"
              *ngFor="let issue of status.lastIssues">
-    <jnt-stack [gutter]="ui.stack.gutter.tiny">
+    <jnt-stack [gutter]="ui.gutter.tiny">
       <jnt-link [source]="issue.glUrl" target="_blank" [title]="issue.title"></jnt-link>
       <div project>{{issue.project?.fullTitle}}</div>
     </jnt-stack>
