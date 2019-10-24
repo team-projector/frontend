@@ -1,5 +1,5 @@
 <jnt-form [formGroup]="form">
-  <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.stack.gutter.big">
+  <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
     <app-metrics-type formControlName="metric" metrics></app-metrics-type>
     <jnt-row>
       <jnt-col [mobile]="12" [wide]="7">
@@ -21,7 +21,7 @@
               <ul milestones>
                 <li *ngFor="let m of p.project.milestones">
                   <jnt-stack [type]="ui.stack.type.horizontal"
-                             [gutter]="ui.stack.gutter.tiny"
+                             [gutter]="ui.gutter.tiny"
                              [align]="ui.flex.align.center">
                     <jnt-link [source]="m.glUrl" [title]="m.title"
                               target="_blank"></jnt-link>

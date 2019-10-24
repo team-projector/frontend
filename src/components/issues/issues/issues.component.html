@@ -31,7 +31,7 @@
                    let-user="user" let-project="project" let-ticket="ticket"
                    let-closedAt="closedAt" let-id="id">
         <jnt-stack [type]="ui.stack.type.horizontal"
-                   [gutter]="ui.stack.gutter.small"
+                   [gutter]="ui.gutter.small"
                    [cdkDragDisabled]="!draggable"
                    (cdkDragDropped)="dropped($event)"
                    cdkDropList cdkDrag [cdkDragData]="{issue: id}">
@@ -39,13 +39,13 @@
                       [size]="ui.sizes.tiny" cdkDragHandle></jnt-button>
           <jnt-avatar [text]="user.name" [image]="user.avatar" [size]="ui.sizes.tiny"></jnt-avatar>
           <jnt-stack [type]="ui.stack.type.vertical"
-                     [gutter]="ui.stack.gutter.tiny">
+                     [gutter]="ui.gutter.tiny">
             <jnt-link *ngIf="ticket" ticket [icon]="ui.icons.externalLink"
                       target="_blank"
                       [source]="ticket.url"
                       [title]="ticket.title"></jnt-link>
             <jnt-stack [type]="ui.stack.type.horizontal"
-                       [gutter]="ui.stack.gutter.small"
+                       [gutter]="ui.gutter.small"
                        [justify]="ui.flex.justify.start">
               <jnt-link [source]="url" target="_blank"
                         [attr.closed]="state == issuesState.closed" [title]="title">
@@ -68,7 +68,7 @@
 
     <jnt-table-column i18n-title="@@dueDate" title="Due date">
       <ng-template #cellTemplate let-dueDate="dueDate" let-problems="problems">
-        <jnt-stack [gutter]="ui.stack.gutter.tiny">
+        <jnt-stack [gutter]="ui.gutter.tiny">
           <app-due-date *ngIf="dueDate" [dueDate]="dueDate"></app-due-date>
           <jnt-stack [type]="ui.stack.type.vertical">
             <jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
@@ -90,7 +90,7 @@
         <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
           <ng-template #legend>
             <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
-                       [justify]="ui.flex.justify.between" [gutter]="ui.stack.gutter.normal">
+                       [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
               <div metric>{{totalTimeSpent | duration}}</div>
               <div metric estimate>{{timeEstimate | duration}}</div>
             </jnt-stack>
