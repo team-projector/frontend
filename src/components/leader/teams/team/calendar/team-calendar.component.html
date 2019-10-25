@@ -33,9 +33,9 @@
   </tr>
   </thead>
 
-  <tbody>
+  <tbody [attr.personalized]="!!user.value">
   <ng-container *ngIf="!!members.length; else noData">
-    <tr *ngFor="let member of members" [attr.active]="user.value?.id == member.user.id">
+    <tr *ngFor="let member of members" [attr.selected]="user.value?.id == member.user.id">
       <td gutter></td>
       <td>
         <jnt-stack (click)="form.patchValue({user: member.user, dueDate: null})"

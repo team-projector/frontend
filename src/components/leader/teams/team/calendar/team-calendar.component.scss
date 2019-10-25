@@ -37,14 +37,10 @@
             &:hover, &[active='true'] {
               background-color: $gray-700-color;
             }
+
             &[active-day='true'] {
               background: $gray-800-color;
             }
-          }
-        }
-        &[active='true'] {
-          td {
-            background-color: $gray-800-color;
           }
         }
       }
@@ -245,6 +241,14 @@ table {
           td:last-child {
             border-bottom-right-radius: $corner-normal;
           }
+        }
+      }
+    }
+    &[personalized='true'] {
+      tr {
+        display: none;
+        &[selected='true'] {
+          display: table-row;
         }
       }
     }

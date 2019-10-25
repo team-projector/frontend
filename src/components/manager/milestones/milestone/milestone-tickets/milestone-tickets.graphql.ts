@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 export class AllTicketsGQL extends Query<{ allTickets }> {
   document = gql`
     query AllTickets($milestone: ID!, $offset: Int, $first: Int) {
-      allTickets(milestone: $milestone, orderBy: "-dueDate", offset: $offset, first: $first) {
+      allTickets(milestone: $milestone, orderBy: "dueDate", offset: $offset, first: $first) {
         count
         edges {
           node {
