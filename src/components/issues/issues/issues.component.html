@@ -37,7 +37,7 @@
                    cdkDropList cdkDrag [cdkDragData]="{issue: id}">
           <jnt-button *ngIf="draggable" [icon]="ui.icons.burger" [scheme]="ui.schemes.secondary"
                       [size]="ui.sizes.tiny" cdkDragHandle></jnt-button>
-          <jnt-avatar [text]="user.name" [image]="user.avatar" [size]="ui.sizes.tiny"></jnt-avatar>
+          <jnt-avatar *ngIf="!!user" [text]="user.name" [image]="user.avatar" [size]="ui.sizes.tiny"></jnt-avatar>
           <jnt-stack [type]="ui.stack.type.vertical"
                      [gutter]="ui.gutter.tiny">
             <jnt-link *ngIf="ticket" ticket [icon]="ui.icons.externalLink"
