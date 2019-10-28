@@ -93,6 +93,7 @@ table {
               justify-content: center;
               align-items: center;
               transition: box-shadow .3s;
+              line-height: 0;
               &:focus {
                 outline: none;
                 box-shadow: 0 0 6px rgba(8, 35, 202, 0.4);
