@@ -10,27 +10,27 @@
           {{tickets.value.title}}
           <jnt-button reset [scheme]="ui.schemes.secondary"
                       [size]="ui.sizes.tiny"
-                      [icon]="ui.icons.font.close"
+                      [icon]="ui.icons.close"
                       (click)="tickets.patchValue(null)"></jnt-button>
         </ng-container>
         <ng-template #noFilterTickets>
-          <jnt-icon icon [icon]="ui.icons.font.project"></jnt-icon>
+          <jnt-icon icon [icon]="ui.icons.project"></jnt-icon>
           Tickets
         </ng-template>
       </div>
 
       <div filter [attr.active]="!!team?.value">
         <ng-container *ngIf="!!team?.value;else noFilterTeam">
-          <jnt-icon icon [icon]="ui.icons.font.team"></jnt-icon>
+          <jnt-icon icon [icon]="ui.icons.team"></jnt-icon>
           <div>{{team.value.title}}</div>
           <jnt-button reset [scheme]="ui.schemes.secondary"
                       [size]="ui.sizes.tiny"
-                      [icon]="ui.icons.font.close"
+                      [icon]="ui.icons.close"
                       (click)="team.patchValue(null)">
           </jnt-button>
         </ng-container>
         <ng-template #noFilterTeam>
-          <jnt-icon icon [icon]="ui.icons.font.team"></jnt-icon>
+          <jnt-icon icon [icon]="ui.icons.team"></jnt-icon>
           Pick a team
         </ng-template>
       </div>

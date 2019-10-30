@@ -1,4 +1,4 @@
-<jnt-link [icon]="ui.icons.font.settings"
+<jnt-link [icon]="ui.icons.settings"
           [scheme]="ui.schemes.secondary"
           [outline]="ui.outline.fill"
           source="/admin/"
@@ -14,7 +14,7 @@
     <p>{{error}}</p>
     <jnt-form-item>
       <jnt-form-control name="login">
-        <jnt-input formControlName="login" placeholder="Login" [icon]="ui.icons.font.user"></jnt-input>
+        <jnt-input formControlName="login" placeholder="Login" [icon]="ui.icons.user"></jnt-input>
         <jnt-form-message [type]="ui.form.validators.typeError.required">
           Field is required!
         </jnt-form-message>
@@ -23,7 +23,7 @@
 
     <jnt-form-item>
       <jnt-form-control name="password">
-        <jnt-input formControlName="password" placeholder="Password" [icon]="ui.icons.font.accessLock" required
+        <jnt-input formControlName="password" placeholder="Password" [icon]="ui.icons.accessLock" required
                    [type]="ui.form.input.password"></jnt-input>
         <jnt-form-message [type]="ui.form.validators.typeError.required">
           Field is required!
