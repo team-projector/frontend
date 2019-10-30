@@ -26,11 +26,11 @@
                         [source]="ticket.url" target="_blank"></jnt-link>
               <jnt-label *ngIf="ticket.metrics.issuesClosedCount as issuesClosedCount"
                          [color]="ui.colors.green"
-                         [label]="issuesClosedCount"></jnt-label>
+                         [label]="issuesClosedCount.toString()"></jnt-label>
               <jnt-label *ngIf="ticket.metrics.issuesOpenedCount as issuesOpenedCount"
                          [color]="ui.colors.gray500"
-                         [label]="issuesOpenedCount"></jnt-label>
-              <jnt-button [icon]="ui.icons.font.edit" (click)="edit(ticket)" [size]="ui.sizes.small"></jnt-button>
+                         [label]="issuesOpenedCount.toString()"></jnt-label>
+              <jnt-button [icon]="ui.icons.edit" (click)="edit(ticket)" [size]="ui.sizes.small"></jnt-button>
             </jnt-stack>
           </jnt-stack>
         </ng-template>
@@ -38,7 +38,7 @@
       <jnt-gantt-line>
         <ng-template #title>
           <div title>
-            <jnt-button [icon]="ui.icons.font.plus" (click)="add()"></jnt-button>
+            <jnt-button [icon]="ui.icons.plus" (click)="add()"></jnt-button>
           </div>
         </ng-template>
       </jnt-gantt-line>

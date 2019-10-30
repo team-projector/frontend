@@ -1,5 +1,5 @@
 <jnt-stack [gutter]="ui.gutter.large">
-  <jnt-link [icon]="ui.icons.font.settings" source="/admin/development/team/"
+  <jnt-link [icon]="ui.icons.settings" source="/admin/development/team/"
             target="_blank" title="Manage"></jnt-link>
 
   <jnt-stack [type]="ui.stack.type.horizontal" [wrap]="ui.flex.wrap.wrap" [align]="ui.flex.align.stretch">
@@ -18,9 +18,9 @@
     <ng-template #teamsTemplate>
       <a *ngFor="let team of teams" [routerLink]="[team.id]" team>
         <jnt-block [padding]="ui.padding.normal" [title]="team.title" block>
-          <jnt-label *ngIf="team.metrics.problemsCount" problems [icon]="ui.icons.font.warning"
+          <jnt-label *ngIf="team.metrics.problemsCount" problems [icon]="ui.icons.warning"
                      [color]="ui.colors.red"
-                     [label]="team.metrics.problemsCount"></jnt-label>
+                     [label]="team.metrics.problemsCount.toString()"></jnt-label>
           <jnt-avatars-group [size]="ui.sizes.normal">
             <jnt-avatar *ngFor="let member of team.members"
                         [image]="member.user.avatar">

@@ -59,7 +59,7 @@
                                  [icon]="ui.icons.animated.runningMan"></jnt-animated-icon>
               <jnt-icon *ngIf="labels | hasLabel:standardLabel.done"
                         state
-                        [icon]="ui.icons.font.check"></jnt-icon>
+                        [icon]="ui.icons.check"></jnt-icon>
               <small *ngIf="state == issuesState.closed">{{closedAt | fromNow}}</small>
             </jnt-stack>
             <small>{{project?.fullTitle}}</small>
@@ -121,7 +121,7 @@
 
     <ng-template #rowActions let-row="row">
       <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
-        <jnt-menu-item [icon]="ui.icons.font.sync" title="Sync from GitLab"
+        <jnt-menu-item [icon]="ui.icons.sync" title="Sync from GitLab"
                        (click)="sync(row.id)"></jnt-menu-item>
       </jnt-menu>
     </ng-template>
