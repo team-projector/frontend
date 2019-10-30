@@ -43,7 +43,9 @@
             <jnt-link *ngIf="ticket" ticket [icon]="ui.icons.externalLink"
                       target="_blank"
                       [source]="ticket.url"
-                      [title]="ticket.title"></jnt-link>
+                      [title]="ticket.title"
+                      [outline]="ui.outline.ghost">
+            </jnt-link>
             <jnt-stack [type]="ui.stack.type.horizontal"
                        [gutter]="ui.gutter.small"
                        [justify]="ui.flex.justify.start">

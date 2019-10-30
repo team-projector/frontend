@@ -1,6 +1,10 @@
-<div admin>
-    <jnt-link [icon]="ui.icons.font.settings" source="/admin/" title="Administrator"></jnt-link>
-</div>
+<jnt-link [icon]="ui.icons.font.settings"
+          [scheme]="ui.schemes.secondary"
+          [outline]="ui.outline.fill"
+          source="/admin/"
+          title="Administrator"
+          admin>
+</jnt-link>
 
 <jnt-block [padding]="ui.padding.large" [loading]="progress.gitlab">
   <jnt-form form [formGroup]="loginForm" (submitted)="login()" [footerForm]="footerForm" jntValidation>
