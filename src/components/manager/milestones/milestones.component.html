@@ -16,8 +16,8 @@
       </jnt-table-column>
       <jnt-table-column title="Period">
         <ng-template #cellTemplate let-startDate="budget" let-problems="problems" let-dueDate="dueDate">
-          <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.center">
-            <div [innerHTML]="startDate | period:dueDate"></div>
+          <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.stretch">
+            <jnt-date-period [start]="startDate" [end]="dueDate"></jnt-date-period>
             <jnt-label *ngIf="problems?.includes(milestoneProblem.overDueDate)"
                        [color]="ui.colors.red" label="overdue">
             </jnt-label>
