@@ -2,8 +2,8 @@
 <jnt-popover #popover></jnt-popover>
 <jnt-app-layout #layout>
   <jnt-app-header>
-    <ng-template #logo *ngIf="!!themeControl.value">
-      <img [src]="'/assets/images/logo-' + themeControl.value + '.svg'" logo>
+    <ng-template #logo>
+      <img [src]="'/assets/images/logo-' + (theme === 'dark' ? 'dark' : 'light') + '.svg'" logo>
     </ng-template>
     <ng-template #topMenu>
       <jnt-menu>
