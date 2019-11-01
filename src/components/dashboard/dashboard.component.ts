@@ -21,14 +21,26 @@ enum Themes {
 })
 export class DashboardComponent implements OnInit {
 
+  private _theme = Themes.light;
+
   ui = UI;
   userRole = UserRole;
+  loading = false;
   themes = Themes;
   themeControl = new FormControl(Themes[localStorage.getItem('theme')]);
 
   themeForm = this.fb.group({
     theme: this.themeControl
   });
+
+  set theme(theme: Themes) {
+    this._theme = theme;
+    this.load(theme);
+  }
+
+  get theme() {
+    return this._theme;
+  }
 
   @ViewChild('layout', {read: ElementRef, static: true}) backdrop;
   @ViewChild('modal', {static: true}) modal: ModalComponent;
@@ -47,7 +59,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     window.postMessage(APPLICATION_READY, location.origin);
-    this.themeControl.valueChanges.subscribe(theme => this.load(theme));
+    this._theme = Themes[localStorage.getItem('theme')];
+    this.themeControl.setValue(this.theme);
+    this.themeControl.valueChanges.subscribe(theme => this.theme = theme);
     this.modalService.register(this.modal);
     this.popoverService.register(this.popover);
   }
@@ -58,7 +72,8 @@ export class DashboardComponent implements OnInit {
   }
 
   private load(theme: Themes) {
-    window['themes'](theme);
+    this.loading = true;
+    window['themes'](theme, () => this.loading = false);
   }
 
 }
