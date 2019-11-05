@@ -7,7 +7,11 @@ import { BehaviorSubject, combineLatest } from 'rxjs';
 import { filter as filtering, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { EditTicketComponent } from 'src/components/manager/milestones/milestone/milestone-tickets/edit-ticket/edit-ticket.component';
-import { AllTicketsGQL, AttachIssueGQL } from 'src/components/manager/milestones/milestone/milestone-tickets/milestone-tickets.graphql';
+import {
+  AllTicketsGQL,
+  AttachIssueGQL,
+  DeleteTicketGQL
+} from 'src/components/manager/milestones/milestone/milestone-tickets/milestone-tickets.graphql';
 import { Milestone } from 'src/models/milestone';
 import { PagingTickets, Ticket, TicketsFilter } from 'src/models/ticket';
 import { equals } from 'src/utils/equals';
@@ -35,6 +39,12 @@ export class MilestoneTicketsComponent implements OnInit, ControlValueAccessor {
   loading = false;
   tickets: Ticket[] = [];
   ticket: Ticket;
+
+  colors = {
+    feature: UI.colors.green,
+    improvement: UI.colors.blue,
+    bug_fixing: UI.colors.red
+  };
 
   @ViewChild('content', {static: false})
   content: TemplateRef<any>;
@@ -78,6 +88,7 @@ export class MilestoneTicketsComponent implements OnInit, ControlValueAccessor {
   }
 
   constructor(private allTicketsGQL: AllTicketsGQL,
+              private deleteTicketGQL: DeleteTicketGQL,
               private attachIssueGQL: AttachIssueGQL,
               private cfr: ComponentFactoryResolver,
               private injector: Injector,
@@ -132,6 +143,11 @@ export class MilestoneTicketsComponent implements OnInit, ControlValueAccessor {
 
   edit(ticket: Ticket) {
     this.open('Edit ticket', 'edit', ticket);
+  }
+
+  delete(id: string) {
+    this.deleteTicketGQL.fetch({id})
+      .subscribe(() => this.load());
   }
 
   open(title: string, icon: string, ticket: Ticket = null) {
