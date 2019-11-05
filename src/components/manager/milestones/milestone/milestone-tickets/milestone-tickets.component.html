@@ -20,17 +20,25 @@
                      [attr.ticket]="ticket.id"
                      [cdkDropListEnterPredicate]="predicate"
                      cdkDropList (cdkDropListDropped)="drop($event)">
-            <jnt-link (click)="onChange(ticket)" [title]="ticket.title"></jnt-link>
-            <jnt-stack [type]="ui.stack.type.horizontal">
+            <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center" [gutter]="ui.gutter.small">
+              <jnt-dot [color]="colors[ticket.type]"></jnt-dot>
+              <jnt-link (click)="onChange(ticket)" [title]="ticket.title"></jnt-link>
+            </jnt-stack>
+
+            <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center" [gutter]="ui.gutter.small">
               <jnt-link *ngIf="ticket.url" [icon]="ui.icons.externalLink"
-                        [source]="ticket.url" target="_blank"></jnt-link>
+                        [source]="ticket.url" target="_blank">
+              </jnt-link>
               <jnt-label *ngIf="ticket.metrics.issuesClosedCount as issuesClosedCount"
                          [color]="ui.colors.green"
-                         [label]="issuesClosedCount.toString()"></jnt-label>
+                         [label]="issuesClosedCount.toString()">
+              </jnt-label>
               <jnt-label *ngIf="ticket.metrics.issuesOpenedCount as issuesOpenedCount"
                          [color]="ui.colors.gray500"
-                         [label]="issuesOpenedCount.toString()"></jnt-label>
+                         [label]="issuesOpenedCount.toString()">
+              </jnt-label>
               <jnt-button [icon]="ui.icons.edit" (click)="edit(ticket)" [size]="ui.sizes.small"></jnt-button>
+              <jnt-button [icon]="ui.icons.delete" (click)="delete(ticket.id)" [size]="ui.sizes.small"></jnt-button>
             </jnt-stack>
           </jnt-stack>
         </ng-template>

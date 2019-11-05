@@ -3,6 +3,7 @@ import { tick } from '@angular/core/testing';
 import { FormBuilder, Validators } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
+import { finalize } from 'rxjs/operators';
 import { serialize } from 'serialize-ts/dist';
 import {
   CreateTicketGQL,
@@ -20,6 +21,7 @@ export class EditTicketComponent {
   private _ticket: Ticket;
   ui = UI;
   milestoneTicketTypes = TicketTypes;
+  saving = false;
 
   form = this.fb.group({
     id: [null],
@@ -63,8 +65,10 @@ export class EditTicketComponent {
   }
 
   save() {
+    this.saving = true;
     const mutation = !!this.ticket ? this.editTicketGQL : this.createTicketGQL;
     mutation.mutate(serialize(new TicketUpdate(this.form.getRawValue())) as R)
+      .pipe(finalize(() => this.saving = false))
       .subscribe(() => this.saved.emit());
   }
 }

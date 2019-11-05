@@ -49,3 +49,15 @@ export class AttachIssueGQL extends Query<{ issue }> {
       }
     }`;
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DeleteTicketGQL extends Query<{ issue }> {
+  document = gql`
+    mutation ($id: ID!) {
+      deleteTicket(id: $id) {
+        ok
+      }
+    }`;
+}

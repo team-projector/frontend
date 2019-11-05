@@ -56,7 +56,7 @@
 
   <ng-template #footerForm>
     <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.center" footer>
-      <jnt-button text="Save" [type]="ui.form.button.type.submit"></jnt-button>
+      <jnt-button text="Save" [type]="ui.form.button.type.submit" [loading]="saving"></jnt-button>
       <jnt-button text="Cancel" (click)="canceled.emit()" [scheme]="ui.schemes.secondary"></jnt-button>
     </jnt-stack>
   </ng-template>
