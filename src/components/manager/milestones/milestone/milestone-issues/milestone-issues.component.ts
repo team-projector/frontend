@@ -25,8 +25,9 @@ export class MilestoneIssuesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(({milestone, team, ticket, type}) =>
-      [this.milestone, this.team, this.ticket, this.type] = [milestone, team, ticket, type]);
+    this.route.data.subscribe(({milestone, team, ticket, type}) => {
+      [this.milestone, this.team, this.ticket, this.type] = [milestone, team, ticket, type || IssuesType.all]
+    });
   }
 
   filtered(state: { type? }) {
