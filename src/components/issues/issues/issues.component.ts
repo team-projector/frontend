@@ -50,13 +50,10 @@ export class IssuesComponent implements OnInit {
     type: this.typeControl
   });
 
-  @Input()
-  view = ViewType.default;
-
-  @Input()
-  draggable = false;
-
+  @Input() view = ViewType.default;
+  @Input() draggable = false;
   @Output() reloaded = new EventEmitter();
+  @Output() filtered = new EventEmitter<{ type? }>();
 
   @Input()
   set team(team: string) {
@@ -126,9 +123,6 @@ export class IssuesComponent implements OnInit {
   @ViewChild('table', {static: true})
   table: TableComponent;
 
-  @Output()
-  filtered = new EventEmitter<{ type? }>();
-
   constructor(private issuesGQL: IssuesGQL,
               private issuesSummaryGQL: IssuesSummaryGQL,
               private syncIssueGQL: SyncIssueGQL,
@@ -137,8 +131,7 @@ export class IssuesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.type$.subscribe(type =>
-      this.typeControl.patchValue(type, {emitEvent: false}));
+    this.type$.subscribe(type => this.typeControl.patchValue(type, {emitEvent: false}));
 
     this.table.fetcher = (filter: DefaultSearchFilter) => {
       this.filter.q = filter.q;
@@ -210,5 +203,4 @@ export class IssuesComponent implements OnInit {
       this.sync(event.item.data.issue);
     }
   }
-
 }

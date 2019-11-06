@@ -16,6 +16,6 @@ export class DueDateResolver implements Resolve<Date> {
 export class IssuesTypeResolver implements Resolve<IssuesType> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): IssuesType {
-    return route.params['type'] || IssuesType.opened;
+    return route.params['type'] || null;
   }
 }

@@ -31,7 +31,7 @@ export class TeamIssuesListComponent implements OnInit {
   ngOnInit() {
     this.route.data.subscribe(({team, user, project, dueDate, type}) =>
       [this.team, this.user, this.project, this.dueDate, this.type] =
-        [team, user, project, dueDate, type]);
+        [team, user, project, dueDate, type || IssuesType.opened]);
   }
 
   filtered(state: { type?, due_date?, project? }) {
