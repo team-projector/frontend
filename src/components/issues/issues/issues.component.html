@@ -53,6 +53,7 @@
                         [attr.closed]="state == issuesState.closed" [title]="title">
               </jnt-link>
               <jnt-label *ngFor="let l of (labels | labels)"
+                         [size]="ui.sizes.small"
                          [color]="l.color" [label]="l.title"></jnt-label>
               <jnt-animated-icon *ngIf="state == issuesState.opened && (labels | hasLabel:standardLabel.doing)"
                                  state doing
