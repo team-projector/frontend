@@ -5,6 +5,7 @@ function themes(theme, callback) {
     var exist = document.head.querySelector('style[theme="true"]');
     if (!!exist) {
       document.head.removeChild(exist);
+      document.body.removeAttribute('theme');
       localStorage.removeItem('theme');
     }
   };
