@@ -1,15 +1,14 @@
 <jnt-block [width]="ui.width.fluid">
   <jnt-table #table>
-    <jnt-table-column i18n-title="@@date" title="Period">
-      <ng-template #cellTemplate let-periodTo="periodTo" let-periodFrom="periodFrom" let-id="id">
-        <jnt-link [source]="[id]" [title]="(periodFrom | date:'shortDate') + '-' + (periodTo | date:'shortDate')">
-        </jnt-link>
+    <jnt-table-column i18n-title="@@chargedTime" title="Charged Time">
+      <ng-template #cellTemplate let-id="id" let-chargedTime="chargedTime">
+        <jnt-link [source]="[id]" [title]="chargedTime | duration"></jnt-link>
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column i18n-title="@@chargedTime" title="Charged Time">
-      <ng-template #cellTemplate let-chargedTime="chargedTime">
-        {{chargedTime | duration}}
+    <jnt-table-column i18n-title="@@date" title="Period">
+      <ng-template #cellTemplate let-periodTo="periodTo" let-periodFrom="periodFrom">
+        <jnt-date-period [start]="periodFrom" [end]="periodTo"></jnt-date-period>
       </ng-template>
     </jnt-table-column>
 
