@@ -6,12 +6,12 @@ import { ModalOptions, ModalService, UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
 import { filter as filtering, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { EditTicketComponent } from 'src/components/manager/milestones/milestone/milestone-tickets/edit-ticket/edit-ticket.component';
+import { EditTicketComponent } from 'src/components/manager/milestones/milestone/tickets/edit-ticket/edit-ticket.component';
 import {
   AllTicketsGQL,
   AttachIssueGQL,
   DeleteTicketGQL
-} from 'src/components/manager/milestones/milestone/milestone-tickets/milestone-tickets.graphql';
+} from 'src/components/manager/milestones/milestone/tickets/milestone-tickets.graphql';
 import { Milestone } from 'src/models/milestone';
 import { PagingTickets, Ticket, TicketsFilter } from 'src/models/ticket';
 import { equals } from 'src/utils/equals';

@@ -8,7 +8,7 @@ import { serialize } from 'serialize-ts/dist';
 import {
   CreateTicketGQL,
   EditTicketGQL
-} from 'src/components/manager/milestones/milestone/milestone-tickets/edit-ticket/edit-ticket.graphql';
+} from 'src/components/manager/milestones/milestone/tickets/edit-ticket/edit-ticket.graphql';
 import { Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
 
 @Component({

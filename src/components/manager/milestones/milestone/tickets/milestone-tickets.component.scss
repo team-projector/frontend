@@ -9,18 +9,14 @@
 }
 
 [period] {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
   margin: $gutter-tiny;
-  text-align: center;
   border-radius: $corner-large;
   background-color: $gray-600-color;
   color: $white-color;
   height: 40px;
   pointer-events: none;
   overflow: hidden;
-  text-overflow: ellipsis;
 
   &[over-from='true'] {
     border-top-left-radius: 0;
@@ -30,5 +26,21 @@
   &[over-to='true'] {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+  }
+  [label] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  [progress] {
+    background-color: $success-color;
+    transform: translateX(-50%);
+    height: 100%;
   }
 }

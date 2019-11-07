@@ -8,9 +8,9 @@
         <ng-template #indicator let-period="period" let-current="current">
           <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
                [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)" period>
-              <span label>
-                {{(period['dueDate'] | dateDiff:period['startDate']) + 1 }} days
-              </span>
+            <div *ngIf="ticket.metrics.issuesOpenedCount" label>{{ticket.metrics.timeRemains | duration}}</div>
+            <div progress [style.transform]="'translateX(-' + (ticket.metrics.issuesOpenedCount ? 100 - ticket.metrics.timeSpent / ticket.metrics.timeEstimate * 100 : 0) + '%)'">
+            </div>
           </div>
         </ng-template>
         <ng-template #title>
@@ -31,11 +31,11 @@
               </jnt-link>
               <jnt-label *ngIf="ticket.metrics.issuesClosedCount as issuesClosedCount"
                          [color]="ui.colors.green"
-                         [label]="issuesClosedCount.toString()">
+                         [label]="issuesClosedCount">
               </jnt-label>
               <jnt-label *ngIf="ticket.metrics.issuesOpenedCount as issuesOpenedCount"
                          [color]="ui.colors.gray500"
-                         [label]="issuesOpenedCount.toString()">
+                         [label]="issuesOpenedCount">
               </jnt-label>
               <jnt-button [icon]="ui.icons.edit" (click)="edit(ticket)" [size]="ui.sizes.small"></jnt-button>
               <jnt-button [icon]="ui.icons.delete" (click)="delete(ticket.id)" [size]="ui.sizes.small"></jnt-button>
