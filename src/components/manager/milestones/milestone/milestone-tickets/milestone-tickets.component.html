@@ -17,6 +17,7 @@
           <jnt-stack [type]="ui.stack.type.horizontal"
                      [justify]="ui.flex.justify.between"
                      [align]="ui.flex.align.center"
+                     [wrap]="ui.flex.wrap.wrap"
                      [attr.ticket]="ticket.id"
                      [cdkDropListEnterPredicate]="predicate"
                      cdkDropList (cdkDropListDropped)="drop($event)">
