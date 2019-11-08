@@ -2,9 +2,15 @@
   <jnt-form-item>
     <jnt-form-control name="type">
       <jnt-switcher formControlName="type">
-        <jnt-switcher-option [value]="milestoneTicketTypes.feature" label="Feature"></jnt-switcher-option>
-        <jnt-switcher-option [value]="milestoneTicketTypes.improvement" label="Improvement"></jnt-switcher-option>
-        <jnt-switcher-option [value]="milestoneTicketTypes.bugFixing" label="Bug fixing"></jnt-switcher-option>
+        <jnt-switcher-option [value]="milestoneTicketTypes.feature" label="Feature">
+          <jnt-dot [color]="ui.colors.green"></jnt-dot>
+        </jnt-switcher-option>
+        <jnt-switcher-option [value]="milestoneTicketTypes.improvement" label="Improvement">
+          <jnt-dot [color]="ui.colors.blue"></jnt-dot>
+        </jnt-switcher-option>
+        <jnt-switcher-option [value]="milestoneTicketTypes.bugFixing" label="Bug fixing">
+          <jnt-dot [color]="ui.colors.red"></jnt-dot>
+        </jnt-switcher-option>
       </jnt-switcher>
       <jnt-form-message [type]="ui.form.validators.typeError.required">
         This field is required

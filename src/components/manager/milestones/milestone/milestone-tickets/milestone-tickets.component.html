@@ -37,8 +37,20 @@
                          [color]="ui.colors.gray500"
                          [label]="issuesOpenedCount.toString()">
               </jnt-label>
-              <jnt-button [icon]="ui.icons.edit" (click)="edit(ticket)" [size]="ui.sizes.small"></jnt-button>
-              <jnt-button [icon]="ui.icons.delete" (click)="delete(ticket.id)" [size]="ui.sizes.small"></jnt-button>
+              <jnt-dropdown>
+                <ng-template #trigger let-action="trigger">
+                  <jnt-button [outline]="ui.outline.transparent"
+                              [icon]="ui.icons.actions"
+                              (click)="action()">
+                  </jnt-button>
+                </ng-template>
+                <ng-template #dropdown let-action="trigger">
+                  <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
+                    <jnt-menu-item title="Edit" [icon]="ui.icons.edit" (click)="edit(ticket)"></jnt-menu-item>
+                    <jnt-menu-item title="Delete" [icon]="ui.icons.delete" (click)="delete(ticket.id)"></jnt-menu-item>
+                  </jnt-menu>
+                </ng-template>
+              </jnt-dropdown>
             </jnt-stack>
           </jnt-stack>
         </ng-template>
