@@ -31,6 +31,9 @@ const routes: Routes = [
         path: 'time-expenses',
         data: {breadcrumb: 'Time Expenses'},
         component: TimeExpensesListComponent,
+        resolve: {
+          state: MergeRequestStateResolver
+        },
       },
       {
         path: 'merge-requests',

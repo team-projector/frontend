@@ -18,7 +18,7 @@ import { TimeExpansesSummaryGQL, TimeExpensesGQL } from './time-expenses.graphql
 })
 export class TimeExpensesComponent implements OnInit {
 
-  private user$ = new BehaviorSubject<number>(null);
+  private user$ = new BehaviorSubject<string>(null);
   private team$ = new BehaviorSubject<number>(null);
   private date$ = new BehaviorSubject<Date>(null);
   private salary$ = new BehaviorSubject<number>(null);
@@ -36,7 +36,7 @@ export class TimeExpensesComponent implements OnInit {
   });
 
   @Input()
-  set user(user: number) {
+  set user(user: string) {
     this.user$.next(user);
   }
 
@@ -75,9 +75,10 @@ export class TimeExpensesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.state$.subscribe(state => this.stateControl.patchValue(state, {emitEvent: false}));
+
     this.table.fetcher = (filter: DefaultSearchFilter) => {
       Object.assign(this.filter, filter);
-      console.log(this.filter);
       return this.timeExpansesGQL.fetch(serialize(this.filter) as R)
         .pipe(map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingMergeRequest)));
     };
@@ -85,7 +86,7 @@ export class TimeExpensesComponent implements OnInit {
     combineLatest([this.team$, this.user$, this.date$, this.salary$, this.state$]).pipe(
       debounceTime(PLATFORM_DELAY),
       distinctUntilChanged(),
-      map(([team, user, project, state]) => ({team, user, project, state}))
+      map(([team, user, date, salary, state]) => ({team, user, date, salary, state}))
     ).subscribe(filter => {
       Object.assign(this.filter, filter);
       this.table.load();

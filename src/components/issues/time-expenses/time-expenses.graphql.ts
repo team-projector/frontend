@@ -7,8 +7,8 @@ import { Query } from 'apollo-angular';
 })
 export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
   document = gql`
-    query TimeExpesnes ($team: ID, $user: ID, $salary: ID, $date: Date, $offset: Int, $first: Int) {
-      allSpentTimes(team: $team, user: $user, salary: $salary, date: $date, offset: $offset, first: $first) {
+    query TimeExpesnes ($team: ID, $user: ID, $salary: ID, $date: Date, $offset: Int, $first: Int, $state: String) {
+      allSpentTimes(team: $team, user: $user, salary: $salary, date: $date, offset: $offset, first: $first, state: $state) {
         count
         edges {
           node {
@@ -45,8 +45,8 @@ export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
 })
 export class TimeExpansesSummaryGQL extends Query<{ summary }> {
   document = gql`
-    query TimeExpansesSummaryType($team: ID, $user: ID, $project: ID) {
-      summary: timeExpansesSummary(team: $team, user: $user, project: $project) {
+    query TimeExpansesSummaryType($team: ID, $user: ID, $dueDate: Date) {
+      summary: timeExpansesSummary(team: $team, user: $user, dueDate: $dueDate) {
         count
         openedCount
         closedCount
