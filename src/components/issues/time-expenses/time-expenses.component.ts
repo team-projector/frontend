@@ -9,7 +9,7 @@ import { PLATFORM_DELAY } from 'src/consts';
 import { IssueState } from 'src/models/issue';
 import { PagingMergeRequest } from 'src/models/merge-request';
 import { TimeExpensesFilter, TimeExpensesState, TimeExpensesSummary } from 'src/models/spent-time';
-import { TimeExpansesSummaryGQL, TimeExpensesGQL } from './time-expenses.graphql';
+import { TimeExpensesSummaryGQL, TimeExpensesGQL } from './time-expenses.graphql';
 
 @Component({
   selector: 'app-time-expenses',
@@ -71,7 +71,7 @@ export class TimeExpensesComponent implements OnInit {
   table: TableComponent;
 
   constructor(private timeExpansesGQL: TimeExpensesGQL,
-              private timeExpansesSummaryGQL: TimeExpansesSummaryGQL) {
+              private TimeExpensesSummaryGQL: TimeExpensesSummaryGQL) {
   }
 
   ngOnInit() {
@@ -104,7 +104,7 @@ export class TimeExpensesComponent implements OnInit {
   }
 
   loadSummary() {
-    this.timeExpansesSummaryGQL.fetch(serialize(this.filter) as R)
+    this.TimeExpensesSummaryGQL.fetch(serialize(this.filter) as R)
       .pipe(map(({data: {summary}}) =>
         deserialize(summary, TimeExpensesSummary)))
       .subscribe(summary => this.summary = summary);
