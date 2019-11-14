@@ -13,7 +13,7 @@ import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { MergeRequestSummary } from 'src/models/merge-request';
 import { MilestoneProblem } from 'src/models/milestone';
 import { Project } from 'src/models/project';
-import { TimeExpensesSummary } from 'src/models/spent-time';
+import { SpentTimesSummary } from 'src/models/spent-time';
 import { Team } from 'src/models/team';
 import { User } from 'src/models/user';
 import { DurationFormat } from 'src/pipes/date';
@@ -47,7 +47,7 @@ export class TeamComponent implements OnInit {
     first?: IssuesSummary, second?: {
       issues: IssuesSummary,
       mergeRequests: MergeRequestSummary
-      spentTimes: TimeExpensesSummary
+      spentTimes: SpentTimesSummary
     }
   } = {};
 
@@ -125,7 +125,7 @@ export class TeamComponent implements OnInit {
       .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({
         issues: deserialize(issues, IssuesSummary),
         mergeRequests: deserialize(mergeRequests, MergeRequestSummary),
-        spentTimes: deserialize(spentTimes, TimeExpensesSummary),
+        spentTimes: deserialize(spentTimes, SpentTimesSummary),
       })))
       .subscribe(summary => this.summary.second = summary);
   }

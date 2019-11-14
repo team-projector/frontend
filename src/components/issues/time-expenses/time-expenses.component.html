@@ -1,10 +1,33 @@
 <jnt-block [width]="ui.width.fluid">
   <jnt-table [filter]="filter" #table (reloaded)="reloaded.emit()">
+    <ng-template #filters>
+      <jnt-stack [type]="ui.stack.type.horizontal">
+        <jnt-form [formGroup]="form">
+          <jnt-switcher formControlName="state">
+            <jnt-switcher-option label="Closed" [value]="timeExpensesState.closed">
+              <jnt-badge *ngIf="summary?.closedCount"
+                         [count]="summary?.closedCount.toString()"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Opened" [value]="timeExpensesState.opened">
+              <jnt-badge *ngIf="summary?.openedCount"
+                         [count]="summary?.openedCount.toString()"
+                         [color]="ui.colors.green"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Merged" [value]="timeExpensesState.merged">
+              <jnt-badge *ngIf="summary?.mergedCount"
+                         [count]="summary?.mergedCount.toString()"
+                         [color]="ui.colors.red"></jnt-badge>
+            </jnt-switcher-option>
+          </jnt-switcher>
+        </jnt-form>
+      </jnt-stack>
+    </ng-template>
     <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
-      <ng-template #cellTemplate let-title="owner.title" let-labels="owner.labels" let-url="owner.glUrl"
-                   let-state="owner.state"
+      <ng-template #cellTemplate let-owner="owner" let-title="owner.title" let-labels="owner.labels"
+                   let-url="owner.glUrl" let-state="owner.state"
                    let-participants="owner.participants" let-project="owner.project">
-        <jnt-stack [type]="ui.stack.type.horizontal"
+        <jnt-stack *ngIf="!!owner"
+                   [type]="ui.stack.type.horizontal"
                    [gutter]="ui.gutter.small">
           <jnt-stack [type]="ui.stack.type.vertical"
                      [gutter]="ui.gutter.tiny">

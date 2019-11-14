@@ -4,10 +4,16 @@ import { DateSerializer } from '../serializers/date';
 import { DATE_FORMAT } from '../consts';
 import { field, model } from '@junte/mocker-library';
 import { OwnerSerializer } from '../serializers/owner';
-import { MergeRequest } from './merge-request';
+import { MergeRequest, MergeRequestState } from './merge-request';
 import { EdgesToPaging } from '../serializers/graphql';
 import { Issue } from './issue';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
+
+export enum TimeExpensesState {
+  opened = 'opened',
+  merged = 'merged',
+  closed = 'closed'
+}
 
 @model()
 export class SpentTime {
@@ -56,13 +62,30 @@ export class PagingTimeExpenses implements Paging<SpentTime> {
 }
 
 @model()
-export class TimeExpensesSummary {
+export class SpentTimesSummary {
 
   @field({mock: '{{int 10 100}}'})
   spent: number;
 
   @field({mock: '{{int 10 100}}'})
   openedSpent: number;
+}
+
+@model()
+export class TimeExpensesSummary {
+
+  @field({mock: '{{int1 10}}'})
+  count: number;
+
+  @field({mock: '{{int1 10}}'})
+  openedCount: number;
+
+  @field({mock: '{{int1 10}}'})
+  closedCount: number;
+
+  @field({mock: '{{int1 10}}'})
+  mergedCount: number;
+
 }
 
 @model()
@@ -87,6 +110,9 @@ export class TimeExpensesFilter {
 
   @field()
   offset?: number;
+
+  @field()
+  state?: TimeExpensesState | null;
 
   constructor(defs: TimeExpensesFilter = null) {
       Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});

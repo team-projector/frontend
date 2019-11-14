@@ -6,16 +6,16 @@
           <jnt-switcher formControlName="state">
             <jnt-switcher-option label="Closed" [value]="mergeRequestState.closed">
               <jnt-badge *ngIf="summary?.closedCount"
-                         [count]="summary?.closedCount"></jnt-badge>
+                         [count]="summary?.closedCount.toString()"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Opened" [value]="mergeRequestState.opened">
               <jnt-badge *ngIf="summary?.openedCount"
-                         [count]="summary?.openedCount"
+                         [count]="summary?.openedCount.toString()"
                          [color]="ui.colors.green"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Merged" [value]="mergeRequestState.merged">
               <jnt-badge *ngIf="summary?.mergedCount"
-                         [count]="summary?.mergedCount"
+                         [count]="summary?.mergedCount.toString()"
                          [color]="ui.colors.red"></jnt-badge>
             </jnt-switcher-option>
           </jnt-switcher>

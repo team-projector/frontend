@@ -33,7 +33,7 @@
               },
               {
                 "glob": "**/*",
-                "input": "node_modules/junte-ui/lib/assets/icons/",
+                "input": "node_modules/junte-ui/lib/assets/junte-ui-icons-default/",
                 "output": "./assets/icons/"
               }
             ],

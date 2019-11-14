@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
@@ -6,9 +7,9 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { PLATFORM_DELAY } from 'src/consts';
 import { IssueState } from 'src/models/issue';
-import { TimeExpensesFilter } from 'src/models/spent-time';
-import { PagingTimeExpenses } from 'src/models/spent-time';
-import { TimeExpensesGQL } from './time-expenses.graphql';
+import { PagingMergeRequest } from 'src/models/merge-request';
+import { TimeExpensesFilter, TimeExpensesState, TimeExpensesSummary } from 'src/models/spent-time';
+import { TimeExpansesSummaryGQL, TimeExpensesGQL } from './time-expenses.graphql';
 
 @Component({
   selector: 'app-time-expenses',
@@ -21,11 +22,18 @@ export class TimeExpensesComponent implements OnInit {
   private team$ = new BehaviorSubject<number>(null);
   private date$ = new BehaviorSubject<Date>(null);
   private salary$ = new BehaviorSubject<number>(null);
+  private state$ = new BehaviorSubject<TimeExpensesState>(TimeExpensesState.opened);
 
   ui = UI;
   issuesState = IssueState;
+  timeExpensesState = TimeExpensesState;
+  filter = new TimeExpensesFilter();
+  stateControl = new FormControl(TimeExpensesState.opened);
+  summary: TimeExpensesSummary;
 
-  @Output() reloaded = new EventEmitter();
+  form = new FormGroup({
+    state: this.stateControl
+  });
 
   @Input()
   set user(user: number) {
@@ -47,31 +55,57 @@ export class TimeExpensesComponent implements OnInit {
     this.salary$.next(salary);
   }
 
-  filter: TimeExpensesFilter = new TimeExpensesFilter();
+  @Input()
+  set state(state: TimeExpensesState) {
+    this.state$.next(state);
+  }
+
+  get state() {
+    return this.state$.getValue();
+  }
+
+  @Output() reloaded = new EventEmitter();
+  @Output() filtered = new EventEmitter<{ state? }>();
 
   @ViewChild('table', {static: true})
   table: TableComponent;
 
-  constructor(private timeExpansesApollo: TimeExpensesGQL) {
+  constructor(private timeExpansesGQL: TimeExpensesGQL,
+              private timeExpansesSummaryGQL: TimeExpansesSummaryGQL) {
   }
 
   ngOnInit() {
-    combineLatest(this.team$, this.user$, this.date$, this.salary$)
-      .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged())
-      .subscribe(([team, user, date, salary]) => {
-        this.filter.team = team;
-        this.filter.user = user;
-        this.filter.date = date;
-        this.filter.salary = salary;
-        this.table.fetcher = (filter: DefaultSearchFilter) => {
-          Object.assign(this.filter, filter);
-          return this.timeExpansesApollo.fetch(serialize(this.filter) as R)
-            .pipe(map(({data: {allSpentTimes}}) =>
-              deserialize(allSpentTimes, PagingTimeExpenses)));
-        };
+    this.table.fetcher = (filter: DefaultSearchFilter) => {
+      Object.assign(this.filter, filter);
+      console.log(this.filter);
+      return this.timeExpansesGQL.fetch(serialize(this.filter) as R)
+        .pipe(map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingMergeRequest)));
+    };
 
-        this.table.load();
+    combineLatest([this.team$, this.user$, this.date$, this.salary$, this.state$]).pipe(
+      debounceTime(PLATFORM_DELAY),
+      distinctUntilChanged(),
+      map(([team, user, project, state]) => ({team, user, project, state}))
+    ).subscribe(filter => {
+      Object.assign(this.filter, filter);
+      this.table.load();
+      // this.loadSummary();
+    });
+
+    this.form.valueChanges.pipe(distinctUntilChanged())
+      .subscribe(({state}) => {
+        const filtering: { state? } = {};
+        if (state !== TimeExpensesState.opened) {
+          filtering.state = state;
+        }
+        this.filtered.emit(filtering);
       });
   }
 
+  loadSummary() {
+    this.timeExpansesSummaryGQL.fetch(serialize(this.filter) as R)
+      .pipe(map(({data: {summary}}) =>
+        deserialize(summary, TimeExpensesSummary)))
+      .subscribe(summary => this.summary = summary);
+  }
 }

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
@@ -31,10 +31,10 @@ export class MergeRequestsComponent implements OnInit {
   viewType = ViewType;
   summary: MergeRequestSummary;
   features = TableFeatures;
-
+  filter = new MergeRequestsFilter();
   stateControl = new FormControl(MergeRequestState.opened);
 
-  form: FormGroup = this.formBuilder.group({
+  form = new FormGroup({
     state: this.stateControl
   });
 
@@ -79,8 +79,6 @@ export class MergeRequestsComponent implements OnInit {
     return this.state$.getValue();
   }
 
-  filter: MergeRequestsFilter = new MergeRequestsFilter();
-
   @ViewChild('table', {static: true})
   table: TableComponent;
 
@@ -88,8 +86,7 @@ export class MergeRequestsComponent implements OnInit {
   filtered = new EventEmitter<{ state? }>();
 
   constructor(private mergeRequestsGQL: MergeRequestsGQL,
-              private mergeRequestsSummaryGQL: MergeRequestSummaryGQL,
-              private formBuilder: FormBuilder) {
+              private mergeRequestsSummaryGQL: MergeRequestSummaryGQL) {
   }
 
   ngOnInit() {

@@ -39,3 +39,18 @@ export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
       }
     }`;
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TimeExpansesSummaryGQL extends Query<{ summary }> {
+  document = gql`
+    query TimeExpansesSummaryType($team: ID, $user: ID, $project: ID) {
+      summary: timeExpansesSummary(team: $team, user: $user, project: $project) {
+        count
+        openedCount
+        closedCount
+        mergedCount
+      }
+    }`;
+}

@@ -14,7 +14,7 @@ import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { MergeRequestSummary } from 'src/models/merge-request';
 import { MetricsGroup, UserMetricsFilter, UserProgressMetrics } from 'src/models/metrics';
 import { MilestoneProblem } from 'src/models/milestone';
-import { TimeExpensesSummary } from 'src/models/spent-time';
+import { SpentTimesSummary } from 'src/models/spent-time';
 import { User } from 'src/models/user';
 import { DurationFormat } from 'src/pipes/date';
 import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
@@ -54,7 +54,7 @@ export class DeveloperIssuesComponent implements OnInit {
   summary: {
     issues?: IssuesSummary,
     mergeRequests?: MergeRequestSummary
-    spentTimes?: TimeExpensesSummary
+    spentTimes?: SpentTimesSummary
   } = {};
 
   set user(user: User) {
@@ -131,7 +131,7 @@ export class DeveloperIssuesComponent implements OnInit {
       .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({
           issues: deserialize(issues, IssuesSummary),
           mergeRequests: deserialize(mergeRequests, MergeRequestSummary),
-          spentTimes: deserialize(spentTimes, TimeExpensesSummary),
+          spentTimes: deserialize(spentTimes, SpentTimesSummary),
         }))
       ).subscribe(summary => this.summary = summary);
   }
