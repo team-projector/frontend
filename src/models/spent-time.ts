@@ -1,17 +1,16 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
-import { Paging } from './paging';
-import { DateSerializer } from '../serializers/date';
-import { DATE_FORMAT } from '../consts';
 import { field, model } from '@junte/mocker-library';
-import { OwnerSerializer } from '../serializers/owner';
-import { MergeRequest, MergeRequestState } from './merge-request';
-import { EdgesToPaging } from '../serializers/graphql';
-import { Issue } from './issue';
+import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
+import { DATE_FORMAT } from '../consts';
+import { DateSerializer } from '../serializers/date';
+import { EdgesToPaging } from '../serializers/graphql';
+import { OwnerSerializer } from '../serializers/owner';
+import { Issue } from './issue';
+import { MergeRequest } from './merge-request';
+import { Paging } from './paging';
 
 export enum TimeExpensesState {
   opened = 'opened',
-  merged = 'merged',
   closed = 'closed'
 }
 
@@ -115,7 +114,7 @@ export class TimeExpensesFilter {
   state?: TimeExpensesState | null;
 
   constructor(defs: TimeExpensesFilter = null) {
-      Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});
+    Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});
   }
 
 }

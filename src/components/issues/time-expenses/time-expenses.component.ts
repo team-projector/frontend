@@ -7,9 +7,8 @@ import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { PLATFORM_DELAY } from 'src/consts';
 import { IssueState } from 'src/models/issue';
-import { PagingMergeRequest } from 'src/models/merge-request';
-import { TimeExpensesFilter, TimeExpensesState, TimeExpensesSummary } from 'src/models/spent-time';
-import { TimeExpensesSummaryGQL, TimeExpensesGQL } from './time-expenses.graphql';
+import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter, TimeExpensesState } from 'src/models/spent-time';
+import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql';
 
 @Component({
   selector: 'app-time-expenses',
@@ -29,7 +28,7 @@ export class TimeExpensesComponent implements OnInit {
   timeExpensesState = TimeExpensesState;
   filter = new TimeExpensesFilter();
   stateControl = new FormControl(TimeExpensesState.opened);
-  summary: TimeExpensesSummary;
+  summary: SpentTimesSummary;
 
   form = new FormGroup({
     state: this.stateControl
@@ -70,7 +69,7 @@ export class TimeExpensesComponent implements OnInit {
   @ViewChild('table', {static: true})
   table: TableComponent;
 
-  constructor(private timeExpansesGQL: TimeExpensesGQL,
+  constructor(private timeExpensesGQL: TimeExpensesGQL,
               private TimeExpensesSummaryGQL: TimeExpensesSummaryGQL) {
   }
 
@@ -79,8 +78,21 @@ export class TimeExpensesComponent implements OnInit {
 
     this.table.fetcher = (filter: DefaultSearchFilter) => {
       Object.assign(this.filter, filter);
-      return this.timeExpansesGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingMergeRequest)));
+      // const allSpent = deserialize(allSpentTimes, PagingTimeExpenses);
+      // const timeExpenses = {count: allSpent.count, results: []};
+      // allSpent.results.forEach(spent => {
+      //   const index = timeExpenses.results.findIndex(timeExpense =>
+      //     JSON.stringify(timeExpense.owner) === JSON.stringify(spent.owner));
+      //   if (index > -1) {
+      //     timeExpenses.results[index].timeSpent += spent.timeSpent;
+      //     timeExpenses.results[index].sum += spent.sum;
+      //   } else {
+      //     timeExpenses.results.push(spent);
+      //   }
+      // });
+      // return timeExpenses;
+      return this.timeExpensesGQL.fetch(serialize(this.filter) as R)
+        .pipe(map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingTimeExpenses)));
     };
 
     combineLatest([this.team$, this.user$, this.date$, this.salary$, this.state$]).pipe(
@@ -90,7 +102,7 @@ export class TimeExpensesComponent implements OnInit {
     ).subscribe(filter => {
       Object.assign(this.filter, filter);
       this.table.load();
-      // this.loadSummary();
+      this.loadSummary();
     });
 
     this.form.valueChanges.pipe(distinctUntilChanged())
@@ -105,8 +117,7 @@ export class TimeExpensesComponent implements OnInit {
 
   loadSummary() {
     this.TimeExpensesSummaryGQL.fetch(serialize(this.filter) as R)
-      .pipe(map(({data: {summary}}) =>
-        deserialize(summary, TimeExpensesSummary)))
+      .pipe(map(({data: {spentTimes}}) => deserialize(spentTimes, SpentTimesSummary)))
       .subscribe(summary => this.summary = summary);
   }
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import gql from 'graphql-tag';
 import { Query } from 'apollo-angular';
+import gql from 'graphql-tag';
 
 @Injectable({
   providedIn: 'root'
@@ -43,14 +43,12 @@ export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
 @Injectable({
   providedIn: 'root'
 })
-export class TimeExpensesSummaryGQL extends Query<{ summary }> {
+export class TimeExpensesSummaryGQL extends Query<{ spentTimes }> {
   document = gql`
-    query TimeExpensesSummaryType($team: ID, $user: ID, $dueDate: Date) {
-      summary: timeExpensesSummary(team: $team, user: $user, dueDate: $dueDate) {
-        count
-        openedCount
-        closedCount
-        mergedCount
+    query TimeExpensesSummaryType($team: ID, $user: ID, $date: Date) {
+      spentTimes: spentTimesSummary(team: $team, user: $user, date: $date) {
+        spent
+        openedSpent
       }
     }`;
 }

@@ -5,18 +5,15 @@
         <jnt-form [formGroup]="form">
           <jnt-switcher formControlName="state">
             <jnt-switcher-option label="Closed" [value]="timeExpensesState.closed">
-              <jnt-badge *ngIf="summary?.closedCount"
-                         [count]="summary?.closedCount.toString()"></jnt-badge>
+              <jnt-badge *ngIf="!!summary?.spent && !!summary?.openedSpent && !!(summary.spent - summary.openedSpent)"
+                         [count]="(summary.spent - summary.openedSpent) | duration">
+              </jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Opened" [value]="timeExpensesState.opened">
-              <jnt-badge *ngIf="summary?.openedCount"
-                         [count]="summary?.openedCount.toString()"
-                         [color]="ui.colors.green"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Merged" [value]="timeExpensesState.merged">
-              <jnt-badge *ngIf="summary?.mergedCount"
-                         [count]="summary?.mergedCount.toString()"
-                         [color]="ui.colors.red"></jnt-badge>
+              <jnt-badge *ngIf="!!summary?.openedSpent"
+                         [count]="summary.openedSpent | duration"
+                         [color]="ui.colors.green">
+              </jnt-badge>
             </jnt-switcher-option>
           </jnt-switcher>
         </jnt-form>
@@ -36,8 +33,9 @@
               <jnt-link [source]="url" target="_blank"
                         [class.closed]="state == issuesState.closed" [title]="title">
               </jnt-link>
-              <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
-
+              <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"
+                         [attr.closed]="state === issuesState.closed">
+              </jnt-label>
             </jnt-stack>
             <small>{{project.fullTitle}}</small>
           </jnt-stack>
