@@ -28,12 +28,12 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/junte-ui/lib/assets/fonts/junte-ui/",
+                "input": "node_modules/junte-ui/lib/assets/fonts/junte-ui-icons-default/",
                 "output": "./assets/fonts/junte-ui/"
               },
               {
                 "glob": "**/*",
-                "input": "node_modules/junte-ui/lib/assets/junte-ui-icons-default/",
+                "input": "node_modules/junte-ui/lib/assets/icons/",
                 "output": "./assets/icons/"
               }
             ],
