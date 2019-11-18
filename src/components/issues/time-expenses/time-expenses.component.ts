@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
@@ -27,10 +27,10 @@ export class TimeExpensesComponent implements OnInit {
   issuesState = IssueState;
   timeExpensesState = TimeExpensesState;
   filter = new TimeExpensesFilter();
-  stateControl = new FormControl(TimeExpensesState.opened);
+  stateControl = this.builder.control(TimeExpensesState.opened);
   summary: SpentTimesSummary;
 
-  form = new FormGroup({
+  form = this.builder.group({
     state: this.stateControl
   });
 
@@ -70,7 +70,8 @@ export class TimeExpensesComponent implements OnInit {
   table: TableComponent;
 
   constructor(private timeExpensesGQL: TimeExpensesGQL,
-              private TimeExpensesSummaryGQL: TimeExpensesSummaryGQL) {
+              private TimeExpensesSummaryGQL: TimeExpensesSummaryGQL,
+              private builder: FormBuilder) {
   }
 
   ngOnInit() {
