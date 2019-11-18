@@ -11,7 +11,8 @@ import { Paging } from './paging';
 
 export enum TimeExpensesState {
   opened = 'opened',
-  closed = 'closed'
+  closed = 'closed',
+  all = 'all'
 }
 
 @model()
@@ -68,6 +69,9 @@ export class SpentTimesSummary {
 
   @field({mock: '{{int 10 100}}'})
   openedSpent: number;
+
+  @field({mock: '{{int 10 100}}'})
+  closedSpent: number;
 }
 
 @model()

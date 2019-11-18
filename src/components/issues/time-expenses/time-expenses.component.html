@@ -4,9 +4,14 @@
       <jnt-stack [type]="ui.stack.type.horizontal">
         <jnt-form [formGroup]="form">
           <jnt-switcher formControlName="state">
+            <jnt-switcher-option label="All" [value]="timeExpensesState.all">
+              <jnt-badge *ngIf="!!summary?.spent"
+                         [count]="summary.spent | duration">
+              </jnt-badge>
+            </jnt-switcher-option>
             <jnt-switcher-option label="Closed" [value]="timeExpensesState.closed">
-              <jnt-badge *ngIf="!!summary?.spent && !!summary?.openedSpent && !!(summary.spent - summary.openedSpent)"
-                         [count]="(summary.spent - summary.openedSpent) | duration">
+              <jnt-badge *ngIf="!!summary?.closedSpent"
+                         [count]="summary.closedSpent | duration">
               </jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Opened" [value]="timeExpensesState.opened">
@@ -31,10 +36,9 @@
             <jnt-stack [type]="ui.stack.type.horizontal"
                        [gutter]="ui.gutter.small">
               <jnt-link [source]="url" target="_blank"
-                        [class.closed]="state == issuesState.closed" [title]="title">
+                        [attr.closed]="state === issuesState.closed" [title]="title">
               </jnt-link>
-              <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"
-                         [attr.closed]="state === issuesState.closed">
+              <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title">
               </jnt-label>
             </jnt-stack>
             <small>{{project.fullTitle}}</small>

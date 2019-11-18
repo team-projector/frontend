@@ -18,6 +18,7 @@ export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
             owner {
               __typename
               title
+              state
               labels {
                 count
                 edges {
@@ -49,6 +50,7 @@ export class TimeExpensesSummaryGQL extends Query<{ spentTimes }> {
       spentTimes: spentTimesSummary(team: $team, user: $user, date: $date) {
         spent
         openedSpent
+        closedSpent
       }
     }`;
 }
