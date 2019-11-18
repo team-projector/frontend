@@ -1,20 +1,45 @@
 <jnt-block [width]="ui.width.fluid">
   <jnt-table [filter]="filter" #table (reloaded)="reloaded.emit()">
+    <ng-template #filters>
+      <jnt-stack [type]="ui.stack.type.horizontal">
+        <jnt-form [formGroup]="form">
+          <jnt-switcher formControlName="state">
+            <jnt-switcher-option label="All" [value]="timeExpensesState.all">
+              <jnt-badge *ngIf="!!summary?.spent"
+                         [count]="summary.spent | duration">
+              </jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Closed" [value]="timeExpensesState.closed">
+              <jnt-badge *ngIf="!!summary?.closedSpent"
+                         [count]="summary.closedSpent | duration">
+              </jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Opened" [value]="timeExpensesState.opened">
+              <jnt-badge *ngIf="!!summary?.openedSpent"
+                         [count]="summary.openedSpent | duration"
+                         [color]="ui.colors.green">
+              </jnt-badge>
+            </jnt-switcher-option>
+          </jnt-switcher>
+        </jnt-form>
+      </jnt-stack>
+    </ng-template>
     <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
-      <ng-template #cellTemplate let-title="owner.title" let-labels="owner.labels" let-url="owner.glUrl"
-                   let-state="owner.state"
+      <ng-template #cellTemplate let-owner="owner" let-title="owner.title" let-labels="owner.labels"
+                   let-url="owner.glUrl" let-state="owner.state"
                    let-participants="owner.participants" let-project="owner.project">
-        <jnt-stack [type]="ui.stack.type.horizontal"
+        <jnt-stack *ngIf="!!owner"
+                   [type]="ui.stack.type.horizontal"
                    [gutter]="ui.gutter.small">
           <jnt-stack [type]="ui.stack.type.vertical"
                      [gutter]="ui.gutter.tiny">
             <jnt-stack [type]="ui.stack.type.horizontal"
                        [gutter]="ui.gutter.small">
               <jnt-link [source]="url" target="_blank"
-                        [class.closed]="state == issuesState.closed" [title]="title">
+                        [attr.closed]="state === issuesState.closed" [title]="title">
               </jnt-link>
-              <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
-
+              <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title">
+              </jnt-label>
             </jnt-stack>
             <small>{{project.fullTitle}}</small>
           </jnt-stack>

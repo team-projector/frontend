@@ -1,6 +1,6 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { R } from 'apollo-angular/types';
 import { format } from 'date-fns';
@@ -44,9 +44,9 @@ export class IssuesComponent implements OnInit {
   summary: IssuesSummary;
   progress = {summary: false, sync: false};
 
-  typeControl = new FormControl(IssuesType.opened);
+  typeControl = this.builder.control(IssuesType.opened);
 
-  form: FormGroup = this.formBuilder.group({
+  form = this.builder.group({
     type: this.typeControl
   });
 
@@ -126,7 +126,7 @@ export class IssuesComponent implements OnInit {
   constructor(private issuesGQL: IssuesGQL,
               private issuesSummaryGQL: IssuesSummaryGQL,
               private syncIssueGQL: SyncIssueGQL,
-              private formBuilder: FormBuilder,
+              private builder: FormBuilder,
               private route: ActivatedRoute) {
   }
 

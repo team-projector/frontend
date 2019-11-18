@@ -1,1 +1,6 @@
-<app-time-expenses [user]="user?.id" [date]="dueDate" (reloaded)="reloaded.emit()"></app-time-expenses>
+<app-time-expenses [user]="user?.id"
+                   [date]="dueDate"
+                   [state]="state"
+                   (reloaded)="reloaded.emit()"
+                   (filtered)="filtered($event)">
+</app-time-expenses>
