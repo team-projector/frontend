@@ -78,19 +78,6 @@ export class TimeExpensesComponent implements OnInit {
 
     this.table.fetcher = (filter: DefaultSearchFilter) => {
       Object.assign(this.filter, filter);
-      // const allSpent = deserialize(allSpentTimes, PagingTimeExpenses);
-      // const timeExpenses = {count: allSpent.count, results: []};
-      // allSpent.results.forEach(spent => {
-      //   const index = timeExpenses.results.findIndex(timeExpense =>
-      //     JSON.stringify(timeExpense.owner) === JSON.stringify(spent.owner));
-      //   if (index > -1) {
-      //     timeExpenses.results[index].timeSpent += spent.timeSpent;
-      //     timeExpenses.results[index].sum += spent.sum;
-      //   } else {
-      //     timeExpenses.results.push(spent);
-      //   }
-      // });
-      // return timeExpenses;
       return this.timeExpensesGQL.fetch(serialize(this.filter) as R)
         .pipe(map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingTimeExpenses)));
     };
