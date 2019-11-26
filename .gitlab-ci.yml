@@ -40,21 +40,7 @@ publish_master:
   only:
     - master
 
-.deploy:
-  image: junte/ssh-agent
-  stage: deploy
-  dependencies: []
-  variables:
-    SSH_PRIVATE_KEY: $SSH_DEV_PRIVATE_KEY
-  script:
-  - ssh deploy@${DEV_HOST} "/opt/deploy/deploy.sh"
-  environment:
-    name: dev
-    url: https://${DEV_HOST}
-  only:
-  - master
-
-.deploy_k8s:
+deploy_master:
   image: dtzar/helm-kubectl:2.16.1
   stage: deploy
   dependencies: []
@@ -69,37 +55,12 @@ publish_master:
     - helm init --client-only
     - cd deploy/helm
     - helm repo update
-    - export RELEASE_NAME=frontend
-    - export DEPLOYS=$(helm ls | grep $RELEASE_NAME | wc -l)
-  script:
-    - if [ ${DEPLOYS}  -eq 0 ]; then helm install --set image.tag=$CI_PIPELINE_IID --name=${RELEASE_NAME} . ; else helm upgrade  ${RELEASE_NAME} --set image.tag=$CI_PIPELINE_IID .; fi
-  environment:
-    name: dev
-    url: https://${DEV_HOST}
-  only:
-  - master
-
-deploy_jserver:
-  image: dtzar/helm-kubectl:2.16.1
-  stage: deploy
-  dependencies: []
-  variables:
-    GIT_DEPTH: 5
-    GIT_STRATEGY: fetch
-  before_script:
-    - kubectl config set-cluster prod --server="${K8S_JURL}" --insecure-skip-tls-verify
-    - kubectl config set-credentials deploy --token="$K8S_JTOKEN"
-    - kubectl config set-context default-context --cluster=prod --user=deploy
-    - kubectl config use-context default-context
-    - helm init --client-only
-    - cd deploy/helm
-    - helm repo update
   script:
     - export RELEASE_NAME=team-projector--frontend
     - export DEPLOYS=$(helm ls | grep $RELEASE_NAME | wc -l)    
     - if [ ${DEPLOYS} -eq 0 ]; then helm install --set image.tag=$CI_PIPELINE_IID --name=${RELEASE_NAME} --namespace $K8S_NS . ; else helm upgrade ${RELEASE_NAME} --set image.tag=$CI_PIPELINE_IID --namespace $K8S_NS .; fi
   environment:
-    name: dev
-    url: https://${DEV_HOST}
+    name: production
+    url: $SITE_ADDRESS
   only:
     - master
