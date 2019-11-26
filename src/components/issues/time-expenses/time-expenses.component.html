@@ -1,8 +1,8 @@
 <jnt-block [width]="ui.width.fluid">
-  <jnt-table [filter]="filter" #table (reloaded)="reloaded.emit()">
-    <ng-template #filters>
-      <jnt-stack [type]="ui.stack.type.horizontal">
-        <jnt-form [formGroup]="form">
+  <jnt-form [formGroup]="form">
+    <jnt-table #table (reloaded)="reloaded.emit()" formControlName="table">
+      <ng-template #filters>
+        <jnt-stack [type]="ui.stack.type.horizontal">
           <jnt-switcher formControlName="state">
             <jnt-switcher-option label="All" [value]="timeExpensesState.all">
               <jnt-badge *ngIf="!!summary?.spent"
@@ -21,48 +21,48 @@
               </jnt-badge>
             </jnt-switcher-option>
           </jnt-switcher>
-        </jnt-form>
-      </jnt-stack>
-    </ng-template>
-    <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
-      <ng-template #cellTemplate let-owner="owner" let-title="owner.title" let-labels="owner.labels"
-                   let-url="owner.glUrl" let-state="owner.state"
-                   let-participants="owner.participants" let-project="owner.project">
-        <jnt-stack *ngIf="!!owner"
-                   [type]="ui.stack.type.horizontal"
-                   [gutter]="ui.gutter.small">
-          <jnt-stack [type]="ui.stack.type.vertical"
-                     [gutter]="ui.gutter.tiny">
-            <jnt-stack [type]="ui.stack.type.horizontal"
-                       [gutter]="ui.gutter.small">
-              <jnt-link [source]="url" target="_blank"
-                        [attr.closed]="state === issuesState.closed" [title]="title">
-              </jnt-link>
-              <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title">
-              </jnt-label>
-            </jnt-stack>
-            <small>{{project.fullTitle}}</small>
-          </jnt-stack>
         </jnt-stack>
       </ng-template>
-    </jnt-table-column>
+      <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
+        <ng-template #cellTemplate let-owner="owner" let-title="owner.title" let-labels="owner.labels"
+                     let-url="owner.glUrl" let-state="owner.state"
+                     let-participants="owner.participants" let-project="owner.project">
+          <jnt-stack *ngIf="!!owner"
+                     [type]="ui.stack.type.horizontal"
+                     [gutter]="ui.gutter.small">
+            <jnt-stack [type]="ui.stack.type.vertical"
+                       [gutter]="ui.gutter.tiny">
+              <jnt-stack [type]="ui.stack.type.horizontal"
+                         [gutter]="ui.gutter.small">
+                <jnt-link [source]="url" target="_blank"
+                          [attr.closed]="state === issuesState.closed" [title]="title">
+                </jnt-link>
+                <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title">
+                </jnt-label>
+              </jnt-stack>
+              <small>{{project.fullTitle}}</small>
+            </jnt-stack>
+          </jnt-stack>
+        </ng-template>
+      </jnt-table-column>
 
-    <jnt-table-column i18n-title="@@created_at" title="Created at" sort="created_at">
-      <ng-template #cellTemplate let-createdAt="createdAt">
-        {{createdAt | date:'medium'}}
-      </ng-template>
-    </jnt-table-column>
+      <jnt-table-column i18n-title="@@created_at" title="Created at" sort="created_at">
+        <ng-template #cellTemplate let-createdAt="createdAt">
+          {{createdAt | date:'medium'}}
+        </ng-template>
+      </jnt-table-column>
 
-    <jnt-table-column i18n-title="@@spent" title="Spent">
-      <ng-template #cellTemplate let-timeSpent="timeSpent">
-        {{timeSpent | duration}}
-      </ng-template>
-    </jnt-table-column>
+      <jnt-table-column i18n-title="@@spent" title="Spent">
+        <ng-template #cellTemplate let-timeSpent="timeSpent">
+          {{timeSpent | duration}}
+        </ng-template>
+      </jnt-table-column>
 
-    <jnt-table-column i18n-title="@@earn" title="Earn">
-      <ng-template #cellTemplate let-sum="sum">
-        {{!!sum ? (sum | currency) : '&mdash;'}}
-      </ng-template>
-    </jnt-table-column>
-  </jnt-table>
+      <jnt-table-column i18n-title="@@earn" title="Earn">
+        <ng-template #cellTemplate let-sum="sum">
+          {{!!sum ? (sum | currency) : '&mdash;'}}
+        </ng-template>
+      </jnt-table-column>
+    </jnt-table>
+  </jnt-form>
 </jnt-block>

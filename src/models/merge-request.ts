@@ -1,12 +1,14 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { field, model } from '@junte/mocker-library';
-import { Label } from './label';
-import { User } from './user';
-import { Project } from './project';
-import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
-import { Paging } from './paging';
 import { SearchFilter } from 'junte-ui';
-import {Issue} from './issue';
+import { ArraySerializer } from 'serialize-ts';
+import { DATE_FORMAT } from 'src/consts';
+import { DateSerializer } from 'src/serializers/date';
+import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { Issue } from './issue';
+import { Label } from './label';
+import { Paging } from './paging';
+import { Project } from './project';
+import { User } from './user';
 
 export enum MergeRequestState {
   opened = 'opened',
@@ -129,6 +131,9 @@ export class MergeRequestsFilter implements SearchFilter {
 
   @field()
   orderBy?: string;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  dueDate?: string;
 
   @field()
   first?: number;

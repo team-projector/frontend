@@ -1,6 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Team } from 'src/models/team';
 import { User } from 'src/models/user';
 
 @Component({
@@ -9,20 +8,15 @@ import { User } from 'src/models/user';
   styleUrls: ['./time-expenses.component.scss']
 })
 
-export class TeamTimeExpensesListComponent implements OnInit {
+export class TeamTimeExpensesListComponent {
 
-  team: Team;
   user: User;
-  dueDate: Date;
-
   @Output() reloaded = new EventEmitter();
 
   constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(({team, user, dueDate}) =>
-      [this.team, this.user, this.dueDate] = [team, user, dueDate]);
+    this.route.data.subscribe(({user}) => this.user = user);
   }
-
 }

@@ -49,17 +49,26 @@ export class MilestoneComponent implements OnInit {
   }
 
   ngOnInit() {
-    combineLatest([this.form.valueChanges])
-      .pipe(distinctUntilChanged())
+    combineLatest([this.form.valueChanges]).pipe(distinctUntilChanged())
       .subscribe(([{tickets, team}]) => {
-        const state: { ticket?, team? } = {};
+        const state = {...this.route.snapshot.params};
+        const child = {...this.route.snapshot.firstChild.params};
+
+        delete state.milestone;
+        delete child.milestone;
+        delete state.ticket;
+        delete child.ticket;
+        delete state.team;
+        delete child.team;
+
         if (!!tickets) {
           state.ticket = tickets.id;
         }
         if (!!team) {
           state.team = team.id;
         }
-        this.router.navigate([state], {relativeTo: this.route});
+
+        this.router.navigate([state, this.route.snapshot.firstChild.routeConfig.path, child], {relativeTo: this.route});
       });
 
     this.route.data.pipe(map(({milestone, team, ticket}: { milestone: Milestone, team: Team, ticket: Ticket }) =>

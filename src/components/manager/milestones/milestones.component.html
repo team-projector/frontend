@@ -2,115 +2,116 @@
   <jnt-link [icon]="ui.icons.settings" source="/admin/development/milestone/"
             target="_blank" title="Manage"></jnt-link>
   <jnt-block [width]="ui.width.fluid">
-    <jnt-table #table [features]="[features.search]">
-      <jnt-table-column title="Title">
-        <ng-template #cellTemplate let-title="title" let-id="id" let-owner="owner">
-          <jnt-stack [type]="ui.stack.type.horizontal">
-            <jnt-avatar [size]="ui.sizes.small" [image]="owner.glAvatar"></jnt-avatar>
-            <jnt-stack [gutter]="ui.gutter.tiny">
-              <jnt-link [source]="[id]" target="_blank" [title]="title"></jnt-link>
-              <small>{{owner?.fullTitle}}</small>
+    <jnt-form [formGroup]="form">
+      <jnt-table #table [features]="[features.search]" formControlName="table">
+        <jnt-table-column title="Title">
+          <ng-template #cellTemplate let-title="title" let-id="id" let-owner="owner">
+            <jnt-stack [type]="ui.stack.type.horizontal">
+              <jnt-avatar [size]="ui.sizes.small" [image]="owner.glAvatar"></jnt-avatar>
+              <jnt-stack [gutter]="ui.gutter.tiny">
+                <jnt-link [source]="[id]" target="_blank" [title]="title"></jnt-link>
+                <small>{{owner?.fullTitle}}</small>
+              </jnt-stack>
             </jnt-stack>
-          </jnt-stack>
-        </ng-template>
-      </jnt-table-column>
-      <jnt-table-column title="Period">
-        <ng-template #cellTemplate let-startDate="startDate" let-problems="problems" let-dueDate="dueDate">
-          <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.stretch">
-            <jnt-date-period [start]="startDate" [end]="dueDate"></jnt-date-period>
-            <jnt-label *ngIf="problems?.includes(milestoneProblem.overDueDate)"
-                       [color]="ui.colors.red" label="overdue">
-            </jnt-label>
-          </jnt-stack>
-        </ng-template>
-      </jnt-table-column>
-      <jnt-table-column title="Budget">
-        <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
-          <ng-container *ngIf="budget">
-            <jnt-progress-bar progress [value]="metrics.budgetSpent / budget * 100">
+          </ng-template>
+        </jnt-table-column>
+        <jnt-table-column title="Period">
+          <ng-template #cellTemplate let-startDate="startDate" let-problems="problems" let-dueDate="dueDate">
+            <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.stretch">
+              <jnt-date-period [start]="startDate" [end]="dueDate"></jnt-date-period>
+              <jnt-label *ngIf="problems?.includes(milestoneProblem.overDueDate)"
+                         [color]="ui.colors.red" label="overdue">
+              </jnt-label>
+            </jnt-stack>
+          </ng-template>
+        </jnt-table-column>
+        <jnt-table-column title="Budget">
+          <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
+            <ng-container *ngIf="budget">
+              <jnt-progress-bar progress [value]="metrics.budgetSpent / budget * 100">
+                <ng-template #legend>
+                  <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
+                             [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
+                    <div metric>{{budget - metrics.budgetRemains | currency}}</div>
+                    <div metric budget>{{budget | currency}}</div>
+                  </jnt-stack>
+                </ng-template>
+              </jnt-progress-bar>
+              <div remains>
+            <span [attr.overflow]="metrics.budgetRemains < 0">
+              {{metrics.budgetRemains | currency}}
+            </span>
+              </div>
+            </ng-container>
+          </ng-template>
+        </jnt-table-column>
+        <jnt-table-column title="Profit">
+          <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
+            <jnt-progress-bar progress [value]="metrics.payroll / budget * 100">
               <ng-template #legend>
-                <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
-                           [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
-                  <div metric>{{budget - metrics.budgetRemains | currency}}</div>
+                <jnt-stack [type]="ui.stack.type.horizontal"
+                           [align]="ui.flex.align.center"
+                           [justify]="ui.flex.justify.between"
+                           [gutter]="ui.gutter.normal">
+                  <div metric>{{metrics.payroll | currency}}</div>
                   <div metric budget>{{budget | currency}}</div>
                 </jnt-stack>
               </ng-template>
             </jnt-progress-bar>
             <div remains>
-            <span [attr.overflow]="metrics.budgetRemains < 0">
-              {{metrics.budgetRemains | currency}}
-            </span>
-            </div>
-          </ng-container>
-        </ng-template>
-      </jnt-table-column>
-      <jnt-table-column title="Profit">
-        <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
-          <jnt-progress-bar progress [value]="metrics.payroll / budget * 100">
-            <ng-template #legend>
-              <jnt-stack [type]="ui.stack.type.horizontal"
-                         [align]="ui.flex.align.center"
-                         [justify]="ui.flex.justify.between"
-                         [gutter]="ui.gutter.normal">
-                <div metric>{{metrics.payroll | currency}}</div>
-                <div metric budget>{{budget | currency}}</div>
-              </jnt-stack>
-            </ng-template>
-          </jnt-progress-bar>
-          <div remains>
             <span [attr.overflow]="metrics.profit < 0">
               {{metrics.profit | currency}}
             </span>
-          </div>
-        </ng-template>
-      </jnt-table-column>
-      <jnt-table-column i18n-title="@@progress" title="Progress">
-        <ng-template #cellTemplate let-metrics="metrics">
-          <jnt-progress-bar progress *ngIf="!!metrics.timeEstimate"
-                            [value]="metrics.timeSpent / metrics.timeEstimate * 100">
-            <ng-template #legend>
-              <jnt-stack [type]="ui.stack.type.horizontal"
-                         [align]="ui.flex.align.center"
-                         [justify]="ui.flex.justify.between"
-                         [gutter]="ui.gutter.normal">
-                <div metric>{{metrics.timeSpent | duration:durationFormat.short}}</div>
-                <div metric estimate>{{metrics.timeEstimate | duration:durationFormat.short}}</div>
-              </jnt-stack>
-            </ng-template>
-          </jnt-progress-bar>
-          <div remains>
+            </div>
+          </ng-template>
+        </jnt-table-column>
+        <jnt-table-column i18n-title="@@progress" title="Progress">
+          <ng-template #cellTemplate let-metrics="metrics">
+            <jnt-progress-bar progress *ngIf="!!metrics.timeEstimate"
+                              [value]="metrics.timeSpent / metrics.timeEstimate * 100">
+              <ng-template #legend>
+                <jnt-stack [type]="ui.stack.type.horizontal"
+                           [align]="ui.flex.align.center"
+                           [justify]="ui.flex.justify.between"
+                           [gutter]="ui.gutter.normal">
+                  <div metric>{{metrics.timeSpent | duration:durationFormat.short}}</div>
+                  <div metric estimate>{{metrics.timeEstimate | duration:durationFormat.short}}</div>
+                </jnt-stack>
+              </ng-template>
+            </jnt-progress-bar>
+            <div remains>
             <span [attr.overflow]="metrics.timeRemains < 0">
               {{metrics.timeRemains | duration:durationFormat.short}}
             </span>
-          </div>
+            </div>
+          </ng-template>
+        </jnt-table-column>
+        <jnt-table-column title="Issues">
+          <ng-template #cellTemplate let-metrics="metrics">
+            <jnt-stack [justify]="ui.flex.justify.center"
+                       [type]="ui.stack.type.horizontal"
+                       [gutter]="ui.gutter.tiny">
+              <jnt-label *ngIf="metrics.issuesOpenedCount" [label]="metrics.issuesOpenedCount"
+                         [color]="ui.colors.green"></jnt-label>
+              <jnt-label *ngIf="metrics.issuesClosedCount" [label]="metrics.issuesClosedCount"
+                         [color]="ui.colors.gray500"></jnt-label>
+            </jnt-stack>
+          </ng-template>
+        </jnt-table-column>
+        <ng-template #rowActions let-row="row">
+          <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
+            <jnt-menu-item [icon]="ui.icons.externalLink" title="View on GitLab"
+                           target="_blank"
+                           [link]="row.glUrl"></jnt-menu-item>
+            <jnt-menu-item [icon]="ui.icons.edit" title="Edit"
+                           target="_blank"
+                           [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
+            <jnt-menu-item [icon]="ui.icons.sync" title="Sync from GitLab"
+                           (click)="sync(row.id)"></jnt-menu-item>
+          </jnt-menu>
         </ng-template>
-      </jnt-table-column>
-      <jnt-table-column title="Issues">
-        <ng-template #cellTemplate let-metrics="metrics">
-          <jnt-stack [justify]="ui.flex.justify.center"
-                     [type]="ui.stack.type.horizontal"
-                     [gutter]="ui.gutter.tiny">
-            <jnt-label *ngIf="metrics.issuesOpenedCount" [label]="metrics.issuesOpenedCount"
-                       [color]="ui.colors.green"></jnt-label>
-            <jnt-label *ngIf="metrics.issuesClosedCount" [label]="metrics.issuesClosedCount"
-                       [color]="ui.colors.gray500"></jnt-label>
-          </jnt-stack>
-        </ng-template>
-      </jnt-table-column>
-      <ng-template #rowActions let-row="row">
-        <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
-          <jnt-menu-item [icon]="ui.icons.externalLink" title="View on GitLab"
-                         target="_blank"
-                         [link]="row.glUrl"></jnt-menu-item>
-          <jnt-menu-item [icon]="ui.icons.edit" title="Edit"
-                         target="_blank"
-                         [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
-          <jnt-menu-item [icon]="ui.icons.sync" title="Sync from GitLab"
-                         (click)="sync(row.id)"></jnt-menu-item>
-        </jnt-menu>
-      </ng-template>
-    </jnt-table>
+      </jnt-table>
+    </jnt-form>
   </jnt-block>
 
 </jnt-stack>
-

@@ -1,8 +1,1 @@
-<app-issues [team]="team?.id"
-            [milestone]="milestone?.id"
-            [ticket]="ticket?.id"
-            [type]="type"
-            [draggable]="true"
-            (filtered)="filtered($event)"
-            (reloaded)="reloaded.emit()">
-</app-issues>
+<app-issues [draggable]="true" [(state)]="state" (reloaded)="reloaded.emit()"></app-issues>

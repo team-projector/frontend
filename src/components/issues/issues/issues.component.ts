@@ -1,14 +1,13 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
 import { R } from 'apollo-angular/types';
 import { format } from 'date-fns';
-import { DefaultSearchFilter, TableComponent, TableFeatures, UI } from 'junte-ui';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, defined, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
+import merge from 'merge-anything';
+import { BehaviorSubject } from 'rxjs';
+import { distinctUntilChanged, filter, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { PLATFORM_DELAY } from 'src/consts';
 import { IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues } from 'src/models/issue';
 import { StandardLabel } from 'src/models/label';
 import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
@@ -18,6 +17,26 @@ export enum ViewType {
   extended
 }
 
+export class IssuesState {
+  q?: string;
+  sort?: string;
+  first?: number;
+  offset?: number;
+  type?: IssuesType;
+  team?: string;
+  user?: string;
+  project?: string;
+  due_date?: string;
+  milestone?: string;
+  ticket?: string;
+
+  constructor(defs: IssuesState = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+}
+
 @Component({
   selector: 'app-issues',
   templateUrl: './issues.component.html',
@@ -25,14 +44,8 @@ export enum ViewType {
 })
 export class IssuesComponent implements OnInit {
 
-  private team$ = new BehaviorSubject<string>(null);
-  private user$ = new BehaviorSubject<string>(null);
-  private project$ = new BehaviorSubject<string>(null);
-  private milestone$ = new BehaviorSubject<string>(null);
-  private ticket$ = new BehaviorSubject<string>(null);
-  private dueDate$ = new BehaviorSubject<Date>(null);
-  private type$ = new BehaviorSubject<IssuesType>(IssuesType.opened);
-
+  private filter$ = new BehaviorSubject<IssuesFilter>(null);
+  private _state: IssuesState;
   ui = UI;
   issuesState = IssueState;
   issueProblem = IssueProblem;
@@ -44,142 +57,119 @@ export class IssuesComponent implements OnInit {
   summary: IssuesSummary;
   progress = {summary: false, sync: false};
 
-  typeControl = this.builder.control(IssuesType.opened);
+  tableControl = this.builder.control({
+    q: null,
+    sort: null,
+    first: DEFAULT_FIRST,
+    offset: DEFAULT_OFFSET
+  });
 
   form = this.builder.group({
-    type: this.typeControl
+    table: this.tableControl,
+    type: [IssuesType.opened],
+    user: [],
+    team: [],
+    project: [],
+    due_date: [],
+    milestone: [],
+    ticket: []
   });
+
+  set filter(filter: IssuesFilter) {
+    this.filter$.next(filter);
+  }
+
+  get filter() {
+    return this.filter$.getValue();
+  }
 
   @Input() view = ViewType.default;
   @Input() draggable = false;
-  @Output() reloaded = new EventEmitter();
-  @Output() filtered = new EventEmitter<{ type? }>();
-
-  @Input()
-  set team(team: string) {
-    this.team$.next(team);
-  }
-
-  get team() {
-    return this.team$.getValue();
-  }
-
-  @Input()
-  set user(user: string) {
-    this.user$.next(user);
-  }
-
-  get user() {
-    return this.user$.getValue();
-  }
-
-  @Input()
-  set project(project: string) {
-    this.project$.next(project);
-  }
-
-  get project() {
-    return this.project$.getValue();
-  }
-
-  @Input()
-  set milestone(milestone: string) {
-    this.milestone$.next(milestone);
-  }
-
-  get milestone() {
-    return this.milestone$.getValue();
-  }
-
-  @Input()
-  set ticket(ticket: string) {
-    this.ticket$.next(ticket);
-  }
-
-  get ticket() {
-    return this.ticket$.getValue();
-  }
-
-  @Input()
-  set dueDate(dueDate: Date) {
-    this.dueDate$.next(dueDate);
-  }
-
-  get dueDate() {
-    return this.dueDate$.getValue();
-  }
-
-  @Input()
-  set type(type: IssuesType) {
-    this.type$.next(type);
-  }
-
-  get type() {
-    return this.type$.getValue();
-  }
-
-  filter: IssuesFilter = new IssuesFilter();
 
   @ViewChild('table', {static: true})
   table: TableComponent;
 
+  @Input() set state(state: IssuesState) {
+    this._state = state;
+    this.form.patchValue(merge({extensions: [defined]}, this.form.getRawValue(), {
+      table: {q: state.q, sort: state.sort, first: state.first, offset: state.offset},
+      type: state.type, team: state.team, user: state.user, project: state.project,
+      due_date: state.due_date, milestone: state.milestone, ticket: state.ticket
+    }));
+  }
+
+  get state() {
+    return this._state;
+  }
+
+  @Output() reloaded = new EventEmitter();
+  @Output() stateChange = new EventEmitter<IssuesState>();
+
   constructor(private issuesGQL: IssuesGQL,
               private issuesSummaryGQL: IssuesSummaryGQL,
               private syncIssueGQL: SyncIssueGQL,
-              private builder: FormBuilder,
-              private route: ActivatedRoute) {
+              private builder: FormBuilder) {
   }
 
   ngOnInit() {
-    this.type$.subscribe(type => this.typeControl.patchValue(type, {emitEvent: false}));
-
-    this.table.fetcher = (filter: DefaultSearchFilter) => {
-      this.filter.q = filter.q;
-      this.filter.first = filter.first;
-      this.filter.offset = filter.offset;
+    this.table.fetcher = () => {
       return this.issuesGQL.fetch(serialize(this.filter) as R)
         .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)));
     };
 
-    combineLatest(this.team$, this.user$, this.project$, this.milestone$,
-      this.ticket$, this.dueDate$, this.type$, this.route.params)
-      .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged())
-      .subscribe(([team, user, project, milestone, ticket, dueDate, type]) => {
-        this.filter.team = team;
-        this.filter.user = user;
-        this.filter.project = project;
-        this.filter.milestone = milestone;
-        this.filter.ticket = ticket;
-        this.filter.dueDate = dueDate;
-        this.filter.state = type === IssuesType.opened ? IssueState.opened
-          : (type === IssuesType.closed ? IssueState.closed : null);
-        this.filter.problems = type === IssuesType.problems ? true : null;
-        this.filter.orderBy = type === IssuesType.opened ? 'dueDate' : '-closedAt';
+    this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
+      .subscribe(({table: {offset, first, q, sort}, type, user, team, project, due_date, milestone, ticket}) =>
+        this.save(offset, first, q, sort, type, user, team, project, due_date, milestone, ticket));
 
-        this.loadSummary();
-        this.table.load();
-      });
+    this.filter$.pipe(
+      filter(filter => !!filter),
+      distinctUntilChanged((val1, val2) => isEqual(val1, val2))
+    ).subscribe(() => this.load());
+  }
 
-    this.form.valueChanges.pipe(distinctUntilChanged())
-      .subscribe(({type}) => {
-        const state: { type?, due_date?, project?, milestone?, ticket? } = {};
-        if (type !== IssuesType.opened) {
-          state.type = type;
-        }
-        if (!!this.filter.dueDate) {
-          state.due_date = format(this.filter.dueDate, 'YYYY-MM-DD');
-        }
-        if (!!this.filter.project) {
-          state.project = this.filter.project;
-        }
-        if (!!this.filter.milestone) {
-          state.milestone = this.filter.milestone;
-        }
-        if (!!this.filter.ticket) {
-          state.ticket = this.filter.ticket;
-        }
-        this.filtered.emit(state);
-      });
+  load() {
+    this.loadSummary();
+    this.table.load();
+  }
+
+  save(offset, first, q, sort, type, user, team, project, due_date, milestone, ticket) {
+    const filter = new IssuesFilter();
+
+    if (!!sort) {
+      filter.sort = sort;
+    }
+    if (!!user) {
+      filter.user = user;
+    }
+    if (!!due_date) {
+      filter.dueDate = new Date(format(due_date, 'YYYY-MM-DD'));
+    }
+    if (!!project) {
+      filter.project = project;
+    }
+    if (!!ticket) {
+      filter.ticket = ticket;
+    }
+    if (!!milestone) {
+      filter.milestone = milestone;
+    }
+
+    filter.offset = offset;
+    filter.first = first;
+    filter.state = type === IssuesType.opened ? IssueState.opened : (type === IssuesType.closed ? IssueState.closed : null);
+    filter.problems = type === IssuesType.problems ? true : null;
+    filter.sort = type === IssuesType.opened ? 'dueDate' : '-closedAt';
+
+    const state = new IssuesState({
+      q: q || null, sort: sort || null, first: +first || DEFAULT_FIRST, offset: +offset || DEFAULT_OFFSET,
+      type: type || IssuesType.opened, user: user, due_date: due_date || null,
+      team: team || null, project: project || null, milestone: milestone || null, ticket: ticket || null
+    });
+    this.filter = filter;
+    if (!isEqual(state, this._state)) {
+      this._state = state;
+      this.stateChange.emit(state);
+    }
   }
 
   loadSummary() {

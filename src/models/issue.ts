@@ -1,8 +1,8 @@
 import { field, model } from '@junte/mocker-library';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
-import { Ticket } from 'src/models/ticket';
 import { Team } from 'src/models/team';
+import { Ticket } from 'src/models/ticket';
 import { DATE_FORMAT } from '../consts';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
@@ -156,9 +156,6 @@ export class IssuesFilter implements SearchFilter {
   problems?: boolean | null;
 
   @field()
-  orderBy?: string;
-
-  @field()
   first?: number;
 
   @field()
@@ -166,6 +163,9 @@ export class IssuesFilter implements SearchFilter {
 
   @field()
   q?: string;
+
+  @field()
+  sort?: string;
 
   constructor(defs: IssuesFilter = null) {
     if (!!defs) {

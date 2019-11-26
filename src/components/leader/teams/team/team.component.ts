@@ -69,7 +69,18 @@ export class TeamComponent implements OnInit {
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(({filter: {user, dueDate}, project}) => {
-        const state: { user?, due_date?, project? } = {};
+        const state = {...this.route.snapshot.params};
+        const child = {...this.route.snapshot.firstChild.params};
+
+        delete state.team;
+        delete child.team;
+        delete state.user;
+        delete child.user;
+        delete state.project;
+        delete child.project;
+        delete state.due_date;
+        delete child.due_date;
+
         if (!!user) {
           state.user = user.id;
         }
@@ -79,8 +90,8 @@ export class TeamComponent implements OnInit {
         if (!!project) {
           state.project = project.id;
         }
-        this.router.navigate([state, 'issues'],
-          {relativeTo: this.route});
+
+        this.router.navigate([state, this.route.snapshot.firstChild.routeConfig.path, child], {relativeTo: this.route});
       });
 
     const first = this.route.data.pipe(

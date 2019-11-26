@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Salary } from 'src/models/salary';
 import { UI } from 'junte-ui';
+import { Salary } from 'src/models/salary';
+import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-salary-detail',
@@ -12,12 +13,13 @@ import { UI } from 'junte-ui';
 export class SalaryDetailComponent implements OnInit {
 
   ui = UI;
+  user: User;
   salary: Salary;
 
   constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(({salary}) => this.salary = salary);
+    this.route.data.subscribe(({user, salary}) => [this.user, this.salary] = [user, salary]);
   }
 }

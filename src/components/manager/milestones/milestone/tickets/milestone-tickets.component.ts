@@ -34,11 +34,11 @@ export class MilestoneTicketsComponent implements OnInit, ControlValueAccessor {
   private orderBy$ = new BehaviorSubject<string>(null);
   private first$ = new BehaviorSubject<number>(null);
   private offset$ = new BehaviorSubject<number>(null);
+  private _current: Ticket;
 
   ui = UI;
   loading = false;
   tickets: Ticket[] = [];
-  ticket: Ticket;
 
   colors = {
     feature: UI.colors.green,
@@ -87,6 +87,15 @@ export class MilestoneTicketsComponent implements OnInit, ControlValueAccessor {
     return this.offset$.getValue();
   }
 
+  set current(current: Ticket) {
+    this._current = current;
+    this.onChange(current);
+  }
+
+  get current() {
+    return this._current;
+  }
+
   constructor(private allTicketsGQL: AllTicketsGQL,
               private deleteTicketGQL: DeleteTicketGQL,
               private attachIssueGQL: AttachIssueGQL,
@@ -118,9 +127,7 @@ export class MilestoneTicketsComponent implements OnInit, ControlValueAccessor {
   }
 
   writeValue(value: Ticket) {
-    if (!!value) {
-      this.ticket = value;
-    }
+    this._current = value;
   }
 
   onChange(value: Ticket) {
@@ -165,7 +172,7 @@ export class MilestoneTicketsComponent implements OnInit, ControlValueAccessor {
       maxWidth: '400px'
     });
 
-    this.modalService.open(component, null, options);
+    this.modalService.open(component, options);
   }
 
   predicate(item: CdkDrag<number>) {

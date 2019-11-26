@@ -1,8 +1,1 @@
-<app-issues [user]="user?.id"
-            [project]="project?.id"
-            [dueDate]="dueDate"
-            [type]="type"
-            [view]="viewType.extended"
-            (filtered)="filtered($event)"
-            (reloaded)="reloaded.emit()">
-</app-issues>
+<app-issues [view]="viewType.extended" [(state)]="state" (reloaded)="reloaded.emit()"></app-issues>

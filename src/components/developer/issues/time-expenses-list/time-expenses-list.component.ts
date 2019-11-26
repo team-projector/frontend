@@ -1,6 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { TimeExpensesState } from 'src/models/spent-time';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/models/user';
 
 @Component({
@@ -8,26 +7,15 @@ import { User } from 'src/models/user';
   templateUrl: './time-expenses-list.component.html',
   styleUrls: ['./time-expenses-list.component.scss']
 })
-export class TimeExpensesListComponent implements OnInit {
+export class TimeExpensesListComponent {
 
   user: User;
-  dueDate: Date;
-  state: TimeExpensesState;
-
   @Output() reloaded = new EventEmitter();
 
-  constructor(private route: ActivatedRoute,
-              private router: Router) {
+  constructor(private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(({user, dueDate, state}) =>
-      [this.user, this.dueDate, this.state] = [user, dueDate, state]);
+    this.route.data.subscribe(({user}) => this.user = user);
   }
-
-  filtered(filtered: { state? }) {
-    this.router.navigate([filtered],
-      {relativeTo: this.route});
-  }
-
 }

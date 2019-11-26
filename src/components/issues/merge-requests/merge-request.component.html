@@ -1,8 +1,9 @@
 <jnt-block [width]="ui.width.fluid">
-  <jnt-table #table [features]="[features.search]" (reloaded)="loadSummary(); reloaded.emit()">
-    <ng-template #filters>
-      <jnt-stack [type]="ui.stack.type.horizontal">
-        <jnt-form [formGroup]="form">
+  <jnt-form [formGroup]="form">
+    <jnt-table #table [features]="[features.search]" (reloaded)="loadSummary(); reloaded.emit()"
+               formControlName="table">
+      <ng-template #filters>
+        <jnt-stack [type]="ui.stack.type.horizontal">
           <jnt-switcher formControlName="state">
             <jnt-switcher-option label="Closed" [value]="mergeRequestState.closed">
               <jnt-badge *ngIf="summary?.closedCount"
@@ -19,72 +20,72 @@
                          [color]="ui.colors.red"></jnt-badge>
             </jnt-switcher-option>
           </jnt-switcher>
-        </jnt-form>
-      </jnt-stack>
-    </ng-template>
-    <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
-      <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
-                   let-issue="issue" let-participants="participants" let-project="project">
-        <jnt-stack [type]="ui.stack.type.horizontal"
-                   [gutter]="ui.gutter.small">
-          <ng-container *ngIf="issue?.user">
-            <jnt-avatar [text]="issue.user.name"
-                        [image]="issue.user.avatar" [size]="ui.sizes.small"></jnt-avatar>
-
-          </ng-container>
-          <jnt-avatars-list>
-            <jnt-avatar *ngFor="let p of participants"
-                        [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>
-          </jnt-avatars-list>
-          <jnt-stack [type]="ui.stack.type.vertical"
-                     [gutter]="ui.gutter.tiny">
-            <jnt-stack [type]="ui.stack.type.horizontal"
-                       [gutter]="ui.gutter.small">
-              <jnt-link [source]="url" target="_blank"
-                        [attr.closed]="state == mergeRequestState.closed" [title]="title">
-              </jnt-link>
-              <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
-
-            </jnt-stack>
-            <small>{{project?.fullTitle}}</small>
-          </jnt-stack>
         </jnt-stack>
       </ng-template>
-    </jnt-table-column>
+      <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
+        <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
+                     let-issue="issue" let-participants="participants" let-project="project">
+          <jnt-stack [type]="ui.stack.type.horizontal"
+                     [gutter]="ui.gutter.small">
+            <ng-container *ngIf="issue?.user">
+              <jnt-avatar [text]="issue.user.name"
+                          [image]="issue.user.avatar" [size]="ui.sizes.small"></jnt-avatar>
 
-    <jnt-table-column i18n-title="@@est" title="Progress">
-      <ng-template #cellTemplate let-timeEstimate="timeEstimate"
-                   let-totalTimeSpent="totalTimeSpent"
-                   let-metrics="metrics"
-                   let-problems="problems">
-        <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
-          <ng-template #legend>
-            <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
-                       [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
-              <div metric>{{totalTimeSpent | duration}}</div>
-              <div metric estimate>{{timeEstimate | duration}}</div>
+            </ng-container>
+            <jnt-avatars-list>
+              <jnt-avatar *ngFor="let p of participants"
+                          [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>
+            </jnt-avatars-list>
+            <jnt-stack [type]="ui.stack.type.vertical"
+                       [gutter]="ui.gutter.tiny">
+              <jnt-stack [type]="ui.stack.type.horizontal"
+                         [gutter]="ui.gutter.small">
+                <jnt-link [source]="url" target="_blank"
+                          [attr.closed]="state == mergeRequestState.closed" [title]="title">
+                </jnt-link>
+                <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title"></jnt-label>
+
+              </jnt-stack>
+              <small>{{project?.fullTitle}}</small>
             </jnt-stack>
-          </ng-template>
-        </jnt-progress-bar>
-        <div style="text-align: center;">
+          </jnt-stack>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column i18n-title="@@est" title="Progress">
+        <ng-template #cellTemplate let-timeEstimate="timeEstimate"
+                     let-totalTimeSpent="totalTimeSpent"
+                     let-metrics="metrics"
+                     let-problems="problems">
+          <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
+            <ng-template #legend>
+              <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
+                         [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
+                <div metric>{{totalTimeSpent | duration}}</div>
+                <div metric estimate>{{timeEstimate | duration}}</div>
+              </jnt-stack>
+            </ng-template>
+          </jnt-progress-bar>
+          <div style="text-align: center;">
             <span [attr.slow]="metrics.efficiency > 0 && metrics.efficiency < 0.8">
               {{!!metrics.efficiency ? (metrics.efficiency | number:'1.2-2') : ''}}
             </span>
-        </div>
-        <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
-                   [color]="ui.colors.red" label="estimate">
-        </jnt-label>
-      </ng-template>
-    </jnt-table-column>
+          </div>
+          <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
+                     [color]="ui.colors.red" label="estimate">
+          </jnt-label>
+        </ng-template>
+      </jnt-table-column>
 
-    <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@payroll" title="Payroll">
-      <ng-template #cellTemplate let-metrics="metrics">
-        <div style="text-align: right;">
-          {{!!metrics.payroll ? (metrics.payroll | currency) : '&mdash;'}}
-          /
-          {{!!metrics.paid ? (metrics.paid | currency) : '&mdash;'}}
-        </div>
-      </ng-template>
-    </jnt-table-column>
-  </jnt-table>
+      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@payroll" title="Payroll">
+        <ng-template #cellTemplate let-metrics="metrics">
+          <div style="text-align: right;">
+            {{!!metrics.payroll ? (metrics.payroll | currency) : '&mdash;'}}
+            /
+            {{!!metrics.paid ? (metrics.paid | currency) : '&mdash;'}}
+          </div>
+        </ng-template>
+      </jnt-table-column>
+    </jnt-table>
+  </jnt-form>
 </jnt-block>
