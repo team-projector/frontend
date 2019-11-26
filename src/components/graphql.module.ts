@@ -3,9 +3,8 @@ import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
-import { AppConfig } from '../app-config';
 import { ErrorResponse, onError } from 'apollo-link-error';
-import { Router } from '@angular/router';
+import { AppConfig } from '../app-config';
 
 @NgModule({
   exports: [
@@ -19,8 +18,7 @@ import { Router } from '@angular/router';
 export class GraphQLModule {
   constructor(@Inject(AppConfig) config: AppConfig,
               apollo: Apollo,
-              httpLink: HttpLink,
-              router: Router) {
+              httpLink: HttpLink) {
     const http = httpLink.create({uri: config.graphqlUrl});
     const authLink = new ApolloLink((operation, forward) => {
       if (config.token) {
@@ -41,11 +39,10 @@ export class GraphQLModule {
         // router.navigate(['/signup/login']);
       }
       if (graphQLErrors) {
-        graphQLErrors.map(({message, locations, path}) =>
-          console.log(
-            `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-          )
-        );
+        graphQLErrors.map(({message, locations, path}) => {
+          console.error(`[GraphQL error]: Message: ${message}, Path: ${path}`);
+          console.log('Locations: ', locations);
+        });
       }
     });
 

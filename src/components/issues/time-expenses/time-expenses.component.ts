@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { R } from 'apollo-angular/types';
-import { DefaultSearchFilter, TableComponent, UI } from 'junte-ui';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, defined, isEqual, TableComponent, UI } from 'junte-ui';
+import merge from 'merge-anything';
+import { distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { PLATFORM_DELAY } from 'src/consts';
 import { IssueState } from 'src/models/issue';
+import { MergeRequestState } from 'src/models/merge-request';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter, TimeExpensesState } from 'src/models/spent-time';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql';
 
@@ -17,90 +18,95 @@ import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql
 })
 export class TimeExpensesComponent implements OnInit {
 
-  private user$ = new BehaviorSubject<string>(null);
-  private team$ = new BehaviorSubject<number>(null);
-  private date$ = new BehaviorSubject<Date>(null);
-  private salary$ = new BehaviorSubject<number>(null);
-  private state$ = new BehaviorSubject<TimeExpensesState>(TimeExpensesState.opened);
-
   ui = UI;
   issuesState = IssueState;
   timeExpensesState = TimeExpensesState;
-  filter = new TimeExpensesFilter();
-  stateControl = this.builder.control(TimeExpensesState.opened);
   summary: SpentTimesSummary;
 
+  stateControl = this.builder.control(TimeExpensesState.opened);
+  tableControl = this.builder.control({
+    q: null,
+    sort: null,
+    first: DEFAULT_FIRST,
+    offset: DEFAULT_OFFSET
+  });
   form = this.builder.group({
-    state: this.stateControl
+    state: this.stateControl,
+    table: this.tableControl
   });
 
-  @Input()
-  set user(user: string) {
-    this.user$.next(user);
-  }
+  filter: TimeExpensesFilter;
 
-  @Input()
-  set team(team: number) {
-    this.team$.next(team);
-  }
-
-  @Input()
-  set date(date: Date) {
-    this.date$.next(date);
-  }
-
-  @Input()
-  set salary(salary: number) {
-    this.salary$.next(salary);
-  }
-
-  @Input()
-  set state(state: TimeExpensesState) {
-    this.state$.next(state);
-  }
-
-  get state() {
-    return this.state$.getValue();
-  }
-
+  @Input() user: string;
   @Output() reloaded = new EventEmitter();
-  @Output() filtered = new EventEmitter<{ state? }>();
 
   @ViewChild('table', {static: true})
   table: TableComponent;
 
   constructor(private timeExpensesGQL: TimeExpensesGQL,
               private TimeExpensesSummaryGQL: TimeExpensesSummaryGQL,
-              private builder: FormBuilder) {
+              private builder: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.state$.subscribe(state => this.stateControl.patchValue(state, {emitEvent: false}));
-
-    this.table.fetcher = (filter: DefaultSearchFilter) => {
-      Object.assign(this.filter, filter);
+    this.table.fetcher = () => {
       return this.timeExpensesGQL.fetch(serialize(this.filter) as R)
         .pipe(map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingTimeExpenses)));
     };
 
-    combineLatest([this.team$, this.user$, this.date$, this.salary$, this.state$]).pipe(
-      debounceTime(PLATFORM_DELAY),
-      distinctUntilChanged(),
-      map(([team, user, date, salary, state]) => ({team, user, date, salary, state}))
-    ).subscribe(filter => {
-      Object.assign(this.filter, filter);
-      this.table.load();
-      this.loadSummary();
-    });
+    this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
+      .subscribe(({table: {offset, first, sort}, state}) => this.save(offset, first, sort, state));
 
-    this.form.valueChanges.pipe(distinctUntilChanged())
-      .subscribe(({state}) => {
-        const filtering: { state? } = {};
-        if (state !== TimeExpensesState.opened) {
-          filtering.state = state;
+    this.route.params.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
+      .subscribe(({sort, first, offset, state, team, user, project, due_date, salary}) => {
+        if (!!this.filter && (this.filter.team != team || this.filter.user != (user || this.user)
+          || this.filter.date != due_date || this.filter.salary != salary || this.filter.project != project)) {
+          offset = 0;
         }
-        this.filtered.emit(filtering);
+        const form = merge({extensions: [defined]}, this.form.getRawValue(), {
+          table: {sort, first: +first || DEFAULT_FIRST, offset: +offset || DEFAULT_OFFSET},
+          state: state || MergeRequestState.opened
+        });
+        const filter = {team, user: user || this.user, project, date: due_date, salary};
+        this.filter = new TimeExpensesFilter({...filter, ...form.table, state: form.state});
+        this.loadSummary();
+        this.table.load();
+        this.form.patchValue(form, {emitEvent: false});
       });
+  }
+
+  save(offset, first, sort, state: TimeExpensesState) {
+    const filter: { sort?, first?, offset?, state? } = {};
+    const params = this.route.snapshot.params;
+    if (offset !== DEFAULT_OFFSET) {
+      filter.offset = offset;
+    }
+    if (first !== DEFAULT_FIRST) {
+      filter.first = first;
+    }
+    if (!!sort) {
+      filter.sort = sort;
+    }
+
+    if (!!state && state !== TimeExpensesState.opened) {
+      filter.state = state;
+    }
+    if (state != params.state && (state !== TimeExpensesState.opened || !!params.state)) {
+      delete filter.offset;
+    }
+
+    if (!!params.user) {
+      this.filter.user = params.user;
+    }
+    if (!!params.project) {
+      this.filter.project = params.project;
+    }
+    if (!!params.salary) {
+      this.filter.salary = params.salary;
+    }
+    this.router.navigate([filter], {relativeTo: this.route}).then(() => null);
   }
 
   loadSummary() {

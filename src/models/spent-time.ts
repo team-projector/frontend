@@ -101,6 +101,9 @@ export class TimeExpensesFilter {
   user?: number;
 
   @field()
+  project?: number;
+
+  @field()
   salary?: number;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})

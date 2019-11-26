@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { TeamIssuesListComponent } from 'src/components/leader/teams/team/issues/issues-list/issues-list.component';
+import { TeamTimeExpensesListComponent } from 'src/components/leader/teams/team/issues/time-expenses/time-expenses.component';
 import { TeamComponent } from 'src/components/leader/teams/team/team.component';
 import { TeamsComponent } from 'src/components/leader/teams/teams.component';
-import { TeamTimeExpensesListComponent } from 'src/components/leader/teams/team/issues/time-expenses/time-expenses.component';
-import { TeamResolver } from 'src/resolvers/team';
-import { TeamIssuesListComponent } from 'src/components/leader/teams/team/issues/issues-list/issues-list.component';
 import { OutletComponent } from 'src/components/outlet/outlet.component';
-import { UserResolver } from 'src/resolvers/user';
 import { DueDateResolver, IssuesTypeResolver } from 'src/resolvers/issue';
-import { ProjectResolver } from 'src/resolvers/project';
-import { TeamMergeRequestsListComponent } from './team/issues/merge-requests/merge-requests.component';
 import { MergeRequestStateResolver } from 'src/resolvers/merge-request';
+import { ProjectResolver } from 'src/resolvers/project';
+import { TeamResolver } from 'src/resolvers/team';
+import { UserResolver } from 'src/resolvers/user';
+import { TeamMergeRequestsListComponent } from './team/issues/merge-requests/merge-requests.component';
 
 export function getTeam(data: any) {
   return data.team.title;

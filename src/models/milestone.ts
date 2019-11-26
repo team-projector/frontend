@@ -111,13 +111,13 @@ export class PagingMilestones implements Paging<Milestone> {
 export class MilestonesFilter implements SearchFilter {
 
   @field()
-  active?: boolean;
-
-  @field()
   first?: number;
 
   @field()
   offset?: number;
+
+  @field()
+  q?: string;
 
   constructor(defs: MilestonesFilter = null) {
     if (!!defs) {

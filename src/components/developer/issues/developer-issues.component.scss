@@ -90,6 +90,11 @@
   }
 }
 
+::ng-deep [current-day='true'] {
+  background-color: $primary-light-color;
+  color: $white-color;
+}
+
 .day {
   display: flex;
   align-items: center;
@@ -98,6 +103,7 @@
   margin: auto;
   height: 45px;
   width: 45px;
+  border: 2px solid transparent;
 
   &[today='true'] {
     border-radius: $corner-normal;

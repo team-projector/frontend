@@ -137,6 +137,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
         group: group
       });
       return this.calendarMetrics.fetch(serialize(filter) as R).pipe(
+        filtering(({data: {teamProgressMetrics}}) => !!teamProgressMetrics),
         map(({data: {teamProgressMetrics}}) => teamProgressMetrics.map(el => deserialize(el, TeamProgressMetrics))),
         map(metrics => {
           const dic = new Map<string, Map<string, UserProgressMetrics>>();
