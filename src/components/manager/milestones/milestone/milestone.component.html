@@ -1,17 +1,17 @@
 <jnt-form [formGroup]="form" cdkDropListGroup>
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
     <app-milestone-tickets #milestoneTickets
-                           formControlName="tickets"
+                           formControlName="ticket"
                            [milestone]="milestone">
     </app-milestone-tickets>
     <jnt-stack [type]="ui.stack.type.horizontal">
-      <div filter [attr.active]="!!tickets?.value">
-        <ng-container *ngIf="!!tickets?.value; else noFilterTickets">
-          {{tickets.value.title}}
+      <div filter [attr.active]="!!ticket?.value">
+        <ng-container *ngIf="!!ticket?.value; else noFilterTickets">
+          {{ticket.value.title}}
           <jnt-button reset [scheme]="ui.schemes.secondary"
                       [size]="ui.sizes.tiny"
                       [icon]="ui.icons.close"
-                      (click)="tickets.patchValue(null)"></jnt-button>
+                      (click)="ticket.patchValue(null)"></jnt-button>
         </ng-container>
         <ng-template #noFilterTickets>
           <jnt-icon icon [icon]="ui.icons.project"></jnt-icon>

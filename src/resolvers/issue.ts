@@ -7,7 +7,7 @@ import { IssuesType } from '../models/issue';
 export class DueDateResolver implements Resolve<Date> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Date {
-    const dueDate = route.params['due_date'];
+    const dueDate = route.params['dueDate'];
     return !!dueDate ? parse(dueDate) : null;
   }
 }

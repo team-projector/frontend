@@ -1,34 +1,58 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import { R } from 'apollo-angular/types';
-import { format } from 'date-fns';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, defined, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
-import merge from 'merge-anything';
-import { BehaviorSubject } from 'rxjs';
-import { distinctUntilChanged, filter, finalize, map } from 'rxjs/operators';
-import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues } from 'src/models/issue';
-import { StandardLabel } from 'src/models/label';
-import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
+import {CdkDragDrop} from '@angular/cdk/drag-drop';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {FormBuilder} from '@angular/forms';
+import {R} from 'apollo-angular/types';
+import {format, startOfDay} from 'date-fns';
+import {DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI} from 'junte-ui';
+import {distinctUntilChanged, finalize, map} from 'rxjs/operators';
+import {deserialize, serialize} from 'serialize-ts/dist';
+import {IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues} from 'src/models/issue';
+import {StandardLabel} from 'src/models/label';
+import {IssuesGQL, IssuesSummaryGQL, SyncIssueGQL} from './issues.graphql';
+import {field, model} from '@junte/mocker-library';
+import {DateSerializer} from '../../../serializers/date';
+import {DATE_FORMAT} from '../../../consts';
 
 export enum ViewType {
   default,
   extended
 }
 
+@model()
 export class IssuesState {
+
+  @field()
   q?: string;
+
+  @field()
   sort?: string;
+
+  @field()
   first?: number;
+
+  @field()
   offset?: number;
+
+  @field()
   type?: IssuesType;
+
+  @field()
   team?: string;
+
+  @field()
   user?: string;
+
+  @field()
   project?: string;
-  due_date?: string;
+
+  @field()
   milestone?: string;
+
+  @field()
   ticket?: string;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  dueDate?: Date;
 
   constructor(defs: IssuesState = null) {
     if (!!defs) {
@@ -44,8 +68,7 @@ export class IssuesState {
 })
 export class IssuesComponent implements OnInit {
 
-  private filter$ = new BehaviorSubject<IssuesFilter>(null);
-  private _state: IssuesState;
+  private _filter: IssuesFilter;
   ui = UI;
   issuesState = IssueState;
   issueProblem = IssueProblem;
@@ -67,20 +90,21 @@ export class IssuesComponent implements OnInit {
   form = this.builder.group({
     table: this.tableControl,
     type: [IssuesType.opened],
-    user: [],
-    team: [],
-    project: [],
-    due_date: [],
-    milestone: [],
-    ticket: []
+    dueDate: [null],
+    team: [null],
+    milestone: [null],
+    user: [null],
+    project: [null],
+    ticket: [null]
   });
 
   set filter(filter: IssuesFilter) {
-    this.filter$.next(filter);
+    this._filter = filter;
+    this.load();
   }
 
   get filter() {
-    return this.filter$.getValue();
+    return this._filter;
   }
 
   @Input() view = ViewType.default;
@@ -89,17 +113,21 @@ export class IssuesComponent implements OnInit {
   @ViewChild('table', {static: true})
   table: TableComponent;
 
-  @Input() set state(state: IssuesState) {
-    this._state = state;
-    this.form.patchValue(merge({extensions: [defined]}, this.form.getRawValue(), {
-      table: {q: state.q, sort: state.sort, first: state.first, offset: state.offset},
-      type: state.type, team: state.team, user: state.user, project: state.project,
-      due_date: state.due_date, milestone: state.milestone, ticket: state.ticket
-    }));
-  }
-
-  get state() {
-    return this._state;
+  @Input() set state({first, offset, q, type, dueDate, team, user, project, milestone, ticket}: IssuesState) {
+    this.form.patchValue({
+      table: {
+        q: q || null,
+        first: first || DEFAULT_FIRST,
+        offset: offset || DEFAULT_OFFSET
+      },
+      type: type || IssuesType.opened,
+      dueDate: dueDate || null,
+      team: team || null,
+      user: user || null,
+      milestone: milestone || null,
+      project: project || null,
+      ticket: ticket || null
+    });
   }
 
   @Output() reloaded = new EventEmitter();
@@ -118,58 +146,41 @@ export class IssuesComponent implements OnInit {
     };
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({table: {offset, first, q, sort}, type, user, team, project, due_date, milestone, ticket}) =>
-        this.save(offset, first, q, sort, type, user, team, project, due_date, milestone, ticket));
+      .subscribe(({table: {offset, first, q}, type, user, team, project, milestone, ticket, dueDate}) => {
+        this.stateChange.emit(new IssuesState({
+          q: q || undefined,
+          first: first !== DEFAULT_FIRST ? first : undefined,
+          offset: offset !== DEFAULT_OFFSET ? offset : undefined,
+          type: type !== IssuesType.opened ? type : undefined,
+          user: user || undefined,
+          team: team || undefined,
+          project: project || undefined,
+          milestone: milestone || undefined,
+          ticket: ticket || undefined,
+          dueDate: !!dueDate ? dueDate : undefined
+        }));
 
-    this.filter$.pipe(
-      filter(filter => !!filter),
-      distinctUntilChanged((val1, val2) => isEqual(val1, val2))
-    ).subscribe(() => this.load());
+        this.filter = new IssuesFilter({
+          offset: offset,
+          first: first,
+          q: q,
+          sort: type === IssuesType.opened ? 'dueDate' : '-closedAt',
+          milestone: milestone,
+          team: team,
+          user: user,
+          project: project,
+          ticket: ticket,
+          dueDate: !!dueDate ? startOfDay(dueDate) : null,
+          state: type === IssuesType.opened ? IssueState.opened :
+            (type === IssuesType.closed ? IssueState.closed : null),
+          problems: type === IssuesType.problems ? true : null
+        });
+      });
   }
 
-  load() {
+  private load() {
     this.loadSummary();
     this.table.load();
-  }
-
-  save(offset, first, q, sort, type, user, team, project, due_date, milestone, ticket) {
-    const filter = new IssuesFilter();
-
-    if (!!sort) {
-      filter.sort = sort;
-    }
-    if (!!user) {
-      filter.user = user;
-    }
-    if (!!due_date) {
-      filter.dueDate = new Date(format(due_date, 'YYYY-MM-DD'));
-    }
-    if (!!project) {
-      filter.project = project;
-    }
-    if (!!ticket) {
-      filter.ticket = ticket;
-    }
-    if (!!milestone) {
-      filter.milestone = milestone;
-    }
-
-    filter.offset = offset;
-    filter.first = first;
-    filter.state = type === IssuesType.opened ? IssueState.opened : (type === IssuesType.closed ? IssueState.closed : null);
-    filter.problems = type === IssuesType.problems ? true : null;
-    filter.sort = type === IssuesType.opened ? 'dueDate' : '-closedAt';
-
-    const state = new IssuesState({
-      q: q || null, sort: sort || null, first: +first || DEFAULT_FIRST, offset: +offset || DEFAULT_OFFSET,
-      type: type || IssuesType.opened, user: user, due_date: due_date || null,
-      team: team || null, project: project || null, milestone: milestone || null, ticket: ticket || null
-    });
-    this.filter = filter;
-    if (!isEqual(state, this._state)) {
-      this._state = state;
-      this.stateChange.emit(state);
-    }
   }
 
   loadSummary() {
