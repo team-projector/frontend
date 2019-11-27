@@ -4,8 +4,6 @@
   display: block;
 }
 
-.closed ::ng-deep a[child-of=#{$jnt-link-host}] {
+[closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
   text-decoration: line-through;
 }
-
-

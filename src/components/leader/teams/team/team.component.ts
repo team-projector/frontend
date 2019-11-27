@@ -13,7 +13,7 @@ import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { MergeRequestSummary } from 'src/models/merge-request';
 import { MilestoneProblem } from 'src/models/milestone';
 import { Project } from 'src/models/project';
-import { TimeExpensesSummary } from 'src/models/spent-time';
+import { SpentTimesSummary } from 'src/models/spent-time';
 import { Team } from 'src/models/team';
 import { User } from 'src/models/user';
 import { DurationFormat } from 'src/pipes/date';
@@ -47,7 +47,7 @@ export class TeamComponent implements OnInit {
     first?: IssuesSummary, second?: {
       issues: IssuesSummary,
       mergeRequests: MergeRequestSummary
-      spentTimes: TimeExpensesSummary
+      spentTimes: SpentTimesSummary
     }
   } = {};
 
@@ -69,7 +69,18 @@ export class TeamComponent implements OnInit {
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(({filter: {user, dueDate}, project}) => {
-        const state: { user?, due_date?, project? } = {};
+        const state = {...this.route.snapshot.params};
+        const child = {...this.route.snapshot.firstChild.params};
+
+        delete state.team;
+        delete child.team;
+        delete state.user;
+        delete child.user;
+        delete state.project;
+        delete child.project;
+        delete state.due_date;
+        delete child.due_date;
+
         if (!!user) {
           state.user = user.id;
         }
@@ -79,8 +90,8 @@ export class TeamComponent implements OnInit {
         if (!!project) {
           state.project = project.id;
         }
-        this.router.navigate([state, 'issues'],
-          {relativeTo: this.route});
+
+        this.router.navigate([state, this.route.snapshot.firstChild.routeConfig.path, child], {relativeTo: this.route});
       });
 
     const first = this.route.data.pipe(
@@ -125,7 +136,7 @@ export class TeamComponent implements OnInit {
       .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({
         issues: deserialize(issues, IssuesSummary),
         mergeRequests: deserialize(mergeRequests, MergeRequestSummary),
-        spentTimes: deserialize(spentTimes, TimeExpensesSummary),
+        spentTimes: deserialize(spentTimes, SpentTimesSummary),
       })))
       .subscribe(summary => this.summary.second = summary);
   }

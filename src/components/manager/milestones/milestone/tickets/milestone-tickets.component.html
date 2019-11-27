@@ -9,7 +9,8 @@
           <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
                [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)" period>
             <div *ngIf="ticket.metrics.issuesOpenedCount" label>{{ticket.metrics.timeRemains | duration}}</div>
-            <div progress [style.transform]="'translateX(-' + (ticket.metrics.issuesOpenedCount ? 100 - ticket.metrics.timeSpent / ticket.metrics.timeEstimate * 100 : 0) + '%)'">
+            <div progress
+                 [style.transform]="'translateX(-' + (ticket.metrics.issuesOpenedCount ? 100 - ticket.metrics.timeSpent / ticket.metrics.timeEstimate * 100 : 0) + '%)'">
             </div>
           </div>
         </ng-template>
@@ -19,11 +20,12 @@
                      [align]="ui.flex.align.center"
                      [wrap]="ui.flex.wrap.wrap"
                      [attr.ticket]="ticket.id"
+                     [attr.current]="ticket.id === current?.id"
                      [cdkDropListEnterPredicate]="predicate"
                      cdkDropList (cdkDropListDropped)="drop($event)">
             <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center" [gutter]="ui.gutter.small">
               <jnt-dot [color]="colors[ticket.type]"></jnt-dot>
-              <jnt-link (click)="onChange(ticket)" [title]="ticket.title"></jnt-link>
+              <jnt-link (click)="current = ticket" [title]="ticket.title"></jnt-link>
             </jnt-stack>
 
             <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center" [gutter]="ui.gutter.small">

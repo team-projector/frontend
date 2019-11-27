@@ -14,7 +14,7 @@ import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { MergeRequestSummary } from 'src/models/merge-request';
 import { MetricsGroup, UserMetricsFilter, UserProgressMetrics } from 'src/models/metrics';
 import { MilestoneProblem } from 'src/models/milestone';
-import { TimeExpensesSummary } from 'src/models/spent-time';
+import { SpentTimesSummary } from 'src/models/spent-time';
 import { User } from 'src/models/user';
 import { DurationFormat } from 'src/pipes/date';
 import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
@@ -54,7 +54,7 @@ export class DeveloperIssuesComponent implements OnInit {
   summary: {
     issues?: IssuesSummary,
     mergeRequests?: MergeRequestSummary
-    spentTimes?: TimeExpensesSummary
+    spentTimes?: SpentTimesSummary
   } = {};
 
   set user(user: User) {
@@ -96,7 +96,15 @@ export class DeveloperIssuesComponent implements OnInit {
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(({dueDate, project}) => {
-        const state: { due_date?, project? } = {};
+        const state = {...this.route.snapshot.params};
+        const child = {...this.route.snapshot.firstChild.params};
+        const path = this.route.snapshot.firstChild.routeConfig.path;
+
+        delete state.due_date;
+        delete child.due_date;
+        delete state.project;
+        delete child.project;
+
         if (!!dueDate) {
           state.due_date = format(dueDate, 'YYYY-MM-DD');
         }
@@ -105,7 +113,7 @@ export class DeveloperIssuesComponent implements OnInit {
           state.project = project.id;
         }
 
-        this.router.navigate([state], {relativeTo: this.route});
+        this.router.navigate(!!path ? [state, path, child] : [{...state, ...child}], {relativeTo: this.route});
       });
 
     this.route.data.subscribe(({user, dueDate, project}) => {
@@ -131,7 +139,7 @@ export class DeveloperIssuesComponent implements OnInit {
       .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({
           issues: deserialize(issues, IssuesSummary),
           mergeRequests: deserialize(mergeRequests, MergeRequestSummary),
-          spentTimes: deserialize(spentTimes, TimeExpensesSummary),
+          spentTimes: deserialize(spentTimes, SpentTimesSummary),
         }))
       ).subscribe(summary => this.summary = summary);
   }

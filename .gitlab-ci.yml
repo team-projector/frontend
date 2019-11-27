@@ -27,7 +27,7 @@ build:
     - docker push $DOCKER_IMAGE
     - docker push $DOCKER_CACHE_IMAGE
 
-publish_dev:
+publish_master:
   stage: publish
   dependencies: []
   services:
@@ -40,22 +40,8 @@ publish_dev:
   only:
     - master
 
-# deploy_dev:
-#   image: junte/ssh-agent
-#   stage: deploy
-#   dependencies: []
-#   variables:
-#     SSH_PRIVATE_KEY: $SSH_DEV_PRIVATE_KEY
-#   script:
-#   - ssh deploy@${DEV_HOST} "/opt/deploy/deploy.sh"
-#   environment:
-#     name: dev
-#     url: https://${DEV_HOST}
-#   only:
-#   - master
-
-deploy_k8s:
-  image: dtzar/helm-kubectl
+deploy_master:
+  image: dtzar/helm-kubectl:2.16.1
   stage: deploy
   dependencies: []
   variables:
@@ -69,12 +55,12 @@ deploy_k8s:
     - helm init --client-only
     - cd deploy/helm
     - helm repo update
-    - export RELEASE_NAME=frontend
-    - export DEPLOYS=$(helm ls | grep $RELEASE_NAME | wc -l)
   script:
-    - if [ ${DEPLOYS}  -eq 0 ]; then helm install --set image.tag=$CI_PIPELINE_IID --name=${RELEASE_NAME} . ; else helm upgrade  ${RELEASE_NAME} --set image.tag=$CI_PIPELINE_IID .; fi
+    - export RELEASE_NAME=team-projector--frontend
+    - export DEPLOYS=$(helm ls | grep $RELEASE_NAME | wc -l)    
+    - if [ ${DEPLOYS} -eq 0 ]; then helm install --set image.tag=$CI_PIPELINE_IID --name=${RELEASE_NAME} --namespace $K8S_NS . ; else helm upgrade ${RELEASE_NAME} --set image.tag=$CI_PIPELINE_IID --namespace $K8S_NS .; fi
   environment:
-    name: dev
-    url: https://${DEV_HOST}
+    name: production
+    url: $SITE_ADDRESS
   only:
-  - master
+    - master
