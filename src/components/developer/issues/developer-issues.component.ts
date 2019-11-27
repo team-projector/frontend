@@ -120,8 +120,9 @@ export class DeveloperIssuesComponent implements OnInit {
           project: !!project ? project.id : undefined,
           dueDate: dueDate || undefined
         });
-        const path = this.route.snapshot.children.map(r =>
-          r.url.reduce((urls, u) => urls.concat(u.path), []));
+        const path = [];
+        this.route.snapshot.children.forEach(child =>
+          child.url.forEach(segment => path.push(segment.path)));
         this.router.navigate([serialize(state), ...path],
           {relativeTo: this.route}).then(() => null);
       });
