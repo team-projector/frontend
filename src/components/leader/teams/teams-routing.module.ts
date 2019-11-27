@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TeamIssuesListComponent } from 'src/components/leader/teams/team/issues/issues-list/issues-list.component';
+import { TeamIssuesListComponent } from 'src/components/leader/teams/team/issues/issues/issues-list.component';
 import { TeamTimeExpensesListComponent } from 'src/components/leader/teams/team/issues/time-expenses/time-expenses.component';
 import { TeamComponent } from 'src/components/leader/teams/team/team.component';
 import { TeamsComponent } from 'src/components/leader/teams/teams.component';

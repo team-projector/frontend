@@ -1,23 +1,45 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { R } from 'apollo-angular/types';
-import { format } from 'date-fns';
-import { UI } from 'junte-ui';
-import { combineLatest } from 'rxjs';
-import { distinctUntilChanged, map, tap } from 'rxjs/operators';
-import { deserialize, serialize } from 'serialize-ts/dist';
-import { MetricType } from 'src/components/leader/teams/team/calendar/team-calendar.component';
-import { METRIC_TYPE } from 'src/components/metrics-type/consts';
-import { IssuesFilter, IssuesSummary } from 'src/models/issue';
-import { MergeRequestSummary } from 'src/models/merge-request';
-import { MilestoneProblem } from 'src/models/milestone';
-import { Project } from 'src/models/project';
-import { SpentTimesSummary } from 'src/models/spent-time';
-import { Team } from 'src/models/team';
-import { User } from 'src/models/user';
-import { DurationFormat } from 'src/pipes/date';
-import { FirstSummaryGQL, SecondSummaryGQL } from './team.graphql';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {R} from 'apollo-angular/types';
+import {UI} from 'junte-ui';
+import {combineLatest} from 'rxjs';
+import {distinctUntilChanged, map, tap} from 'rxjs/operators';
+import {deserialize, serialize} from 'serialize-ts/dist';
+import {MetricType} from 'src/components/leader/teams/team/calendar/team-calendar.component';
+import {METRIC_TYPE} from 'src/components/metrics-type/consts';
+import {IssuesFilter, IssuesSummary} from 'src/models/issue';
+import {MergeRequestSummary} from 'src/models/merge-request';
+import {MilestoneProblem} from 'src/models/milestone';
+import {Project} from 'src/models/project';
+import {SpentTimesSummary} from 'src/models/spent-time';
+import {Team} from 'src/models/team';
+import {User} from 'src/models/user';
+import {DurationFormat} from 'src/pipes/date';
+import {FirstSummaryGQL, SecondSummaryGQL} from './team.graphql';
+import {field, model} from '@junte/mocker-library';
+import {DateSerializer} from '../../../../serializers/date';
+import {DATE_FORMAT} from '../../../../consts';
+
+@model()
+export class TeamState {
+
+  @field()
+  user?: string;
+
+  @field()
+  project?: string;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  dueDate?: Date;
+
+  constructor(defs: TeamState = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+
+}
 
 @Component({
   selector: 'app-leader-team',
@@ -69,29 +91,15 @@ export class TeamComponent implements OnInit {
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(({filter: {user, dueDate}, project}) => {
-        const state = {...this.route.snapshot.params};
-        const child = {...this.route.snapshot.firstChild.params};
-
-        delete state.team;
-        delete child.team;
-        delete state.user;
-        delete child.user;
-        delete state.project;
-        delete child.project;
-        delete state.due_date;
-        delete child.due_date;
-
-        if (!!user) {
-          state.user = user.id;
-        }
-        if (!!dueDate) {
-          state.due_date = format(dueDate, 'MM-DD-YYYY');
-        }
-        if (!!project) {
-          state.project = project.id;
-        }
-
-        this.router.navigate([state, this.route.snapshot.firstChild.routeConfig.path, child], {relativeTo: this.route});
+        const state = new TeamState({
+          user: !!user ? user.id : undefined,
+          project: !!project ? project.id : undefined,
+          dueDate: dueDate || undefined
+        });
+        const path = this.route.snapshot.children.map(r =>
+          r.url.reduce((urls, u) => urls.concat(u.path), []));
+        this.router.navigate([serialize(state), ...path],
+          {relativeTo: this.route}).then(() => null);
       });
 
     const first = this.route.data.pipe(

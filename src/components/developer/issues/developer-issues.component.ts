@@ -1,28 +1,48 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { R } from 'apollo-angular/types';
-import { format } from 'date-fns';
-import { UI } from 'junte-ui';
-import { Period } from 'junte-ui/lib/components/calendar/models';
-import { BehaviorSubject, combineLatest, zip } from 'rxjs';
-import { distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
-import { deserialize, serialize } from 'serialize-ts/dist';
-import { MetricType } from 'src/components/leader/teams/team/calendar/team-calendar.component';
-import { METRIC_TYPE } from 'src/components/metrics-type/consts';
-import { IssuesFilter, IssuesSummary } from 'src/models/issue';
-import { MergeRequestSummary } from 'src/models/merge-request';
-import { MetricsGroup, UserMetricsFilter, UserProgressMetrics } from 'src/models/metrics';
-import { MilestoneProblem } from 'src/models/milestone';
-import { SpentTimesSummary } from 'src/models/spent-time';
-import { User } from 'src/models/user';
-import { DurationFormat } from 'src/pipes/date';
-import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormControl} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {R} from 'apollo-angular/types';
+import {UI} from 'junte-ui';
+import {Period} from 'junte-ui/lib/components/calendar/models';
+import {BehaviorSubject, combineLatest, zip} from 'rxjs';
+import {distinctUntilChanged, filter as filtering, map} from 'rxjs/operators';
+import {deserialize, serialize} from 'serialize-ts/dist';
+import {MetricType} from 'src/components/leader/teams/team/calendar/team-calendar.component';
+import {METRIC_TYPE} from 'src/components/metrics-type/consts';
+import {IssuesFilter, IssuesSummary} from 'src/models/issue';
+import {MergeRequestSummary} from 'src/models/merge-request';
+import {MetricsGroup, UserMetricsFilter, UserProgressMetrics} from 'src/models/metrics';
+import {MilestoneProblem} from 'src/models/milestone';
+import {SpentTimesSummary} from 'src/models/spent-time';
+import {User} from 'src/models/user';
+import {DurationFormat} from 'src/pipes/date';
+import {IssuesMetricsGQL, IssuesSummaryGQL} from './issues-metrics.graphql';
+import {field, model} from '@junte/mocker-library';
+import {DateSerializer} from '../../../serializers/date';
+import {DATE_FORMAT} from '../../../consts';
+import {TeamState} from '../../leader/teams/team/team.component';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,
               public weeks: Map<string, UserProgressMetrics>) {
   }
+}
+
+@model()
+export class DeveloperState {
+
+  @field()
+  project?: string;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  dueDate?: Date;
+
+  constructor(defs: TeamState = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+
 }
 
 @Component({
@@ -82,8 +102,8 @@ export class DeveloperIssuesComponent implements OnInit {
   metric = new FormControl(localStorage.getItem(METRIC_TYPE) || MetricType.all);
   form = this.formBuilder.group({
     dueDate: this.dueDate,
-    metric: this.metric,
-    project: this.project
+    project: this.project,
+    metric: this.metric
   });
 
   constructor(private formBuilder: FormBuilder,
@@ -96,24 +116,14 @@ export class DeveloperIssuesComponent implements OnInit {
   ngOnInit() {
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(({dueDate, project}) => {
-        const state = {...this.route.snapshot.params};
-        const child = {...this.route.snapshot.firstChild.params};
-        const path = this.route.snapshot.firstChild.routeConfig.path;
-
-        delete state.due_date;
-        delete child.due_date;
-        delete state.project;
-        delete child.project;
-
-        if (!!dueDate) {
-          state.due_date = format(dueDate, 'YYYY-MM-DD');
-        }
-
-        if (!!project) {
-          state.project = project.id;
-        }
-
-        this.router.navigate(!!path ? [state, path, child] : [{...state, ...child}], {relativeTo: this.route});
+        const state = new DeveloperState({
+          project: !!project ? project.id : undefined,
+          dueDate: dueDate || undefined
+        });
+        const path = this.route.snapshot.children.map(r =>
+          r.url.reduce((urls, u) => urls.concat(u.path), []));
+        this.router.navigate([serialize(state), ...path],
+          {relativeTo: this.route}).then(() => null);
       });
 
     this.route.data.subscribe(({user, dueDate, project}) => {

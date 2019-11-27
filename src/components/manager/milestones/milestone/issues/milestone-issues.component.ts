@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { IssuesListComponent } from 'src/components/issues/issues/issues-list';
-import { IssuesState } from 'src/components/issues/issues/issues.component';
+import {Component} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {IssuesListComponent} from 'src/components/issues/issues/issues-list';
 
 @Component({
   selector: 'app-milestone-issues',
@@ -14,14 +13,8 @@ export class MilestoneIssuesComponent extends IssuesListComponent {
     super(route, router);
   }
 
-  filter(previous: IssuesState, current: IssuesState): IssuesState {
-    const state = super.filter(previous, current);
-    if (!!current.ticket) {
-      state.ticket = current.ticket;
-    }
-    if (!!current.milestone) {
-      state.milestone = current.milestone;
-    }
+  getState(state: Object) {
+    delete state['milestone'];
     return state;
   }
 }
