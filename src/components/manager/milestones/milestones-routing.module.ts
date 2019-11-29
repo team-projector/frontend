@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { MilestoneIssuesComponent } from 'src/components/manager/milestones/milestone/issues/milestone-issues.component';
 import { MilestoneComponent } from 'src/components/manager/milestones/milestone/milestone.component';
 import { OutletComponent } from 'src/components/outlet/outlet.component';
 import { IssuesTypeResolver } from 'src/resolvers/issue';
@@ -10,6 +11,10 @@ import { MilestonesComponent } from './milestones.component';
 
 export function getMilestone(data: any) {
   return data.milestone.title;
+}
+
+export function getTicket(data: any) {
+  return data.ticket.title;
 }
 
 const routes: Routes = [
@@ -24,14 +29,31 @@ const routes: Routes = [
       },
       {
         path: ':milestone',
-        component: MilestoneComponent,
-        data: {breadcrumb: getMilestone},
+        component: OutletComponent,
         resolve: {
           milestone: MilestoneResolver,
-          type: IssuesTypeResolver,
-          ticket: TicketResolver,
-          team: TeamResolver
-        }
+        },
+        data: {breadcrumb: getMilestone},
+        children: [
+          {
+            path: '',
+            component: MilestoneComponent,
+            resolve: {
+              milestone: MilestoneResolver,
+              type: IssuesTypeResolver,
+              ticket: TicketResolver,
+              team: TeamResolver
+            }
+          },
+          {
+            path: ':ticket',
+            component: MilestoneIssuesComponent,
+            resolve: {
+              ticket: TicketResolver,
+            },
+            data: {breadcrumb: getTicket},
+          }
+        ]
       }
     ]
   }

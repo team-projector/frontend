@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {UI} from 'junte-ui';
+import { Component } from '@angular/core';
+import { UI } from 'junte-ui';
 
 @Component({
   selector: 'app-developer',
@@ -8,7 +8,5 @@ import {UI} from 'junte-ui';
 })
 
 export class ManagerComponent {
-
   ui = UI;
-
 }

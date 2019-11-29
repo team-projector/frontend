@@ -1,8 +1,8 @@
-import {EventEmitter, OnInit, Output} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {IssuesState, ViewType} from 'src/components/issues/issues/issues.component';
-import {combineLatest} from 'rxjs';
-import {serialize} from 'serialize-ts/dist';
+import { EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { combineLatest } from 'rxjs';
+import { serialize } from 'serialize-ts/dist';
+import { IssuesState, ViewType } from 'src/components/issues/issues/issues.component';
 
 export abstract class IssuesListComponent implements OnInit {
 
@@ -27,9 +27,8 @@ export abstract class IssuesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    combineLatest(this.route.data, this.route.params)
-      .subscribe(([{user, team, milestone, project, ticket, dueDate},
-                    {q, sort, first, offset, type}]) => {
+    combineLatest([this.route.data, this.route.params])
+      .subscribe(([{user, team, milestone, project, ticket, dueDate}, {q, sort, first, offset, type}]) => {
         this.state = new IssuesState({
           first: +first || undefined,
           offset: +offset || undefined,
