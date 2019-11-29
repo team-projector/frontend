@@ -60,7 +60,7 @@
                     <jnt-link [source]="m.glUrl" [title]="m.title"
                               target="_blank"></jnt-link>
                     <jnt-label *ngIf="m.dueDate" [label]="m.dueDate | dueDate"
-                               [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.colors.red : ui.colors.gray500"></jnt-label>
+                               [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.colors.red : ui.colors.paleNavy"></jnt-label>
                   </jnt-stack>
                 </li>
               </ul>

@@ -4,13 +4,13 @@
       <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
         <span payroll closed>{{metrics.payrollClosed | currency}}</span>
         <jnt-label label [label]="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) | duration"
-                   [color]="ui.colors.gray500"></jnt-label>
+                   [color]="ui.colors.paleNavy"></jnt-label>
       </jnt-stack>
 
       <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
         <span payroll opened>{{metrics.payrollOpened | currency}}</span>
         <jnt-label label [label]="(metrics.issues.openedSpent + metrics.mergeRequests.openedSpent ) | duration"
-                   [color]="ui.colors.gray500"></jnt-label>
+                   [color]="ui.colors.paleNavy"></jnt-label>
       </jnt-stack>
     </jnt-stack>
 
