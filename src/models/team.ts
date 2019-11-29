@@ -6,9 +6,9 @@ import { Paging } from './paging';
 import { User } from './user';
 
 export enum TeamMemberRole {
-  developer = 'developer',
-  leader = 'leader',
-  watcher = 'watcher'
+  developer = 'DEVELOPER',
+  leader = 'LEADER',
+  watcher = 'WATCHER'
 }
 
 @model()

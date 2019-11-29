@@ -12,14 +12,14 @@ import { Project } from './project';
 import { User } from './user';
 
 export enum IssueState {
-  opened = 'opened',
-  closed = 'closed'
+  opened = 'OPENED',
+  closed = 'CLOSED'
 }
 
 export enum IssueProblem {
-  overDueDate = 'over_due_date',
-  emptyDueDate = 'empty_due_date',
-  emptyEstimate = 'empty_estimate'
+  overDueDate = 'OVER_DUE_DATE',
+  emptyDueDate = 'EMPTY_DUE_DATE',
+  emptyEstimate = 'EMPTY_ESTIMATE'
 }
 
 export enum IssuesType {

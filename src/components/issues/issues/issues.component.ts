@@ -1,17 +1,17 @@
-import {CdkDragDrop} from '@angular/cdk/drag-drop';
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
-import {R} from 'apollo-angular/types';
-import {format, startOfDay} from 'date-fns';
-import {DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI} from 'junte-ui';
-import {distinctUntilChanged, finalize, map} from 'rxjs/operators';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues} from 'src/models/issue';
-import {StandardLabel} from 'src/models/label';
-import {IssuesGQL, IssuesSummaryGQL, SyncIssueGQL} from './issues.graphql';
-import {field, model} from '@junte/mocker-library';
-import {DateSerializer} from '../../../serializers/date';
-import {DATE_FORMAT} from '../../../consts';
+import { CdkDragDrop } from '@angular/cdk/drag-drop';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { field, model } from '@junte/mocker-library';
+import { R } from 'apollo-angular/types';
+import { startOfDay } from 'date-fns';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
+import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { DATE_FORMAT } from 'src/consts';
+import { IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues } from 'src/models/issue';
+import { StandardLabel } from 'src/models/label';
+import { DateSerializer } from 'src/serializers/date';
+import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
 
 export enum ViewType {
   default,

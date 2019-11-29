@@ -11,9 +11,9 @@ import { Project } from './project';
 import { User } from './user';
 
 export enum MergeRequestState {
-  opened = 'opened',
-  merged = 'merged',
-  closed = 'closed'
+  opened = 'OPENED',
+  merged = 'MERGED',
+  closed = 'CLOSED'
 }
 
 @model()

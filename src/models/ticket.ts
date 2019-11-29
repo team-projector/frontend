@@ -7,9 +7,9 @@ import { DateSerializer } from 'src/serializers/date';
 import { EdgesToPaging } from 'src/serializers/graphql';
 
 export enum TicketTypes {
-  feature = 'feature',
-  improvement = 'improvement',
-  bugFixing = 'bug_fixing'
+  feature = 'FEATURE',
+  improvement = 'IMPROVEMENT',
+  bugFixing = 'BUG_FIXING'
 }
 
 @model()
