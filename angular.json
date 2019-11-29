@@ -28,13 +28,18 @@
               "src/assets",
               {
                 "glob": "**/*",
-                "input": "node_modules/junte-ui/lib/assets/fonts/junte-ui-icons-default/",
-                "output": "./assets/fonts/junte-ui/"
+                "input": "node_modules/junte-ui/lib/assets/fonts/",
+                "output": "./assets/fonts/"
               },
               {
                 "glob": "**/*",
-                "input": "node_modules/junte-ui/lib/assets/icons/",
-                "output": "./assets/icons/"
+                "input": "projects/junte-ui/src/lib/assets/icons/animated/",
+                "output": "./assets/icons/animated/"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/junte-ui/src/lib/assets/icons/svg/",
+                "output": "./assets/icons/svg/"
               }
             ],
             "styles": [
