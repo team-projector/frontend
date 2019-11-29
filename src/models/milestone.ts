@@ -9,7 +9,7 @@ import { Paging } from './paging';
 import { Project, ProjectGroup } from './project';
 
 export enum MilestoneProblem {
-  overDueDate = 'over_due_date'
+  overDueDate = 'OVER_DUE_DATE'
 }
 
 @model()

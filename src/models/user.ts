@@ -2,19 +2,19 @@ import { field, model } from '@junte/mocker-library';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
 
 export enum UserPermission {
-  inviteUser = 'intite_user',
+  inviteUser = 'invite_user',
 }
 
 export enum UserRole {
-  developer = 'developer',
-  teamLeader = 'team_leader',
-  projectManager = 'project_manager',
-  customer = 'customer',
-  shareholder = 'shareholder'
+  developer = 'DEVELOPER',
+  teamLeader = 'TEAM_LEADER',
+  projectManager = 'PROJECT_MANAGER',
+  customer = 'CUSTOMER',
+  shareholder = 'SHAREHOLDER'
 }
 
 export enum UserProblem {
-  payrollOpenedOverflow = 'payroll_opened_overflow'
+  payrollOpenedOverflow = 'PAYROLL_OPENED_OVERFLOW'
 }
 
 @model()

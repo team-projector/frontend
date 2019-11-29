@@ -10,9 +10,9 @@ import { MergeRequest } from './merge-request';
 import { Paging } from './paging';
 
 export enum TimeExpensesState {
-  opened = 'opened',
-  closed = 'closed',
-  all = 'all'
+  opened = 'OPENED',
+  closed = 'CLOSED',
+  all = 'ALL'
 }
 
 @model()
