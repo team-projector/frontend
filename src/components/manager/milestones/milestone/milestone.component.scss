@@ -1,27 +1,83 @@
 @import "variables";
 
-[filter] {
-  position: relative;
+[title] {
+  width: 100%;
+  height: 100%;
   display: flex;
+  justify-content: center;
   align-items: center;
-  min-height: 40px;
-  color: $primary-text-light-color;
-  padding: $gutter-small $gutter-normal;
-  border: 1px dashed $secondary-dark-color;
-  border-radius: $corner-normal;
-  line-height: 1em;
+}
 
-  &[active='true'] {
-    border-color: transparent;
-    background: $primary-light-color;
-    color: $white-color;
-    padding-right: $gutter-huge;
-    box-shadow: $shadow-normal;
+[period] {
+  position: relative;
+  margin: $gutter-tiny;
+  border-radius: $corner-large;
+  background-color: $gray-600-color;
+  color: $white-color;
+  height: 40px;
+  pointer-events: none;
+  overflow: hidden;
+
+  &[over-from='true'] {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 
-  [reset] {
+  &[over-to='true'] {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  [label] {
     position: absolute;
-    top: $gutter-small;
-    right: $gutter-small;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  [progress] {
+    background-color: $success-color;
+    transform: translateX(-50%);
+    height: 100%;
   }
 }
+
+[issue] {
+  padding-left: $gutter-normal;
+
+  [state] {
+    color: $success-color;
+
+    &[doing] {
+      min-width: 18px;
+      width: 18px;
+      min-height: 18px;
+      height: 18px;
+      border-radius: 50%;
+      fill: $success-color;
+      padding: 1px;
+      border: 1px solid $success-color;
+    }
+  }
+
+  [closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
+    text-decoration: line-through;
+  }
+
+}
+
+.cdk-drag-preview {
+  border-radius: $corner-normal;
+  box-shadow: $shadow-normal;
+  padding: $gutter-normal;
+  background-color: $primary-background;
+}
+
+//.cdk-drag-placeholder {
+//  display: none;
+//}

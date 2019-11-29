@@ -5,10 +5,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { JunteUiModule } from 'junte-ui';
 import { DueDateModule } from 'src/components/due-date/due-date.module';
+import { IssuesPipesModule } from 'src/components/issues/issues.pipes';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { CurrencyRublePipeModule } from 'src/pipes/currency-ruble.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
-import { HasLabelPipe, LabelsPipe } from './issues.pipes';
 import { IssuesComponent } from './issues/issues.component';
 import { MergeRequestsComponent } from './merge-requests/merge-requests.component';
 import { TimeExpensesComponent } from './time-expenses/time-expenses.component';
@@ -18,8 +18,6 @@ import { TimeExpensesComponent } from './time-expenses/time-expenses.component';
     IssuesComponent,
     TimeExpensesComponent,
     MergeRequestsComponent,
-    LabelsPipe,
-    HasLabelPipe
   ],
   imports: [
     CommonModule,
@@ -27,6 +25,7 @@ import { TimeExpensesComponent } from './time-expenses/time-expenses.component';
     RouterModule,
     DragDropModule,
     DatePipesModule,
+    IssuesPipesModule,
     ArrayPipesModule,
     JunteUiModule,
     DueDateModule,

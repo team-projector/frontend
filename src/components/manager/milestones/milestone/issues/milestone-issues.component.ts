@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {IssuesListComponent} from 'src/components/issues/issues/issues-list';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IssuesListComponent } from 'src/components/issues/issues/issues-list';
 
 @Component({
   selector: 'app-milestone-issues',
@@ -15,6 +15,7 @@ export class MilestoneIssuesComponent extends IssuesListComponent {
 
   getState(state: Object) {
     delete state['milestone'];
+    delete state['ticket'];
     return state;
   }
 }
