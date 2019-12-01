@@ -69,6 +69,7 @@ export class IssuesState {
 export class IssuesComponent implements OnInit {
 
   private _filter: IssuesFilter;
+
   ui = UI;
   issuesState = IssueState;
   issueProblem = IssueProblem;
@@ -80,14 +81,14 @@ export class IssuesComponent implements OnInit {
   summary: IssuesSummary;
   progress = {summary: false, sync: false};
 
-  tableControl = this.builder.control({
+  tableControl = this.fb.control({
     q: null,
     sort: null,
     first: DEFAULT_FIRST,
     offset: DEFAULT_OFFSET
   });
 
-  form = this.builder.group({
+  form = this.fb.group({
     table: this.tableControl,
     type: [IssuesType.opened],
     dueDate: [null],
@@ -136,7 +137,7 @@ export class IssuesComponent implements OnInit {
   constructor(private issuesGQL: IssuesGQL,
               private issuesSummaryGQL: IssuesSummaryGQL,
               private syncIssueGQL: SyncIssueGQL,
-              private builder: FormBuilder) {
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {

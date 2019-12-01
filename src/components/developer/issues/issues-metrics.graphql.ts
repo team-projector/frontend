@@ -29,7 +29,7 @@ export class IssuesMetricsGQL extends Query<{ userProgressMetrics }> {
 export class IssuesSummaryGQL extends Query<{ issues, mergeRequests, spentTimes }> {
   document = gql`
     query IssuesSummary($user: ID, $dueDate: Date) {
-      issues: issuesSummary(user: $user, dueDate: $dueDate, state: "opened") {
+      issues: issuesSummary(user: $user, dueDate: $dueDate, state: "OPENED") {
         count
         problemsCount,
         projects {
@@ -59,7 +59,7 @@ export class IssuesSummaryGQL extends Query<{ issues, mergeRequests, spentTimes 
           }
         }
       }
-      mergeRequests: mergeRequestsSummary(user: $user, state: "opened") {
+      mergeRequests: mergeRequestsSummary(user: $user, state: "OPENED") {
         count
       }
       spentTimes: spentTimesSummary(user: $user, date: $dueDate) {

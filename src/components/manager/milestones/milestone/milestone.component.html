@@ -1,3 +1,33 @@
+<ng-template #issueTemplate let-title="title" let-labels="labels" let-project="project" let-closedAt="closedAt"
+             let-user="user" let-glUrl="glUrl" let-state="state">
+  <jnt-avatar *ngIf="!!user" [text]="user.name"
+              [image]="user.avatar" [size]="ui.sizes.tiny">
+  </jnt-avatar>
+  <jnt-stack [type]="ui.stack.type.vertical"
+             [gutter]="ui.gutter.tiny">
+    <jnt-stack [type]="ui.stack.type.horizontal"
+               [gutter]="ui.gutter.small"
+               [justify]="ui.flex.justify.start">
+      <jnt-link [source]="glUrl" target="_blank"
+                [attr.closed]="state === issuesState.closed" [title]="title">
+      </jnt-link>
+      <jnt-label *ngFor="let l of (labels | labels)"
+                 [size]="ui.sizes.small"
+                 [color]="l.color" [label]="l.title"></jnt-label>
+      <jnt-animated-icon *ngIf="state == issuesState.opened
+                          && (labels | hasLabel:standardLabel.doing)"
+                         [icon]="ui.icons.animated.runningMan"
+                         state doing>
+      </jnt-animated-icon>
+      <jnt-icon *ngIf="labels | hasLabel:standardLabel.done"
+                state
+                [icon]="ui.icons.check"></jnt-icon>
+      <small *ngIf="state == issuesState.closed">{{closedAt | fromNow}}</small>
+    </jnt-stack>
+    <small>{{project?.fullTitle}}</small>
+  </jnt-stack>
+</ng-template>
+
 <jnt-form cdkDropListGroup>
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
     <jnt-block [loading]="loading.tickets">
@@ -19,23 +49,30 @@
               <jnt-stack [type]="ui.stack.type.horizontal"
                          [justify]="ui.flex.justify.between"
                          [align]="ui.flex.align.center"
-                         [wrap]="ui.flex.wrap.wrap"
                          [attr.ticket]="ticket.id"
-                         [attr.current]="ticket.id === current"
+                         [attr.current]="ticket.id === ticketControl.value"
+                         cdkDropList
                          [cdkDropListEnterPredicate]="predicate"
-                         cdkDropList (cdkDropListDropped)="drop($event)">
-                <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
-                           [gutter]="ui.gutter.small" (click)="current = ticket.id">
+                         (cdkDropListDropped)="drop($event)">
+                <jnt-stack [type]="ui.stack.type.horizontal"
+                           [align]="ui.flex.align.center"
+                           [gutter]="ui.gutter.small">
                   <jnt-button [outline]="ui.outline.transparent"
+                              [disabled]="!ticket.metrics.issuesCount"
                               [size]="ui.sizes.small"
-                              [icon]="current === ticket.id ? ui.icons.chevronDown : ui.icons.chevronRight">
+                              [icon]="ticketControl.value === ticket.id ? ui.icons.chevronDown : ui.icons.chevronRight"
+                              (click)="ticketControl.setValue(ticketControl.value === ticket.id ? null : ticket.id)">
                   </jnt-button>
-                  <jnt-dot [color]="colors[ticket.type]"></jnt-dot>
+                  <jnt-dot
+                    [color]="ticket.type === ticketTypes.feature ? ui.colors.green : (ticket.type === ticketTypes.improvement ? ui.colors.purple : ui.colors.red)"></jnt-dot>
                   <jnt-link [title]="ticket.title"></jnt-link>
                 </jnt-stack>
 
-                <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center" [gutter]="ui.gutter.small">
-                  <jnt-link *ngIf="ticket.url" [icon]="ui.icons.externalLink"
+                <jnt-stack [type]="ui.stack.type.horizontal"
+                           [align]="ui.flex.align.center"
+                           [gutter]="ui.gutter.small">
+                  <jnt-link *ngIf="ticket.url"
+                            [icon]="ui.icons.externalLink"
                             [source]="ticket.url" target="_blank">
                   </jnt-link>
                   <jnt-label *ngIf="ticket.metrics.issuesClosedCount as issuesClosedCount"
@@ -54,9 +91,13 @@
                       </jnt-button>
                     </ng-template>
                     <ng-template #dropdown let-action="trigger">
-                      <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
-                        <jnt-menu-item title="Edit" [icon]="ui.icons.edit" (click)="edit(ticket)"></jnt-menu-item>
-                        <jnt-menu-item title="Delete" [icon]="ui.icons.delete"
+                      <jnt-menu [type]="ui.type.vertical"
+                                [spacer]="ui.sizes.small">
+                        <jnt-menu-item title="Edit"
+                                       [icon]="ui.icons.edit"
+                                       (click)="edit(ticket)"></jnt-menu-item>
+                        <jnt-menu-item title="Delete"
+                                       [icon]="ui.icons.delete"
                                        (click)="delete(ticket.id)"></jnt-menu-item>
                       </jnt-menu>
                     </ng-template>
@@ -66,36 +107,38 @@
             </ng-template>
           </jnt-gantt-line>
 
-          <ng-template #noData>
+          <ng-template #noIssuesTemplate>
             <ng-template #loadingIssues>
               <jnt-gantt-line>
                 <ng-template #title>
-                  <jnt-spinner></jnt-spinner>
+                  <jnt-skeleton [type]="ui.skeleton.type.text"
+                                [lines]="ticket.metrics.issuesCount"></jnt-skeleton>
                 </ng-template>
               </jnt-gantt-line>
             </ng-template>
             <ng-container *ngIf="!loading.issues; else loadingIssues">
               <jnt-gantt-line>
                 <ng-template #title>
-                  <jnt-icon [icon]="ui.icons.stopping"></jnt-icon>
+                  <p>No one issue has been attached to ticket.</p>
                 </ng-template>
               </jnt-gantt-line>
             </ng-container>
           </ng-template>
-          <ng-container *ngIf="current === ticket.id">
-            <ng-container *ngIf="!!issues.length else noData">
+          <ng-container *ngIf="ticketControl.value === ticket.id">
+            <ng-container *ngIf="!!issues.length; else noIssuesTemplate">
               <jnt-gantt-line *ngFor="let issue of issues"
                               [period]="issue"
-                              [from]="issue.createdAt"
-                              [to]="issue.dueDate"
-                              issue>
+                              [from]="ticket.startDate"
+                              [to]="issue.dueDate">
                 <ng-template #indicator let-period="period" let-current="current">
                   <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
                        [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)" period>
-                    <div *ngIf="ticket.metrics.issuesOpenedCount" label>{{ticket.metrics.timeRemains | duration}}</div>
-                    <div progress [style.transform]="'translateX(-' + (ticket.metrics.issuesOpenedCount
-                  ? 100 - ticket.metrics.timeSpent / ticket.metrics.timeEstimate * 100 : 0) + '%)'">
-                    </div>
+                    <ng-container *ngIf="issue.timeEstimate">
+                      <div label>{{issue.metrics.remains | duration}}</div>
+                      <div progress [style.transform]="'translateX(-' + (issue.timeEstimate
+                  ? 100 - issue.totalTimeSpent / issue.timeEstimate * 100 : 0) + '%)'">
+                      </div>
+                    </ng-container>
                   </div>
                 </ng-template>
                 <ng-template #title>
@@ -103,34 +146,10 @@
                              [gutter]="ui.gutter.small"
                              [cdkDropListEnterPredicate]="predicateIssue"
                              issue cdkDropList cdkDrag [cdkDragData]="{issue: issue.id}">
-                    <jnt-button [icon]="ui.icons.burger" [scheme]="ui.schemes.secondary"
+                    <jnt-button [icon]="ui.icons.burger"
+                                [scheme]="ui.schemes.secondary"
                                 [size]="ui.sizes.tiny" cdkDragHandle></jnt-button>
-                    <jnt-avatar *ngIf="!!issue.user" [text]="issue.user.name"
-                                [image]="issue.user.avatar" [size]="ui.sizes.tiny">
-                    </jnt-avatar>
-                    <jnt-stack [type]="ui.stack.type.vertical"
-                               [gutter]="ui.gutter.tiny">
-                      <jnt-stack [type]="ui.stack.type.horizontal"
-                                 [gutter]="ui.gutter.small"
-                                 [justify]="ui.flex.justify.start">
-                        <jnt-link [source]="issue.glUrl" target="_blank"
-                                  [attr.closed]="issue.state === issuesState.closed" [title]="issue.title">
-                        </jnt-link>
-                        <jnt-label *ngFor="let l of (issue.labels | labels)"
-                                   [size]="ui.sizes.small"
-                                   [color]="l.color" [label]="l.title"></jnt-label>
-                        <jnt-animated-icon *ngIf="issue.state == issuesState.opened
-                          && (issue.labels | hasLabel:standardLabel.doing)"
-                                           [icon]="ui.icons.animated.runningMan"
-                                           state doing>
-                        </jnt-animated-icon>
-                        <jnt-icon *ngIf="issue.labels | hasLabel:standardLabel.done"
-                                  state
-                                  [icon]="ui.icons.check"></jnt-icon>
-                        <small *ngIf="issue.state == issuesState.closed">{{issue.closedAt | fromNow}}</small>
-                      </jnt-stack>
-                      <small>{{issue.project?.fullTitle}}</small>
-                    </jnt-stack>
+                    <ng-container *ngTemplateOutlet="issueTemplate; context: issue"></ng-container>
                   </jnt-stack>
                 </ng-template>
               </jnt-gantt-line>

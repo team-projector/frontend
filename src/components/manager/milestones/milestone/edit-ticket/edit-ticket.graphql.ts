@@ -28,8 +28,8 @@ export class CreateTicketGQL extends Mutation<{ ticket }> {
 })
 export class EditTicketGQL extends Mutation<{ ticket }> {
   document = gql`
-    mutation ($id: ID!, $type: String!, $title: String!, $startDate: Date!, $dueDate: Date!, $url: String) {
-      updateTicket(id: $id, type: $type, title: $title, startDate: $startDate, dueDate: $dueDate, url: $url) {
+    mutation ($input: UpdateTicketMutationInput!) {
+      updateTicket(input: $input) {
         ticket {
           id
           type

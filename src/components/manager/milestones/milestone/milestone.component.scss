@@ -1,11 +1,7 @@
 @import "variables";
 
 [title] {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
 }
 
 [period] {
@@ -30,6 +26,8 @@
 
   [label] {
     position: absolute;
+    font-size: $font-size-small;
+    white-space: nowrap;
     top: 0;
     right: 0;
     bottom: 0;
@@ -48,7 +46,7 @@
 }
 
 [issue] {
-  padding-left: $gutter-normal;
+  margin-left: $gutter-tiny;
 
   [state] {
     color: $success-color;
@@ -77,7 +75,3 @@
   padding: $gutter-normal;
   background-color: $primary-background;
 }
-
-//.cdk-drag-placeholder {
-//  display: none;
-//}

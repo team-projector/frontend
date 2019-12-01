@@ -1,25 +1,33 @@
 import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, ComponentFactoryResolver, Injector, Input, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, ComponentFactoryResolver, Injector, Input, OnInit } from '@angular/core';
+import { FormBuilder, FormControl } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { field, model } from '@junte/mocker-library';
 import { R } from 'apollo-angular/types';
-import { ModalOptions, ModalService, UI } from 'junte-ui';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { filter as filtering, finalize, map } from 'rxjs/operators';
+import { isEqual, ModalOptions, ModalService, UI } from 'junte-ui';
+import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssuesGQL } from 'src/components/issues/issues/issues.graphql';
-import { MilestoneIssuesSummaryGQL } from 'src/components/manager/milestones/milestone/milestone.graphql';
-import { EditTicketComponent } from 'src/components/manager/milestones/milestone/tickets/edit-ticket/edit-ticket.component';
-import {
-  AllTicketsGQL,
-  AttachIssueGQL,
-  DeleteTicketGQL
-} from 'src/components/manager/milestones/milestone/tickets/milestone-tickets.graphql';
-import { Issue, IssuesFilter, IssuesSummary, IssueState, PagingIssues } from 'src/models/issue';
+import { Issue, IssuesFilter, IssueState, PagingIssues } from 'src/models/issue';
 import { StandardLabel } from 'src/models/label';
 import { Milestone } from 'src/models/milestone';
-import { PagingTickets, Ticket, TicketsFilter } from 'src/models/ticket';
+import { PagingTickets, Ticket, TicketsFilter, TicketTypes } from 'src/models/ticket';
 import { DurationFormat } from 'src/pipes/date';
 import { equals } from 'src/utils/equals';
+import { EditTicketComponent } from './edit-ticket/edit-ticket.component';
+import { AllTicketsGQL, AttachIssueGQL, DeleteTicketGQL, MilestoneIssuesSummaryGQL, TicketIssuesGQL } from './milestone.graphql';
+
+@model()
+class MilestoneState {
+
+  @field()
+  ticket?: string;
+
+  constructor(defs: MilestoneState = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+}
 
 @Component({
   selector: 'app-milestone',
@@ -28,126 +36,80 @@ import { equals } from 'src/utils/equals';
 })
 export class MilestoneComponent implements OnInit {
 
-  private milestone$ = new BehaviorSubject<Milestone>(null);
-  private orderBy$ = new BehaviorSubject<string>(null);
-  private first$ = new BehaviorSubject<number>(null);
-  private offset$ = new BehaviorSubject<number>(null);
-  private _current: string;
-
   ui = UI;
   issuesState = IssueState;
   standardLabel = StandardLabel;
+  durationFormat = DurationFormat;
+  ticketTypes = TicketTypes;
+
+  private _milestone: Milestone;
+
+  ticketControl = new FormControl(null);
+
+  form = this.fb.group({
+    ticket: this.ticketControl
+  });
+
   loading = {tickets: false, issues: false};
   tickets: Ticket[] = [];
   issues: Issue[] = [];
-  durationFormat = DurationFormat;
-  summary: IssuesSummary;
-
-  colors = {
-    feature: UI.colors.green,
-    improvement: UI.colors.blue,
-    bug_fixing: UI.colors.red
-  };
-
-  @ViewChild('content', {static: false})
-  content: TemplateRef<any>;
-
-  @ViewChild('footer', {static: false})
-  footer: TemplateRef<any>;
 
   @Input()
   set milestone(milestone: Milestone) {
-    if (!equals(this.milestone, milestone)) {
-      this.milestone$.next(milestone);
+    if (!isEqual(this._milestone, milestone)) {
+      this._milestone = milestone;
+      this.loadTickets();
     }
   }
 
   get milestone() {
-    return this.milestone$.getValue();
-  }
-
-  set orderBy(orderBy: string) {
-    this.orderBy$.next(orderBy);
-  }
-
-  get orderBy() {
-    return this.orderBy$.getValue();
-  }
-
-  set first(first: number) {
-    this.first$.next(first);
-  }
-
-  get first() {
-    return this.first$.getValue();
-  }
-
-  set offset(offset: number) {
-    this.offset$.next(offset);
-  }
-
-  get offset() {
-    return this.offset$.getValue();
-  }
-
-  set current(current: string) {
-    this.issues = [];
-    if (this._current !== current && !!current) {
-      this._current = current;
-      this.loadIssues();
-    } else {
-      this._current = null;
-    }
-  }
-
-  get current() {
-    return this._current;
+    return this._milestone;
   }
 
   constructor(private milestoneIssuesSummaryGQL: MilestoneIssuesSummaryGQL,
               private allTicketsGQL: AllTicketsGQL,
               private deleteTicketGQL: DeleteTicketGQL,
               private attachIssueGQL: AttachIssueGQL,
-              private issuesGQL: IssuesGQL,
+              private ticketIssuesGQL: TicketIssuesGQL,
               private cfr: ComponentFactoryResolver,
               private injector: Injector,
-              public modalService: ModalService,
-              private route: ActivatedRoute) {
+              private modal: ModalService,
+              private fb: FormBuilder,
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(({milestone}) => this.milestone = milestone);
+    this.form.valueChanges.pipe(distinctUntilChanged((a, b) => equals(a, b)))
+      .subscribe(({ticket}) => {
+        this.issues = [];
+        if (!!ticket) {
+          this.loading.issues = true;
+          const filter = new IssuesFilter({ticket});
+          this.ticketIssuesGQL.fetch(serialize(filter) as R)
+            .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues).results),
+              finalize(() => this.loading.issues = false))
+            .subscribe(issues => this.issues = issues);
+        }
 
-    combineLatest([this.milestone$, this.orderBy$, this.first$, this.offset$])
-      .pipe(filtering(([milestone]) => !!milestone))
-      .subscribe(() => this.load());
+        const state = new MilestoneState({ticket: ticket || undefined});
+        this.router.navigate([serialize(state)],
+          {relativeTo: this.route}).then(() => null);
+      });
+
+    this.route.data.subscribe(({milestone, ticket}) => {
+      this.milestone = milestone;
+      this.form.patchValue({ticket: !!ticket ? ticket.id : null});
+    });
   }
 
-  load() {
+  private loadTickets() {
     this.loading.tickets = true;
-    const filter = new TicketsFilter({
-      milestone: this.milestone.id,
-      orderBy: this.orderBy,
-      first: this.first,
-      offset: this.offset
-    });
-
+    const filter = new TicketsFilter({milestone: this.milestone.id});
     this.allTicketsGQL.fetch(serialize(filter) as R).pipe(
       map(({data: {allTickets}}) => deserialize(allTickets, PagingTickets)),
       finalize(() => this.loading.tickets = false)
     ).subscribe(tickets => this.tickets = tickets.results);
-  }
-
-  loadIssues() {
-    this.loading.issues = true;
-    const filter = new IssuesFilter({
-      milestone: this.milestone.id,
-      ticket: this.current
-    });
-
-    this.issuesGQL.fetch(serialize(filter) as R)
-      .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues).results), finalize(() => this.loading.issues = false))
-      .subscribe(issues => this.issues = issues);
   }
 
   add() {
@@ -160,15 +122,15 @@ export class MilestoneComponent implements OnInit {
 
   delete(id: string) {
     this.deleteTicketGQL.fetch({id})
-      .subscribe(() => this.load());
+      .subscribe(() => this.loadTickets());
   }
 
   open(title: string, icon: string, ticket: Ticket = null) {
     const component = this.cfr.resolveComponentFactory(EditTicketComponent).create(this.injector);
-    component.instance.canceled.subscribe(() => this.modalService.close());
+    component.instance.canceled.subscribe(() => this.modal.close());
     component.instance.saved.subscribe(() => {
-      this.modalService.close();
-      this.load();
+      this.modal.close();
+      this.loadTickets();
     });
     component.instance.milestone = this.milestone.id;
     component.instance.ticket = ticket;
@@ -178,7 +140,7 @@ export class MilestoneComponent implements OnInit {
       maxWidth: '400px'
     });
 
-    this.modalService.open(component, options);
+    this.modal.open(component, options);
   }
 
   predicate(item: CdkDrag<number>) {
@@ -195,8 +157,8 @@ export class MilestoneComponent implements OnInit {
       id: event.item.data['issue'],
       ticket: ticket
     }).subscribe(() => {
-      this.load();
-      this.current = ticket;
+      this.loadTickets();
+      this.form.patchValue({ticket: ticket});
     });
   }
 

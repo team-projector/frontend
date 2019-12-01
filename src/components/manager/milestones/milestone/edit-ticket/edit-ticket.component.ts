@@ -1,14 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { tick } from '@angular/core/testing';
 import { FormBuilder, Validators } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
 import { finalize } from 'rxjs/operators';
 import { serialize } from 'serialize-ts/dist';
-import {
-  CreateTicketGQL,
-  EditTicketGQL
-} from 'src/components/manager/milestones/milestone/tickets/edit-ticket/edit-ticket.graphql';
+import { CreateTicketGQL, EditTicketGQL } from './edit-ticket.graphql';
 import { Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
 
 @Component({
@@ -67,7 +63,7 @@ export class EditTicketComponent {
   save() {
     this.saving = true;
     const mutation = !!this.ticket ? this.editTicketGQL : this.createTicketGQL;
-    mutation.mutate(serialize(new TicketUpdate(this.form.getRawValue())) as R)
+    mutation.mutate({input: serialize(new TicketUpdate(this.form.getRawValue())) as R})
       .pipe(finalize(() => this.saving = false))
       .subscribe(() => this.saved.emit());
   }

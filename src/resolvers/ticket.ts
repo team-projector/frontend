@@ -16,7 +16,7 @@ export class TicketResolver implements Resolve<Observable<Ticket>> {
           state: RouterStateSnapshot): Observable<Ticket> {
     const id = route.params['ticket'];
     const action = this.ticketGQL.fetch({ticket: id})
-      .pipe(map(({data: {ticket}}) => deserialize(ticket, Ticket)));
+      .pipe(map(({data: {ticket}}) => !!ticket ? deserialize(ticket, Ticket) : null));
 
     return !!id ? action : of(null);
   }
