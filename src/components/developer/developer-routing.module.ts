@@ -20,6 +20,11 @@ const routes: Routes = [
         path: 'salaries',
         data: {breadcrumb: 'Salaries'},
         loadChildren: () => import('./salaries/salaries.module').then(m => m.SalariesModule)
+      },
+      {
+        path: 'breaks',
+        data: {breadcrumb: 'Work breaks'},
+        loadChildren: () => import('./breaks/developer-breaks.module').then(m => m.DeveloperBreaksModule)
       }
     ]
   }
