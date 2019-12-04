@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DeveloperIssuesListComponent } from 'src/components/developer/issues/issues-list/issues-list.component';
 import { DeveloperMergeRequestsListComponent } from 'src/components/developer/issues/merge-requests-list/merge-requests-list.component';
+import { DeveloperTimeExpensesListComponent } from 'src/components/developer/issues/time-expenses-list/time-expenses-list.component';
 import { DueDateResolver, IssuesTypeResolver } from 'src/resolvers/issue';
 import { MeUserResolver } from 'src/resolvers/me';
 import { MergeRequestStateResolver } from 'src/resolvers/merge-request';
 import { ProjectResolver } from 'src/resolvers/project';
 import { DeveloperIssuesComponent } from './developer-issues.component';
-import { TimeExpensesListComponent } from './time-expenses-list/time-expenses-list.component';
 
 const routes: Routes = [
   {
@@ -30,7 +30,7 @@ const routes: Routes = [
       {
         path: 'time-expenses',
         data: {breadcrumb: 'Time Expenses'},
-        component: TimeExpensesListComponent,
+        component: DeveloperTimeExpensesListComponent,
         resolve: {
           state: MergeRequestStateResolver
         },

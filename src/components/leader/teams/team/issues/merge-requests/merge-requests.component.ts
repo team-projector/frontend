@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { UI } from 'junte-ui';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MergeRequestsListComponent } from 'src/components/issues/merge-requests/merge-requests-list';
 
 @Component({
   selector: 'app-team-merge-requests-list',
@@ -7,8 +8,18 @@ import { UI } from 'junte-ui';
   styleUrls: ['./merge-requests.component.scss']
 })
 
-export class TeamMergeRequestsListComponent {
+export class TeamMergeRequestsListComponent extends MergeRequestsListComponent {
+  constructor(route: ActivatedRoute,
+              router: Router) {
+    super(route, router);
+  }
 
-  ui = UI;
-  @Output() reloaded = new EventEmitter();
+  getState(state: Object) {
+    delete state['user'];
+    delete state['team'];
+    delete state['project'];
+    delete state['dueDate'];
+    return state;
+  }
 }
+

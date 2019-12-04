@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { User } from 'src/models/user';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TimeExpensesListComponent } from 'src/components/issues/time-expenses/time-expenses-list';
 
 @Component({
   selector: 'app-team-time-expenses-component',
@@ -8,15 +8,17 @@ import { User } from 'src/models/user';
   styleUrls: ['./time-expenses.component.scss']
 })
 
-export class TeamTimeExpensesListComponent {
-
-  user: User;
-  @Output() reloaded = new EventEmitter();
-
-  constructor(private route: ActivatedRoute) {
+export class TeamTimeExpensesListComponent extends TimeExpensesListComponent {
+  constructor(route: ActivatedRoute,
+              router: Router) {
+    super(route, router);
   }
 
-  ngOnInit() {
-    this.route.data.subscribe(({user}) => this.user = user);
+  getState(state: Object) {
+    delete state['user'];
+    delete state['team'];
+    delete state['project'];
+    delete state['dueDate'];
+    return state;
   }
 }

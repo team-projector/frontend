@@ -16,13 +16,13 @@ import { ProjectResolver } from 'src/resolvers/project';
 import { DeveloperIssuesRoutingModule } from './developer-issues-routing.module';
 import { DeveloperIssuesComponent } from './developer-issues.component';
 import { DeveloperIssuesListComponent } from './issues-list/issues-list.component';
-import { TimeExpensesListComponent } from './time-expenses-list/time-expenses-list.component';
+import { DeveloperTimeExpensesListComponent } from './time-expenses-list/time-expenses-list.component';
 
 @NgModule({
   declarations: [
     DeveloperIssuesComponent,
     DeveloperIssuesListComponent,
-    TimeExpensesListComponent,
+    DeveloperTimeExpensesListComponent,
     DeveloperMergeRequestsListComponent
   ],
   imports: [
