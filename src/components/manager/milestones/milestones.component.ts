@@ -1,15 +1,34 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { field, model } from '@junte/mocker-library';
 import { R } from 'apollo-angular/types';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, defined, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
-import merge from 'merge-anything';
-import { BehaviorSubject } from 'rxjs';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
 import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
-import { deserialize } from 'serialize-ts/dist';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { IssuesFilter } from 'src/models/issue';
 import { MilestoneProblem, MilestonesFilter, PagingMilestones } from 'src/models/milestone';
 import { DurationFormat } from 'src/pipes/date';
 import { AllMilestonesGQL, SyncMilestoneGQL } from './milestones.graphql';
+
+@model()
+export class MilestonesState {
+
+  @field()
+  q?: string;
+
+  @field()
+  first?: number;
+
+  @field()
+  offset?: number;
+
+  constructor(defs: MilestonesState = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+}
 
 @Component({
   selector: 'app-manager-dashboard',
@@ -18,7 +37,7 @@ import { AllMilestonesGQL, SyncMilestoneGQL } from './milestones.graphql';
 })
 export class MilestonesComponent implements OnInit {
 
-  private filter$ = new BehaviorSubject<MilestonesFilter>(null);
+  private _filter: MilestonesFilter;
   ui = UI;
   durationFormat = DurationFormat;
   features = TableFeatures;
@@ -36,13 +55,13 @@ export class MilestonesComponent implements OnInit {
     table: this.tableControl
   });
 
-  @Input()
-  set filter(filter: MilestonesFilter) {
-    this.filter$.next(filter);
+  set filter(filter: IssuesFilter) {
+    this._filter = filter;
+    this.table.load();
   }
 
   get filter() {
-    return this.filter$.getValue();
+    return this._filter;
   }
 
   @ViewChild('table', {static: true})
@@ -63,40 +82,31 @@ export class MilestonesComponent implements OnInit {
     };
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({table: {offset, first, q}}) => this.save(offset, first, q));
-
-    this.route.params.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({first, offset, q}) => {
-        const form = merge({extensions: [defined]}, this.form.getRawValue(), {
-          table: {first: +first || DEFAULT_FIRST, offset: +offset || DEFAULT_OFFSET, q}
+      .subscribe(({table: {offset, first, q}}) => {
+        const state = new MilestonesState({
+          q: q || undefined,
+          first: first !== DEFAULT_FIRST ? first : undefined,
+          offset: offset !== DEFAULT_OFFSET ? offset : undefined
         });
-        this.filter = new MilestonesFilter(form.table);
-        this.form.patchValue(form, {emitEvent: false});
+
+        this.filter = new IssuesFilter({
+          offset: offset,
+          first: first,
+          q: q
+        });
+
+        this.router.navigate([serialize(state)], {relativeTo: this.route}).then(() => null);
       });
 
-    this.filter$.pipe(
-      distinctUntilChanged((val1, val2) => isEqual(val1, val2))
-    ).subscribe(() => this.table.load());
-  }
-
-  save(offset, first, q) {
-    const filter: { first?, offset?, q? } = {};
-    const params = this.route.snapshot.params;
-
-    if (offset !== DEFAULT_OFFSET) {
-      filter.offset = offset;
-    }
-    if (first !== DEFAULT_FIRST) {
-      filter.first = first;
-    }
-    if (!!q) {
-      filter.q = q;
-    }
-    if (q != params.q && (q !== '' || !!params.q)) {
-      delete filter.offset;
-    }
-
-    this.router.navigate([filter], {relativeTo: this.route}).then(() => null);
+    this.route.params.subscribe(({q, first, offset}) => {
+      this.form.patchValue({
+        table: {
+          q: q || null,
+          first: first || DEFAULT_FIRST,
+          offset: offset || DEFAULT_OFFSET
+        }
+      });
+    });
   }
 
   sync(issue: number) {

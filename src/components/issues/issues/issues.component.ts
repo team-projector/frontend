@@ -131,8 +131,8 @@ export class IssuesComponent implements OnInit {
     });
   }
 
-  @Output() reloaded = new EventEmitter();
   @Output() stateChange = new EventEmitter<IssuesState>();
+  @Output() reloaded = new EventEmitter();
 
   constructor(private issuesGQL: IssuesGQL,
               private issuesSummaryGQL: IssuesSummaryGQL,

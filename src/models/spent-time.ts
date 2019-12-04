@@ -9,7 +9,7 @@ import { Issue } from './issue';
 import { MergeRequest } from './merge-request';
 import { Paging } from './paging';
 
-export enum TimeExpensesState {
+export enum TimeExpenseState {
   opened = 'OPENED',
   closed = 'CLOSED',
   all = 'ALL'
@@ -118,7 +118,7 @@ export class TimeExpensesFilter {
   offset?: number;
 
   @field()
-  state?: TimeExpensesState | null;
+  state?: TimeExpenseState | null;
 
   constructor(defs: TimeExpensesFilter = null) {
     Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});

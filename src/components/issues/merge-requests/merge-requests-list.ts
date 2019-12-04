@@ -2,15 +2,14 @@ import { EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
-import { IssuesState, ViewType } from 'src/components/issues/issues/issues.component';
+import { MergeRequestsState } from 'src/components/issues/merge-requests/merge-requests.component';
 
-export abstract class IssuesListComponent implements OnInit {
+export abstract class MergeRequestsListComponent implements OnInit {
 
-  private _state = new IssuesState();
-  viewType = ViewType;
+  private _state = new MergeRequestsState();
   @Output() reloaded = new EventEmitter();
 
-  set state(state: IssuesState) {
+  set state(state: MergeRequestsState) {
     this._state = state;
     this.router.navigate([this.getState(serialize(state))],
       {relativeTo: this.route}).then(() => null);
@@ -26,18 +25,15 @@ export abstract class IssuesListComponent implements OnInit {
 
   ngOnInit() {
     combineLatest([this.route.data, this.route.params])
-      .subscribe(([{user, team, milestone, project, ticket, dueDate}, {q, sort, first, offset, type}]) => {
-        this.state = new IssuesState({
+      .subscribe(([{user, team, project}, {q, first, offset, state}]) => {
+        this.state = new MergeRequestsState({
           first: +first || undefined,
           offset: +offset || undefined,
           q: q,
-          type: type,
+          state: state,
           user: !!user ? user.id : user,
           team: !!team ? team.id : team,
-          milestone: !!milestone ? milestone.id : undefined,
           project: !!project ? project.id : undefined,
-          ticket: !!ticket ? ticket.id : undefined,
-          dueDate: dueDate
         });
       });
   }

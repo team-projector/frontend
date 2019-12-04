@@ -1,6 +1,6 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {IssuesListComponent} from 'src/components/issues/issues/issues-list';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IssuesListComponent } from 'src/components/issues/issues/issues-list';
 
 @Component({
   selector: 'app-developer-issues-list',

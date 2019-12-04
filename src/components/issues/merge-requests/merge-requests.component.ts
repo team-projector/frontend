@@ -1,9 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { field, model } from '@junte/mocker-library';
 import { R } from 'apollo-angular/types';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, defined, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
-import merge from 'merge-anything';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { IssueProblem } from 'src/models/issue';
@@ -15,6 +14,40 @@ export enum ViewType {
   extended
 }
 
+@model()
+export class MergeRequestsState {
+
+  @field()
+  q?: string;
+
+  @field()
+  sort?: string;
+
+  @field()
+  first?: number;
+
+  @field()
+  offset?: number;
+
+  @field()
+  state?: MergeRequestState;
+
+  @field()
+  team?: string;
+
+  @field()
+  user?: string;
+
+  @field()
+  project?: string;
+
+  constructor(defs: MergeRequestsState = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+}
+
 @Component({
   selector: 'app-merge-requests',
   templateUrl: './merge-request.component.html',
@@ -22,6 +55,7 @@ export enum ViewType {
 })
 export class MergeRequestsComponent implements OnInit {
 
+  private _filter: MergeRequestsFilter;
   ui = UI;
   mergeRequestState = MergeRequestState;
   issueProblem = IssueProblem;
@@ -29,7 +63,6 @@ export class MergeRequestsComponent implements OnInit {
   summary: MergeRequestSummary;
   features = TableFeatures;
 
-  stateControl = this.builder.control(MergeRequestState.opened);
   tableControl = this.builder.control({
     q: null,
     sort: null,
@@ -37,14 +70,39 @@ export class MergeRequestsComponent implements OnInit {
     offset: DEFAULT_OFFSET
   });
   form = this.builder.group({
-    state: this.stateControl,
-    table: this.tableControl
+    table: this.tableControl,
+    state: [MergeRequestState.opened],
+    team: [null],
+    user: [null],
+    project: [null],
   });
 
-  filter: MergeRequestsFilter;
+  set filter(filter: MergeRequestsFilter) {
+    this._filter = filter;
+    this.load();
+  }
 
-  @Input() user: string;
+  get filter() {
+    return this._filter;
+  }
+
   @Input() view = ViewType.default;
+
+  @Input() set state({first, offset, q, state, team, user, project}: MergeRequestsState) {
+    this.form.patchValue({
+      table: {
+        q: q || null,
+        first: first || DEFAULT_FIRST,
+        offset: offset || DEFAULT_OFFSET
+      },
+      state: state || MergeRequestState.opened,
+      team: team || null,
+      user: user || null,
+      project: project || null,
+    });
+  }
+
+  @Output() stateChange = new EventEmitter<MergeRequestsState>();
   @Output() reloaded = new EventEmitter();
 
   @ViewChild('table', {static: true})
@@ -52,9 +110,7 @@ export class MergeRequestsComponent implements OnInit {
 
   constructor(private mergeRequestsGQL: MergeRequestsGQL,
               private mergeRequestsSummaryGQL: MergeRequestSummaryGQL,
-              private builder: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router) {
+              private builder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -64,59 +120,32 @@ export class MergeRequestsComponent implements OnInit {
     };
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({table: {offset, first, q, sort}, state}) => this.save(offset, first, q, sort, state));
+      .subscribe(({table: {offset, first, q}, state, user, team, project}) => {
+        this.stateChange.emit(new MergeRequestsState({
+          q: q || undefined,
+          first: first !== DEFAULT_FIRST ? first : undefined,
+          offset: offset !== DEFAULT_OFFSET ? offset : undefined,
+          state: state !== MergeRequestState.opened ? state : undefined,
+          user: user || undefined,
+          team: team || undefined,
+          project: project || undefined,
+        }));
 
-    this.route.params.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({q, sort, first, offset, state, team, user, project}) => {
-        // if (!!this.filter && (this.filter.team != team || this.filter.user != user || this.filter.project != project)) {
-        //   offset = 0;
-        // }
-        const form = merge({extensions: [defined]}, this.form.getRawValue(), {
-          table: {q, sort, first: +first || DEFAULT_FIRST, offset: +offset || DEFAULT_OFFSET},
-          state: state || MergeRequestState.opened
+        this.filter = new MergeRequestsFilter({
+          offset: offset,
+          first: first,
+          q: q,
+          team: team,
+          user: user,
+          project: project,
+          state: state
         });
-        const filter = {team, user: user || this.user, project};
-        this.filter = new MergeRequestsFilter({...filter, ...form.table, state: form.state});
-        this.loadSummary();
-        this.table.load();
-        this.form.patchValue(form, {emitEvent: false});
       });
   }
 
-  save(offset, first, q, sort, state: MergeRequestState) {
-    const filter: { q?, sort?, first?, offset?, state? } = {};
-    const params = this.route.snapshot.params;
-    if (offset !== DEFAULT_OFFSET) {
-      filter.offset = offset;
-    }
-    if (first !== DEFAULT_FIRST) {
-      filter.first = first;
-    }
-    if (!!sort) {
-      filter.sort = sort;
-    }
-
-    if (!!q) {
-      filter.q = q;
-    }
-    if (q != params.q && (q !== '' || !!params.q)) {
-      delete filter.offset;
-    }
-
-    if (!!state && state !== MergeRequestState.opened) {
-      filter.state = state;
-    }
-    if (state != params.state && (state !== MergeRequestState.opened || !!params.state)) {
-      delete filter.offset;
-    }
-
-    if (!!params.user) {
-      this.filter.user = params.user;
-    }
-    if (!!params.project) {
-      this.filter.project = params.project;
-    }
-    this.router.navigate([filter], {relativeTo: this.route}).then(() => null);
+  private load() {
+    this.loadSummary();
+    this.table.load();
   }
 
   loadSummary() {

@@ -1,21 +1,21 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { User } from 'src/models/user';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TimeExpensesListComponent } from 'src/components/issues/time-expenses/time-expenses-list';
 
 @Component({
-  selector: 'app-issues-epxenses-time-list',
+  selector: 'app-developer-time-expenses-list',
   templateUrl: './time-expenses-list.component.html',
   styleUrls: ['./time-expenses-list.component.scss']
 })
-export class TimeExpensesListComponent {
-
-  user: User;
-  @Output() reloaded = new EventEmitter();
-
-  constructor(private route: ActivatedRoute) {
+export class DeveloperTimeExpensesListComponent extends TimeExpensesListComponent {
+  constructor(route: ActivatedRoute,
+              router: Router) {
+    super(route, router);
   }
 
-  ngOnInit() {
-    this.route.data.subscribe(({user}) => this.user = user);
+  getState(state: Object) {
+    delete state['user'];
+    delete state['project'];
+    return state;
   }
 }
