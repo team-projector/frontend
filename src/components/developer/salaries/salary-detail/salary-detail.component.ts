@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from 'junte-ui';
+import { TimeExpensesListComponent } from 'src/components/issues/time-expenses/time-expenses-list';
 import { Salary } from 'src/models/salary';
-import { User } from 'src/models/user';
 
 @Component({
   selector: 'app-salary-detail',
@@ -10,16 +10,18 @@ import { User } from 'src/models/user';
   styleUrls: ['./salary-detail.component.scss']
 })
 
-export class SalaryDetailComponent implements OnInit {
-
+export class SalaryDetailComponent extends TimeExpensesListComponent {
   ui = UI;
-  user: User;
   salary: Salary;
 
-  constructor(private route: ActivatedRoute) {
+  constructor(route: ActivatedRoute,
+              router: Router) {
+    super(route, router);
+    route.data.subscribe(({salary}) => this.salary = salary);
   }
 
-  ngOnInit() {
-    this.route.data.subscribe(({user, salary}) => [this.user, this.salary] = [user, salary]);
+  getState(state: Object) {
+    delete state['user'];
+    return state;
   }
 }

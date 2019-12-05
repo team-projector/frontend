@@ -3,7 +3,7 @@
 <jnt-app-layout #layout>
   <jnt-app-header>
     <ng-template #logo>
-      <img [src]="'/assets/images/logo-' + (theme === 'dark' ? 'dark' : 'light') + '.svg'" logo>
+      <img [src]="'/assets/images/logo-' + (theme === 'dark' ? 'dark' : 'light') + '.svg'">
     </ng-template>
     <ng-template #topMenu>
       <jnt-menu>
@@ -47,7 +47,7 @@
                       [image]="me.user?.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
         </ng-template>
         <ng-template #userMenu>
-          <jnt-user-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
+          <jnt-user-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
             <jnt-button *ngIf="config.token" (click)="logout()"
                         text="Logout"></jnt-button>
           </jnt-user-menu>

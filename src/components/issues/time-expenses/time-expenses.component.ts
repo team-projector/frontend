@@ -1,15 +1,55 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { field, model } from '@junte/mocker-library';
 import { R } from 'apollo-angular/types';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, defined, isEqual, TableComponent, UI } from 'junte-ui';
-import merge from 'merge-anything';
+import { startOfDay } from 'date-fns';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI } from 'junte-ui';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssueState } from 'src/models/enums/issue';
-import { MergeRequestState } from 'src/models/merge-request';
-import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter, TimeExpensesState } from 'src/models/spent-time';
+import { DATE_FORMAT } from 'src/consts';
+import { IssueState } from 'src/models/issue';
+import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter, TimeExpenseState } from 'src/models/spent-time';
+import { DateSerializer } from 'src/serializers/date';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql';
+
+@model()
+export class TimeExpensesState {
+  @field()
+  q?: string;
+
+  @field()
+  sort?: string;
+
+  @field()
+  first?: number;
+
+  @field()
+  offset?: number;
+
+  @field()
+  state?: TimeExpenseState;
+
+  @field()
+  team?: string;
+
+  @field()
+  user?: string;
+
+  @field()
+  project?: string;
+
+  @field()
+  salary?: string;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  dueDate?: Date;
+
+  constructor(defs: TimeExpensesState = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+}
 
 @Component({
   selector: 'app-time-expenses',
@@ -18,12 +58,12 @@ import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql
 })
 export class TimeExpensesComponent implements OnInit {
 
+  private _filter: TimeExpensesFilter;
   ui = UI;
   issuesState = IssueState;
-  timeExpensesState = TimeExpensesState;
+  timeExpensesState = TimeExpenseState;
   summary: SpentTimesSummary;
 
-  stateControl = this.builder.control(TimeExpensesState.opened);
   tableControl = this.builder.control({
     q: null,
     sort: null,
@@ -31,23 +71,49 @@ export class TimeExpensesComponent implements OnInit {
     offset: DEFAULT_OFFSET
   });
   form = this.builder.group({
-    state: this.stateControl,
-    table: this.tableControl
+    table: this.tableControl,
+    state: [TimeExpenseState.opened],
+    dueDate: [null],
+    team: [null],
+    project: [null],
+    salary: [null],
+    user: [null],
   });
 
-  filter: TimeExpensesFilter;
+  set filter(filter: TimeExpensesFilter) {
+    this._filter = filter;
+    this.load();
+  }
 
-  @Input() user: string;
+  get filter() {
+    return this._filter;
+  }
+
+  @Input() set state({first, offset, q, state, dueDate, team, user, project, salary}: TimeExpensesState) {
+    this.form.patchValue({
+      table: {
+        q: q || null,
+        first: first || DEFAULT_FIRST,
+        offset: offset || DEFAULT_OFFSET
+      },
+      state: state || TimeExpenseState.opened,
+      dueDate: dueDate || null,
+      team: team || null,
+      user: user || null,
+      project: project || null,
+      salary: salary || null,
+    });
+  }
+
+  @Output() stateChange = new EventEmitter<TimeExpensesState>();
   @Output() reloaded = new EventEmitter();
 
   @ViewChild('table', {static: true})
   table: TableComponent;
 
   constructor(private timeExpensesGQL: TimeExpensesGQL,
-              private TimeExpensesSummaryGQL: TimeExpensesSummaryGQL,
-              private builder: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router) {
+              private timeExpensesSummaryGQL: TimeExpensesSummaryGQL,
+              private builder: FormBuilder) {
   }
 
   ngOnInit() {
@@ -57,60 +123,40 @@ export class TimeExpensesComponent implements OnInit {
     };
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({table: {offset, first, sort}, state}) => this.save(offset, first, sort, state));
+      .subscribe(({table: {offset, first, q}, state, user, team, project, salary, dueDate}) => {
+        this.stateChange.emit(new TimeExpensesState({
+          q: q || undefined,
+          first: first !== DEFAULT_FIRST ? first : undefined,
+          offset: offset !== DEFAULT_OFFSET ? offset : undefined,
+          state: state !== TimeExpenseState.opened ? state : undefined,
+          user: user || undefined,
+          team: team || undefined,
+          project: project || undefined,
+          salary: salary || undefined,
+          dueDate: !!dueDate ? dueDate : undefined
+        }));
 
-    this.route.params.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({sort, first, offset, state, team, user, project, due_date, salary}) => {
-        if (!!this.filter && (this.filter.team != team || this.filter.user != (user || this.user)
-          || this.filter.date != due_date || this.filter.salary != salary || this.filter.project != project)) {
-          offset = 0;
-        }
-        const form = merge({extensions: [defined]}, this.form.getRawValue(), {
-          table: {sort, first: +first || DEFAULT_FIRST, offset: +offset || DEFAULT_OFFSET},
-          state: state || MergeRequestState.opened
+        this.filter = new TimeExpensesFilter({
+          offset: offset,
+          first: first,
+          state: state,
+          orderBy: state === TimeExpenseState.opened ? 'dueDate' : '-closedAt',
+          project: project,
+          salary: salary,
+          team: team,
+          user: user,
+          date: !!dueDate ? startOfDay(dueDate) : null
         });
-        const filter = {team, user: user || this.user, project, date: due_date, salary};
-        this.filter = new TimeExpensesFilter({...filter, ...form.table, state: form.state});
-        this.loadSummary();
-        this.table.load();
-        this.form.patchValue(form, {emitEvent: false});
       });
   }
 
-  save(offset, first, sort, state: TimeExpensesState) {
-    const filter: { sort?, first?, offset?, state? } = {};
-    const params = this.route.snapshot.params;
-    if (offset !== DEFAULT_OFFSET) {
-      filter.offset = offset;
-    }
-    if (first !== DEFAULT_FIRST) {
-      filter.first = first;
-    }
-    if (!!sort) {
-      filter.sort = sort;
-    }
-
-    if (!!state && state !== TimeExpensesState.opened) {
-      filter.state = state;
-    }
-    if (state != params.state && (state !== TimeExpensesState.opened || !!params.state)) {
-      delete filter.offset;
-    }
-
-    if (!!params.user) {
-      this.filter.user = params.user;
-    }
-    if (!!params.project) {
-      this.filter.project = params.project;
-    }
-    if (!!params.salary) {
-      this.filter.salary = params.salary;
-    }
-    this.router.navigate([filter], {relativeTo: this.route}).then(() => null);
+  private load() {
+    this.loadSummary();
+    this.table.load();
   }
 
   loadSummary() {
-    this.TimeExpensesSummaryGQL.fetch(serialize(this.filter) as R)
+    this.timeExpensesSummaryGQL.fetch(serialize(this.filter) as R)
       .pipe(map(({data: {spentTimes}}) => deserialize(spentTimes, SpentTimesSummary)))
       .subscribe(summary => this.summary = summary);
   }

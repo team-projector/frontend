@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { TimeExpensesState } from 'src/models/spent-time';
+import { TimeExpenseState } from 'src/models/spent-time';
 import { MergeRequestState } from '../models/merge-request';
 
 @Injectable()
-export class TimeExpensesStateResolver implements Resolve<TimeExpensesState> {
+export class TimeExpenseStateResolver implements Resolve<TimeExpenseState> {
   resolve(route: ActivatedRouteSnapshot,
-          state: RouterStateSnapshot): TimeExpensesState {
+          state: RouterStateSnapshot): TimeExpenseState {
     return route.params['state'] || MergeRequestState.opened;
   }
 }

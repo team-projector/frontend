@@ -1,12 +1,10 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ComponentFactoryResolver, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { R } from 'apollo-angular/types';
-import { format } from 'date-fns';
 import { DefaultSearchFilter, ModalOptions, ModalService, TableComponent, TableFeatures, UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest } from 'rxjs';
-import { debounceTime, distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { BreakEditComponent } from 'src/components/developer/breaks/break-edit/break-edit.component';
 import { PLATFORM_DELAY } from 'src/consts';
@@ -35,17 +33,16 @@ export class BreaksComponent implements OnInit {
   viewType = ViewType;
   features = TableFeatures;
 
-  typeControl = new FormControl(BreaksType.created);
+  tableControl = new FormControl(BreaksType.created);
 
   form: FormGroup = this.formBuilder.group({
-    type: this.typeControl
+    table: this.tableControl
   });
 
   @Input() view = ViewType.default;
   @Input() draggable = false;
   @Output() reloaded = new EventEmitter();
   @Output() filtered = new EventEmitter<{ type? }>();
-
 
 
   @Input()
@@ -81,18 +78,21 @@ export class BreaksComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.type$.subscribe(type => this.typeControl.patchValue(type, {emitEvent: false}));
+    this.type$.subscribe(type => this.tableControl.patchValue(type, {emitEvent: false}));
 
     this.table.fetcher = (filter: DefaultSearchFilter) => {
       this.filter.first = filter.first;
       this.filter.offset = filter.offset;
       return this.breaksGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {breaks}}) => {console.log(deserialize(breaks, PagingBreaks)); return deserialize(breaks, PagingBreaks)}));
+        .pipe(map(({data: {breaks}}) => {
+          console.log(deserialize(breaks, PagingBreaks));
+          return deserialize(breaks, PagingBreaks);
+        }));
     };
 
     combineLatest(this.user$, this.type$, this.route.params)
       .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged())
-      .subscribe(([ user, type]) => {
+      .subscribe(([user, type]) => {
         this.filter.user = user;
         this.filter.state = type === BreaksType.created ? BreakState.created
           : (type === BreaksType.decline ? BreakState.decline : null);
