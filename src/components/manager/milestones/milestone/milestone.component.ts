@@ -122,8 +122,8 @@ export class MilestoneComponent implements OnInit {
     component.instance.saved.subscribe(() => {
       this.modal.close();
       this.loadTickets();
-      const {active} = this.form.getRawValue();
-      if (!!ticket && !!ticket.id === active) {
+      const {ticket: active} = this.form.getRawValue();
+      if (!!ticket && ticket.id === active) {
         this.loadIssues(active);
       }
     });

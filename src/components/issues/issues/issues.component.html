@@ -30,42 +30,7 @@
         <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
                      let-user="user" let-project="project" let-ticket="ticket"
                      let-closedAt="closedAt" let-id="id">
-          <jnt-stack [type]="ui.stack.type.horizontal"
-                     [gutter]="ui.gutter.small"
-                     [cdkDragDisabled]="!draggable"
-                     (cdkDragDropped)="dropped($event)"
-                     cdkDropList cdkDrag [cdkDragData]="{issue: id}">
-            <jnt-button *ngIf="draggable" [icon]="ui.icons.burger" [scheme]="ui.schemes.secondary"
-                        [size]="ui.sizes.tiny" cdkDragHandle></jnt-button>
-            <jnt-avatar *ngIf="!!user" [text]="user.name" [image]="user.avatar" [size]="ui.sizes.tiny"></jnt-avatar>
-            <jnt-stack [type]="ui.stack.type.vertical"
-                       [gutter]="ui.gutter.tiny">
-              <jnt-link *ngIf="ticket" ticket [icon]="ui.icons.externalLink"
-                        target="_blank"
-                        [source]="ticket.url"
-                        [title]="ticket.title"
-                        [outline]="ui.outline.ghost">
-              </jnt-link>
-              <jnt-stack [type]="ui.stack.type.horizontal"
-                         [gutter]="ui.gutter.small"
-                         [justify]="ui.flex.justify.start">
-                <jnt-link [source]="url" target="_blank"
-                          [attr.closed]="state == issuesState.closed" [title]="title">
-                </jnt-link>
-                <jnt-label *ngFor="let l of (labels | labels)"
-                           [size]="ui.sizes.small"
-                           [color]="l.color" [label]="l.title"></jnt-label>
-                <jnt-animated-icon *ngIf="state == issuesState.opened && (labels | hasLabel:standardLabel.doing)"
-                                   state doing
-                                   [icon]="ui.icons.animated.runningMan"></jnt-animated-icon>
-                <jnt-icon *ngIf="labels | hasLabel:standardLabel.done"
-                          state
-                          [icon]="ui.icons.check"></jnt-icon>
-                <small *ngIf="state == issuesState.closed">{{closedAt | fromNow}}</small>
-              </jnt-stack>
-              <small>{{project?.fullTitle}}</small>
-            </jnt-stack>
-          </jnt-stack>
+          <app-issue [issue]="{id: id, title: title, labels: labels, glUrl: glUrl, state: state, user: user, project: project, ticket: ticket, closedAt: closedAt}"></app-issue>
         </ng-template>
       </jnt-table-column>
 

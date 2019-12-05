@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { IssuesGQL } from 'src/components/issues/issues/issues.graphql';
@@ -70,17 +70,6 @@ export class EditTicketComponent {
   @Output() saved = new EventEmitter<TicketUpdate>();
   @Output() canceled = new EventEmitter<any>();
 
-  findIssues = () => (query: string) => new Observable<Issue[]>(o => {
-    const filter = new IssuesFilter({q: query, first: FOUND_ISSUES_COUNT});
-    this.issuesGQL.fetch(serialize(filter) as R)
-      .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)))
-      .subscribe(({results: issues}) => {
-        console.log(issues);
-        o.next(issues);
-        o.complete();
-      });
-  });
-
   constructor(private fb: FormBuilder,
               private getTicketGQL: GetTicketGQL,
               private createTicketGQL: CreateTicketGQL,
@@ -102,5 +91,17 @@ export class EditTicketComponent {
     mutation.mutate({input: serialize(new TicketUpdate(this.form.getRawValue())) as R})
       .pipe(finalize(() => this.saving = false))
       .subscribe(() => this.saved.emit());
+  }
+
+  findIssues() {
+    return (query: string) => new Observable<Issue[]>(o => {
+      const filter = new IssuesFilter({q: query, first: FOUND_ISSUES_COUNT});
+      this.issuesGQL.fetch(serialize(filter) as R)
+        .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)))
+        .subscribe(({results: issues}) => {
+          o.next(issues);
+          o.complete();
+        });
+    });
   }
 }

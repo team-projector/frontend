@@ -61,7 +61,7 @@ export class TicketMetrics {
 export class Issue {
 
   @field()
-  id: number;
+  id: string;
 
   @field()
   user: User;

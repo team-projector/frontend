@@ -7,7 +7,7 @@ import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI } from 'junt
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
-import { IssueState } from 'src/models/issue';
+import { IssueState } from 'src/models/enums/issue';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter, TimeExpenseState } from 'src/models/spent-time';
 import { DateSerializer } from 'src/serializers/date';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql';

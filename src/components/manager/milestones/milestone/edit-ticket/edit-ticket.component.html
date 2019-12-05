@@ -69,17 +69,23 @@
       <jnt-form-item>
         <jnt-form-label for="issues">Issues</jnt-form-label>
         <jnt-form-control name="issues">
-          <jnt-select valueField="id"
-                      labelField="title"
-                      placeholder="Issues"
+          <jnt-select issues placeholder="Issues"
                       formControlName="issues"
-                      [search]="true"
                       [mode]="ui.select.multiple"
-                      [loadOptions]="findIssues()">
+                      [search]="true"
+                      [loader]="findIssues()"
+                      keyField="id"
+                      labelField="title">
             <jnt-select-option *ngFor="let issue of ticket?.issues"
+                               [key]="issue.id"
                                [label]="issue.title"
-                               [value]="issue.id">
+                               [value]="issue">
             </jnt-select-option>
+            <ng-template #optionTemplate let-issue="value">
+              <div issue>
+                <app-issue [issue]="issue"></app-issue>
+              </div>
+            </ng-template>
           </jnt-select>
         </jnt-form-control>
       </jnt-form-item>

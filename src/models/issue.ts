@@ -33,7 +33,7 @@ export class IssueMetrics {
 export class Issue {
 
   @field()
-  id: number;
+  id: string;
 
   @field()
   user: User;

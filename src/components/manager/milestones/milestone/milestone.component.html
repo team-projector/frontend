@@ -1,33 +1,3 @@
-<ng-template #issueTemplate let-title="title" let-labels="labels" let-project="project" let-closedAt="closedAt"
-             let-user="user" let-glUrl="glUrl" let-state="state">
-  <jnt-avatar *ngIf="!!user" [text]="user.name"
-              [image]="user.avatar" [size]="ui.sizes.tiny">
-  </jnt-avatar>
-  <jnt-stack [type]="ui.stack.type.vertical"
-             [gutter]="ui.gutter.tiny">
-    <jnt-stack [type]="ui.stack.type.horizontal"
-               [gutter]="ui.gutter.small"
-               [justify]="ui.flex.justify.start">
-      <jnt-link [source]="glUrl" target="_blank"
-                [attr.closed]="state === issuesState.closed" [title]="title">
-      </jnt-link>
-      <jnt-label *ngFor="let l of (labels | labels)"
-                 [size]="ui.sizes.small"
-                 [color]="l.color" [label]="l.title"></jnt-label>
-      <jnt-animated-icon *ngIf="state == issuesState.opened
-                          && (labels | hasLabel:standardLabel.doing)"
-                         [icon]="ui.icons.animated.runningMan"
-                         state doing>
-      </jnt-animated-icon>
-      <jnt-icon *ngIf="labels | hasLabel:standardLabel.done"
-                state
-                [icon]="ui.icons.check"></jnt-icon>
-      <small *ngIf="state == issuesState.closed">{{closedAt | fromNow}}</small>
-    </jnt-stack>
-    <small>{{project?.fullTitle}}</small>
-  </jnt-stack>
-</ng-template>
-
 <jnt-form cdkDropListGroup>
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
     <jnt-block [loading]="loading.tickets">
@@ -149,7 +119,7 @@
                     <jnt-button [icon]="ui.icons.burger"
                                 [scheme]="ui.schemes.secondary"
                                 [size]="ui.sizes.tiny" cdkDragHandle></jnt-button>
-                    <ng-container *ngTemplateOutlet="issueTemplate; context: issue"></ng-container>
+                    <app-issue [issue]="issue"></app-issue>
                   </jnt-stack>
                 </ng-template>
               </jnt-gantt-line>

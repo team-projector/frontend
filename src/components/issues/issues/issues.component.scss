@@ -4,28 +4,6 @@
   display: block;
 }
 
-[ticket] {
-  font-size: 12px;
-}
-
-[state] {
-  color: $success-color;
-  &[doing] {
-    min-width: 18px;
-    width: 18px;
-    min-height: 18px;
-    height: 18px;
-    border-radius: 50%;
-    fill: $success-color;
-    padding: 1px;
-    border: 1px solid $success-color;
-  }
-}
-
-[closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
-  text-decoration: line-through;
-}
-
 [progress] {
   min-width: 100px;
 }
@@ -55,15 +33,4 @@
   &[estimate] {
     color: $primary-text-light-color;
   }
-}
-
-.cdk-drag-preview {
-  border-radius: $corner-normal;
-  box-shadow: $shadow-normal;
-  padding: $gutter-normal;
-  background-color: $primary-background;
-}
-
-.cdk-drag-placeholder {
-  display: none;
 }

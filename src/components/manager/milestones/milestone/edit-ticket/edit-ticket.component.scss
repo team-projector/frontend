@@ -1,4 +1,24 @@
+@import "variables";
+
 :host {
   display: block;
   min-width: 400px;
+}
+
+[issue] {
+  padding: $gutter-small;
+  border-radius: $corner-small;
+  background-color: $secondary-color;
+}
+
+[issues] ::ng-deep [select][child-of=#{$jnt-select-host}] {
+  ul {
+    flex-wrap: nowrap;
+    flex-direction: column;
+    li {
+      &:not(:last-child) {
+        margin-bottom: $gutter-small;
+      }
+    }
+  }
 }

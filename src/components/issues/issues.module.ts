@@ -1,10 +1,10 @@
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { JunteUiModule } from 'junte-ui';
 import { DueDateModule } from 'src/components/due-date/due-date.module';
+import { IssueComponent } from 'src/components/issues/issue/issue.component';
 import { IssuesPipesModule } from 'src/components/issues/issues.pipes';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { CurrencyRublePipeModule } from 'src/pipes/currency-ruble.module';
@@ -15,6 +15,7 @@ import { TimeExpensesComponent } from './time-expenses/time-expenses.component';
 
 @NgModule({
   declarations: [
+    IssueComponent,
     IssuesComponent,
     TimeExpensesComponent,
     MergeRequestsComponent,
@@ -23,7 +24,6 @@ import { TimeExpensesComponent } from './time-expenses/time-expenses.component';
     CommonModule,
     ReactiveFormsModule,
     RouterModule,
-    DragDropModule,
     DatePipesModule,
     IssuesPipesModule,
     ArrayPipesModule,
@@ -32,6 +32,7 @@ import { TimeExpensesComponent } from './time-expenses/time-expenses.component';
     CurrencyRublePipeModule
   ],
   exports: [
+    IssueComponent,
     IssuesComponent,
     TimeExpensesComponent,
     MergeRequestsComponent
