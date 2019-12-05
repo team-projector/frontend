@@ -99,7 +99,7 @@
           </ng-template>
         </jnt-table-column>
         <ng-template #rowActions let-row="row">
-          <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
+          <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
             <jnt-menu-item [icon]="ui.icons.externalLink" title="View on GitLab"
                            target="_blank"
                            [link]="row.glUrl"></jnt-menu-item>

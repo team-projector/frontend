@@ -1,43 +1,45 @@
 <jnt-block [width]="ui.width.fluid">
-  <jnt-table #table [features]="[features.search]" formControlName="table">
-    <ng-template #filters>
-     <jnt-button text="Add" [icon]="ui.icons.plus" [outline]="ui.outline.transparent" (click)="open()"></jnt-button>
-    </ng-template>
-    <jnt-table-column i18n-title="@@date" title="Period">
-      <ng-template #cellTemplate let-fromDate="fromDate" let-toDate="toDate">
-        <jnt-date-period [start]="fromDate" [end]="toDate"></jnt-date-period>
+  <jnt-form [formGroup]="form">
+    <jnt-table #table [features]="[features.search]" formControlName="table">
+      <ng-template #filters>
+        <jnt-button text="Add" [icon]="ui.icons.plus" [outline]="ui.outline.transparent" (click)="open()"></jnt-button>
       </ng-template>
-    </jnt-table-column>
+      <jnt-table-column i18n-title="@@date" title="Period">
+        <ng-template #cellTemplate let-fromDate="fromDate" let-toDate="toDate">
+          <jnt-date-period [start]="fromDate" [end]="toDate"></jnt-date-period>
+        </ng-template>
+      </jnt-table-column>
 
-    <jnt-table-column i18n-title="@@reason" title="Reason">
-      <ng-template #cellTemplate let-reason="reason">
-        {{reason}}
+      <jnt-table-column i18n-title="@@reason" title="Reason">
+        <ng-template #cellTemplate let-reason="reason">
+          {{reason}}
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column i18n-title="@@comment" title="Comment">
+        <ng-template #cellTemplate let-comment="comment">
+          {{comment}}
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column i18n-title="@@agreement" title="Agreement">
+        <ng-template #cellTemplate let-approveState="approveState">
+          {{approveState}}
+        </ng-template>
+      </jnt-table-column>
+
+      <ng-template #rowActions let-row="row">
+        <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
+
+          <jnt-menu-item [icon]="ui.icons.edit" title="Edit"
+                         target="_blank"
+                         [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
+          <jnt-menu-item [icon]="ui.icons.delete" title="Delete"
+                         target="_blank"
+                         [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
+        </jnt-menu>
       </ng-template>
-    </jnt-table-column>
 
-    <jnt-table-column i18n-title="@@comment" title="Comment">
-      <ng-template #cellTemplate let-comment="comment">
-        {{comment}}
-      </ng-template>
-    </jnt-table-column>
-
-    <jnt-table-column i18n-title="@@agreement" title="Agreement">
-      <ng-template #cellTemplate let-approveState="approveState">
-        {{approveState}}
-      </ng-template>
-    </jnt-table-column>
-
-    <ng-template #rowActions let-row="row">
-      <jnt-menu [type]="ui.type.vertical" [spacer]="ui.sizes.small">
-
-        <jnt-menu-item [icon]="ui.icons.edit" title="Edit"
-                       target="_blank"
-                       [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
-        <jnt-menu-item [icon]="ui.icons.delete" title="Delete"
-                       target="_blank"
-                       [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
-      </jnt-menu>
-    </ng-template>
-
-  </jnt-table>
+    </jnt-table>
+  </jnt-form>
 </jnt-block>
