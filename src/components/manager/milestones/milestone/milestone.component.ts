@@ -7,7 +7,8 @@ import { R } from 'apollo-angular/types';
 import { isEqual, ModalOptions, ModalService, UI } from 'junte-ui';
 import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { Issue, IssuesFilter, IssueState, PagingIssues } from 'src/models/issue';
+import { IssueState } from 'src/models/enums/issue';
+import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { StandardLabel } from 'src/models/label';
 import { Milestone } from 'src/models/milestone';
 import { PagingTickets, Ticket, TicketsFilter, TicketTypes } from 'src/models/ticket';
@@ -83,15 +84,7 @@ export class MilestoneComponent implements OnInit {
     this.form.valueChanges.pipe(distinctUntilChanged((a, b) => equals(a, b)))
       .subscribe(({ticket}) => {
         this.issues = [];
-        if (!!ticket) {
-          this.loading.issues = true;
-          const filter = new IssuesFilter({ticket});
-          this.ticketIssuesGQL.fetch(serialize(filter) as R)
-            .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues).results),
-              finalize(() => this.loading.issues = false))
-            .subscribe(issues => this.issues = issues);
-        }
-
+        this.loadIssues(ticket);
         const state = new MilestoneState({ticket: ticket || undefined});
         this.router.navigate([serialize(state)],
           {relativeTo: this.route}).then(() => null);
@@ -112,35 +105,44 @@ export class MilestoneComponent implements OnInit {
     ).subscribe(tickets => this.tickets = tickets.results);
   }
 
-  add() {
-    this.open('Add ticket', 'add');
+  private loadIssues(ticket: string) {
+    if (!!ticket) {
+      this.loading.issues = true;
+      const filter = new IssuesFilter({ticket});
+      this.ticketIssuesGQL.fetch(serialize(filter) as R)
+        .pipe(map(({data: {ticket: {issues}}}) => deserialize(issues, PagingIssues).results),
+          finalize(() => this.loading.issues = false))
+        .subscribe(issues => this.issues = issues);
+    }
   }
 
-  edit(ticket: Ticket) {
-    this.open('Edit ticket', 'edit', ticket);
-  }
-
-  delete(id: string) {
-    this.deleteTicketGQL.fetch({id})
-      .subscribe(() => this.loadTickets());
-  }
-
-  open(title: string, icon: string, ticket: Ticket = null) {
+  edit(ticket: Ticket = null) {
     const component = this.cfr.resolveComponentFactory(EditTicketComponent).create(this.injector);
     component.instance.canceled.subscribe(() => this.modal.close());
     component.instance.saved.subscribe(() => {
       this.modal.close();
       this.loadTickets();
+      const {active} = this.form.getRawValue();
+      if (!!ticket && !!ticket.id === active) {
+        this.loadIssues(active);
+      }
     });
-    component.instance.milestone = this.milestone.id;
-    component.instance.ticket = ticket;
+    if (!!ticket) {
+      component.instance.id = ticket.id;
+    }
 
     const options = new ModalOptions({
-      title: {text: title, icon: icon},
+      title: !!ticket ? {text: 'Edit', icon: UI.icons.edit}
+        : {text: 'Add', icon: UI.icons.add},
       maxWidth: '400px'
     });
 
     this.modal.open(component, options);
+  }
+
+  delete(id: string) {
+    this.deleteTicketGQL.fetch({id})
+      .subscribe(() => this.loadTickets());
   }
 
   predicate(item: CdkDrag<number>) {

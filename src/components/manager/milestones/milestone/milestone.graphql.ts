@@ -61,50 +61,52 @@ export class AllTicketsGQL extends Query<{ allTickets }> {
 @Injectable({
   providedIn: 'root'
 })
-export class TicketIssuesGQL extends Query<{ issues }> {
+export class TicketIssuesGQL extends Query<{ ticket: { issues } }> {
   document = gql`
-    query Issues ($ticket: ID) {
-      issues: allIssues(ticket: $ticket) {
-        count
-        edges {
-          node {
-            title
-            id
-            dueDate
-            closedAt
-            labels {
-              count
-              edges {
-                node {
-                  title
-                  color
+    query TicketIssues($ticket: ID!) {
+      ticket(id: $ticket) {
+        issues {
+          count
+          edges {
+            node {
+              title
+              id
+              dueDate
+              closedAt
+              labels {
+                count
+                edges {
+                  node {
+                    title
+                    color
+                  }
                 }
               }
-            }
-            project {
-              fullTitle
-            }
-            state
-            createdAt
-            timeEstimate
-            totalTimeSpent
-            timeEstimate
-            glUrl
-            ticket {
-              id
-              title
-              url
-            }
-            user {
-              id
-              name
-              glAvatar
-            }
-            metrics {
-              remains
-              efficiency
-              payroll
-              paid
+              project {
+                fullTitle
+              }
+              state
+              createdAt
+              timeEstimate
+              totalTimeSpent
+              timeEstimate
+              glUrl
+              ticket {
+                id
+                title
+                url
+              }
+              user {
+                id
+                name
+                glAvatar
+              }
+              metrics {
+                remains
+                efficiency
+                payroll
+                paid
+              }
             }
           }
         }

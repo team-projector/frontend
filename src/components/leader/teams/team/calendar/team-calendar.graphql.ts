@@ -9,7 +9,7 @@ export class CalendarMembersGQL extends Query<{team: {members}}> {
   document = gql`
     query CalendarMember($team: ID!) {
       team(id: $team) {
-        members(roles: "developer", orderBy: "user__name") {
+        members(roles: "DEVELOPER", orderBy: "user__name") {
           count
           edges {
             node {

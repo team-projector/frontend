@@ -1,10 +1,14 @@
 import { field, model } from '@junte/mocker-library';
 import { SearchFilter } from 'junte-ui';
-import { ArraySerializer } from 'serialize-ts/dist';
+import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
+import { IssueState } from 'src/models/enums/issue';
+import { Label } from 'src/models/label';
 import { Paging } from 'src/models/paging';
+import { Project } from 'src/models/project';
+import { User } from 'src/models/user';
 import { DateSerializer } from 'src/serializers/date';
-import { EdgesToPaging } from 'src/serializers/graphql';
+import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
 
 export enum TicketTypes {
   feature = 'FEATURE',
@@ -15,42 +19,82 @@ export enum TicketTypes {
 @model()
 export class TicketMetrics {
 
-  @field({mock: '{{money}}'})
+  @field()
   customerPayroll: number;
 
-  @field({mock: '{{money}}'})
+  @field()
   payroll: number;
 
-  @field({mock: '{{money}}'})
+  @field()
   budgetSpent: number;
 
-  @field({mock: '{{money}}'})
+  @field()
   budgetRemains: number;
 
-  @field({mock: '{{money}}'})
+  @field()
   profit: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field()
   timeEstimate: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field()
   timeSpent: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field()
   timeRemains: number;
 
-  @field({mock: '{{efficiency}}'})
+  @field()
   efficiency: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field()
   issuesCount: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field()
   issuesOpenedCount: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field()
   issuesClosedCount: number;
 
+}
+
+@model()
+export class Issue {
+
+  @field()
+  id: number;
+
+  @field()
+  user: User;
+
+  @field()
+  title: string;
+
+  @field({serializer: new EdgesToArray(Label)})
+  labels: Label[];
+
+  @field()
+  project: Project;
+
+  @field({serializer: new DateSerializer()})
+  dueDate: Date;
+
+  @field()
+  timeEstimate: number;
+
+  @field()
+  timeSpent: number;
+
+  @field()
+  totalTimeSpent: number;
+
+  @field()
+  glUrl: string;
+
+  @field({mock: IssueState.opened})
+  state: IssueState;
+
+  @field({serializer: new DateSerializer()})
+  closedAt: Date;
 }
 
 @model()
@@ -74,7 +118,10 @@ export class Ticket {
   @field()
   url: string;
 
-  @field({mock: '{{> milestone_metrics}}'})
+  @field({serializer: new EdgesToArray(Issue)})
+  issues: Issue[];
+
+  @field()
   metrics: TicketMetrics;
 }
 
@@ -82,10 +129,7 @@ export class Ticket {
 export class TicketUpdate {
 
   @field()
-  id: number;
-
-  @field()
-  milestone: number;
+  id: string;
 
   @field()
   type: TicketTypes;
@@ -102,6 +146,9 @@ export class TicketUpdate {
   @field()
   url: string;
 
+  @field({serializer: new ArraySerializer(new PrimitiveSerializer<string>())})
+  issues: string[];
+
   constructor(update: TicketUpdate) {
     Object.assign(this, update);
   }
@@ -110,13 +157,12 @@ export class TicketUpdate {
 @model()
 export class PagingTickets implements Paging<Ticket> {
 
-  @field({mock: '{{int 3 10}}'})
+  @field()
   count: number;
 
   @field({
     name: 'edges',
-    serializer: new ArraySerializer(new EdgesToPaging<Ticket>(Ticket)),
-    mock: '[{{#repeat 3 10}} {{> milestone_ticket}} {{/repeat}}]'
+    serializer: new ArraySerializer(new EdgesToPaging<Ticket>(Ticket))
   })
   results: Ticket[];
 }

@@ -84,18 +84,18 @@
                              [label]="issuesOpenedCount.toString()">
                   </jnt-label>
                   <jnt-dropdown>
-                    <ng-template #trigger let-action="trigger">
+                    <ng-template #trigger let-open="trigger">
                       <jnt-button [outline]="ui.outline.transparent"
                                   [icon]="ui.icons.actions"
-                                  (click)="action()">
+                                  (click)="open()">
                       </jnt-button>
                     </ng-template>
-                    <ng-template #dropdown let-action="trigger">
+                    <ng-template #dropdown let-close="trigger">
                       <jnt-menu [type]="ui.type.vertical"
                                 [spacer]="ui.sizes.small">
                         <jnt-menu-item title="Edit"
                                        [icon]="ui.icons.edit"
-                                       (click)="edit(ticket)"></jnt-menu-item>
+                                       (click)="edit(ticket);close()"></jnt-menu-item>
                         <jnt-menu-item title="Delete"
                                        [icon]="ui.icons.delete"
                                        (click)="delete(ticket.id)"></jnt-menu-item>
@@ -159,12 +159,11 @@
         <jnt-gantt-line>
           <ng-template #title>
             <div title>
-              <jnt-button [icon]="ui.icons.plus" (click)="add()"></jnt-button>
+              <jnt-button [icon]="ui.icons.plus" (click)="edit()"></jnt-button>
             </div>
           </ng-template>
         </jnt-gantt-line>
       </jnt-gantt>
     </jnt-block>
-
   </jnt-stack>
 </jnt-form>

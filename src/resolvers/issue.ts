@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { parse } from 'date-fns';
-import { IssuesType } from '../models/issue';
+import { IssuesType } from 'src/models/enums/issue';
 
 @Injectable()
 export class DueDateResolver implements Resolve<Date> {

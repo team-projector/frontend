@@ -6,7 +6,7 @@ import { DEFAULT_FIRST, DEFAULT_OFFSET, defined, isEqual, TableComponent, UI } f
 import merge from 'merge-anything';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssueState } from 'src/models/issue';
+import { IssueState } from 'src/models/enums/issue';
 import { MergeRequestState } from 'src/models/merge-request';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter, TimeExpensesState } from 'src/models/spent-time';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql';

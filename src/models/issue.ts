@@ -1,6 +1,7 @@
 import { field, model } from '@junte/mocker-library';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
+import { IssueProblem, IssueState } from 'src/models/enums/issue';
 import { Team } from 'src/models/team';
 import { Ticket } from 'src/models/ticket';
 import { DATE_FORMAT } from '../consts';
@@ -11,37 +12,19 @@ import { Paging } from './paging';
 import { Project } from './project';
 import { User } from './user';
 
-export enum IssueState {
-  opened = 'OPENED',
-  closed = 'CLOSED'
-}
-
-export enum IssueProblem {
-  overDueDate = 'OVER_DUE_DATE',
-  emptyDueDate = 'EMPTY_DUE_DATE',
-  emptyEstimate = 'EMPTY_ESTIMATE'
-}
-
-export enum IssuesType {
-  all = 'all',
-  closed = 'closed',
-  opened = 'opened',
-  problems = 'problems'
-}
-
 @model()
 export class IssueMetrics {
 
-  @field({mock: '{{int 10 100}}'})
+  @field()
   remains: number;
 
-  @field({mock: '{{efficiency}}'})
+  @field()
   efficiency: number;
 
-  @field({mock: '{{money}}'})
+  @field()
   payroll: number;
 
-  @field({mock: '{{money}}'})
+  @field()
   paid: number;
 
 }
@@ -49,86 +32,67 @@ export class IssueMetrics {
 @model()
 export class Issue {
 
-  @field({mock: '{{id}}'})
+  @field()
   id: number;
 
-  @field({mock: '{{> user}}'})
+  @field()
   user: User;
 
-  @field({
-    serializer: new EdgesToArray(User),
-    mock: '[{{#repeat 1 3}} {{> user}} {{/repeat}}]'
-  })
+  @field({serializer: new EdgesToArray(User)})
   participants: User[];
 
-  @field({mock: '{{issue}}'})
+  @field()
   title: string;
 
-  @field({
-    serializer: new EdgesToArray(Label),
-    mock: '[{{#repeat 2 5}} {{> label}} {{/repeat}}]'
-  })
+  @field({serializer: new EdgesToArray(Label)})
   labels: Label[];
 
-  @field({mock: '{{> project}}'})
+  @field()
   project: Project;
 
-  @field({mock: '{{> ticket}}'})
+  @field()
   ticket: Ticket;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
-  })
+  @field({serializer: new DateSerializer()})
   dueDate: Date;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
-  })
+  @field({serializer: new DateSerializer()})
   createdAt: Date;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
-  })
-  closedAt: Date;
-
-  @field({mock: '{{int 10 100}}'})
+  @field()
   timeEstimate: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field()
   timeSpent: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field()
   totalTimeSpent: number;
 
-  @field({mock: '{{url}}'})
+  @field()
   glUrl: string;
 
   @field({mock: IssueState.opened})
   state: IssueState;
 
-  @field({
-    serializer: new ArraySerializer(new PrimitiveSerializer()),
-    mock: '{{issue_problem}}'
-  })
+  @field({serializer: new DateSerializer()})
+  closedAt: Date;
+
+  @field({serializer: new ArraySerializer(new PrimitiveSerializer())})
   problems: IssueProblem[];
 
-  @field({mock: '{{> issue_metrics}}'})
+  @field()
   metrics: IssueMetrics;
 }
 
 @model()
 export class PagingIssues implements Paging<Issue> {
 
-  @field({mock: '{{int 50 1000}}'})
+  @field()
   count: number;
 
   @field({
     name: 'edges',
-    serializer: new ArraySerializer(new EdgesToPaging<Issue>(Issue)),
-    mock: '[{{#repeat 10 20}} {{> issue}} {{/repeat}}]'
+    serializer: new ArraySerializer(new EdgesToPaging<Issue>(Issue))
   })
   results: Issue[];
 

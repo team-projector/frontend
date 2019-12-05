@@ -2,10 +2,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
-import { finalize } from 'rxjs/operators';
-import { serialize } from 'serialize-ts/dist';
-import { CreateTicketGQL, EditTicketGQL } from './edit-ticket.graphql';
-import { Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
+import { Observable, of } from 'rxjs';
+import { finalize, map } from 'rxjs/operators';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { IssuesGQL } from 'src/components/issues/issues/issues.graphql';
+import { IssuesFilter, PagingIssues } from 'src/models/issue';
+import { Issue, Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
+import { CreateTicketGQL, EditTicketGQL, GetTicketGQL } from './edit-ticket.graphql';
+
+const FOUND_ISSUES_COUNT = 10;
 
 @Component({
   selector: 'app-edit-ticket',
@@ -14,23 +19,32 @@ import { Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
 })
 export class EditTicketComponent {
 
-  private _ticket: Ticket;
   ui = UI;
   milestoneTicketTypes = TicketTypes;
+
+  private _ticket: Ticket;
+  private _id: string;
+
   saving = false;
+  progress = {loading: false, saving: false};
 
   form = this.fb.group({
     id: [null],
-    milestone: [null],
-    type: [null, Validators.required],
+    type: [TicketTypes.feature, Validators.required],
     title: [null, Validators.required],
     startDate: [new Date(), Validators.required],
     dueDate: [new Date(), Validators.required],
-    url: [null]
+    url: [null],
+    issues: [[]]
   });
 
-  @Input() set milestone(milestone: string) {
-    this.form.get('milestone').setValue(milestone);
+  set id(id: string) {
+    this._id = id;
+    this.load();
+  }
+
+  get id() {
+    return this._id;
   }
 
   @Input() set ticket(ticket: Ticket) {
@@ -44,6 +58,7 @@ export class EditTicketComponent {
         startDate: ticket.startDate,
         dueDate: ticket.dueDate,
         url: ticket.url,
+        issues: ticket.issues.map(i => i.id)
       });
     }
   }
@@ -55,9 +70,30 @@ export class EditTicketComponent {
   @Output() saved = new EventEmitter<TicketUpdate>();
   @Output() canceled = new EventEmitter<any>();
 
+  findIssues = () => (query: string) => new Observable<Issue[]>(o => {
+    const filter = new IssuesFilter({q: query, first: FOUND_ISSUES_COUNT});
+    this.issuesGQL.fetch(serialize(filter) as R)
+      .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)))
+      .subscribe(({results: issues}) => {
+        console.log(issues);
+        o.next(issues);
+        o.complete();
+      });
+  });
+
   constructor(private fb: FormBuilder,
+              private getTicketGQL: GetTicketGQL,
               private createTicketGQL: CreateTicketGQL,
-              private editTicketGQL: EditTicketGQL) {
+              private editTicketGQL: EditTicketGQL,
+              private issuesGQL: IssuesGQL) {
+  }
+
+  private load() {
+    this.progress.loading = true;
+    this.getTicketGQL.fetch({ticket: this.id} as R).pipe(
+      map(({data: {ticket}}) => deserialize(ticket, Ticket)),
+      finalize(() => this.progress.loading = false)
+    ).subscribe(ticket => this.ticket = ticket);
   }
 
   save() {

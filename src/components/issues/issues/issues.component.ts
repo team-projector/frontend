@@ -8,7 +8,8 @@ import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, 
 import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
-import { IssueProblem, IssuesFilter, IssuesSummary, IssueState, IssuesType, PagingIssues } from 'src/models/issue';
+import { IssueProblem, IssueState, IssuesType } from 'src/models/enums/issue';
+import { IssuesFilter, IssuesSummary, PagingIssues } from 'src/models/issue';
 import { StandardLabel } from 'src/models/label';
 import { DateSerializer } from 'src/serializers/date';
 import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';

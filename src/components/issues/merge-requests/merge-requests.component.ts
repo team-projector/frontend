@@ -6,7 +6,7 @@ import { DEFAULT_FIRST, DEFAULT_OFFSET, defined, isEqual, TableComponent, TableF
 import merge from 'merge-anything';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssueProblem } from 'src/models/issue';
+import { IssueProblem } from 'src/models/enums/issue';
 import { MergeRequestsFilter, MergeRequestState, MergeRequestSummary, PagingMergeRequest } from 'src/models/merge-request';
 import { MergeRequestsGQL, MergeRequestSummaryGQL } from './merge-requests.graphql';
 

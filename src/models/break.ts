@@ -1,10 +1,8 @@
 import { field, model } from '@junte/mocker-library';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
-import { IssueState } from 'src/models/issue';
-import { DATE_FORMAT } from '../consts';
 import { DateSerializer } from '../serializers/date';
-import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { EdgesToPaging } from '../serializers/graphql';
 import { Paging } from './paging';
 import { User } from './user';
 
