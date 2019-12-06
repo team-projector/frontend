@@ -69,8 +69,8 @@ export class GetTicketGQL extends Query<{ ticket }> {
 })
 export class CreateTicketGQL extends Mutation<{ ticket }> {
   document = gql`
-    mutation ($milestone: ID!, $type: String!, $title: String!, $startDate: Date!, $dueDate: Date!, $url: String) {
-      createTicket(milestone: $milestone, type: $type, title: $title, startDate: $startDate, dueDate: $dueDate, url: $url) {
+    mutation ($input: CreateTicketMutationInput!) {
+      createTicket(input: $input) {
         ticket {
           milestone {
             id

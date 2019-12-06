@@ -7,9 +7,7 @@ import { R } from 'apollo-angular/types';
 import { isEqual, ModalOptions, ModalService, UI } from 'junte-ui';
 import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssueState } from 'src/models/enums/issue';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
-import { StandardLabel } from 'src/models/label';
 import { Milestone } from 'src/models/milestone';
 import { PagingTickets, Ticket, TicketsFilter, TicketTypes } from 'src/models/ticket';
 import { DurationFormat } from 'src/pipes/date';
@@ -38,8 +36,6 @@ class MilestoneState {
 export class MilestoneComponent implements OnInit {
 
   ui = UI;
-  issuesState = IssueState;
-  standardLabel = StandardLabel;
   durationFormat = DurationFormat;
   ticketTypes = TicketTypes;
 
@@ -118,6 +114,7 @@ export class MilestoneComponent implements OnInit {
 
   edit(ticket: Ticket = null) {
     const component = this.cfr.resolveComponentFactory(EditTicketComponent).create(this.injector);
+    component.instance.milestone = this.milestone.id;
     component.instance.canceled.subscribe(() => this.modal.close());
     component.instance.saved.subscribe(() => {
       this.modal.close();

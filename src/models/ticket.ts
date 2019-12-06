@@ -132,6 +132,9 @@ export class TicketUpdate {
   id: string;
 
   @field()
+  milestone: string;
+
+  @field()
   type: TicketTypes;
 
   @field()

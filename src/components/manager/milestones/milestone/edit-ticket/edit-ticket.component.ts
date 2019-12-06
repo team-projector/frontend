@@ -28,8 +28,11 @@ export class EditTicketComponent {
   saving = false;
   progress = {loading: false, saving: false};
 
+  milestoneControl = this.fb.control(null);
+
   form = this.fb.group({
     id: [null],
+    milestone: this.milestoneControl,
     type: [TicketTypes.feature, Validators.required],
     title: [null, Validators.required],
     startDate: [new Date(), Validators.required],
@@ -37,6 +40,10 @@ export class EditTicketComponent {
     url: [null],
     issues: [[]]
   });
+
+  set milestone(milestone: string) {
+    this.milestoneControl.setValue(milestone);
+  }
 
   set id(id: string) {
     this._id = id;
