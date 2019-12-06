@@ -1,7 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 import { UI } from 'junte-ui';
-import { User } from 'src/models/user';
 
 
 @Component({
@@ -9,16 +7,6 @@ import { User } from 'src/models/user';
   templateUrl: './developer-breaks.component.html',
   styleUrls: ['./developer-breaks.component.scss']
 })
-export class DeveloperBreaksComponent implements OnInit {
-
-  user: User;
+export class DeveloperBreaksComponent {
   ui = UI;
-
-  constructor(private route: ActivatedRoute) {
-  }
-
-  ngOnInit() {
-    this.route.data.subscribe(({user}) => this.user = user);
-  }
 }
-

@@ -1,6 +1,7 @@
 import { field, model } from '@junte/mocker-library';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
+import { DATE_TIME_FORMAT } from '../consts';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { Paging } from './paging';
@@ -19,6 +20,11 @@ export enum BreaksType {
   approved = 'approved'
 }
 
+export enum BreakReason {
+  dayoff = 'DAYOFF',
+  vacation = 'VACATION',
+  disease = 'DISEASE'
+}
 
 @model()
 export class Break {
@@ -50,8 +56,8 @@ export class Break {
   @field({mock: '{{comment}}'})
   comment: string;
 
-  @field({mock: '{{reason}}'})
-  reason: number;
+  @field({mock: BreakReason.dayoff})
+  reason: BreakReason;
 
   @field({mock: BreakState.created})
   state: BreakState;
@@ -59,7 +65,30 @@ export class Break {
   @field({mock: BreakState.created})
   approveState: BreakState;
 
+}
 
+@model()
+export class BreakUpdate {
+
+  @field()
+  user: string;
+
+  @field()
+  reason: BreakReason;
+
+  @field()
+  comment: string;
+
+  @field({serializer: new DateSerializer(DATE_TIME_FORMAT)})
+  fromDate: Date;
+
+  @field({serializer: new DateSerializer(DATE_TIME_FORMAT)})
+
+  toDate: Date;
+
+  constructor(update: BreakUpdate) {
+    Object.assign(this, update);
+  }
 }
 
 @model()
@@ -87,10 +116,10 @@ export class BreaksFilter implements SearchFilter {
   first?: number;
 
   @field()
-  state?: BreakState | null;
+  offset?: number;
 
   @field()
-  offset?: number;
+  q?: string;
 
   constructor(defs: BreaksFilter = null) {
     if (!!defs) {

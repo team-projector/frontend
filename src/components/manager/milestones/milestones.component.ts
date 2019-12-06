@@ -89,13 +89,14 @@ export class MilestonesComponent implements OnInit {
           offset: offset !== DEFAULT_OFFSET ? offset : undefined
         });
 
-        this.filter = new IssuesFilter({
+        this.filter = new MilestonesFilter({
           offset: offset,
           first: first,
           q: q
         });
 
-        this.router.navigate([serialize(state)], {relativeTo: this.route}).then(() => null);
+        this.router.navigate([serialize(state)], {relativeTo: this.route})
+          .then(() => null);
       });
 
     this.route.params.subscribe(({q, first, offset}) => {
