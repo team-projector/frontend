@@ -27,9 +27,10 @@
                     formControlName="reason"
                     labelField="label"
                     placeholder="Select reason">
-          <jnt-select-option *ngFor = "let label of reasons | keys"
+          <jnt-select-option *ngFor = "let label of (reasons | keys)"
+                             [key]="reasons[label]"
                              [label]="label | titlecase"
-                             [value]="reasons[label]">
+                             [value]="label">
           </jnt-select-option>
         </jnt-select>
         <jnt-form-message [type]="ui.form.validators.typeError.required">
