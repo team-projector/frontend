@@ -27,7 +27,7 @@
         </jnt-stack>
       </ng-template>
       <jnt-table-column i18n-title="@@issue_title" title="Title">
-        <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
+        <ng-template #cellTemplate let-title="title" let-labels="labels" let-glUrl="glUrl" let-state="state"
                      let-user="user" let-project="project" let-ticket="ticket"
                      let-closedAt="closedAt" let-id="id">
           <app-issue [issue]="{id: id, title: title, labels: labels, glUrl: glUrl, state: state, user: user, project: project, ticket: ticket, closedAt: closedAt}"></app-issue>
