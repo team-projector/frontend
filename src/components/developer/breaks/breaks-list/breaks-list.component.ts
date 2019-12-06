@@ -5,10 +5,10 @@ import { field, model } from '@junte/mocker-library';
 import { R } from 'apollo-angular/types';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, ModalOptions, ModalService, TableComponent, TableFeatures, UI } from 'junte-ui';
 import { combineLatest } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { BreakEditComponent } from 'src/components/developer/breaks/break-edit/break-edit.component';
-import { BreaksGQL } from 'src/components/developer/breaks/breaks-list/breaks-list.graphql';
+import { BreaksGQL, DeleteBreakGQL } from 'src/components/developer/breaks/breaks-list/breaks-list.graphql';
 import { Break, BreaksFilter, PagingBreaks } from 'src/models/break';
 import { IssuesFilter } from 'src/models/issue';
 
@@ -46,6 +46,7 @@ export class BreaksListComponent implements OnInit {
   features = TableFeatures;
   breaks: Break[] = [];
   loading = false;
+  progress = {delete: false};
 
   tableControl = this.builder.control({
     q: null,
@@ -74,6 +75,7 @@ export class BreaksListComponent implements OnInit {
   }
 
   constructor(private breaksGQL: BreaksGQL,
+              private deleteBreakGQL: DeleteBreakGQL,
               private builder: FormBuilder,
               private route: ActivatedRoute,
               private injector: Injector,
@@ -129,6 +131,13 @@ export class BreaksListComponent implements OnInit {
       this.modalService.close();
       this.table.load();
     });
+  }
+
+  delete(id: string) {
+    this.progress.delete = true;
+    this.deleteBreakGQL.fetch({id})
+      .pipe(finalize(() => this.progress.delete = false))
+      .subscribe(() => this.table.load());
   }
 
 }
