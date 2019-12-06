@@ -31,11 +31,12 @@
                               [disabled]="!ticket.metrics.issuesCount"
                               [size]="ui.sizes.small"
                               [icon]="ticketControl.value === ticket.id ? ui.icons.chevronDown : ui.icons.chevronRight"
-                              (click)="ticketControl.setValue(ticketControl.value === ticket.id ? null : ticket.id)">
+                              (click)="toggleIssues(ticket.id)">
                   </jnt-button>
                   <jnt-dot
                     [color]="ticket.type === ticketTypes.feature ? ui.colors.green : (ticket.type === ticketTypes.improvement ? ui.colors.purple : ui.colors.red)"></jnt-dot>
-                  <jnt-link [title]="ticket.title"></jnt-link>
+                  <jnt-link [title]="ticket.title"
+                            (click)="toggleIssues(ticket.id)"></jnt-link>
                 </jnt-stack>
 
                 <jnt-stack [type]="ui.stack.type.horizontal"

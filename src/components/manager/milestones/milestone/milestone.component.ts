@@ -142,6 +142,10 @@ export class MilestoneComponent implements OnInit {
       .subscribe(() => this.loadTickets());
   }
 
+  toggleIssues(ticket: string) {
+    this.ticketControl.setValue(this.ticketControl.value === ticket ? null : ticket);
+  }
+
   predicate(item: CdkDrag<number>) {
     return !!item.data['issue'];
   }
