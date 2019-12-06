@@ -1,3 +1,57 @@
-<jnt-form [formGroup]="form">
-  <p>break-edit works!</p>
+<jnt-form [formGroup]="form" jntValidation (submitted)="save()" [footerForm]="footerForm">
+  <jnt-stack [type]="ui.stack.type.vertical" [align]="ui.flex.align.stretch">
+    <jnt-form-item>
+      <jnt-form-label for="fromDate">From</jnt-form-label>
+      <jnt-form-control name="fromDate">
+        <jnt-date-picker placeholder="Start date" formControlName="fromDate"></jnt-date-picker>
+        <jnt-form-message [type]="ui.form.validators.typeError.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+
+    <jnt-form-item>
+      <jnt-form-label for="toDate">To</jnt-form-label>
+      <jnt-form-control name="toDate">
+        <jnt-date-picker placeholder="To date" formControlName="toDate"></jnt-date-picker>
+        <jnt-form-message [type]="ui.form.validators.typeError.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+
+    <jnt-form-item>
+      <jnt-form-label for="reason">Reason</jnt-form-label>
+      <jnt-form-control name="reason">
+        <jnt-select valueField="value"
+                    formControlName="reason"
+                    labelField="label"
+                    placeholder="Select reason">
+          <jnt-select-option *ngFor = "let label of reasons | keys"
+                             [label]="label | titlecase"
+                             [value]="reasons[label]">
+          </jnt-select-option>
+        </jnt-select>
+        <jnt-form-message [type]="ui.form.validators.typeError.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+
+    <jnt-form-item>
+      <jnt-form-label for="comment">Comment</jnt-form-label>
+      <jnt-form-control name="comment">
+        <jnt-input placeholder="Comment" formControlName="comment"></jnt-input>
+        <jnt-form-message [type]="ui.form.validators.typeError.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+  </jnt-stack>
+
+  <ng-template #footerForm let-user="user">
+    <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.center">
+      <jnt-button text="Save" [type]="ui.form.button.type.submit" [loading]="saving"></jnt-button>
+    </jnt-stack>
+  </ng-template>
 </jnt-form>

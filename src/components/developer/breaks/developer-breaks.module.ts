@@ -1,26 +1,25 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule, UI } from 'junte-ui';
-import { BreaksModule } from 'src/components/breaks/breaks.module';
+import { JunteUiModule } from 'junte-ui';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
+import { KeysModule } from 'src/pipes/keys.module';
 import { NumberModule } from 'src/pipes/number.module';
 import { BreaksTypeResolver } from 'src/resolvers/break';
 import { MeUserResolver } from 'src/resolvers/me';
+import { BreakEditComponent } from './break-edit/break-edit.component';
+import { BreaksGanttComponent } from './breaks-gantt/breaks-gantt.component';
+import { BreaksListComponent } from './breaks-list/breaks-list.component';
 import { DeveloperBreaksRoutingModule } from './developer-breaks-routing.module';
 import { DeveloperBreaksComponent } from './developer-breaks.component';
-import { BreaksListComponent } from './breaks-list/breaks-list.component';
-import { BreaksGantComponent } from './breaks-gant/breaks-gant.component';
-import { BreakEditComponent } from './break-edit/break-edit.component';
-
-
 
 @NgModule({
   declarations: [
     DeveloperBreaksComponent,
     BreaksListComponent,
-    BreaksGantComponent,
-    BreakEditComponent],
+    BreaksGanttComponent,
+    BreakEditComponent
+  ],
   imports: [
     CommonModule,
     JunteUiModule,
@@ -28,9 +27,8 @@ import { BreakEditComponent } from './break-edit/break-edit.component';
     ReactiveFormsModule,
     DatePipesModule,
     DeveloperBreaksRoutingModule,
-    BreaksModule,
     NumberModule,
-
+    KeysModule
   ],
   entryComponents: [
     BreakEditComponent
@@ -38,7 +36,7 @@ import { BreakEditComponent } from './break-edit/break-edit.component';
   providers: [
     MeUserResolver,
     BreaksTypeResolver
-  ],
+  ]
 })
 export class DeveloperBreaksModule {
 }
