@@ -66,32 +66,26 @@
       </jnt-form-item>
     </jnt-tab>
     <jnt-tab title="Issues">
-      <jnt-form-item>
-        <jnt-form-label for="issues">Issues</jnt-form-label>
-        <jnt-form-control name="issues">
-          <jnt-select issues placeholder="Issues"
-                      formControlName="issues"
-                      [mode]="ui.select.multiple"
-                      [search]="true"
-                      [loader]="findIssues()"
-                      keyField="id"
-                      labelField="title">
-            <jnt-select-option *ngFor="let issue of ticket?.issues"
-                               [key]="issue.id"
-                               [label]="issue.title"
-                               [value]="issue">
-            </jnt-select-option>
-            <ng-template #optionTemplate let-issue="value">
-              <div issue>
-                <app-issue [issue]="issue"></app-issue>
-              </div>
-            </ng-template>
-          </jnt-select>
-        </jnt-form-control>
-      </jnt-form-item>
+      <jnt-select issues placeholder="Issues"
+                  formControlName="issues"
+                  [mode]="ui.select.multiple"
+                  [search]="true"
+                  [loader]="findIssues()"
+                  keyField="id"
+                  labelField="title">
+        <jnt-select-option *ngFor="let issue of ticket?.issues"
+                           [key]="issue.id"
+                           [label]="issue.title"
+                           [value]="issue">
+        </jnt-select-option>
+        <ng-template #optionTemplate let-issue="value">
+          <div issue>
+            <app-issue [issue]="issue"></app-issue>
+          </div>
+        </ng-template>
+      </jnt-select>
     </jnt-tab>
   </jnt-tabs>
-
 
   <ng-template #footerForm>
     <jnt-stack [type]="ui.stack.type.horizontal"

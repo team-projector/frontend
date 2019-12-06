@@ -1,13 +1,10 @@
 <jnt-stack [type]="ui.orientation.horizontal"
            [gutter]="ui.gutter.small">
-  <jnt-button *ngIf="draggable" [icon]="ui.icons.burger"
-              [scheme]="ui.schemes.secondary"
-              [size]="ui.sizes.tiny"></jnt-button>
   <jnt-avatar *ngIf="!!issue.user" [text]="issue.user.name" [image]="issue.user.avatar"
               [size]="ui.sizes.tiny"></jnt-avatar>
   <jnt-stack [type]="ui.stack.type.vertical"
              [gutter]="ui.gutter.tiny">
-    <jnt-link *ngIf="ticket" ticket [icon]="ui.icons.externalLink"
+    <jnt-link *ngIf="issue.ticket" ticket [icon]="ui.icons.externalLink"
               target="_blank"
               [source]="issue.ticket.url"
               [title]="issue.ticket.title"
@@ -23,7 +20,7 @@
       <jnt-label *ngFor="let l of (issue.labels | labels)"
                  [size]="ui.sizes.small"
                  [color]="l.color" [label]="l.title"></jnt-label>
-      <jnt-animated-icon *ngIf="state == issueState.opened && (labels | hasLabel:standardLabel.doing)" state doing
+      <jnt-animated-icon *ngIf="issue.state == issueState.opened && (issue.labels | hasLabel:standardLabel.doing)" state doing
                          [icon]="ui.icons.animated.runningMan"></jnt-animated-icon>
       <jnt-icon *ngIf="issue.labels | hasLabel:standardLabel.done" state
                 [icon]="ui.icons.check"></jnt-icon>

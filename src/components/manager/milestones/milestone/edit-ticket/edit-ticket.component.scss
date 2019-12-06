@@ -15,7 +15,10 @@
   ul {
     flex-wrap: nowrap;
     flex-direction: column;
+    margin-bottom: $gutter-small;
     li {
+      width: 100%;
+      box-sizing: border-box;
       &:not(:last-child) {
         margin-bottom: $gutter-small;
       }

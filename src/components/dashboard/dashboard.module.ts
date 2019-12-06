@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from 'junte-ui';
+import { IssuesModule } from 'src/components/issues/issues.module';
 import { AuthorizationGuard } from '../../guards/authorization.guard';
 import { ArrayPipesModule } from '../../pipes/array-pipes.module';
 import { DatePipesModule } from '../../pipes/date-pipes.module';
@@ -22,7 +23,8 @@ import { DifferencePipe } from './dashboard.pipe';
     DashboardRoutingModule,
     JunteUiModule,
     ArrayPipesModule,
-    DatePipesModule
+    DatePipesModule,
+    IssuesModule
   ],
   providers: [
     AuthorizationGuard

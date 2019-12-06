@@ -19,13 +19,33 @@ export class GitlabStatusGQL extends Query<{gitlabStatus}> {
             node {
               id
               title
-              glUrl
+              dueDate
+              labels {
+                count
+                edges {
+                  node {
+                    title
+                    color
+                  }
+                }
+              }
               project {
                 fullTitle
               }
-              user {
-                name
+              state
+              createdAt
+              glUrl
+              ticket {
+                id
+                title
+                url
               }
+              user {
+                id
+                name
+                glAvatar
+              }
+              closedAt
             }
           }
         }
