@@ -31,3 +31,15 @@ export class BreaksGQL extends Query<{ breaks }> {
       }
     }`;
 }
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DeleteBreakGQL extends Query<{ break }> {
+  document = gql`
+    mutation ($id: ID!) {
+      deleteWorkBreak(id: $id) {
+        ok
+      }
+    }`;
+}
