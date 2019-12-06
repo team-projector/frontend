@@ -18,6 +18,8 @@
       flex-wrap: nowrap;
       flex-direction: column;
       margin-bottom: $gutter-small;
+      max-height: 200px;
+      overflow-y: scroll;
       li {
         width: 100%;
         box-sizing: border-box;
