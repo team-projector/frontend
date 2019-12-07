@@ -2,7 +2,11 @@
   <jnt-form [formGroup]="form">
     <jnt-table #table formControlName="table" [features]="[features.search]">
       <ng-template #filters>
-        <jnt-button text="Add" [icon]="ui.icons.plus" [outline]="ui.outline.transparent" (click)="open()"></jnt-button>
+        <jnt-button text="Add"
+                    [icon]="ui.icons.plus"
+                    [outline]="ui.outline.transparent"
+                    (click)="open()">
+        </jnt-button>
       </ng-template>
       <jnt-table-column i18n-title="@@date" title="Period">
         <ng-template #cellTemplate let-fromDate="fromDate" let-toDate="toDate">
@@ -28,10 +32,11 @@
         </ng-template>
       </jnt-table-column>
 
-      <ng-template #rowActions let-row="row">
+      <ng-template #rowActions let-break="row">
         <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
           <jnt-menu-item [icon]="ui.icons.edit" title="Edit"></jnt-menu-item>
-          <jnt-menu-item [icon]="ui.icons.delete" title="Delete"></jnt-menu-item>
+          <jnt-menu-item title="Delete" [icon]="ui.icons.delete" (click)="delete(break.id)">
+          </jnt-menu-item>
         </jnt-menu>
       </ng-template>
     </jnt-table>
