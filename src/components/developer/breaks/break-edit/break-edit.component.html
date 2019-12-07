@@ -1,4 +1,4 @@
-<jnt-form [formGroup]="form" jntValidation (submitted)="save()" [footerForm]="footerForm">
+<jnt-form [formGroup]="form" jntValidation (submitted)="save()">
   <jnt-stack [type]="ui.stack.type.vertical" [align]="ui.flex.align.stretch">
     <jnt-form-item>
       <jnt-form-label for="fromDate">From</jnt-form-label>
@@ -49,7 +49,7 @@
     </jnt-form-item>
   </jnt-stack>
 
-  <ng-template #footerForm let-user="user">
+  <ng-template #formFooterTemplate>
     <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.center">
       <jnt-button text="Save" [type]="ui.form.button.type.submit" [loading]="saving"></jnt-button>
     </jnt-stack>

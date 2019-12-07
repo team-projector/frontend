@@ -1,5 +1,4 @@
 <jnt-link [icon]="ui.icons.settings"
-          [scheme]="ui.schemes.secondary"
           [outline]="ui.outline.fill"
           source="/admin/"
           title="Administrator"
@@ -7,7 +6,7 @@
 </jnt-link>
 
 <jnt-block [padding]="ui.padding.large" [loading]="progress.gitlab">
-  <jnt-form form [formGroup]="loginForm" (submitted)="login()" [footerForm]="footerForm" jntValidation>
+  <jnt-form form [formGroup]="loginForm" (submitted)="login()" jntValidation>
     <div logo>
       <img src="/assets/images/logo.svg" height="50">
     </div>
@@ -31,7 +30,7 @@
       </jnt-form-control>
     </jnt-form-item>
 
-    <ng-template #footerForm>
+    <ng-template #formFooterTemplate>
       <jnt-form-item>
         <jnt-button [loading]="progress.login" [type]="ui.form.button.type.submit" text="Login"
                     [width]="ui.width.fluid">

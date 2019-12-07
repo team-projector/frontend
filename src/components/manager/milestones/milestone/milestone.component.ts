@@ -112,6 +112,10 @@ export class MilestoneComponent implements OnInit {
     }
   }
 
+  add() {
+    this.edit();
+  }
+
   edit(ticket: Ticket = null) {
     const component = this.cfr.resolveComponentFactory(EditTicketComponent).create(this.injector);
     component.instance.milestone = this.milestone.id;

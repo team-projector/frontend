@@ -1,4 +1,4 @@
-<jnt-form [formGroup]="form" jntValidation (submitted)="save()" [footerForm]="footerForm">
+<jnt-form [formGroup]="form" jntValidation (submitted)="save()">
   <jnt-tabs>
     <jnt-tab title="Common" [active]="true">
       <jnt-form-item>
@@ -87,7 +87,7 @@
     </jnt-tab>
   </jnt-tabs>
 
-  <ng-template #footerForm>
+  <ng-template #formFooterTemplate>
     <jnt-stack [type]="ui.stack.type.horizontal"
                [justify]="ui.flex.justify.between" footer>
       <jnt-button text="Save" [type]="ui.form.button.type.submit" [loading]="saving"></jnt-button>

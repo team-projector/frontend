@@ -12,7 +12,8 @@
     </jnt-link>
     <jnt-stack [type]="ui.orientation.horizontal"
                [gutter]="ui.gutter.small"
-               [justify]="ui.flex.justify.start">
+               [justify]="ui.flex.justify.start"
+               [wrap]="ui.flex.wrap.wrap">
       <jnt-link [source]="issue.glUrl" target="_blank"
                 [attr.closed]="issue.state == issueState.closed"
                 [title]="issue.title">

@@ -110,7 +110,6 @@ export class IssuesComponent implements OnInit {
   }
 
   @Input() view = ViewType.default;
-  @Input() draggable = false;
 
   @ViewChild('table', {static: true})
   table: TableComponent;
