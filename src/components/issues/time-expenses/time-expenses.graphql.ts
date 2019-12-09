@@ -15,7 +15,6 @@ export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
             id
             createdAt
             date
-            title
             owner {
               __typename
               title
