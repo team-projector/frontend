@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from 'junte-ui';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
-import { KeysModule } from 'src/pipes/keys.module';
 import { NumberModule } from 'src/pipes/number.module';
 import { BreaksTypeResolver } from 'src/resolvers/break';
 import { MeUserResolver } from 'src/resolvers/me';
@@ -27,8 +26,7 @@ import { DeveloperBreaksComponent } from './developer-breaks.component';
     ReactiveFormsModule,
     DatePipesModule,
     DeveloperBreaksRoutingModule,
-    NumberModule,
-    KeysModule
+    NumberModule
   ],
   entryComponents: [
     BreakEditComponent

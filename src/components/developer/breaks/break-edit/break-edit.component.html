@@ -23,15 +23,17 @@
     <jnt-form-item>
       <jnt-form-label for="reason">Reason</jnt-form-label>
       <jnt-form-control name="reason">
-        <jnt-select valueField="value"
-                    formControlName="reason"
-                    labelField="label"
-                    placeholder="Select reason">
-          <jnt-select-option *ngFor = "let label of reasons | keys"
-                             [label]="label | titlecase"
-                             [value]="reasons[label]">
-          </jnt-select-option>
-        </jnt-select>
+        <jnt-switcher formControlName="reason" [type]="ui.orientation.horizontal">
+          <jnt-switcher-option label="Dayoff"
+                               [value]="reasons.dayoff">
+          </jnt-switcher-option>
+          <jnt-switcher-option label="Disease"
+                               [value]="reasons.disease">
+          </jnt-switcher-option>
+          <jnt-switcher-option label="Vacation"
+                               [value]="reasons.vacation">
+          </jnt-switcher-option>
+        </jnt-switcher>
         <jnt-form-message [type]="ui.form.validators.typeError.required">
           This field is required
         </jnt-form-message>
