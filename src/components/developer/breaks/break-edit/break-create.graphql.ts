@@ -24,3 +24,24 @@ export class CreateBreakGQL extends Mutation<{ break }> {
     }`;
 }
 
+@Injectable({
+  providedIn: 'root'
+})
+export class EditBreakGQL extends Mutation<{ break }> {
+  document = gql`
+    mutation ($user: ID!, $fromDate: DateTime!, $toDate: DateTime!, $reason: String!, $comment: String!) {
+      updateBreak(user: $user, fromDate: $fromDate, toDate: $toDate, reason: $reason, comment: $comment) {
+        workBreak {
+          createdAt
+          user {
+            id
+            name
+          }
+          fromDate
+          toDate
+          reason
+          comment
+        }
+      }
+    }`;
+}
