@@ -123,10 +123,11 @@ export class BreaksListComponent implements OnInit {
       });
   }
 
-  open() {
+  open(workBreak: Break = null) {
     const component = this.cfr.resolveComponentFactory(BreakEditComponent).create(this.injector);
     const options = new ModalOptions({title: {text: 'Add break'}});
     this.modalService.open(component, options);
+    component.instance.break = workBreak;
     component.instance.saved.subscribe(() => {
       this.modalService.close();
       this.table.load();

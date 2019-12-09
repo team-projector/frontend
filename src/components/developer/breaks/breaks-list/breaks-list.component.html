@@ -34,7 +34,7 @@
 
       <ng-template #rowActions let-break="row">
         <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
-          <jnt-menu-item [icon]="ui.icons.edit" title="Edit"></jnt-menu-item>
+          <jnt-menu-item [icon]="ui.icons.edit" title="Edit" (click)="open(break)"></jnt-menu-item>
           <jnt-menu-item title="Delete" [icon]="ui.icons.delete" (click)="delete(break.id)">
           </jnt-menu-item>
         </jnt-menu>
