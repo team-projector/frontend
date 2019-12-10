@@ -158,8 +158,7 @@ export class MilestoneComponent implements OnInit {
     return false;
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    const ticket = event.container.element.nativeElement.attributes.getNamedItem('ticket').value;
+  drop(event: CdkDragDrop<string[]>, ticket) {
     this.attachIssueGQL.fetch({
       id: event.item.data['issue'],
       ticket: ticket
