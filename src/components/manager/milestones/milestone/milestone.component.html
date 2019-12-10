@@ -8,9 +8,13 @@
                           [to]="ticket.dueDate">
 
             <ng-template #titleTemplate>
-              <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center">
+              <jnt-stack [type]="ui.stack.type.horizontal"
+                         [gutter]="ui.gutter.small"
+                         [align]="ui.flex.align.center">
                 <jnt-button [icon]="ui.icons.plus" [size]="ui.sizes.small"
                             (click)="add()"></jnt-button>
+                <jnt-button [icon]="ui.icons.reload" [size]="ui.sizes.small"
+                            (click)="loadTickets()"></jnt-button>
                 <div title>Tickets</div>
               </jnt-stack>
             </ng-template>

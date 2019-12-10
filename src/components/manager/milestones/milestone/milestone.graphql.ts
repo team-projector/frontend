@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Query } from 'apollo-angular';
+import { Mutation, Query } from 'apollo-angular';
 import gql from 'graphql-tag';
 
 @Injectable({
@@ -112,10 +112,10 @@ export class TicketIssuesGQL extends Query<{ ticket: { issues } }> {
 @Injectable({
   providedIn: 'root'
 })
-export class AttachIssueGQL extends Query<{ issue }> {
+export class AttachIssueGQL extends Mutation<{ issue }> {
   document = gql`
-    mutation ($id: ID!, $ticket: ID!) {
-      updateIssue(id: $id, ticket: $ticket) {
+    mutation ($issue: ID!, $ticket: ID!) {
+      updateIssue(id: $issue, ticket: $ticket) {
         issue {
           id
         }
@@ -126,7 +126,7 @@ export class AttachIssueGQL extends Query<{ issue }> {
 @Injectable({
   providedIn: 'root'
 })
-export class DeleteTicketGQL extends Query<{ issue }> {
+export class DeleteTicketGQL extends Mutation<{ issue }> {
   document = gql`
     mutation ($id: ID!) {
       deleteTicket(id: $id) {

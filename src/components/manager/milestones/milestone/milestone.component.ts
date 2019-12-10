@@ -92,7 +92,7 @@ export class MilestoneComponent implements OnInit {
     });
   }
 
-  private loadTickets() {
+  loadTickets() {
     this.loading.tickets = true;
     const filter = new TicketsFilter({milestone: this.milestone.id});
     this.allTicketsGQL.fetch(serialize(filter) as R).pipe(
@@ -142,7 +142,7 @@ export class MilestoneComponent implements OnInit {
   }
 
   delete(id: string) {
-    this.deleteTicketGQL.fetch({id})
+    this.deleteTicketGQL.mutate({id})
       .subscribe(() => this.loadTickets());
   }
 
@@ -159,8 +159,9 @@ export class MilestoneComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>, ticket) {
-    this.attachIssueGQL.fetch({
-      id: event.item.data['issue'],
+    const issue = event.item.data['issue'];
+    this.attachIssueGQL.mutate({
+      issue: issue,
       ticket: ticket
     }).subscribe(() => {
       this.loadTickets();
