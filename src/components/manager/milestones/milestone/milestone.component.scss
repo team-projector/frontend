@@ -76,3 +76,12 @@
   padding: $gutter-normal;
   background-color: $primary-background;
 }
+
+.cdk-drag-placeholder {
+  display: none;
+}
+
+.cdk-drop-list-dragging {
+  border: 2px $primary-color solid;
+  border-radius: $corner-normal;
+}
