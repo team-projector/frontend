@@ -91,11 +91,6 @@ export class TicketIssuesGQL extends Query<{ ticket: { issues } }> {
               totalTimeSpent
               timeEstimate
               glUrl
-              ticket {
-                id
-                title
-                url
-              }
               user {
                 id
                 name
