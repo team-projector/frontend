@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class CreateBreakGQL extends Mutation<{ break }> {
+export class CreateBreakGQL extends Mutation<{ workBreak }> {
   document = gql`
     mutation ($user: ID!, $fromDate: DateTime!, $toDate: DateTime!, $reason: String!, $comment: String!) {
       createWorkBreak(user: $user, fromDate: $fromDate, toDate: $toDate, reason: $reason, comment: $comment) {
@@ -27,16 +27,12 @@ export class CreateBreakGQL extends Mutation<{ break }> {
 @Injectable({
   providedIn: 'root'
 })
-export class EditBreakGQL extends Mutation<{ break }> {
+export class EditBreakGQL extends Mutation<{ workBreak }> {
   document = gql`
-    mutation ($user: ID!, $fromDate: DateTime!, $toDate: DateTime!, $reason: String!, $comment: String!) {
-      updateBreak(user: $user, fromDate: $fromDate, toDate: $toDate, reason: $reason, comment: $comment) {
+    mutation ($id: ID!, $fromDate: DateTime!, $toDate: DateTime!, $reason: String!, $comment: String!) {
+      updateWorkBreak(id: $id, fromDate: $fromDate, toDate: $toDate, reason: $reason, comment: $comment) {
         workBreak {
           createdAt
-          user {
-            id
-            name
-          }
           fromDate
           toDate
           reason

@@ -71,6 +71,9 @@ export class Break {
 export class BreakUpdate {
 
   @field()
+  id: string;
+
+  @field()
   user: string;
 
   @field()

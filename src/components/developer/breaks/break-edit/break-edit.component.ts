@@ -23,6 +23,7 @@ export class BreakEditComponent {
   reasons = BreakReason;
 
   form = this.builder.group({
+    id: [],
     user: [this.me.user.id],
     comment: [null, Validators.required],
     reason: [null, Validators.required],
@@ -33,8 +34,13 @@ export class BreakEditComponent {
   @Input() set break(workBreak: Break) {
     if (!!workBreak) {
       this._break = workBreak;
-      this.form.patchValue({...workBreak, user: this.me.user.id});
+      this._break.user = null;
+      this.form.patchValue(this._break);
     }
+  }
+
+  get break() {
+    return this._break;
   }
 
   @Output() saved = new EventEmitter<BreakUpdate>();
