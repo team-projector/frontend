@@ -1,25 +1,26 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {R} from 'apollo-angular/types';
-import {UI} from 'junte-ui';
-import {combineLatest} from 'rxjs';
-import {distinctUntilChanged, map, tap} from 'rxjs/operators';
-import {deserialize, serialize} from 'serialize-ts/dist';
-import {MetricType} from 'src/components/leader/teams/team/calendar/team-calendar.component';
-import {METRIC_TYPE} from 'src/components/metrics-type/consts';
-import {IssuesFilter, IssuesSummary} from 'src/models/issue';
-import {MergeRequestSummary} from 'src/models/merge-request';
-import {MilestoneProblem} from 'src/models/milestone';
-import {Project} from 'src/models/project';
-import {SpentTimesSummary} from 'src/models/spent-time';
-import {Team} from 'src/models/team';
-import {User} from 'src/models/user';
-import {DurationFormat} from 'src/pipes/date';
-import {FirstSummaryGQL, SecondSummaryGQL} from './team.graphql';
-import {field, model} from '@junte/mocker-library';
-import {DateSerializer} from '../../../../serializers/date';
-import {DATE_FORMAT} from '../../../../consts';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { field, model } from '@junte/mocker-library';
+import { R } from 'apollo-angular/types';
+import { ApolloError } from 'apollo-client';
+import { UI } from 'junte-ui';
+import { combineLatest } from 'rxjs';
+import { distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { MetricType } from 'src/components/leader/teams/team/calendar/team-calendar.component';
+import { METRIC_TYPE } from 'src/components/metrics-type/consts';
+import { DATE_FORMAT } from 'src/consts';
+import { IssuesFilter, IssuesSummary } from 'src/models/issue';
+import { MergeRequestSummary } from 'src/models/merge-request';
+import { MilestoneProblem } from 'src/models/milestone';
+import { Project } from 'src/models/project';
+import { SpentTimesSummary } from 'src/models/spent-time';
+import { Team } from 'src/models/team';
+import { User } from 'src/models/user';
+import { DurationFormat } from 'src/pipes/date';
+import { DateSerializer } from 'src/serializers/date';
+import { FirstSummaryGQL, SecondSummaryGQL } from './team.graphql';
 
 @model()
 export class TeamState {

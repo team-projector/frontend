@@ -1,15 +1,15 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, finalize, map } from 'rxjs/operators';
-import 'reflect-metadata';
-import { UI, validate } from 'junte-ui';
-import { GitlabLoginGQL, LoginGQL } from './login.graphql';
-import { AccessToken } from 'src/models/access-token';
-import { AppConfig } from 'src/app-config';
-import { deserialize } from 'serialize-ts/dist';
 import { ApolloError } from 'apollo-client';
-import { APPLICATION_READY } from '../../../consts';
+import { UI, validate } from 'junte-ui';
+import 'reflect-metadata';
+import { filter, finalize, map, tap } from 'rxjs/operators';
+import { deserialize } from 'serialize-ts/dist';
+import { AppConfig } from 'src/app-config';
+import { AccessToken } from 'src/models/access-token';
+import { APPLICATION_READY } from 'src/consts';
+import { GitlabLoginGQL, LoginGQL } from './login.graphql';
 
 @Component({
   selector: 'app-login',
@@ -37,32 +37,27 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     window.postMessage(APPLICATION_READY, location.origin);
-    this.route.queryParams
-      .pipe(filter(({code, state}) => !!code && !!state))
+    this.route.queryParams.pipe(filter(({code, state}) => !!code && !!state))
       .subscribe(({code, state}) => {
         this.progress.gitlab = true;
-        this.loginGitlabApollo.mutate({code: code, state: state})
-          .pipe(
-            finalize(() => this.progress.gitlab = false),
-            map(({data: {completeGitlabAuth: {token}}}) =>
-              deserialize(token, AccessToken))
-          )
-          .subscribe((token: AccessToken) => this.logged(token),
-            (error: ApolloError) => this.error = error);
+        this.loginGitlabApollo.mutate({code: code, state: state}).pipe(
+          finalize(() => this.progress.gitlab = false),
+          map(({data: {completeGitlabAuth: {token}}}) =>
+            deserialize(token, AccessToken))
+        ).subscribe((token: AccessToken) => this.logged(token),
+          (error: ApolloError) => this.error = error);
       });
   }
 
   login() {
     if (validate(this.loginForm)) {
       this.progress.login = true;
-      this.loginApollo.mutate(this.loginForm.value)
-        .pipe(
-          finalize(() => this.progress.login = false),
-          map(({data: {login: {token}}}) =>
-            deserialize(token, AccessToken))
-        )
-        .subscribe((token: AccessToken) => this.logged(token),
-          (error: ApolloError) => this.error = error);
+      this.loginApollo.mutate(this.loginForm.value).pipe(
+        tap(({errors}) => console.log(errors)),
+        finalize(() => this.progress.login = false),
+        map(({data: {login: {token}}}) => deserialize(token, AccessToken))
+      ).subscribe((token: AccessToken) => this.logged(token),
+        (error: ApolloError) => this.error = error);
     }
   }
 

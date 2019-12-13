@@ -27,7 +27,7 @@
     "@angular/platform-browser-dynamic": "~8.2.5",
     "@angular/router": "~8.2.5",
     "@junte/mocker-library": "0.0.58",
-    "apollo-angular": "^1.7.0",
+    "apollo-angular": "^1.8.0",
     "apollo-angular-link-http": "^1.6.0",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.4",

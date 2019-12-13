@@ -34,14 +34,13 @@ export class GraphQLModule {
 
     const errorLink = onError(({graphQLErrors, networkError}: ErrorResponse) => {
       if (networkError) {
-        console.log('[Network error]: ', networkError);
+        console.log('Network error: ', networkError);
         // config.token = null;
         // router.navigate(['/signup/login']);
       }
       if (graphQLErrors) {
-        graphQLErrors.map(({message, locations, path}) => {
-          console.error(`[GraphQL error]: Message: ${message}, Path: ${path}`);
-          console.log('Locations: ', locations);
+        graphQLErrors.forEach(({message, path}) => {
+          console.error(`GraphQL error [${path.join(' => ')}]: ${message}`);
         });
       }
     });
@@ -58,11 +57,15 @@ export class GraphQLModule {
       defaultOptions: {
         watchQuery: {
           fetchPolicy: 'no-cache',
-          errorPolicy: 'ignore'
+          errorPolicy: 'none'
         },
         query: {
           fetchPolicy: 'no-cache',
-          errorPolicy: 'all'
+          errorPolicy: 'none'
+        },
+        mutate: {
+          fetchPolicy: 'no-cache',
+          errorPolicy: 'none'
         }
       }
     });
