@@ -25,7 +25,7 @@ export class DueDatePipe implements PipeTransform {
 
     const endNextWeek = endOfWeek(addDays(today, 7), DATE_FNS_OPTIONS);
     const difference = differenceInDays(dueDate, today);
-    const comingDay = (d) => isTomorrow(d) ? 'Tommorow' : isToday(d) ? 'Today' :
+    const comingDay = (d) => isTomorrow(d) ? 'Tomorrow' : isToday(d) ? 'Today' :
       isYesterday(d) ? 'Yesterday' : format(d, 'D MMMM YYYY');
 
     let date: string = null;

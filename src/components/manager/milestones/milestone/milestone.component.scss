@@ -70,9 +70,22 @@
 
 }
 
-.cdk-drag-preview {
-  border-radius: $corner-normal;
-  box-shadow: $shadow-normal;
-  padding: $gutter-normal;
-  background-color: $primary-background;
+.cdk- {
+  &drag- {
+    &preview {
+      border-radius: $corner-normal;
+      box-shadow: $shadow-normal;
+      padding: $gutter-normal;
+      background-color: $primary-background;
+    }
+    &placeholder {
+      display: none;
+    }
+  }
+  &drop- {
+    &list-dragging {
+      display: flex;
+      outline: 1px solid $secondary-color;
+    }
+  }
 }

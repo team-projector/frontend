@@ -3,7 +3,7 @@ import { GitLabStatus } from '../../models/gitlab';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { interval } from 'rxjs';
-import { GitlabStatusGQL } from '../dashboard/gitlab-status.graphql';
+import { GitlabStatusGQL } from './gitlab-status.graphql';
 import { UI } from 'junte-ui';
 
 const STATUS_TIMEOUT = 60000;

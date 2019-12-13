@@ -5,11 +5,11 @@
   </jnt-stack>
   <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
     <div>WEB</div>
-    <div>{{status.services.webHooks | diff | duration}}</div>
+    <jnt-label [label]="status.services.webHooks | diff | duration"></jnt-label>
   </jnt-stack>
   <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
     <div>API</div>
-    <div>{{status.services.api | diff | duration}}</div>
+    <jnt-label [label]="status.services.api | diff | duration"></jnt-label>
   </jnt-stack>
   <hr>
   <jnt-stack>
