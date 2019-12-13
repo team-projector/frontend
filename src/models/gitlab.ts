@@ -1,5 +1,6 @@
+import { ArrayType } from '@angular/compiler';
 import { field, model } from '@junte/mocker-library';
-import { DateSerializer, Serializer } from 'serialize-ts';
+import { ArraySerializer, DateSerializer, Serializer, ModelSerializer } from 'serialize-ts';
 import { EdgesToArray } from '../serializers/graphql';
 import { Issue } from './issue';
 
@@ -53,7 +54,7 @@ export class GitLabStatus {
   services: GitLabServices;
 
   @field({
-    serializer: new EdgesToArray(Issue),
+    serializer: new ArraySerializer(new ModelSerializer(Issue)),
     mock: '[{{#repeat 5 10}} {{> issue }} {{/repeat}}]'
   })
   lastIssues: Issue[];

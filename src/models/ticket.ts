@@ -126,13 +126,39 @@ export class Ticket {
 }
 
 @model()
+export class TicketCreate {
+
+  @field()
+  milestone: string;
+
+  @field()
+  type: TicketTypes;
+
+  @field()
+  title: string;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  startDate: Date;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  dueDate: Date;
+
+  @field()
+  url: string;
+
+  @field({serializer: new ArraySerializer(new PrimitiveSerializer<string>())})
+  issues: string[];
+
+  constructor(update: TicketCreate) {
+    Object.assign(this, update);
+  }
+}
+
+@model()
 export class TicketUpdate {
 
   @field()
   id: string;
-
-  @field()
-  milestone: string;
 
   @field()
   type: TicketTypes;
