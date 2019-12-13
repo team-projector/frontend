@@ -16,6 +16,7 @@ export class BreaksGQL extends Query<{ breaks }> {
             createdAt
             user {
               name
+              glAvatar
             }
             fromDate
             toDate
