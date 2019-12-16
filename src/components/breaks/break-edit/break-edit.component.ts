@@ -4,7 +4,7 @@ import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
 import { finalize } from 'rxjs/operators';
 import { serialize } from 'serialize-ts/dist';
-import { CreateBreakGQL, EditBreakGQL } from 'src/components/developer/breaks/break-edit/break-create.graphql';
+import { CreateBreakGQL, EditBreakGQL } from './break-create.graphql';
 import { MeManager } from 'src/managers/me.manager';
 import { Break, BreakReason, BreakUpdate } from 'src/models/break';
 import { User } from 'src/models/user';
@@ -23,7 +23,7 @@ export class BreakEditComponent {
   reasons = BreakReason;
 
   form = this.builder.group({
-    id: [],
+    id: [null],
     user: [this.me.user.id],
     comment: [null, Validators.required],
     reason: [null, Validators.required],

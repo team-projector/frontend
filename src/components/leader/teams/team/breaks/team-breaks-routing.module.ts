@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BreaksGanttComponent } from 'src/components/developer/breaks/breaks-gantt/breaks-gantt.component';
-import { DeveloperBreaksComponent } from './developer-breaks.component';
 import { BreaksListComponent } from 'src/components/breaks/breaks-list/breaks-list.component';
+import { TeamBreaksComponent } from 'src/components/leader/teams/team/breaks/team-breaks.component';
 import { MeUserResolver } from 'src/resolvers/me';
 
 const routes: Routes = [
   {
     path: '',
-    component: DeveloperBreaksComponent,
+    component: TeamBreaksComponent,
     children: [
       {
         path: '',
@@ -18,11 +17,10 @@ const routes: Routes = [
           user: MeUserResolver
         }
       },
-      {
-        path: 'gantt',
-        data: {breadcrumb: 'Gantt'},
-        component: BreaksGanttComponent
-      }
+      // {
+      //   path: 'gantt',
+      //
+      // },
     ]
   }
 ];
@@ -31,5 +29,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DeveloperBreaksRoutingModule {
+export class TeamBreaksRoutingModule {
 }

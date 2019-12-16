@@ -8,6 +8,16 @@
                     (click)="open()">
         </jnt-button>
       </ng-template>
+
+      <jnt-table-column *ngIf="me.user?.roles?.includes(userRole.teamLeader)" i18n-title="@@date" title="Developer">
+        <ng-template #cellTemplate let-user="user">
+          <jnt-avatar avatar [image]="user?.avatar"
+                      [size]="ui.sizes.small"></jnt-avatar>
+          <div>
+            <jnt-link link [title]="user?.name"></jnt-link>
+          </div>
+        </ng-template>
+      </jnt-table-column>
       <jnt-table-column i18n-title="@@date" title="Period">
         <ng-template #cellTemplate let-fromDate="fromDate" let-toDate="toDate">
           <jnt-date-period [start]="fromDate" [end]="toDate"></jnt-date-period>

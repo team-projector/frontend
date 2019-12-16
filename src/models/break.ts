@@ -86,7 +86,6 @@ export class BreakUpdate {
   fromDate: Date;
 
   @field({serializer: new DateSerializer(DATE_TIME_FORMAT)})
-
   toDate: Date;
 
   constructor(update: BreakUpdate) {

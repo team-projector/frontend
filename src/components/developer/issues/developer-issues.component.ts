@@ -7,7 +7,7 @@ import {Period} from 'junte-ui/lib/components/calendar/models';
 import {BehaviorSubject, combineLatest, zip} from 'rxjs';
 import {distinctUntilChanged, filter as filtering, map} from 'rxjs/operators';
 import {deserialize, serialize} from 'serialize-ts/dist';
-import {MetricType} from 'src/components/leader/teams/team/calendar/team-calendar.component';
+import {MetricType} from 'src/components/leader/teams/team/issues/calendar/team-calendar.component';
 import {METRIC_TYPE} from 'src/components/metrics-type/consts';
 import {IssuesFilter, IssuesSummary} from 'src/models/issue';
 import {MergeRequestSummary} from 'src/models/merge-request';
@@ -20,7 +20,7 @@ import {IssuesMetricsGQL, IssuesSummaryGQL} from './issues-metrics.graphql';
 import {field, model} from '@junte/mocker-library';
 import {DateSerializer} from '../../../serializers/date';
 import {DATE_FORMAT} from '../../../consts';
-import {TeamState} from '../../leader/teams/team/team.component';
+import {TeamState} from '../../leader/teams/team/issues/team-issues.component';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,

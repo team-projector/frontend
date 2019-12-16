@@ -7,10 +7,12 @@ import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, ModalOptions, ModalService, Tab
 import { combineLatest } from 'rxjs';
 import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { BreakEditComponent } from 'src/components/developer/breaks/break-edit/break-edit.component';
-import { BreaksGQL, DeleteBreakGQL } from 'src/components/developer/breaks/breaks-list/breaks-list.graphql';
+import { BreakEditComponent } from 'src/components/breaks/break-edit/break-edit.component';
+import { BreaksGQL, DeleteBreakGQL } from 'src/components/breaks/breaks-list/breaks-list.graphql';
+import { MeManager } from 'src/managers/me.manager';
 import { Break, BreaksFilter, PagingBreaks } from 'src/models/break';
 import { IssuesFilter } from 'src/models/issue';
+import { User, UserRole } from 'src/models/user';
 
 @model()
 export class BreaksState {
@@ -42,6 +44,8 @@ export class BreaksState {
 export class BreaksListComponent implements OnInit {
 
   private _filter: BreaksFilter;
+  userRole = UserRole;
+  user: User;
   ui = UI;
   features = TableFeatures;
   breaks: Break[] = [];
@@ -81,6 +85,7 @@ export class BreaksListComponent implements OnInit {
               private injector: Injector,
               private cfr: ComponentFactoryResolver,
               private modalService: ModalService,
+              public me: MeManager,
               private router: Router) {
   }
 
