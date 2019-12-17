@@ -7,7 +7,7 @@ import { finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { IssuesGQL } from 'src/components/issues/issues/issues.graphql';
 import { IssuesFilter, PagingIssues } from 'src/models/issue';
-import { Issue, Ticket, TicketCreate, TicketTypes, TicketUpdate } from 'src/models/ticket';
+import { Issue, Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
 import { CreateTicketGQL, EditTicketGQL, GetTicketGQL } from './edit-ticket.graphql';
 
 const FOUND_ISSUES_COUNT = 10;
@@ -95,8 +95,8 @@ export class EditTicketComponent {
   save() {
     this.saving = true;
     const mutation = !!this.ticket ? this.editTicketGQL : this.createTicketGQL;
-    const request = new (!!this.ticket ? TicketUpdate : TicketCreate)(this.form.getRawValue());
-    mutation.mutate({input: serialize(request) as R})
+    console.log(this.form.getRawValue());
+    mutation.mutate(serialize(new TicketUpdate(this.form.getRawValue())) as R)
       .pipe(finalize(() => this.saving = false))
       .subscribe(() => this.saved.emit());
   }
