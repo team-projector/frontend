@@ -3,7 +3,6 @@ import {FormBuilder, FormControl} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {R} from 'apollo-angular/types';
 import {UI} from 'junte-ui';
-import {Period} from 'junte-ui/lib/components/calendar/models';
 import {BehaviorSubject, combineLatest, zip} from 'rxjs';
 import {distinctUntilChanged, filter as filtering, map} from 'rxjs/operators';
 import {deserialize, serialize} from 'serialize-ts/dist';
@@ -21,6 +20,7 @@ import {field, model} from '@junte/mocker-library';
 import {DateSerializer} from '../../../serializers/date';
 import {DATE_FORMAT} from '../../../consts';
 import {TeamState} from '../../leader/teams/team/issues/team-issues.component';
+import { Period } from 'junte-ui/lib/components/forms/calendar/models';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,
