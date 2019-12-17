@@ -1,8 +1,9 @@
- <jnt-row>
-  <jnt-col [desktop]="9" [mobile]="12">
-    <app-salaries [user]="user?.id"></app-salaries>
+<jnt-row>
+  <jnt-col [desktop]="9" [tablet]="12">
+    <app-salaries [user]="user?.id" salary></app-salaries>
   </jnt-col>
-  <jnt-col [desktop]="3" [mobile]="12">
+  <jnt-col [desktop]="3" [tablet]="12">
     <app-salary-metrics [metrics]="user?.metrics"></app-salary-metrics>
   </jnt-col>
 </jnt-row>
+
