@@ -110,6 +110,9 @@ export class Ticket {
   title: string;
 
   @field()
+  role: string;
+
+  @field()
   startDate: Date;
 
   @field()
@@ -140,6 +143,9 @@ export class TicketUpdate {
 
   @field()
   title: string;
+
+  @field()
+  role: string;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
   startDate: Date;

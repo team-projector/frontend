@@ -50,6 +50,10 @@
                     [color]="ticket.type === ticketTypes.feature ? ui.colors.green : (ticket.type === ticketTypes.improvement ? ui.colors.purple : ui.colors.red)"></jnt-dot>
                   <jnt-link [title]="ticket.title"
                             (click)="toggleIssues(ticket.id)"></jnt-link>
+                  <jnt-label *ngIf="ticket.role as role"
+                             [color]="ui.colors.paleNavy"
+                             [label]="role">
+                  </jnt-label>
                 </jnt-stack>
 
                 <jnt-stack [type]="ui.stack.type.horizontal"

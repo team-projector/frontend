@@ -34,6 +34,16 @@
           </jnt-form-control>
         </jnt-form-item>
 
+        <jnt-form-item>
+          <jnt-form-label for="role">Role</jnt-form-label>
+          <jnt-form-control name="role">
+            <jnt-input placeholder="role" formControlName="role"></jnt-input>
+            <jnt-form-message [type]="ui.form.validators.typeError.required">
+              This field is required
+            </jnt-form-message>
+          </jnt-form-control>
+        </jnt-form-item>
+
         <jnt-stack [type]="ui.stack.type.horizontal">
           <jnt-form-item>
             <jnt-form-label for="startDate">Start date</jnt-form-label>

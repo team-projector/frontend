@@ -37,6 +37,7 @@ export class AllTicketsGQL extends Query<{ allTickets }> {
             id
             type
             title
+            role
             startDate
             dueDate
             url
@@ -69,8 +70,8 @@ export class TicketIssuesGQL extends Query<{ ticket: { issues } }> {
           count
           edges {
             node {
-              title
               id
+              title
               dueDate
               closedAt
               labels {

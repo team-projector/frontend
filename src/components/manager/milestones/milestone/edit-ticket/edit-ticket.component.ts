@@ -35,6 +35,7 @@ export class EditTicketComponent {
     milestone: this.milestoneControl,
     type: [TicketTypes.feature, Validators.required],
     title: [null, Validators.required],
+    role: [null, Validators.required],
     startDate: [new Date(), Validators.required],
     dueDate: [new Date(), Validators.required],
     url: [null],
@@ -62,6 +63,7 @@ export class EditTicketComponent {
         id: ticket.id,
         type: ticket.type,
         title: ticket.title,
+        role: ticket.role,
         startDate: ticket.startDate,
         dueDate: ticket.dueDate,
         url: ticket.url,
@@ -95,7 +97,6 @@ export class EditTicketComponent {
   save() {
     this.saving = true;
     const mutation = !!this.ticket ? this.editTicketGQL : this.createTicketGQL;
-    console.log(this.form.getRawValue());
     mutation.mutate(serialize(new TicketUpdate(this.form.getRawValue())) as R)
       .pipe(finalize(() => this.saving = false))
       .subscribe(() => this.saved.emit());
