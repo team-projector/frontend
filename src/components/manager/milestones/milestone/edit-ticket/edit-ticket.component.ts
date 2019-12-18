@@ -35,7 +35,7 @@ export class EditTicketComponent {
     milestone: this.milestoneControl,
     type: [TicketTypes.feature, Validators.required],
     title: [null, Validators.required],
-    role: [null, Validators.required],
+    role: [null],
     startDate: [new Date(), Validators.required],
     dueDate: [new Date(), Validators.required],
     url: [null],
