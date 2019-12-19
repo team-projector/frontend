@@ -76,24 +76,26 @@
     </jnt-tab>
     <jnt-tab title="Issues">
       <ng-template #tabContentTemplate>
-        <jnt-select issues placeholder="Issues"
-                    formControlName="issues"
-                    [mode]="ui.select.multiple"
-                    [search]="true"
-                    [loader]="findIssues()"
-                    keyField="id"
-                    labelField="title">
-          <jnt-select-option *ngFor="let issue of ticket?.issues"
-                             [key]="issue.id"
-                             [label]="issue.title"
-                             [value]="issue">
-          </jnt-select-option>
-          <ng-template #optionTemplate let-issue="value">
-            <div issue>
-              <app-issue [issue]="issue"></app-issue>
-            </div>
-          </ng-template>
-        </jnt-select>
+        <jnt-form-item>
+          <jnt-select issues placeholder="Issues"
+                      formControlName="issues"
+                      [mode]="ui.select.multiple"
+                      [search]="true"
+                      [loader]="findIssues()"
+                      keyField="id"
+                      labelField="title">
+            <jnt-select-option *ngFor="let issue of ticket?.issues"
+                               [key]="issue.id"
+                               [label]="issue.title"
+                               [value]="issue">
+            </jnt-select-option>
+            <ng-template #optionTemplate let-issue="value">
+              <div issue>
+                <app-issue [issue]="issue"></app-issue>
+              </div>
+            </ng-template>
+          </jnt-select>
+        </jnt-form-item>
       </ng-template>
     </jnt-tab>
   </jnt-tabs>
