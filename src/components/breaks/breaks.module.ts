@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { JunteUiModule } from 'junte-ui';
-import { BreaksListComponent} from 'src/components/breaks/breaks-list/breaks-list.component';
+import { BreaksComponent} from 'src/components/breaks/breaks/breaks.component';
 import { BreakEditComponent } from 'src/components/breaks/break-edit/break-edit.component';
 
 
 @NgModule({
   declarations: [
-    BreaksListComponent,
+    BreaksComponent,
     BreakEditComponent
   ],
   imports: [
@@ -22,7 +22,7 @@ import { BreakEditComponent } from 'src/components/breaks/break-edit/break-edit.
     BreakEditComponent
   ],
   exports: [
-    BreaksListComponent
+    BreaksComponent
   ]
 })
 export class BreaksModule {

@@ -1,18 +1,21 @@
-import { Component, ComponentFactoryResolver, EventEmitter, Injector, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { field, model } from '@junte/mocker-library';
 import { R } from 'apollo-angular/types';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, ModalOptions, ModalService, TableComponent, TableFeatures, UI } from 'junte-ui';
-import { combineLatest } from 'rxjs';
-import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
-import { deserialize, serialize } from 'serialize-ts/dist';
+import { distinctUntilChanged, map } from 'rxjs/operators';
+import { deserialize } from 'serialize-ts/dist';
 import { BreakEditComponent } from 'src/components/breaks/break-edit/break-edit.component';
-import { BreaksGQL, DeleteBreakGQL } from 'src/components/breaks/breaks-list/breaks-list.graphql';
+import { BreaksGQL, DeleteBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
 import { MeManager } from 'src/managers/me.manager';
 import { Break, BreaksFilter, PagingBreaks } from 'src/models/break';
 import { IssuesFilter } from 'src/models/issue';
-import { User, UserRole } from 'src/models/user';
+import { User } from 'src/models/user';
+
+export enum ViewType {
+  default,
+  extended
+}
 
 @model()
 export class BreaksState {
@@ -29,6 +32,9 @@ export class BreaksState {
   @field()
   user?: number;
 
+  @field()
+  team?: string;
+
   constructor(defs: BreaksState = null) {
     if (!!defs) {
       Object.assign(this, defs);
@@ -37,20 +43,19 @@ export class BreaksState {
 }
 
 @Component({
-  selector: 'app-breaks-list',
-  templateUrl: './breaks-list.component.html',
-  styleUrls: ['./breaks-list.component.scss']
+  selector: 'app-breaks',
+  templateUrl: './breaks.component.html',
+  styleUrls: ['./breaks.component.scss']
 })
-export class BreaksListComponent implements OnInit {
+export class BreaksComponent implements OnInit {
 
   private _filter: BreaksFilter;
-  userRole = UserRole;
   user: User;
   ui = UI;
+  viewType = ViewType;
   features = TableFeatures;
   breaks: Break[] = [];
   loading = false;
-  progress = {delete: false};
 
   tableControl = this.builder.control({
     q: null,
@@ -61,13 +66,9 @@ export class BreaksListComponent implements OnInit {
 
   form = this.builder.group({
     table: this.tableControl,
-    user: [null]
+    user: [null],
+    team: [null]
   });
-
-  @Output() reloaded = new EventEmitter();
-
-  @ViewChild('table', {static: true})
-  table: TableComponent;
 
   set filter(filter: IssuesFilter) {
     this._filter = filter;
@@ -78,15 +79,33 @@ export class BreaksListComponent implements OnInit {
     return this._filter;
   }
 
+  @Input() view = ViewType.default;
+
+  @Input() set state({first, offset, q, team, user}: BreaksState) {
+    this.form.patchValue({
+      table: {
+        q: q || null,
+        first: first || DEFAULT_FIRST,
+        offset: offset || DEFAULT_OFFSET
+      },
+      team: team || null,
+      user: user || null
+    });
+  }
+
+  @Output() stateChange = new EventEmitter<BreaksState>();
+  @Output() reloaded = new EventEmitter();
+
+  @ViewChild('table', {static: true})
+  table: TableComponent;
+
   constructor(private breaksGQL: BreaksGQL,
               private deleteBreakGQL: DeleteBreakGQL,
               private builder: FormBuilder,
-              private route: ActivatedRoute,
               private injector: Injector,
               private cfr: ComponentFactoryResolver,
               private modalService: ModalService,
-              public me: MeManager,
-              private router: Router) {
+              public me: MeManager) {
   }
 
   ngOnInit() {
@@ -97,33 +116,21 @@ export class BreaksListComponent implements OnInit {
     };
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({table: {offset, first, q}, user}) => {
-        const state = new BreaksState({
+      .subscribe(({table: {offset, first, q}, team, user}) => {
+        this.stateChange.emit(new BreaksState({
           q: q || undefined,
           first: first !== DEFAULT_FIRST ? first : undefined,
-          offset: offset !== DEFAULT_OFFSET ? offset : undefined
-        });
+          offset: offset !== DEFAULT_OFFSET ? offset : undefined,
+          user: user || undefined,
+          team: team || undefined
+        }));
 
         this.filter = new BreaksFilter({
           q: q,
           offset: offset,
           first: first,
-          user: user
-        });
-
-        this.router.navigate([serialize(state)], {relativeTo: this.route})
-          .then(() => null);
-      });
-
-    combineLatest([this.route.data, this.route.params])
-      .subscribe(([{user}, {q, first, offset}]) => {
-        this.form.patchValue({
-          table: {
-            q: q || null,
-            first: first || DEFAULT_FIRST,
-            offset: offset || DEFAULT_OFFSET
-          },
-          user: !!user ? user.id : user
+          user: user,
+          team: team
         });
       });
   }
@@ -140,10 +147,7 @@ export class BreaksListComponent implements OnInit {
   }
 
   delete(id: string) {
-    this.progress.delete = true;
     this.deleteBreakGQL.fetch({id})
-      .pipe(finalize(() => this.progress.delete = false))
       .subscribe(() => this.table.load());
   }
-
 }

@@ -123,6 +123,9 @@ export class BreaksFilter implements SearchFilter {
   @field()
   q?: string;
 
+  @field()
+  team?: string;
+
   constructor(defs: BreaksFilter = null) {
     if (!!defs) {
       Object.assign(this, defs);
