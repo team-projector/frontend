@@ -44,3 +44,36 @@ export class DeleteBreakGQL extends Query<{ break }> {
       }
     }`;
 }
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class ApproveBreakGQL extends Query<{ break }> {
+  document = gql`
+    mutation ($id: ID!) {
+      approveWorkBreak(id: $id) {
+        workBreak {
+          id
+        }
+      }
+    }`;
+}
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DeclineBreakGQL extends Query<{ break }> {
+  document = gql`
+    mutation ($id: ID!) {
+      mutation ($id: ID!, $declineReason: String!) {
+      declineWorkBreak(id: $id, declineReason: $declineReason) {
+        workBreak {
+          id
+        }
+      }
+    }`;
+}
+
+

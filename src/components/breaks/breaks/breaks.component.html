@@ -9,13 +9,15 @@
         </jnt-button>
       </ng-template>
 
-      <jnt-table-column *ngIf="me.user?.roles?.includes(userRole.teamLeader)" i18n-title="@@date" title="Developer">
+      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@date" title="Developer">
         <ng-template #cellTemplate let-user="user">
-          <jnt-avatar avatar [image]="user?.avatar"
-                      [size]="ui.sizes.small"></jnt-avatar>
-          <div>
-            <jnt-link link [title]="user?.name"></jnt-link>
-          </div>
+          <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center">
+            <jnt-avatar avatar [image]="user?.avatar"
+                        [size]="ui.sizes.small"></jnt-avatar>
+            <div>
+              <jnt-link link [title]="user?.name"></jnt-link>
+            </div>
+          </jnt-stack>
         </ng-template>
       </jnt-table-column>
       <jnt-table-column i18n-title="@@date" title="Period">
@@ -37,7 +39,7 @@
       </jnt-table-column>
 
       <jnt-table-column i18n-title="@@agreement" title="Agreement">
-        <ng-template #cellTemplate let-approveState="approveState">
+        <ng-template ngIf #cellTemplate let-approveState="approveState">
           {{approveState | titlecase}}
         </ng-template>
       </jnt-table-column>
@@ -45,8 +47,7 @@
       <ng-template #rowActions let-break="row">
         <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
           <jnt-menu-item [icon]="ui.icons.edit" title="Edit" (click)="open(break)"></jnt-menu-item>
-          <jnt-menu-item title="Delete" [icon]="ui.icons.delete" (click)="delete(break.id)">
-          </jnt-menu-item>
+          <jnt-menu-item title="Delete" [icon]="ui.icons.delete" (click)="delete(break.id)"></jnt-menu-item>
         </jnt-menu>
       </ng-template>
     </jnt-table>

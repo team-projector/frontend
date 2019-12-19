@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BreaksListComponent } from 'src/components/breaks/breaks-list/breaks-list.component';
 import { TeamBreaksComponent } from 'src/components/leader/teams/team/breaks/team-breaks.component';
-import { MeUserResolver } from 'src/resolvers/me';
+import { TeamResolver } from 'src/resolvers/team';
+import { UserResolver } from 'src/resolvers/user';
+import { TeamBreaksListComponent } from './breaks/breaks-list.component';
 
 const routes: Routes = [
   {
     path: '',
     component: TeamBreaksComponent,
+    resolve: {
+      team: TeamResolver,
+      user: UserResolver
+    },
     children: [
       {
         path: '',
         data: {breadcrumb: 'Breaks'},
-        component: BreaksListComponent,
-        resolve: {
-          user: MeUserResolver
-        }
+        component: TeamBreaksListComponent
       },
       // {
       //   path: 'gantt',

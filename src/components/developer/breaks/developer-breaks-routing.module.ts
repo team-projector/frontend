@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BreaksGanttComponent } from 'src/components/developer/breaks/breaks-gantt/breaks-gantt.component';
 import { DeveloperBreaksComponent } from './developer-breaks.component';
-import { BreaksListComponent } from 'src/components/breaks/breaks-list/breaks-list.component';
+import { DeveloperBreaksListComponent } from './breaks/breaks-list.component';
 import { MeUserResolver } from 'src/resolvers/me';
 
 const routes: Routes = [
@@ -13,7 +13,7 @@ const routes: Routes = [
       {
         path: '',
         data: {breadcrumb: 'Breaks'},
-        component: BreaksListComponent,
+        component: DeveloperBreaksListComponent,
         resolve: {
           user: MeUserResolver
         }
