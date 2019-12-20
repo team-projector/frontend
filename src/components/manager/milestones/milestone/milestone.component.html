@@ -2,22 +2,22 @@
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
     <jnt-block [loading]="loading.tickets">
       <jnt-gantt title="Tickets">
+        <ng-template #titleTemplate>
+          <jnt-stack [type]="ui.stack.type.horizontal"
+                     [gutter]="ui.gutter.small"
+                     [align]="ui.flex.align.center">
+            <jnt-button [icon]="ui.icons.plus" [size]="ui.sizes.small"
+                        (click)="add()"></jnt-button>
+            <jnt-button [icon]="ui.icons.reload" [size]="ui.sizes.small"
+                        (click)="loadTickets()"></jnt-button>
+            <div title>Tickets</div>
+          </jnt-stack>
+        </ng-template>
+
         <ng-container *ngFor="let ticket of tickets">
           <jnt-gantt-line [period]="ticket"
                           [from]="ticket.startDate"
                           [to]="ticket.dueDate">
-
-            <ng-template #titleTemplate>
-              <jnt-stack [type]="ui.stack.type.horizontal"
-                         [gutter]="ui.gutter.small"
-                         [align]="ui.flex.align.center">
-                <jnt-button [icon]="ui.icons.plus" [size]="ui.sizes.small"
-                            (click)="add()"></jnt-button>
-                <jnt-button [icon]="ui.icons.reload" [size]="ui.sizes.small"
-                            (click)="loadTickets()"></jnt-button>
-                <div title>Tickets</div>
-              </jnt-stack>
-            </ng-template>
 
             <ng-template #indicator let-period="period" let-current="current">
               <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
@@ -41,7 +41,6 @@
                            [align]="ui.flex.align.center"
                            [gutter]="ui.gutter.small">
                   <jnt-button [outline]="ui.outline.transparent"
-                              [disabled]="!ticket.metrics.issuesCount"
                               [size]="ui.sizes.small"
                               [icon]="ticketControl.value === ticket.id ? ui.icons.chevronDown : ui.icons.chevronRight"
                               (click)="toggleIssues(ticket.id)">
