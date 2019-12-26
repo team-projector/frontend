@@ -8,22 +8,3 @@
 [issue] {
   pointer-events: none;
 }
-
-[issues] ::ng-deep {
-  [select][child-of=#{$jnt-select-host}] {
-    ul {
-      flex-wrap: nowrap;
-      flex-direction: column;
-      margin-bottom: $gutter-small;
-      max-height: 200px;
-      overflow-y: scroll;
-      li {
-        width: 100%;
-        box-sizing: border-box;
-        &:not(:last-child) {
-          margin-bottom: $gutter-small;
-        }
-      }
-    }
-  }
-}
