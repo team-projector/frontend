@@ -26,9 +26,6 @@ export class IssuesState {
   q?: string;
 
   @field()
-  sort?: string;
-
-  @field()
   first?: number;
 
   @field()
