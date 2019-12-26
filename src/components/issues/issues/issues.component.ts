@@ -165,7 +165,7 @@ export class IssuesComponent implements OnInit {
           offset: offset,
           first: first,
           q: q,
-          sort: type === IssuesType.opened ? 'dueDate' : '-closedAt',
+          orderBy: type === IssuesType.opened ? 'dueDate' : '-closedAt',
           milestone: milestone,
           team: team,
           user: user,

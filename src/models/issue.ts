@@ -135,7 +135,7 @@ export class IssuesFilter implements SearchFilter {
   q?: string;
 
   @field()
-  sort?: string;
+  orderBy?: string;
 
   constructor(defs: IssuesFilter = null) {
     if (!!defs) {
