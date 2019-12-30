@@ -1,4 +1,4 @@
-<jnt-block [loading]="loading" [width]="ui.width.fluid">
+<jnt-block [state]="loading ? ui.block.state.loading : null" [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
     <jnt-table #table formControlName="table" [features]="[features.search]">
       <ng-template #filters>
