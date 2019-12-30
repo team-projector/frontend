@@ -1,6 +1,6 @@
 <jnt-form cdkDropListGroup>
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
-    <jnt-block [loading]="loading.tickets">
+    <jnt-block [state]="loading.tickets ? ui.block.state.loading : null">
       <jnt-gantt title="Tickets">
         <ng-template #titleTemplate>
           <jnt-stack [type]="ui.stack.type.horizontal"
