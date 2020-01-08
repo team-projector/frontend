@@ -9,7 +9,7 @@
         </jnt-button>
       </ng-template>
 
-      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@date" title="Developer">
+      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@developer" title="Developer">
         <ng-template #cellTemplate let-user="user">
           <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center">
             <jnt-avatar avatar [image]="user?.avatar"
@@ -20,6 +20,7 @@
           </jnt-stack>
         </ng-template>
       </jnt-table-column>
+
       <jnt-table-column i18n-title="@@date" title="Period">
         <ng-template #cellTemplate let-fromDate="fromDate" let-toDate="toDate">
           <jnt-date-period [start]="fromDate" [end]="toDate"></jnt-date-period>
@@ -40,16 +41,27 @@
 
       <jnt-table-column i18n-title="@@agreement" title="Agreement">
         <ng-template ngIf #cellTemplate let-approveState="approveState">
-          {{approveState | titlecase}}
+          <jnt-label
+            [icon]="approveState == approves.created ? ui.icons.add : (approveState == approves.approved ? ui.icons.check : ui.icons.cancel)"
+            [color]="approveState == approves.created ? ui.colors.purple : (approveState == approves.approved ? ui.colors.green : ui.colors.red)"
+            [label]="approveState | titlecase">
+          </jnt-label>
         </ng-template>
       </jnt-table-column>
 
       <ng-template #rowActions let-break="row">
         <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
-          <jnt-menu-item [icon]="ui.icons.edit" title="Edit" (click)="open(break)"></jnt-menu-item>
+          <jnt-menu-item *ngIf="view === viewType.extended" title="Approve"
+                         [icon]="ui.icons.check" (click)="approve(break.id)">
+          </jnt-menu-item>
+          <jnt-menu-item *ngIf="view === viewType.extended" title="Decline"
+                         [icon]="ui.icons.cancel" (click)="openDecline(break)">
+          </jnt-menu-item>
+          <jnt-menu-item title="Edit" [icon]="ui.icons.edit" (click)="open(break)"></jnt-menu-item>
           <jnt-menu-item title="Delete" [icon]="ui.icons.delete" (click)="delete(break.id)"></jnt-menu-item>
         </jnt-menu>
       </ng-template>
+
     </jnt-table>
   </jnt-form>
 </jnt-block>

@@ -157,7 +157,6 @@ export class IssuesComponent implements OnInit {
           ticket: ticket || undefined,
           dueDate: !!dueDate ? dueDate : undefined
         }));
-
         this.filter = new IssuesFilter({
           offset: offset,
           first: first,

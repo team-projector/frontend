@@ -1,0 +1,19 @@
+<jnt-form [formGroup]="form" jntValidation (submitted)="decline()">
+  <jnt-stack [type]="ui.stack.type.vertical" [align]="ui.flex.align.stretch">
+    <jnt-form-item>
+      <jnt-form-label for="declineReason">Comment</jnt-form-label>
+      <jnt-form-control name="declineReason">
+        <jnt-input placeholder="Decline Reason" formControlName="declineReason"></jnt-input>
+        <jnt-form-message [type]="ui.form.validators.typeError.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+  </jnt-stack>
+
+  <ng-template #formFooterTemplate>
+    <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.center">
+      <jnt-button text="Save" [type]="ui.form.button.type.submit" [loading]="saving"></jnt-button>
+    </jnt-stack>
+  </ng-template>
+</jnt-form>
