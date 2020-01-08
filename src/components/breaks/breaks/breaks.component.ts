@@ -6,11 +6,12 @@ import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, ModalOptions, ModalService, Tab
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { BreakEditComponent } from 'src/components/breaks/break-edit/break-edit.component';
-import { BreaksGQL, DeleteBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
+import { ApproveBreakGQL, BreaksGQL, DeleteBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
 import { MeManager } from 'src/managers/me.manager';
-import { Break, BreaksFilter, PagingBreaks } from 'src/models/break';
+import { Break, BreaksFilter, PagingBreaks, BreaksType } from 'src/models/break';
 import { IssuesFilter } from 'src/models/issue';
 import { User } from 'src/models/user';
+import { BreakDeclineComponent} from 'src/components/breaks/break-decline/break-decline.component';
 
 export enum ViewType {
   default,
@@ -54,6 +55,7 @@ export class BreaksComponent implements OnInit {
   ui = UI;
   viewType = ViewType;
   features = TableFeatures;
+  approves = BreaksType;
   breaks: Break[] = [];
   loading = false;
 
@@ -101,6 +103,7 @@ export class BreaksComponent implements OnInit {
 
   constructor(private breaksGQL: BreaksGQL,
               private deleteBreakGQL: DeleteBreakGQL,
+              private approveBreakGQL: ApproveBreakGQL,
               private builder: FormBuilder,
               private injector: Injector,
               private cfr: ComponentFactoryResolver,
@@ -114,7 +117,7 @@ export class BreaksComponent implements OnInit {
         .pipe(map(({data: {breaks}}) =>
           deserialize(breaks, PagingBreaks)));
     };
-
+    console.log(this.approves);
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
       .subscribe(({table: {offset, first, q}, team, user}) => {
         this.stateChange.emit(new BreaksState({
@@ -149,5 +152,21 @@ export class BreaksComponent implements OnInit {
   delete(id: string) {
     this.deleteBreakGQL.fetch({id})
       .subscribe(() => this.table.load());
+  }
+
+  approve(id: string) {
+    this.approveBreakGQL.fetch({id})
+      .subscribe(() => this.table.load());
+  }
+
+  openDecline(workBreak: Break = null) {
+    const component = this.cfr.resolveComponentFactory(BreakDeclineComponent).create(this.injector);
+    const options = new ModalOptions({title: {text: 'Decline break'}});
+    this.modalService.open(component, options);
+    component.instance.break = workBreak;
+    component.instance.saved.subscribe(() => {
+      this.modalService.close();
+      this.table.load();
+    });
   }
 }

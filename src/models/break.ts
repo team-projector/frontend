@@ -15,9 +15,9 @@ export enum BreakState {
 
 export enum BreaksType {
   all = 'all',
-  created = 'created',
-  decline = 'decline',
-  approved = 'approved'
+  created = 'CREATED',
+  decline = 'DECLINED',
+  approved = 'APPROVED'
 }
 
 export enum BreakReason {
@@ -35,11 +35,20 @@ export class Break {
   @field({mock: '{{> user}}'})
   user: User;
 
+  @field({mock: '{{> user}}'})
+  approvedBy: User;
+
   @field({
     serializer: new DateSerializer(),
     mock: '{{date \'2019\' \'2020\'}}'
   })
   createdAt: Date;
+
+  @field({
+    serializer: new DateSerializer(),
+    mock: '{{date \'2019\' \'2020\'}}'
+  })
+  approvedAt: Date;
 
   @field({
     serializer: new DateSerializer(),
@@ -64,6 +73,9 @@ export class Break {
 
   @field({mock: BreakState.created})
   approveState: BreakState;
+
+  @field({mock: '{{comment}}'})
+  declineReason: string;
 
 }
 
@@ -90,6 +102,20 @@ export class BreakUpdate {
 
   constructor(update: BreakUpdate) {
     Object.assign(this, update);
+  }
+}
+
+@model()
+export class BreakDecline {
+
+  @field()
+  id: string;
+
+  @field()
+  declineReason: string;
+
+  constructor(decline: BreakDecline) {
+    Object.assign(this, decline);
   }
 }
 
