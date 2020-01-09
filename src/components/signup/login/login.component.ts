@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApolloError } from 'apollo-client';
 import { UI, validate } from 'junte-ui';
 import 'reflect-metadata';
 import { filter, finalize, map } from 'rxjs/operators';
@@ -23,7 +22,7 @@ export class LoginComponent implements OnInit {
   ui = UI;
 
   progress = {gitlab: false, login: false};
-  errors: GqlError[];
+  errors: GqlError[] = [];
   loginForm = this.builder.group({
     login: [null, [Validators.required]],
     password: [null, [Validators.required]]
@@ -59,8 +58,7 @@ export class LoginComponent implements OnInit {
     if (validate(this.loginForm)) {
       this.progress.login = true;
       this.loginApollo.mutate(this.loginForm.value)
-        .pipe(
-          catchGQLErrors(),
+        .pipe(catchGQLErrors(),
           finalize(() => this.progress.login = false),
           map(({data: {login: {token}}}) =>
             deserialize(token, AccessToken))

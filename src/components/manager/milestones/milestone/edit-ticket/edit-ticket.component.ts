@@ -8,6 +8,7 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { IssuesGQL } from 'src/components/issues/issues/issues.graphql';
 import { IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Issue, Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
+import { GqlError } from '../../../../../models/gql-errors';
 import { catchGQLErrors } from '../../../../../operators/catch-gql-error';
 import { CreateTicketGQL, EditTicketGQL, GetTicketGQL } from './edit-ticket.graphql';
 
@@ -26,6 +27,7 @@ export class EditTicketComponent {
   private _ticket: Ticket;
   private _id: string;
 
+  errors: GqlError[] = [];
   saving = false;
   progress = {loading: false, saving: false};
 
@@ -35,7 +37,7 @@ export class EditTicketComponent {
     id: [null],
     milestone: this.milestoneControl,
     type: [TicketTypes.feature, Validators.required],
-    title: [null],
+    title: [null, Validators.required],
     role: [null],
     startDate: [new Date(), Validators.required],
     dueDate: [new Date(), Validators.required],
@@ -100,7 +102,8 @@ export class EditTicketComponent {
     const mutation = !!this.ticket ? this.editTicketGQL : this.createTicketGQL;
     mutation.mutate(serialize(new TicketUpdate(this.form.getRawValue())) as R)
       .pipe(catchGQLErrors(), finalize(() => this.saving = false))
-      .subscribe(() => this.saved.emit());
+      .subscribe(() => this.saved.emit(),
+        (err: GqlError[]) => this.errors = err);
   }
 
   findIssues() {
@@ -110,9 +113,10 @@ export class EditTicketComponent {
         .pipe(catchGQLErrors(),
           map(({data: {issues}}) => deserialize(issues, PagingIssues)))
         .subscribe(({results: issues}) => {
-          o.next(issues);
-          o.complete();
-        });
+            o.next(issues);
+            o.complete();
+          },
+          (err: GqlError[]) => this.errors = err);
     });
   }
 }

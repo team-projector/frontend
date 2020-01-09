@@ -1,4 +1,5 @@
 <jnt-form [formGroup]="form" jntValidation (submitted)="save()">
+  <p *ngFor="let e of errors">{{e}}</p>
   <jnt-tabs>
     <jnt-tab title="Common">
       <ng-template #tabContentTemplate>
