@@ -52,18 +52,15 @@
             <ng-template #titleTemplate>
               <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
               {{p.project.title}}
-              <ul milestones>
-                <li *ngFor="let m of p.project.milestones">
-                  <jnt-stack [type]="ui.stack.type.horizontal"
-                             [gutter]="ui.gutter.tiny"
-                             [align]="ui.flex.align.center">
-                    <jnt-link [source]="m.glUrl" [title]="m.title"
-                              target="_blank"></jnt-link>
-                    <jnt-label *ngIf="m.dueDate" [label]="m.dueDate | dueDate"
-                               [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.colors.red : ui.colors.paleNavy"></jnt-label>
-                  </jnt-stack>
-                </li>
-              </ul>
+              <jnt-stack *ngIf="p.project.milestones[0] as m" milestone
+                         [type]="ui.stack.type.horizontal"
+                         [gutter]="ui.gutter.tiny"
+                         [align]="ui.flex.align.center">
+                <jnt-link [source]="m.glUrl" [title]="m.title"
+                          target="_blank"></jnt-link>
+                <jnt-label *ngIf="m.dueDate" [label]="m.dueDate | dueDate"
+                           [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.colors.red : ui.colors.paleNavy"></jnt-label>
+              </jnt-stack>
             </ng-template>
           </jnt-chart-indicator>
         </jnt-chart>

@@ -18,7 +18,7 @@
             <ng-template #titleTemplate>
               <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
               {{p.project.title}}
-              <jnt-stack *ngIf="p.project.milestones as m" milestone
+              <jnt-stack *ngIf="p.project.milestones[0] as m" milestone
                          [type]="ui.stack.type.horizontal"
                          [gutter]="ui.gutter.tiny"
                          [align]="ui.flex.align.center">
