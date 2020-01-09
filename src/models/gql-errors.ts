@@ -13,7 +13,23 @@ export class GqlError {
 }
 
 @Model()
+export class NetworkError extends GqlError {
+
+  constructor(public message?: string) {
+    super(message);
+  }
+}
+
+@Model()
 export class AuthorisationError extends GqlError {
+
+  constructor(public message?: string) {
+    super(message);
+  }
+}
+
+@Model()
+export class NotFoundError extends GqlError {
 
   constructor(public message?: string) {
     super(message);
