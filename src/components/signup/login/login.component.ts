@@ -1,15 +1,17 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { filter, finalize, map } from 'rxjs/operators';
-import 'reflect-metadata';
-import { UI, validate } from 'junte-ui';
-import { GitlabLoginGQL, LoginGQL } from './login.graphql';
-import { AccessToken } from 'src/models/access-token';
-import { AppConfig } from 'src/app-config';
-import { deserialize } from 'serialize-ts/dist';
 import { ApolloError } from 'apollo-client';
+import { UI, validate } from 'junte-ui';
+import 'reflect-metadata';
+import { filter, finalize, map } from 'rxjs/operators';
+import { deserialize } from 'serialize-ts/dist';
+import { AppConfig } from 'src/app-config';
+import { AccessToken } from 'src/models/access-token';
 import { APPLICATION_READY } from '../../../consts';
+import { GqlError } from '../../../models/gql-errors';
+import { catchGQLErrors } from '../../../operators/catch-gql-error';
+import { GitlabLoginGQL, LoginGQL } from './login.graphql';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +23,7 @@ export class LoginComponent implements OnInit {
   ui = UI;
 
   progress = {gitlab: false, login: false};
-  error: ApolloError;
+  errors: GqlError[];
   loginForm = this.builder.group({
     login: [null, [Validators.required]],
     password: [null, [Validators.required]]
@@ -43,12 +45,13 @@ export class LoginComponent implements OnInit {
         this.progress.gitlab = true;
         this.loginGitlabApollo.mutate({code: code, state: state})
           .pipe(
+            catchGQLErrors(),
             finalize(() => this.progress.gitlab = false),
             map(({data: {completeGitlabAuth: {token}}}) =>
               deserialize(token, AccessToken))
           )
           .subscribe((token: AccessToken) => this.logged(token),
-            (error: ApolloError) => this.error = error);
+            (err: GqlError[]) => this.errors = err);
       });
   }
 
@@ -57,12 +60,13 @@ export class LoginComponent implements OnInit {
       this.progress.login = true;
       this.loginApollo.mutate(this.loginForm.value)
         .pipe(
+          catchGQLErrors(),
           finalize(() => this.progress.login = false),
           map(({data: {login: {token}}}) =>
             deserialize(token, AccessToken))
         )
         .subscribe((token: AccessToken) => this.logged(token),
-          (error: ApolloError) => this.error = error);
+          (err: GqlError[]) => this.errors = err);
     }
   }
 

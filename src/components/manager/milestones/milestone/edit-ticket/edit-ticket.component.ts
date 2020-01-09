@@ -8,6 +8,7 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { IssuesGQL } from 'src/components/issues/issues/issues.graphql';
 import { IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Issue, Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
+import { catchGQLErrors } from '../../../../../operators/catch-gql-error';
 import { CreateTicketGQL, EditTicketGQL, GetTicketGQL } from './edit-ticket.graphql';
 
 const FOUND_ISSUES_COUNT = 10;
@@ -34,7 +35,7 @@ export class EditTicketComponent {
     id: [null],
     milestone: this.milestoneControl,
     type: [TicketTypes.feature, Validators.required],
-    title: [null, Validators.required],
+    title: [null],
     role: [null],
     startDate: [new Date(), Validators.required],
     dueDate: [new Date(), Validators.required],
@@ -98,7 +99,7 @@ export class EditTicketComponent {
     this.saving = true;
     const mutation = !!this.ticket ? this.editTicketGQL : this.createTicketGQL;
     mutation.mutate(serialize(new TicketUpdate(this.form.getRawValue())) as R)
-      .pipe(finalize(() => this.saving = false))
+      .pipe(catchGQLErrors(), finalize(() => this.saving = false))
       .subscribe(() => this.saved.emit());
   }
 
@@ -106,7 +107,8 @@ export class EditTicketComponent {
     return (query: string) => new Observable<Issue[]>(o => {
       const filter = new IssuesFilter({q: query, first: FOUND_ISSUES_COUNT});
       this.issuesGQL.fetch(serialize(filter) as R)
-        .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)))
+        .pipe(catchGQLErrors(),
+          map(({data: {issues}}) => deserialize(issues, PagingIssues)))
         .subscribe(({results: issues}) => {
           o.next(issues);
           o.complete();

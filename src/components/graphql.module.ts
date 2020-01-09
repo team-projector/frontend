@@ -1,10 +1,13 @@
 import { Inject, NgModule } from '@angular/core';
+import { Router } from '@angular/router';
 import { Apollo, ApolloModule } from 'apollo-angular';
 import { HttpLink, HttpLinkModule } from 'apollo-angular-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { ErrorResponse, onError } from 'apollo-link-error';
 import { AppConfig } from '../app-config';
+import { AuthorisationError } from '../models/gql-errors';
+import { convertGQLErrors } from '../utils/gql-errors';
 
 @NgModule({
   exports: [
@@ -18,7 +21,8 @@ import { AppConfig } from '../app-config';
 export class GraphQLModule {
   constructor(@Inject(AppConfig) config: AppConfig,
               apollo: Apollo,
-              httpLink: HttpLink) {
+              httpLink: HttpLink,
+              router: Router) {
     const http = httpLink.create({uri: config.graphqlUrl});
     const authLink = new ApolloLink((operation, forward) => {
       if (config.token) {
@@ -32,17 +36,12 @@ export class GraphQLModule {
       return forward(operation);
     });
 
-    const errorLink = onError(({graphQLErrors, networkError}: ErrorResponse) => {
-      if (networkError) {
-        console.log('[Network error]: ', networkError);
-        // config.token = null;
-        // router.navigate(['/signup/login']);
-      }
-      if (graphQLErrors) {
-        graphQLErrors.map(({message, locations, path}) => {
-          console.error(`[GraphQL error]: Message: ${message}, Path: ${path}`);
-          console.log('Locations: ', locations);
-        });
+    const errorLink = onError((resp: ErrorResponse) => {
+      const errs = convertGQLErrors(resp);
+      if (errs.some(e => e instanceof AuthorisationError)) {
+        config.token = null;
+        router.navigate(['/signup/login'])
+          .then(() => null);
       }
     });
 

@@ -10,7 +10,7 @@
     <div logo>
       <img src="/assets/images/logo.svg" height="50">
     </div>
-    <p>{{error}}</p>
+    <p *ngFor="let e of errors">{{e}}</p>
     <jnt-form-item>
       <jnt-form-control name="login">
         <jnt-input formControlName="login" placeholder="Login" [icon]="ui.icons.user"></jnt-input>
