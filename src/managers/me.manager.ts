@@ -29,7 +29,7 @@ export class MeManager {
     this.config.token$.subscribe(token => {
       if (!!token) {
         (environment.mocks
-          ? of(getMock(User))
+          ? of(getMock(Me))
           : this.meManagerGql.fetch().pipe(map(({data: {me}}) => deserialize(me, Me))))
           .subscribe(user => this.user = user);
       } else {

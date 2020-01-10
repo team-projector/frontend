@@ -17,7 +17,7 @@ export class MeUserResolver implements Resolve<Observable<Me>> {
 
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<Me> {
-    return environment.mocks ? of(getMock(User)) : this.meGQL.fetch()
+    return environment.mocks ? of(getMock(Me)) : this.meGQL.fetch()
       .pipe(catchGQLErrors(),
         map(({data: {me}}) => deserialize(me, Me)));
   }

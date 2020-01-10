@@ -1,7 +1,7 @@
 import { MOCK_OBJECT_METADATA_KEY } from '../decorators/model';
 
-export function getMock<T>(model: any): T {
-  const obj = new model();
+export function getMock<T>(model: new () => T): T {
+  const obj = new model() as T;
   const metadata = Reflect.getMetadata(MOCK_OBJECT_METADATA_KEY, obj);
   for (const property in metadata) {
     const type = Reflect.getMetadata('design:type', obj, property);
