@@ -6,9 +6,9 @@ import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
-import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { DATE_FORMAT } from 'src/consts';
+import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
 import { IssueProblem, IssueState, IssuesType } from 'src/models/enums/issue';
 import { IssuesFilter, IssuesSummary, PagingIssues } from 'src/models/issue';
 import { StandardLabel } from 'src/models/label';
@@ -142,8 +142,10 @@ export class IssuesComponent implements OnInit {
 
   ngOnInit() {
     this.table.fetcher = () => {
-      return environment.mocks ? of(getMock(PagingIssues)) : this.issuesGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)));
+      return environment.mocks
+        ? of(getMock(PagingIssues)).pipe(delay(MOCKS_DELAY))
+        : this.issuesGQL.fetch(serialize(this.filter) as R)
+          .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)));
     };
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))

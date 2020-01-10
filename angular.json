@@ -81,6 +81,14 @@
                   "maximumError": "5mb"
                 }
               ]
+            },
+            "mocks": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.mocks.ts"
+                }
+              ]
             }
           }
         },
@@ -92,6 +100,9 @@
           "configurations": {
             "production": {
               "browserTarget": "team-projector:build:production"
+            },
+            "mocks": {
+              "browserTarget": "team-projector:build:mocks"
             }
           }
         },
