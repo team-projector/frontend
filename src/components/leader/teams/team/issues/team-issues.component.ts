@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { field, model } from '@junte/mocker-library';
+import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
 import { combineLatest } from 'rxjs';

@@ -1,4 +1,4 @@
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
 import { DATE_FORMAT } from '../consts';
@@ -18,44 +18,44 @@ export enum TimeExpenseState {
 @model()
 export class SpentTime {
 
-  @field({mock: '{{id}}'})
+  @field({mock: ''})
   id: number;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   createdAt: Date;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   date: Date;
 
   @field({
     serializer: new OwnerSerializer(),
-    mock: '{{> issue}}'
+    mock: ''
   })
   owner: Issue | MergeRequest;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   timeSpent: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   sum: number;
 }
 
 @model()
 export class PagingTimeExpenses implements Paging<SpentTime> {
 
-  @field({mock: '{{int 50 1000}}'})
+  @field({mock: ''})
   count: number;
 
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<SpentTime>(SpentTime)),
-    mock: '[{{#repeat 10 20}} {{> spent_time}} {{/repeat}}]'
+    mock: ''
   })
   results: SpentTime[];
 
@@ -64,29 +64,29 @@ export class PagingTimeExpenses implements Paging<SpentTime> {
 @model()
 export class SpentTimesSummary {
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   spent: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   openedSpent: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   closedSpent: number;
 }
 
 @model()
 export class TimeExpensesSummary {
 
-  @field({mock: '{{int1 10}}'})
+  @field({mock: ''})
   count: number;
 
-  @field({mock: '{{int1 10}}'})
+  @field({mock: ''})
   openedCount: number;
 
-  @field({mock: '{{int1 10}}'})
+  @field({mock: ''})
   closedCount: number;
 
-  @field({mock: '{{int1 10}}'})
+  @field({mock: ''})
   mergedCount: number;
 
 }

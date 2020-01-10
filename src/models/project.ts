@@ -1,20 +1,20 @@
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { EdgesToArray } from '../serializers/graphql';
 import { Milestone } from './milestone';
 
 @model()
 export class ProjectGroup {
 
-  @field({mock: '{{int 1 1000}}'})
+  @field({mock: ''})
   id: string;
 
-  @field({mock: '{{project}}'})
+  @field({mock: ''})
   title: string;
 
-  @field({mock: '{{title}}'})
+  @field({mock: ''})
   fullTitle: string;
 
-  @field({mock: '{{url}}'})
+  @field({mock: ''})
   glUrl: string;
 
   @field()
@@ -24,13 +24,13 @@ export class ProjectGroup {
 @model()
 export class Project {
 
-  @field({mock: '{{id}}'})
+  @field({mock: ''})
   id: string;
 
-  @field({mock: '{{project}}'})
+  @field({mock: ''})
   title: string;
 
-  @field({mock: '{{title}}'})
+  @field({mock: ''})
   fullTitle: string;
 
   @field()
@@ -38,13 +38,13 @@ export class Project {
 
   @field({
     name: 'gl_url',
-    mock: '{{url}}'
+    mock: ''
   })
   glUrl: string;
 
   @field({
     serializer: new EdgesToArray(Milestone),
-    mock: '[{{#repeat 2 5}} {{> milestone}} {{/repeat}}]'
+    mock: ''
   })
   milestones: Milestone[];
 }

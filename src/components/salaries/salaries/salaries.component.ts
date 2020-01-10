@@ -2,8 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { R } from 'apollo-angular/types';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, defined, isEqual, TableComponent, UI } from 'junte-ui';
-import merge from 'merge-anything';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI } from 'junte-ui';
 import { BehaviorSubject } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
@@ -67,9 +66,10 @@ export class SalariesComponent implements OnInit {
         if (!!this.filter && this.filter.user != this.user) {
           offset = 0;
         }
-        const form = merge({extensions: [defined]}, this.form.getRawValue(), {
-          table: {first: +first || DEFAULT_FIRST, offset: +offset || DEFAULT_OFFSET}
-        });
+        // const form = merge({extensions: [defined]}, this.form.getRawValue(), {
+        //  table: {first: +first || DEFAULT_FIRST, offset: +offset || DEFAULT_OFFSET}
+        // });
+        const form = this.form.getRawValue();
         this.filter = new SalariesFilter({user: this.user, ...form.table});
         this.form.patchValue(form, {emitEvent: false});
       });

@@ -1,7 +1,8 @@
 import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { field, model } from '@junte/mocker-library';
+import { of } from 'rxjs';
+import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
@@ -12,6 +13,8 @@ import { IssueProblem, IssueState, IssuesType } from 'src/models/enums/issue';
 import { IssuesFilter, IssuesSummary, PagingIssues } from 'src/models/issue';
 import { StandardLabel } from 'src/models/label';
 import { DateSerializer } from 'src/serializers/date';
+import { environment } from '../../../environments/environment';
+import { getMock } from '../../../utils/mocks';
 import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
 
 export enum ViewType {
@@ -139,7 +142,7 @@ export class IssuesComponent implements OnInit {
 
   ngOnInit() {
     this.table.fetcher = () => {
-      return this.issuesGQL.fetch(serialize(this.filter) as R)
+      return environment.mocks ? of(getMock(PagingIssues)) : this.issuesGQL.fetch(serialize(this.filter) as R)
         .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)));
     };
 

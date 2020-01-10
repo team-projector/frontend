@@ -1,5 +1,6 @@
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
+import * as faker from 'faker';
 
 export enum UserPermission {
   inviteUser = 'invite_user',
@@ -20,13 +21,13 @@ export enum UserProblem {
 @model()
 export class IssuesMetrics {
 
-  @field({mock: '{{int 1000 20000}}'})
+  @field({mock: () => faker.random.number()})
   openedCount: number;
 
-  @field({mock: '{{int 3600 18000}}'})
+  @field({mock: () => faker.random.number()})
   openedSpent: number;
 
-  @field({mock: '{{int 3600 18000}}'})
+  @field({mock: () => faker.random.number()})
   closedSpent: number;
 
 }
@@ -34,22 +35,22 @@ export class IssuesMetrics {
 @model()
 export class UserMetrics {
 
-  @field({mock: '{{money}}'})
+  @field({mock: () => faker.random.number()})
   bonus: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: () => faker.random.number()})
   penalty: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: () => faker.random.number()})
   payrollClosed: number;
 
-  @field({mock: '{{int 1000 20000}}'})
+  @field({mock: () => faker.random.number()})
   payrollOpened: number;
 
-  @field({mock: '{{> issues_metrics}}'})
+  @field()
   issues: IssuesMetrics;
 
-  @field({mock: '{{> issues_metrics}}'})
+  @field()
   mergeRequests: IssuesMetrics;
 
 }
@@ -57,33 +58,36 @@ export class UserMetrics {
 @model()
 export class User {
 
-  @field({mock: '{{int 0 100}}'})
-  id: string;
+  text = 1;
 
-  @field({mock: '{{login}}'})
+  @field({mock: () => faker.random.uuid()})
+  id: string = faker.random.uuid();
+
+  @field({mock: () => faker.internet.userName()})
   login: string;
 
-  @field({mock: '{{firstName}} {{lastName}}'})
+  @field({mock: () => faker.name.findName()})
   name: string;
 
-  @field({
-    name: 'glAvatar',
-    mock: '{{avatar}}'
-  })
+  @field({name: 'glAvatar', mock: () => faker.internet.avatar()})
   avatar: string;
 
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
-    mock: [UserRole.developer, UserRole.customer, UserRole.projectManager, UserRole.shareholder, UserRole.teamLeader]
+    mock: [UserRole.developer,
+      UserRole.customer,
+      UserRole.projectManager,
+      UserRole.shareholder,
+      UserRole.teamLeader]
   })
   roles: UserRole[];
 
-  @field({mock: '{{> user_metrics}}'})
+  @field()
   metrics: UserMetrics;
 
   @field({
-    serializer: new ArraySerializer(new PrimitiveSerializer()),
-    mock: '{{user_problem}}'
+    mock: [UserProblem.payrollOpenedOverflow],
+    serializer: new ArraySerializer(new PrimitiveSerializer())
   })
   problems: UserProblem[];
 

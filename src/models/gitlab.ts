@@ -1,5 +1,5 @@
 import { ArrayType } from '@angular/compiler';
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { ArraySerializer, DateSerializer, Serializer, ModelSerializer } from 'serialize-ts';
 import { EdgesToArray } from '../serializers/graphql';
 import { Issue } from './issue';
@@ -33,13 +33,13 @@ export class GitLabServices {
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   api: Date;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   webHooks: Date;
 }
@@ -49,19 +49,19 @@ export class GitLabStatus {
 
   @field({
     serializer: new GitLabServicesSerializer(),
-    mock: '{{> service}}'
+    mock: ''
   })
   services: GitLabServices;
 
   @field({
     serializer: new ArraySerializer(new ModelSerializer(Issue)),
-    mock: '[{{#repeat 5 10}} {{> issue }} {{/repeat}}]'
+    mock: ''
   })
   lastIssues: Issue[];
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   lastSync: string;
 }

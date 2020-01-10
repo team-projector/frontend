@@ -16,7 +16,7 @@ import {SpentTimesSummary} from 'src/models/spent-time';
 import {User} from 'src/models/user';
 import {DurationFormat} from 'src/pipes/date';
 import {IssuesMetricsGQL, IssuesSummaryGQL} from './issues-metrics.graphql';
-import {field, model} from '@junte/mocker-library';
+import {field, model} from 'src/decorators/model';
 import {DateSerializer} from '../../../serializers/date';
 import {DATE_FORMAT} from '../../../consts';
 import {TeamState} from '../../leader/teams/team/issues/team-issues.component';

@@ -1,4 +1,4 @@
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { format } from 'date-fns';
 import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { DATE_FORMAT } from '../consts';
@@ -15,47 +15,47 @@ export class UserProgressMetrics {
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   start: Date;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   end: Date;
 
-  @field({mock: '{{int 10000 100000}}'})
+  @field({mock: ''})
   timeEstimate: number;
 
-  @field({mock: '{{int 10000 100000}}'})
+  @field({mock: ''})
   timeSpent: number;
 
-  @field({mock: '{{int 10000 100000}}'})
+  @field({mock: ''})
   timeRemains: number;
 
-  @field({mock: '{{int 8 10}}'})
+  @field({mock: ''})
   plannedWorkHours: number;
 
-  @field({mock: '{{efficiency}}'})
+  @field({mock: ''})
   efficiency: number;
 
-  @field({mock: '{{int 200000 300000}}'})
+  @field({mock: ''})
   loading: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   payrollClosed: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   payrollOpened: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   payroll: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   paid: number;
 
-  @field({mock: '{{int 50 1000}}'})
+  @field({mock: ''})
   issuesCount: number;
 
   getKey(): string {
@@ -90,12 +90,12 @@ export class UserMetricsFilter {
 @model()
 export class TeamProgressMetrics {
 
-  @field({mock: '{{int 1 10}}'})
+  @field({mock: ''})
   user: User;
 
   @field({
     serializer: new ArraySerializer(new ModelSerializer(UserProgressMetrics)),
-    mock: '[{{#repeat 5 15}} {{> team_member }} {{/repeat}}]'
+    mock: ''
   })
   metrics: UserProgressMetrics[];
 }

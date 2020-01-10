@@ -1,4 +1,4 @@
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { PrimitiveSerializer } from 'serialize-ts/dist';
@@ -15,40 +15,40 @@ export enum MilestoneProblem {
 @model()
 export class MilestoneMetrics {
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   customerPayroll: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   payroll: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   budgetSpent: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   budgetRemains: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   profit: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   timeEstimate: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   timeSpent: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   timeRemains: number;
 
-  @field({mock: '{{efficiency}}'})
+  @field({mock: ''})
   efficiency: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   issuesCount: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   issuesOpenedCount: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   issuesClosedCount: number;
 
 }
@@ -56,39 +56,39 @@ export class MilestoneMetrics {
 @model()
 export class Milestone {
 
-  @field({mock: '{{id}}'})
+  @field({mock: ''})
   id: string;
 
-  @field({mock: '{{title}}'})
+  @field({mock: ''})
   title: string;
 
   @field({
     serializer: new ProjectSerializer(),
-    mock: '{{> project}}'
+    mock: ''
   })
   owner: Project | ProjectGroup;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   budget: number;
 
-  @field({mock: '{{date \'2019\' \'2020\'}}'})
+  @field({mock: ''})
   startDate: Date;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   dueDate: Date;
 
-  @field({mock: '{{> milestone_metrics}}'})
+  @field({mock: ''})
   metrics: MilestoneMetrics;
 
-  @field({mock: '{{url}}'})
+  @field({mock: ''})
   glUrl: string;
 
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
-    mock: '{{milestone_problem}}'
+    mock: ''
   })
   problems: MilestoneProblem[];
 }
@@ -96,13 +96,13 @@ export class Milestone {
 @model()
 export class PagingMilestones implements Paging<Milestone> {
 
-  @field({mock: '{{int 3 10}}'})
+  @field({mock: ''})
   count: number;
 
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<Milestone>(Milestone)),
-    mock: '[{{#repeat 3 10}} {{> milestone}} {{/repeat}}]'
+    mock: ''
   })
   results: Milestone[];
 }

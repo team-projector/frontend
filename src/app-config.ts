@@ -31,18 +31,6 @@ export class AppConfig {
     return this.token$.getValue();
   }
 
-  set useMocks(value: boolean) {
-    localStorage.setItem('useMocks', value ? '1' : '');
-  }
-
-  get useMocks() {
-    if (localStorage.useMocks !== undefined) {
-      return localStorage.useMocks;
-    }
-    const href = location.href;
-    return /use-mocks/i.test(href);
-  }
-
   localMode: boolean = (() => {
     const href = location.href;
     // href = 'http://localhost/';

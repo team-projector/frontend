@@ -1,4 +1,4 @@
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
@@ -9,6 +9,8 @@ import { Project } from 'src/models/project';
 import { User } from 'src/models/user';
 import { DateSerializer } from 'src/serializers/date';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
+import * as faker from 'faker';
+import { helpers } from 'faker';
 
 export enum TicketTypes {
   feature = 'FEATURE',
@@ -106,7 +108,12 @@ export class Ticket {
   @field()
   type: TicketTypes;
 
-  @field()
+  @field({
+    mock: () => helpers.randomize([
+      'Login feature',
+      'Bug fixes'
+    ])
+  })
   title: string;
 
   @field()
@@ -118,7 +125,7 @@ export class Ticket {
   @field()
   dueDate: Date;
 
-  @field()
+  @field({mock: () => faker.internet.url()})
   url: string;
 
   @field({serializer: new EdgesToArray(Issue)})

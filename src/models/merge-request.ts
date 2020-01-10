@@ -1,4 +1,4 @@
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { DATE_FORMAT } from 'src/consts';
@@ -19,16 +19,16 @@ export enum MergeRequestState {
 @model()
 export class MergeRequestSummary {
 
-  @field({mock: '{{int1 10}}'})
+  @field({mock: ''})
   count: number;
 
-  @field({mock: '{{int1 10}}'})
+  @field({mock: ''})
   openedCount: number;
 
-  @field({mock: '{{int1 10}}'})
+  @field({mock: ''})
   closedCount: number;
 
-  @field({mock: '{{int1 10}}'})
+  @field({mock: ''})
   mergedCount: number;
 
 }
@@ -36,16 +36,16 @@ export class MergeRequestSummary {
 @model()
 export class MergeRequestMetrics {
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   remains: number;
 
-  @field({mock: '{{efficiency}}'})
+  @field({mock: ''})
   efficiency: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   payroll: number;
 
-  @field({mock: '{{money}}'})
+  @field({mock: ''})
   paid: number;
 
 }
@@ -53,62 +53,62 @@ export class MergeRequestMetrics {
 @model()
 export class MergeRequest {
 
-  @field({mock: '{{id}}'})
+  @field({mock: ''})
   id: number;
 
-  @field({mock: '{{> user}}'})
+  @field({mock: ''})
   user: User;
 
-  @field({mock: '{{> issue}}'})
+  @field({mock: ''})
   issue: Issue;
 
   @field({
     serializer: new EdgesToArray(User),
-    mock: '[{{#repeat 1 3}} {{> user}} {{/repeat}}]'
+    mock: ''
   })
   participants: User[];
 
-  @field({mock: '{{issue}}'})
+  @field({mock: ''})
   title: string;
 
   @field({
     serializer: new EdgesToArray(Label),
-    mock: '[{{#repeat 2 5}} {{> label}} {{/repeat}}]'
+    mock: ''
   })
   labels: Label[];
 
-  @field({mock: '{{> object_link presentation=(project)}}'})
+  @field({mock: ''})
   project: Project;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   timeEstimate: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   timeSpent: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   totalTimeSpent: number;
 
-  @field({mock: '{{url}}'})
+  @field({mock: ''})
   glUrl: string;
 
   @field({mock: MergeRequestState.opened})
   state: MergeRequestState;
 
-  @field({mock: '{{> issue_metrics}}'})
+  @field({mock: ''})
   metrics: MergeRequestMetrics;
 }
 
 @model()
 export class PagingMergeRequest implements Paging<MergeRequest> {
 
-  @field({mock: '{{int 50 1000}}'})
+  @field({mock: ''})
   count: number;
 
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<MergeRequest>(MergeRequest)),
-    mock: '[{{#repeat 10 20}} {{> merge_request}} {{/repeat}}]'
+    mock: ''
   })
   results: MergeRequest[];
 

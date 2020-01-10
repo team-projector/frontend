@@ -21,7 +21,7 @@ export class EdgesToArray<T> implements Serializer<T[]> {
 
   }
 
-  serialize(source: T[]): string {
+  serialize(source: T[]): Object {
     throw new Error('Was not implemented');
   }
 

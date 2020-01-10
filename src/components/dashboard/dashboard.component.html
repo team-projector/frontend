@@ -47,6 +47,7 @@
                       [image]="me.user?.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
         </ng-template>
         <ng-template #userMenu>
+          <p>{{me.user?.name}}</p>
           <jnt-user-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
             <jnt-button *ngIf="config.token" (click)="logout()"
                         text="Logout"></jnt-button>
@@ -57,5 +58,3 @@
   </jnt-app-header>
   <router-outlet></router-outlet>
 </jnt-app-layout>
-
-

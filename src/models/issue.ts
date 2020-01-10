@@ -1,4 +1,4 @@
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { IssueProblem, IssueState } from 'src/models/enums/issue';
@@ -11,6 +11,8 @@ import { Label } from './label';
 import { Paging } from './paging';
 import { Project } from './project';
 import { User } from './user';
+import * as faker from 'faker';
+import { helpers } from 'faker';
 
 @model()
 export class IssueMetrics {
@@ -38,13 +40,19 @@ export class Issue {
   @field()
   user: User;
 
-  @field({serializer: new EdgesToArray(User)})
+  @field({mock: {type: User, length: 5}, serializer: new EdgesToArray(User)})
   participants: User[];
 
-  @field()
+  @field({
+    mock: () => helpers.randomize([
+      'Implement design for login feature',
+      'GraphQL API for login',
+      'Fix bugs in login form'
+    ])
+  })
   title: string;
 
-  @field({serializer: new EdgesToArray(Label)})
+  @field({mock: {type: Label, length: 3}, serializer: new EdgesToArray(Label)})
   labels: Label[];
 
   @field()
@@ -53,31 +61,37 @@ export class Issue {
   @field()
   ticket: Ticket;
 
-  @field({serializer: new DateSerializer()})
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   dueDate: Date;
 
-  @field({serializer: new DateSerializer()})
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
 
-  @field()
+  @field({mock: () => faker.random.number()})
   timeEstimate: number;
 
-  @field()
+  @field({mock: () => faker.random.number()})
   timeSpent: number;
 
-  @field()
+  @field({mock: () => faker.random.number()})
   totalTimeSpent: number;
 
-  @field()
+  @field({mock: () => faker.internet.url()})
   glUrl: string;
 
-  @field({mock: IssueState.opened})
+  @field({mock: () => helpers.randomize([IssueState.opened, IssueState.closed])})
   state: IssueState;
 
-  @field({serializer: new DateSerializer()})
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   closedAt: Date;
 
-  @field({serializer: new ArraySerializer(new PrimitiveSerializer())})
+  @field({
+    mock: () => helpers.randomize([
+      IssueProblem.emptyDueDate,
+      IssueProblem.emptyEstimate,
+      IssueProblem.overDueDate]),
+    serializer: new ArraySerializer(new PrimitiveSerializer())
+  })
   problems: IssueProblem[];
 
   @field()
@@ -87,11 +101,12 @@ export class Issue {
 @model()
 export class PagingIssues implements Paging<Issue> {
 
-  @field()
+  @field({mock: () => faker.random.number()})
   count: number;
 
   @field({
     name: 'edges',
+    mock: {type: Issue, length: 10},
     serializer: new ArraySerializer(new EdgesToPaging<Issue>(Issue))
   })
   results: Issue[];
@@ -194,19 +209,19 @@ export class TeamSummary {
 @model()
 export class IssuesSummary {
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   count: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   closedCount: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   openedCount: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   timeSpent: number;
 
-  @field({mock: '{{int 10 100}}'})
+  @field({mock: ''})
   problemsCount: number;
 
   @field({serializer: new ArraySerializer(new ModelSerializer(ProjectSummary))})

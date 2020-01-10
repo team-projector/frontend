@@ -1,4 +1,4 @@
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { DATE_TIME_FORMAT } from '../consts';
@@ -29,40 +29,40 @@ export enum BreakReason {
 @model()
 export class Break {
 
-  @field({mock: '{{id}}'})
+  @field({mock: ''})
   id: number;
 
-  @field({mock: '{{> user}}'})
+  @field()
   user: User;
 
-  @field({mock: '{{> user}}'})
+  @field()
   approvedBy: User;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   createdAt: Date;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   approvedAt: Date;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   toDate: Date;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   fromDate: Date;
 
-  @field({mock: '{{comment}}'})
+  @field({mock: ''})
   comment: string;
 
   @field({mock: BreakReason.dayoff})
@@ -74,7 +74,7 @@ export class Break {
   @field({mock: BreakState.created})
   approveState: BreakState;
 
-  @field({mock: '{{comment}}'})
+  @field({mock: ''})
   declineReason: string;
 
 }
@@ -122,13 +122,13 @@ export class BreakDecline {
 @model()
 export class PagingBreaks implements Paging<Break> {
 
-  @field({mock: '{{int 50 1000}}'})
+  @field({mock: ''})
   count: number;
 
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<Break>(Break)),
-    mock: '[{{#repeat 10 20}} {{> break}} {{/repeat}}]'
+    mock: ''
   })
   results: Break[];
 

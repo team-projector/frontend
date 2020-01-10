@@ -1,9 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { AppConfig } from 'src/app-config';
-import { Me } from '../models/user';
+import { environment } from '../environments/environment';
+import { Me, User } from '../models/user';
+import { getMock } from '../utils/mocks';
 import { equals } from '../utils/equals';
 import { MeManagerGQL } from './me-manager.graphql';
 
@@ -23,11 +25,12 @@ export class MeManager {
   }
 
   constructor(@Inject(AppConfig) private config: AppConfig,
-              private meManagerApollo: MeManagerGQL) {
+              private meManagerGql: MeManagerGQL) {
     this.config.token$.subscribe(token => {
       if (!!token) {
-        this.meManagerApollo.fetch()
-          .pipe(map(({data: {me}}) => deserialize(me, Me)))
+        (environment.mocks
+          ? of(getMock(User))
+          : this.meManagerGql.fetch().pipe(map(({data: {me}}) => deserialize(me, Me))))
           .subscribe(user => this.user = user);
       } else {
         this.user = null;

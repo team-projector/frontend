@@ -1,4 +1,5 @@
-import {field, model} from '@junte/mocker-library';
+import { field, model } from 'src/decorators/model';
+import * as faker from 'faker';
 
 export enum StandardLabel {
   toDo = 'To Do',
@@ -9,10 +10,16 @@ export enum StandardLabel {
 @model()
 export class Label {
 
-  @field({mock: '{{label}}'})
+  @field({
+    mock: () => faker.helpers.randomize([
+      StandardLabel.toDo,
+      StandardLabel.doing,
+      StandardLabel.done
+    ])
+  })
   title: string;
 
-  @field({mock: '{{color}}'})
+  @field({mock: () => faker.commerce.color()})
   color: string;
 
 }

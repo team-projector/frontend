@@ -1,4 +1,4 @@
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
 import { IssuesMetrics } from 'src/models/metrics';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
@@ -18,7 +18,7 @@ export class TeamMetrics {
   issues: IssuesMetrics;
 
   @field({
-    mock: '{{int 10 100}}'
+    mock: ''
   })
   problemsCount: number;
 
@@ -27,7 +27,7 @@ export class TeamMetrics {
 @model()
 export class TeamMember {
 
-  @field({mock: '{{> user}}'})
+  @field({mock: ''})
   user: User;
 
   @field({
@@ -41,32 +41,32 @@ export class TeamMember {
 @model()
 export class Team {
 
-  @field({mock: '{{int 1 1000}}'})
+  @field({mock: ''})
   id: string;
 
-  @field({mock: '{{team}}'})
+  @field({mock: ''})
   title: string;
 
   @field({
     serializer: new EdgesToArray(TeamMember),
-    mock: '[{{#repeat 5 15}} {{> team_member }} {{/repeat}}]'
+    mock: ''
   })
   members: TeamMember[];
 
-  @field({mock: '{{> team_metrics}}'})
+  @field({mock: ''})
   metrics: TeamMetrics;
 }
 
 @model()
 export class PagingTeams implements Paging<Team> {
 
-  @field({mock: '{{int 3 10}}'})
+  @field({mock: ''})
   count: number;
 
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<Team>(Team)),
-    mock: '[{{#repeat 3 10}} {{> team}} {{/repeat}}]'
+    mock: ''
   })
   results: Team[];
 }
@@ -74,13 +74,13 @@ export class PagingTeams implements Paging<Team> {
 @model()
 export class PagingTeamMembers implements Paging<TeamMember> {
 
-  @field({mock: '{{int 3 10}}'})
+  @field({mock: ''})
   count: number;
 
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<TeamMember>(TeamMember)),
-    mock: '[{{#repeat 3 10}} {{> team_member}} {{/repeat}}]'
+    mock: ''
   })
   results: TeamMember[];
 }

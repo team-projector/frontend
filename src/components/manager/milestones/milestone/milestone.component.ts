@@ -2,7 +2,7 @@ import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ComponentFactoryResolver, Injector, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { field, model } from '@junte/mocker-library';
+import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { isEqual, ModalOptions, ModalService, UI } from 'junte-ui';
 import { distinctUntilChanged, finalize, map } from 'rxjs/operators';

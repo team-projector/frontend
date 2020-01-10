@@ -2,53 +2,53 @@ import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { DateSerializer } from '../serializers/date';
 import { Paging } from './paging';
 import { SearchFilter } from 'junte-ui';
-import { field, model } from '@junte/mocker-library';
+import { field, model } from '../decorators/model';
 import { EdgesToPaging } from '../serializers/graphql';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
 
 @model()
 export class Salary {
 
-  @field({mock: '{{int 1 1000}}'})
+  @field({mock: ''})
   id: number;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   createdAt: Date;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   periodTo: Date;
 
   @field({
     serializer: new DateSerializer(),
-    mock: '{{date \'2019\' \'2020\'}}'
+    mock: ''
   })
   periodFrom: Date;
 
-  @field({mock: '{{int 144000 288000}}'})
+  @field({mock: ''})
   chargedTime: number;
 
-  @field({mock: '{{int 1000 5000}}'})
+  @field({mock: ''})
   bonus: number;
 
-  @field({mock: '{{int 250 500}}'})
+  @field({mock: ''})
   taxes: number;
 
-  @field({mock: '{{int 500 1000}}'})
+  @field({mock: ''})
   penalty: number;
 
-  @field({mock: '{{int 10000 20000}}'})
+  @field({mock: ''})
   sum: number;
 
-  @field({mock: '{{int 30000 50000}}'})
+  @field({mock: ''})
   total: number;
 
-  @field({mock: '{{boolean}}'})
+  @field({mock: ''})
   payed: boolean;
 
 }
@@ -56,13 +56,13 @@ export class Salary {
 @model()
 export class PagingSalaries implements Paging<Salary> {
 
-  @field({mock: '{{int 10 20}}'})
+  @field({mock: ''})
   count: number;
 
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<Salary>(Salary)),
-    mock: '[{{#repeat 5 15}} {{> salary }} {{/repeat}}]'
+    mock: ''
   })
   results: Salary[];
 

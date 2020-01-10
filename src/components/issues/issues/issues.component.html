@@ -40,9 +40,11 @@
             <app-due-date *ngIf="dueDate" [dueDate]="dueDate"></app-due-date>
             <jnt-stack [type]="ui.stack.type.vertical">
               <jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
+                         [size]="ui.sizes.small"
                          [color]="ui.colors.red" label="empty">
               </jnt-label>
               <jnt-label *ngIf="problems?.includes(issueProblem.overDueDate)"
+                         [size]="ui.sizes.small"
                          [color]="ui.colors.red" label="overdue">
               </jnt-label>
             </jnt-stack>
@@ -70,6 +72,7 @@
             </span>
           </div>
           <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
+                     [size]="ui.sizes.small"
                      [color]="ui.colors.red" label="estimate">
           </jnt-label>
         </ng-template>
