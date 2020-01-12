@@ -1,18 +1,18 @@
-import { field, model } from '../decorators/model';
+import * as faker from 'faker';
+import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { IssueProblem, IssueState } from 'src/models/enums/issue';
 import { Team } from 'src/models/team';
 import { Ticket } from 'src/models/ticket';
 import { DATE_FORMAT } from '../consts';
+import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
 import { Label } from './label';
 import { Paging } from './paging';
 import { Project } from './project';
 import { User } from './user';
-import * as faker from 'faker';
-import { helpers } from 'faker';
 
 @model()
 export class IssueMetrics {
@@ -31,16 +31,39 @@ export class IssueMetrics {
 
 }
 
-@model()
+@model({
+  mocking: (issue: Issue, context: IssuesFilter) => {
+    issue.timeEstimate = Math.round(Math.random() * 3600 * 3 + 2);
+    issue.totalTimeSpent = Math.round(Math.random() * 3600 * 2);
+    issue.timeSpent = issue.totalTimeSpent;
+    if (!!context) {
+      if (context.state === IssueState.opened) {
+        issue.state = IssueState.opened;
+      } else if (context.state === IssueState.closed) {
+        issue.state = IssueState.closed;
+      }
+
+      if (context.problems === true) {
+        issue.problems = helpers.randomize([
+          IssueProblem.emptyDueDate,
+          IssueProblem.emptyEstimate,
+          IssueProblem.overDueDate]);
+      }
+    }
+  }
+})
 export class Issue {
 
-  @field()
+  @field({mock: () => faker.random.uuid()})
   id: string;
 
   @field()
   user: User;
 
-  @field({mock: {type: User, length: 5}, serializer: new EdgesToArray(User)})
+  @field({
+    mock: {type: User, length: 5},
+    serializer: new EdgesToArray(User)
+  })
   participants: User[];
 
   @field({
@@ -67,13 +90,13 @@ export class Issue {
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   timeEstimate: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   timeSpent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   totalTimeSpent: number;
 
   @field({mock: () => faker.internet.url()})
@@ -86,10 +109,7 @@ export class Issue {
   closedAt: Date;
 
   @field({
-    mock: () => helpers.randomize([
-      IssueProblem.emptyDueDate,
-      IssueProblem.emptyEstimate,
-      IssueProblem.overDueDate]),
+    mock: [],
     serializer: new ArraySerializer(new PrimitiveSerializer())
   })
   problems: IssueProblem[];
@@ -162,25 +182,25 @@ export class IssuesFilter implements SearchFilter {
 
 @model()
 export class ProjectIssuesSummary {
-  @field()
+  @field({mock: () => faker.random.number()})
   remains: number;
 
-  @field()
+  @field({mock: () => faker.random.number({max: 100})})
   percentage: number;
 
-  @field()
+  @field({mock: () => faker.random.number()})
   openedCount: number;
 }
 
 @model()
 export class TeamIssuesSummary {
-  @field()
+  @field({mock: () => faker.random.number()})
   remains: number;
 
-  @field()
+  @field({mock: () => faker.random.number({max: 100})})
   percentage: number;
 
-  @field()
+  @field({mock: () => faker.random.number()})
   openedCount: number;
 }
 
@@ -209,25 +229,31 @@ export class TeamSummary {
 @model()
 export class IssuesSummary {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   count: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   closedCount: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   openedCount: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   timeSpent: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   problemsCount: number;
 
-  @field({serializer: new ArraySerializer(new ModelSerializer(ProjectSummary))})
+  @field({
+    mock: {type: ProjectSummary, length: 5},
+    serializer: new ArraySerializer(new ModelSerializer(ProjectSummary))
+  })
   projects: ProjectSummary[];
 
-  @field({serializer: new ArraySerializer(new ModelSerializer(TeamSummary))})
+  @field({
+    mock: {type: TeamSummary, length: 10},
+    serializer: new ArraySerializer(new ModelSerializer(TeamSummary))
+  })
   teams: TeamSummary[];
 
 }

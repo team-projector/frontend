@@ -4,6 +4,8 @@ import { IssuesMetrics } from 'src/models/metrics';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
 import { Paging } from './paging';
 import { User } from './user';
+import * as faker from 'faker';
+import { helpers } from 'faker';
 
 export enum TeamMemberRole {
   developer = 'DEVELOPER',
@@ -17,9 +19,7 @@ export class TeamMetrics {
   @field()
   issues: IssuesMetrics;
 
-  @field({
-    mock: ''
-  })
+  @field({mock: () => faker.random.number({max: 10})})
   problemsCount: number;
 
 }
@@ -27,12 +27,12 @@ export class TeamMetrics {
 @model()
 export class TeamMember {
 
-  @field({mock: ''})
+  @field()
   user: User;
 
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
-    mock: [TeamMemberRole.developer]
+    mock: () => [helpers.randomize([TeamMemberRole.developer, TeamMemberRole.leader])]
   })
   roles: TeamMemberRole[];
 
@@ -41,32 +41,38 @@ export class TeamMember {
 @model()
 export class Team {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.uuid()})
   id: string;
 
-  @field({mock: ''})
+  @field({
+    mock: () => helpers.randomize([
+      'Mobile',
+      'Frontend',
+      'Backend'
+    ])
+  })
   title: string;
 
   @field({
+    mock: {type: TeamMember, length: 5},
     serializer: new EdgesToArray(TeamMember),
-    mock: ''
   })
   members: TeamMember[];
 
-  @field({mock: ''})
+  @field()
   metrics: TeamMetrics;
 }
 
 @model()
 export class PagingTeams implements Paging<Team> {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   count: number;
 
   @field({
     name: 'edges',
-    serializer: new ArraySerializer(new EdgesToPaging<Team>(Team)),
-    mock: ''
+    serializer: new ArraySerializer(new EdgesToPaging(Team)),
+    mock: {type: Team, length: 10}
   })
   results: Team[];
 }
@@ -74,13 +80,13 @@ export class PagingTeams implements Paging<Team> {
 @model()
 export class PagingTeamMembers implements Paging<TeamMember> {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   count: number;
 
   @field({
     name: 'edges',
-    serializer: new ArraySerializer(new EdgesToPaging<TeamMember>(TeamMember)),
-    mock: ''
+    serializer: new ArraySerializer(new EdgesToPaging(TeamMember)),
+    mock: {type: TeamMember, length: 5}
   })
   results: TeamMember[];
 }

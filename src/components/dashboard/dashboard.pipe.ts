@@ -3,7 +3,7 @@ import {differenceInSeconds} from 'date-fns';
 
 @Pipe({name: 'diff'})
 export class DifferencePipe implements PipeTransform {
-  transform(date: string): number {
+  transform(date: Date): number {
     return differenceInSeconds(new Date(), date);
   }
 }

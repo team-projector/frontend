@@ -47,17 +47,17 @@
             <jnt-link link
                       [title]="member.user.name"></jnt-link>
             <br>
-            <small roles>{{member.roles.join(', ')}}</small>
+            <small roles>{{member.roles | join:', '}}</small>
           </div>
         </jnt-stack>
       </td>
       <td>
         <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.stretch">
           <jnt-label *ngIf="member.user.metrics.issues.closedSpent"
-                     [label]="member.user.metrics.issues.closedSpent | duration"
+                     [label]="member.user.metrics.issues.closedSpent | duration:durationFormat.short"
                      [color]="ui.colors.green"></jnt-label>
           <jnt-label *ngIf="member.user.metrics.issues.openedSpent"
-                     [label]="member.user.metrics.issues.openedSpent | duration"
+                     [label]="member.user.metrics.issues.openedSpent | duration:durationFormat.short"
                      [color]="member.user.problems?.includes(userProblem.payrollOpenedOverflow) ? ui.colors.red : ui.colors.paleNavy"></jnt-label>
         </jnt-stack>
       </td>

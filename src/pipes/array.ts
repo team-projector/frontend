@@ -17,3 +17,10 @@ export class IncludesPipe implements PipeTransform {
     return !!arr && arr.includes(el);
   }
 }
+
+@Pipe({name: 'join'})
+export class JoinPipe implements PipeTransform {
+  transform(arr: string[], separator: string = ' '): string {
+    return arr.join(separator);
+  }
+}

@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GitLabStatus } from '../../models/gitlab';
+import { UI } from 'junte-ui';
+import { interval, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
-import { interval } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { GitLabStatus } from '../../models/gitlab';
+import { getMock } from '../../utils/mocks';
 import { GitlabStatusGQL } from './gitlab-status.graphql';
-import { UI } from 'junte-ui';
 
 const STATUS_TIMEOUT = 60000;
 
@@ -30,9 +32,10 @@ export class GitlabStatusComponent implements OnInit {
   }
 
   load() {
-    this.gitlabStatusApollo.fetch()
-      .pipe(map(({data: {gitlabStatus}}) =>
-        deserialize(gitlabStatus, GitLabStatus)))
+    (environment.mocks ? of(getMock(GitLabStatus))
+      : this.gitlabStatusApollo.fetch()
+        .pipe(map(({data: {gitlabStatus}}) =>
+          deserialize(gitlabStatus, GitLabStatus))))
       .subscribe(status => this.status = status);
   }
 }

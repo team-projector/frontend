@@ -3,14 +3,17 @@ import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACC
 import { R } from 'apollo-angular/types';
 import { addDays, addWeeks, endOfWeek, getDate, startOfDay, startOfWeek, subWeeks } from 'date-fns';
 import { UI } from 'junte-ui';
-import { BehaviorSubject, combineLatest, zip } from 'rxjs';
-import { distinctUntilChanged, filter as filtering, finalize, map } from 'rxjs/operators';
+import { BehaviorSubject, combineLatest, of, zip } from 'rxjs';
+import { delay, distinctUntilChanged, filter as filtering, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MetricsGroup, TeamMetricsFilter, TeamProgressMetrics, UserProgressMetrics } from 'src/models/metrics';
-import { PagingTeamMembers, Team, TeamMember } from 'src/models/team';
+import { PagingTeamMembers, PagingTeams, Team, TeamMember } from 'src/models/team';
 import { User, UserProblem } from 'src/models/user';
 import { DurationFormat } from 'src/pipes/date';
 import { equals } from 'src/utils/equals';
+import { MOCKS_DELAY } from '../../../../../../consts';
+import { environment } from '../../../../../../environments/environment';
+import { getMock } from '../../../../../../utils/mocks';
 import { CalendarMembersGQL, CalendarMetricsGQL } from './team-calendar.graphql';
 
 const DAYS_IN_WEEK = 7;
@@ -156,10 +159,12 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
 
   private loadMembers() {
     this.loading = true;
-    this.calendarMember.fetch({team: this.team.id} as R).pipe(
-      map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers)),
-      finalize(() => this.loading = false)
-    ).subscribe(teams => this.members = teams.results);
+    (environment.mocks
+      ? of(getMock(PagingTeamMembers)).pipe(delay(MOCKS_DELAY))
+      : this.calendarMember.fetch({team: this.team.id} as R)
+        .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(teams => this.members = teams.results);
   }
 
   private update() {

@@ -1,14 +1,18 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { of } from 'rxjs';
 import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
-import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssuesFilter } from 'src/models/issue';
+import { IssuesFilter, PagingIssues } from 'src/models/issue';
 import { MilestoneProblem, MilestonesFilter, PagingMilestones } from 'src/models/milestone';
 import { DurationFormat } from 'src/pipes/date';
+import { MOCKS_DELAY } from '../../../consts';
+import { environment } from '../../../environments/environment';
+import { getMock } from '../../../utils/mocks';
 import { AllMilestonesGQL, SyncMilestoneGQL } from './milestones.graphql';
 
 @model()
@@ -76,9 +80,11 @@ export class MilestonesComponent implements OnInit {
 
   ngOnInit() {
     this.table.fetcher = () => {
-      return this.allMilestonesGQL.fetch(this.filter as R)
-        .pipe(map(({data: {allMilestones}}) =>
-          deserialize(allMilestones, PagingMilestones)));
+      return environment.mocks
+        ? of(getMock(PagingMilestones, this.filter)).pipe(delay(MOCKS_DELAY))
+        : this.allMilestonesGQL.fetch(this.filter as R)
+          .pipe(map(({data: {allMilestones}}) =>
+            deserialize(allMilestones, PagingMilestones)));
     };
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))

@@ -58,10 +58,8 @@ export class UserMetrics {
 @model()
 export class User {
 
-  text = 1;
-
   @field({mock: () => faker.random.uuid()})
-  id: string = faker.random.uuid();
+  id: string;
 
   @field({mock: () => faker.internet.userName()})
   login: string;

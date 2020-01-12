@@ -1,41 +1,51 @@
 import 'reflect-metadata';
 import { Field, Model, Name, serialize, Serializer, Type } from 'serialize-ts/dist';
 
-export const MODEL_METADATA_KEY = 'model_metadata';
-export const MOCK_OBJECT_METADATA_KEY = 'mock_field';
+export const MOCKING_METADATA_KEY = 'model_metadata';
+export const MOCK_FIELDS_METADATA_KEY = 'mock_field';
 
-export class MockClassDescription {
-  constructor(public name: string) {
-  }
-}
-
-export function model() {
+export function mocking(callback: (obj: Object, context?: Object, index?: number) => void) {
   return function (constructor: any) {
     Model()(constructor);
-    const metadata = new MockClassDescription(constructor.name);
-    Reflect.defineMetadata(MODEL_METADATA_KEY, metadata, constructor.prototype);
+    Reflect.defineMetadata(MOCKING_METADATA_KEY, callback, constructor.prototype);
+  };
+}
+
+type MockFieldConfig = boolean | boolean[] | number | number[]
+  | string | string[] | Function | { type: any, length: number };
+
+export function mock(config: MockFieldConfig) {
+  return function (obj: Object, property: string | symbol) {
+    const metadata = Reflect.getMetadata(MOCK_FIELDS_METADATA_KEY, obj) || {};
+    metadata[property] = config;
+    Reflect.defineMetadata(MOCK_FIELDS_METADATA_KEY, metadata, obj);
+  };
+}
+
+export interface ModelConfig {
+  mocking?: (obj: Object, context?: Object, index?: number) => void;
+}
+
+export function model(config: ModelConfig = {}) {
+  return function (constructor: any) {
+    Model()(constructor);
+    mocking(config.mocking)(constructor);
   };
 }
 
 export interface FieldConfig {
   name?: string;
   serializer?: Serializer<any>;
-  mock?: string | string[] | Function | { type: any, length: number };
+  mock?: MockFieldConfig;
 }
 
 export function field(config: FieldConfig = {}) {
   return function (obj: Object, property: string | symbol) {
-    if (!!config.name) {
-      Name(config.name)(obj, property);
-    }
-    if (!!config.serializer) {
-      Type(config.serializer)(obj, property);
-    }
+    Field({
+      jsonPropertyName: config.name,
+      serializer: config.serializer
+    })(obj, property);
 
-    Field()(obj, property);
-
-    const metadata = Reflect.getMetadata(MOCK_OBJECT_METADATA_KEY, obj) || {};
-    metadata[property] = config.mock;
-    Reflect.defineMetadata(MOCK_OBJECT_METADATA_KEY, metadata, obj);
+    mock(config.mock)(obj, property);
   };
 }

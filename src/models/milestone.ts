@@ -1,10 +1,13 @@
-import { field, model } from '../decorators/model';
+import * as faker from 'faker';
+import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { PrimitiveSerializer } from 'serialize-ts/dist';
+import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { ProjectSerializer } from '../serializers/project';
+import { ProjectSummary } from './issue';
 import { Paging } from './paging';
 import { Project, ProjectGroup } from './project';
 
@@ -15,40 +18,40 @@ export enum MilestoneProblem {
 @model()
 export class MilestoneMetrics {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   customerPayroll: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   payroll: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   budgetSpent: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   budgetRemains: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   profit: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   timeEstimate: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   timeSpent: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   timeRemains: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   efficiency: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   issuesCount: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   issuesOpenedCount: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   issuesClosedCount: number;
 
 }
@@ -56,39 +59,39 @@ export class MilestoneMetrics {
 @model()
 export class Milestone {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.uuid()})
   id: string;
 
-  @field({mock: ''})
+  @field({
+    mock: () => helpers.randomize([
+      'MVP',
+      'Sprint 1',
+      'Version 1.0'
+    ])
+  })
   title: string;
 
-  @field({
-    serializer: new ProjectSerializer(),
-    mock: ''
-  })
+  @field({mock: ProjectGroup, serializer: new ProjectSerializer()})
   owner: Project | ProjectGroup;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   budget: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   startDate: Date;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
+  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
   dueDate: Date;
 
-  @field({mock: ''})
+  @field()
   metrics: MilestoneMetrics;
 
-  @field({mock: ''})
+  @field({mock: () => faker.internet.url()})
   glUrl: string;
 
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
-    mock: ''
+    mock: []
   })
   problems: MilestoneProblem[];
 }
@@ -102,7 +105,7 @@ export class PagingMilestones implements Paging<Milestone> {
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<Milestone>(Milestone)),
-    mock: ''
+    mock: {type: Milestone, length: 5},
   })
   results: Milestone[];
 }

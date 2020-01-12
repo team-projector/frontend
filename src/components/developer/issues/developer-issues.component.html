@@ -60,7 +60,8 @@
                   <jnt-link [source]="m.glUrl" [title]="m.title"
                             target="_blank"></jnt-link>
                   <jnt-label *ngIf="m.dueDate" [label]="m.dueDate | dueDate"
-                             [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.colors.red : ui.colors.paleNavy"></jnt-label>
+                             [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.colors.red : ui.colors.paleNavy">
+                  </jnt-label>
                 </jnt-stack>
               </ng-container>
             </ng-template>
@@ -117,14 +118,15 @@
                    [color]="ui.colors.red"></jnt-badge>
       </jnt-menu-item>
       <jnt-menu-item [link]="['time-expenses']" title="Time Expenses">
-        <jnt-badge *ngIf="summary?.spentTimes?.spent" [count]="summary?.spentTimes.spent | duration"></jnt-badge>
+        <jnt-badge *ngIf="summary?.spentTimes?.spent"
+                   [count]="summary?.spentTimes.spent | duration:durationFormat.short"></jnt-badge>
       </jnt-menu-item>
     </jnt-menu>
     <router-outlet (activate)="onActivate($event)"></router-outlet>
     <ng-template #dayMetricTemplate let-metric="metric" let-date="date" let-presentation="presentation">
       <div issues *ngIf="!!metric?.issuesCount"></div>
-      <ng-template #no_metric>{{date | getDate}}</ng-template>
-      <div *ngIf="!!metric; else no_metric" metric [ngSwitch]="presentation">
+      <ng-template #noMetricTemplate>{{date | getDate}}</ng-template>
+      <div *ngIf="!!metric; else noMetricTemplate" metric [ngSwitch]="presentation">
 
         <ng-template #metrics let-metric="metric" let-color="color" let-planned="planned">
           <jnt-circle-bar circle time>
@@ -138,7 +140,7 @@
         </ng-template>
 
         <ng-container *ngSwitchCase="metricType.spent">
-          <ng-container *ngIf="!(date | isFuture) && !!metric['timeSpent']; else no_metric">
+          <ng-container *ngIf="!(date | isFuture) && !!metric['timeSpent']; else noMetricTemplate">
             <ng-container *ngTemplateOutlet="metrics; context: {metric: metric['timeSpent'],
           color: ui.colors.green, planned: metric['plannedWorkHours']}">
             </ng-container>
@@ -146,7 +148,7 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="metricType.estimate">
-          <ng-container *ngIf="(date | isFuture) && !!metric['timeEstimate']; else no_metric">
+          <ng-container *ngIf="(date | isFuture) && !!metric['timeEstimate']; else noMetricTemplate">
             <ng-container *ngTemplateOutlet="metrics; context: {metric: metric['timeEstimate'],
           color: ui.colors.red, planned: metric['plannedWorkHours']}">
             </ng-container>
@@ -154,7 +156,7 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="metricType.remains">
-          <ng-container *ngIf="(date | isFuture) && !!metric['timeRemains']; else no_metric">
+          <ng-container *ngIf="(date | isFuture) && !!metric['timeRemains']; else noMetricTemplate">
             <ng-container *ngTemplateOutlet="metrics; context: {metric: metric['timeRemains'],
           color: ui.colors.yellow, planned: metric['plannedWorkHours']}">
             </ng-container>
@@ -162,7 +164,7 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="metricType.loading">
-          <ng-container *ngIf="(date | isFuture) && !!metric['loading']; else no_metric">
+          <ng-container *ngIf="(date | isFuture) && !!metric['loading']; else noMetricTemplate">
             <ng-container *ngTemplateOutlet="metrics; context: {metric: metric['loading'],
           color: ui.colors.purpleDark, planned: metric['plannedWorkHours']}">
             </ng-container>

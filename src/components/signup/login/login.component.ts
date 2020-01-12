@@ -3,13 +3,17 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UI, validate } from 'junte-ui';
 import 'reflect-metadata';
+import { of } from 'rxjs';
 import { filter, finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { AppConfig } from 'src/app-config';
 import { AccessToken } from 'src/models/access-token';
 import { APPLICATION_READY } from '../../../consts';
+import { environment } from '../../../environments/environment';
 import { GqlError } from '../../../models/gql-errors';
+import { Me } from '../../../models/user';
 import { catchGQLErrors } from '../../../operators/catch-gql-error';
+import { getMock } from '../../../utils/mocks';
 import { GitlabLoginGQL, LoginGQL } from './login.graphql';
 
 @Component({
@@ -29,7 +33,7 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(@Inject(AppConfig) private config: AppConfig,
-              private loginApollo: LoginGQL,
+              private loginGQL: LoginGQL,
               private loginGitlabApollo: GitlabLoginGQL,
               private builder: FormBuilder,
               private route: ActivatedRoute,
@@ -57,12 +61,12 @@ export class LoginComponent implements OnInit {
   login() {
     if (validate(this.loginForm)) {
       this.progress.login = true;
-      this.loginApollo.mutate(this.loginForm.value)
-        .pipe(catchGQLErrors(),
-          finalize(() => this.progress.login = false),
-          map(({data: {login: {token}}}) =>
-            deserialize(token, AccessToken))
-        )
+      (environment.mocks ? of(getMock(AccessToken))
+        : this.loginGQL.mutate(this.loginForm.value)
+          .pipe(catchGQLErrors(),
+            map(({data: {login: {token}}}) =>
+              deserialize(token, AccessToken))))
+        .pipe(finalize(() => this.progress.login = false))
         .subscribe((token: AccessToken) => this.logged(token),
           (err: GqlError[]) => this.errors = err);
     }

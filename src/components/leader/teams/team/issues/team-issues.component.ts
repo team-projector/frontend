@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
-import { combineLatest } from 'rxjs';
-import { distinctUntilChanged, map, tap } from 'rxjs/operators';
+import { combineLatest, of } from 'rxjs';
+import { delay, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MetricType } from 'src/components/leader/teams/team/issues/calendar/team-calendar.component';
 import { METRIC_TYPE } from 'src/components/metrics-type/consts';
-import { DATE_FORMAT } from 'src/consts';
+import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
+import { field, model } from 'src/decorators/model';
 import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { MergeRequestSummary } from 'src/models/merge-request';
 import { MilestoneProblem } from 'src/models/milestone';
@@ -19,6 +19,8 @@ import { Team } from 'src/models/team';
 import { User } from 'src/models/user';
 import { DurationFormat } from 'src/pipes/date';
 import { DateSerializer } from 'src/serializers/date';
+import { environment } from '../../../../../environments/environment';
+import { getMock } from '../../../../../utils/mocks';
 import { FirstSummaryGQL, SecondSummaryGQL } from './team-issues.graphql';
 
 @model()
@@ -135,8 +137,10 @@ export class TeamIssuesComponent implements OnInit {
   }
 
   loadFirstSummary() {
-    this.firstSummaryGQL.fetch(serialize(this.filter2) as R)
-      .pipe(map(({data: {summary}}) => deserialize(summary, IssuesSummary)))
+    (environment.mocks
+      ? of(getMock(IssuesSummary)).pipe(delay(MOCKS_DELAY))
+      : this.firstSummaryGQL.fetch(serialize(this.filter2) as R)
+        .pipe(map(({data: {summary}}) => deserialize(summary, IssuesSummary))))
       .subscribe(summary => this.summary.first = summary);
   }
 

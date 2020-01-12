@@ -1,7 +1,6 @@
-import { ArrayType } from '@angular/compiler';
+import * as faker from 'faker';
+import { ArraySerializer, DateSerializer, ModelSerializer, Serializer } from 'serialize-ts';
 import { field, model } from '../decorators/model';
-import { ArraySerializer, DateSerializer, Serializer, ModelSerializer } from 'serialize-ts';
-import { EdgesToArray } from '../serializers/graphql';
 import { Issue } from './issue';
 
 export class GitLabServicesSerializer implements Serializer<GitLabServices> {
@@ -31,37 +30,25 @@ export class GitLabServicesSerializer implements Serializer<GitLabServices> {
 @model()
 export class GitLabServices {
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   api: Date;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   webHooks: Date;
 }
 
 @model()
 export class GitLabStatus {
 
-  @field({
-    serializer: new GitLabServicesSerializer(),
-    mock: ''
-  })
+  @field({serializer: new GitLabServicesSerializer()})
   services: GitLabServices;
 
   @field({
     serializer: new ArraySerializer(new ModelSerializer(Issue)),
-    mock: ''
+    mock: {type: Issue, length: 10}
   })
   lastIssues: Issue[];
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
-  lastSync: string;
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
+  lastSync: Date;
 }

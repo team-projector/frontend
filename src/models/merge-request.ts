@@ -9,6 +9,7 @@ import { Label } from './label';
 import { Paging } from './paging';
 import { Project } from './project';
 import { User } from './user';
+import * as faker from 'faker';
 
 export enum MergeRequestState {
   opened = 'OPENED',
@@ -19,16 +20,16 @@ export enum MergeRequestState {
 @model()
 export class MergeRequestSummary {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   count: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   openedCount: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   closedCount: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   mergedCount: number;
 
 }
@@ -36,16 +37,16 @@ export class MergeRequestSummary {
 @model()
 export class MergeRequestMetrics {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   remains: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   efficiency: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   payroll: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   paid: number;
 
 }

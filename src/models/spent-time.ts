@@ -8,6 +8,7 @@ import { OwnerSerializer } from '../serializers/owner';
 import { Issue } from './issue';
 import { MergeRequest } from './merge-request';
 import { Paging } from './paging';
+import * as faker from 'faker';
 
 export enum TimeExpenseState {
   opened = 'OPENED',
@@ -49,13 +50,13 @@ export class SpentTime {
 @model()
 export class PagingTimeExpenses implements Paging<SpentTime> {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   count: number;
 
   @field({
     name: 'edges',
-    serializer: new ArraySerializer(new EdgesToPaging<SpentTime>(SpentTime)),
-    mock: ''
+    mock: {type: SpentTime, length: 10},
+    serializer: new ArraySerializer(new EdgesToPaging<SpentTime>(SpentTime))
   })
   results: SpentTime[];
 
@@ -64,29 +65,29 @@ export class PagingTimeExpenses implements Paging<SpentTime> {
 @model()
 export class SpentTimesSummary {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   spent: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   openedSpent: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   closedSpent: number;
 }
 
 @model()
 export class TimeExpensesSummary {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   count: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   openedCount: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   closedCount: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   mergedCount: number;
 
 }

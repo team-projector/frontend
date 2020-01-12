@@ -143,7 +143,7 @@ export class IssuesComponent implements OnInit {
   ngOnInit() {
     this.table.fetcher = () => {
       return environment.mocks
-        ? of(getMock(PagingIssues)).pipe(delay(MOCKS_DELAY))
+        ? of(getMock(PagingIssues, this.filter)).pipe(delay(MOCKS_DELAY))
         : this.issuesGQL.fetch(serialize(this.filter) as R)
           .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)));
     };
@@ -187,10 +187,12 @@ export class IssuesComponent implements OnInit {
 
   loadSummary() {
     this.progress.summary = true;
-    this.issuesSummaryGQL.fetch(serialize(this.filter) as R)
-      .pipe(map(({data: {summary}}) =>
-          deserialize(summary, IssuesSummary)),
-        finalize(() => this.progress.summary = false))
+    return (environment.mocks
+      ? of(getMock(IssuesSummary)).pipe(delay(MOCKS_DELAY))
+      : this.issuesSummaryGQL.fetch(serialize(this.filter) as R)
+        .pipe(map(({data: {summary}}) =>
+          deserialize(summary, IssuesSummary))))
+      .pipe(finalize(() => this.progress.summary = false))
       .subscribe(summary => this.summary = summary);
   }
 
@@ -199,11 +201,5 @@ export class IssuesComponent implements OnInit {
     this.syncIssueGQL.mutate({id: issue})
       .pipe(finalize(() => this.progress.sync = false))
       .subscribe(() => this.table.load());
-  }
-
-  dropped(event: CdkDragDrop<any>) {
-    if (!!event.container.element.nativeElement.attributes.getNamedItem('ticket')) {
-      this.sync(event.item.data.issue);
-    }
   }
 }

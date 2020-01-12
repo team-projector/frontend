@@ -1,50 +1,77 @@
+import * as faker from 'faker';
+import { helpers } from 'faker';
 import { field, model } from '../decorators/model';
+import { DateSerializer } from '../serializers/date';
 import { EdgesToArray } from '../serializers/graphql';
-import { Milestone } from './milestone';
+
+@model()
+export class ProjectMilestone {
+
+  @field({mock: () => faker.random.uuid()})
+  id: string;
+
+  @field({
+    mock: () => helpers.randomize([
+      'MVP',
+      'Sprint 1',
+      'Version 1.0'
+    ])
+  })
+  title: string;
+
+  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
+  dueDate: Date;
+}
 
 @model()
 export class ProjectGroup {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.uuid()})
   id: string;
 
-  @field({mock: ''})
+  @field({
+    mock: () => helpers.randomize([
+      'Microsoft',
+      'Tesla',
+      'Amazon'
+    ])
+  })
   title: string;
 
   @field({mock: ''})
   fullTitle: string;
 
-  @field({mock: ''})
-  glUrl: string;
-
-  @field()
+  @field({mock: () => faker.image.business()})
   glAvatar: string;
 }
 
 @model()
 export class Project {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.uuid()})
   id: string;
 
-  @field({mock: ''})
+  @field({
+    mock: () => helpers.randomize([
+      'Azure',
+      'Customers Billing',
+      'CRM'
+    ])
+  })
   title: string;
 
-  @field({mock: ''})
+  @field()
   fullTitle: string;
 
   @field()
   group: ProjectGroup;
 
-  @field({
-    name: 'gl_url',
-    mock: ''
-  })
+  @field({mock: () => faker.internet.url()})
   glUrl: string;
 
   @field({
-    serializer: new EdgesToArray(Milestone),
-    mock: ''
+    serializer: new EdgesToArray(ProjectMilestone),
+    mock: {type: ProjectMilestone, length: 5}
   })
-  milestones: Milestone[];
+  milestones: ProjectMilestone[];
 }
