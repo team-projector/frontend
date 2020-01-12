@@ -21,7 +21,7 @@ enum Themes {
 })
 export class DashboardComponent implements OnInit {
 
-  private _theme = !!localStorage.theme ? Themes[localStorage.theme] : Themes.light;
+  private _theme = !!localStorage.theme ? Themes[localStorage.theme] as Themes : Themes.light;
 
   ui = UI;
   userRole = UserRole;
