@@ -20,7 +20,7 @@
 }
 
 [form] {
-  min-width: 300px;
+  max-width: 400px;
 
   a {
     display: block;
@@ -30,6 +30,7 @@
 
   [logo] {
     text-align: center;
+    padding-bottom: $gutter-big;
   }
   [fields] {
     margin-top: $gutter-normal;
@@ -39,4 +40,9 @@
     margin: 20px 0;
     width: 100%;
   }
+}
+
+[god] ::ng-deep [host=#{$jnt-button-host}] button {
+  padding-left: $gutter-normal !important;
+  padding-right: $gutter-normal !important;
 }

@@ -91,7 +91,27 @@ export class User {
 
 }
 
-@model()
+@model({
+  mocking: (me: Me) => {
+    if (!!localStorage.role) {
+      me.roles = [];
+      switch (localStorage.role) {
+        case UserRole.developer:
+          me.roles.push(UserRole.developer);
+          break;
+        case UserRole.teamLeader:
+          me.roles.push(UserRole.developer);
+          me.roles.push(UserRole.teamLeader);
+          break;
+        case UserRole.projectManager:
+          me.roles.push(UserRole.developer);
+          me.roles.push(UserRole.teamLeader);
+          me.roles.push(UserRole.projectManager);
+          break;
+      }
+    }
+  }
+})
 export class Me extends User {
 
   @field({

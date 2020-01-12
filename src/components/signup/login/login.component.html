@@ -1,4 +1,4 @@
-<jnt-link [icon]="ui.icons.settings"
+<jnt-link *ngIf="!mocks" [icon]="ui.icons.settings"
           [outline]="ui.outline.fill"
           source="/admin/"
           title="Administrator"
@@ -39,6 +39,28 @@
       <a href="https://teamprojector.com/api/login/gitlab/">
         <img src="/assets/images/gitlab.svg" height="30">
       </a>
+
+      <div *ngIf="mocks" god>
+        <p>The current version uses mocks! No real backend or database is needed. You can be a god!<br>
+          <b>Select your role:</b></p>
+        <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.center">
+          <jnt-button [scheme]="ui.schemes.success"
+                      [size]="ui.sizes.small"
+                      [outline]="ui.outline.ghost"
+                      text="Developer"
+                      (click)="god(userRole.developer)"></jnt-button>
+          <jnt-button [scheme]="ui.schemes.success"
+                      [size]="ui.sizes.small"
+                      [outline]="ui.outline.ghost"
+                      text="Team Leader"
+                      (click)="god(userRole.teamLeader)"></jnt-button>
+          <jnt-button [scheme]="ui.schemes.success"
+                      [size]="ui.sizes.small"
+                      [outline]="ui.outline.ghost"
+                      text="Project Manager"
+                      (click)="god(userRole.projectManager)"></jnt-button>
+        </jnt-stack>
+      </div>
     </ng-template>
   </jnt-form>
 </jnt-block>

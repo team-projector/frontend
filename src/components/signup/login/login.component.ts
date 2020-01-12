@@ -11,7 +11,7 @@ import { AccessToken } from 'src/models/access-token';
 import { APPLICATION_READY } from '../../../consts';
 import { environment } from '../../../environments/environment';
 import { GqlError } from '../../../models/gql-errors';
-import { Me } from '../../../models/user';
+import { UserRole } from '../../../models/user';
 import { catchGQLErrors } from '../../../operators/catch-gql-error';
 import { getMock } from '../../../utils/mocks';
 import { GitlabLoginGQL, LoginGQL } from './login.graphql';
@@ -24,6 +24,8 @@ import { GitlabLoginGQL, LoginGQL } from './login.graphql';
 export class LoginComponent implements OnInit {
 
   ui = UI;
+  userRole = UserRole;
+  mocks = environment.mocks;
 
   progress = {gitlab: false, login: false};
   errors: GqlError[] = [];
@@ -74,6 +76,13 @@ export class LoginComponent implements OnInit {
 
   private logged(token: AccessToken) {
     this.config.token = token;
+    this.router.navigate(['/'])
+      .then(() => null);
+  }
+
+  god(role: UserRole) {
+    localStorage.setItem('role', role);
+    this.config.token = getMock(AccessToken);
     this.router.navigate(['/'])
       .then(() => null);
   }
