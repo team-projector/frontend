@@ -1,14 +1,14 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UI, validate } from 'junte-ui';
+import { Themes, UI, validate } from 'junte-ui';
 import 'reflect-metadata';
 import { of } from 'rxjs';
-import { filter, finalize, map } from 'rxjs/operators';
+import { delay, filter, finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { AppConfig } from 'src/app-config';
 import { AccessToken } from 'src/models/access-token';
-import { APPLICATION_READY } from '../../../consts';
+import { APPLICATION_READY, MOCKS_DELAY } from '../../../consts';
 import { environment } from '../../../environments/environment';
 import { GqlError } from '../../../models/gql-errors';
 import { UserRole } from '../../../models/user';
@@ -26,6 +26,8 @@ export class LoginComponent implements OnInit {
   ui = UI;
   userRole = UserRole;
   mocks = environment.mocks;
+
+  theme = !!localStorage.theme ? Themes[localStorage.theme] : Themes.light;
 
   progress = {gitlab: false, login: false};
   errors: GqlError[] = [];
@@ -63,7 +65,7 @@ export class LoginComponent implements OnInit {
   login() {
     if (validate(this.loginForm)) {
       this.progress.login = true;
-      (environment.mocks ? of(getMock(AccessToken))
+      (environment.mocks ? of(getMock(AccessToken)).pipe(delay(MOCKS_DELAY))
         : this.loginGQL.mutate(this.loginForm.value)
           .pipe(catchGQLErrors(),
             map(({data: {login: {token}}}) =>

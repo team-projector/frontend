@@ -8,7 +8,7 @@
 <jnt-block [padding]="ui.padding.large" [state]="progress.gitlab ? ui.block.state.loading : null">
   <jnt-form form [formGroup]="loginForm" (submitted)="login()" jntValidation>
     <div logo>
-      <img src="/assets/images/logo.svg" height="50">
+      <img [src]="'/assets/images/' + (theme === 'dark' ? 'logo-dark' : 'logo') + '.svg'" height="50">
     </div>
     <p *ngFor="let e of errors">{{e}}</p>
     <jnt-form-item>

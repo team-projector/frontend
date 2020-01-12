@@ -1,4 +1,4 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostBinding, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalComponent, ModalService, PopoverComponent, PopoverService, UI } from 'junte-ui';
@@ -21,18 +21,19 @@ enum Themes {
 })
 export class DashboardComponent implements OnInit {
 
-  private _theme = Themes.light;
+  private _theme = !!localStorage.theme ? Themes[localStorage.theme] : Themes.light;
 
   ui = UI;
   userRole = UserRole;
   loading = false;
   themes = Themes;
-  themeControl = new FormControl(Themes[localStorage.getItem('theme')]);
+  themeControl = new FormControl(Themes[localStorage.theme]);
 
   themeForm = this.fb.group({
     theme: this.themeControl
   });
 
+  @HostBinding('attr.theme')
   set theme(theme: Themes) {
     this._theme = theme;
     this.load(theme);
@@ -59,7 +60,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     window.postMessage(APPLICATION_READY, location.origin);
-    this._theme = Themes[localStorage.getItem('theme')];
     this.themeControl.setValue(this.theme);
     this.themeControl.valueChanges.subscribe(theme => this.theme = theme);
     this.modalService.register(this.modal);

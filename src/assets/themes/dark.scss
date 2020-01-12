@@ -31,7 +31,7 @@ $control-disabled-indicator-icon-color: $gray-800;
 $control-disabled-border-color: $highlight-background;
 $control-disabled-background: $highlight-background;
 
-$shadow-light: 0px 4px 10px rgba(255, 255, 255, 0.15);
-$shadow-normal: 0px 2px 8px rgba(255, 255, 255, 0.25);
+$shadow-light: 0 0 0 1px rgba(255, 255, 255, 0.15);
+$shadow-normal: 0 0 0 2px rgba(255, 255, 255, 0.25);
 
 @import "../../styles";
