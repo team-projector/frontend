@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class BreaksGQL extends Query<{ breaks }> {
   document = gql`
-    query TimeExpesnes($team: ID, $user: ID, $offset: Int, $first: Int) {
+    query allWorkBreaks($team: ID, $user: ID, $offset: Int, $first: Int) {
       breaks: allWorkBreaks(team: $team, user: $user, offset: $offset, first: $first) {
         count
         edges {

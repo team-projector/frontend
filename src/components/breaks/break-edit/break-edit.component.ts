@@ -6,7 +6,7 @@ import { finalize } from 'rxjs/operators';
 import { serialize } from 'serialize-ts/dist';
 import { CreateBreakGQL, EditBreakGQL } from './break-create.graphql';
 import { MeManager } from 'src/managers/me.manager';
-import { Break, BreakReason, BreakUpdate } from 'src/models/break';
+import { Break, BreakReasons, BreakUpdate } from 'src/models/break';
 import { User } from 'src/models/user';
 
 @Component({
@@ -20,7 +20,7 @@ export class BreakEditComponent {
   ui = UI;
   saving = false;
   user: User;
-  reasons = BreakReason;
+  reasons = BreakReasons;
 
   form = this.builder.group({
     id: [null],
