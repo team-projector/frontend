@@ -32,7 +32,10 @@
 
     <ng-template #formFooterTemplate>
       <jnt-form-item>
-        <jnt-button [loading]="progress.login" [type]="ui.form.button.type.submit" text="Login"
+        <jnt-button [loading]="progress.login"
+                    [type]="ui.form.button.type.submit"
+                    [icon]="ui.icons.arrowRight"
+                    text="Login"
                     [width]="ui.width.fluid">
         </jnt-button>
       </jnt-form-item>
