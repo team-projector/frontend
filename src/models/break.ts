@@ -20,7 +20,7 @@ export enum BreaksType {
   approved = 'APPROVED'
 }
 
-export enum BreakReason {
+export enum BreakReasons {
   dayoff = 'DAYOFF',
   vacation = 'VACATION',
   disease = 'DISEASE'
@@ -65,8 +65,8 @@ export class Break {
   @field({mock: ''})
   comment: string;
 
-  @field({mock: BreakReason.dayoff})
-  reason: BreakReason;
+  @field({mock: BreakReasons.dayoff})
+  reason: BreakReasons;
 
   @field({mock: BreakState.created})
   state: BreakState;
@@ -89,7 +89,7 @@ export class BreakUpdate {
   user: string;
 
   @field()
-  reason: BreakReason;
+  reason: BreakReasons;
 
   @field()
   comment: string;

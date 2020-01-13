@@ -71,6 +71,7 @@
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
+              "outputPath": "dist/en/",
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -98,6 +99,14 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "ru": {
+              "aot": true,
+              "outputPath": "dist/ru/",
+              "baseHref": "/",
+              "i18nFile": "src/locale/messages.ru.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "ru"
             }
           }
         },
@@ -112,6 +121,9 @@
             },
             "mocks": {
               "browserTarget": "team-projector:build:mocks"
+            },
+            "ru": {
+              "browserTarget": "team-projector:build:ru"
             }
           }
         },

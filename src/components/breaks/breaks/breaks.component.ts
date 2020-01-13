@@ -8,7 +8,7 @@ import { deserialize } from 'serialize-ts/dist';
 import { BreakEditComponent } from 'src/components/breaks/break-edit/break-edit.component';
 import { ApproveBreakGQL, BreaksGQL, DeleteBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
 import { MeManager } from 'src/managers/me.manager';
-import { Break, BreaksFilter, PagingBreaks, BreaksType } from 'src/models/break';
+import { Break, BreaksFilter, PagingBreaks, BreaksType, BreakReasons } from 'src/models/break';
 import { IssuesFilter } from 'src/models/issue';
 import { User } from 'src/models/user';
 import { BreakDeclineComponent} from 'src/components/breaks/break-decline/break-decline.component';
@@ -54,6 +54,7 @@ export class BreaksComponent implements OnInit {
   user: User;
   ui = UI;
   viewType = ViewType;
+  reasons = BreakReasons;
   features = TableFeatures;
   approves = BreaksType;
   breaks: Break[] = [];
