@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from 'junte-ui';
 import { SalariesRoutingModule } from 'src/components/developer/salaries/salaries-routing.module';
-import { SalariesComponent } from 'src/components/salaries/salaries/salaries.component';
+import { SalariesComponent } from 'src/components/salaries/salaries.component';
 import { SalaryDetailWidgetModule } from 'src/components/salaries/salary-detail-widget/salary-detail-widget.module';
 import { SalaryMetricsComponent } from 'src/components/salaries/salary-metrics/salary-metrics.component';
 import { CurrencyRublePipeModule } from 'src/pipes/currency-ruble.module';

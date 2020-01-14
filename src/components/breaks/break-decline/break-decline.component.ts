@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UI } from 'junte-ui';
-import { DeclineBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
+import { DeclineWorkBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
 import { Break, BreakDecline } from 'src/models/break';
 
 @Component({
@@ -33,7 +33,7 @@ export class BreakDeclineComponent {
   @Output() canceled = new EventEmitter<any>();
 
   constructor(private builder: FormBuilder,
-              private declineBreakGQL: DeclineBreakGQL) {
+              private declineBreakGQL: DeclineWorkBreakGQL) {
   }
 
   decline() {

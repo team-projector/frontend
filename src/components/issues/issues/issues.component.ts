@@ -1,20 +1,19 @@
-import { CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { of } from 'rxjs';
-import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
+import { of } from 'rxjs';
 import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
+import { field, model } from 'src/decorators/model';
+import { environment } from 'src/environments/environment';
 import { IssueProblem, IssueState, IssuesType } from 'src/models/enums/issue';
 import { IssuesFilter, IssuesSummary, PagingIssues } from 'src/models/issue';
 import { StandardLabel } from 'src/models/label';
 import { DateSerializer } from 'src/serializers/date';
-import { environment } from '../../../environments/environment';
-import { getMock } from '../../../utils/mocks';
+import { getMock } from 'src/utils/mocks';
 import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
 
 export enum ViewType {

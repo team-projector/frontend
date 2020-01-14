@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { User } from 'src/models/user';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from 'junte-ui';
+import { combineLatest } from 'rxjs';
+import { serialize } from 'serialize-ts/dist';
+import { SalariesState } from 'src/components/salaries/salaries.component';
+import { UserMetrics } from 'src/models/user';
 
 @Component({
   selector: 'app-salaries-list',
@@ -11,13 +14,39 @@ import { UI } from 'junte-ui';
 
 export class SalariesListComponent implements OnInit {
 
-  user: User;
+  private _state = new SalariesState();
   ui = UI;
+  metrics: UserMetrics;
 
-  constructor(private route: ActivatedRoute) {
+  set state(state: SalariesState) {
+    this._state = state;
+    this.router.navigate([this.getState(serialize(state))],
+      {relativeTo: this.route}).then(() => null);
+  }
+
+  get state() {
+    return this._state;
+  }
+
+  constructor(private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
-    this.route.data.subscribe(({user}) => this.user = user);
+    combineLatest([this.route.data, this.route.params])
+      .subscribe(([{user}, {first, offset}]) => {
+        this.state = new SalariesState({
+          first: +first || undefined,
+          offset: +offset || undefined,
+          user: !!user ? user.id : user
+        });
+
+        this.metrics = user.metrics;
+      });
+  }
+
+  getState(state: Object) {
+    delete state['user'];
+    return state;
   }
 }
