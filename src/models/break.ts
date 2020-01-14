@@ -8,9 +8,9 @@ import { Paging } from './paging';
 import { User } from './user';
 
 export enum BreakState {
-  created = 'created',
-  decline = 'decline',
-  approved = 'approved'
+  created = 'CREATED',
+  decline = 'DECLINED',
+  approved = 'APPROVED'
 }
 
 export enum BreaksType {

@@ -25,6 +25,7 @@ export class BreaksGQL extends Query<{ breaks }> {
             approveState
             approvedBy {
               name
+              glAvatar
             }
             approvedAt
           }

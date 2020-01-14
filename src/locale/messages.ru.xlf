@@ -260,6 +260,26 @@
               <source>Decline</source>
               <target>Отклонить</target>
       </trans-unit>
+      <trans-unit id="approveApproved" datatype="html">
+              <source>Approved</source>
+              <target>Одобрено</target>
+      </trans-unit>
+      <trans-unit id="approveDeclined" datatype="html">
+              <source>Declined</source>
+              <target>Отклонено</target>
+      </trans-unit>
+      <trans-unit id="approveCreated" datatype="html">
+              <source>Created</source>
+              <target>Запрос открыт</target>
+      </trans-unit>
+      <trans-unit id="breakState" datatype="html">
+              <source>State</source>
+              <target>Состояние</target>
+      </trans-unit>
+      <trans-unit id="declineReason" datatype="html">
+              <source>Decline Reason</source>
+              <target>Причина отказа</target>
+      </trans-unit>
       <trans-unit id="add_break" datatype="html">
               <source>Add break</source>
               <target>Добавить перерыв</target>
