@@ -1,9 +1,8 @@
 <jnt-row>
   <jnt-col [desktop]="9" [tablet]="12">
-    <app-salaries [user]="user?.id" salary></app-salaries>
+    <app-salaries [(state)]="state" salary></app-salaries>
   </jnt-col>
   <jnt-col [desktop]="3" [tablet]="12">
-    <app-salary-metrics [metrics]="user?.metrics"></app-salary-metrics>
+    <app-salary-metrics [metrics]="metrics"></app-salary-metrics>
   </jnt-col>
 </jnt-row>
-
