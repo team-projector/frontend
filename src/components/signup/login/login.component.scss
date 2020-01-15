@@ -9,16 +9,14 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: #dd3e54;
-  background: -webkit-linear-gradient(to right, #6be585, #dd3e54);
-  background: linear-gradient(to right, #6be585, #dd3e54);
+  background: url('/assets/images/login.jpg') no-repeat center;
+  background-size: cover;
 
 }
 
 :host-context([theme='dark']) {
-  background: #c31432;
-  background: -webkit-linear-gradient(to right, #240b36, #c31432);
-  background: linear-gradient(to right, #240b36, #c31432);
+  background: url('/assets/images/login-dark.jpg') no-repeat center;
+  background-size: cover;
 }
 
 [admin] {
