@@ -1,12 +1,14 @@
 <jnt-app-aside #aside>
-  <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
-    <jnt-menu-item [link]="['issues']" [matching]="ui.url.matching.wildcard" title="Issues"
-                   [icon]="ui.icons.dashboard"></jnt-menu-item>
-    <jnt-menu-item [link]="['salaries']" [matching]="ui.url.matching.wildcard" title="Salaries"
-                   [icon]="ui.icons.money"></jnt-menu-item>
-    <jnt-menu-item [link]="['breaks']" [matching]="ui.url.matching.wildcard" title="Work breaks"
-                   [icon]="ui.icons.cup"></jnt-menu-item>
-  </jnt-menu>
+  <ng-template #contentTemplate>
+    <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
+      <jnt-menu-item [link]="['issues']" [matching]="ui.url.matching.wildcard" title="Issues"
+                     [icon]="ui.icons.dashboard"></jnt-menu-item>
+      <jnt-menu-item [link]="['salaries']" [matching]="ui.url.matching.wildcard" title="Salaries"
+                     [icon]="ui.icons.money"></jnt-menu-item>
+      <jnt-menu-item [link]="['breaks']" [matching]="ui.url.matching.wildcard" title="Work breaks"
+                     [icon]="ui.icons.cup"></jnt-menu-item>
+    </jnt-menu>
+  </ng-template>
 </jnt-app-aside>
 <jnt-app-content [aside]="aside">
   <jnt-app-sub-header (burger)="aside.toggle()">
