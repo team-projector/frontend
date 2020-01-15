@@ -30,7 +30,7 @@ export class MilestoneIssuesSummaryGQL extends Query<{ summary }> {
 export class AllTicketsGQL extends Query<{ allTickets }> {
   document = gql`
     query AllTickets($milestone: ID!, $offset: Int, $first: Int) {
-      allTickets(milestone: $milestone, orderBy: "dueDate,title", offset: $offset, first: $first) {
+      allTickets(milestone: $milestone, orderBy: "dueDate,startDate,title", offset: $offset, first: $first) {
         count
         edges {
           node {
@@ -41,6 +41,7 @@ export class AllTicketsGQL extends Query<{ allTickets }> {
             startDate
             dueDate
             url
+            problems
             metrics {
               budgetEstimate
               budgetRemains

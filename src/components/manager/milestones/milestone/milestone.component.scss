@@ -25,6 +25,10 @@
     border-bottom-right-radius: 0;
   }
 
+  &[over-due='true'] {
+    border-right: 10px solid $fail-color;
+  }
+
   [label] {
     position: absolute;
     font-size: $font-size-small;

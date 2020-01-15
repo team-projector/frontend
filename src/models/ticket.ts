@@ -1,4 +1,5 @@
-import { field, model } from '../decorators/model';
+import * as faker from 'faker';
+import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
@@ -9,8 +10,8 @@ import { Project } from 'src/models/project';
 import { User } from 'src/models/user';
 import { DateSerializer } from 'src/serializers/date';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
-import * as faker from 'faker';
-import { helpers } from 'faker';
+import { field, model } from '../decorators/model';
+import { TicketProblem } from './enums/ticket';
 
 export enum TicketTypes {
   feature = 'FEATURE',
@@ -133,6 +134,12 @@ export class Ticket {
 
   @field()
   metrics: TicketMetrics;
+
+  @field({
+    mock: [],
+    serializer: new ArraySerializer(new PrimitiveSerializer())
+  })
+  problems: TicketProblem[];
 }
 
 
