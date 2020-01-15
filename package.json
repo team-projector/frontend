@@ -42,7 +42,7 @@
     "graphql-tag": "^2.10.0",
     "graphql-tools": "^4.0.5",
     "junte-angular": "~0.0.46",
-    "junte-ui": "0.0.335",
+    "junte-ui": "0.0.336",
     "ngx-date-fns": "4.0.3",
     "rxjs": "~6.5.3",
     "serialize-ts": "2.5.4",
