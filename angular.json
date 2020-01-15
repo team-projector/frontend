@@ -90,6 +90,7 @@
                   "with": "src/environments/environment.mocks.ts"
                 }
               ],
+              "outputPath": "dist/en/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
