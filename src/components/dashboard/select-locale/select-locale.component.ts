@@ -44,11 +44,11 @@ export class SelectLocaleComponent implements OnInit {
       if (selected !== DEFAULT_LOCALE) {
         this.cookie.set(COOKIE_LOCALE_KEY, selected);
       } else {
-        this.cookie.delete(COOKIE_LOCALE_KEY);
+        this.cookie.delete(COOKIE_LOCALE_KEY, '/');
       }
 
 
-      setTimeout(() => document.location.reload(), 5000);
+      setTimeout(() => document.location.reload(), 1000);
     });
 
   }
