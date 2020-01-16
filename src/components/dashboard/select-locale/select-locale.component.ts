@@ -48,7 +48,7 @@ export class SelectLocaleComponent implements OnInit {
       }
 
 
-      setTimeout(() => document.location.reload(), 500);
+      setTimeout(() => document.location.reload(), 5000);
     });
 
   }
