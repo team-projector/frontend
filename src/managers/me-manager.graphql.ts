@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class MeManagerGQL extends Query<{me}> {
   document = gql`
-    query MeManager {
+    query {
       me {
         id
         name

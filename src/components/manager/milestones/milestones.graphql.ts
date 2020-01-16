@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class SyncMilestoneGQL extends Mutation<{ syncMilestone: { milestone: { id } } }> {
   document = gql`
-    mutation SyncMilestone($id: ID) {
+    mutation ($id: ID) {
       syncMilestone(id: $id) {
         milestone {
           id
@@ -22,7 +22,7 @@ export class SyncMilestoneGQL extends Mutation<{ syncMilestone: { milestone: { i
 })
 export class AllMilestonesGQL extends Query<{allMilestones}> {
   document = gql`
-    query AllMilestones($orderBy: String, $offset: Int, $first: Int) {
+    query ($orderBy: String, $offset: Int, $first: Int) {
       allMilestones(active: true, orderBy: $orderBy, offset: $offset, first: $first) {
         count
         edges {

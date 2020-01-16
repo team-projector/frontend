@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class SalaryGQL extends Query<{salary}> {
   document = gql`
-    query Salary($salary: ID!){
+    query ($salary: ID!){
       salary (id: $salary) {
         id
         createdAt

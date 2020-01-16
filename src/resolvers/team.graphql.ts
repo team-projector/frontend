@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class TeamGQL extends Query<{team}> {
   document = gql`
-    query Team($team: ID!) {
+    query ($team: ID!) {
       team(id: $team) {
         id
         title
