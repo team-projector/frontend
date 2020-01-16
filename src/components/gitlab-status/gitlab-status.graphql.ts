@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class GitlabStatusGQL extends Query<{gitlabStatus}> {
   document = gql`
-    query GitlabStatus {
+    query {
       gitlabStatus {
         services {
           name

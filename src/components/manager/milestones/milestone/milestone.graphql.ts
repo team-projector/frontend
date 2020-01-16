@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class MilestoneIssuesSummaryGQL extends Query<{ summary }> {
   document = gql`
-    query IssuesSummary($milestone: ID,$ticket: ID, $team: ID, $dueDate: Date) {
+    query ($milestone: ID,$ticket: ID, $team: ID, $dueDate: Date) {
       summary: issuesSummary(milestone: $milestone, ticket: $ticket, team: $team, dueDate: $dueDate) {
         teams {
           team {
@@ -29,7 +29,7 @@ export class MilestoneIssuesSummaryGQL extends Query<{ summary }> {
 })
 export class AllTicketsGQL extends Query<{ allTickets }> {
   document = gql`
-    query AllTickets($milestone: ID!, $offset: Int, $first: Int) {
+    query ($milestone: ID!, $offset: Int, $first: Int) {
       allTickets(milestone: $milestone, orderBy: "dueDate,startDate,title", offset: $offset, first: $first) {
         count
         edges {
@@ -65,7 +65,7 @@ export class AllTicketsGQL extends Query<{ allTickets }> {
 })
 export class TicketIssuesGQL extends Query<{ ticket: { issues } }> {
   document = gql`
-    query TicketIssues($ticket: ID!) {
+    query ($ticket: ID!) {
       ticket(id: $ticket) {
         issues {
           count

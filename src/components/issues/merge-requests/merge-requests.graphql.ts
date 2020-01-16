@@ -7,7 +7,7 @@ import { Query } from 'apollo-angular';
 })
 export class MergeRequestsGQL extends Query<{ mergeRequests }> {
   document = gql`
-    query MergeRequests($team: ID, $user: ID, $project: ID, $state: String, $orderBy: String, $offset: Int, $first: Int) {
+    query ($team: ID, $user: ID, $project: ID, $state: String, $orderBy: String, $offset: Int, $first: Int) {
       mergeRequests: allMergeRequests(team: $team, user: $user, project: $project, state: $state, orderBy: $orderBy, offset: $offset, first: $first) {
         count
         edges {
@@ -63,7 +63,7 @@ export class MergeRequestsGQL extends Query<{ mergeRequests }> {
 })
 export class MergeRequestSummaryGQL extends Query<{ summary }> {
   document = gql`
-    query MergeRequestsSummaryType($team: ID, $user: ID, $project: ID) {
+    query ($team: ID, $user: ID, $project: ID) {
       summary: mergeRequestsSummary(team: $team, user: $user, project: $project) {
         count
         openedCount

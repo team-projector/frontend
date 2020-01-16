@@ -5,9 +5,9 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class BreaksGQL extends Query<{ breaks }> {
+export class AllWorkBreaks extends Query<{ breaks }> {
   document = gql`
-    query TimeExpesnes($team: ID, $user: ID, $offset: Int, $first: Int) {
+    query ($team: ID, $user: ID, $offset: Int, $first: Int) {
       breaks: allWorkBreaks(team: $team, user: $user, offset: $offset, first: $first) {
         count
         edges {
@@ -37,7 +37,7 @@ export class BreaksGQL extends Query<{ breaks }> {
 @Injectable({
   providedIn: 'root'
 })
-export class DeleteBreakGQL extends Query<{ break }> {
+export class DeleteWorkBreakGQL extends Query<{ break }> {
   document = gql`
     mutation ($id: ID!) {
       deleteWorkBreak(id: $id) {
@@ -50,7 +50,7 @@ export class DeleteBreakGQL extends Query<{ break }> {
 @Injectable({
   providedIn: 'root'
 })
-export class ApproveBreakGQL extends Query<{ break }> {
+export class ApproveWorkBreakGQL extends Query<{ break }> {
   document = gql`
     mutation ($id: ID!) {
       approveWorkBreak(id: $id) {
@@ -65,7 +65,7 @@ export class ApproveBreakGQL extends Query<{ break }> {
 @Injectable({
   providedIn: 'root'
 })
-export class DeclineBreakGQL extends Query<{ break }> {
+export class DeclineWorkBreakGQL extends Query<{ break }> {
   document = gql`
     mutation ($id: ID!, $declineReason: String!) {
       declineWorkBreak(id: $id, declineReason: $declineReason) {

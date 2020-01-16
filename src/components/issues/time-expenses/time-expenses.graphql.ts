@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
   document = gql`
-    query TimeExpenses ($team: ID, $user: ID, $salary: ID, $date: Date, $offset: Int, $first: Int, $state: String) {
+    query ($team: ID, $user: ID, $salary: ID, $date: Date, $offset: Int, $first: Int, $state: String) {
       allSpentTimes(team: $team, user: $user, salary: $salary, date: $date, offset: $offset, first: $first, state: $state) {
         count
         edges {
@@ -46,7 +46,7 @@ export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
 })
 export class TimeExpensesSummaryGQL extends Query<{ spentTimes }> {
   document = gql`
-    query TimeExpensesSummaryType($team: ID, $user: ID, $date: Date) {
+    query ($team: ID, $user: ID, $date: Date) {
       spentTimes: spentTimesSummary(team: $team, user: $user, date: $date) {
         spent
         openedSpent

@@ -7,33 +7,33 @@ import gql from 'graphql-tag';
 })
 export class AllTeamsGQL extends Query<{ teams }> {
   document = gql`
-    query AllTeams($first: Int) {
-  teams: allTeams(first: $first) {
-    count
-    edges {
-      node {
-        id
-        title
-        members(first: 4, roles: "developer") {
-          count
-          edges {
-            node {
-              user {
-                glAvatar
+    query ($first: Int) {
+      teams: allTeams(first: $first) {
+        count
+        edges {
+          node {
+            id
+            title
+            members(first: 4, roles: "developer") {
+              count
+              edges {
+                node {
+                  user {
+                    glAvatar
+                  }
+                }
               }
+            }
+            metrics {
+              issues {
+                count
+                openedCount
+                openedEstimated
+              }
+              problemsCount
             }
           }
         }
-        metrics {
-          issues {
-            count
-            openedCount
-            openedEstimated
-          }
-          problemsCount
-        }
       }
-    }
-  }
-}`;
+    }`;
 }

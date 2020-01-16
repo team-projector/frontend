@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class ProjectGQL extends Query<{project}> {
   document = gql`
-    query Project($project: ID!) {
+    query ($project: ID!) {
       project (id: $project) {
         id
         title
