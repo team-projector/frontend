@@ -4,10 +4,10 @@ import { Router } from '@angular/router';
 import { ModalComponent, ModalService, PopoverComponent, PopoverService, UI } from 'junte-ui';
 import { AppConfig } from '../../app-config';
 import { MeManager } from '../../managers/me.manager';
+import { Locales } from '../../models/enums/locales';
 import { UserRole } from '../../models/user';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
 import { APPLICATION_READY } from '../../consts';
-
 
 enum Themes {
   light = 'light',
@@ -27,6 +27,7 @@ export class DashboardComponent implements OnInit {
   userRole = UserRole;
   loading = false;
   themes = Themes;
+  locales = Locales
   themeControl = new FormControl(Themes[localStorage.theme]);
 
   themeForm = this.fb.group({

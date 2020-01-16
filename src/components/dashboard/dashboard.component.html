@@ -8,17 +8,20 @@
     <ng-template #topMenu>
       <jnt-menu>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.developer)"
-                       [link]="['/developer']" [matching]="ui.url.matching.wildcard" title="Developer"></jnt-menu-item>
+                       title="Developer"
+                       [link]="['/developer']" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.teamLeader)"
-                       [link]="['/leader']" [matching]="ui.url.matching.wildcard" title="Team Leader"></jnt-menu-item>
+                       title="Team Leader"
+                       [link]="['/leader']" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.projectManager)"
-                       [link]="['/manager']" [matching]="ui.url.matching.wildcard"
-                       title="Project Manager"></jnt-menu-item>
+                       title="Project Manager"
+                       [link]="['/manager']" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.customer)"
-                       [link]="['/customer']" [matching]="ui.url.matching.wildcard" title="Customer"></jnt-menu-item>
+                       title="Customer"
+                       [link]="['/customer']" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.shareholder)"
-                       [link]="['/shareholder']" [matching]="ui.url.matching.wildcard"
-                       title="Shareholder"></jnt-menu-item>
+                       title="Shareholder"
+                       [link]="['/shareholder']" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
       </jnt-menu>
     </ng-template>
 
@@ -47,6 +50,7 @@
                       [image]="me.user?.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
         </ng-template>
         <ng-template #userMenu>
+          <app-select-locale></app-select-locale>
           <p>{{me.user?.name}}</p>
           <jnt-user-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
             <jnt-button *ngIf="config.token" (click)="logout()"

@@ -1,0 +1,9 @@
+<jnt-form [formGroup]="form">
+  <jnt-select formControlName="locale" [allowEmpty]="false">
+    <jnt-select-option [icon]="ui.icons.usa"
+                       label="English"
+                       [key]="locales.en"></jnt-select-option>
+    <jnt-select-option [icon]="ui.icons.russia"
+                       label="Russian" [key]="locales.ru"></jnt-select-option>
+  </jnt-select>
+</jnt-form>

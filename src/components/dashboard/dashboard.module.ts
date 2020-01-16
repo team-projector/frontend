@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from 'junte-ui';
+import { CookieService } from 'ngx-cookie-service';
 import { IssuesModule } from 'src/components/issues/issues.module';
 import { AuthorizationGuard } from '../../guards/authorization.guard';
 import { ArrayPipesModule } from '../../pipes/array-pipes.module';
@@ -10,12 +11,14 @@ import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component'
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { DifferencePipe } from './dashboard.pipe';
+import { SelectLocaleComponent } from './select-locale/select-locale.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     GitlabStatusComponent,
-    DifferencePipe
+    DifferencePipe,
+    SelectLocaleComponent
   ],
   imports: [
     CommonModule,
@@ -27,7 +30,8 @@ import { DifferencePipe } from './dashboard.pipe';
     IssuesModule
   ],
   providers: [
-    AuthorizationGuard
+    AuthorizationGuard,
+    CookieService
   ]
 })
 export class DashboardModule {
