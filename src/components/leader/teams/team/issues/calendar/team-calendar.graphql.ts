@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class CalendarMembersGQL extends Query<{team: {members}}> {
   document = gql`
-    query CalendarMember($team: ID!) {
+    query ($team: ID!) {
       team(id: $team) {
         members(roles: "DEVELOPER", orderBy: "user__name") {
           count
@@ -38,7 +38,7 @@ export class CalendarMembersGQL extends Query<{team: {members}}> {
 })
 export class CalendarMetricsGQL extends Query<{teamProgressMetrics}> {
   document = gql`
-    query CalendarMetrics($team: ID!, $start: Date!, $end: Date!, $group: String!) {
+    query ($team: ID!, $start: Date!, $end: Date!, $group: String!) {
       teamProgressMetrics(team: $team, start: $start, end: $end, group: $group) {
         user {
           id

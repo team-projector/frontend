@@ -5,9 +5,9 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class UserGQL extends Query<{user}> {
+export class UserGQL extends Query<{ user }> {
   document = gql`
-    query User($user: ID!) {
+    query ($user: ID!) {
       user (id: $user) {
         id
         name

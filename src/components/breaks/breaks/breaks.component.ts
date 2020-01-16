@@ -6,7 +6,7 @@ import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, ModalOptions, ModalService, Tab
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { BreakEditComponent } from 'src/components/breaks/break-edit/break-edit.component';
-import { ApproveBreakGQL, BreaksGQL, DeleteBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
+import { ApproveWorkBreakGQL, AllWorkBreaks, DeleteWorkBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
 import { MeManager } from 'src/managers/me.manager';
 import { Break, BreaksFilter, PagingBreaks, BreaksType, BreakReasons } from 'src/models/break';
 import { IssuesFilter } from 'src/models/issue';
@@ -102,9 +102,9 @@ export class BreaksComponent implements OnInit {
   @ViewChild('table', {static: true})
   table: TableComponent;
 
-  constructor(private breaksGQL: BreaksGQL,
-              private deleteBreakGQL: DeleteBreakGQL,
-              private approveBreakGQL: ApproveBreakGQL,
+  constructor(private breaksGQL: AllWorkBreaks,
+              private deleteBreakGQL: DeleteWorkBreakGQL,
+              private approveBreakGQL: ApproveWorkBreakGQL,
               private builder: FormBuilder,
               private injector: Injector,
               private cfr: ComponentFactoryResolver,

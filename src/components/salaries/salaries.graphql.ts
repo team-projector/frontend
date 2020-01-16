@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class AllSalariesGQL extends Query<{allSalaries}> {
   document = gql`
-    query AllSalaries($user: ID, $offset: Int, $first: Int){
+    query ($user: ID, $offset: Int, $first: Int){
       allSalaries (user: $user, offset: $offset, first: $first) {
         count
         edges {

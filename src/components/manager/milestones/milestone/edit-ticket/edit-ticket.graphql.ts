@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class GetTicketGQL extends Query<{ ticket }> {
   document = gql`
-    query GetTicket($ticket: ID!) {
+    query ($ticket: ID!) {
       ticket(id: $ticket) {
         id
         type

@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class IssuesMetricsGQL extends Query<{ userProgressMetrics }> {
   document = gql`
-    query UserProgressMetrics($user: ID!, $start: Date!, $end: Date!, $group: String!) {
+    query ($user: ID!, $start: Date!, $end: Date!, $group: String!) {
       userProgressMetrics(user: $user, start: $start, end: $end, group: $group) {
         start
         end
@@ -28,7 +28,7 @@ export class IssuesMetricsGQL extends Query<{ userProgressMetrics }> {
 })
 export class IssuesSummaryGQL extends Query<{ issues, mergeRequests, spentTimes }> {
   document = gql`
-    query IssuesSummary($user: ID, $dueDate: Date) {
+    query ($user: ID, $dueDate: Date) {
       issues: issuesSummary(user: $user, dueDate: $dueDate, state: "OPENED") {
         count
         problemsCount,
