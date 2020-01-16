@@ -47,7 +47,8 @@ export class SelectLocaleComponent implements OnInit {
         this.cookie.delete(COOKIE_LOCALE_KEY);
       }
 
-      document.location.reload();
+
+      setTimeout(() => document.location.reload(), 500);
     });
 
   }
