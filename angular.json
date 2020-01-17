@@ -71,6 +71,7 @@
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
+              "baseHref": "/",
               "outputPath": "dist/en/",
               "extractLicenses": true,
               "vendorChunk": false,
@@ -90,21 +91,44 @@
                   "with": "src/environments/environment.mocks.ts"
                 }
               ],
-              "outputPath": "dist/en/",
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
+              "baseHref": "/",
+              "outputPath": "dist/en/",
               "extractLicenses": true,
               "vendorChunk": false,
-              "buildOptimizer": true
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ]
             },
             "ru": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
               "aot": true,
-              "outputPath": "dist/ru/",
               "baseHref": "/",
+              "outputPath": "dist/ru/",
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                }
+              ],
               "i18nFile": "src/locale/messages.ru.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "ru"

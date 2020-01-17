@@ -42,7 +42,7 @@ export class SelectLocaleComponent implements OnInit {
 
     this.localeControl.valueChanges.subscribe(selected => {
       if (selected !== DEFAULT_LOCALE) {
-        this.cookie.set(COOKIE_LOCALE_KEY, selected);
+        this.cookie.set(COOKIE_LOCALE_KEY, selected, null, '/');
       } else {
         this.cookie.delete(COOKIE_LOCALE_KEY, '/');
       }
