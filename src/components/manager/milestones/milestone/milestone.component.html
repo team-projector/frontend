@@ -23,7 +23,7 @@
               <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
                    [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)"
                    [attr.over-due]="ticket.problems | includes:ticketProblem.overDueDate" period>
-                <div *ngIf="ticket.metrics.issuesOpenedCount" label>{{ticket.metrics.timeRemains | duration}}</div>
+                <div *ngIf="ticket.metrics.issuesOpenedCount" label>{{ticket.metrics.timeRemains | duration:durationFormat.short}}</div>
                 <div progress [style.transform]="'translateX(-' + (ticket.metrics.issuesOpenedCount
                   ? 100 - ticket.metrics.timeSpent / ticket.metrics.timeEstimate * 100 : 0) + '%)'">
                 </div>
@@ -96,7 +96,7 @@
           </jnt-gantt-line>
 
           <ng-template #noIssuesTemplate>
-            <ng-template #loadingIssues>
+            <ng-template #loadingIssuesTemplate>
               <jnt-gantt-line>
                 <ng-template #title>
                   <jnt-skeleton [type]="ui.skeleton.type.text"
@@ -104,7 +104,7 @@
                 </ng-template>
               </jnt-gantt-line>
             </ng-template>
-            <ng-container *ngIf="!loading.issues; else loadingIssues">
+            <ng-container *ngIf="!loading.issues; else loadingIssuesTemplate">
               <jnt-gantt-line>
                 <ng-template #title>
                   <p>No one issue has been attached to ticket.</p>
@@ -116,13 +116,13 @@
             <ng-container *ngIf="!!issues.length; else noIssuesTemplate">
               <jnt-gantt-line *ngFor="let issue of issues"
                               [period]="issue"
-                              [from]="ticket.startDate"
+                              [from]="[ticket.startDate, issue.dueDate] | dfnsMin"
                               [to]="issue.dueDate">
                 <ng-template #indicator let-period="period" let-current="current">
                   <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
                        [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)" period>
                     <ng-container *ngIf="issue.timeEstimate">
-                      <div label>{{issue.metrics.remains | duration}}</div>
+                      <div label>{{issue.metrics.remains | duration:durationFormat.short}}</div>
                       <div progress [style.transform]="'translateX(-' + (issue.timeEstimate
                   ? 100 - issue.totalTimeSpent / issue.timeEstimate * 100 : 0) + '%)'">
                       </div>
