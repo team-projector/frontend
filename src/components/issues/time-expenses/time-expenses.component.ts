@@ -1,12 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI } from 'junte-ui';
 import { distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
+import { field, model } from 'src/decorators/model';
 import { IssueState } from 'src/models/enums/issue';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter, TimeExpenseState } from 'src/models/spent-time';
 import { DateSerializer } from 'src/serializers/date';
@@ -139,7 +139,7 @@ export class TimeExpensesComponent implements OnInit {
         this.filter = new TimeExpensesFilter({
           offset: offset,
           first: first,
-          state: state,
+          state: state !== TimeExpenseState.all ? state : undefined,
           orderBy: state === TimeExpenseState.opened ? 'dueDate' : '-closedAt',
           project: project,
           salary: salary,
