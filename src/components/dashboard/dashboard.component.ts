@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('modal', {static: true}) modal: ModalComponent;
   @ViewChild('popover', {static: true}) popover: PopoverComponent;
 
-  @ViewChild(GitlabStatusComponent, {static: false})
+  @ViewChild(GitlabStatusComponent)
   gitlabStatus: GitlabStatusComponent;
 
   constructor(@Inject(AppConfig) public config: AppConfig,

@@ -1,4 +1,4 @@
-FROM node:10.9 as build
+FROM node:10.13 as build
 
 ARG BUILD_COMMAND="npm run build"
 
