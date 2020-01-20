@@ -5,6 +5,10 @@
   "projects": {
     "team-projector": {
       "i18n": {
+        "sourceLocale": {
+          "code": "en",
+          "baseHref": "/"
+        },
         "locales": {
           "ru": {
             "translation": "src/locale/messages.ru.xlf",
@@ -117,7 +121,7 @@
               "namedChunks": false,
               "aot": true,
               "baseHref": "/",
-              "outputPath": "dist/en/",
+              "outputPath": "dist/",
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
