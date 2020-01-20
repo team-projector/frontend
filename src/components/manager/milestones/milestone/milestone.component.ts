@@ -3,7 +3,7 @@ import { Component, ComponentFactoryResolver, Injector, Input, OnInit } from '@a
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { R } from 'apollo-angular/types';
-import { isEqual, ModalOptions, ModalService, UI } from 'junte-ui';
+import { ModalOptions, ModalService, UI } from 'junte-ui';
 import { of } from 'rxjs';
 import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
@@ -105,9 +105,8 @@ export class MilestoneComponent implements OnInit {
       ? of(getMock(PagingTickets)).pipe(delay(MOCKS_DELAY))
       : this.allTicketsGQL.fetch(serialize(filter) as R).pipe(
         map(({data: {allTickets}}) => deserialize(allTickets, PagingTickets))))
-      .pipe(
-      finalize(() => this.loading.tickets = false)
-    ).subscribe(tickets => this.tickets = tickets.results);
+      .pipe(finalize(() => this.loading.tickets = false))
+      .subscribe(tickets => this.tickets = tickets.results);
   }
 
   private loadIssues(ticket: string) {

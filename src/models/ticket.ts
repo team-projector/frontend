@@ -134,7 +134,7 @@ export class Ticket {
   @field({mock: () => faker.internet.url()})
   url: string;
 
-  @field({serializer: new EdgesToArray(Issue)})
+  @field({mock: {type: Issue, length: 5}, serializer: new EdgesToArray(Issue)})
   issues: Issue[];
 
   @field()
