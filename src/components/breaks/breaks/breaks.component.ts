@@ -1,17 +1,21 @@
 import { Component, ComponentFactoryResolver, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, ModalOptions, ModalService, TableComponent, TableFeatures, UI } from 'junte-ui';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { delay, distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
+import { BreakDeclineComponent } from 'src/components/breaks/break-decline/break-decline.component';
 import { BreakEditComponent } from 'src/components/breaks/break-edit/break-edit.component';
-import { ApproveWorkBreakGQL, AllWorkBreaks, DeleteWorkBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
+import { AllWorkBreaks, ApproveWorkBreakGQL, DeleteWorkBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
+import { MOCKS_DELAY } from 'src/consts';
+import { field, model } from 'src/decorators/model';
+import { environment } from 'src/environments/environment.mocks';
 import { MeManager } from 'src/managers/me.manager';
-import { Break, BreaksFilter, PagingBreaks, BreaksType, BreakReasons } from 'src/models/break';
+import { Break, BreakReasons, BreaksFilter, BreaksType, PagingBreaks } from 'src/models/break';
 import { IssuesFilter } from 'src/models/issue';
 import { User } from 'src/models/user';
-import { BreakDeclineComponent} from 'src/components/breaks/break-decline/break-decline.component';
+import { getMock } from 'src/utils/mocks';
 
 export enum ViewType {
   default,
@@ -114,11 +118,11 @@ export class BreaksComponent implements OnInit {
 
   ngOnInit() {
     this.table.fetcher = () => {
-      return this.breaksGQL.fetch(this.filter as R)
+      return environment.mocks ? of(getMock(PagingBreaks)).pipe(delay(MOCKS_DELAY))
+        : this.breaksGQL.fetch(this.filter as R)
         .pipe(map(({data: {breaks}}) =>
           deserialize(breaks, PagingBreaks)));
     };
-    console.log(this.approves);
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
       .subscribe(({table: {offset, first, q}, team, user}) => {
         this.stateChange.emit(new BreaksState({
@@ -151,12 +155,14 @@ export class BreaksComponent implements OnInit {
   }
 
   delete(id: string) {
-    this.deleteBreakGQL.fetch({id})
+    (environment.mocks ? of(null)
+      : this.deleteBreakGQL.fetch({id}))
       .subscribe(() => this.table.load());
   }
 
   approve(id: string) {
-    this.approveBreakGQL.fetch({id})
+    (environment.mocks ? of(null)
+      : this.approveBreakGQL.fetch({id}))
       .subscribe(() => this.table.load());
   }
 

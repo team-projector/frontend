@@ -7,7 +7,7 @@ import { BehaviorSubject, combineLatest, of, zip } from 'rxjs';
 import { delay, distinctUntilChanged, filter as filtering, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MetricsGroup, TeamMetricsFilter, TeamProgressMetrics, UserProgressMetrics } from 'src/models/metrics';
-import { PagingTeamMembers, PagingTeams, Team, TeamMember } from 'src/models/team';
+import { PagingTeamMembers, Team, TeamMember } from 'src/models/team';
 import { User, UserProblem } from 'src/models/user';
 import { DurationFormat } from 'src/pipes/date';
 import { equals } from 'src/utils/equals';
@@ -139,9 +139,11 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
         end: endOfWeek(this.start, {weekStartsOn: 1}),
         group: group
       });
-      return this.calendarMetrics.fetch(serialize(filter) as R).pipe(
-        filtering(({data: {teamProgressMetrics}}) => !!teamProgressMetrics),
-        map(({data: {teamProgressMetrics}}) => teamProgressMetrics.map(el => deserialize(el, TeamProgressMetrics))),
+      return (environment.mocks
+        ? of(getMock(TeamProgressMetrics)).pipe(delay(MOCKS_DELAY))
+        : this.calendarMetrics.fetch(serialize(filter) as R).pipe(
+          filtering(({data: {teamProgressMetrics}}) => !!teamProgressMetrics),
+          map(({data: {teamProgressMetrics}}) => teamProgressMetrics.map(el => deserialize(el, TeamProgressMetrics))))).pipe(
         map(metrics => {
           const dic = new Map<string, Map<string, UserProgressMetrics>>();
           metrics.forEach(m => {
@@ -149,6 +151,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
             m.metrics.forEach(metric => userDic.set(metric.getKey(), metric));
             dic.set(m.user.id.toString(), userDic);
           });
+
           return dic;
         }));
     };

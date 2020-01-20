@@ -19,31 +19,28 @@ export enum TimeExpenseState {
 @model()
 export class SpentTime {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   id: number;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
 
   @field({
     serializer: new DateSerializer(),
-    mock: ''
+    mock: faker.date.past()
   })
   date: Date;
 
   @field({
     serializer: new OwnerSerializer(),
-    mock: ''
+    mock: Issue
   })
   owner: Issue | MergeRequest;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   timeSpent: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   sum: number;
 }
 

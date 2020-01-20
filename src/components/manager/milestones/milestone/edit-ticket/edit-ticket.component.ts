@@ -2,12 +2,15 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
-import { Observable } from 'rxjs';
-import { finalize, map } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { IssuesGQL } from 'src/components/issues/issues/issues.graphql';
+import { MOCKS_DELAY } from 'src/consts';
+import { environment } from 'src/environments/environment.mocks';
 import { IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Issue, Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
+import { getMock } from 'src/utils/mocks';
 import { GqlError } from '../../../../../models/gql-errors';
 import { catchGQLErrors } from '../../../../../operators/catch-gql-error';
 import { CreateTicketGQL, EditTicketGQL, GetTicketGQL } from './edit-ticket.graphql';
@@ -91,8 +94,10 @@ export class EditTicketComponent {
 
   private load() {
     this.progress.loading = true;
-    this.getTicketGQL.fetch({ticket: this.id} as R).pipe(
-      map(({data: {ticket}}) => deserialize(ticket, Ticket)),
+    (environment.mocks ?
+      of(getMock(Ticket)).pipe(delay(MOCKS_DELAY))
+      : this.getTicketGQL.fetch({ticket: this.id} as R).pipe(
+        map(({data: {ticket}}) => deserialize(ticket, Ticket)))).pipe(
       finalize(() => this.progress.loading = false)
     ).subscribe(ticket => this.ticket = ticket);
   }

@@ -1,3 +1,4 @@
+import { IssueState } from 'src/models/enums/issue';
 import { field, model } from '../decorators/model';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
@@ -6,6 +7,8 @@ import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { Paging } from './paging';
 import { User } from './user';
+import * as faker from 'faker';
+import { helpers } from 'faker';
 
 export enum BreakState {
   created = 'CREATED',
@@ -29,7 +32,7 @@ export enum BreakReasons {
 @model()
 export class Break {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.uuid()})
   id: number;
 
   @field()
@@ -38,40 +41,34 @@ export class Break {
   @field()
   approvedBy: User;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   approvedAt: Date;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
+  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
   toDate: Date;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   fromDate: Date;
 
-  @field({mock: ''})
+  @field({
+    mock: () => helpers.randomize([
+      'Wanna have weekend',
+      'Going to party',
+      'I need a vacation'
+    ])
+  })
   comment: string;
 
-  @field({mock: BreakReasons.dayoff})
+  @field({mock: () => helpers.randomize([BreakReasons.dayoff, BreakReasons.disease, BreakReasons.vacation])})
   reason: BreakReasons;
 
-  @field({mock: BreakState.created})
+  @field({mock: () => helpers.randomize([BreakState.approved, BreakState.created, BreakState.decline])})
   state: BreakState;
 
-  @field({mock: BreakState.created})
+  @field({mock: () => helpers.randomize([BreakState.approved, BreakState.created, BreakState.decline])})
   approveState: BreakState;
 
   @field({mock: ''})
@@ -122,13 +119,13 @@ export class BreakDecline {
 @model()
 export class PagingBreaks implements Paging<Break> {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   count: number;
 
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<Break>(Break)),
-    mock: ''
+    mock: {type: Break, length: 10}
   })
   results: Break[];
 

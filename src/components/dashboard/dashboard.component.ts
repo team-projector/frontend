@@ -2,12 +2,12 @@ import { Component, ElementRef, HostBinding, Inject, OnInit, ViewChild } from '@
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ModalComponent, ModalService, PopoverComponent, PopoverService, UI } from 'junte-ui';
-import { AppConfig } from '../../app-config';
-import { MeManager } from '../../managers/me.manager';
-import { Locales } from '../../models/enums/locales';
-import { UserRole } from '../../models/user';
+import { AppConfig } from 'src/app-config';
+import { APPLICATION_READY } from 'src/consts';
+import { MeManager } from 'src/managers/me.manager';
+import { Locales } from 'src/models/enums/locales';
+import { UserRole } from 'src/models/user';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
-import { APPLICATION_READY } from '../../consts';
 
 enum Themes {
   light = 'light',
@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
   userRole = UserRole;
   loading = false;
   themes = Themes;
-  locales = Locales
+  locales = Locales;
   themeControl = new FormControl(Themes[localStorage.theme]);
 
   themeForm = this.fb.group({

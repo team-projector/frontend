@@ -1,15 +1,16 @@
-import { field, model } from '../decorators/model';
+import * as faker from 'faker';
+import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { DATE_FORMAT } from 'src/consts';
 import { DateSerializer } from 'src/serializers/date';
+import { field, model } from '../decorators/model';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
 import { Issue } from './issue';
 import { Label } from './label';
 import { Paging } from './paging';
 import { Project } from './project';
 import { User } from './user';
-import * as faker from 'faker';
 
 export enum MergeRequestState {
   opened = 'OPENED',
@@ -54,7 +55,7 @@ export class MergeRequestMetrics {
 @model()
 export class MergeRequest {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.uuid()})
   id: number;
 
   @field({mock: ''})
@@ -65,17 +66,20 @@ export class MergeRequest {
 
   @field({
     serializer: new EdgesToArray(User),
-    mock: ''
+    mock: {type: User, length: 5}
   })
   participants: User[];
 
-  @field({mock: ''})
+  @field({
+    mock: () => helpers.randomize([
+      'New features added',
+      'Bug fixed',
+      'Refactored'
+    ])
+  })
   title: string;
 
-  @field({
-    serializer: new EdgesToArray(Label),
-    mock: ''
-  })
+  @field({mock: {type: Label, length: 3}, serializer: new EdgesToArray(Label)})
   labels: Label[];
 
   @field({mock: ''})
@@ -93,7 +97,7 @@ export class MergeRequest {
   @field({mock: ''})
   glUrl: string;
 
-  @field({mock: MergeRequestState.opened})
+  @field({mock: () => helpers.randomize([MergeRequestState.opened, MergeRequestState.closed])})
   state: MergeRequestState;
 
   @field({mock: ''})
@@ -103,13 +107,13 @@ export class MergeRequest {
 @model()
 export class PagingMergeRequest implements Paging<MergeRequest> {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   count: number;
 
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<MergeRequest>(MergeRequest)),
-    mock: ''
+    mock: {type: MergeRequest, length: 10}
   })
   results: MergeRequest[];
 

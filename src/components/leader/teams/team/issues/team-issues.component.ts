@@ -145,13 +145,19 @@ export class TeamIssuesComponent implements OnInit {
   }
 
   loadSecondSummary() {
-    this.secondSummaryGQL.fetch(serialize(this.filter2) as R)
+    (environment.mocks
+      ? of({
+        issues: getMock(IssuesSummary),
+        mergeRequests: getMock(MergeRequestSummary),
+        spentTimes: getMock(SpentTimesSummary)
+      }).pipe(delay(MOCKS_DELAY))
+      : this.secondSummaryGQL.fetch(serialize(this.filter2) as R)
       .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({
         issues: deserialize(issues, IssuesSummary),
         mergeRequests: deserialize(mergeRequests, MergeRequestSummary),
         spentTimes: deserialize(spentTimes, SpentTimesSummary)
       })))
-      .subscribe(summary => this.summary.second = summary);
+    ).subscribe(summary => this.summary.second = summary);
   }
 
   onActivate(component) {

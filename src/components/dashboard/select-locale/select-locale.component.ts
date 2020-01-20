@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UI } from 'junte-ui';
 import { CookieService } from 'ngx-cookie-service';
-import { DEFAULT_LOCALE } from '../../../consts';
-import { Locales } from '../../../models/enums/locales';
+import { DEFAULT_LOCALE } from 'src/consts';
+import { Locales } from 'src/models/enums/locales';
 
 const COOKIE_LOCALE_KEY = 'locale';
 
