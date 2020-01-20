@@ -11,8 +11,8 @@ import { environment } from 'src/environments/environment';
 import { IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Issue, Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
 import { getMock } from 'src/utils/mocks';
-import { GqlError } from '../../../../../models/gql-errors';
-import { catchGQLErrors } from '../../../../../operators/catch-gql-error';
+import { GqlError } from 'src/models/gql-errors';
+import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { CreateTicketGQL, EditTicketGQL, GetTicketGQL } from './edit-ticket.graphql';
 
 const FOUND_ISSUES_COUNT = 10;
