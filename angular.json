@@ -68,6 +68,9 @@
           },
           "configurations": {
             "production": {
+              "localize": [
+                "ru"
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -81,14 +84,14 @@
               "namedChunks": false,
               "aot": true,
               "baseHref": "/",
-              "outputPath": "dist/en/",
+              "outputPath": "dist/",
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
+                  "maximumWarning": "3mb",
                   "maximumError": "5mb"
                 },
                 {
@@ -98,6 +101,9 @@
               ]
             },
             "mocks": {
+              "localize": [
+                "ru"
+              ],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -118,33 +124,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
-                },
-                {
-                  "type": "anyComponentStyle",
-                  "maximumWarning": "6kb"
-                }
-              ]
-            },
-            "ru": {
-              "localize": [
-                "ru"
-              ],
-              "optimization": true,
-              "outputHashing": "all",
-              "sourceMap": false,
-              "extractCss": true,
-              "namedChunks": false,
-              "aot": true,
-              "outputPath": "dist",
-              "extractLicenses": true,
-              "vendorChunk": false,
-              "buildOptimizer": true,
-              "budgets": [
-                {
-                  "type": "initial",
-                  "maximumWarning": "2mb",
+                  "maximumWarning": "3mb",
                   "maximumError": "5mb"
                 },
                 {
@@ -166,9 +146,6 @@
             },
             "mocks": {
               "browserTarget": "team-projector:build:mocks"
-            },
-            "ru": {
-              "browserTarget": "team-projector:build:ru"
             }
           }
         },
@@ -238,5 +215,8 @@
       }
     }
   },
-  "defaultProject": "team-projector"
+  "defaultProject": "team-projector",
+  "cli": {
+    "analytics": "503b86f1-e09b-41a2-88b0-1e247d6c472e"
+  }
 }
