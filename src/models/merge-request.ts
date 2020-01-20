@@ -3,6 +3,7 @@ import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { DATE_FORMAT } from 'src/consts';
+import { MergeRequestState } from 'src/models/enums/merge-requests';
 import { DateSerializer } from 'src/serializers/date';
 import { field, model } from '../decorators/model';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
@@ -11,12 +12,6 @@ import { Label } from './label';
 import { Paging } from './paging';
 import { Project } from './project';
 import { User } from './user';
-
-export enum MergeRequestState {
-  opened = 'OPENED',
-  merged = 'MERGED',
-  closed = 'CLOSED'
-}
 
 @model()
 export class MergeRequestSummary {

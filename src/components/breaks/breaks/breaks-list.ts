@@ -2,7 +2,8 @@ import { OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
-import { BreaksState, ViewType } from 'src/components/breaks/breaks/breaks.component';
+import { BreaksState } from 'src/components/breaks/breaks/breaks.component';
+import { ViewType } from 'src/models/enums/view-type';
 
 export abstract class BreaksListComponent implements OnInit {
 

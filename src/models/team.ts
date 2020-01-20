@@ -1,17 +1,12 @@
-import { field, model } from '../decorators/model';
+import * as faker from 'faker';
+import { helpers } from 'faker';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
+import { TeamMemberRole } from 'src/models/enums/team';
 import { IssuesMetrics } from 'src/models/metrics';
+import { field, model } from '../decorators/model';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
 import { Paging } from './paging';
 import { User } from './user';
-import * as faker from 'faker';
-import { helpers } from 'faker';
-
-export enum TeamMemberRole {
-  developer = 'DEVELOPER',
-  leader = 'LEADER',
-  watcher = 'WATCHER'
-}
 
 @model()
 export class TeamMetrics {

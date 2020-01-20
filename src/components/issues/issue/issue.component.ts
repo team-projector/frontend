@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { UI } from 'junte-ui';
 import { IssueState } from 'src/models/enums/issue';
-import { StandardLabel } from 'src/models/label';
+import { StandardLabel } from 'src/models/enums/standard-label';
 import { Issue } from 'src/models/issue';
 
 @Component({

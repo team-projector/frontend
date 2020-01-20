@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule, Pipe, PipeTransform } from '@angular/core';
-import { Label, StandardLabel } from 'src/models/label';
+import { StandardLabel } from 'src/models/enums/standard-label';
+import { Label } from 'src/models/label';
 
 @Pipe({name: 'labels'})
 export class LabelsPipe implements PipeTransform {

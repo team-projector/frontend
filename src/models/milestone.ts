@@ -3,17 +3,13 @@ import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { PrimitiveSerializer } from 'serialize-ts/dist';
+import { MilestoneProblem } from 'src/models/enums/milestone';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { ProjectSerializer } from '../serializers/project';
-import { ProjectSummary } from './issue';
 import { Paging } from './paging';
 import { Project, ProjectGroup } from './project';
-
-export enum MilestoneProblem {
-  overDueDate = 'OVER_DUE_DATE'
-}
 
 @model()
 export class MilestoneMetrics {
