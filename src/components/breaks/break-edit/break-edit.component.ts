@@ -2,12 +2,16 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
-import { finalize } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { delay, finalize } from 'rxjs/operators';
 import { serialize } from 'serialize-ts/dist';
-import { CreateBreakGQL, EditBreakGQL } from './break-create.graphql';
+import { MOCKS_DELAY } from 'src/consts';
+import { environment } from 'src/environments/environment.mocks';
 import { MeManager } from 'src/managers/me.manager';
 import { Break, BreakReasons, BreakUpdate } from 'src/models/break';
 import { User } from 'src/models/user';
+import { getMock } from 'src/utils/mocks';
+import { CreateBreakGQL, EditBreakGQL } from './break-create.graphql';
 
 @Component({
   selector: 'app-break-edit',
@@ -55,8 +59,9 @@ export class BreakEditComponent {
   save() {
     this.saving = true;
     const mutation = !!this.break ? this.editBreakGQL : this.createBreakGQL;
-    mutation.mutate(serialize(new BreakUpdate(this.form.getRawValue())) as R)
-      .pipe(finalize(() => this.saving = false))
+    (environment.mocks ? of(null)
+      : mutation.mutate(serialize(new BreakUpdate(this.form.getRawValue())) as R)
+        .pipe(finalize(() => this.saving = false)))
       .subscribe(() => this.saved.emit());
   }
 

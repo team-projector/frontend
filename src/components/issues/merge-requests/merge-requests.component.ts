@@ -1,12 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { delay, distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
+import { MOCKS_DELAY } from 'src/consts';
+import { field, model } from 'src/decorators/model';
+import { environment } from 'src/environments/environment';
 import { IssueProblem } from 'src/models/enums/issue';
 import { MergeRequestsFilter, MergeRequestState, MergeRequestSummary, PagingMergeRequest } from 'src/models/merge-request';
+import { getMock } from 'src/utils/mocks';
 import { MergeRequestsGQL, MergeRequestSummaryGQL } from './merge-requests.graphql';
 
 export enum ViewType {
@@ -115,8 +119,10 @@ export class MergeRequestsComponent implements OnInit {
 
   ngOnInit() {
     this.table.fetcher = () => {
-      return this.mergeRequestsGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {mergeRequests}}) => deserialize(mergeRequests, PagingMergeRequest)));
+      return environment.mocks
+        ? of(getMock(PagingMergeRequest)).pipe(delay(MOCKS_DELAY))
+        : this.mergeRequestsGQL.fetch(serialize(this.filter) as R)
+          .pipe(map(({data: {mergeRequests}}) => deserialize(mergeRequests, PagingMergeRequest)));
     };
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
@@ -149,9 +155,11 @@ export class MergeRequestsComponent implements OnInit {
   }
 
   loadSummary() {
-    this.mergeRequestsSummaryGQL.fetch(serialize(this.filter) as R)
-      .pipe(map(({data: {summary}}) =>
-        deserialize(summary, MergeRequestSummary)))
+    (environment.mocks
+      ? of(getMock(MergeRequestSummary)).pipe(delay(MOCKS_DELAY))
+      : this.mergeRequestsSummaryGQL.fetch(serialize(this.filter) as R)
+        .pipe(map(({data: {summary}}) =>
+          deserialize(summary, MergeRequestSummary))))
       .subscribe(summary => this.summary = summary);
   }
 }

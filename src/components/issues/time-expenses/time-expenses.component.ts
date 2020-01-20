@@ -3,13 +3,16 @@ import { FormBuilder } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI } from 'junte-ui';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { delay, distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { DATE_FORMAT } from 'src/consts';
+import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
+import { environment } from 'src/environments/environment';
 import { IssueState } from 'src/models/enums/issue';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter, TimeExpenseState } from 'src/models/spent-time';
 import { DateSerializer } from 'src/serializers/date';
+import { getMock } from 'src/utils/mocks';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql';
 
 @model()
@@ -117,9 +120,12 @@ export class TimeExpensesComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(getMock(PagingTimeExpenses));
     this.table.fetcher = () => {
-      return this.timeExpensesGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingTimeExpenses)));
+      return environment.mocks
+        ? of(getMock(PagingTimeExpenses)).pipe(delay(MOCKS_DELAY))
+        : this.timeExpensesGQL.fetch(serialize(this.filter) as R)
+          .pipe(map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingTimeExpenses)));
     };
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
@@ -156,8 +162,11 @@ export class TimeExpensesComponent implements OnInit {
   }
 
   loadSummary() {
-    this.timeExpensesSummaryGQL.fetch(serialize(this.filter) as R)
-      .pipe(map(({data: {spentTimes}}) => deserialize(spentTimes, SpentTimesSummary)))
+    console.log(SpentTimesSummary);
+    (environment.mocks
+      ? of(getMock(SpentTimesSummary)).pipe(delay(MOCKS_DELAY))
+      : this.timeExpensesSummaryGQL.fetch(serialize(this.filter) as R)
+        .pipe(map(({data: {spentTimes}}) => deserialize(spentTimes, SpentTimesSummary))))
       .subscribe(summary => this.summary = summary);
   }
 }

@@ -1,5 +1,4 @@
 import * as faker from 'faker';
-import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
@@ -63,31 +62,37 @@ export class TicketMetrics {
 @model()
 export class Issue {
 
-  @field()
+  @field({mock: () => faker.random.uuid()})
   id: string;
 
   @field()
   user: User;
 
-  @field()
+  @field({
+    mock: () => faker.helpers.randomize([
+      'Implement design for login feature',
+      'GraphQL API for login',
+      'Fix bugs in login form'
+    ])
+  })
   title: string;
 
-  @field({serializer: new EdgesToArray(Label)})
+  @field({mock: {type: Label, length: 3}, serializer: new EdgesToArray(Label)})
   labels: Label[];
 
   @field()
   project: Project;
 
-  @field({serializer: new DateSerializer()})
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   dueDate: Date;
 
-  @field()
+  @field({mock: () => faker.random.number()})
   timeEstimate: number;
 
-  @field()
+  @field({mock: () => faker.random.number()})
   timeSpent: number;
 
-  @field()
+  @field({mock: () => faker.random.number()})
   totalTimeSpent: number;
 
   @field()
@@ -96,21 +101,21 @@ export class Issue {
   @field({mock: IssueState.opened})
   state: IssueState;
 
-  @field({serializer: new DateSerializer()})
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   closedAt: Date;
 }
 
 @model()
 export class Ticket {
 
-  @field()
+  @field({mock: context => !!context && !!context.id ? context.id : faker.random.uuid()})
   id: string;
 
   @field()
   type: TicketTypes;
 
   @field({
-    mock: () => helpers.randomize([
+    mock: () => faker.helpers.randomize([
       'Login feature',
       'Bug fixes'
     ])
@@ -120,10 +125,10 @@ export class Ticket {
   @field()
   role: string;
 
-  @field()
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   startDate: Date;
 
-  @field()
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   dueDate: Date;
 
   @field({mock: () => faker.internet.url()})
@@ -181,11 +186,12 @@ export class TicketUpdate {
 @model()
 export class PagingTickets implements Paging<Ticket> {
 
-  @field()
+  @field({mock: () => faker.random.number()})
   count: number;
 
   @field({
     name: 'edges',
+    mock: {type: Ticket, length: 10},
     serializer: new ArraySerializer(new EdgesToPaging<Ticket>(Ticket))
   })
   results: Ticket[];

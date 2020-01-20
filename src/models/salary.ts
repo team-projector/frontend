@@ -1,54 +1,47 @@
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
-import { DateSerializer } from '../serializers/date';
-import { Paging } from './paging';
 import { SearchFilter } from 'junte-ui';
-import { field, model } from '../decorators/model';
-import { EdgesToPaging } from '../serializers/graphql';
+import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
+import { field, model } from '../decorators/model';
+import { DateSerializer } from '../serializers/date';
+import { EdgesToPaging } from '../serializers/graphql';
+import { Paging } from './paging';
+import * as faker from 'faker';
+import { helpers } from 'faker';
 
 @model()
 export class Salary {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   id: number;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
+  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
   periodTo: Date;
 
-  @field({
-    serializer: new DateSerializer(),
-    mock: ''
-  })
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   periodFrom: Date;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   chargedTime: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   bonus: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   taxes: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   penalty: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   sum: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   total: number;
 
-  @field({mock: ''})
+  @field({mock: () => helpers.randomize([true, false])})
   payed: boolean;
 
 }
@@ -56,13 +49,13 @@ export class Salary {
 @model()
 export class PagingSalaries implements Paging<Salary> {
 
-  @field({mock: ''})
+  @field({mock: () => faker.random.number()})
   count: number;
 
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<Salary>(Salary)),
-    mock: ''
+    mock: {type: Salary, length: 10}
   })
   results: Salary[];
 

@@ -2,16 +2,20 @@ import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ComponentFactoryResolver, Injector, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { isEqual, ModalOptions, ModalService, UI } from 'junte-ui';
-import { distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
+import { MOCKS_DELAY } from 'src/consts';
+import { field, model } from 'src/decorators/model';
+import { environment } from 'src/environments/environment';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Milestone } from 'src/models/milestone';
 import { PagingTickets, Ticket, TicketsFilter, TicketTypes } from 'src/models/ticket';
 import { DurationFormat } from 'src/pipes/date';
 import { equals } from 'src/utils/equals';
+import { getMock } from 'src/utils/mocks';
 import { TicketProblem } from '../../../../models/enums/ticket';
 import { EditTicketComponent } from './edit-ticket/edit-ticket.component';
 import { AllTicketsGQL, AttachIssueGQL, DeleteTicketGQL, MilestoneIssuesSummaryGQL, TicketIssuesGQL } from './milestone.graphql';
@@ -55,7 +59,7 @@ export class MilestoneComponent implements OnInit {
 
   @Input()
   set milestone(milestone: Milestone) {
-    if (!isEqual(this._milestone, milestone)) {
+    if (!this._milestone || this._milestone.id !== milestone.id) {
       this._milestone = milestone;
       this.loadTickets();
     }
@@ -97,8 +101,11 @@ export class MilestoneComponent implements OnInit {
   loadTickets() {
     this.loading.tickets = true;
     const filter = new TicketsFilter({milestone: this.milestone.id});
-    this.allTicketsGQL.fetch(serialize(filter) as R).pipe(
-      map(({data: {allTickets}}) => deserialize(allTickets, PagingTickets)),
+    (environment.mocks
+      ? of(getMock(PagingTickets)).pipe(delay(MOCKS_DELAY))
+      : this.allTicketsGQL.fetch(serialize(filter) as R).pipe(
+        map(({data: {allTickets}}) => deserialize(allTickets, PagingTickets))))
+      .pipe(
       finalize(() => this.loading.tickets = false)
     ).subscribe(tickets => this.tickets = tickets.results);
   }
@@ -107,9 +114,11 @@ export class MilestoneComponent implements OnInit {
     if (!!ticket) {
       this.loading.issues = true;
       const filter = new IssuesFilter({ticket});
-      this.ticketIssuesGQL.fetch(serialize(filter) as R)
-        .pipe(map(({data: {ticket: {issues}}}) => deserialize(issues, PagingIssues).results),
-          finalize(() => this.loading.issues = false))
+      (environment.mocks
+        ? of(getMock(PagingIssues).results).pipe(delay(MOCKS_DELAY))
+        : this.ticketIssuesGQL.fetch(serialize(filter) as R)
+          .pipe(map(({data: {ticket: {issues}}}) => deserialize(issues, PagingIssues).results)))
+        .pipe(finalize(() => this.loading.issues = false))
         .subscribe(issues => this.issues = issues);
     }
   }
