@@ -2,11 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UI } from 'junte-ui';
 import { of } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { DeclineWorkBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';import { MOCKS_DELAY } from 'src/consts';
-import { environment } from 'src/environments/environment.mocks';
+import { DeclineWorkBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
+import { environment } from 'src/environments/environment';
 import { Break, BreakDecline } from 'src/models/break';
-import { getMock } from 'src/utils/mocks';
 
 @Component({
   selector: 'app-break-decline',

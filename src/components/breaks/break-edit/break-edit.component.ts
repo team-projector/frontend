@@ -3,14 +3,12 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
 import { of } from 'rxjs';
-import { delay, finalize } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { serialize } from 'serialize-ts/dist';
-import { MOCKS_DELAY } from 'src/consts';
-import { environment } from 'src/environments/environment.mocks';
+import { environment } from 'src/environments/environment';
 import { MeManager } from 'src/managers/me.manager';
 import { Break, BreakReasons, BreakUpdate } from 'src/models/break';
 import { User } from 'src/models/user';
-import { getMock } from 'src/utils/mocks';
 import { CreateBreakGQL, EditBreakGQL } from './break-create.graphql';
 
 @Component({

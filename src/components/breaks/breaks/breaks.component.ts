@@ -10,7 +10,7 @@ import { BreakEditComponent } from 'src/components/breaks/break-edit/break-edit.
 import { AllWorkBreaks, ApproveWorkBreakGQL, DeleteWorkBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
-import { environment } from 'src/environments/environment.mocks';
+import { environment } from 'src/environments/environment';
 import { MeManager } from 'src/managers/me.manager';
 import { Break, BreakReasons, BreaksFilter, BreaksType, PagingBreaks } from 'src/models/break';
 import { IssuesFilter } from 'src/models/issue';
