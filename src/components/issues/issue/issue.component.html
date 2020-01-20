@@ -21,8 +21,8 @@
       <jnt-label *ngFor="let l of (issue.labels | labels)"
                  [size]="ui.sizes.small"
                  [color]="l.color" [label]="l.title"></jnt-label>
-      <jnt-animated-icon *ngIf="issue.state == issueState.opened && (issue.labels | hasLabel:standardLabel.doing)" state doing
-                         [icon]="ui.icons.animated.runningMan"></jnt-animated-icon>
+      <jnt-icon *ngIf="issue.state == issueState.opened && (issue.labels | hasLabel:standardLabel.doing)" state doing
+                         [icon]="ui.icons.animated.runningMan"></jnt-icon>
       <jnt-icon *ngIf="issue.labels | hasLabel:standardLabel.done" state
                 [icon]="ui.icons.check"></jnt-icon>
       <small *ngIf="issue.state == issueState.closed">{{issue.closedAt | fromNow}}</small>
