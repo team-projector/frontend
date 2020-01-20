@@ -4,6 +4,14 @@
   "newProjectRoot": "projects",
   "projects": {
     "team-projector": {
+      "i18n": {
+        "locales": {
+          "ru": {
+            "translation": "src/locale/messages.ru.xlf",
+            "baseHref": "/"
+          }
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -18,6 +26,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "aot": true,
             "outputPath": "dist",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -81,6 +90,10 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
@@ -107,18 +120,24 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
               ]
             },
             "ru": {
+              "localize": [
+                "ru"
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
-              "baseHref": "/",
-              "outputPath": "dist/ru/",
+              "outputPath": "dist",
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
@@ -127,11 +146,12 @@
                   "type": "initial",
                   "maximumWarning": "2mb",
                   "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
                 }
-              ],
-              "i18nFile": "src/locale/messages.ru.xlf",
-              "i18nFormat": "xlf",
-              "i18nLocale": "ru"
+              ]
             }
           }
         },
