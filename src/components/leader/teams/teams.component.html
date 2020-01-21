@@ -20,16 +20,16 @@
           </ng-template>
           <ng-template #teamsTemplate>
             <a *ngFor="let team of teams" [routerLink]="[team.id]" team>
-              <jnt-block [padding]="ui.padding.normal" [title]="team.title" block>
+              <jnt-block [title]="team.title" block>
                 <jnt-label *ngIf="team.metrics.problemsCount" problems [icon]="ui.icons.warning"
                            [color]="ui.colors.red"
                            [label]="team.metrics.problemsCount.toString()"></jnt-label>
-                <jnt-avatars-group [size]="ui.sizes.normal">
+                <jnt-avatars-group avatars [size]="ui.sizes.normal">
                   <jnt-avatar *ngFor="let member of team.members"
                               [image]="member.user.avatar">
                   </jnt-avatar>
                 </jnt-avatars-group>
-                <ng-template #footerBlock>
+                <ng-template #blockFooterTemplate>
                   <div footer>
                     <div><b>{{!!team.metrics.issues.openedEstimated ? (team.metrics.issues.openedEstimated |
                       duration:durationFormat.short) : '&ndash;'}}</b>

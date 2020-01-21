@@ -23,22 +23,8 @@
     max-width: 170px;
     width: 170px;
     text-align: center;
-    & ::ng-deep {
-      [title] {
-        > div {
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-      }
-    }
-    [title] {
-      max-width: 100%;
-      display: inline-block;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      box-sizing: border-box;
+    [avatars] {
+      margin: $gutter-big $gutter-normal;
     }
     [footer] {
       padding: $gutter-normal $gutter-small;
