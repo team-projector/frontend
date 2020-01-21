@@ -50,7 +50,7 @@
                       [image]="me.user?.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
         </ng-template>
         <ng-template #userMenu>
-          <app-select-locale></app-select-locale>
+          <app-select-lang></app-select-lang>
           <p>{{me.user?.name}}</p>
           <jnt-user-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
             <jnt-button *ngIf="config.token" (click)="logout()"
