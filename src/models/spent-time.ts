@@ -1,3 +1,4 @@
+import { TimeExpenseState } from 'src/models/enums/time-expenses';
 import { field, model } from '../decorators/model';
 import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
@@ -9,12 +10,6 @@ import { Issue } from './issue';
 import { MergeRequest } from './merge-request';
 import { Paging } from './paging';
 import * as faker from 'faker';
-
-export enum TimeExpenseState {
-  opened = 'OPENED',
-  closed = 'CLOSED',
-  all = 'ALL'
-}
 
 @model()
 export class SpentTime {

@@ -2,7 +2,8 @@ import { EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
-import { IssuesState, ViewType } from 'src/components/issues/issues/issues.component';
+import { IssuesState } from 'src/components/issues/issues/issues.component';
+import { ViewType } from 'src/models/enums/view-type';
 
 export abstract class IssuesListComponent implements OnInit {
 

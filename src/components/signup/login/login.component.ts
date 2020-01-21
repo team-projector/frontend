@@ -7,13 +7,13 @@ import { of } from 'rxjs';
 import { delay, filter, finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { AppConfig } from 'src/app-config';
+import { APPLICATION_READY, MOCKS_DELAY } from 'src/consts';
+import { environment } from 'src/environments/environment';
 import { AccessToken } from 'src/models/access-token';
-import { APPLICATION_READY, MOCKS_DELAY } from '../../../consts';
-import { environment } from '../../../environments/environment';
-import { GqlError } from '../../../models/gql-errors';
-import { UserRole } from '../../../models/user';
-import { catchGQLErrors } from '../../../operators/catch-gql-error';
-import { getMock } from '../../../utils/mocks';
+import { UserRole } from 'src/models/enums/user';
+import { GqlError } from 'src/models/gql-errors';
+import { catchGQLErrors } from 'src/operators/catch-gql-error';
+import { getMock } from 'src/utils/mocks';
 import { GitlabLoginGQL, LoginGQL } from './login.graphql';
 
 @Component({

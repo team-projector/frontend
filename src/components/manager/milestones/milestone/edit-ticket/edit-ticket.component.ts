@@ -8,11 +8,12 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { IssuesGQL } from 'src/components/issues/issues/issues.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
-import { IssuesFilter, PagingIssues } from 'src/models/issue';
-import { Issue, Ticket, TicketTypes, TicketUpdate } from 'src/models/ticket';
-import { getMock } from 'src/utils/mocks';
+import { TicketTypes } from 'src/models/enums/ticket';
 import { GqlError } from 'src/models/gql-errors';
+import { IssuesFilter, PagingIssues } from 'src/models/issue';
+import { Issue, Ticket, TicketUpdate } from 'src/models/ticket';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
+import { getMock } from 'src/utils/mocks';
 import { CreateTicketGQL, EditTicketGQL, GetTicketGQL } from './edit-ticket.graphql';
 
 const FOUND_ISSUES_COUNT = 10;

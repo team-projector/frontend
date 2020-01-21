@@ -3,12 +3,12 @@ import { UI } from 'junte-ui';
 import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
+import { MOCKS_DELAY } from 'src/consts';
+import { environment } from 'src/environments/environment';
+import { DurationFormat } from 'src/models/enums/duration-format';
 import { PagingTeams, Team } from 'src/models/team';
-import { DurationFormat } from 'src/pipes/date';
-import { MOCKS_DELAY } from '../../../consts';
-import { environment } from '../../../environments/environment';
-import { catchGQLErrors } from '../../../operators/catch-gql-error';
-import { getMock } from '../../../utils/mocks';
+import { catchGQLErrors } from 'src/operators/catch-gql-error';
+import { getMock } from 'src/utils/mocks';
 import { AllTeamsGQL } from './teams.graphql';
 
 @Component({

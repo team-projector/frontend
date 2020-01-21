@@ -6,27 +6,21 @@ import { UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest, of, zip } from 'rxjs';
 import { delay, distinctUntilChanged, filter as filtering, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { MetricsGroup, TeamMetricsFilter, TeamProgressMetrics, UserProgressMetrics } from 'src/models/metrics';
+import { MOCKS_DELAY } from 'src/consts';
+import { environment } from 'src/environments/environment';
+import { DurationFormat } from 'src/models/enums/duration-format';
+import { Metrics, MetricType } from 'src/models/enums/metrics';
+import { UserProblem } from 'src/models/enums/user';
+import { TeamMetricsFilter, TeamProgressMetrics, UserProgressMetrics } from 'src/models/metrics';
 import { PagingTeamMembers, Team, TeamMember } from 'src/models/team';
-import { User, UserProblem } from 'src/models/user';
-import { DurationFormat } from 'src/pipes/date';
+import { User } from 'src/models/user';
 import { equals } from 'src/utils/equals';
-import { MOCKS_DELAY } from '../../../../../../consts';
-import { environment } from '../../../../../../environments/environment';
-import { getMock } from '../../../../../../utils/mocks';
+import { getMock } from 'src/utils/mocks';
 import { CalendarMembersGQL, CalendarMetricsGQL } from './team-calendar.graphql';
 
 const DAYS_IN_WEEK = 7;
 const DAYS_WEEK = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 const L = 'DD/MM/YYYY';
-
-export enum MetricType {
-  all = 'all',
-  spent = 'spent',
-  estimate = 'estimate',
-  remains = 'Remains',
-  loading = 'Loading'
-}
 
 export class UserFilter {
   user: User;
@@ -132,7 +126,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   }
 
   private loadMetrics() {
-    const getMetric = (group: MetricsGroup) => {
+    const getMetric = (group: Metrics) => {
       const filter = new TeamMetricsFilter({
         team: this.team.id,
         start: this.start,
@@ -156,7 +150,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
         }));
     };
 
-    zip(getMetric(MetricsGroup.day), getMetric(MetricsGroup.week))
+    zip(getMetric(Metrics.day), getMetric(Metrics.week))
       .subscribe(([days, weeks]) => this.metrics = new Metric(days, weeks));
   }
 

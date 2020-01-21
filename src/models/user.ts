@@ -1,22 +1,7 @@
-import { field, model } from '../decorators/model';
-import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
 import * as faker from 'faker';
-
-export enum UserPermission {
-  inviteUser = 'invite_user',
-}
-
-export enum UserRole {
-  developer = 'DEVELOPER',
-  teamLeader = 'TEAM_LEADER',
-  projectManager = 'PROJECT_MANAGER',
-  customer = 'CUSTOMER',
-  shareholder = 'SHAREHOLDER'
-}
-
-export enum UserProblem {
-  payrollOpenedOverflow = 'PAYROLL_OPENED_OVERFLOW'
-}
+import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
+import { UserPermission, UserProblem, UserRole } from 'src/models/enums/user';
+import { field, model } from '../decorators/model';
 
 @model()
 export class IssuesMetrics {

@@ -1,10 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { endOfDay, format as fnsFormat, getDate, isFuture, isPast, isSameMonth, isToday } from 'date-fns';
-
-export enum DurationFormat {
-  full = 'full',
-  short = 'short'
-}
+import { DurationFormat } from 'src/models/enums/duration-format';
 
 @Pipe({name: 'duration'})
 export class DurationPipe implements PipeTransform {
