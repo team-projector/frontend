@@ -11,7 +11,7 @@ import { SalaryGQL } from './salary.graphql';
 @Injectable()
 export class SalaryResolver implements Resolve<Observable<Salary>> {
 
-  constructor(private salaryApollo: SalaryGQL) {
+  constructor(private salaryGQL: SalaryGQL) {
   }
 
   resolve(route: ActivatedRouteSnapshot,
@@ -19,7 +19,7 @@ export class SalaryResolver implements Resolve<Observable<Salary>> {
     const id = +route.params['salary'];
     return environment.mocks
       ? of(getMock(Salary))
-      : this.salaryApollo.fetch({salary: id})
+      : this.salaryGQL.fetch({salary: id})
       .pipe(map(({data: {salary}}) =>
         deserialize(salary, Salary)));
   }

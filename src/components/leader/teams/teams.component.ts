@@ -23,7 +23,7 @@ export class TeamsComponent implements OnInit {
   teams: Team[] = [];
   loading: boolean;
 
-  constructor(private allTeamsApollo: AllTeamsGQL) {
+  constructor(private allTeamsGQL: AllTeamsGQL) {
   }
 
   ngOnInit() {
@@ -34,7 +34,7 @@ export class TeamsComponent implements OnInit {
     this.loading = true;
     (environment.mocks
       ? of(getMock(PagingTeams)).pipe(delay(MOCKS_DELAY))
-      : this.allTeamsApollo.fetch().pipe(catchGQLErrors(),
+      : this.allTeamsGQL.fetch().pipe(catchGQLErrors(),
         map(({data: {teams}}) =>
           deserialize(teams, PagingTeams))
       )).pipe(finalize(() => this.loading = false))
