@@ -9,13 +9,13 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background: url('assets/images/login.jpg') no-repeat center;
+  background: url('../../../assets/images/login.jpg') no-repeat center;
   background-size: cover;
 
 }
 
 :host-context([theme='dark']) {
-  background: url('assets/images/login-dark.jpg') no-repeat center;
+  background: url('../../../assets/images/login-dark.jpg') no-repeat center;
   background-size: cover;
 }
 
