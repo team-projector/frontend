@@ -12,7 +12,7 @@ import { getMock } from 'src/utils/mocks';
 @Injectable()
 export class MilestoneResolver implements Resolve<Observable<Milestone>> {
 
-  constructor(private milestoneApollo: MilestoneGQL) {
+  constructor(private milestoneGQL: MilestoneGQL) {
   }
 
   resolve(route: ActivatedRouteSnapshot,
@@ -20,7 +20,7 @@ export class MilestoneResolver implements Resolve<Observable<Milestone>> {
     const id = route.params['milestone'];
     return environment.mocks
       ? of(getMock(Milestone, {id: id})).pipe(delay(MOCKS_DELAY))
-      : this.milestoneApollo.fetch({milestone: id})
+      : this.milestoneGQL.fetch({milestone: id})
       .pipe(map(({data: {milestone}}) =>
         deserialize(milestone, Milestone)));
   }

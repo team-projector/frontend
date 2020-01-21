@@ -11,7 +11,7 @@ import { TeamGQL } from './team.graphql';
 @Injectable()
 export class TeamResolver implements Resolve<Observable<Team>> {
 
-  constructor(private teamApollo: TeamGQL) {
+  constructor(private teamGQL: TeamGQL) {
   }
 
   resolve(route: ActivatedRouteSnapshot,
@@ -19,7 +19,7 @@ export class TeamResolver implements Resolve<Observable<Team>> {
     const id = route.params['team'];
     const action = environment.mocks
       ? of(getMock(Team))
-      : this.teamApollo.fetch({team: id})
+      : this.teamGQL.fetch({team: id})
         .pipe(map(({data: {team}}) => deserialize(team, Team)));
 
     return !!id ? action : of(null);

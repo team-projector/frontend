@@ -27,8 +27,9 @@ export class SelectLangComponent implements OnInit {
   }
 
   ngOnInit() {
-    let lang: Langs;
-    switch (this.cookie.get(document.location.origin)) {
+    let lang: Langs = DEFAULT_LANG;
+    const base = document.querySelector('base').getAttribute('href');
+    switch (base) {
       case '/ru/':
         lang = Langs.ru;
         break;
@@ -36,12 +37,12 @@ export class SelectLangComponent implements OnInit {
         lang = Langs.en;
         break;
       default:
-        lang = DEFAULT_LANG;
     }
     this.langControl.setValue(lang);
-
-    this.langControl.valueChanges.subscribe(selected =>
-      document.location.href = `/${selected}/`);
+    this.langControl.valueChanges.subscribe(selected => {
+      const path = document.location.pathname.substring(base.length);
+      document.location.href = `/${selected}/${path}`;
+    });
 
   }
 }

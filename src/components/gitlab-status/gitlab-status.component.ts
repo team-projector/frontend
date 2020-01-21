@@ -23,7 +23,7 @@ export class GitlabStatusComponent implements OnInit {
   @Input()
   status: GitLabStatus;
 
-  constructor(private gitlabStatusApollo: GitlabStatusGQL) {
+  constructor(private gitlabStatusGQL: GitlabStatusGQL) {
   }
 
   ngOnInit() {
@@ -33,7 +33,7 @@ export class GitlabStatusComponent implements OnInit {
 
   load() {
     (environment.mocks ? of(getMock(GitLabStatus))
-      : this.gitlabStatusApollo.fetch()
+      : this.gitlabStatusGQL.fetch()
         .pipe(map(({data: {gitlabStatus}}) =>
           deserialize(gitlabStatus, GitLabStatus))))
       .subscribe(status => this.status = status);

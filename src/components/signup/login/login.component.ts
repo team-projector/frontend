@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
 
   constructor(@Inject(AppConfig) private config: AppConfig,
               private loginGQL: LoginGQL,
-              private loginGitlabApollo: GitlabLoginGQL,
+              private loginGitlabGQL: GitlabLoginGQL,
               private builder: FormBuilder,
               private route: ActivatedRoute,
               private router: Router) {
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit {
       .pipe(filter(({code, state}) => !!code && !!state))
       .subscribe(({code, state}) => {
         this.progress.gitlab = true;
-        this.loginGitlabApollo.mutate({code: code, state: state})
+        this.loginGitlabGQL.mutate({code: code, state: state})
           .pipe(
             catchGQLErrors(),
             finalize(() => this.progress.gitlab = false),
