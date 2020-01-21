@@ -1,5 +1,7 @@
 export enum StandardLabel {
   toDo = 'To Do',
   doing = 'Doing',
-  done = 'Done'
+  done = 'Done',
+  delayed = 'Delayed',
+  bug = 'Bug'
 }
