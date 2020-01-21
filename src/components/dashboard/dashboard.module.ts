@@ -11,14 +11,14 @@ import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component'
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { DifferencePipe } from './dashboard.pipe';
-import { SelectLocaleComponent } from './select-locale/select-locale.component';
+import { SelectLangComponent } from './select-lang/select-lang.component';
 
 @NgModule({
   declarations: [
     DashboardComponent,
     GitlabStatusComponent,
     DifferencePipe,
-    SelectLocaleComponent
+    SelectLangComponent
   ],
   imports: [
     CommonModule,

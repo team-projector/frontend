@@ -5,7 +5,6 @@ import { ModalComponent, ModalService, PopoverComponent, PopoverService, UI } fr
 import { AppConfig } from 'src/app-config';
 import { APPLICATION_READY } from 'src/consts';
 import { MeManager } from 'src/managers/me.manager';
-import { Locales } from 'src/models/enums/locales';
 import { Themes } from 'src/models/enums/themes';
 import { UserRole } from 'src/models/enums/user';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
@@ -23,7 +22,6 @@ export class DashboardComponent implements OnInit {
   userRole = UserRole;
   loading = false;
   themes = Themes;
-  locales = Locales;
   themeControl = new FormControl(Themes[localStorage.theme]);
 
   themeForm = this.fb.group({
