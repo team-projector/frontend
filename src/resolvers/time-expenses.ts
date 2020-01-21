@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { TimeExpenseState } from 'src/models/spent-time';
-import { MergeRequestState } from '../models/merge-request';
+import { MergeRequestState } from 'src/models/enums/merge-requests';
+import { TimeExpenseState } from 'src/models/enums/time-expenses';
 
 @Injectable()
 export class TimeExpenseStateResolver implements Resolve<TimeExpenseState> {

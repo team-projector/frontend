@@ -7,7 +7,8 @@ import { finalize } from 'rxjs/operators';
 import { serialize } from 'serialize-ts/dist';
 import { environment } from 'src/environments/environment';
 import { MeManager } from 'src/managers/me.manager';
-import { Break, BreakReasons, BreakUpdate } from 'src/models/break';
+import { Break, BreakUpdate } from 'src/models/break';
+import { BreakReasons } from 'src/models/enums/break';
 import { User } from 'src/models/user';
 import { CreateBreakGQL, EditBreakGQL } from './break-create.graphql';
 

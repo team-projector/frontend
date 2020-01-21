@@ -7,20 +7,20 @@ import { Period } from 'junte-ui/lib/components/forms/calendar/models';
 import { BehaviorSubject, combineLatest, of, zip } from 'rxjs';
 import { delay, distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { MetricType } from 'src/components/leader/teams/team/issues/calendar/team-calendar.component';
 import { METRIC_TYPE } from 'src/components/metrics-type/consts';
 import { field, model } from 'src/decorators/model';
+import { DurationFormat } from 'src/models/enums/duration-format';
+import { Metrics, MetricType } from 'src/models/enums/metrics';
+import { MilestoneProblem } from 'src/models/enums/milestone';
 import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { MergeRequestSummary } from 'src/models/merge-request';
-import { MetricsGroup, UserMetricsFilter, UserProgressMetrics } from 'src/models/metrics';
-import { MilestoneProblem } from 'src/models/milestone';
+import { UserMetricsFilter, UserProgressMetrics } from 'src/models/metrics';
 import { SpentTimesSummary } from 'src/models/spent-time';
 import { User } from 'src/models/user';
-import { DurationFormat } from 'src/pipes/date';
-import { DATE_FORMAT, MOCKS_DELAY } from '../../../consts';
-import { environment } from '../../../environments/environment';
-import { DateSerializer } from '../../../serializers/date';
-import { getMock } from '../../../utils/mocks';
+import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
+import { environment } from 'src/environments/environment';
+import { DateSerializer } from 'src/serializers/date';
+import { getMock } from 'src/utils/mocks';
 import { TeamState } from '../../leader/teams/team/issues/team-issues.component';
 import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
 
@@ -164,7 +164,7 @@ export class DeveloperIssuesComponent implements OnInit {
   }
 
   private loadMetrics() {
-    const getMetric = (group: MetricsGroup) => {
+    const getMetric = (group: Metrics) => {
       const filter = new UserMetricsFilter({
         user: this.user.id,
         start: this.period.start,
@@ -186,7 +186,7 @@ export class DeveloperIssuesComponent implements OnInit {
         }));
     };
 
-    zip(getMetric(MetricsGroup.day), getMetric(MetricsGroup.week))
+    zip(getMetric(Metrics.day), getMetric(Metrics.week))
       .subscribe(([days, weeks]) => this.metrics = new Metric(days, weeks));
   }
 

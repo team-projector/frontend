@@ -1,18 +1,19 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
-import { field, model } from 'src/decorators/model';
 import { R } from 'apollo-angular/types';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
+import { of } from 'rxjs';
 import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssuesFilter, PagingIssues } from 'src/models/issue';
-import { MilestoneProblem, MilestonesFilter, PagingMilestones } from 'src/models/milestone';
-import { DurationFormat } from 'src/pipes/date';
-import { MOCKS_DELAY } from '../../../consts';
-import { environment } from '../../../environments/environment';
-import { getMock } from '../../../utils/mocks';
+import { MOCKS_DELAY } from 'src/consts';
+import { field, model } from 'src/decorators/model';
+import { environment } from 'src/environments/environment';
+import { DurationFormat } from 'src/models/enums/duration-format';
+import { MilestoneProblem } from 'src/models/enums/milestone';
+import { IssuesFilter } from 'src/models/issue';
+import { MilestonesFilter, PagingMilestones } from 'src/models/milestone';
+import { getMock } from 'src/utils/mocks';
 import { AllMilestonesGQL, SyncMilestoneGQL } from './milestones.graphql';
 
 @model()

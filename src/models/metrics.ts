@@ -1,27 +1,23 @@
 import { endOfDay, endOfMonth, endOfWeek, format, isPast, startOfDay, startOfMonth, startOfToday, startOfWeek } from 'date-fns';
 import * as faker from 'faker';
 import { ArraySerializer, ModelSerializer } from 'serialize-ts';
+import { Metrics } from 'src/models/enums/metrics';
 import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { mocks } from '../utils/mocks';
 import { User } from './user';
 
-export enum MetricsGroup {
-  day = 'day',
-  week = 'week'
-}
-
 @model({
   mocking: (metrics: UserProgressMetrics, filter: UserMetricsFilter) => {
     const today = startOfToday();
     const day = faker.date.between(startOfMonth(today), endOfMonth(today));
     switch (filter.group) {
-      case MetricsGroup.week:
+      case Metrics.week:
         metrics.start = startOfWeek(day, {weekStartsOn: 1});
         metrics.end = endOfWeek(day, {weekStartsOn: 1});
         break;
-      case MetricsGroup.day:
+      case Metrics.day:
       default:
         metrics.start = startOfDay(day);
         metrics.end = endOfDay(day);
@@ -91,7 +87,7 @@ export class UserMetricsFilter {
   end: Date;
 
   @field()
-  group: MetricsGroup;
+  group: Metrics;
 
   constructor(defs: UserMetricsFilter = null) {
     if (!!defs) {
@@ -127,7 +123,7 @@ export class TeamMetricsFilter {
   end: Date;
 
   @field()
-  group: MetricsGroup;
+  group: Metrics;
 
   constructor(defs: TeamMetricsFilter = null) {
     if (!!defs) {

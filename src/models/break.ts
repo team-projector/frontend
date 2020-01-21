@@ -1,33 +1,14 @@
-import { IssueState } from 'src/models/enums/issue';
-import { field, model } from '../decorators/model';
+import * as faker from 'faker';
+import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
-import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
+import { ArraySerializer } from 'serialize-ts';
+import { BreakReasons, BreakState } from 'src/models/enums/break';
 import { DATE_TIME_FORMAT } from '../consts';
+import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { Paging } from './paging';
 import { User } from './user';
-import * as faker from 'faker';
-import { helpers } from 'faker';
-
-export enum BreakState {
-  created = 'CREATED',
-  decline = 'DECLINED',
-  approved = 'APPROVED'
-}
-
-export enum BreaksType {
-  all = 'all',
-  created = 'CREATED',
-  decline = 'DECLINED',
-  approved = 'APPROVED'
-}
-
-export enum BreakReasons {
-  dayoff = 'DAYOFF',
-  vacation = 'VACATION',
-  disease = 'DISEASE'
-}
 
 @model()
 export class Break {

@@ -10,16 +10,12 @@ import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { IssueProblem, IssueState, IssuesType } from 'src/models/enums/issue';
+import { StandardLabel } from 'src/models/enums/standard-label';
+import { ViewType } from 'src/models/enums/view-type';
 import { IssuesFilter, IssuesSummary, PagingIssues } from 'src/models/issue';
-import { StandardLabel } from 'src/models/label';
 import { DateSerializer } from 'src/serializers/date';
 import { getMock } from 'src/utils/mocks';
 import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues.graphql';
-
-export enum ViewType {
-  default,
-  extended
-}
 
 @model()
 export class IssuesState {

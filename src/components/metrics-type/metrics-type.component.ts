@@ -1,9 +1,9 @@
 import { Component, forwardRef, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { MetricType } from 'src/components/leader/teams/team/issues/calendar/team-calendar.component';
 import { distinctUntilChanged } from 'rxjs/operators';
 import { UI } from 'junte-ui';
 import { METRIC_TYPE } from 'src/components/metrics-type/consts';
+import { MetricType } from 'src/models/enums/metrics';
 
 @Component({
   selector: 'app-metrics-type',

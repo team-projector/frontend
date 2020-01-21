@@ -30,7 +30,7 @@ spec:
           failureThreshold: 5
         livenessProbe:
           httpGet:
-            path: /
+            path: /en/
             port: 8080
           initialDelaySeconds: 15
           periodSeconds: 60
