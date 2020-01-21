@@ -23,7 +23,9 @@
               <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
                    [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)"
                    [attr.over-due]="ticket.problems | includes:ticketProblem.overDueDate" period>
-                <div *ngIf="ticket.metrics.issuesOpenedCount" label>{{ticket.metrics.timeRemains | duration:durationFormat.short}}</div>
+                <div *ngIf="ticket.metrics.issuesOpenedCount" label>
+                  {{ticket.metrics.timeRemains | duration:durationFormat.short}}
+                </div>
                 <div progress [style.transform]="'translateX(-' + (ticket.metrics.issuesOpenedCount
                   ? 100 - ticket.metrics.timeSpent / ticket.metrics.timeEstimate * 100 : 0) + '%)'">
                 </div>
