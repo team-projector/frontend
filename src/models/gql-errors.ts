@@ -1,5 +1,33 @@
-import { Model } from 'serialize-ts/dist';
-import { GqlErrorSerializer } from '../serializers/gql-error';
+import { GraphQLError } from 'graphql';
+import { Model, Serializer } from 'serialize-ts/dist';
+
+export class GqlErrorSerializer implements Serializer<GqlError> {
+
+  serialize(error: GqlError): string {
+    throw new Error('Not implemented');
+  }
+
+  deserialize(source: GraphQLError): GqlError {
+    switch (!!source.extensions ? source.extensions['code'] : null) {
+      case 'INPUT_ERROR':
+        const fields: FieldError[] = [];
+        const fieldErrors = source.extensions['fieldErrors'] as { fieldName: string, messages: string[] }[];
+        if (!!fieldErrors) {
+          fieldErrors.forEach(e => {
+            fields.push(new FieldError({
+              name: e.fieldName,
+              messages: e.messages
+            }));
+          });
+        }
+
+        return new InputError(source.message, {fields});
+        break;
+      default:
+        return new GqlError(source.message);
+    }
+  }
+}
 
 @Model(new GqlErrorSerializer())
 export class GqlError {

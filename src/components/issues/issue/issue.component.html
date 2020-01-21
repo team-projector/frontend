@@ -23,6 +23,10 @@
                  [color]="l.color" [label]="l.title"></jnt-label>
       <jnt-icon *ngIf="issue.state == issueState.opened && (issue.labels | hasLabel:standardLabel.doing)" state doing
                          [icon]="ui.icons.animated.runningMan"></jnt-icon>
+      <jnt-icon *ngIf="issue.labels | hasLabel:standardLabel.bug" state bug
+                [icon]="ui.icons.bug"></jnt-icon>
+      <jnt-icon *ngIf="issue.labels | hasLabel:standardLabel.delayed" state delayed
+                [icon]="ui.icons.pause"></jnt-icon>
       <jnt-icon *ngIf="issue.labels | hasLabel:standardLabel.done" state
                 [icon]="ui.icons.check"></jnt-icon>
       <small *ngIf="issue.state == issueState.closed">{{issue.closedAt | fromNow}}</small>
