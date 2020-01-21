@@ -43,7 +43,7 @@
     "graphql-tag": "^2.10.0",
     "graphql-tools": "^4.0.5",
     "junte-angular": "~0.0.46",
-    "junte-ui": "0.0.349",
+    "junte-ui": "0.0.350",
     "ngx-cookie-service": "^2.3.0",
     "ngx-date-fns": "4.0.3",
     "rxjs": "~6.5.3",

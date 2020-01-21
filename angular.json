@@ -38,12 +38,8 @@
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets",
-              {
-                "glob": "**/*",
-                "input": "node_modules/junte-ui/lib/assets/fonts/",
-                "output": "./assets/fonts/"
-              },
+              "src/assets/images",
+              "src/assets/themes",
               {
                 "glob": "**/*",
                 "input": "node_modules/junte-ui/lib/assets/icons/animated/",
