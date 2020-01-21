@@ -6,21 +6,21 @@ import { UI } from 'junte-ui';
 import { combineLatest, of } from 'rxjs';
 import { delay, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { MetricType } from 'src/components/leader/teams/team/issues/calendar/team-calendar.component';
 import { METRIC_TYPE } from 'src/components/metrics-type/consts';
 import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
+import { DurationFormat } from 'src/models/enums/duration-format';
+import { MetricType } from 'src/models/enums/metrics';
+import { MilestoneProblem } from 'src/models/enums/milestone';
 import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { MergeRequestSummary } from 'src/models/merge-request';
-import { MilestoneProblem } from 'src/models/milestone';
 import { Project } from 'src/models/project';
 import { SpentTimesSummary } from 'src/models/spent-time';
 import { Team } from 'src/models/team';
 import { User } from 'src/models/user';
-import { DurationFormat } from 'src/pipes/date';
 import { DateSerializer } from 'src/serializers/date';
-import { environment } from '../../../../../environments/environment';
-import { getMock } from '../../../../../utils/mocks';
+import { environment } from 'src/environments/environment';
+import { getMock } from 'src/utils/mocks';
 import { FirstSummaryGQL, SecondSummaryGQL } from './team-issues.graphql';
 
 @model()

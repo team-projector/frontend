@@ -10,13 +10,7 @@ import { User } from 'src/models/user';
 import { DateSerializer } from 'src/serializers/date';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
 import { field, model } from '../decorators/model';
-import { TicketProblem } from './enums/ticket';
-
-export enum TicketTypes {
-  feature = 'FEATURE',
-  improvement = 'IMPROVEMENT',
-  bugFixing = 'BUG_FIXING'
-}
+import { TicketProblem, TicketTypes } from './enums/ticket';
 
 @model()
 export class TicketMetrics {

@@ -10,13 +10,13 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
+import { DurationFormat } from 'src/models/enums/duration-format';
+import { TicketProblem, TicketTypes } from 'src/models/enums/ticket';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Milestone } from 'src/models/milestone';
-import { PagingTickets, Ticket, TicketsFilter, TicketTypes } from 'src/models/ticket';
-import { DurationFormat } from 'src/pipes/date';
+import { PagingTickets, Ticket, TicketsFilter } from 'src/models/ticket';
 import { equals } from 'src/utils/equals';
 import { getMock } from 'src/utils/mocks';
-import { TicketProblem } from '../../../../models/enums/ticket';
 import { EditTicketComponent } from './edit-ticket/edit-ticket.component';
 import { AllTicketsGQL, AttachIssueGQL, DeleteTicketGQL, MilestoneIssuesSummaryGQL, TicketIssuesGQL } from './milestone.graphql';
 

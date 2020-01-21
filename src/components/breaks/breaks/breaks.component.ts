@@ -12,15 +12,12 @@ import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { MeManager } from 'src/managers/me.manager';
-import { Break, BreakReasons, BreaksFilter, BreaksType, PagingBreaks } from 'src/models/break';
+import { Break, BreaksFilter, PagingBreaks } from 'src/models/break';
+import { BreakReasons, BreaksType } from 'src/models/enums/break';
+import { ViewType } from 'src/models/enums/view-type';
 import { IssuesFilter } from 'src/models/issue';
 import { User } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
-
-export enum ViewType {
-  default,
-  extended
-}
 
 @model()
 export class BreaksState {

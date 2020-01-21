@@ -1,11 +1,6 @@
-import { field, model } from 'src/decorators/model';
 import * as faker from 'faker';
-
-export enum StandardLabel {
-  toDo = 'To Do',
-  doing = 'Doing',
-  done = 'Done'
-}
+import { field, model } from 'src/decorators/model';
+import { StandardLabel } from 'src/models/enums/standard-label';
 
 @model()
 export class Label {

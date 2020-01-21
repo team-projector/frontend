@@ -9,14 +9,11 @@ import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { IssueProblem } from 'src/models/enums/issue';
-import { MergeRequestsFilter, MergeRequestState, MergeRequestSummary, PagingMergeRequest } from 'src/models/merge-request';
+import { MergeRequestState } from 'src/models/enums/merge-requests';
+import { ViewType } from 'src/models/enums/view-type';
+import { MergeRequestsFilter, MergeRequestSummary, PagingMergeRequest } from 'src/models/merge-request';
 import { getMock } from 'src/utils/mocks';
 import { MergeRequestsGQL, MergeRequestSummaryGQL } from './merge-requests.graphql';
-
-export enum ViewType {
-  default,
-  extended
-}
 
 @model()
 export class MergeRequestsState {
