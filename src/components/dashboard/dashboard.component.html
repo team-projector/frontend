@@ -9,19 +9,19 @@
       <jnt-menu>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.developer)"
                        title="Developer"
-                       [link]="['/developer']" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
+                       [link]="['/developer']" [icon]="localUi.icons.menu.developer" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.teamLeader)"
                        title="Team Leader"
-                       [link]="['/leader']" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
+                       [link]="['/leader']" [icon]="localUi.icons.menu.teamLeader" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.projectManager)"
                        title="Project Manager"
-                       [link]="['/manager']" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
+                       [link]="['/manager']" [icon]="localUi.icons.menu.projectManager" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.customer)"
                        title="Customer"
-                       [link]="['/customer']" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
+                       [link]="['/customer']" [icon]="localUi.icons.menu.customer" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.shareholder)"
                        title="Shareholder"
-                       [link]="['/shareholder']" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
+                       [link]="['/shareholder']" [icon]="localUi.icons.menu.shareholder" [matching]="ui.url.matching.wildcard"></jnt-menu-item>
       </jnt-menu>
     </ng-template>
 
