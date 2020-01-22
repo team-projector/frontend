@@ -8,6 +8,7 @@ import { MeManager } from 'src/managers/me.manager';
 import { Themes } from 'src/models/enums/themes';
 import { UserRole } from 'src/models/enums/user';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
+import {LocalUI} from '../../enums/local-ui';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,6 +20,7 @@ export class DashboardComponent implements OnInit {
   private _theme = !!localStorage.theme ? Themes[localStorage.theme] as Themes : Themes.light;
 
   ui = UI;
+  localUi = LocalUI;
   userRole = UserRole;
   loading = false;
   themes = Themes;
