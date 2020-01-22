@@ -56,8 +56,8 @@ export class MergeRequest {
   @field({mock: ''})
   user: User;
 
-  @field({mock: ''})
-  issue: Issue;
+  @field({mock: {type: Issue, length: 1}, serializer: new EdgesToArray(Issue)})
+  issues: Issue[];
 
   @field({
     serializer: new EdgesToArray(User),

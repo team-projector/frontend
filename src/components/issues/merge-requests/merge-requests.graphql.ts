@@ -37,12 +37,14 @@ export class MergeRequestsGQL extends Query<{ mergeRequests }> {
               name
               glAvatar
             }
-            participants {
+            issues {
               count
               edges {
                 node {
-                  name
-                  glAvatar
+                  user {
+                    name
+                    glAvatar
+                  }
                 }
               }
             }

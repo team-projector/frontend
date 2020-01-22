@@ -24,18 +24,21 @@
       </ng-template>
       <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
         <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
-                     let-issue="issue" let-participants="participants" let-project="project">
+                     let-issues="issues" let-user="user" let-project="project">
           <jnt-stack [type]="ui.stack.type.horizontal"
                      [gutter]="ui.gutter.small">
-            <ng-container *ngIf="issue?.user">
-              <jnt-avatar [text]="issue.user.name"
-                          [image]="issue.user.avatar" [size]="ui.sizes.small"></jnt-avatar>
+            <jnt-stack [type]="ui.stack.type.horizontal"
+                       [gutter]="ui.gutter.small"
+                       [align]="ui.flex.align.center">
+              <jnt-avatar [text]="issues[0]?.user.name"
+                          [image]="issues[0]?.user.avatar"
+                          [size]="ui.sizes.tiny"></jnt-avatar>
+              <jnt-icon [icon]="ui.icons.chevronRight"></jnt-icon>
+              <jnt-avatar [text]="user?.name"
+                          [image]="user?.avatar"
+                          [size]="ui.sizes.tiny"></jnt-avatar>
+            </jnt-stack>
 
-            </ng-container>
-            <jnt-avatars-list>
-              <jnt-avatar *ngFor="let p of participants"
-                          [text]="p.name" [image]="p.avatar" [size]="ui.sizes.small"></jnt-avatar>
-            </jnt-avatars-list>
             <jnt-stack [type]="ui.stack.type.vertical"
                        [gutter]="ui.gutter.tiny">
               <jnt-stack [type]="ui.stack.type.horizontal"
