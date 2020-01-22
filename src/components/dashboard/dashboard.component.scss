@@ -4,20 +4,26 @@
   display: block
 }
 
-[project] {
-  font-size: 0.75rem;
-  color: $gray-800-color;
-}
-
-[user] {
-  text-align: right;
-}
-
-hr {
-  width: 100%;
-  border: 1px solid $gray-400-color;
-}
-
 [theme] {
   align-self: center;
+}
+
+[menu] {
+  ::ng-deep {
+    div[child-of=#{$jnt-menu-host}]:nth-child(1) svg path {
+      fill: url(#purple-light-gradient);
+    }
+    div[child-of=#{$jnt-menu-host}]:nth-child(2) svg path {
+      fill: url(#green-light-gradient);
+    }
+    div[child-of=#{$jnt-menu-host}]:nth-child(3) svg path {
+      fill: url(#blue-light-gradient);
+    }
+    div[child-of=#{$jnt-menu-host}]:nth-child(4) svg path {
+      fill: url(#orange-light-gradient);
+    }
+    div[child-of=#{$jnt-menu-host}]:nth-child(5) svg path {
+      fill: url(#green-light-gradient);
+    }
+  }
 }
