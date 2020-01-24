@@ -4,10 +4,6 @@
   display: block
 }
 
-[theme] {
-  align-self: center;
-}
-
 [menu] {
   ::ng-deep {
     div[child-of=#{$jnt-menu-host}]:nth-child(1) svg path {
