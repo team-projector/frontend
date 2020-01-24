@@ -1,11 +1,4 @@
-export enum BreakState {
-  created = 'CREATED',
-  decline = 'DECLINED',
-  approved = 'APPROVED'
-}
-
-export enum BreaksType {
-  all = 'all',
+export enum ApproveStates {
   created = 'CREATED',
   decline = 'DECLINED',
   approved = 'APPROVED'

@@ -87,7 +87,6 @@ export class MilestonesComponent implements OnInit {
           .pipe(map(({data: {allMilestones}}) =>
             deserialize(allMilestones, PagingMilestones)));
     };
-
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
       .subscribe(({table: {offset, first, q}}) => {
         const state = new MilestonesState({

@@ -85,7 +85,7 @@ export class SalariesComponent implements OnInit {
   ngOnInit() {
     this.table.fetcher = () => {
       return environment.mocks
-        ? of(getMock(PagingSalaries, this.filter)).pipe(delay(MOCKS_DELAY))
+        ? of(getMock(PagingSalaries)).pipe(delay(MOCKS_DELAY))
         : this.allSalaries.fetch(serialize(this.filter) as R)
           .pipe(map(({data: {allSalaries}}: { data: { allSalaries } }) =>
             deserialize(allSalaries, PagingSalaries)));

@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="chargedTime" datatype="html">
         <source>Charged Time</source>
-        <target>Втф тайм</target>
+        <target>Оплаченное время</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/salaries/salaries/salaries.component.html</context>
           <context context-type="linenumber">4</context>
@@ -124,7 +124,7 @@
       </trans-unit>
       <trans-unit id="penalty" datatype="html">
         <source>Penalty</source>
-        <target>Пеналька</target>
+        <target>Штраф</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/salaries/salaries/salaries.component.html</context>
           <context context-type="linenumber">24</context>

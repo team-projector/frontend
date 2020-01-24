@@ -24,25 +24,8 @@
         </jnt-stack>
       </ng-template>
       <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
-        <ng-template #cellTemplate let-owner="owner" let-title="owner.title" let-labels="owner.labels"
-                     let-url="owner.glUrl" let-state="owner.state"
-                     let-participants="owner.participants" let-project="owner.project">
-          <jnt-stack *ngIf="!!owner"
-                     [type]="ui.stack.type.horizontal"
-                     [gutter]="ui.gutter.small">
-            <jnt-stack [type]="ui.stack.type.vertical"
-                       [gutter]="ui.gutter.tiny">
-              <jnt-stack [type]="ui.stack.type.horizontal"
-                         [gutter]="ui.gutter.small">
-                <jnt-link [source]="url" target="_blank"
-                          [attr.closed]="state === issuesState.closed" [title]="title">
-                </jnt-link>
-                <jnt-label *ngFor="let l of labels" [color]="l.color" [label]="l.title">
-                </jnt-label>
-              </jnt-stack>
-              <small>{{project.fullTitle}}</small>
-            </jnt-stack>
-          </jnt-stack>
+        <ng-template #cellTemplate let-owner="owner">
+          <app-issue [issue]="owner"></app-issue>
         </ng-template>
       </jnt-table-column>
 

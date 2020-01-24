@@ -13,7 +13,7 @@ import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { MeManager } from 'src/managers/me.manager';
 import { Break, BreaksFilter, PagingBreaks } from 'src/models/break';
-import { BreakReasons, BreaksType } from 'src/models/enums/break';
+import { ApproveStates, BreakReasons } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
 import { IssuesFilter } from 'src/models/issue';
 import { User } from 'src/models/user';
@@ -57,7 +57,7 @@ export class BreaksComponent implements OnInit {
   viewType = ViewType;
   reasons = BreakReasons;
   features = TableFeatures;
-  approves = BreaksType;
+  approveStates = ApproveStates;
   breaks: Break[] = [];
   loading = false;
 

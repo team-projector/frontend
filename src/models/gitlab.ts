@@ -40,7 +40,7 @@ export class GitLabServices {
 @model()
 export class GitLabStatus {
 
-  @field({serializer: new GitLabServicesSerializer()})
+  @field({mock: GitLabServices, serializer: new GitLabServicesSerializer()})
   services: GitLabServices;
 
   @field({

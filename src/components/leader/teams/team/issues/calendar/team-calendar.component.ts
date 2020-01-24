@@ -4,16 +4,15 @@ import { R } from 'apollo-angular/types';
 import { addDays, addWeeks, endOfWeek, getDate, startOfDay, startOfWeek, subWeeks } from 'date-fns';
 import { UI } from 'junte-ui';
 import { BehaviorSubject, combineLatest, of, zip } from 'rxjs';
-import { delay, distinctUntilChanged, filter as filtering, finalize, map } from 'rxjs/operators';
+import { delay, distinctUntilChanged, filter as filtering, finalize, map, tap } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { Metrics, MetricType } from 'src/models/enums/metrics';
 import { UserProblem } from 'src/models/enums/user';
-import { TeamMetricsFilter, TeamProgressMetrics, UserProgressMetrics } from 'src/models/metrics';
-import { PagingTeamMembers, Team, TeamMember } from 'src/models/team';
-import { User } from 'src/models/user';
+import { PagingTeamMembers, Team, TeamMember, TeamMemberProgressMetrics, TeamMetricsFilter } from 'src/models/team';
+import { User, UserProgressMetrics } from 'src/models/user';
 import { equals } from 'src/utils/equals';
 import { getMock } from 'src/utils/mocks';
 import { CalendarMembersGQL, CalendarMetricsGQL } from './team-calendar.graphql';
@@ -134,11 +133,12 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
         group: group
       });
       return (environment.mocks
-        ? of(getMock(TeamProgressMetrics)).pipe(delay(MOCKS_DELAY))
-        : this.calendarMetrics.fetch(serialize(filter) as R).pipe(
-          filtering(({data: {teamProgressMetrics}}) => !!teamProgressMetrics),
-          map(({data: {teamProgressMetrics}}) => teamProgressMetrics.map(el => deserialize(el, TeamProgressMetrics))))).pipe(
-        map(metrics => {
+        ? of(Array.apply(null, Array(10))
+          .map((v, i) => getMock(TeamMemberProgressMetrics, filter, i))).pipe(delay(MOCKS_DELAY))
+        : this.calendarMetrics.fetch(serialize(filter) as R)
+          .pipe(filtering(({data: {metrics}}) => !!metrics),
+            map(({data: {metrics}}) => metrics.map(el => deserialize(el, UserProgressMetrics)))))
+        .pipe(map(metrics => {
           const dic = new Map<string, Map<string, UserProgressMetrics>>();
           metrics.forEach(m => {
             const userDic = new Map<string, UserProgressMetrics>();
@@ -160,7 +160,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
       ? of(getMock(PagingTeamMembers)).pipe(delay(MOCKS_DELAY))
       : this.calendarMember.fetch({team: this.team.id} as R)
         .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => this.loading = false), tap(m => console.log(m)))
       .subscribe(teams => this.members = teams.results);
   }
 

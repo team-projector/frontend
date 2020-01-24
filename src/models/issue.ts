@@ -1,10 +1,12 @@
+import { addDays } from 'date-fns';
 import * as faker from 'faker';
-import { helpers } from 'faker';
-import { SearchFilter } from 'junte-ui';
+import { SearchFilter, UI } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { IssueProblem, IssueState } from 'src/models/enums/issue';
+import { StandardLabel } from 'src/models/enums/standard-label';
 import { Team } from 'src/models/team';
 import { Ticket } from 'src/models/ticket';
+import { mocks, TimeAccuracy } from 'src/utils/mocks';
 import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
@@ -17,39 +19,98 @@ import { User } from './user';
 @model()
 export class IssueMetrics {
 
-  @field()
+  @field({mock: () => mocks.time()})
   remains: number;
 
-  @field()
+  @field({mock: () => mocks.efficiency()})
   efficiency: number;
 
-  @field()
+  @field({mock: () => mocks.money(10, 100)})
   payroll: number;
 
-  @field()
+  @field({mock: () => mocks.money(10, 100)})
   paid: number;
 
 }
 
 @model({
   mocking: (issue: Issue, context: IssuesFilter) => {
-    issue.timeEstimate = Math.round(Math.random() * 3600 * 3 + 2);
-    issue.totalTimeSpent = Math.round(Math.random() * 3600 * 2);
+    const recent = faker.date.recent();
+    issue.dueDate = addDays(recent, mocks.random(1, 20));
+    issue.timeEstimate = mocks.time(1, 10, TimeAccuracy.minutes);
+    issue.totalTimeSpent = mocks.time(1, 15, TimeAccuracy.minutes);
     issue.timeSpent = issue.totalTimeSpent;
+
+    switch (mocks.random(1, 4)) {
+      case 1: // issue for to do
+        issue.labels.push(new Label({
+          title: StandardLabel.toDo,
+          color: UI.colors.green
+        }));
+        issue.state = IssueState.opened;
+        break;
+      case 2: // issue for to doing
+        issue.labels.push(new Label({
+          title: StandardLabel.doing,
+          color: UI.colors.green
+        }));
+        issue.state = IssueState.opened;
+        break;
+      case 3: // issue for to done
+        issue.labels.push(new Label({
+          title: StandardLabel.done,
+          color: UI.colors.green
+        }));
+        issue.state = IssueState.closed;
+        break;
+      default: // issue for to delayed
+        issue.labels.push(new Label({
+          title: StandardLabel.delayed,
+          color: UI.colors.green
+        }));
+        issue.state = IssueState.opened;
+    }
+
     if (!!context) {
       if (context.state === IssueState.opened) {
         issue.state = IssueState.opened;
       } else if (context.state === IssueState.closed) {
         issue.state = IssueState.closed;
       }
-
       if (context.problems === true) {
-        issue.problems = helpers.randomize([
+        issue.problems = faker.helpers.randomize([
           IssueProblem.emptyDueDate,
           IssueProblem.emptyEstimate,
           IssueProblem.overDueDate]);
       }
     }
+
+    if (issue.problems.includes(IssueProblem.emptyDueDate)) {
+      issue.dueDate = null;
+    } else if (issue.problems.includes(IssueProblem.emptyEstimate)) {
+      issue.timeEstimate = null;
+    } else if (issue.problems.includes(IssueProblem.overDueDate)) {
+      issue.dueDate = faker.date.past();
+    }
+
+    issue.labels.push(faker.helpers.randomize([
+      new Label({
+        title: StandardLabel.bug,
+        color: UI.colors.red
+      }),
+      new Label({
+        title: 'Discuss',
+        color: UI.colors.blue
+      }),
+      new Label({
+        title: 'Urgent',
+        color: UI.colors.red
+      }),
+      new Label({
+        title: 'Refactor',
+        color: UI.colors.green
+      })
+    ]));
   }
 })
 export class Issue {
@@ -57,7 +118,7 @@ export class Issue {
   @field({mock: () => faker.random.uuid()})
   id: string;
 
-  @field()
+  @field({mock: User})
   user: User;
 
   @field({
@@ -67,7 +128,7 @@ export class Issue {
   participants: User[];
 
   @field({
-    mock: () => helpers.randomize([
+    mock: () => faker.helpers.randomize([
       'Implement design for login feature',
       'GraphQL API for login',
       'Fix bugs in login form'
@@ -78,13 +139,13 @@ export class Issue {
   @field({mock: {type: Label, length: 3}, serializer: new EdgesToArray(Label)})
   labels: Label[];
 
-  @field()
+  @field({mock: Project})
   project: Project;
 
-  @field()
+  @field({mock: Ticket})
   ticket: Ticket;
 
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
+  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
   dueDate: Date;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
@@ -102,7 +163,7 @@ export class Issue {
   @field({mock: () => faker.internet.url()})
   glUrl: string;
 
-  @field({mock: () => helpers.randomize([IssueState.opened, IssueState.closed])})
+  @field({mock: () => faker.helpers.randomize([IssueState.opened, IssueState.closed])})
   state: IssueState;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
@@ -114,7 +175,7 @@ export class Issue {
   })
   problems: IssueProblem[];
 
-  @field()
+  @field({mock: IssueMetrics})
   metrics: IssueMetrics;
 }
 
@@ -185,19 +246,7 @@ export class ProjectIssuesSummary {
   @field({mock: () => faker.random.number()})
   remains: number;
 
-  @field({mock: () => faker.random.number({max: 100})})
-  percentage: number;
-
-  @field({mock: () => faker.random.number()})
-  openedCount: number;
-}
-
-@model()
-export class TeamIssuesSummary {
-  @field({mock: () => faker.random.number()})
-  remains: number;
-
-  @field({mock: () => faker.random.number({max: 100})})
+  @field({mock: () => mocks.percents()})
   percentage: number;
 
   @field({mock: () => faker.random.number()})
@@ -207,13 +256,26 @@ export class TeamIssuesSummary {
 @model()
 export class ProjectSummary {
 
-  @field()
+  @field({mock: Project})
   project: Project;
 
-  @field()
+  @field({mock: ProjectIssuesSummary})
   issues: ProjectIssuesSummary;
 
 }
+
+@model()
+export class TeamIssuesSummary {
+  @field({mock: () => faker.random.number()})
+  remains: number;
+
+  @field({mock: () => mocks.percents()})
+  percentage: number;
+
+  @field({mock: () => faker.random.number()})
+  openedCount: number;
+}
+
 
 @model()
 export class TeamSummary {

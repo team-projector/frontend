@@ -1,15 +1,17 @@
+import { addDays } from 'date-fns';
 import * as faker from 'faker';
-import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { PrimitiveSerializer } from 'serialize-ts/dist';
 import { MilestoneProblem } from 'src/models/enums/milestone';
+import { DateSerializer } from 'src/serializers/date';
+import { mocks } from 'src/utils/mocks';
 import { field, model } from '../decorators/model';
-import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { ProjectSerializer } from '../serializers/project';
 import { Paging } from './paging';
 import { Project, ProjectGroup } from './project';
+
 
 @model()
 export class MilestoneMetrics {
@@ -52,14 +54,30 @@ export class MilestoneMetrics {
 
 }
 
-@model()
+@model({
+  mocking: (milestone: Milestone) => {
+    milestone.budget = mocks.money(60000, 300000);
+    const startDate = faker.date.past();
+    milestone.startDate = startDate;
+    milestone.dueDate = addDays(startDate, mocks.random(5, 14));
+
+    milestone.metrics.timeEstimate = mocks.time(300, 600);
+    milestone.metrics.timeSpent = mocks.time(300, 600);
+    milestone.metrics.timeRemains = milestone.metrics.timeEstimate - milestone.metrics.timeSpent;
+    milestone.metrics.payroll = mocks.money(30000, 150000);
+    milestone.metrics.profit = milestone.budget - milestone.metrics.payroll;
+    milestone.metrics.customerPayroll = mocks.money(60000, 300000);
+    milestone.metrics.budgetSpent = mocks.money(30000, 150000);
+    milestone.metrics.budgetRemains = milestone.budget - milestone.metrics.budgetSpent;
+  }
+})
 export class Milestone {
 
   @field({mock: context => !!context && !!context.id ? context.id : faker.random.uuid()})
   id: string;
 
   @field({
-    mock: () => helpers.randomize([
+    mock: () => faker.helpers.randomize([
       'MVP',
       'Sprint 1',
       'Version 1.0'
@@ -76,10 +94,10 @@ export class Milestone {
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   startDate: Date;
 
-  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
+  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   dueDate: Date;
 
-  @field()
+  @field({mock: MilestoneMetrics})
   metrics: MilestoneMetrics;
 
   @field({mock: () => faker.internet.url()})
@@ -95,7 +113,7 @@ export class Milestone {
 @model()
 export class PagingMilestones implements Paging<Milestone> {
 
-  @field({mock: ''})
+  @field({mock: faker.random.number()})
   count: number;
 
   @field({

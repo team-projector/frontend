@@ -5,8 +5,8 @@ import { AppConfig } from 'src/app-config';
 import { APPLICATION_READY } from 'src/consts';
 import { MeManager } from 'src/managers/me.manager';
 import { UserRole } from 'src/models/enums/user';
+import { LocalUI } from '../../enums/local-ui';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
-import {LocalUI} from '../../enums/local-ui';
 
 @Component({
   selector: 'app-dashboard',

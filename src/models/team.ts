@@ -1,50 +1,61 @@
 import * as faker from 'faker';
-import { helpers } from 'faker';
-import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
+import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { TeamMemberRole } from 'src/models/enums/team';
 import { IssuesMetrics } from 'src/models/metrics';
+import { mocks } from 'src/utils/mocks';
+import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
+import { DateSerializer } from '../serializers/date';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { Metrics } from './enums/metrics';
 import { Paging } from './paging';
-import { User } from './user';
+import { User, UserProgressMetrics } from './user';
 
-@model()
-export class TeamMetrics {
-
-  @field()
-  issues: IssuesMetrics;
-
-  @field({mock: () => faker.random.number({max: 10})})
-  problemsCount: number;
-
-}
-
-@model()
+@model({
+  mocking: (member: TeamMember, filter: Object, index: number) => {
+    member.user.id = `${index}`;
+  }
+})
 export class TeamMember {
 
-  @field()
+  @field({mock: User})
   user: User;
 
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
-    mock: () => [helpers.randomize([TeamMemberRole.developer, TeamMemberRole.leader])]
+    mock: () => [faker.helpers.randomize([TeamMemberRole.developer, TeamMemberRole.leader])]
   })
   roles: TeamMemberRole[];
 
 }
 
 @model()
+export class TeamMetrics {
+
+  @field({mock: IssuesMetrics})
+  issues: IssuesMetrics;
+
+  @field({mock: () => mocks.random(0, 10)})
+  problemsCount: number;
+
+}
+
+@model({
+  mocking: (team: Team) => {
+    team.members.forEach((m, i) => m.user.id = `${i}`);
+  }
+})
 export class Team {
 
   @field({mock: () => faker.random.uuid()})
   id: string;
 
   @field({
-    mock: () => helpers.randomize([
-      'Mobile',
-      'Frontend',
-      'Backend'
-    ])
+    mock: () => {
+      const title = faker.helpers.randomize(['Mobile', 'Frontend', 'Backend']);
+      const city = faker.address.city();
+      return `${title} ${city}`;
+    }
   })
   title: string;
 
@@ -54,7 +65,7 @@ export class Team {
   })
   members: TeamMember[];
 
-  @field()
+  @field({mock: TeamMetrics})
   metrics: TeamMetrics;
 }
 
@@ -67,7 +78,7 @@ export class PagingTeams implements Paging<Team> {
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging(Team)),
-    mock: {type: Team, length: 10}
+    mock: {type: Team, length: 15}
   })
   results: Team[];
 }
@@ -84,4 +95,44 @@ export class PagingTeamMembers implements Paging<TeamMember> {
     mock: {type: TeamMember, length: 5}
   })
   results: TeamMember[];
+}
+
+@model()
+export class TeamMetricsFilter {
+
+  @field()
+  team: string;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  start: Date;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  end: Date;
+
+  @field()
+  group: Metrics;
+
+  constructor(defs: TeamMetricsFilter = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+
+}
+
+@model({
+  mocking: (metrics: TeamMemberProgressMetrics, filter: Object, index: number) => {
+    metrics.user.id = `${index}`;
+  }
+})
+export class TeamMemberProgressMetrics {
+
+  @field({mock: User})
+  user: User;
+
+  @field({
+    serializer: new ArraySerializer(new ModelSerializer(UserProgressMetrics)),
+    mock: {type: UserProgressMetrics, length: 10}
+  })
+  metrics: UserProgressMetrics[];
 }

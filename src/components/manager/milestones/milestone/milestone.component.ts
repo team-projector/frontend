@@ -102,7 +102,7 @@ export class MilestoneComponent implements OnInit {
     this.loading.tickets = true;
     const filter = new TicketsFilter({milestone: this.milestone.id});
     (environment.mocks
-      ? of(getMock(PagingTickets)).pipe(delay(MOCKS_DELAY))
+      ? of(getMock(PagingTickets, filter)).pipe(delay(MOCKS_DELAY))
       : this.allTicketsGQL.fetch(serialize(filter) as R).pipe(
         map(({data: {allTickets}}) => deserialize(allTickets, PagingTickets))))
       .pipe(finalize(() => this.loading.tickets = false))

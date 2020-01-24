@@ -117,7 +117,7 @@ export class MergeRequestsComponent implements OnInit {
   ngOnInit() {
     this.table.fetcher = () => {
       return environment.mocks
-        ? of(getMock(PagingMergeRequest)).pipe(delay(MOCKS_DELAY))
+        ? of(getMock(PagingMergeRequest, this.filter)).pipe(delay(MOCKS_DELAY))
         : this.mergeRequestsGQL.fetch(serialize(this.filter) as R)
           .pipe(map(({data: {mergeRequests}}) => deserialize(mergeRequests, PagingMergeRequest)));
     };
