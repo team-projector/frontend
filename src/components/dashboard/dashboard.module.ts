@@ -12,6 +12,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { DifferencePipe } from './dashboard.pipe';
 import { SelectLangComponent } from './select-lang/select-lang.component';
+import { AppThemeSwitcherModule } from '../app-theme-switcher/app-theme-switcher.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { SelectLangComponent } from './select-lang/select-lang.component';
     JunteUiModule,
     ArrayPipesModule,
     DatePipesModule,
-    IssuesModule
+    IssuesModule,
+    AppThemeSwitcherModule
   ],
   providers: [
     AuthorizationGuard,
