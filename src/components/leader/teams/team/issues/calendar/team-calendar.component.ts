@@ -137,7 +137,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
           .map((v, i) => getMock(TeamMemberProgressMetrics, filter, i))).pipe(delay(MOCKS_DELAY))
         : this.calendarMetrics.fetch(serialize(filter) as R)
           .pipe(filtering(({data: {metrics}}) => !!metrics),
-            map(({data: {metrics}}) => metrics.map(el => deserialize(el, UserProgressMetrics)))))
+            map(({data: {metrics}}) => metrics.map(el => deserialize(el, TeamMemberProgressMetrics)))))
         .pipe(map(metrics => {
           const dic = new Map<string, Map<string, UserProgressMetrics>>();
           metrics.forEach(m => {
@@ -160,7 +160,7 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
       ? of(getMock(PagingTeamMembers)).pipe(delay(MOCKS_DELAY))
       : this.calendarMember.fetch({team: this.team.id} as R)
         .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
-      .pipe(finalize(() => this.loading = false), tap(m => console.log(m)))
+      .pipe(finalize(() => this.loading = false))
       .subscribe(teams => this.members = teams.results);
   }
 
