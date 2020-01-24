@@ -1,3 +1,4 @@
+import { addDays, startOfMonth } from 'date-fns';
 import * as faker from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
@@ -10,45 +11,49 @@ import { User } from 'src/models/user';
 import { DateSerializer } from 'src/serializers/date';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
 import { field, model } from '../decorators/model';
+import { mocks } from '../utils/mocks';
 import { TicketProblem, TicketTypes } from './enums/ticket';
 
 @model()
 export class TicketMetrics {
 
-  @field()
+  @field({mock: () => mocks.money(5000, 10000)})
   customerPayroll: number;
 
-  @field()
+  @field({mock: () => mocks.money(5000, 10000)})
   payroll: number;
 
-  @field()
+  @field({mock: () => mocks.money(5000, 10000)})
   budgetSpent: number;
 
-  @field()
+  @field({mock: () => mocks.money(5000, 10000)})
   budgetRemains: number;
 
-  @field()
+  @field({mock: () => mocks.money(5000, 10000)})
   profit: number;
 
-  @field()
+  @field({mock: () => mocks.time(0, 10)})
   timeEstimate: number;
 
-  @field()
+  @field({mock: () => mocks.time(0, 10)})
   timeSpent: number;
 
-  @field()
+  @field({mock: () => mocks.time(0, 10)})
   timeRemains: number;
 
-  @field()
+  @field({mock: () => mocks.time(0, 10)})
+  openedTimeRemains: number;
+
+  @field({mock: () => mocks.efficiency()})
   efficiency: number;
 
-  @field()
+  @field({mock: () => faker.random.number({min: 1, max: 10})})
   issuesCount: number;
 
-  @field()
+  @field({mock: () => faker.random.number({min: 1, max: 10})})
   issuesOpenedCount: number;
 
-  @field()
+  @field({mock: () => faker.random.number({min: 1, max: 10})})
   issuesClosedCount: number;
 
 }
@@ -74,7 +79,7 @@ export class Issue {
   @field({mock: {type: Label, length: 3}, serializer: new EdgesToArray(Label)})
   labels: Label[];
 
-  @field()
+  @field({mock: Project})
   project: Project;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
@@ -105,12 +110,20 @@ export class Ticket {
   @field({mock: context => !!context && !!context.id ? context.id : faker.random.uuid()})
   id: string;
 
-  @field()
+  @field({
+    mock: faker.helpers.randomize([
+      TicketTypes.feature,
+      TicketTypes.improvement,
+      TicketTypes.bugFixing
+    ])
+  })
   type: TicketTypes;
 
   @field({
     mock: () => faker.helpers.randomize([
       'Login feature',
+      'Sending emails',
+      'Design improvements',
       'Bug fixes'
     ])
   })
@@ -122,7 +135,7 @@ export class Ticket {
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   startDate: Date;
 
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
+  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
   dueDate: Date;
 
   @field({mock: () => faker.internet.url()})
@@ -131,7 +144,7 @@ export class Ticket {
   @field({mock: {type: Issue, length: 5}, serializer: new EdgesToArray(Issue)})
   issues: Issue[];
 
-  @field()
+  @field({mock: TicketMetrics})
   metrics: TicketMetrics;
 
   @field({
@@ -177,7 +190,15 @@ export class TicketUpdate {
   }
 }
 
-@model()
+@model({
+  mocking: (paging: PagingTickets) => {
+    const start = startOfMonth(new Date());
+    paging.results.forEach((ticket, i) => {
+      ticket.startDate = addDays(start, i);
+      ticket.dueDate = addDays(ticket.startDate, faker.random.number({min: 1, max: 10}));
+    });
+  }
+})
 export class PagingTickets implements Paging<Ticket> {
 
   @field({mock: () => faker.random.number()})
@@ -185,7 +206,7 @@ export class PagingTickets implements Paging<Ticket> {
 
   @field({
     name: 'edges',
-    mock: {type: Ticket, length: 10},
+    mock: {type: Ticket, length: 15},
     serializer: new ArraySerializer(new EdgesToPaging<Ticket>(Ticket))
   })
   results: Ticket[];

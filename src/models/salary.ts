@@ -1,18 +1,33 @@
+import { addDays } from 'date-fns';
+import * as faker from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
+import { mocks, TimeAccuracy } from 'src/utils/mocks';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { Paging } from './paging';
-import * as faker from 'faker';
-import { helpers } from 'faker';
 
-@model()
+@model({
+  mocking: (salary: Salary) => {
+    const from = faker.date.past(0);
+    salary.periodFrom = from;
+    salary.periodTo = addDays(from, mocks.random(3, 30));
+    salary.chargedTime = mocks.time(40, 80, TimeAccuracy.minutes);
+    salary.sum = mocks.money(10000, 30000);
+    salary.bonus = mocks.money(1000, 3000);
+    salary.penalty = mocks.money(100, 500);
+    salary.taxes = mocks.money(100, 500);
+    salary.total = salary.sum + salary.bonus - salary.penalty;
+
+
+  }
+})
 export class Salary {
 
-  @field({mock: () => faker.random.number()})
-  id: number;
+  @field({mock: () => faker.random.uuid()})
+  id: string;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
@@ -20,7 +35,7 @@ export class Salary {
   @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
   periodTo: Date;
 
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
+  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
   periodFrom: Date;
 
   @field({mock: () => faker.random.number()})
@@ -41,7 +56,7 @@ export class Salary {
   @field({mock: () => faker.random.number()})
   total: number;
 
-  @field({mock: () => helpers.randomize([true, false])})
+  @field({mock: () => faker.helpers.randomize([true, false])})
   payed: boolean;
 
 }

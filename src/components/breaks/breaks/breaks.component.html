@@ -31,11 +31,14 @@
         <ng-template #cellTemplate let-reason="reason">
           <ng-container [ngSwitch]="reason">
             <ng-container *ngSwitchCase="reasons.vacation"
-                          i18n="@@reason-vacation">Vacation</ng-container>
+                          i18n="@@reason-vacation">Vacation
+            </ng-container>
             <ng-container *ngSwitchCase="reasons.disease"
-                          i18n="@@reason-disease">Disease</ng-container>
+                          i18n="@@reason-disease">Disease
+            </ng-container>
             <ng-container *ngSwitchCase="reasons.dayoff"
-                          i18n="@@reason-dayoff">Dayoff</ng-container>
+                          i18n="@@reason-dayoff">Dayoff
+            </ng-container>
           </ng-container>
         </ng-template>
       </jnt-table-column>
@@ -51,48 +54,45 @@
                      let-approveState="approveState"
                      let-approvedBy="approvedBy"
                      let-approvedAt="approvedAt"
-                     let-comment="comment">
-          <ng-container *ngIf="approveState != approves.created">
-            <jnt-stack [type]="ui.stack.type.horizontal">
-              <jnt-stack [type]="ui.stack.type.vertical" [gutter]="ui.gutter.tiny">
-                <ng-container [ngSwitch]="approveState">
-                  <ng-container *ngSwitchCase="approves.approved">
-                    <jnt-label i18n-label="@@approveApproved"
-                               [color]="ui.colors.green"
-                               label="Approved">
-                    </jnt-label>
-                  </ng-container>
-                  <ng-container *ngSwitchCase="approves.decline">
-                    <jnt-label i18n-label="@@approveDeclined"
-                               [color]="ui.colors.red"
-                               label="Declined">
-                    </jnt-label>
-                  </ng-container>
-                </ng-container>
-                <div>
-                  {{ approvedAt | date}}
-                </div>
-              </jnt-stack>
-              <jnt-stack [type]="ui.stack.type.vertical" [gutter]="ui.gutter.tiny">
-                <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.gutter.tiny">
-                  <jnt-avatar avatar [image]="approvedBy?.avatar"
-                              [size]="ui.sizes.tiny"></jnt-avatar>
-                  <div>
-                    <jnt-link link [title]="approvedBy?.name"></jnt-link>
-                  </div>
-                </jnt-stack>
-                <div>
-                  {{ comment }}
-                </div>
-              </jnt-stack>
+                     let-comment="comment"
+                     let-declineReason="declineReason">
+
+          <jnt-stack [type]="ui.stack.type.horizontal">
+            <jnt-stack [type]="ui.stack.type.vertical" [gutter]="ui.gutter.tiny">
+              <ng-container [ngSwitch]="approveState">
+                <jnt-label *ngSwitchCase="approveStates.created"
+                           i18n-label="@@approveCreated"
+                           [color]="ui.colors.purple"
+                           label="Approving">
+                </jnt-label>
+                <jnt-label *ngSwitchCase="approveStates.approved"
+                           i18n-label="@@approveApproved"
+                           [color]="ui.colors.green"
+                           label="Approved">
+                </jnt-label>
+
+                <jnt-label *ngSwitchCase="approveStates.decline"
+                           i18n-label="@@approveDeclined"
+                           [color]="ui.colors.red"
+                           label="Declined">
+                </jnt-label>
+              </ng-container>
+              <small *ngIf="approvedAt">
+                {{ approvedAt | date}}
+              </small>
             </jnt-stack>
-          </ng-container>
-          <ng-container *ngIf="approveState === approves.created">
-            <jnt-label i18n-label="@@approveCreated"
-                       [color]="ui.colors.purple"
-                       label="Created">
-            </jnt-label>
-          </ng-container>
+            <jnt-stack [type]="ui.stack.type.vertical" [gutter]="ui.gutter.tiny">
+              <jnt-stack *ngIf="approvedBy"
+                         [type]="ui.stack.type.horizontal" [gutter]="ui.gutter.tiny">
+                <jnt-avatar avatar [image]="approvedBy.avatar"
+                            [size]="ui.sizes.tiny"></jnt-avatar>
+                <jnt-link link [title]="approvedBy.name"></jnt-link>
+              </jnt-stack>
+              <small *ngIf="declineReason">
+                {{ declineReason }}
+              </small>
+            </jnt-stack>
+          </jnt-stack>
         </ng-template>
       </jnt-table-column>
 
@@ -105,7 +105,8 @@
                          [icon]="ui.icons.cancel" (click)="openDecline(break)">
           </jnt-menu-item>
           <jnt-menu-item i18n-title="@@edit" title="Edit" [icon]="ui.icons.edit" (click)="open(break)"></jnt-menu-item>
-          <jnt-menu-item i18n-title="@@delete" title="Delete" [icon]="ui.icons.delete" (click)="delete(break.id)"></jnt-menu-item>
+          <jnt-menu-item i18n-title="@@delete" title="Delete" [icon]="ui.icons.delete"
+                         (click)="delete(break.id)"></jnt-menu-item>
         </jnt-menu>
       </ng-template>
 

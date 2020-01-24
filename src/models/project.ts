@@ -38,7 +38,7 @@ export class ProjectGroup {
   })
   title: string;
 
-  @field({mock: ''})
+  @field()
   fullTitle: string;
 
   @field({mock: () => faker.image.business()})
@@ -63,7 +63,7 @@ export class Project {
   @field()
   fullTitle: string;
 
-  @field()
+  @field({mock: ProjectGroup})
   group: ProjectGroup;
 
   @field({mock: () => faker.internet.url()})

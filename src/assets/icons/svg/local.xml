@@ -7,7 +7,7 @@
     <!-- Common -->
 
 <svg id="customer" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path d="M20.9208 12.742L14.9997 5L9.07989 12.742L0 5L3.55254 21.3417C3.55254 23.3623 5.05684 25 6.90986 25H23.0911C24.9442 25 26.4478 23.3623 26.4478 21.3417L30 5L20.9208 12.742Z" fill="black"/>
+  <path d="M20.9208 14.742L15 2L9.07989 14.742L0 7L3.55254 23.3417C3.55254 25.3623 5.05684 27 6.90986 27H23.0911C24.9442 27 26.4478 25.3623 26.4478 23.3417L30 7L20.9208 14.742Z" fill="black"/>
 </svg>
 
 <svg id="developer" width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">

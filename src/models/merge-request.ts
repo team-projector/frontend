@@ -7,6 +7,7 @@ import { MergeRequestState } from 'src/models/enums/merge-requests';
 import { DateSerializer } from 'src/serializers/date';
 import { field, model } from '../decorators/model';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { mocks } from '../utils/mocks';
 import { Issue } from './issue';
 import { Label } from './label';
 import { Paging } from './paging';
@@ -16,16 +17,16 @@ import { User } from './user';
 @model()
 export class MergeRequestSummary {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => faker.random.number({min: 1, max: 10})})
   count: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => faker.random.number({min: 1, max: 10})})
   openedCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => faker.random.number({min: 1, max: 10})})
   closedCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => faker.random.number({min: 1, max: 10})})
   mergedCount: number;
 
 }
@@ -33,16 +34,16 @@ export class MergeRequestSummary {
 @model()
 export class MergeRequestMetrics {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.time()})
   remains: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.efficiency()})
   efficiency: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.money(10, 100)})
   payroll: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.money(10, 100)})
   paid: number;
 
 }
@@ -53,7 +54,7 @@ export class MergeRequest {
   @field({mock: () => faker.random.uuid()})
   id: number;
 
-  @field({mock: ''})
+  @field({mock: User})
   user: User;
 
   @field({mock: {type: Issue, length: 1}, serializer: new EdgesToArray(Issue)})
@@ -74,28 +75,28 @@ export class MergeRequest {
   })
   title: string;
 
-  @field({mock: {type: Label, length: 3}, serializer: new EdgesToArray(Label)})
+  @field({mock: {type: Label, length: 1}, serializer: new EdgesToArray(Label)})
   labels: Label[];
 
-  @field({mock: ''})
+  @field({mock: Project})
   project: Project;
 
-  @field({mock: ''})
+  @field({mock: () => mocks.time()})
   timeEstimate: number;
 
-  @field({mock: ''})
+  @field({mock: () => mocks.time()})
   timeSpent: number;
 
-  @field({mock: ''})
+  @field({mock: () => mocks.time()})
   totalTimeSpent: number;
 
-  @field({mock: ''})
+  @field({mock: () => faker.internet.url()})
   glUrl: string;
 
   @field({mock: () => helpers.randomize([MergeRequestState.opened, MergeRequestState.closed])})
   state: MergeRequestState;
 
-  @field({mock: ''})
+  @field({mock: MergeRequestMetrics})
   metrics: MergeRequestMetrics;
 }
 

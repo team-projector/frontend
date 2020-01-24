@@ -1,37 +1,57 @@
+import { subDays } from 'date-fns';
 import * as faker from 'faker';
 import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
-import { BreakReasons, BreakState } from 'src/models/enums/break';
+import { BreakReasons, ApproveStates } from 'src/models/enums/break';
 import { DATE_TIME_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
+import { getMock, mocks } from '../utils/mocks';
 import { Paging } from './paging';
 import { User } from './user';
 
-@model()
+@model({
+  mocking: (workBreak: Break) => {
+    [workBreak.fromDate, workBreak.toDate] = mocks.date.interval();
+    const approvedAt = subDays(workBreak.fromDate, faker.random.number({min: 1, max: 10}));
+    switch (faker.random.number({min: 1, max: 3})) {
+      case 2:
+        workBreak.approveState = ApproveStates.approved;
+        workBreak.approvedBy = getMock(User);
+        workBreak.approvedAt = approvedAt;
+        break;
+      case 3:
+        workBreak.approveState = ApproveStates.decline;
+        workBreak.approvedBy = getMock(User);
+        workBreak.approvedAt = approvedAt;
+        workBreak.declineReason = helpers.randomize([
+          'Sorry we have an urgent project',
+          'You need on the next week meeting',
+          'Only next week'
+        ]);
+        break;
+      default:
+        workBreak.approveState = ApproveStates.created;
+    }
+  }
+})
 export class Break {
 
   @field({mock: () => faker.random.uuid()})
   id: number;
 
-  @field()
+  @field({mock: User})
   user: User;
-
-  @field()
-  approvedBy: User;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
 
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
-  approvedAt: Date;
-
-  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   toDate: Date;
 
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   fromDate: Date;
 
   @field({
@@ -43,16 +63,24 @@ export class Break {
   })
   comment: string;
 
-  @field({mock: () => helpers.randomize([BreakReasons.dayoff, BreakReasons.disease, BreakReasons.vacation])})
+  @field()
+  approveState: ApproveStates;
+
+  @field({serializer: new DateSerializer()})
+  approvedAt: Date;
+
+  @field()
+  approvedBy: User;
+
+  @field({
+    mock: () => helpers.randomize([
+      BreakReasons.dayoff,
+      BreakReasons.disease,
+      BreakReasons.vacation])
+  })
   reason: BreakReasons;
 
-  @field({mock: () => helpers.randomize([BreakState.approved, BreakState.created, BreakState.decline])})
-  state: BreakState;
-
-  @field({mock: () => helpers.randomize([BreakState.approved, BreakState.created, BreakState.decline])})
-  approveState: BreakState;
-
-  @field({mock: ''})
+  @field()
   declineReason: string;
 
 }

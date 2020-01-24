@@ -5,9 +5,9 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class CalendarMembersGQL extends Query<{team: {members}}> {
+export class CalendarMembersGQL extends Query<{ team: { members } }> {
   document = gql`
-    query ($team: ID!) {
+    query($team: ID!) {
       team(id: $team) {
         members(roles: "DEVELOPER", orderBy: "user__name") {
           count
@@ -36,10 +36,10 @@ export class CalendarMembersGQL extends Query<{team: {members}}> {
 @Injectable({
   providedIn: 'root'
 })
-export class CalendarMetricsGQL extends Query<{teamProgressMetrics}> {
+export class CalendarMetricsGQL extends Query<{ metrics }> {
   document = gql`
     query ($team: ID!, $start: Date!, $end: Date!, $group: String!) {
-      teamProgressMetrics(team: $team, start: $start, end: $end, group: $group) {
+      metrics: teamProgressMetrics(team: $team, start: $start, end: $end, group: $group) {
         user {
           id
           name

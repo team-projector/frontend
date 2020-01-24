@@ -1,21 +1,22 @@
-import { TimeExpenseState } from 'src/models/enums/time-expenses';
-import { field, model } from '../decorators/model';
+import * as faker from 'faker';
 import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
+import { TimeExpenseState } from 'src/models/enums/time-expenses';
+import { mocks, SECONDS_IN_HOUR } from 'src/utils/mocks';
 import { DATE_FORMAT } from '../consts';
+import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { OwnerSerializer } from '../serializers/owner';
 import { Issue } from './issue';
 import { MergeRequest } from './merge-request';
 import { Paging } from './paging';
-import * as faker from 'faker';
 
 @model()
 export class SpentTime {
 
-  @field({mock: () => faker.random.number()})
-  id: number;
+  @field({mock: () => faker.random.uuid()})
+  id: string;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
@@ -32,10 +33,10 @@ export class SpentTime {
   })
   owner: Issue | MergeRequest;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.time()})
   timeSpent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.money(10, 100)})
   sum: number;
 }
 
@@ -57,29 +58,29 @@ export class PagingTimeExpenses implements Paging<SpentTime> {
 @model()
 export class SpentTimesSummary {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.time()})
   spent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.time()})
   openedSpent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.time()})
   closedSpent: number;
 }
 
 @model()
 export class TimeExpensesSummary {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => faker.random.number({min: 1, max: 10})})
   count: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => faker.random.number({min: 1, max: 10})})
   openedCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => faker.random.number({min: 1, max: 10})})
   closedCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => faker.random.number({min: 1, max: 10})})
   mergedCount: number;
 
 }

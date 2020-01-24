@@ -121,10 +121,9 @@ export class TimeExpensesComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(getMock(PagingTimeExpenses));
     this.table.fetcher = () => {
       return environment.mocks
-        ? of(getMock(PagingTimeExpenses)).pipe(delay(MOCKS_DELAY))
+        ? of(getMock(PagingTimeExpenses, this.filter)).pipe(delay(MOCKS_DELAY))
         : this.timeExpensesGQL.fetch(serialize(this.filter) as R)
           .pipe(map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingTimeExpenses)));
     };
@@ -163,7 +162,6 @@ export class TimeExpensesComponent implements OnInit {
   }
 
   loadSummary() {
-    console.log(SpentTimesSummary);
     (environment.mocks
       ? of(getMock(SpentTimesSummary)).pipe(delay(MOCKS_DELAY))
       : this.timeExpensesSummaryGQL.fetch(serialize(this.filter) as R)

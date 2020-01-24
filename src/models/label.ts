@@ -17,4 +17,8 @@ export class Label {
   @field({mock: () => faker.commerce.color()})
   color: string;
 
+  constructor(defs: any = {}) {
+    Object.assign(this, defs);
+  }
+
 }
