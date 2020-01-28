@@ -21,6 +21,7 @@ export class SalaryDetailComponent extends TimeExpensesListComponent {
   }
 
   getState(state: Object) {
+    delete state['salary'];
     delete state['user'];
     return state;
   }
