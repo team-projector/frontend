@@ -64,7 +64,7 @@ export class Issue {
   @field({mock: () => faker.random.uuid()})
   id: string;
 
-  @field()
+  @field({mock: User})
   user: User;
 
   @field({
@@ -111,7 +111,7 @@ export class Ticket {
   id: string;
 
   @field({
-    mock: faker.helpers.randomize([
+    mock: () => faker.helpers.randomize([
       TicketTypes.feature,
       TicketTypes.improvement,
       TicketTypes.bugFixing

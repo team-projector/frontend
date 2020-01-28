@@ -1,13 +1,5 @@
-<p *ngIf="!!ticket">
-  <jnt-link [source]="'https://teamprojector.com/admin/development/ticket/' + ticket.id + '/change/'"
-            [icon]="ui.icons.edit"
-            target="_blank"
-            title="Edit"
-            [outline]="ui.outline.ghost">
-  </jnt-link>
-  ticket in admin dashboard.
-</p>
-<jnt-form [formGroup]="form" jntValidation (submitted)="save()">
+<jnt-form [formGroup]="form" jntValidation (submitted)="save()"
+          [loading]="progress.loading">
   <p *ngFor="let e of errors">{{e}}</p>
   <jnt-tabs>
     <jnt-tab title="Common">
@@ -85,6 +77,8 @@
       </ng-template>
     </jnt-tab>
     <jnt-tab title="Issues">
+      <jnt-badge *ngIf="ticket?.issues.length"
+                 [count]="ticket?.issues.length"></jnt-badge>
       <ng-template #tabContentTemplate>
         <jnt-form-item>
           <jnt-select issues placeholder="Issues"
@@ -110,11 +104,25 @@
     </jnt-tab>
   </jnt-tabs>
 
+  <p *ngIf="!!ticket">
+    <jnt-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
+              [icon]="ui.icons.settings"
+              target="_blank"
+              title="Edit"
+              [outline]="ui.outline.ghost">
+    </jnt-link>
+    ticket in admin dashboard.
+  </p>
+
   <ng-template #formFooterTemplate>
     <jnt-stack [type]="ui.stack.type.horizontal"
-               [justify]="ui.flex.justify.between" footer>
-      <jnt-button text="Save" [type]="ui.form.button.type.submit" [loading]="saving"></jnt-button>
-      <jnt-button text="Cancel" (click)="canceled.emit()" [scheme]="ui.schemes.secondary"></jnt-button>
+               [justify]="ui.flex.justify.between">
+      <jnt-button text="Save"
+                  [type]="ui.form.button.type.submit"
+                  [loading]="progress.saving"></jnt-button>
+      <jnt-button text="Cancel"
+                  (click)="canceled.emit()"
+                  [scheme]="ui.schemes.secondary"></jnt-button>
     </jnt-stack>
   </ng-template>
 </jnt-form>

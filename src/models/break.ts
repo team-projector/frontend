@@ -1,6 +1,5 @@
 import { subDays } from 'date-fns';
 import * as faker from 'faker';
-import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { BreakReasons, ApproveStates } from 'src/models/enums/break';
@@ -26,7 +25,7 @@ import { User } from './user';
         workBreak.approveState = ApproveStates.decline;
         workBreak.approvedBy = getMock(User);
         workBreak.approvedAt = approvedAt;
-        workBreak.declineReason = helpers.randomize([
+        workBreak.declineReason = faker.helpers.randomize([
           'Sorry we have an urgent project',
           'You need on the next week meeting',
           'Only next week'
@@ -55,7 +54,7 @@ export class Break {
   fromDate: Date;
 
   @field({
-    mock: () => helpers.randomize([
+    mock: () => faker.helpers.randomize([
       'Wanna have weekend',
       'Going to party',
       'I need a vacation'
@@ -73,7 +72,7 @@ export class Break {
   approvedBy: User;
 
   @field({
-    mock: () => helpers.randomize([
+    mock: () => faker.helpers.randomize([
       BreakReasons.dayoff,
       BreakReasons.disease,
       BreakReasons.vacation])

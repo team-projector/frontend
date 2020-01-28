@@ -32,7 +32,6 @@ export class EditTicketComponent {
   private _id: string;
 
   errors: GqlError[] = [];
-  saving = false;
   progress = {loading: false, saving: false};
 
   milestoneControl = this.fb.control(null);
@@ -104,10 +103,10 @@ export class EditTicketComponent {
   }
 
   save() {
-    this.saving = true;
+    this.progress.saving = true;
     const mutation = !!this.ticket ? this.editTicketGQL : this.createTicketGQL;
     const action = mutation.mutate(serialize(new TicketUpdate(this.form.getRawValue())) as R);
-    action.pipe(catchGQLErrors(), finalize(() => this.saving = false))
+    action.pipe(catchGQLErrors(), finalize(() => this.progress.saving = false))
       .subscribe(() => this.saved.emit(),
         (err: GqlError[]) => this.errors = err);
   }

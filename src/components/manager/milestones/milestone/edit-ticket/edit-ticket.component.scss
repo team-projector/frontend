@@ -5,6 +5,11 @@
   min-width: 400px;
 }
 
+p {
+  font-size: $font-size-small;
+  text-align: right;
+}
+
 [issue] {
   pointer-events: none;
 }
