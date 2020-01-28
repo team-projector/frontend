@@ -17,6 +17,7 @@ import { Milestone } from 'src/models/milestone';
 import { PagingTickets, Ticket, TicketsFilter } from 'src/models/ticket';
 import { equals } from 'src/utils/equals';
 import { getMock } from 'src/utils/mocks';
+import { IssueState } from '../../../../models/enums/issue';
 import { EditTicketComponent } from './edit-ticket/edit-ticket.component';
 import { AllTicketsGQL, AttachIssueGQL, DeleteTicketGQL, MilestoneIssuesSummaryGQL, TicketIssuesGQL } from './milestone.graphql';
 
@@ -44,6 +45,7 @@ export class MilestoneComponent implements OnInit {
   durationFormat = DurationFormat;
   ticketTypes = TicketTypes;
   ticketProblem = TicketProblem;
+  issueStates = IssueState.opened;
 
   private _milestone: Milestone;
 

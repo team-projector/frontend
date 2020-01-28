@@ -50,6 +50,7 @@ export class AllTicketsGQL extends Query<{ allTickets }> {
               timeEstimate
               timeSpent
               timeRemains
+              openedTimeRemains
               issuesCount
               issuesOpenedCount
               issuesClosedCount

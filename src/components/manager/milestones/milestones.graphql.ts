@@ -22,8 +22,8 @@ export class SyncMilestoneGQL extends Mutation<{ syncMilestone: { milestone: { i
 })
 export class AllMilestonesGQL extends Query<{allMilestones}> {
   document = gql`
-    query ($orderBy: String, $offset: Int, $first: Int) {
-      allMilestones(active: true, orderBy: $orderBy, offset: $offset, first: $first) {
+    query ($offset: Int, $first: Int) {
+      allMilestones(active: true, orderBy: "dueDate", offset: $offset, first: $first) {
         count
         edges {
           node {
