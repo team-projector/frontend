@@ -1,3 +1,12 @@
+<p *ngIf="!!ticket">
+  <jnt-link [source]="'https://teamprojector.com/admin/development/ticket/' + ticket.id + '/change/'"
+            [icon]="ui.icons.edit"
+            target="_blank"
+            title="Edit"
+            [outline]="ui.outline.ghost">
+  </jnt-link>
+  ticket in admin dashboard.
+</p>
 <jnt-form [formGroup]="form" jntValidation (submitted)="save()">
   <p *ngFor="let e of errors">{{e}}</p>
   <jnt-tabs>
