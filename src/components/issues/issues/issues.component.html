@@ -30,7 +30,8 @@
         <ng-template #cellTemplate let-title="title" let-labels="labels" let-glUrl="glUrl" let-state="state"
                      let-user="user" let-project="project" let-ticket="ticket"
                      let-closedAt="closedAt" let-id="id">
-          <app-issue [issue]="{id: id, title: title, labels: labels, glUrl: glUrl, state: state, user: user, project: project, ticket: ticket, closedAt: closedAt}"></app-issue>
+          <app-issue
+            [issue]="{id: id, title: title, labels: labels, glUrl: glUrl, state: state, user: user, project: project, ticket: ticket, closedAt: closedAt}"></app-issue>
         </ng-template>
       </jnt-table-column>
 
@@ -54,14 +55,21 @@
 
       <jnt-table-column i18n-title="@@progress" title="Progress">
         <ng-template #cellTemplate let-timeEstimate="timeEstimate"
+                     let-timeSpent="timeSpent"
                      let-totalTimeSpent="totalTimeSpent"
                      let-metrics="metrics"
                      let-problems="problems">
-          <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
+          <jnt-progress-bar progress *ngIf="!!timeEstimate"
+                            [value]="(view === viewType.default ? totalTimeSpent : timeSpent) / timeEstimate * 100">
             <ng-template #legend>
               <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
                          [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
-                <div metric>{{totalTimeSpent | duration}}</div>
+                <div metric>
+                  {{(view === viewType.default ? totalTimeSpent : timeSpent) | duration}}
+                  <span collaboration *ngIf="view === viewType.default && totalTimeSpent !== timeSpent">
+                    +{{totalTimeSpent - timeSpent | duration}}
+                  </span>
+                </div>
                 <div metric estimate>{{timeEstimate | duration}}</div>
               </jnt-stack>
             </ng-template>

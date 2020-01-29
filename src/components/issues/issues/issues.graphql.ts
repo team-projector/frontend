@@ -45,6 +45,7 @@ export class IssuesGQL extends Query<{ issues }> {
             state
             createdAt
             timeEstimate
+            timeSpent
             totalTimeSpent
             timeEstimate
             glUrl

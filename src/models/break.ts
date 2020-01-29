@@ -27,7 +27,7 @@ import { User } from './user';
         workBreak.approvedAt = approvedAt;
         workBreak.declineReason = faker.helpers.randomize([
           'Sorry we have an urgent project',
-          'You need on the next week meeting',
+          'You need to be on next week meetup',
           'Only next week'
         ]);
         break;

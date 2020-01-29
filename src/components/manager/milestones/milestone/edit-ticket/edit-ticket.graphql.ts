@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class GetTicketGQL extends Query<{ ticket }> {
   document = gql`
-    query ($ticket: ID!) {
+    query($ticket: ID!) {
       ticket(id: $ticket) {
         id
         type
@@ -70,7 +70,7 @@ export class GetTicketGQL extends Query<{ ticket }> {
 })
 export class CreateTicketGQL extends Mutation<{ ticket }> {
   document = gql`
-    mutation ($milestone: ID!, $type: String!, $title: String!, $role: String, $startDate: Date!, $dueDate: Date!, $url: String, $issues: [ID]!) {
+    mutation($milestone: ID!, $type: String!, $title: String!, $role: String, $startDate: Date!, $dueDate: Date!, $url: String, $issues: [ID]!) {
       createTicket(milestone: $milestone, type: $type, title: $title, role: $role, startDate: $startDate, dueDate: $dueDate, url: $url, issues: $issues) {
         ticket {
           milestone {
@@ -92,7 +92,7 @@ export class CreateTicketGQL extends Mutation<{ ticket }> {
 })
 export class EditTicketGQL extends Mutation<{ ticket }> {
   document = gql`
-    mutation ($id: ID!, $type: String!, $title: String!, $role: String, $startDate: Date!, $dueDate: Date!, $url: String, $issues: [ID]!) {
+    mutation($id: ID!, $type: String!, $title: String!, $role: String, $startDate: Date!, $dueDate: Date!, $url: String, $issues: [ID]!) {
       updateTicket(id: $id, type: $type, title: $title, role: $role, startDate: $startDate, dueDate: $dueDate, url: $url, issues: $issues) {
         ticket {
           id
