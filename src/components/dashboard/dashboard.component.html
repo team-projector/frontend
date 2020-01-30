@@ -22,11 +22,11 @@
                        [link]="['/manager']"
                        [icon]="localUi.icons.projectManager"
                        [matching]="ui.url.matching.wildcard"></jnt-menu-item>
-        <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.customer)"
+        <!--<jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.customer)"
                        title="Customer"
                        [link]="['/customer']"
                        [icon]="localUi.icons.customer"
-                       [matching]="ui.url.matching.wildcard"></jnt-menu-item>
+                       [matching]="ui.url.matching.wildcard"></jnt-menu-item>-->
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.shareholder)"
                        title="Shareholder"
                        [link]="['/shareholder']"
