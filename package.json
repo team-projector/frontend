@@ -12,7 +12,7 @@
     "clean": "npm cache clean --force && rm -rf -- node_modules doc coverage dist dll package-lock.json",
     "refresh": "npm run clean && npm install",
     "mocks": "tsc && gulp build --gulpfile node_modules/@junte/mocker-library/gulpfile.js --cwd .",
-    "extract-i18n": "ng xi18n --output-path locale && xliffmerge --profile xliffmerge.json en de",
+    "extract-i18n": "ng xi18n --output-path locale && xliffmerge --profile xliffmerge.json",
     "e2e": "ng e2e",
     "themes:watch": "gulp themes:watch",
     "themes": "gulp themes"
