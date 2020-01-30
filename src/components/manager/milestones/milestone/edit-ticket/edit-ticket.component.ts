@@ -113,7 +113,11 @@ export class EditTicketComponent {
 
   findIssues() {
     return (query: string) => new Observable<Issue[]>(o => {
-      const filter = new IssuesFilter({q: query, first: FOUND_ISSUES_COUNT});
+      const filter = new IssuesFilter({
+        q: query,
+        orderBy: '-createdAt',
+        first: FOUND_ISSUES_COUNT
+      });
       this.issuesGQL.fetch(serialize(filter) as R)
         .pipe(catchGQLErrors(),
           map(({data: {issues}}) => deserialize(issues, PagingIssues)))
