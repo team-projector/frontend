@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
   <file source-language="en" datatype="plaintext" original="ng2.template">
     <body>
@@ -23,7 +23,7 @@
         <target>До даты</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/issues/issues/issues.component.html</context>
-          <context context-type="linenumber">37</context>
+          <context context-type="linenumber">39</context>
         </context-group>
       </trans-unit>
       <trans-unit id="progress" datatype="html">
@@ -31,7 +31,7 @@
         <target>Прогресс</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/issues/issues/issues.component.html</context>
-          <context context-type="linenumber">53</context>
+          <context context-type="linenumber">57</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestones.component.html</context>
@@ -43,11 +43,11 @@
         <target>Оплата</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/issues/issues/issues.component.html</context>
-          <context context-type="linenumber">78</context>
+          <context context-type="linenumber">90</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/issues/merge-requests/merge-request.component.html</context>
-          <context context-type="linenumber">80</context>
+          <context context-type="linenumber">83</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/issues/developer-issues.component.html</context>
@@ -59,7 +59,7 @@
         <target>Создано</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/issues/time-expenses/time-expenses.component.html</context>
-          <context context-type="linenumber">49</context>
+          <context context-type="linenumber">32</context>
         </context-group>
       </trans-unit>
       <trans-unit id="spent" datatype="html">
@@ -67,7 +67,7 @@
         <target>Затрачено</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/issues/time-expenses/time-expenses.component.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">38</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/issues/developer-issues.component.html</context>
@@ -79,7 +79,7 @@
         <target>Получить</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/issues/time-expenses/time-expenses.component.html</context>
-          <context context-type="linenumber">61</context>
+          <context context-type="linenumber">44</context>
         </context-group>
       </trans-unit>
       <trans-unit id="est" datatype="html">
@@ -87,7 +87,7 @@
         <target>Прогресс</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/issues/merge-requests/merge-request.component.html</context>
-          <context context-type="linenumber">55</context>
+          <context context-type="linenumber">58</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/issues/developer-issues.component.html</context>
@@ -98,7 +98,7 @@
         <source>Charged Time</source>
         <target>Оплаченное время</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/salaries/salaries/salaries.component.html</context>
+          <context context-type="sourcefile">components/salaries/salaries.component.html</context>
           <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
@@ -106,7 +106,7 @@
         <source>Period</source>
         <target>Период</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/salaries/salaries/salaries.component.html</context>
+          <context context-type="sourcefile">components/salaries/salaries.component.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
         <context-group purpose="location">
@@ -118,7 +118,7 @@
         <source>Bonus</source>
         <target>Бонус</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/salaries/salaries/salaries.component.html</context>
+          <context context-type="sourcefile">components/salaries/salaries.component.html</context>
           <context context-type="linenumber">18</context>
         </context-group>
       </trans-unit>
@@ -126,7 +126,7 @@
         <source>Penalty</source>
         <target>Штраф</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/salaries/salaries/salaries.component.html</context>
+          <context context-type="sourcefile">components/salaries/salaries.component.html</context>
           <context context-type="linenumber">24</context>
         </context-group>
       </trans-unit>
@@ -134,7 +134,7 @@
         <source>Total</source>
         <target>Всего</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/salaries/salaries/salaries.component.html</context>
+          <context context-type="sourcefile">components/salaries/salaries.component.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
@@ -142,7 +142,7 @@
         <source>Payed</source>
         <target>Оплачено</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/salaries/salaries/salaries.component.html</context>
+          <context context-type="sourcefile">components/salaries/salaries.component.html</context>
           <context context-type="linenumber">36</context>
         </context-group>
       </trans-unit>
@@ -182,6 +182,10 @@
         <source>Reason</source>
         <target>Причина</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-edit/break-edit.component.html</context>
+          <context context-type="linenumber">24</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
           <context context-type="linenumber">30</context>
         </context-group>
@@ -190,101 +194,166 @@
         <source>Vacation</source>
         <target>Отпуск</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-edit/break-edit.component.html</context>
+          <context context-type="linenumber">35</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">34</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reason-disease" datatype="html">
         <source>Disease</source>
         <target>Болезнь</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-edit/break-edit.component.html</context>
+          <context context-type="linenumber">31</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">37</context>
         </context-group>
       </trans-unit>
       <trans-unit id="reason-dayoff" datatype="html">
         <source>Dayoff</source>
         <target>Выходной</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-edit/break-edit.component.html</context>
+          <context context-type="linenumber">27</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
-          <context context-type="linenumber">30</context>
+          <context context-type="linenumber">40</context>
         </context-group>
       </trans-unit>
       <trans-unit id="comment" datatype="html">
         <source>Comment</source>
         <target>Комментарий</target>
         <context-group purpose="location">
-          <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
-          <context context-type="linenumber">36</context>
+          <context context-type="sourcefile">components/breaks/break-decline/break-decline.component.html</context>
+          <context context-type="linenumber">4</context>
         </context-group>
-      </trans-unit>
-      <trans-unit id="agreement" datatype="html">
-        <source>Agreement</source>
-        <target>Статус</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-edit/break-edit.component.html</context>
+          <context context-type="linenumber">47</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-edit/break-edit.component.html</context>
+          <context context-type="linenumber">49</context>
+        </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
-          <context context-type="linenumber">42</context>
+          <context context-type="linenumber">46</context>
         </context-group>
       </trans-unit>
       <trans-unit id="fromDate" datatype="html">
-              <source>From</source>
-              <target>С</target>
+        <source>From</source>
+        <target>С</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-edit/break-edit.component.html</context>
+          <context context-type="linenumber">4</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="toDate" datatype="html">
-              <source>To</source>
-              <target>По</target>
+        <source>To</source>
+        <target>По</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-edit/break-edit.component.html</context>
+          <context context-type="linenumber">14</context>
+        </context-group>
       </trans-unit>
-
       <trans-unit id="save" datatype="html">
-              <source>Save</source>
-              <target>Сохранить</target>
+        <source>Save</source>
+        <target>Сохранить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-decline/break-decline.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-edit/break-edit.component.html</context>
+          <context context-type="linenumber">59</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="add" datatype="html">
-              <source>Add</source>
-              <target>Добавить</target>
+        <source>Add</source>
+        <target>Добавить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
+          <context context-type="linenumber">5</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="edit" datatype="html">
-              <source>Edit</source>
-              <target>Редактировать</target>
+        <source>Edit</source>
+        <target>Редактировать</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
+          <context context-type="linenumber">107</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="delete" datatype="html">
-              <source>Delete</source>
-              <target>Удалить</target>
+        <source>Delete</source>
+        <target>Удалить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
+          <context context-type="linenumber">108</context>
+        </context-group>
       </trans-unit>
-
       <trans-unit id="approve" datatype="html">
-              <source>Approve</source>
-              <target>Одобрить</target>
+        <source>Approve</source>
+        <target>Одобрить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
+          <context context-type="linenumber">101</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="decline" datatype="html">
-              <source>Decline</source>
-              <target>Отклонить</target>
+        <source>Decline</source>
+        <target>Отклонить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
+          <context context-type="linenumber">104</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="approveApproved" datatype="html">
-              <source>Approved</source>
-              <target>Одобрено</target>
+        <source>Approved</source>
+        <target>Одобрено</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
+          <context context-type="linenumber">71</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="approveDeclined" datatype="html">
-              <source>Declined</source>
-              <target>Отклонено</target>
+        <source>Declined</source>
+        <target>Отклонено</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
+          <context context-type="linenumber">77</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="approveCreated" datatype="html">
-              <source>Created</source>
-              <target>Запрос открыт</target>
+        <source>Approving</source>
+        <target>Запрос открыт</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
+          <context context-type="linenumber">66</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="breakState" datatype="html">
-              <source>State</source>
-              <target>Состояние</target>
+        <source>State</source>
+        <target>Состояние</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/breaks/breaks.component.html</context>
+          <context context-type="linenumber">52</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="declineReason" datatype="html">
-              <source>Decline Reason</source>
-              <target>Причина отказа</target>
+        <source>Decline Reason</source>
+        <target>Причина отказа</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-decline/break-decline.component.html</context>
+          <context context-type="linenumber">6</context>
+        </context-group>
       </trans-unit>
-      <trans-unit id="add_break" datatype="html">
-              <source>Add break</source>
-              <target>Добавить перерыв</target>
-      </trans-unit>
-
     </body>
   </file>
 </xliff>
