@@ -18,7 +18,6 @@
           <jnt-gantt-line [period]="ticket"
                           [from]="ticket.startDate"
                           [to]="ticket.dueDate">
-
             <ng-template #indicator let-period="period" let-current="current">
               <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
                    [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)"
@@ -49,8 +48,9 @@
                               [icon]="ticketControl.value === ticket.id ? ui.icons.chevronDown : ui.icons.chevronRight"
                               (click)="toggleIssues(ticket.id)">
                   </jnt-button>
-                  <jnt-dot
-                    [color]="ticket.type === ticketTypes.feature ? ui.colors.green : (ticket.type === ticketTypes.improvement ? ui.colors.purple : ui.colors.red)"></jnt-dot>
+                  <jnt-dot [color]="ticket.type === ticketTypes.feature ? ui.colors.green
+                    : (ticket.type === ticketTypes.improvement ? ui.colors.purple : ui.colors.red)">
+                  </jnt-dot>
                   <jnt-link [title]="ticket.title"
                             (click)="toggleIssues(ticket.id)"></jnt-link>
                   <jnt-label *ngIf="ticket.role as role"
@@ -120,7 +120,9 @@
               <jnt-gantt-line *ngFor="let issue of issues"
                               [period]="issue"
                               [from]="[ticket.startDate, issue.dueDate] | dfnsMin"
-                              [to]="issue.dueDate">
+                              [to]="issue.dueDate"
+                              cdkDropList
+                              [cdkDropListEnterPredicate]="predicateIssue">
                 <ng-template #indicator let-period="period" let-current="current">
                   <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
                        [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)" period>
@@ -135,8 +137,7 @@
                 <ng-template #title>
                   <jnt-stack [type]="ui.stack.type.horizontal"
                              [gutter]="ui.gutter.small"
-                             [cdkDropListEnterPredicate]="predicateIssue"
-                             issue cdkDropList cdkDrag [cdkDragData]="{issue: issue.id}">
+                             issue cdkDrag [cdkDragData]="{issue: issue.id}">
                     <jnt-button [icon]="ui.icons.burger"
                                 [scheme]="ui.schemes.secondary"
                                 [size]="ui.sizes.tiny" cdkDragHandle></jnt-button>
