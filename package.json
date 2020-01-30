@@ -12,7 +12,7 @@
     "clean": "npm cache clean --force && rm -rf -- node_modules doc coverage dist dll package-lock.json",
     "refresh": "npm run clean && npm install",
     "mocks": "tsc && gulp build --gulpfile node_modules/@junte/mocker-library/gulpfile.js --cwd .",
-    "extract-i18n": "ng xi18n --output-path src/locale && xliffmerge --profile xliffmerge.json en de",
+    "extract-i18n": "ng xi18n --output-path locale && xliffmerge --profile xliffmerge.json",
     "e2e": "ng e2e",
     "themes:watch": "gulp themes:watch",
     "themes": "gulp themes"
@@ -80,32 +80,5 @@
     "ts-node": "~8.3.0",
     "tslint": "~5.20.0",
     "typescript": "3.7.5"
-  },
-  "xliffmergeOptions": {
-    "srcDir": "src/locale",
-    "genDir": "src/locale",
-    "i18nFile": "messages.xlf",
-    "i18nBaseFile": "messages",
-    "i18nFormat": "xlf",
-    "encoding": "UTF-8",
-    "defaultLanguage": "en",
-    "languages": [
-      "en",
-      "de"
-    ],
-    "removeUnusedIds": false,
-    "supportNgxTranslate": false,
-    "ngxTranslateExtractionPattern": "@@|ngx-translate",
-    "useSourceAsTarget": true,
-    "targetPraefix": "",
-    "targetSuffix": "",
-    "beautifyOutput": true,
-    "preserveOrder": true,
-    "allowIdChange": false,
-    "autotranslate": false,
-    "apikey": "",
-    "apikeyfile": "",
-    "verbose": false,
-    "quiet": false
   }
 }
