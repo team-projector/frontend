@@ -4,6 +4,15 @@
   <jnt-tabs>
     <jnt-tab title="Common">
       <ng-template #tabContentTemplate>
+        <p *ngIf="!!ticket">
+          <jnt-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
+                    [icon]="ui.icons.settings"
+                    target="_blank"
+                    title="Edit"
+                    [outline]="ui.outline.ghost">
+          </jnt-link>
+          ticket in admin dashboard.
+        </p>
         <jnt-form-item>
           <jnt-form-control name="type">
             <jnt-switcher formControlName="type">
@@ -103,16 +112,6 @@
       </ng-template>
     </jnt-tab>
   </jnt-tabs>
-
-  <p *ngIf="!!ticket">
-    <jnt-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
-              [icon]="ui.icons.settings"
-              target="_blank"
-              title="Edit"
-              [outline]="ui.outline.ghost">
-    </jnt-link>
-    ticket in admin dashboard.
-  </p>
 
   <ng-template #formFooterTemplate>
     <jnt-stack [type]="ui.stack.type.horizontal"
