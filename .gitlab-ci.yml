@@ -2,6 +2,7 @@ image: docker:18
 variables:
   DOCKER_DRIVER: overlay
   DOCKER_IMAGE: $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
+  DOCKER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
   DOCKER_MOCKS_IMAGE: $CI_REGISTRY_IMAGE:mocks-$CI_PIPELINE_IID
   DOCKER_DEV_IMAGE: $CI_REGISTRY_IMAGE:dev
   DOCKER_CACHE_IMAGE: $CI_REGISTRY_IMAGE:cache
@@ -9,7 +10,7 @@ variables:
 
 stages:
   - build
-  - docker
+  - test
   - publish
   - deploy
 
@@ -25,10 +26,11 @@ build:
   script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
     - docker pull $DOCKER_CACHE_IMAGE || true
-    - docker build --cache-from $DOCKER_CACHE_IMAGE --target build -t $DOCKER_CACHE_IMAGE -f deploy/Dockerfile .
+    - docker build --cache-from $DOCKER_CACHE_IMAGE --target build -t $DOCKER_CACHE_IMAGE -t $DOCKER_TEST_IMAGE -f deploy/Dockerfile .
     - docker build --cache-from $DOCKER_CACHE_IMAGE -t $DOCKER_IMAGE -f deploy/Dockerfile .
     - docker push $DOCKER_IMAGE
     - docker push $DOCKER_CACHE_IMAGE
+    - docker push $DOCKER_TEST_IMAGE
 
 build_mocks:
   stage: build
@@ -43,6 +45,14 @@ build_mocks:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
     - docker build -t $DOCKER_MOCKS_IMAGE --build-arg BUILD_COMMAND="npm run build:mocks" -f deploy/Dockerfile .
     - docker push $DOCKER_MOCKS_IMAGE
+
+e2e:
+  stage: test
+  image: $DOCKER_TEST_IMAGE
+  except:
+    - mocks
+  script:
+    - npm run e2e
 
 publish_master:
   stage: publish
