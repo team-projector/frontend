@@ -19,16 +19,16 @@
   </tr>
   <tr timeline>
     <th gutter></th>
-    <th>Developer</th>
+    <th i18n="@@label.developer">Developer</th>
     <th></th>
     <th *ngFor="let day of daysOfWeek; let i = index" day (click)="form.patchValue({user: null, dueDate: days[i]})"
         [attr.today]="(today | isEqualDate: days[i])"
         [attr.active]="(dueDate.value | isEqualDate: days[i])">
       <span i18n>{{day}}</span> {{days[i] | getDate}}
     </th>
-    <th name-metric>Est</th>
-    <th name-metric>Sp</th>
-    <th name-metric>Eff</th>
+    <th name-metric i18n="@@label.est">Est</th>
+    <th name-metric i18n="@@label.sp">Sp</th>
+    <th name-metric i18n="@@label.eff">Eff</th>
     <th gutter></th>
   </tr>
   </thead>

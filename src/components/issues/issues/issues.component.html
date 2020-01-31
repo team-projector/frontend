@@ -5,20 +5,20 @@
       <ng-template #filters>
         <jnt-stack [type]="ui.stack.type.horizontal">
           <jnt-switcher formControlName="type">
-            <jnt-switcher-option label="All" [value]="issuesType.all">
+            <jnt-switcher-option i18n-label="@@action.filter_issues_all" label="All" [value]="issuesType.all">
               <jnt-badge *ngIf="summary?.count"
                          [count]="summary?.count.toString()"></jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option label="Closed" [value]="issuesType.closed">
+            <jnt-switcher-option i18n-label="@@action.filter_type_closed" label="Closed" [value]="issuesType.closed">
               <jnt-badge *ngIf="summary?.closedCount"
                          [count]="summary?.closedCount.toString()"></jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option label="Opened" [value]="issuesType.opened">
+            <jnt-switcher-option i18n-label="@@action.filter_type_opened" label="Opened" [value]="issuesType.opened">
               <jnt-badge *ngIf="summary?.openedCount"
                          [count]="summary?.openedCount.toString()"
                          [color]="ui.colors.green"></jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option label="Problems" [value]="issuesType.problems">
+            <jnt-switcher-option i18n-label="@@action.filter_type_problems" label="Problems" [value]="issuesType.problems">
               <jnt-badge *ngIf="summary?.problemsCount"
                          [count]="summary?.problemsCount.toString()"
                          [color]="ui.colors.red"></jnt-badge>
@@ -26,7 +26,7 @@
           </jnt-switcher>
         </jnt-stack>
       </ng-template>
-      <jnt-table-column i18n-title="@@issue_title" title="Title">
+      <jnt-table-column i18n-title="@@label.title" title="Title">
         <ng-template #cellTemplate let-title="title" let-labels="labels" let-glUrl="glUrl" let-state="state"
                      let-user="user" let-project="project" let-ticket="ticket"
                      let-closedAt="closedAt" let-id="id">
@@ -36,25 +36,25 @@
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@dueDate" title="Due date">
+      <jnt-table-column i18n-title="@@label.due_date" title="Due date">
         <ng-template #cellTemplate let-dueDate="dueDate" let-problems="problems">
           <jnt-stack [gutter]="ui.gutter.tiny">
             <app-due-date *ngIf="dueDate" [dueDate]="dueDate"></app-due-date>
             <jnt-stack [type]="ui.stack.type.vertical">
               <jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
                          [size]="ui.sizes.small"
-                         [color]="ui.colors.red" label="empty">
+                         [color]="ui.colors.red" i18n-label="@@label.empty" label="empty">
               </jnt-label>
               <jnt-label *ngIf="problems?.includes(issueProblem.overDueDate)"
                          [size]="ui.sizes.small"
-                         [color]="ui.colors.red" label="overdue">
+                         [color]="ui.colors.red" i18n-label="@@label.overdue" label="overdue">
               </jnt-label>
             </jnt-stack>
           </jnt-stack>
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@progress" title="Progress">
+      <jnt-table-column i18n-title="@@label.progress" title="Progress">
         <ng-template #cellTemplate let-timeEstimate="timeEstimate"
                      let-timeSpent="timeSpent"
                      let-totalTimeSpent="totalTimeSpent"
@@ -82,12 +82,12 @@
           </div>
           <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
                      [size]="ui.sizes.small"
-                     [color]="ui.colors.red" label="estimate">
+                     [color]="ui.colors.red" i18n-label="@@label.estimate" label="estimate">
           </jnt-label>
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@payroll" title="Payroll">
+      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@label.payroll" title="Payroll">
         <ng-template #cellTemplate let-metrics="metrics">
           <div style="text-align: right;">
             {{!!metrics.payroll ? (metrics.payroll | currency) : '&mdash;'}}
@@ -99,7 +99,7 @@
 
       <ng-template #rowActions let-row="row">
         <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
-          <jnt-menu-item [icon]="ui.icons.sync" title="Sync from GitLab"
+          <jnt-menu-item [icon]="ui.icons.sync" i18n-title="@@action.sync_from_Gitlab" title="Sync from GitLab"
                          (click)="sync(row.id)"></jnt-menu-item>
         </jnt-menu>
       </ng-template>

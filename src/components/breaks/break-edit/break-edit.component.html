@@ -1,7 +1,16 @@
 <jnt-form [formGroup]="form" jntValidation (submitted)="save()">
   <jnt-stack [type]="ui.stack.type.vertical" [align]="ui.flex.align.stretch">
+    <jnt-form-item >
+      <jnt-form-label i18n="@@label.developer">Developer</jnt-form-label>
+      <jnt-select developers placeholder="Developer"
+                  formControlName="member"
+                  keyField="id">
+
+      </jnt-select>
+    </jnt-form-item>
+
     <jnt-form-item>
-      <jnt-form-label for="fromDate" i18n="@@fromDate">From</jnt-form-label>
+      <jnt-form-label for="fromDate" i18n="@@label.from_date">From</jnt-form-label>
       <jnt-form-control name="fromDate">
         <jnt-date-picker placeholder="Start date" formControlName="fromDate"></jnt-date-picker>
         <jnt-form-message [type]="ui.form.validators.typeError.required">
@@ -11,7 +20,7 @@
     </jnt-form-item>
 
     <jnt-form-item>
-      <jnt-form-label for="toDate" i18n="@@toDate">To</jnt-form-label>
+      <jnt-form-label for="toDate" i18n="@@label.to_date">To</jnt-form-label>
       <jnt-form-control name="toDate">
         <jnt-date-picker placeholder="To date" formControlName="toDate"></jnt-date-picker>
         <jnt-form-message [type]="ui.form.validators.typeError.required">
@@ -21,19 +30,19 @@
     </jnt-form-item>
 
     <jnt-form-item>
-      <jnt-form-label i18n="@@reason" for="reason">Reason</jnt-form-label>
+      <jnt-form-label i18n="@@label.reason" for="reason">Reason</jnt-form-label>
       <jnt-form-control name="reason">
         <jnt-switcher formControlName="reason" [type]="ui.orientation.horizontal">
           <jnt-switcher-option label="Dayoff"
-                               i18n-label="@@reason-dayoff"
+                               i18n-label="@@action.dayoff"
                                [value]="reasons.dayoff">
           </jnt-switcher-option>
           <jnt-switcher-option label="Disease"
-                               i18n-label="@@reason-disease"
+                               i18n-label="@@action.disease"
                                [value]="reasons.disease">
           </jnt-switcher-option>
           <jnt-switcher-option label="Vacation"
-                               i18n-label="@@reason-vacation"
+                               i18n-label="@@action.vacation"
                                [value]="reasons.vacation">
           </jnt-switcher-option>
         </jnt-switcher>
@@ -44,9 +53,9 @@
     </jnt-form-item>
 
     <jnt-form-item>
-      <jnt-form-label for="comment" i18n="@@comment">Comment</jnt-form-label>
+      <jnt-form-label for="comment" i18n="@@label.comment">Comment</jnt-form-label>
       <jnt-form-control name="comment">
-        <jnt-input i18n-placeholder="@@comment" placeholder="Comment" formControlName="comment"></jnt-input>
+        <jnt-input i18n-placeholder="@@label.comment" placeholder="Comment" formControlName="comment"></jnt-input>
         <jnt-form-message [type]="ui.form.validators.typeError.required">
           This field is required
         </jnt-form-message>
@@ -56,7 +65,7 @@
 
   <ng-template #formFooterTemplate>
     <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.center">
-      <jnt-button text="Save" i18n-text="@@save" [type]="ui.form.button.type.submit" [loading]="saving"></jnt-button>
+      <jnt-button text="Save" i18n-text="@@action.save" [type]="ui.form.button.type.submit" [loading]="saving"></jnt-button>
     </jnt-stack>
   </ng-template>
 </jnt-form>

@@ -8,27 +8,32 @@
     <ng-template #topMenu>
       <jnt-menu menu>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.developer)"
+                       i18n-title="@@action.developer"
                        title="Developer"
                        [link]="['/developer']"
                        [icon]="localUi.icons.developer"
                        [matching]="ui.url.matching.wildcard"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.teamLeader)"
                        title="Team Leader"
+                       i18n-title="@@action.team_leader"
                        [link]="['/leader']"
                        [icon]="localUi.icons.teamLeader"
                        [matching]="ui.url.matching.wildcard"></jnt-menu-item>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.projectManager)"
                        title="Project Manager"
+                       i18n-title="@@action.project_manager"
                        [link]="['/manager']"
                        [icon]="localUi.icons.projectManager"
                        [matching]="ui.url.matching.wildcard"></jnt-menu-item>
         <!--<jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.customer)"
                        title="Customer"
+                       i18n-title="@@action.customer"
                        [link]="['/customer']"
                        [icon]="localUi.icons.customer"
                        [matching]="ui.url.matching.wildcard"></jnt-menu-item>-->
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.shareholder)"
                        title="Shareholder"
+                       i18n-title="@@action.shareholder"
                        [link]="['/shareholder']"
                        [icon]="localUi.icons.shareholder"
                        [matching]="ui.url.matching.wildcard"></jnt-menu-item>
