@@ -5,16 +5,16 @@
       <ng-template #filters>
         <jnt-stack [type]="ui.stack.type.horizontal">
           <jnt-switcher formControlName="state">
-            <jnt-switcher-option label="Closed" [value]="mergeRequestState.closed">
+            <jnt-switcher-option i18n-label="@@action.filter_type_closed" label="Closed" [value]="mergeRequestState.closed">
               <jnt-badge *ngIf="summary?.closedCount"
                          [count]="summary?.closedCount.toString()"></jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option label="Opened" [value]="mergeRequestState.opened">
+            <jnt-switcher-option i18n-label="@@action.filter_type_opened" label="Opened" [value]="mergeRequestState.opened">
               <jnt-badge *ngIf="summary?.openedCount"
                          [count]="summary?.openedCount.toString()"
                          [color]="ui.colors.green"></jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option label="Merged" [value]="mergeRequestState.merged">
+            <jnt-switcher-option i18n-label="@@action.filter_type_merged" label="Merged" [value]="mergeRequestState.merged">
               <jnt-badge *ngIf="summary?.mergedCount"
                          [count]="summary?.mergedCount.toString()"
                          [color]="ui.colors.red"></jnt-badge>
@@ -22,7 +22,7 @@
           </jnt-switcher>
         </jnt-stack>
       </ng-template>
-      <jnt-table-column i18n-title="@@issue_title" title="Title" sort="title">
+      <jnt-table-column i18n-title="@@label.title" title="Title" sort="title">
         <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
                      let-issues="issues" let-user="user" let-project="project">
           <jnt-stack [type]="ui.stack.type.horizontal"
@@ -55,7 +55,7 @@
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@est" title="Progress">
+      <jnt-table-column i18n-title="@@label.progress" title="Progress">
         <ng-template #cellTemplate let-timeEstimate="timeEstimate"
                      let-totalTimeSpent="totalTimeSpent"
                      let-metrics="metrics"
@@ -75,12 +75,12 @@
             </span>
           </div>
           <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
-                     [color]="ui.colors.red" label="estimate">
+                     [color]="ui.colors.red" i18n-label="@@label.estimate" label="estimate">
           </jnt-label>
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@payroll" title="Payroll">
+      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@label.payroll" title="Payroll">
         <ng-template #cellTemplate let-metrics="metrics">
           <div style="text-align: right;">
             {{!!metrics.payroll ? (metrics.payroll | currency) : '&mdash;'}}

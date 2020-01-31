@@ -65,7 +65,7 @@
             </div>
           </ng-template>
         </jnt-table-column>
-        <jnt-table-column i18n-title="@@progress" title="Progress">
+        <jnt-table-column i18n-title="@@label.progress" title="Progress">
           <ng-template #cellTemplate let-metrics="metrics">
             <jnt-progress-bar progress *ngIf="!!metrics.timeEstimate"
                               [value]="metrics.timeSpent / metrics.timeEstimate * 100">
@@ -86,7 +86,7 @@
             </div>
           </ng-template>
         </jnt-table-column>
-        <jnt-table-column title="Issues">
+        <jnt-table-column title="Issues" i18n-title="@@label.issues">
           <ng-template #cellTemplate let-metrics="metrics">
             <jnt-stack [justify]="ui.flex.justify.center"
                        [type]="ui.stack.type.horizontal"
@@ -100,13 +100,13 @@
         </jnt-table-column>
         <ng-template #rowActions let-row="row">
           <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
-            <jnt-menu-item [icon]="ui.icons.externalLink" title="View on GitLab"
+            <jnt-menu-item [icon]="ui.icons.externalLink" title="View on GitLab" i18n-title="@@action.view_on_Gitlab"
                            target="_blank"
                            [link]="row.glUrl"></jnt-menu-item>
-            <jnt-menu-item [icon]="ui.icons.edit" title="Edit"
+            <jnt-menu-item [icon]="ui.icons.edit" title="Edit" i18n-title="@@action.edit"
                            target="_blank"
                            [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
-            <jnt-menu-item [icon]="ui.icons.sync" title="Sync from GitLab"
+            <jnt-menu-item [icon]="ui.icons.sync" title="Sync from GitLab" i18n-title="@@action.sync_from_Gitlab"
                            (click)="sync(row.id)"></jnt-menu-item>
           </jnt-menu>
         </ng-template>

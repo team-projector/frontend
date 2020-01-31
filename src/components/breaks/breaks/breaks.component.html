@@ -2,14 +2,14 @@
   <jnt-form [formGroup]="form">
     <jnt-table #table formControlName="table" [features]="[features.search]">
       <ng-template #filters>
-        <jnt-button text="Add" i18n-text="@@add"
+        <jnt-button text="Add" i18n-text="@@action.add"
                     [icon]="ui.icons.add"
                     [outline]="ui.outline.transparent"
                     (click)="open()">
         </jnt-button>
       </ng-template>
 
-      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@developer" title="Developer">
+      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@label.developer" title="Developer">
         <ng-template #cellTemplate let-user="user">
           <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center">
             <jnt-avatar avatar [image]="user?.avatar"
@@ -21,35 +21,35 @@
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@date" title="Period">
+      <jnt-table-column i18n-title="@@label.period" title="Period">
         <ng-template #cellTemplate let-fromDate="fromDate" let-toDate="toDate">
           <jnt-date-period [start]="fromDate" [end]="toDate"></jnt-date-period>
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@reason" title="Reason">
+      <jnt-table-column i18n-title="@@label.reason" title="Reason">
         <ng-template #cellTemplate let-reason="reason">
           <ng-container [ngSwitch]="reason">
             <ng-container *ngSwitchCase="reasons.vacation"
-                          i18n="@@reason-vacation">Vacation
+                          i18n="@@action.vacation">Vacation
             </ng-container>
             <ng-container *ngSwitchCase="reasons.disease"
-                          i18n="@@reason-disease">Disease
+                          i18n="@@action.disease">Disease
             </ng-container>
             <ng-container *ngSwitchCase="reasons.dayoff"
-                          i18n="@@reason-dayoff">Dayoff
+                          i18n="@@action.dayoff">Dayoff
             </ng-container>
           </ng-container>
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@comment" title="Comment">
+      <jnt-table-column i18n-title="@@label.comment" title="Comment">
         <ng-template #cellTemplate let-comment="comment">
           {{comment}}
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@breakState" title="State">
+      <jnt-table-column i18n-title="@@label.break_state" title="State">
         <ng-template ngIf #cellTemplate
                      let-approveState="approveState"
                      let-approvedBy="approvedBy"
@@ -61,18 +61,18 @@
             <jnt-stack [type]="ui.stack.type.vertical" [gutter]="ui.gutter.tiny">
               <ng-container [ngSwitch]="approveState">
                 <jnt-label *ngSwitchCase="approveStates.created"
-                           i18n-label="@@approveCreated"
+                           i18n-label="@@label.created"
                            [color]="ui.colors.purple"
                            label="Approving">
                 </jnt-label>
                 <jnt-label *ngSwitchCase="approveStates.approved"
-                           i18n-label="@@approveApproved"
+                           i18n-label="@@label.approved"
                            [color]="ui.colors.green"
                            label="Approved">
                 </jnt-label>
 
                 <jnt-label *ngSwitchCase="approveStates.decline"
-                           i18n-label="@@approveDeclined"
+                           i18n-label="@@label.declined"
                            [color]="ui.colors.red"
                            label="Declined">
                 </jnt-label>
@@ -98,14 +98,14 @@
 
       <ng-template #rowActions let-break="row">
         <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
-          <jnt-menu-item *ngIf="view === viewType.extended" i18n-title="@@approve" title="Approve"
+          <jnt-menu-item *ngIf="view === viewType.extended" i18n-title="@@action.approve" title="Approve"
                          [icon]="ui.icons.check" (click)="approve(break.id)">
           </jnt-menu-item>
-          <jnt-menu-item *ngIf="view === viewType.extended" i18n-title="@@decline" title="Decline"
+          <jnt-menu-item *ngIf="view === viewType.extended" i18n-title="@@action.decline" title="Decline"
                          [icon]="ui.icons.cancel" (click)="openDecline(break)">
           </jnt-menu-item>
-          <jnt-menu-item i18n-title="@@edit" title="Edit" [icon]="ui.icons.edit" (click)="open(break)"></jnt-menu-item>
-          <jnt-menu-item i18n-title="@@delete" title="Delete" [icon]="ui.icons.delete"
+          <jnt-menu-item i18n-title="@@action.edit" title="Edit" [icon]="ui.icons.edit" (click)="open(break)"></jnt-menu-item>
+          <jnt-menu-item i18n-title="@@action.delete" title="Delete" [icon]="ui.icons.delete"
                          (click)="delete(break.id)"></jnt-menu-item>
         </jnt-menu>
       </ng-template>

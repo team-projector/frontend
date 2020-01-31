@@ -101,6 +101,14 @@
                 }
               ]
             },
+            "ru": {
+              "aot": true,
+              "outputPath": "dist/ru/",
+              "baseHref": "/",
+              "i18nFile": "src/locale/messages.ru.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "ru"
+            },
             "mocks": {
               "localize": [
                 "ru"
@@ -125,6 +133,9 @@
             },
             "mocks": {
               "browserTarget": "team-projector:build:mocks"
+            },
+            "ru": {
+              "browserTarget": "team-projector:build:ru"
             }
           }
         },
