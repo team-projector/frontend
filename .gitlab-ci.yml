@@ -46,7 +46,7 @@ build_mocks:
     - docker build -t $DOCKER_MOCKS_IMAGE --build-arg BUILD_COMMAND="npm run build:mocks" -f deploy/Dockerfile .
     - docker push $DOCKER_MOCKS_IMAGE
 
-e2e:
+.e2e:
   stage: test
   image: $DOCKER_TEST_IMAGE
   except:
