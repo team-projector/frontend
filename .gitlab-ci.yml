@@ -46,11 +46,26 @@ build_mocks:
     - docker build -t $DOCKER_MOCKS_IMAGE --build-arg BUILD_COMMAND="npm run build:mocks" -f deploy/Dockerfile .
     - docker push $DOCKER_MOCKS_IMAGE
 
-.e2e:
+e2e:
   stage: test
   image: $DOCKER_TEST_IMAGE
   except:
     - mocks
+  before_script:
+    # Add Google Chrome to aptitude's (package manager) sources
+    - echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/apt/sources.list
+    # Fetch Chrome's PGP keys for secure installation
+    - wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+    # Update aptitude's package sources
+    - apt-get -qq update -y
+    # Install latest Chrome stable, Xvfb packages
+    - apt-get -qq install -y google-chrome-stable xvfb gtk2-engines-pixbuf xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable imagemagick x11-apps default-jre
+    # Launch Xvfb
+    - Xvfb :0 -ac -screen 0 1024x768x24 &
+    # Export display for Chrome
+    - export DISPLAY=:99
+    # Download Selenium server JAR, drivers for Chrome
+    - /src/node_modules/.bin/webdriver-manager update
   script:
     - cd /src
     - npm run e2e
