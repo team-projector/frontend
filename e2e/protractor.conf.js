@@ -11,7 +11,7 @@ exports.config = {
   capabilities: {
     'browserName': 'chrome',
     chromeOptions: {
-      args: ['--no-sandbox', '--disable-gpu', '--window-size=1600x1000'],
+      args: ['--headless', '--no-sandbox', '--disable-gpu', '--window-size=1600x1000'],
       // args: ['--no-sandbox', '--disable-gpu', '--window-size=1600x1000']
     }
   },
