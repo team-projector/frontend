@@ -52,6 +52,9 @@ e2e:
   except:
     - mocks
   script:
+    - pwd
+    - which npm
+    - which ng
     - npm run e2e
 
 publish_master:
