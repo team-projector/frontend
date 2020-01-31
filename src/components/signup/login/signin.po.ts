@@ -1,14 +1,9 @@
-import {browser, by, element} from 'protractor';
-import {protractor} from 'protractor/built/ptor';
+import { by, element } from 'protractor';
 
-
-
-const JNT_USERNAME_LOCATOR = by.css('jnt-input[formcontrolname="login"]');
-const USERNAME_INPUT_LOCATOR = by.css('jnt-input[formcontrolname="login"] input');
-const JNT_PASSWORD_INPUT_LOCATOR = by.css('jnt-input[formcontrolname="password"]');
-const PASSWORD_INPUT_LOCATOR = by.css('jnt-input[formcontrolname="password"] input');
-const LOGIN_BUTTON_LOCATOR = by.css('button[type="submit"]');
-const HEADER_LOCATOR = by.css('jnt-app-header');
+const USERNAME_INPUT_LOCATOR = by.css('[formcontrolname="login"] input');
+const PASSWORD_INPUT_LOCATOR = by.css('[formcontrolname="password"] input');
+const LOGIN_BUTTON_LOCATOR = by.css('[type="submit"]');
+const USERBAR_LOCATOR = by.css('jnt-userbar');
 const EMAIL = 'demo@gmail.com';
 const PASSWORD = '229835aA';
 
@@ -22,9 +17,8 @@ export class SigninPage {
       element(LOGIN_BUTTON_LOCATOR).click();
     }
 
-    checkHeader() {
-        element(HEADER_LOCATOR);
-        return element(HEADER_LOCATOR);
+    checkUserbar() {
+        return element(USERBAR_LOCATOR);
     }
 
 }
