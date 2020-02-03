@@ -1,7 +1,7 @@
 <jnt-block [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
     <jnt-table #table (reloaded)="reloaded.emit()" formControlName="table">
-      <ng-template #filters>
+      <ng-template *ngIf="view === viewType.extended" #filters>
         <jnt-stack [type]="ui.stack.type.horizontal">
           <jnt-switcher formControlName="state">
             <jnt-switcher-option i18n-label="@@action.filter_type_all" label="All" [value]="timeExpensesState.all">

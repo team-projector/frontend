@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { Salary } from 'src/models/salary';
 import { UI } from 'junte-ui';
+import { DurationFormat } from '../../../models/enums/duration-format';
 
 @Component({
   selector: 'app-salary-detail-widget',
@@ -13,5 +14,6 @@ export class SalaryDetailWidgetComponent {
   ui = UI;
 
   @Input() salary: Salary;
+  durationFormat = DurationFormat;
 
 }

@@ -1,15 +1,7 @@
-<jnt-block *ngIf="salary" i18n-title="@@label.details" title="Details" [padding]="ui.padding.normal">
+<jnt-block *ngIf="salary" title="Details" [padding]="ui.padding.normal" [width]="ui.width.fluid">
+  <jnt-date-period [start]="salary.periodFrom" [end]="salary.periodTo"></jnt-date-period>
+
   <table>
-    <thead>
-    <tr>
-      <th title>From:</th>
-      <th title>To:</th>
-    </tr>
-    <tr>
-      <th value>{{salary.periodFrom | date: 'shortDate'}}</th>
-      <th value>{{salary.periodTo | date: 'shortDate'}}</th>
-    </tr>
-    </thead>
     <tbody>
     <tr>
       <td title>Charged Time</td>
@@ -17,7 +9,7 @@
     </tr>
     <tr>
       <td title>Sum</td>
-      <td value>{{salary.sum | duration}}</td>
+      <td value>{{salary.sum | duration:durationFormat.short}}</td>
     </tr>
     <tr>
       <td title>Bonus</td>
