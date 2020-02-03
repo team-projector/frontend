@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from 'junte-ui';
 import { TimeExpensesListComponent } from 'src/components/issues/time-expenses/time-expenses-list';
 import { Salary } from 'src/models/salary';
+import { ViewType } from '../../../../models/enums/view-type';
 
 @Component({
   selector: 'app-salary-detail',
@@ -13,6 +14,7 @@ import { Salary } from 'src/models/salary';
 export class SalaryDetailComponent extends TimeExpensesListComponent {
   ui = UI;
   salary: Salary;
+  viewType = ViewType;
 
   constructor(route: ActivatedRoute,
               router: Router) {

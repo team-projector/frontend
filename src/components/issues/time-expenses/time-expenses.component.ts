@@ -15,6 +15,7 @@ import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter } from 'src/m
 import { DateSerializer } from 'src/serializers/date';
 import { getMock } from 'src/utils/mocks';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql';
+import { ViewType } from '../../../models/enums/view-type';
 
 @model()
 export class TimeExpensesState {
@@ -67,6 +68,7 @@ export class TimeExpensesComponent implements OnInit {
   issuesState = IssueState;
   timeExpensesState = TimeExpenseState;
   summary: SpentTimesSummary;
+  viewType = ViewType;
 
   tableControl = this.builder.control({
     q: null,
@@ -93,6 +95,8 @@ export class TimeExpensesComponent implements OnInit {
     return this._filter;
   }
 
+  @Input() view = ViewType.extended;
+
   @Input() set state({first, offset, q, state, dueDate, team, user, project, salary}: TimeExpensesState) {
     this.form.patchValue({
       table: {
@@ -100,7 +104,7 @@ export class TimeExpensesComponent implements OnInit {
         first: first || DEFAULT_FIRST,
         offset: offset || DEFAULT_OFFSET
       },
-      state: state || TimeExpenseState.opened,
+      state: state || TimeExpenseState.all,
       dueDate: dueDate || null,
       team: team || null,
       user: user || null,
