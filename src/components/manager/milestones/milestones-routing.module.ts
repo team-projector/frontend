@@ -19,7 +19,7 @@ const routes: Routes = [
   {
     path: '',
     component: OutletComponent,
-    data: {breadcrumb: 'Milestones'},
+    data: {breadcrumb: $localize`:@@label.milestones:Milestones`},
     children: [
       {
         path: '',

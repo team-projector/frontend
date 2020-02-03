@@ -2,6 +2,7 @@
           [outline]="ui.outline.fill"
           source="/admin/"
           title="Administrator"
+          i18n-title="@@action.administrator"
           admin>
 </jnt-link>
 
@@ -50,17 +51,20 @@
           <jnt-button [scheme]="ui.schemes.success"
                       [size]="ui.sizes.small"
                       [outline]="ui.outline.ghost"
+                      i18n-text="@@action.developer"
                       text="Developer"
                       (click)="god(userRole.developer)"></jnt-button>
           <jnt-button [scheme]="ui.schemes.success"
                       [size]="ui.sizes.small"
                       [outline]="ui.outline.ghost"
+                      i18n-text="@@action.team_leader"
                       text="Team Leader"
-                      (click)="god(userRole.teamLeader)"></jnt-button>
+                      (click)="god(userRole.teamLeader)"></jnt-button>s
           <jnt-button [scheme]="ui.schemes.success"
                       [size]="ui.sizes.small"
                       [outline]="ui.outline.ghost"
                       text="Project Manager"
+                      i18n-text="@@action.project_manager"
                       (click)="god(userRole.projectManager)"></jnt-button>
         </jnt-stack>
       </div>

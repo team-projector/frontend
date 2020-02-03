@@ -15,7 +15,7 @@ const routes: Routes = [
   {
     path: '',
     component: OutletComponent,
-    data: {breadcrumb: 'Teams'},
+    data: {breadcrumb: $localize`:@@label.teams:Teams`},
     children: [
       {
         path: '',

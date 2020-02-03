@@ -1,7 +1,7 @@
 <jnt-form cdkDropListGroup>
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
     <jnt-block [state]="loading.tickets ? ui.block.state.loading : null">
-      <jnt-gantt title="Tickets">
+      <jnt-gantt i18n-title="@@label.tickets" title="Tickets">
         <ng-template #titleTemplate>
           <jnt-stack [type]="ui.stack.type.horizontal"
                      [gutter]="ui.gutter.small"
@@ -84,10 +84,10 @@
                     <ng-template #dropdown let-close="trigger">
                       <jnt-menu [type]="ui.orientation.vertical"
                                 [spacer]="ui.sizes.small">
-                        <jnt-menu-item title="Edit"
+                        <jnt-menu-item i18n-title="@@action.edit" title="Edit"
                                        [icon]="ui.icons.edit"
                                        (click)="edit(ticket);close()"></jnt-menu-item>
-                        <jnt-menu-item title="Delete"
+                        <jnt-menu-item i18n-title="@@action.delete" title="Delete"
                                        [icon]="ui.icons.delete"
                                        (click)="delete(ticket.id)"></jnt-menu-item>
                       </jnt-menu>
