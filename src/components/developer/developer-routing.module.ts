@@ -18,12 +18,12 @@ const routes: Routes = [
       },
       {
         path: 'salaries',
-        data: {breadcrumb: 'Salaries'},
+        data: {breadcrumb: $localize`:@@label.salaries:Salaries`},
         loadChildren: () => import('./salaries/salaries.module').then(m => m.SalariesModule)
       },
       {
         path: 'breaks',
-        data: {breadcrumb: 'Work breaks'},
+        data: {breadcrumb: $localize`:@@label.work_breaks:Work Breaks`},
         loadChildren: () => import('./breaks/developer-breaks.module').then(m => m.DeveloperBreaksModule)
       }
     ]

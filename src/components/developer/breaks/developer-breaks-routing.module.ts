@@ -12,7 +12,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        data: {breadcrumb: 'Breaks'},
+        data: {breadcrumb: $localize`:@@label.work_breaks:Work Breaks`},
         component: DeveloperBreaksListComponent,
         resolve: {
           user: MeUserResolver

@@ -21,7 +21,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        data: {breadcrumb: 'Issues'},
+        data: {breadcrumb: $localize`:@@label.issues:Issues`},
         component: DeveloperIssuesListComponent,
         resolve: {
           type: IssuesTypeResolver
@@ -29,7 +29,7 @@ const routes: Routes = [
       },
       {
         path: 'time-expenses',
-        data: {breadcrumb: 'Time Expenses'},
+        data: {breadcrumb: $localize`:@@label.time_expenses:Time Expenses`},
         component: DeveloperTimeExpensesListComponent,
         resolve: {
           state: MergeRequestStateResolver
@@ -37,7 +37,7 @@ const routes: Routes = [
       },
       {
         path: 'merge-requests',
-        data: {breadcrumb: 'Merge Requests'},
+        data: {breadcrumb: $localize`:@@label.merge_requests:Merge Requests`},
         resolve: {
           state: MergeRequestStateResolver
         },

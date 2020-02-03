@@ -1,10 +1,10 @@
 <jnt-stack [gutter]="ui.gutter.large">
   <jnt-link [icon]="ui.icons.settings" source="/admin/development/milestone/"
-            target="_blank" title="Manage"></jnt-link>
+            target="_blank" title="Manage" i18n-title="@@action.manage"></jnt-link>
   <jnt-block [width]="ui.width.fluid">
     <jnt-form [formGroup]="form">
       <jnt-table #table [features]="[features.search]" formControlName="table">
-        <jnt-table-column title="Title">
+        <jnt-table-column i18n-title="@@label.title" title="Title">
           <ng-template #cellTemplate let-title="title" let-id="id" let-owner="owner">
             <jnt-stack [type]="ui.stack.type.horizontal">
               <jnt-avatar [size]="ui.sizes.small" [image]="owner.glAvatar"></jnt-avatar>
@@ -15,7 +15,7 @@
             </jnt-stack>
           </ng-template>
         </jnt-table-column>
-        <jnt-table-column title="Period">
+        <jnt-table-column i18n-title="@@label.period" title="Period">
           <ng-template #cellTemplate let-startDate="startDate" let-problems="problems" let-dueDate="dueDate">
             <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.stretch">
               <jnt-date-period [start]="startDate" [end]="dueDate"></jnt-date-period>
@@ -25,7 +25,7 @@
             </jnt-stack>
           </ng-template>
         </jnt-table-column>
-        <jnt-table-column title="Budget">
+        <jnt-table-column i18n-title="@@label.budget" title="Budget">
           <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
             <ng-container *ngIf="budget">
               <jnt-progress-bar progress [value]="metrics.budgetSpent / budget * 100">
@@ -45,7 +45,7 @@
             </ng-container>
           </ng-template>
         </jnt-table-column>
-        <jnt-table-column title="Profit">
+        <jnt-table-column i18n-title="@@label.profit" title="Profit">
           <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
             <jnt-progress-bar progress [value]="metrics.payroll / budget * 100">
               <ng-template #legend>

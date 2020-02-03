@@ -142,7 +142,7 @@ export class BreaksComponent implements OnInit {
 
   open(workBreak: Break = null) {
     const component = this.cfr.resolveComponentFactory(BreakEditComponent).create(this.injector);
-    const options = new ModalOptions({title: {text: $localize`:@@add_break:Add break`}});
+    const options = new ModalOptions({title: {text: $localize`:@@label.add_break:Add break`}});
     this.modalService.open(component, options);
     component.instance.break = workBreak;
     component.instance.saved.subscribe(() => {
@@ -165,7 +165,7 @@ export class BreaksComponent implements OnInit {
 
   openDecline(workBreak: Break = null) {
     const component = this.cfr.resolveComponentFactory(BreakDeclineComponent).create(this.injector);
-    const options = new ModalOptions({title: {text: 'Decline break'}});
+    const options = new ModalOptions({title: {text: $localize`:@@label.decline_break:Decline break`}});
     this.modalService.open(component, options);
     component.instance.break = workBreak;
     component.instance.saved.subscribe(() => {
