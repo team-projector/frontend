@@ -6,13 +6,12 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 exports.config = {
   allScriptsTimeout: 11000,
   specs: [
-    '../src/**/*.e2e-spec.ts'
+    '../src/**/*.e2e.ts'
   ],
   capabilities: {
     'browserName': 'chrome',
     chromeOptions: {
-      args: ['--headless', '--no-sandbox', '--disable-gpu', '--window-size=1600x1000'],
-      // args: ['--no-sandbox', '--disable-gpu', '--window-size=1600x1000']
+      args: ['--headless', '--no-sandbox', '--disable-gpu', '--window-size=1600x1000']
     }
   },
   directConnect: true,
@@ -25,6 +24,7 @@ exports.config = {
     print: function() {}
   },
   onPrepare() {
+    browser.waitForAngularEnabled(false);
     require('ts-node').register({
       project: require('path').join(__dirname, './tsconfig.e2e.json')
     });
