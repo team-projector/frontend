@@ -1,5 +1,5 @@
-import {browser, by, element} from 'protractor';
-import {SigninPage} from './signin.po';
+import { browser } from 'protractor';
+import { SigninPage } from './signin.po';
 
 describe('Signin', () => {
 
@@ -11,8 +11,6 @@ describe('Signin', () => {
 
   it('check user login', () => {
     signinPage.login();
-    // jnt-app-header
-    // by.css('jnt-userbar');
-    browser.wait(() => signinPage.checkUserbar().isPresent(), 10000);
+    browser.wait(() => signinPage.getUserbar().isPresent(), 10000);
   });
 });
