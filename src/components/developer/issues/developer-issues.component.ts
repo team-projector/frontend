@@ -60,16 +60,16 @@ export class DeveloperIssuesComponent implements OnInit {
   milestoneProblem = MilestoneProblem;
   metricType = MetricType;
   colors = [
-    UI.colors.purple,
-    UI.colors.red,
-    UI.colors.green,
-    UI.colors.yellow,
-    UI.colors.teal,
-    UI.colors.orange,
-    UI.colors.purpleLight
+    UI.color.purple,
+    UI.color.red,
+    UI.color.green,
+    UI.color.yellow,
+    UI.color.teal,
+    UI.color.orange,
+    UI.color.purpleLight
   ];
 
-  formatDate = 'DD/MM/YYYY';
+  formatDate = 'dd/MM/yyyy';
   filter: IssuesFilter;
 
   summary: {

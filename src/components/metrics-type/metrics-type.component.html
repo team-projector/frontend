@@ -1,16 +1,16 @@
 <jnt-form [formGroup]="form">
   <jnt-switcher formControlName="metric">
     <jnt-switcher-option i18n-label="@@label.spent" label="Spent" [value]="metricType.spent">
-      <jnt-dot [color]="ui.colors.green"></jnt-dot>
+      <jnt-dot [color]="ui.color.green"></jnt-dot>
     </jnt-switcher-option>
     <jnt-switcher-option i18n-label="@@label.estimated" label="Estimated" [value]="metricType.estimate">
-      <jnt-dot [color]="ui.colors.red"></jnt-dot>
+      <jnt-dot [color]="ui.color.red"></jnt-dot>
     </jnt-switcher-option>
     <jnt-switcher-option i18n-label="@@label.remains" label="Remains" [value]="metricType.remains">
-      <jnt-dot [color]="ui.colors.yellow"></jnt-dot>
+      <jnt-dot [color]="ui.color.yellow"></jnt-dot>
     </jnt-switcher-option>
     <jnt-switcher-option i18n-label="@@label.loading" label="Loading" [value]="metricType.loading">
-      <jnt-dot [color]="ui.colors.purpleDark"></jnt-dot>
+      <jnt-dot [color]="ui.color.purpleDark"></jnt-dot>
     </jnt-switcher-option>
   </jnt-switcher>
 </jnt-form>

@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Themes, UI, validate } from 'junte-ui';
+import { UI, validate } from 'junte-ui';
 import 'reflect-metadata';
 import { of } from 'rxjs';
 import { delay, filter, finalize, map } from 'rxjs/operators';
@@ -15,6 +15,11 @@ import { GqlError } from 'src/models/gql-errors';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
 import { GitlabLoginGQL, LoginGQL } from './login.graphql';
+
+enum Themes {
+  light = 'light',
+  dark = 'dark'
+}
 
 @Component({
   selector: 'app-login',

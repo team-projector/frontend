@@ -45,28 +45,28 @@ export class IssueMetrics {
       case 1: // issue for to do
         issue.labels.push(new Label({
           title: StandardLabel.toDo,
-          color: UI.colors.green
+          color: UI.color.green
         }));
         issue.state = IssueState.opened;
         break;
       case 2: // issue for to doing
         issue.labels.push(new Label({
           title: StandardLabel.doing,
-          color: UI.colors.green
+          color: UI.color.green
         }));
         issue.state = IssueState.opened;
         break;
       case 3: // issue for to done
         issue.labels.push(new Label({
           title: StandardLabel.done,
-          color: UI.colors.green
+          color: UI.color.green
         }));
         issue.state = IssueState.closed;
         break;
       default: // issue for to delayed
         issue.labels.push(new Label({
           title: StandardLabel.delayed,
-          color: UI.colors.green
+          color: UI.color.green
         }));
         issue.state = IssueState.opened;
     }
@@ -96,19 +96,19 @@ export class IssueMetrics {
     issue.labels.push(faker.helpers.randomize([
       new Label({
         title: StandardLabel.bug,
-        color: UI.colors.red
+        color: UI.color.red
       }),
       new Label({
         title: 'Discuss',
-        color: UI.colors.blue
+        color: UI.color.blue
       }),
       new Label({
         title: 'Urgent',
-        color: UI.colors.red
+        color: UI.color.red
       }),
       new Label({
         title: 'Refactor',
-        color: UI.colors.green
+        color: UI.color.green
       })
     ]));
   }

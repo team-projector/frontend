@@ -79,21 +79,21 @@ export class FromNowPipe implements PipeTransform {
 
 @Pipe({name: 'isFuture'})
 export class IsFuturePipe implements PipeTransform {
-  transform(date: Date | string | number): boolean {
+  transform(date: Date | number): boolean {
     return isFuture(date);
   }
 }
 
 @Pipe({name: 'isToday'})
 export class IsTodayPipe implements PipeTransform {
-  transform(date: Date | string | number): boolean {
+  transform(date: Date | number): boolean {
     return isToday(date);
   }
 }
 
 @Pipe({name: 'format'})
 export class FormatPipe implements PipeTransform {
-  transform(date: Date | string | number,
+  transform(date: Date | number,
             format?: string,
             options?: { locale?: Object }): string {
     return fnsFormat(date, format, options);
@@ -102,7 +102,7 @@ export class FormatPipe implements PipeTransform {
 
 @Pipe({name: 'isPast'})
 export class IsPastPipe implements PipeTransform {
-  transform(date: Date | string | number): boolean {
+  transform(date: Date | number): boolean {
     return isPast(date);
   }
 }
@@ -110,14 +110,14 @@ export class IsPastPipe implements PipeTransform {
 
 @Pipe({name: 'endOfDay'})
 export class EndOfDayPipe implements PipeTransform {
-  transform(date: Date | string | number): Date {
+  transform(date: Date | number): Date {
     return endOfDay(date);
   }
 }
 
 @Pipe({name: 'getDate'})
 export class GetDatePipe implements PipeTransform {
-  transform(date: Date | string | number): number {
+  transform(date: Date | number): number {
     return getDate(date);
   }
 }

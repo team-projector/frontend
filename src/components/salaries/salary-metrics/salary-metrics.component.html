@@ -1,23 +1,23 @@
-<jnt-block *ngIf="metrics" i18n-title="@@label.current_payroll" title="Current payroll" [width]="ui.width.fluid" [padding]="ui.padding.large">
+<jnt-block *ngIf="metrics" i18n-title="@@label.current_payroll" title="Current payroll" [width]="ui.width.fluid" [padding]="ui.gutter.large">
   <jnt-stack [gutter]="ui.gutter.large" [align]="ui.flex.align.stretch">
     <jnt-stack [gutter]="ui.gutter.small" [align]="ui.flex.justify.end">
-      <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
+      <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
         <span payroll closed>{{metrics.payrollClosed | currency}}</span>
         <jnt-label label [label]="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) | duration"
-                   [color]="ui.colors.paleNavy"></jnt-label>
+                   [color]="ui.color.paleNavy"></jnt-label>
       </jnt-stack>
 
-      <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
+      <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
         <span payroll opened>{{metrics.payrollOpened | currency}}</span>
         <jnt-label label [label]="(metrics.issues.openedSpent + metrics.mergeRequests.openedSpent ) | duration"
-                   [color]="ui.colors.paleNavy"></jnt-label>
+                   [color]="ui.color.paleNavy"></jnt-label>
       </jnt-stack>
     </jnt-stack>
 
     <ng-template #blockFooterTemplate>
-      <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.stretch" [justify]="ui.flex.justify.center">
+      <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.stretch" [justify]="ui.flex.justify.center">
         <div metrics>
-          <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.gutter.small"
+          <jnt-stack [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
                      [align]="ui.flex.align.center">
             <jnt-icon like [icon]="ui.icons.like"></jnt-icon>
             <span>{{metrics.bonus | currency}}</span>
@@ -25,7 +25,7 @@
         </div>
         <div separator></div>
         <div metrics>
-          <jnt-stack [type]="ui.stack.type.horizontal" [gutter]="ui.gutter.small"
+          <jnt-stack [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
                      [align]="ui.flex.align.center">
             <jnt-icon dislike [icon]="ui.icons.dislike"></jnt-icon>
             <span>{{metrics.penalty | currency}}</span>

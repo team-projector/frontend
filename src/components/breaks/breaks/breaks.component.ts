@@ -1,7 +1,7 @@
 import { Component, ComponentFactoryResolver, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { R } from 'apollo-angular/types';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, ModalOptions, ModalService, TableComponent, TableFeatures, UI } from 'junte-ui';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, ModalOptions, ModalService, TableComponent, UI } from 'junte-ui';
 import { of } from 'rxjs';
 import { delay, distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
@@ -56,7 +56,6 @@ export class BreaksComponent implements OnInit {
   ui = UI;
   viewType = ViewType;
   reasons = BreakReasons;
-  features = TableFeatures;
   approveStates = ApproveStates;
   breaks: Break[] = [];
   loading = false;

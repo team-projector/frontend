@@ -54,13 +54,13 @@ export class TeamIssuesComponent implements OnInit {
   durationFormat = DurationFormat;
   milestoneProblem = MilestoneProblem;
   colors = [
-    UI.colors.purple,
-    UI.colors.red,
-    UI.colors.green,
-    UI.colors.yellow,
-    UI.colors.teal,
-    UI.colors.orange,
-    UI.colors.purpleLight
+    UI.color.purple,
+    UI.color.red,
+    UI.color.green,
+    UI.color.yellow,
+    UI.color.teal,
+    UI.color.orange,
+    UI.color.purpleLight
   ];
 
   team: Team;

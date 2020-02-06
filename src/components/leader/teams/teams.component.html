@@ -5,15 +5,15 @@
         <jnt-link [icon]="ui.icons.settings" source="/admin/development/team/"
                   target="_blank" i18n-title="@@action.manage" title="Manage"></jnt-link>
 
-        <jnt-stack [type]="ui.stack.type.horizontal"
+        <jnt-stack [type]="ui.layout.stack.type.horizontal"
                    [wrap]="ui.flex.wrap.wrap">
           <ng-container *ngIf="loading; then loadingTemplate; else teamsTemplate"></ng-container>
           <ng-template #loadingTemplate>
             <div *ngFor="let i of 5 | mockArray" team>
-              <jnt-block [width]="ui.width.fluid" [padding]="ui.padding.normal" block>
+              <jnt-block [width]="ui.width.fluid" block>
                 <jnt-stack [align]="ui.flex.align.center">
                   <jnt-skeleton [lines]="1"></jnt-skeleton>
-                  <jnt-skeleton [type]="ui.skeleton.type.avatar"></jnt-skeleton>
+                  <jnt-skeleton [type]="ui.layout.skeleton.type.avatar"></jnt-skeleton>
                   <jnt-skeleton [lines]="1"></jnt-skeleton>
                 </jnt-stack>
               </jnt-block>
@@ -21,11 +21,12 @@
           </ng-template>
           <ng-template #teamsTemplate>
             <a *ngFor="let team of teams" [routerLink]="[team.id]" team>
-              <jnt-block [title]="team.title" block>
+              <jnt-block [title]="team.title"
+                         [padding]="ui.gutter.none" block>
                 <jnt-label *ngIf="team.metrics.problemsCount" problems [icon]="ui.icons.warning"
-                           [color]="ui.colors.red"
+                           [color]="ui.color.red"
                            [label]="team.metrics.problemsCount.toString()"></jnt-label>
-                <jnt-avatars-group avatars [size]="ui.sizes.normal">
+                <jnt-avatars-group avatars [size]="ui.size.normal">
                   <jnt-avatar *ngFor="let member of team.members"
                               [image]="member.user.avatar">
                   </jnt-avatar>

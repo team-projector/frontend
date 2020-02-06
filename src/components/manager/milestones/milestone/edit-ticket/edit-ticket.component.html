@@ -18,15 +18,15 @@
             <jnt-switcher formControlName="type">
               <jnt-switcher-option i18n-title="@@label.feature" label="Feature"
                                    [value]="milestoneTicketTypes.feature">
-                <jnt-dot [color]="ui.colors.green"></jnt-dot>
+                <jnt-dot [color]="ui.color.green"></jnt-dot>
               </jnt-switcher-option>
               <jnt-switcher-option i18n-title="@@label.improvement" label="Improvement"
                                    [value]="milestoneTicketTypes.improvement">
-                <jnt-dot [color]="ui.colors.purple"></jnt-dot>
+                <jnt-dot [color]="ui.color.purple"></jnt-dot>
               </jnt-switcher-option>
               <jnt-switcher-option i18n-title="@@label.bug_fixing" label="Bug fixing"
                                    [value]="milestoneTicketTypes.bugFixing">
-                <jnt-dot [color]="ui.colors.red"></jnt-dot>
+                <jnt-dot [color]="ui.color.red"></jnt-dot>
               </jnt-switcher-option>
             </jnt-switcher>
             <jnt-form-message [type]="ui.form.validators.typeError.required">
@@ -52,7 +52,7 @@
           </jnt-form-control>
         </jnt-form-item>
 
-        <jnt-stack [type]="ui.stack.type.horizontal">
+        <jnt-stack [type]="ui.layout.stack.type.horizontal">
           <jnt-form-item>
             <jnt-form-label for="startDate">Start date</jnt-form-label>
             <jnt-form-control name="startDate">
@@ -87,12 +87,12 @@
     </jnt-tab>
     <jnt-tab i18n-title="@@label.issues" title="Issues">
       <jnt-badge *ngIf="ticket?.issues.length"
-                 [count]="ticket?.issues.length"></jnt-badge>
+                 [value]="ticket?.issues.length"></jnt-badge>
       <ng-template #tabContentTemplate>
         <jnt-form-item>
           <jnt-select issues placeholder="Issues"
                       formControlName="issues"
-                      [mode]="ui.select.multiple"
+                      [mode]="ui.form.select.mode.multiple"
                       [search]="true"
                       [loader]="findIssues()"
                       keyField="id"
@@ -102,7 +102,7 @@
                                [label]="issue.title"
                                [value]="issue">
             </jnt-select-option>
-            <ng-template #optionTemplate let-issue="value">
+            <ng-template #selectOptionTemplate let-issue="value">
               <div issue>
                 <app-issue [issue]="issue"></app-issue>
               </div>
@@ -114,14 +114,14 @@
   </jnt-tabs>
 
   <ng-template #formFooterTemplate>
-    <jnt-stack [type]="ui.stack.type.horizontal"
+    <jnt-stack [type]="ui.layout.stack.type.horizontal"
                [justify]="ui.flex.justify.between">
       <jnt-button i18n-title="@@action.save" text="Save"
                   [type]="ui.form.button.type.submit"
                   [loading]="progress.saving"></jnt-button>
       <jnt-button i18n-title="@@action.cancel" text="Cancel"
                   (click)="canceled.emit()"
-                  [scheme]="ui.schemes.secondary"></jnt-button>
+                  [scheme]="ui.scheme.secondary"></jnt-button>
     </jnt-stack>
   </ng-template>
 </jnt-form>

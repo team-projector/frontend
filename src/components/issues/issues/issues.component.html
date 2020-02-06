@@ -1,27 +1,29 @@
-<jnt-block [width]="ui.width.fluid">
+<jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
-    <jnt-table #table [features]="[features.search]" (reloaded)="loadSummary(); reloaded.emit()"
+    <jnt-table #table [features]="[ui.collections.table.features.search]"
+               (reloaded)="loadSummary(); reloaded.emit()"
                formControlName="table">
       <ng-template #filters>
-        <jnt-stack [type]="ui.stack.type.horizontal">
+        <jnt-stack [type]="ui.layout.stack.type.horizontal">
           <jnt-switcher formControlName="type">
             <jnt-switcher-option i18n-label="@@action.filter_issues_all" label="All" [value]="issuesType.all">
               <jnt-badge *ngIf="summary?.count"
-                         [count]="summary?.count.toString()"></jnt-badge>
+                         [value]="summary?.count.toString()"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option i18n-label="@@action.filter_type_closed" label="Closed" [value]="issuesType.closed">
               <jnt-badge *ngIf="summary?.closedCount"
-                         [count]="summary?.closedCount.toString()"></jnt-badge>
+                         [value]="summary?.closedCount.toString()"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option i18n-label="@@action.filter_type_opened" label="Opened" [value]="issuesType.opened">
               <jnt-badge *ngIf="summary?.openedCount"
-                         [count]="summary?.openedCount.toString()"
-                         [color]="ui.colors.green"></jnt-badge>
+                         [value]="summary?.openedCount.toString()"
+                         [color]="ui.color.green"></jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option i18n-label="@@action.filter_type_problems" label="Problems" [value]="issuesType.problems">
+            <jnt-switcher-option i18n-label="@@action.filter_type_problems" label="Problems"
+                                 [value]="issuesType.problems">
               <jnt-badge *ngIf="summary?.problemsCount"
-                         [count]="summary?.problemsCount.toString()"
-                         [color]="ui.colors.red"></jnt-badge>
+                         [value]="summary?.problemsCount.toString()"
+                         [color]="ui.color.red"></jnt-badge>
             </jnt-switcher-option>
           </jnt-switcher>
         </jnt-stack>
@@ -40,14 +42,14 @@
         <ng-template #cellTemplate let-dueDate="dueDate" let-problems="problems">
           <jnt-stack [gutter]="ui.gutter.tiny">
             <app-due-date *ngIf="dueDate" [dueDate]="dueDate"></app-due-date>
-            <jnt-stack [type]="ui.stack.type.vertical">
+            <jnt-stack [type]="ui.layout.stack.type.vertical">
               <jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
-                         [size]="ui.sizes.small"
-                         [color]="ui.colors.red" i18n-label="@@label.empty" label="empty">
+                         [size]="ui.size.small"
+                         [color]="ui.color.red" i18n-label="@@label.empty" label="empty">
               </jnt-label>
               <jnt-label *ngIf="problems?.includes(issueProblem.overDueDate)"
-                         [size]="ui.sizes.small"
-                         [color]="ui.colors.red" i18n-label="@@label.overdue" label="overdue">
+                         [size]="ui.size.small"
+                         [color]="ui.color.red" i18n-label="@@label.overdue" label="overdue">
               </jnt-label>
             </jnt-stack>
           </jnt-stack>
@@ -63,7 +65,7 @@
           <jnt-progress-bar progress *ngIf="!!timeEstimate"
                             [value]="totalTimeSpent / timeEstimate * 100">
             <ng-template #legend>
-              <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
+              <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.center"
                          [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
                 <div metric>
                   {{totalTimeSpent | duration}}
@@ -81,8 +83,8 @@
             </span>
           </div>
           <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
-                     [size]="ui.sizes.small"
-                     [color]="ui.colors.red" i18n-label="@@label.estimate" label="estimate">
+                     [size]="ui.size.small"
+                     [color]="ui.color.red" i18n-label="@@label.estimate" label="estimate">
           </jnt-label>
         </ng-template>
       </jnt-table-column>
@@ -98,7 +100,7 @@
       </jnt-table-column>
 
       <ng-template #rowActions let-row="row">
-        <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
+        <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
           <jnt-menu-item [icon]="ui.icons.sync" i18n-title="@@action.sync_from_Gitlab" title="Sync from GitLab"
                          (click)="sync(row.id)"></jnt-menu-item>
         </jnt-menu>

@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { R } from 'apollo-angular/types';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI } from 'junte-ui';
 import { of } from 'rxjs';
 import { delay, distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
@@ -56,13 +56,13 @@ export class MergeRequestsState {
 })
 export class MergeRequestsComponent implements OnInit {
 
-  private _filter: MergeRequestsFilter;
   ui = UI;
+
+  private _filter: MergeRequestsFilter;
   mergeRequestState = MergeRequestState;
   issueProblem = IssueProblem;
   viewType = ViewType;
   summary: MergeRequestSummary;
-  features = TableFeatures;
 
   tableControl = this.builder.control({
     q: null,

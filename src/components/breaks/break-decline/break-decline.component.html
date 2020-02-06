@@ -1,5 +1,5 @@
 <jnt-form [formGroup]="form" jntValidation (submitted)="decline()">
-  <jnt-stack [type]="ui.stack.type.vertical" [align]="ui.flex.align.stretch">
+  <jnt-stack [type]="ui.layout.stack.type.vertical" [align]="ui.flex.align.stretch">
     <jnt-form-item>
       <jnt-form-label for="declineReason" i18n="@@label.comment">Comment</jnt-form-label>
       <jnt-form-control name="declineReason">
@@ -12,7 +12,7 @@
   </jnt-stack>
 
   <ng-template #formFooterTemplate>
-    <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.center">
+    <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.center">
       <jnt-button text="Save" i18n-text="@@action.save" [type]="ui.form.button.type.submit" [loading]="saving"></jnt-button>
     </jnt-stack>
   </ng-template>

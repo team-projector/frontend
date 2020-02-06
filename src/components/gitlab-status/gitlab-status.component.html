@@ -1,13 +1,13 @@
 <jnt-stack [align]="ui.flex.align.stretch" *ngIf="status">
-  <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
+  <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.between">
     <div>Last Sync Time</div>
     <jnt-label [label]="status.lastSync | format:'HH:mm:ss'"></jnt-label>
   </jnt-stack>
-  <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
+  <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.between">
     <div>WEB</div>
     <jnt-label [label]="status.services.webHooks | diff | duration"></jnt-label>
   </jnt-stack>
-  <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.between">
+  <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.between">
     <div>API</div>
     <jnt-label [label]="status.services.api | diff | duration"></jnt-label>
   </jnt-stack>

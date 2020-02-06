@@ -39,10 +39,10 @@
       <td gutter></td>
       <td>
         <jnt-stack (click)="form.patchValue({user: member.user, dueDate: null})"
-                   [type]="ui.stack.type.horizontal"
+                   [type]="ui.layout.stack.type.horizontal"
                    [gutter]="ui.gutter.small" developer tabindex="0">
           <jnt-avatar [image]="member.user.avatar"
-                      [size]="ui.sizes.tiny"></jnt-avatar>
+                      [size]="ui.size.tiny"></jnt-avatar>
           <div>
             <jnt-link link
                       [title]="member.user.name"></jnt-link>
@@ -55,10 +55,10 @@
         <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.stretch">
           <jnt-label *ngIf="member.user.metrics.issues.closedSpent"
                      [label]="member.user.metrics.issues.closedSpent | duration:durationFormat.short"
-                     [color]="ui.colors.green"></jnt-label>
+                     [color]="ui.color.green"></jnt-label>
           <jnt-label *ngIf="member.user.metrics.issues.openedSpent"
                      [label]="member.user.metrics.issues.openedSpent | duration:durationFormat.short"
-                     [color]="member.user.problems?.includes(userProblem.payrollOpenedOverflow) ? ui.colors.red : ui.colors.paleNavy"></jnt-label>
+                     [color]="member.user.problems?.includes(userProblem.payrollOpenedOverflow) ? ui.color.red : ui.color.paleNavy"></jnt-label>
         </jnt-stack>
       </td>
       <td day *ngFor="let day of days"
@@ -113,7 +113,7 @@
       <jnt-circle-bar circle>
         <ng-template #content>{{metric.timeSpent | duration:durationFormat.short}}</ng-template>
         <jnt-bar-indicator-group>
-          <jnt-bar-indicator [color]="ui.colors.green"
+          <jnt-bar-indicator [color]="ui.color.green"
                              [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
           </jnt-bar-indicator>
         </jnt-bar-indicator-group>
@@ -123,7 +123,7 @@
       <jnt-circle-bar *ngIf="(date | isFuture)" circle>
         <ng-template #content>{{metric.timeEstimate | duration:durationFormat.short}}</ng-template>
         <jnt-bar-indicator-group>
-          <jnt-bar-indicator [color]="ui.colors.red"
+          <jnt-bar-indicator [color]="ui.color.red"
                              [value]="metric.timeEstimate | percentage:(metric.plannedWorkHours * 3600)">
           </jnt-bar-indicator>
         </jnt-bar-indicator-group>
@@ -133,7 +133,7 @@
       <jnt-circle-bar *ngIf="(date | isFuture)" circle>
         <ng-template #content>{{metric.timeRemains | duration:durationFormat.short}}</ng-template>
         <jnt-bar-indicator-group>
-          <jnt-bar-indicator [color]="ui.colors.yellow"
+          <jnt-bar-indicator [color]="ui.color.yellow"
                              [value]="metric.timeRemains | percentage:(metric.plannedWorkHours * 3600)">
           </jnt-bar-indicator>
         </jnt-bar-indicator-group>
@@ -143,7 +143,7 @@
       <jnt-circle-bar circle>
         <ng-template #content>{{metric.loading | duration:durationFormat.short}}</ng-template>
         <jnt-bar-indicator-group>
-          <jnt-bar-indicator [color]="ui.colors.purpleDark"
+          <jnt-bar-indicator [color]="ui.color.purpleDark"
                              [value]="metric.loading | percentage:(metric.plannedWorkHours * 3600)">
           </jnt-bar-indicator>
         </jnt-bar-indicator-group>
@@ -153,7 +153,7 @@
       <ng-container *ngIf="(date | isPast); else futureMetrics">
         <jnt-circle-bar circle>
           <jnt-bar-indicator-group>
-            <jnt-bar-indicator [color]="ui.colors.green"
+            <jnt-bar-indicator [color]="ui.color.green"
                                [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
             </jnt-bar-indicator>
           </jnt-bar-indicator-group>
@@ -162,20 +162,20 @@
       <ng-template #futureMetrics>
         <jnt-circle-bar circle>
           <jnt-bar-indicator-group>
-            <jnt-bar-indicator [color]="ui.colors.green"
+            <jnt-bar-indicator [color]="ui.color.green"
                                [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
             </jnt-bar-indicator>
-            <jnt-bar-indicator [color]="ui.colors.yellow"
+            <jnt-bar-indicator [color]="ui.color.yellow"
                                [value]="metric.timeRemains | percentage:(metric.plannedWorkHours * 3600)">
             </jnt-bar-indicator>
           </jnt-bar-indicator-group>
           <jnt-bar-indicator-group>
-            <jnt-bar-indicator [color]="ui.colors.red"
+            <jnt-bar-indicator [color]="ui.color.red"
                                [value]="metric.timeEstimate | percentage:(metric.plannedWorkHours * 3600)">
             </jnt-bar-indicator>
           </jnt-bar-indicator-group>
           <jnt-bar-indicator-group>
-            <jnt-bar-indicator [color]="ui.colors.purpleDark"
+            <jnt-bar-indicator [color]="ui.color.purpleDark"
                                [value]="metric.loading | percentage:(metric.plannedWorkHours * 3600)">
             </jnt-bar-indicator>
           </jnt-bar-indicator-group>

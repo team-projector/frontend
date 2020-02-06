@@ -6,7 +6,7 @@
           admin>
 </jnt-link>
 
-<jnt-block [padding]="ui.padding.large" [state]="progress.gitlab ? ui.block.state.loading : null">
+<jnt-block [padding]="ui.gutter.large" [state]="progress.gitlab ? ui.layout.block.state.loading : null">
   <jnt-form form [formGroup]="loginForm" (submitted)="login()" jntValidation>
     <div logo>
       <img [src]="'assets/images/' + (theme === 'dark' ? 'logo-dark' : 'logo') + '.svg'" height="50">
@@ -24,7 +24,7 @@
     <jnt-form-item>
       <jnt-form-control name="password">
         <jnt-input formControlName="password" placeholder="Password" [icon]="ui.icons.accessLock" required
-                   [type]="ui.form.input.password"></jnt-input>
+                   [type]="ui.form.input.type.password"></jnt-input>
         <jnt-form-message [type]="ui.form.validators.typeError.required">
           Field is required!
         </jnt-form-message>
@@ -47,21 +47,21 @@
       <div *ngIf="mocks" god>
         <p>The current version uses mocks! No real backend or database is needed. You can be a god 😎!</p>
         <p><b>Select your role:</b></p>
-        <jnt-stack [type]="ui.stack.type.horizontal" [justify]="ui.flex.justify.center">
-          <jnt-button [scheme]="ui.schemes.success"
-                      [size]="ui.sizes.small"
+        <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.center">
+          <jnt-button [scheme]="ui.scheme.success"
+                      [size]="ui.size.small"
                       [outline]="ui.outline.ghost"
                       i18n-text="@@action.developer"
                       text="Developer"
                       (click)="god(userRole.developer)"></jnt-button>
-          <jnt-button [scheme]="ui.schemes.success"
-                      [size]="ui.sizes.small"
+          <jnt-button [scheme]="ui.scheme.success"
+                      [size]="ui.size.small"
                       [outline]="ui.outline.ghost"
                       i18n-text="@@action.team_leader"
                       text="Team Leader"
                       (click)="god(userRole.teamLeader)"></jnt-button>s
-          <jnt-button [scheme]="ui.schemes.success"
-                      [size]="ui.sizes.small"
+          <jnt-button [scheme]="ui.scheme.success"
+                      [size]="ui.size.small"
                       [outline]="ui.outline.ghost"
                       text="Project Manager"
                       i18n-text="@@action.project_manager"

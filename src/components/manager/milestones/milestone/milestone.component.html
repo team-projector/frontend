@@ -1,14 +1,14 @@
 <jnt-form cdkDropListGroup>
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
-    <jnt-block [state]="loading.tickets ? ui.block.state.loading : null">
+    <jnt-block [padding]="ui.gutter.none" [state]="loading.tickets ? ui.layout.block.state.loading : null">
       <jnt-gantt i18n-title="@@label.tickets" title="Tickets">
         <ng-template #titleTemplate>
-          <jnt-stack [type]="ui.stack.type.horizontal"
+          <jnt-stack [type]="ui.layout.stack.type.horizontal"
                      [gutter]="ui.gutter.small"
                      [align]="ui.flex.align.center">
-            <jnt-button [icon]="ui.icons.add" [size]="ui.sizes.small"
+            <jnt-button [icon]="ui.icons.add" [size]="ui.size.small"
                         (click)="add()"></jnt-button>
-            <jnt-button [icon]="ui.icons.reload" [size]="ui.sizes.small"
+            <jnt-button [icon]="ui.icons.reload" [size]="ui.size.small"
                         (click)="loadTickets()"></jnt-button>
             <div title>Tickets</div>
           </jnt-stack>
@@ -32,7 +32,7 @@
               </div>
             </ng-template>
             <ng-template #title>
-              <jnt-stack [type]="ui.stack.type.horizontal"
+              <jnt-stack [type]="ui.layout.stack.type.horizontal"
                          [justify]="ui.flex.justify.between"
                          [align]="ui.flex.align.center"
                          [attr.ticket]="ticket.id"
@@ -40,26 +40,26 @@
                          cdkDropList
                          [cdkDropListEnterPredicate]="predicate"
                          (cdkDropListDropped)="drop($event, ticket.id)">
-                <jnt-stack [type]="ui.stack.type.horizontal"
+                <jnt-stack [type]="ui.layout.stack.type.horizontal"
                            [align]="ui.flex.align.center"
                            [gutter]="ui.gutter.small">
                   <jnt-button [outline]="ui.outline.transparent"
-                              [size]="ui.sizes.small"
+                              [size]="ui.size.small"
                               [icon]="ticketControl.value === ticket.id ? ui.icons.chevronDown : ui.icons.chevronRight"
                               (click)="toggleIssues(ticket.id)">
                   </jnt-button>
-                  <jnt-dot [color]="ticket.type === ticketTypes.feature ? ui.colors.green
-                    : (ticket.type === ticketTypes.improvement ? ui.colors.purple : ui.colors.red)">
+                  <jnt-dot [color]="ticket.type === ticketTypes.feature ? ui.color.green
+                    : (ticket.type === ticketTypes.improvement ? ui.color.purple : ui.color.red)">
                   </jnt-dot>
                   <jnt-link [title]="ticket.title"
                             (click)="toggleIssues(ticket.id)"></jnt-link>
                   <jnt-label *ngIf="ticket.role as role"
-                             [color]="ui.colors.paleNavy"
+                             [color]="ui.color.paleNavy"
                              [label]="role">
                   </jnt-label>
                 </jnt-stack>
 
-                <jnt-stack [type]="ui.stack.type.horizontal"
+                <jnt-stack [type]="ui.layout.stack.type.horizontal"
                            [align]="ui.flex.align.center"
                            [gutter]="ui.gutter.small">
                   <jnt-link *ngIf="ticket.url"
@@ -67,11 +67,11 @@
                             [source]="ticket.url" target="_blank">
                   </jnt-link>
                   <jnt-label *ngIf="ticket.metrics.issuesClosedCount as issuesClosedCount"
-                             [color]="ui.colors.green"
+                             [color]="ui.color.green"
                              [label]="issuesClosedCount.toString()">
                   </jnt-label>
                   <jnt-label *ngIf="ticket.metrics.issuesOpenedCount as issuesOpenedCount"
-                             [color]="ui.colors.paleNavy"
+                             [color]="ui.color.paleNavy"
                              [label]="issuesOpenedCount.toString()">
                   </jnt-label>
                   <jnt-dropdown>
@@ -83,7 +83,7 @@
                     </ng-template>
                     <ng-template #dropdown let-close="trigger">
                       <jnt-menu [type]="ui.orientation.vertical"
-                                [spacer]="ui.sizes.small">
+                                [spacer]="ui.size.small">
                         <jnt-menu-item i18n-title="@@action.edit" title="Edit"
                                        [icon]="ui.icons.edit"
                                        (click)="edit(ticket);close()"></jnt-menu-item>
@@ -102,7 +102,7 @@
             <ng-template #loadingIssuesTemplate>
               <jnt-gantt-line>
                 <ng-template #title>
-                  <jnt-skeleton [type]="ui.skeleton.type.text"
+                  <jnt-skeleton [type]="ui.layout.skeleton.type.text"
                                 [lines]="ticket.metrics.issuesCount"></jnt-skeleton>
                 </ng-template>
               </jnt-gantt-line>
@@ -135,12 +135,12 @@
                   </div>
                 </ng-template>
                 <ng-template #title>
-                  <jnt-stack [type]="ui.stack.type.horizontal"
+                  <jnt-stack [type]="ui.layout.stack.type.horizontal"
                              [gutter]="ui.gutter.small"
                              issue cdkDrag [cdkDragData]="{issue: issue.id}">
                     <jnt-button [icon]="ui.icons.burger"
-                                [scheme]="ui.schemes.secondary"
-                                [size]="ui.sizes.tiny" cdkDragHandle></jnt-button>
+                                [scheme]="ui.scheme.secondary"
+                                [size]="ui.size.tiny" cdkDragHandle></jnt-button>
                     <app-issue [issue]="issue"></app-issue>
                   </jnt-stack>
                 </ng-template>

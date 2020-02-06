@@ -1,6 +1,8 @@
-<jnt-block [state]="loading ? ui.block.state.loading : null" [width]="ui.width.fluid">
+<jnt-block [padding]="ui.gutter.none"
+           [state]="loading ? ui.layout.block.state.loading : null"
+           [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
-    <jnt-table #table formControlName="table" [features]="[features.search]">
+    <jnt-table #table formControlName="table" [features]="[ui.collections.table.features]">
       <ng-template #filters>
         <jnt-button text="Add" i18n-text="@@action.add"
                     [icon]="ui.icons.add"
@@ -11,9 +13,9 @@
 
       <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@label.developer" title="Developer">
         <ng-template #cellTemplate let-user="user">
-          <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center">
+          <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.center">
             <jnt-avatar avatar [image]="user?.avatar"
-                        [size]="ui.sizes.small"></jnt-avatar>
+                        [size]="ui.size.small"></jnt-avatar>
             <div>
               <jnt-link link [title]="user?.name"></jnt-link>
             </div>
@@ -57,23 +59,23 @@
                      let-comment="comment"
                      let-declineReason="declineReason">
 
-          <jnt-stack [type]="ui.stack.type.horizontal">
-            <jnt-stack [type]="ui.stack.type.vertical" [gutter]="ui.gutter.tiny">
+          <jnt-stack [type]="ui.layout.stack.type.horizontal">
+            <jnt-stack [type]="ui.layout.stack.type.vertical" [gutter]="ui.gutter.tiny">
               <ng-container [ngSwitch]="approveState">
                 <jnt-label *ngSwitchCase="approveStates.created"
                            i18n-label="@@label.created"
-                           [color]="ui.colors.purple"
+                           [color]="ui.color.purple"
                            label="Approving">
                 </jnt-label>
                 <jnt-label *ngSwitchCase="approveStates.approved"
                            i18n-label="@@label.approved"
-                           [color]="ui.colors.green"
+                           [color]="ui.color.green"
                            label="Approved">
                 </jnt-label>
 
                 <jnt-label *ngSwitchCase="approveStates.decline"
                            i18n-label="@@label.declined"
-                           [color]="ui.colors.red"
+                           [color]="ui.color.red"
                            label="Declined">
                 </jnt-label>
               </ng-container>
@@ -81,11 +83,11 @@
                 {{ approvedAt | date}}
               </small>
             </jnt-stack>
-            <jnt-stack [type]="ui.stack.type.vertical" [gutter]="ui.gutter.tiny">
+            <jnt-stack [type]="ui.layout.stack.type.vertical" [gutter]="ui.gutter.tiny">
               <jnt-stack *ngIf="approvedBy"
-                         [type]="ui.stack.type.horizontal" [gutter]="ui.gutter.tiny">
+                         [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.tiny">
                 <jnt-avatar avatar [image]="approvedBy.avatar"
-                            [size]="ui.sizes.tiny"></jnt-avatar>
+                            [size]="ui.size.tiny"></jnt-avatar>
                 <jnt-link link [title]="approvedBy.name"></jnt-link>
               </jnt-stack>
               <small *ngIf="declineReason">
@@ -97,14 +99,15 @@
       </jnt-table-column>
 
       <ng-template #rowActions let-break="row">
-        <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
+        <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
           <jnt-menu-item *ngIf="view === viewType.extended" i18n-title="@@action.approve" title="Approve"
                          [icon]="ui.icons.check" (click)="approve(break.id)">
           </jnt-menu-item>
           <jnt-menu-item *ngIf="view === viewType.extended" i18n-title="@@action.decline" title="Decline"
                          [icon]="ui.icons.cancel" (click)="openDecline(break)">
           </jnt-menu-item>
-          <jnt-menu-item i18n-title="@@action.edit" title="Edit" [icon]="ui.icons.edit" (click)="open(break)"></jnt-menu-item>
+          <jnt-menu-item i18n-title="@@action.edit" title="Edit" [icon]="ui.icons.edit"
+                         (click)="open(break)"></jnt-menu-item>
           <jnt-menu-item i18n-title="@@action.delete" title="Delete" [icon]="ui.icons.delete"
                          (click)="delete(break.id)"></jnt-menu-item>
         </jnt-menu>

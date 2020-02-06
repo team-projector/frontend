@@ -1,11 +1,11 @@
 <jnt-modal #modal [backdrop]="backdrop"></jnt-modal>
 <jnt-popover #popover></jnt-popover>
-<jnt-app-layout #layout>
+<jnt-app-layout #layout [position]="ui.layout.app.position.fixed">
   <jnt-app-header>
-    <ng-template #logo>
+    <ng-template #headerLogoTemplate>
       <img [src]="'assets/images/logo-' + (theme === 'dark' ? 'dark' : 'light') + '.svg'">
     </ng-template>
-    <ng-template #topMenu>
+    <ng-template #headerMenuTemplate>
       <jnt-menu menu>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.developer)"
                        i18n-title="@@action.developer"
@@ -42,30 +42,30 @@
 
     <app-theme-switcher></app-theme-switcher>
 
-    <ng-template #actions>
+    <ng-template #headerActionsTemplate>
       <jnt-actions>
         <jnt-action>
-          <ng-template #template>
+          <ng-template #actionLabeltemplate>
             <img src="assets/images/gitlab-logo.svg" (mouseenter)="gitlabStatus.load()">
             <div></div>
           </ng-template>
-          <ng-template #content>
+          <ng-template #actionContenttemplate>
             <app-gitlab-status></app-gitlab-status>
           </ng-template>
         </jnt-action>
       </jnt-actions>
     </ng-template>
 
-    <ng-template #userbar>
+    <ng-template #headerUserbarTemplate>
       <jnt-userbar>
         <ng-template #avatar>
-          <jnt-avatar [size]="ui.sizes.small"
+          <jnt-avatar [size]="ui.size.small"
                       [image]="me.user?.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
         </ng-template>
-        <ng-template #userMenu>
+        <ng-template #userMenuTemplate>
           <app-select-lang></app-select-lang>
           <p>{{me.user?.name}}</p>
-          <jnt-user-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
+          <jnt-user-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
             <jnt-button *ngIf="config.token" (click)="logout()"
                         text="Logout"></jnt-button>
           </jnt-user-menu>

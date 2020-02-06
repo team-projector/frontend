@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { R } from 'apollo-angular/types';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, TableFeatures, UI } from 'junte-ui';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI } from 'junte-ui';
 import { of } from 'rxjs';
 import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
@@ -45,7 +45,6 @@ export class MilestonesComponent implements OnInit {
   private _filter: MilestonesFilter;
   ui = UI;
   durationFormat = DurationFormat;
-  features = TableFeatures;
   milestoneProblem = MilestoneProblem;
   progress = {sync: false};
 

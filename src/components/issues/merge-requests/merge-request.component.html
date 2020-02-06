@@ -1,23 +1,23 @@
-<jnt-block [width]="ui.width.fluid">
+<jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
-    <jnt-table #table [features]="[features.search]" (reloaded)="loadSummary(); reloaded.emit()"
+    <jnt-table #table [features]="[ui.collections.table.features.search]" (reloaded)="loadSummary(); reloaded.emit()"
                formControlName="table">
       <ng-template #filters>
-        <jnt-stack [type]="ui.stack.type.horizontal">
+        <jnt-stack [type]="ui.layout.stack.type.horizontal">
           <jnt-switcher formControlName="state">
             <jnt-switcher-option i18n-label="@@action.filter_type_closed" label="Closed" [value]="mergeRequestState.closed">
               <jnt-badge *ngIf="summary?.closedCount"
-                         [count]="summary?.closedCount.toString()"></jnt-badge>
+                         [value]="summary?.closedCount.toString()"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option i18n-label="@@action.filter_type_opened" label="Opened" [value]="mergeRequestState.opened">
               <jnt-badge *ngIf="summary?.openedCount"
-                         [count]="summary?.openedCount.toString()"
-                         [color]="ui.colors.green"></jnt-badge>
+                         [value]="summary?.openedCount.toString()"
+                         [color]="ui.color.green"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option i18n-label="@@action.filter_type_merged" label="Merged" [value]="mergeRequestState.merged">
               <jnt-badge *ngIf="summary?.mergedCount"
-                         [count]="summary?.mergedCount.toString()"
-                         [color]="ui.colors.red"></jnt-badge>
+                         [value]="summary?.mergedCount.toString()"
+                         [color]="ui.color.red"></jnt-badge>
             </jnt-switcher-option>
           </jnt-switcher>
         </jnt-stack>
@@ -25,23 +25,23 @@
       <jnt-table-column i18n-title="@@label.title" title="Title" sort="title">
         <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
                      let-issues="issues" let-user="user" let-project="project">
-          <jnt-stack [type]="ui.stack.type.horizontal"
+          <jnt-stack [type]="ui.layout.stack.type.horizontal"
                      [gutter]="ui.gutter.small">
-            <jnt-stack [type]="ui.stack.type.horizontal"
+            <jnt-stack [type]="ui.layout.stack.type.horizontal"
                        [gutter]="ui.gutter.small"
                        [align]="ui.flex.align.center">
               <jnt-avatar [text]="issues[0]?.user.name"
                           [image]="issues[0]?.user.avatar"
-                          [size]="ui.sizes.tiny"></jnt-avatar>
+                          [size]="ui.size.tiny"></jnt-avatar>
               <jnt-icon [icon]="ui.icons.chevronRight"></jnt-icon>
               <jnt-avatar [text]="user?.name"
                           [image]="user?.avatar"
-                          [size]="ui.sizes.tiny"></jnt-avatar>
+                          [size]="ui.size.tiny"></jnt-avatar>
             </jnt-stack>
 
-            <jnt-stack [type]="ui.stack.type.vertical"
+            <jnt-stack [type]="ui.layout.stack.type.vertical"
                        [gutter]="ui.gutter.tiny">
-              <jnt-stack [type]="ui.stack.type.horizontal"
+              <jnt-stack [type]="ui.layout.stack.type.horizontal"
                          [gutter]="ui.gutter.small">
                 <jnt-link [source]="url" target="_blank"
                           [attr.closed]="state == mergeRequestState.closed" [title]="title">
@@ -62,7 +62,7 @@
                      let-problems="problems">
           <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
             <ng-template #legend>
-              <jnt-stack [type]="ui.stack.type.horizontal" [align]="ui.flex.align.center"
+              <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.center"
                          [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
                 <div metric>{{totalTimeSpent | duration}}</div>
                 <div metric estimate>{{timeEstimate | duration}}</div>
@@ -75,7 +75,7 @@
             </span>
           </div>
           <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
-                     [color]="ui.colors.red" i18n-label="@@label.estimate" label="estimate">
+                     [color]="ui.color.red" i18n-label="@@label.estimate" label="estimate">
           </jnt-label>
         </ng-template>
       </jnt-table-column>

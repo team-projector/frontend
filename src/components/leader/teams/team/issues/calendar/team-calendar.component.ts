@@ -19,7 +19,7 @@ import { CalendarMembersGQL, CalendarMetricsGQL } from './team-calendar.graphql'
 
 const DAYS_IN_WEEK = 7;
 const DAYS_WEEK = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
-const L = 'DD/MM/YYYY';
+const L = 'dd/MM/yyyy';
 
 export class UserFilter {
   user: User;

@@ -1,8 +1,8 @@
 <jnt-stack [type]="ui.orientation.horizontal"
            [gutter]="ui.gutter.small">
   <jnt-avatar *ngIf="!!issue.user" [text]="issue.user.name" [image]="issue.user.avatar"
-              [size]="ui.sizes.tiny"></jnt-avatar>
-  <jnt-stack [type]="ui.stack.type.vertical"
+              [size]="ui.size.tiny"></jnt-avatar>
+  <jnt-stack [type]="ui.layout.stack.type.vertical"
              [gutter]="ui.gutter.tiny">
     <jnt-link *ngIf="issue.ticket" ticket [icon]="ui.icons.externalLink"
               target="_blank"
@@ -19,7 +19,7 @@
                 [title]="issue.title">
       </jnt-link>
       <jnt-label *ngFor="let l of (issue.labels | labels)"
-                 [size]="ui.sizes.small"
+                 [size]="ui.size.small"
                  [color]="l.color" [label]="l.title"></jnt-label>
       <jnt-icon *ngIf="issue.state == issueState.opened && (issue.labels | hasLabel:standardLabel.doing)" state doing
                          [icon]="ui.icons.animated.runningMan"></jnt-icon>

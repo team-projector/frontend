@@ -183,7 +183,7 @@ export class UserProgressMetrics {
   issuesCount: number;
 
   getKey(): string {
-    return format(this.start, 'DD/MM/YYYY');
+    return format(this.start, 'dd/MM/yyyy');
   }
 
 }

@@ -2,13 +2,13 @@
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
     <app-metrics-type formControlName="metric" metrics></app-metrics-type>
     <jnt-row>
-      <jnt-col [mobile]="12" [wide]="7">
+      <jnt-col [tablet]="12" [wide]="7">
         <app-team-calendar calendar
                            formControlName="filter"
                            [metric]="metric.value"
                            [team]="team"></app-team-calendar>
       </jnt-col>
-      <jnt-col [mobile]="12" [wide]="5">
+      <jnt-col [tablet]="12" [wide]="5">
         <jnt-chart formControlName="project"
                    title="Opened project" metric="Hours"
                    i18n-title="@@label.opened_project"
@@ -23,27 +23,27 @@
               <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
               {{p.project.title}}
               <jnt-stack *ngIf="p.project.milestones[0] as m" milestone
-                         [type]="ui.stack.type.horizontal"
+                         [type]="ui.layout.stack.type.horizontal"
                          [gutter]="ui.gutter.tiny"
                          [align]="ui.flex.align.center">
                 <jnt-link [source]="m.glUrl" [title]="m.title"
                           target="_blank"></jnt-link>
                 <jnt-label *ngIf="m.dueDate" [label]="m.dueDate | dueDate"
-                           [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.colors.red : ui.colors.paleNavy"></jnt-label>
+                           [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.color.red : ui.color.paleNavy"></jnt-label>
               </jnt-stack>
             </ng-template>
           </jnt-chart-indicator>
         </jnt-chart>
       </jnt-col>
     </jnt-row>
-    <jnt-stack [type]="ui.stack.type.horizontal">
+    <jnt-stack [type]="ui.layout.stack.type.horizontal">
       <div filter [attr.active]="!!filter.value.user">
         <ng-container *ngIf="filter.value.user;else noFilterUser">
           <jnt-avatar avatar [image]="filter.value.user.avatar"
-                      [size]="ui.sizes.tiny"></jnt-avatar>
+                      [size]="ui.size.tiny"></jnt-avatar>
           {{filter.value.user.name}}
-          <jnt-button reset [scheme]="ui.schemes.secondary"
-                      [size]="ui.sizes.tiny"
+          <jnt-button reset [scheme]="ui.scheme.secondary"
+                      [size]="ui.size.tiny"
                       [icon]="ui.icons.close"
                       (click)="filter.patchValue({user: null, dueDate: filter.value.dueDate})"></jnt-button>
         </ng-container>
@@ -56,8 +56,8 @@
         <ng-container *ngIf="filter.value.dueDate;else noFilterDueDate">
           <jnt-icon icon [icon]="ui.icons.calendar"></jnt-icon>
           {{filter.value.dueDate | date}}
-          <jnt-button reset [scheme]="ui.schemes.secondary"
-                      [size]="ui.sizes.tiny"
+          <jnt-button reset [scheme]="ui.scheme.secondary"
+                      [size]="ui.size.tiny"
                       [icon]="ui.icons.close"
                       (click)="filter.patchValue({user: filter.value.user,  dueDate: null})"></jnt-button>
         </ng-container>
@@ -73,8 +73,8 @@
             {{project.value.title}}<br>
             <small>{{project.value.group?.fullTitle}}</small>
           </div>
-          <jnt-button reset [scheme]="ui.schemes.secondary"
-                      [size]="ui.sizes.tiny"
+          <jnt-button reset [scheme]="ui.scheme.secondary"
+                      [size]="ui.size.tiny"
                       [icon]="ui.icons.close"
                       (click)="project.patchValue(null)"></jnt-button>
         </ng-container>
@@ -87,25 +87,25 @@
     <jnt-menu>
       <jnt-menu-item [link]="['issues']" i18n-title="@@action.issues" title="Issues">
         <jnt-badge *ngIf="summary?.second?.issues.count"
-                   [count]="summary?.second?.issues.count"
-                   [color]="ui.colors.green"></jnt-badge>
+                   [value]="summary?.second?.issues.count"
+                   [color]="ui.color.green"></jnt-badge>
         <jnt-badge *ngIf="summary?.second?.issues.problemsCount"
-                   [count]="summary?.second?.issues.problemsCount"
-                   [color]="ui.colors.red"></jnt-badge>
+                   [value]="summary?.second?.issues.problemsCount"
+                   [color]="ui.color.red"></jnt-badge>
       </jnt-menu-item>
       <jnt-menu-item [link]="['merge-requests']" i18n-title="@@action.merge_requests" title="Merge Requests">
         <jnt-badge *ngIf="summary?.second?.mergeRequests.count"
-                   [count]="summary?.second?.mergeRequests.count"
-                   [color]="ui.colors.red"></jnt-badge>
+                   [value]="summary?.second?.mergeRequests.count"
+                   [color]="ui.color.red"></jnt-badge>
       </jnt-menu-item>
       <jnt-menu-item [link]="['time-expenses']" i18n-title="@@action.time_expenses" title="Time Expenses">
         <jnt-badge
           *ngIf="(filter.value.user || filter.value.dueDate || project.value) && summary?.second?.spentTimes.spent"
-          [count]="summary?.second?.spentTimes.spent | duration"
-          [color]="ui.colors.purple"></jnt-badge>
+          [value]="summary?.second?.spentTimes.spent | duration"
+          [color]="ui.color.purple"></jnt-badge>
         <jnt-badge *ngIf="summary?.second?.spentTimes.openedSpent"
-                   [count]="summary?.second?.spentTimes.openedSpent | duration"
-                   [color]="ui.colors.green"></jnt-badge>
+                   [value]="summary?.second?.spentTimes.openedSpent | duration"
+                   [color]="ui.color.green"></jnt-badge>
       </jnt-menu-item>
     </jnt-menu>
     <router-outlet (activate)="onActivate($event)"></router-outlet>
