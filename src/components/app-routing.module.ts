@@ -13,6 +13,10 @@ const routes: Routes = [
   {
     matcher: dashboardMatcher,
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+  },
+  {
+    path: '**',
+    redirectTo: '/'
   }
 ];
 

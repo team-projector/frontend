@@ -5,6 +5,7 @@
     <ng-template #headerLogoTemplate>
       <img [src]="'assets/images/logo-' + (theme === 'dark' ? 'dark' : 'light') + '.svg'">
     </ng-template>
+
     <ng-template #headerMenuTemplate>
       <jnt-menu menu>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.developer)"
@@ -43,26 +44,26 @@
     <app-theme-switcher></app-theme-switcher>
 
     <ng-template #headerActionsTemplate>
-      <jnt-actions>
-        <jnt-action>
-          <ng-template #actionLabeltemplate>
+      <jnt-app-header-actions>
+        <jnt-app-header-action>
+          <ng-template #actionLabelTemplate>
             <img src="assets/images/gitlab-logo.svg" (mouseenter)="gitlabStatus.load()">
             <div></div>
           </ng-template>
-          <ng-template #actionContenttemplate>
+          <ng-template #actionContentTemplate>
             <app-gitlab-status></app-gitlab-status>
           </ng-template>
-        </jnt-action>
-      </jnt-actions>
+        </jnt-app-header-action>
+      </jnt-app-header-actions>
     </ng-template>
 
     <ng-template #headerUserbarTemplate>
-      <jnt-userbar>
-        <ng-template #avatar>
+      <jnt-app-header-userbar>
+        <ng-template #userbarAvatarTemplate>
           <jnt-avatar [size]="ui.size.small"
                       [image]="me.user?.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
         </ng-template>
-        <ng-template #userMenuTemplate>
+        <ng-template #userbarMenuTemplate>
           <app-select-lang></app-select-lang>
           <p>{{me.user?.name}}</p>
           <jnt-user-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
@@ -70,7 +71,7 @@
                         text="Logout"></jnt-button>
           </jnt-user-menu>
         </ng-template>
-      </jnt-userbar>
+      </jnt-app-header-userbar>
     </ng-template>
   </jnt-app-header>
   <router-outlet></router-outlet>
