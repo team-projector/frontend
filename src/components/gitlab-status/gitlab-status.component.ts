@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UI } from 'junte-ui';
 import { interval, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { environment } from '../../environments/environment';
 import { GitLabStatus } from '../../models/gitlab';
@@ -23,6 +23,8 @@ export class GitlabStatusComponent implements OnInit {
   @Input()
   status: GitLabStatus;
 
+  progress = {loading: false};
+
   constructor(private gitlabStatusGQL: GitlabStatusGQL) {
   }
 
@@ -32,10 +34,12 @@ export class GitlabStatusComponent implements OnInit {
   }
 
   load() {
+    this.progress.loading = true;
     (environment.mocks ? of(getMock(GitLabStatus))
       : this.gitlabStatusGQL.fetch()
         .pipe(map(({data: {gitlabStatus}}) =>
           deserialize(gitlabStatus, GitLabStatus))))
+      .pipe(finalize(() => this.progress.loading = false))
       .subscribe(status => this.status = status);
   }
 }
