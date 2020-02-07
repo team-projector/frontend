@@ -24,7 +24,7 @@
     <th *ngFor="let day of daysOfWeek; let i = index" day (click)="form.patchValue({user: null, dueDate: days[i]})"
         [attr.today]="(today | isEqualDate: days[i])"
         [attr.active]="(dueDate.value | isEqualDate: days[i])">
-      <span i18n>{{day}}</span> {{days[i] | getDate}}
+      <span i18n>{{day}}</span> {{days[i] | dfnsGetDate}}
     </th>
     <th name-metric i18n="@@label.est">Est</th>
     <th name-metric i18n="@@label.sp">Sp</th>
@@ -65,13 +65,13 @@
           (click)="form.patchValue({user: member.user, dueDate: day})"
           [attr.active]="(dueDate.value | isEqualDate: day) && (user.value?.id === member.user.id)"
           [attr.active-day]="(dueDate.value | isEqualDate: day)">
-        <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric, date: (day | endOfDay),
-              metric: metrics?.days?.get(member.user.id)?.get((day | format: formatDate))}">
+        <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric, date: (day | dfnsEndOfDay),
+              metric: metrics?.days?.get(member.user.id)?.get((day | dfnsFormat: formatDate))}">
         </ng-container>
       </td>
 
       <ng-container
-        *ngTemplateOutlet="weekMetricTemplate; context: {metric: metrics?.weeks?.get(member.user.id)?.get((start | format: formatDate))}">
+        *ngTemplateOutlet="weekMetricTemplate; context: {metric: metrics?.weeks?.get(member.user.id)?.get((start | dfnsFormat: formatDate))}">
       </ng-container>
       <td gutter></td>
     </tr>

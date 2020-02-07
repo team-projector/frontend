@@ -3,7 +3,7 @@
              let-date="date"
              let-presentation="presentation">
   <div issues *ngIf="!!metric?.issuesCount"></div>
-  <ng-template #noMetricTemplate>{{date | getDate}}</ng-template>
+  <ng-template #noMetricTemplate>{{date | dfnsGetDate}}</ng-template>
   <ng-template #metricTemplate let-metric="metric" let-color="color" let-planned="planned">
     <jnt-circle-bar circle time>
       <ng-template #content>{{metric | duration:durationFormat.short}}</ng-template>
@@ -50,7 +50,7 @@
     <ng-container *ngSwitchDefault>
       <ng-container>
         <jnt-circle-bar circle>
-          <ng-template #content>{{date | getDate}}</ng-template>
+          <ng-template #content>{{date | dfnsGetDate}}</ng-template>
           <jnt-bar-indicator-group>
             <jnt-bar-indicator [color]="ui.color.green"
                                [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
@@ -90,12 +90,12 @@
             <ng-template #calendarDayTemplate let-date="date">
               <div class="day" [attr.today]="(date | isToday)">
                 <ng-container *ngTemplateOutlet="dayTemplate; context: {presentation: metric.value,
-                date: date, metric: metrics.days.get((date | format : formatDate))}">
+                date: date, metric: metrics.days.get((date | dfnsFormat : formatDate))}">
                 </ng-container>
               </div>
             </ng-template>
             <ng-template #calendarMetricTemplate let-metric="metric" let-date="date">
-              <ng-container *ngIf="metrics.weeks.get((date | format: formatDate)) as weekMetric">
+              <ng-container *ngIf="metrics.weeks.get((date | dfnsFormat: formatDate)) as weekMetric">
                 <ng-container [ngSwitch]="metric">
                   <ng-container *ngSwitchCase="0">
                     {{!!weekMetric.timeEstimate ? (weekMetric.timeEstimate | duration:durationFormat.short) : '&ndash;'}}

@@ -6,7 +6,7 @@
   <jnt-stack [align]="ui.flex.align.stretch" *ngIf="status; else noDataTemplate">
     <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.between">
       <div>Last Sync Time</div>
-      <jnt-label [label]="status.lastSync | format:'HH:mm:ss'"></jnt-label>
+      <jnt-label [label]="status.lastSync | dfnsFormat:'HH:mm:ss'"></jnt-label>
     </jnt-stack>
     <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.between">
       <div>WEB</div>

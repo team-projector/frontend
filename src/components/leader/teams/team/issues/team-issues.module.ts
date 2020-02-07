@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DateFnsModule } from 'ngx-date-fns';
 import { TeamIssuesRoutingModule } from 'src/components/leader/teams/team/issues/team-issues-routing.module';
 import { TeamIssuesComponent } from 'src/components/leader/teams/team/issues/team-issues.component';
 import { PercentagePipe } from 'src/components/leader/teams/team/issues/team.pipe';
@@ -33,7 +34,8 @@ import { DueDateModule } from 'src/components/due-date/due-date.module';
     OutletModule,
     IssuesModule,
     ArrayPipesModule,
-    DueDateModule
+    DueDateModule,
+    DateFnsModule
   ],
   declarations: [
     TeamIssuesComponent,
