@@ -25,12 +25,12 @@ export abstract class TimeExpensesListComponent implements OnInit {
 
   ngOnInit() {
     combineLatest([this.route.data, this.route.params])
-      .subscribe(([{user, team, salary, project, dueDate}, {q, first, offset, state}]) => {
+      .subscribe(([{user, team, salary, project, dueDate}, {q, first, offset, type}]) => {
         this.state = new TimeExpensesState({
           first: +first || undefined,
           offset: +offset || undefined,
           q: q,
-          state: state,
+          type: type,
           user: !!user ? user.id : user,
           team: !!team ? team.id : team,
           salary: !!salary ? salary.id : undefined,
@@ -40,7 +40,7 @@ export abstract class TimeExpensesListComponent implements OnInit {
       });
   }
 
-  getState(state: Object) {
+  getState(state: TimeExpensesState) {
     throw new Error('Must be overridden');
   }
 }

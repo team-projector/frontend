@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { UI } from 'junte-ui';
-import { UserMetrics } from '../../../models/user';
+import { UserMetrics } from 'src/models/user';
 
 @Component({
   selector: 'app-salary-metrics',
@@ -11,7 +11,5 @@ import { UserMetrics } from '../../../models/user';
 export class SalaryMetricsComponent {
 
   ui = UI;
-
   @Input() metrics: UserMetrics;
-
 }
