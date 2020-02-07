@@ -7,8 +7,8 @@ import gql from 'graphql-tag';
 })
 export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
   document = gql`
-    query ($team: ID, $user: ID, $salary: ID, $date: Date, $offset: Int, $first: Int, $state: String) {
-      allSpentTimes(team: $team, user: $user, salary: $salary, date: $date, offset: $offset, first: $first, state: $state) {
+    query ($team: ID, $user: ID, $salary: ID, $project: ID, $date: Date, $offset: Int, $first: Int, $state: String) {
+      allSpentTimes(team: $team, user: $user, salary: $salary, project: $project, date: $date, offset: $offset, first: $first, state: $state) {
         count
         edges {
           node {

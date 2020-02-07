@@ -9,13 +9,12 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
-import { IssueState } from 'src/models/enums/issue';
-import { TimeExpenseState } from 'src/models/enums/time-expenses';
+import { TimeExpenseState, TimeExpenseType } from 'src/models/enums/time-expenses';
+import { ViewType } from 'src/models/enums/view-type';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter } from 'src/models/spent-time';
 import { DateSerializer } from 'src/serializers/date';
 import { getMock } from 'src/utils/mocks';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql';
-import { ViewType } from '../../../models/enums/view-type';
 
 @model()
 export class TimeExpensesState {
@@ -32,7 +31,7 @@ export class TimeExpensesState {
   offset?: number;
 
   @field()
-  state?: TimeExpenseState;
+  type?: TimeExpenseType;
 
   @field()
   team?: string;
@@ -65,8 +64,7 @@ export class TimeExpensesComponent implements OnInit {
 
   private _filter: TimeExpensesFilter;
   ui = UI;
-  issuesState = IssueState;
-  timeExpensesState = TimeExpenseState;
+  timeExpensesType = TimeExpenseType;
   summary: SpentTimesSummary;
   viewType = ViewType;
 
@@ -78,7 +76,7 @@ export class TimeExpensesComponent implements OnInit {
   });
   form = this.builder.group({
     table: this.tableControl,
-    state: [TimeExpenseState.opened],
+    type: [TimeExpenseType.opened],
     dueDate: [null],
     team: [null],
     project: [null],
@@ -97,14 +95,14 @@ export class TimeExpensesComponent implements OnInit {
 
   @Input() view = ViewType.extended;
 
-  @Input() set state({first, offset, q, state, dueDate, team, user, project, salary}: TimeExpensesState) {
+  @Input() set state({first, offset, q, type, dueDate, team, user, project, salary}: TimeExpensesState) {
     this.form.patchValue({
       table: {
         q: q || null,
         first: first || DEFAULT_FIRST,
         offset: offset || DEFAULT_OFFSET
       },
-      state: state || TimeExpenseState.all,
+      type: type || TimeExpenseType.opened,
       dueDate: dueDate || null,
       team: team || null,
       user: user || null,
@@ -133,12 +131,12 @@ export class TimeExpensesComponent implements OnInit {
     };
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({table: {offset, first, q}, state, user, team, project, salary, dueDate}) => {
+      .subscribe(({table: {offset, first, q}, type, user, team, project, salary, dueDate}) => {
         this.stateChange.emit(new TimeExpensesState({
           q: q || undefined,
           first: first !== DEFAULT_FIRST ? first : undefined,
           offset: offset !== DEFAULT_OFFSET ? offset : undefined,
-          state: state !== TimeExpenseState.opened ? state : undefined,
+          type: type !== TimeExpenseType.opened ? type : undefined,
           user: user || undefined,
           team: team || undefined,
           project: project || undefined,
@@ -149,8 +147,9 @@ export class TimeExpensesComponent implements OnInit {
         this.filter = new TimeExpensesFilter({
           offset: offset,
           first: first,
-          state: state !== TimeExpenseState.all ? state : undefined,
-          orderBy: state === TimeExpenseState.opened ? 'dueDate' : '-closedAt',
+          state: type === TimeExpenseType.opened ? TimeExpenseState.opened :
+            type === TimeExpenseType.closed ? TimeExpenseState.closed : undefined,
+          orderBy: type === TimeExpenseType.opened ? 'dueDate' : '-closedAt',
           project: project,
           salary: salary,
           team: team,
