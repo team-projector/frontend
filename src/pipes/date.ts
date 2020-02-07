@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { endOfDay, format as fnsFormat, getDate, isFuture, isPast, isSameMonth, isToday } from 'date-fns';
+import { format as fnsFormat, getDate, isFuture, isPast, isSameMonth, isToday } from 'date-fns';
 import { DurationFormat } from 'src/models/enums/duration-format';
 
 @Pipe({name: 'duration'})
@@ -40,42 +40,7 @@ export class PeriodPipe implements PipeTransform {
   }
 }
 
-
 // https://medium.com/@thunderroid/angular-date-ago-pipe-minutes-hours-days-months-years-ago-c4b5efae5fe5
-@Pipe({
-  name: 'fromNow',
-  pure: true
-})
-export class FromNowPipe implements PipeTransform {
-
-  transform(value: Date): string {
-    const seconds = Math.floor((+new Date() - +new Date(value)) / 1000);
-    if (seconds < 29) {
-      return 'Just now';
-    }
-    const intervals = {
-      'year': 31536000,
-      'month': 2592000,
-      'week': 604800,
-      'day': 86400,
-      'hour': 3600,
-      'minute': 60,
-      'second': 1
-    };
-    let counter;
-    for (const i in intervals) {
-      counter = Math.floor(seconds / intervals[i]);
-      if (counter > 0) {
-        if (counter === 1) {
-          return counter + ' ' + i + ' ago';
-        } else {
-          return counter + ' ' + i + 's ago';
-        }
-      }
-    }
-  }
-
-}
 
 @Pipe({name: 'isFuture'})
 export class IsFuturePipe implements PipeTransform {
@@ -91,15 +56,6 @@ export class IsTodayPipe implements PipeTransform {
   }
 }
 
-@Pipe({name: 'format'})
-export class FormatPipe implements PipeTransform {
-  transform(date: Date | number,
-            format?: string,
-            options?: { locale?: Object }): string {
-    return fnsFormat(date, format, options);
-  }
-}
-
 @Pipe({name: 'isPast'})
 export class IsPastPipe implements PipeTransform {
   transform(date: Date | number): boolean {
@@ -107,17 +63,3 @@ export class IsPastPipe implements PipeTransform {
   }
 }
 
-
-@Pipe({name: 'endOfDay'})
-export class EndOfDayPipe implements PipeTransform {
-  transform(date: Date | number): Date {
-    return endOfDay(date);
-  }
-}
-
-@Pipe({name: 'getDate'})
-export class GetDatePipe implements PipeTransform {
-  transform(date: Date | number): number {
-    return getDate(date);
-  }
-}

@@ -6,7 +6,6 @@ import { SalariesRoutingModule } from 'src/components/developer/salaries/salarie
 import { SalariesComponent } from 'src/components/salaries/salaries.component';
 import { SalaryDetailWidgetModule } from 'src/components/salaries/salary-detail-widget/salary-detail-widget.module';
 import { SalaryMetricsComponent } from 'src/components/salaries/salary-metrics/salary-metrics.component';
-import { CurrencyRublePipeModule } from 'src/pipes/currency-ruble.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { MeUserResolver } from 'src/resolvers/me';
 import { SalaryResolver } from 'src/resolvers/salary';
@@ -29,8 +28,7 @@ import { SalaryDetailComponent } from './salary-detail/salary-detail.component';
     SalariesRoutingModule,
     SalaryDetailWidgetModule,
     DatePipesModule,
-    IssuesModule,
-    CurrencyRublePipeModule
+    IssuesModule
   ],
   exports: [
     SalariesComponent,

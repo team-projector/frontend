@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from 'junte-ui';
 import { CookieService } from 'ngx-cookie-service';
+import { DateFnsModule } from 'ngx-date-fns';
 import { IssuesModule } from 'src/components/issues/issues.module';
 import { AuthorizationGuard } from 'src/guards/authorization.guard';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
@@ -29,7 +30,8 @@ import { AppThemeSwitcherModule } from '../app-theme-switcher/app-theme-switcher
     ArrayPipesModule,
     DatePipesModule,
     IssuesModule,
-    AppThemeSwitcherModule
+    AppThemeSwitcherModule,
+    DateFnsModule
   ],
   providers: [
     AuthorizationGuard,
