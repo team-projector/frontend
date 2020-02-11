@@ -8,7 +8,7 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { IssuesGQL } from 'src/components/issues/issues/issues.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
-import { TicketTypes } from 'src/models/enums/ticket';
+import { TicketStates, TicketTypes } from 'src/models/enums/ticket';
 import { GqlError } from 'src/models/gql-errors';
 import { IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Issue, Ticket, TicketUpdate } from 'src/models/ticket';
@@ -27,6 +27,7 @@ export class EditTicketComponent {
 
   ui = UI;
   milestoneTicketTypes = TicketTypes;
+  milestoneTicketStates = TicketStates;
 
   private _ticket: Ticket;
   private _id: string;
@@ -44,6 +45,7 @@ export class EditTicketComponent {
     role: [null],
     startDate: [new Date(), Validators.required],
     dueDate: [new Date(), Validators.required],
+    state: [TicketStates.created],
     url: [null],
     issues: [[]]
   });
@@ -72,6 +74,7 @@ export class EditTicketComponent {
         role: ticket.role,
         startDate: ticket.startDate,
         dueDate: ticket.dueDate,
+        state: ticket.state,
         url: ticket.url,
         issues: ticket.issues.map(i => i.id)
       });
