@@ -44,7 +44,7 @@
     "graphql-tag": "^2.10.0",
     "graphql-tools": "^4.0.5",
     "jasmine": "^3.5.0",
-    "junte-ui": "0.0.403",
+    "junte-ui": "0.0.407",
     "ngx-cookie-service": "^2.3.0",
     "ngx-date-fns": "5.0.0",
     "rxjs": "^6.5.4",

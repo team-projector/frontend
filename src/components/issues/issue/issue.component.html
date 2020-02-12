@@ -4,7 +4,7 @@
               [size]="ui.size.tiny"></jnt-avatar>
   <jnt-stack [type]="ui.layout.stack.type.vertical"
              [gutter]="ui.gutter.tiny">
-    <jnt-link *ngIf="issue.ticket" ticket [icon]="ui.icons.externalLink"
+    <jnt-link *ngIf="issue.ticket" ticket [icon]="ui.icons.link"
               target="_blank"
               [source]="issue.ticket.url"
               [title]="issue.ticket.title"
@@ -28,7 +28,7 @@
       <jnt-icon *ngIf="issue.labels | hasLabel:standardLabel.delayed" state delayed
                 [icon]="ui.icons.pause"></jnt-icon>
       <jnt-icon *ngIf="issue.labels | hasLabel:standardLabel.done" state
-                [icon]="ui.icons.check"></jnt-icon>
+                [icon]="ui.icons.checked"></jnt-icon>
       <small *ngIf="issue.state == issueState.closed">{{issue.closedAt | dfnsFormatDistanceToNow}}</small>
     </jnt-stack>
     <small>{{issue.project?.fullTitle}}</small>

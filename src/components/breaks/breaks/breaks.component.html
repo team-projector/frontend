@@ -101,7 +101,7 @@
       <ng-template #rowActions let-break="row">
         <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
           <jnt-menu-item *ngIf="view === viewType.extended" i18n-title="@@action.approve" title="Approve"
-                         [icon]="ui.icons.check" (click)="approve(break.id)">
+                         [icon]="ui.icons.checked" (click)="approve(break.id)">
           </jnt-menu-item>
           <jnt-menu-item *ngIf="view === viewType.extended" i18n-title="@@action.decline" title="Decline"
                          [icon]="ui.icons.cancel" (click)="openDecline(break)">

@@ -153,7 +153,7 @@
     <jnt-stack [type]="ui.layout.stack.type.horizontal">
       <div filter [attr.active]="!!dueDate.value">
         <ng-container *ngIf="dueDate.value;else noFilterDueDate">
-          <jnt-icon icon [icon]="ui.icons.calendar"></jnt-icon>
+          <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
           {{dueDate.value | date}}
           <jnt-button reset [scheme]="ui.scheme.secondary"
                       [size]="ui.size.tiny"
@@ -161,14 +161,14 @@
                       (click)="form.patchValue({dueDate: null})"></jnt-button>
         </ng-container>
         <ng-template i18n="@@action.pick_due_date" #noFilterDueDate>
-          <jnt-icon icon [icon]="ui.icons.calendar"></jnt-icon>
+          <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
           Pick a due date
         </ng-template>
       </div>
 
       <div filter [attr.active]="!!project.value">
         <ng-container *ngIf="!!project.value;else noFilterProject">
-          <jnt-icon icon [icon]="ui.icons.project"></jnt-icon>
+          <jnt-icon [icon]="ui.icons.anchor"></jnt-icon>
           <div>
             {{project.value.title}}<br>
             <small>{{project.value.group?.fullTitle}}</small>
@@ -179,7 +179,7 @@
                       (click)="project.patchValue(null)"></jnt-button>
         </ng-container>
         <ng-template i18n="@@action.pick_project" #noFilterProject>
-          <jnt-icon icon [icon]="ui.icons.project"></jnt-icon>
+          <jnt-icon [icon]="ui.icons.anchor"></jnt-icon>
           Pick a project
         </ng-template>
       </div>
