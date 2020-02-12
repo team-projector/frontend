@@ -75,6 +75,20 @@
         </jnt-stack>
 
         <jnt-form-item>
+          <jnt-form-label for="state">State</jnt-form-label>
+          <jnt-form-control name="state">
+            <jnt-select formControlName="state" [allowEmpty]="false">
+              <jnt-select-option label="Created" [key]="milestoneTicketStates.created"></jnt-select-option>
+              <jnt-select-option label="Planning" [key]="milestoneTicketStates.planning"></jnt-select-option>
+              <jnt-select-option label="Doing" [key]="milestoneTicketStates.doing"></jnt-select-option>
+              <jnt-select-option label="Accepting" [key]="milestoneTicketStates.accepting"></jnt-select-option>
+              <jnt-select-option label="Done" [key]="milestoneTicketStates.done"></jnt-select-option>
+              <jnt-select-option label="Testing" [key]="milestoneTicketStates.testing"></jnt-select-option>
+            </jnt-select>
+          </jnt-form-control>
+        </jnt-form-item>
+
+        <jnt-form-item>
           <jnt-form-label for="url">Url</jnt-form-label>
           <jnt-form-control name="url">
             <jnt-input placeholder="Url" formControlName="url"></jnt-input>

@@ -12,7 +12,7 @@ import { DateSerializer } from 'src/serializers/date';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
 import { field, model } from '../decorators/model';
 import { mocks } from '../utils/mocks';
-import { TicketProblem, TicketTypes } from './enums/ticket';
+import { TicketProblem, TicketStates, TicketTypes } from './enums/ticket';
 
 @model()
 export class TicketMetrics {
@@ -121,6 +121,18 @@ export class Ticket {
 
   @field({
     mock: () => faker.helpers.randomize([
+      TicketStates.created,
+      TicketStates.planning,
+      TicketStates.doing,
+      TicketStates.done,
+      TicketStates.accepting,
+      TicketStates.testing,
+    ])
+  })
+  state: TicketStates;
+
+  @field({
+    mock: () => faker.helpers.randomize([
       'Login feature',
       'Sending emails',
       'Design improvements',
@@ -166,6 +178,9 @@ export class TicketUpdate {
 
   @field()
   type: TicketTypes;
+
+  @field()
+  state: TicketStates;
 
   @field()
   title: string;
