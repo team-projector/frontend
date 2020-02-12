@@ -7,8 +7,8 @@ import gql from 'graphql-tag';
 })
 export class AllTeamsGQL extends Query<{ teams }> {
   document = gql`
-    query ($first: Int) {
-      teams: allTeams(first: $first) {
+    query ($first: Int, $offset: Int) {
+      teams: allTeams(first: $first, offset: $offset) {
         count
         edges {
           node {
