@@ -1,7 +1,7 @@
 <jnt-app-content>
   <jnt-app-body>
     <jnt-container [width]="ui.width.fluid">
-      <jnt-stack [gutter]="ui.gutter.large" [align]="ui.flex.align.stretch">
+      <jnt-stack [gutter]="ui.gutter.large">
         <jnt-link [icon]="ui.icons.settings" source="/admin/development/team/"
                   target="_blank" i18n-title="@@action.manage" title="Manage"></jnt-link>
 
@@ -43,9 +43,11 @@
             </a>
           </ng-template>
         </jnt-stack>
-        <jnt-form [formGroup]="form">
-          <jnt-pagination [pagesCount]="count" formControlName="page"></jnt-pagination>
-        </jnt-form>
+        <ng-container *ngIf="pagesCount > 1">
+          <jnt-form [formGroup]="form">
+            <jnt-pagination [pagesCount]="pagesCount" formControlName="page"></jnt-pagination>
+          </jnt-form>
+        </ng-container>
       </jnt-stack>
     </jnt-container>
   </jnt-app-body>
