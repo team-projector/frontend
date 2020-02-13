@@ -29,9 +29,9 @@ export class DueDatePipe implements PipeTransform {
     if (difference < 2) {
       date = comingDay(dueDate);
     } else if (isThisWeek(dueDate, {weekStartsOn: 1})) {
-      date = format(dueDate, 'dddd');
+      date = format(dueDate, 'EEEE');
     } else if (isSameWeek(dueDate, endNextWeek, {weekStartsOn: 1})) {
-      date = `Next ${format(dueDate, 'dddd')}`;
+      date = `Next ${format(dueDate, 'EEEE')}`;
     } else if (isThisYear(dueDate)) {
       date = format(dueDate, 'd MMMM');
     } else {
