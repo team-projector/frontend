@@ -79,8 +79,38 @@
                              [color]="ui.color.paleNavy"
                              [label]="issuesOpenedCount.toString()">
                   </jnt-label>
-                  <jnt-label [label]="ticket.state">
-                  </jnt-label>
+                  <ng-container [ngSwitch]="ticket.state">
+                    <jnt-label *ngSwitchCase="ticketStates.created"
+                               i18n-label="@@label.created"
+                               [color]="ui.color.purple"
+                               label="Created">
+                    </jnt-label>
+                    <jnt-label *ngSwitchCase="ticketStates.planning"
+                               i18n-label="@@label.planning"
+                               [color]="ui.color.red"
+                               label="Planning">
+                    </jnt-label>
+                    <jnt-label *ngSwitchCase="ticketStates.doing"
+                               i18n-label="@@label.doing"
+                               [color]="ui.color.blue"
+                               label="Doing">
+                    </jnt-label>
+                    <jnt-label *ngSwitchCase="ticketStates.testing"
+                               i18n-label="@@label.testing"
+                               [color]="ui.color.yellow"
+                               label="Testing">
+                    </jnt-label>
+                    <jnt-label *ngSwitchCase="ticketStates.accepting"
+                               i18n-label="@@label.accepting"
+                               [color]="ui.color.gray"
+                               label="Accepting">
+                    </jnt-label>
+                    <jnt-label *ngSwitchCase="ticketStates.done"
+                               i18n-label="@@label.done"
+                               [color]="ui.color.green"
+                               label="Done">
+                    </jnt-label>
+                  </ng-container>
                   <jnt-dropdown>
                     <ng-template #trigger let-open="trigger">
                       <jnt-button [outline]="ui.outline.transparent"
