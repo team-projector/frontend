@@ -29,7 +29,7 @@ export class SelectLangComponent implements OnInit {
   ngOnInit() {
     this.langControl.valueChanges.subscribe(selected => {
       const pathname = document.location.pathname;
-      const path = pathname.substring(pathname.indexOf('/', 1));
+      const path = pathname.substring(pathname.indexOf('/', 1) + 1);
       document.location.href = `/${selected}/${path}`;
     });
 
