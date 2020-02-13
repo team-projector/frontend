@@ -4,59 +4,34 @@
   <jnt-tabs>
     <jnt-tab i18n-title="@@label.common" title="Common">
       <ng-template #tabContentTemplate>
-        <p *ngIf="!!ticket">
-          <jnt-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
-                    [icon]="ui.icons.settings"
-                    target="_blank"
-                    title="Edit"
-                    [outline]="ui.outline.ghost">
-          </jnt-link>
-          ticket in admin dashboard.
-        </p>
-        <jnt-form-item>
-          <jnt-form-control name="type">
-            <jnt-switcher formControlName="type">
-              <jnt-switcher-option i18n-title="@@label.feature" label="Feature"
-                                   [value]="milestoneTicketTypes.feature">
-                <jnt-dot [color]="ui.color.green"></jnt-dot>
-              </jnt-switcher-option>
-              <jnt-switcher-option i18n-title="@@label.improvement" label="Improvement"
-                                   [value]="milestoneTicketTypes.improvement">
-                <jnt-dot [color]="ui.color.purple"></jnt-dot>
-              </jnt-switcher-option>
-              <jnt-switcher-option i18n-title="@@label.bug_fixing" label="Bug fixing"
-                                   [value]="milestoneTicketTypes.bugFixing">
-                <jnt-dot [color]="ui.color.red"></jnt-dot>
-              </jnt-switcher-option>
-            </jnt-switcher>
-            <jnt-form-message [type]="ui.form.validators.typeError.required">
-              This field is required
-            </jnt-form-message>
-          </jnt-form-control>
-        </jnt-form-item>
-
-        <jnt-form-item>
-          <jnt-form-label for="title">Title</jnt-form-label>
-          <jnt-form-control name="title">
-            <jnt-input placeholder="Title" formControlName="title"></jnt-input>
-            <jnt-form-message [type]="ui.form.validators.typeError.required">
-              This field is required
-            </jnt-form-message>
-          </jnt-form-control>
-        </jnt-form-item>
-
-        <jnt-form-item>
-          <jnt-form-label for="role">Role</jnt-form-label>
-          <jnt-form-control name="role">
-            <jnt-input placeholder="Target role" formControlName="role"></jnt-input>
-          </jnt-form-control>
-        </jnt-form-item>
-
-        <jnt-stack [type]="ui.layout.stack.type.horizontal">
+        <jnt-stack
+          [gutter]="ui.gutter.small"
+          [align]="ui.flex.align.stretch">
+          <p *ngIf="!!ticket">
+            <jnt-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
+                      [icon]="ui.icons.settings"
+                      target="_blank"
+                      title="Edit"
+                      [outline]="ui.outline.ghost">
+            </jnt-link>
+            ticket in admin dashboard.
+          </p>
           <jnt-form-item>
-            <jnt-form-label for="startDate">Start date</jnt-form-label>
-            <jnt-form-control name="startDate">
-              <jnt-date-picker placeholder="Start date" formControlName="startDate"></jnt-date-picker>
+            <jnt-form-control name="type">
+              <jnt-switcher formControlName="type">
+                <jnt-switcher-option i18n-title="@@label.feature" label="Feature"
+                                     [value]="milestoneTicketTypes.feature">
+                  <jnt-dot [color]="ui.color.green"></jnt-dot>
+                </jnt-switcher-option>
+                <jnt-switcher-option i18n-title="@@label.improvement" label="Improvement"
+                                     [value]="milestoneTicketTypes.improvement">
+                  <jnt-dot [color]="ui.color.purple"></jnt-dot>
+                </jnt-switcher-option>
+                <jnt-switcher-option i18n-title="@@label.bug_fixing" label="Bug fixing"
+                                     [value]="milestoneTicketTypes.bugFixing">
+                  <jnt-dot [color]="ui.color.red"></jnt-dot>
+                </jnt-switcher-option>
+              </jnt-switcher>
               <jnt-form-message [type]="ui.form.validators.typeError.required">
                 This field is required
               </jnt-form-message>
@@ -64,39 +39,80 @@
           </jnt-form-item>
 
           <jnt-form-item>
-            <jnt-form-label for="dueDate">Due date</jnt-form-label>
-            <jnt-form-control name="dueDate">
-              <jnt-date-picker placeholder="Due date" formControlName="dueDate"></jnt-date-picker>
+            <jnt-form-label for="title">Title</jnt-form-label>
+            <jnt-form-control name="title">
+              <jnt-input placeholder="Title" formControlName="title"></jnt-input>
+              <jnt-form-message [type]="ui.form.validators.typeError.required">
+                This field is required
+              </jnt-form-message>
+            </jnt-form-control>
+          </jnt-form-item>
+
+          <jnt-form-item>
+            <jnt-form-label for="role">Role</jnt-form-label>
+            <jnt-form-control name="role">
+              <jnt-input placeholder="Target role" formControlName="role"></jnt-input>
+            </jnt-form-control>
+          </jnt-form-item>
+
+          <jnt-stack [type]="ui.layout.stack.type.horizontal">
+            <jnt-form-item>
+              <jnt-form-label for="startDate">Start date</jnt-form-label>
+              <jnt-form-control name="startDate">
+                <jnt-date-picker placeholder="Start date" formControlName="startDate"></jnt-date-picker>
+                <jnt-form-message [type]="ui.form.validators.typeError.required">
+                  This field is required
+                </jnt-form-message>
+              </jnt-form-control>
+            </jnt-form-item>
+
+            <jnt-form-item>
+              <jnt-form-label for="dueDate">Due date</jnt-form-label>
+              <jnt-form-control name="dueDate">
+                <jnt-date-picker placeholder="Due date" formControlName="dueDate"></jnt-date-picker>
+                <jnt-form-message [type]="ui.form.validators.typeError.required">
+                  This field is required
+                </jnt-form-message>
+              </jnt-form-control>
+            </jnt-form-item>
+          </jnt-stack>
+
+          <jnt-form-item>
+            <jnt-form-label for="state">State</jnt-form-label>
+            <jnt-form-control name="state">
+              <jnt-select formControlName="state" [allowEmpty]="false">
+                <jnt-select-option label="Created"
+                                   i18n-label="@@label.created"
+                                   [key]="milestoneTicketStates.created"></jnt-select-option>
+                <jnt-select-option label="Planning"
+                                   i18n-label="@@label.planning"
+                                   [key]="milestoneTicketStates.planning"></jnt-select-option>
+                <jnt-select-option label="Doing"
+                                   i18n-label="@@label.doing"
+                                   [key]="milestoneTicketStates.doing"></jnt-select-option>
+                <jnt-select-option label="Testing"
+                                   i18n-label="@@label.testing"
+                                   [key]="milestoneTicketStates.testing"></jnt-select-option>
+                <jnt-select-option label="Accepting"
+                                   i18n-title="@@label.accepting"
+                                   [key]="milestoneTicketStates.accepting"></jnt-select-option>
+                <jnt-select-option label="Done"
+                                   i18n-label="@@label.done"
+                                   [key]="milestoneTicketStates.done"></jnt-select-option>
+              </jnt-select>
+            </jnt-form-control>
+          </jnt-form-item>
+
+          <jnt-form-item>
+            <jnt-form-label for="url">Url</jnt-form-label>
+            <jnt-form-control name="url">
+              <jnt-input placeholder="Url" formControlName="url"></jnt-input>
               <jnt-form-message [type]="ui.form.validators.typeError.required">
                 This field is required
               </jnt-form-message>
             </jnt-form-control>
           </jnt-form-item>
         </jnt-stack>
-
-        <jnt-form-item>
-          <jnt-form-label for="state">State</jnt-form-label>
-          <jnt-form-control name="state">
-            <jnt-select formControlName="state" [allowEmpty]="false">
-              <jnt-select-option label="Created" [key]="milestoneTicketStates.created"></jnt-select-option>
-              <jnt-select-option label="Planning" [key]="milestoneTicketStates.planning"></jnt-select-option>
-              <jnt-select-option label="Doing" [key]="milestoneTicketStates.doing"></jnt-select-option>
-              <jnt-select-option label="Accepting" [key]="milestoneTicketStates.accepting"></jnt-select-option>
-              <jnt-select-option label="Done" [key]="milestoneTicketStates.done"></jnt-select-option>
-              <jnt-select-option label="Testing" [key]="milestoneTicketStates.testing"></jnt-select-option>
-            </jnt-select>
-          </jnt-form-control>
-        </jnt-form-item>
-
-        <jnt-form-item>
-          <jnt-form-label for="url">Url</jnt-form-label>
-          <jnt-form-control name="url">
-            <jnt-input placeholder="Url" formControlName="url"></jnt-input>
-            <jnt-form-message [type]="ui.form.validators.typeError.required">
-              This field is required
-            </jnt-form-message>
-          </jnt-form-control>
-        </jnt-form-item>
       </ng-template>
     </jnt-tab>
     <jnt-tab i18n-title="@@label.issues" title="Issues">

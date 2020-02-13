@@ -79,7 +79,7 @@
                       (click)="project.patchValue(null)"></jnt-button>
         </ng-container>
         <ng-template i18n="@@action.pick_project" #noFilterProject>
-          <jnt-icon [icon]="ui.icons.project"></jnt-icon>
+          <jnt-icon [icon]="ui.icons.poop"></jnt-icon>
           Pick a project
         </ng-template>
       </div>
@@ -104,7 +104,7 @@
           [value]="summary?.second?.spentTimes.spent | duration"
           [color]="ui.color.purple"></jnt-badge>
         <jnt-badge *ngIf="summary?.second?.spentTimes.openedSpent"
-                   [value]="summary?.second?.spentTimes.openedSpent | duration"
+                   [text]="summary?.second?.spentTimes.openedSpent | duration"
                    [color]="ui.color.green"></jnt-badge>
       </jnt-menu-item>
     </jnt-menu>

@@ -29,7 +29,7 @@
           <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
             <ng-container *ngIf="budget">
               <jnt-progress-bar progress [value]="metrics.budgetSpent / budget * 100">
-                <ng-template #legend>
+                <ng-template #progressBarLegendTemplate>
                   <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.center"
                              [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
                     <div metric>{{budget - metrics.budgetRemains | currency}}</div>
@@ -48,7 +48,7 @@
         <jnt-table-column i18n-title="@@label.profit" title="Profit">
           <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
             <jnt-progress-bar progress [value]="metrics.payroll / budget * 100">
-              <ng-template #legend>
+              <ng-template #progressBarLegendTemplate>
                 <jnt-stack [type]="ui.layout.stack.type.horizontal"
                            [align]="ui.flex.align.center"
                            [justify]="ui.flex.justify.between"
@@ -69,7 +69,7 @@
           <ng-template #cellTemplate let-metrics="metrics">
             <jnt-progress-bar progress *ngIf="!!metrics.timeEstimate"
                               [value]="metrics.timeSpent / metrics.timeEstimate * 100">
-              <ng-template #legend>
+              <ng-template #progressBarLegendTemplate>
                 <jnt-stack [type]="ui.layout.stack.type.horizontal"
                            [align]="ui.flex.align.center"
                            [justify]="ui.flex.justify.between"

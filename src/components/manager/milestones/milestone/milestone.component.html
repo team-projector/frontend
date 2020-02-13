@@ -74,6 +74,8 @@
                              [color]="ui.color.paleNavy"
                              [label]="issuesOpenedCount.toString()">
                   </jnt-label>
+                  <jnt-label [label]="ticket.state">
+                  </jnt-label>
                   <jnt-dropdown>
                     <ng-template #trigger let-open="trigger">
                       <jnt-button [outline]="ui.outline.transparent"
@@ -138,7 +140,7 @@
                   <jnt-stack [type]="ui.layout.stack.type.horizontal"
                              [gutter]="ui.gutter.small"
                              issue cdkDrag [cdkDragData]="{issue: issue.id}">
-                    <jnt-button [icon]="ui.icons.burger"
+                    <jnt-button [icon]="ui.icons.menu"
                                 [scheme]="ui.scheme.secondary"
                                 [size]="ui.size.tiny" cdkDragHandle></jnt-button>
                     <app-issue [issue]="issue"></app-issue>

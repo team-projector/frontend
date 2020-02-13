@@ -1,30 +1,22 @@
 import { CurrencyPipe, registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
-import localeRu from '@angular/common/locales/ru';
 import localeEn from '@angular/common/locales/en';
+import localeRu from '@angular/common/locales/ru';
 import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Locale } from 'date-fns';
+import { enUS as dfnsEnUS, ru as dfnsRu } from 'date-fns/locale';
 import { DateFnsConfigurationService, DateFnsModule } from 'ngx-date-fns';
+import { Language } from '../enums/language';
 import { MeManager } from '../managers/me.manager';
+import { detectLanguage } from '../utils/lang';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
-import { enUS as dfnsEnUS, ru as dfnsRu } from 'date-fns/locale';
-import { Locale } from 'date-fns';
 
+const CURRENCY_CODE = '₽';
 const FIRST_DAY_OF_WEEK: 0 | 1 | 2 | 3 | 4 | 5 | 6 = 1;
-
-let locale = {
-  code: 'ru',
-  currency: '₽'
-};
-
-/*locale = {
-  code: 'ru',
-  firstDayOfWeek: 1,
-  currency: 'ruble'
-};*/
 
 function mergeLocale(l: Locale): Locale {
   return {...l, ...{options: {weekStartsOn: FIRST_DAY_OF_WEEK}}};
@@ -32,15 +24,26 @@ function mergeLocale(l: Locale): Locale {
 
 const fnsConfig = new DateFnsConfigurationService();
 
-switch (locale.code) {
-  case 'ru':
-    registerLocaleData(localeRu);
-    fnsConfig.setLocale(mergeLocale(dfnsRu));
-    break;
-  default:
-    registerLocaleData(localeEn);
-    fnsConfig.setLocale(mergeLocale(dfnsEnUS));
+function registerLocale() {
+  switch (detectLanguage()) {
+    case Language.ru:
+      registerLocaleData(localeRu);
+      fnsConfig.setLocale(mergeLocale(dfnsRu));
+      return [{
+        provide: LOCALE_ID,
+        useValue: 'ru'
+      }];
+    case Language.en:
+    default:
+      registerLocaleData(localeEn);
+      fnsConfig.setLocale(mergeLocale(dfnsEnUS));
+      return [{
+        provide: LOCALE_ID,
+        useValue: 'en'
+      }];
+  }
 }
+
 
 @NgModule({
   declarations: [
@@ -55,20 +58,21 @@ switch (locale.code) {
     DateFnsModule.forRoot()
   ],
   providers: [
+    ...registerLocale(),
     {
       provide: DEFAULT_CURRENCY_CODE,
-      useValue: locale.currency
+      useValue: CURRENCY_CODE
     },
     {
-      provide: LOCALE_ID,
-      useValue: locale.code
+      provide: Language,
+      useValue: detectLanguage()
     },
-    MeManager,
-    CurrencyPipe,
     {
       provide: DateFnsConfigurationService,
       useValue: fnsConfig
-    }
+    },
+    MeManager,
+    CurrencyPipe
   ],
   bootstrap: [AppComponent]
 })

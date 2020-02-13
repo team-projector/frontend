@@ -36,6 +36,7 @@ export class AllTicketsGQL extends Query<{ allTickets }> {
           node {
             id
             type
+            state
             title
             role
             startDate

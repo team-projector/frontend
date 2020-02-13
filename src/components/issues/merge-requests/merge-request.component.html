@@ -61,7 +61,7 @@
                      let-metrics="metrics"
                      let-problems="problems">
           <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
-            <ng-template #legend>
+            <ng-template #progressBarLegendTemplate>
               <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.center"
                          [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
                 <div metric>{{totalTimeSpent | duration}}</div>

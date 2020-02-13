@@ -198,9 +198,10 @@
                    [value]="summary?.mergeRequests.count"
                    [color]="ui.color.red"></jnt-badge>
       </jnt-menu-item>
-      <jnt-menu-item [link]="['time-expenses']" i18n-title="@@action.time_expenses" title="Time Expenses">
+      <jnt-menu-item title="Time Expenses" i18n-title="@@action.time_expenses"
+                     [link]="['time-expenses']">
         <jnt-badge *ngIf="summary?.spentTimes?.spent"
-                   [value]="summary?.spentTimes.spent | duration:durationFormat.short"></jnt-badge>
+                   [text]="summary?.spentTimes.spent | duration:durationFormat.short"></jnt-badge>
       </jnt-menu-item>
     </jnt-menu>
     <router-outlet (activate)="onActivate($event)"></router-outlet>

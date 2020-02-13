@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UI } from 'junte-ui';
 import { CookieService } from 'ngx-cookie-service';
-import { DEFAULT_LANG } from 'src/consts';
-import { Langs } from 'src/models/enums/langs';
+import { Language } from 'src/enums/language';
 
 @Component({
   selector: 'app-select-lang',
@@ -14,33 +13,23 @@ import { Langs } from 'src/models/enums/langs';
 export class SelectLangComponent implements OnInit {
 
   ui = UI;
-  langs = Langs;
+  langs = Language;
 
-  langControl = this.fb.control(DEFAULT_LANG);
+  langControl = this.fb.control(this.lang);
 
   form = this.fb.group({
     lang: this.langControl
   });
 
   constructor(private cookie: CookieService,
-              private fb: FormBuilder) {
+              private fb: FormBuilder,
+              private lang: Language) {
   }
 
   ngOnInit() {
-    let lang: Langs = DEFAULT_LANG;
-    const base = document.querySelector('base').getAttribute('href');
-    switch (base) {
-      case '/ru/':
-        lang = Langs.ru;
-        break;
-      case '/en/':
-        lang = Langs.en;
-        break;
-      default:
-    }
-    this.langControl.setValue(lang);
     this.langControl.valueChanges.subscribe(selected => {
-      const path = document.location.pathname.substring(base.length);
+      const pathname = document.location.pathname;
+      const path = pathname.substring(pathname.indexOf('/', 1));
       document.location.href = `/${selected}/${path}`;
     });
 

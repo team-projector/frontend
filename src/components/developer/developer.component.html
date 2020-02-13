@@ -1,12 +1,15 @@
 <jnt-app-aside #aside>
   <ng-template #contentTemplate>
     <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
-      <jnt-menu-item [link]="['issues']" [matching]="ui.url.matching.wildcard" i18n-title="@@action.issues" title="Issues"
+      <jnt-menu-item i18n-title="@@action.issues" title="Issues"
+                     [link]="['issues']" [matching]="ui.url.matching.wildcard"
                      [icon]="ui.icons.dashboard"></jnt-menu-item>
-      <jnt-menu-item [link]="['salaries']" [matching]="ui.url.matching.wildcard" i18n-title="@@action.salaries" title="Salaries"
+      <jnt-menu-item i18n-title="@@action.salaries" title="Salaries"
+                     [link]="['salaries']" [matching]="ui.url.matching.wildcard"
                      [icon]="ui.icons.money"></jnt-menu-item>
-      <jnt-menu-item [link]="['breaks']" [matching]="ui.url.matching.wildcard" i18n-title="@@action.work_breaks" title="Work breaks"
-                     [icon]="ui.icons.cup"></jnt-menu-item>
+      <jnt-menu-item i18n-title="@@action.work_breaks" title="Work breaks"
+                     [link]="['breaks']" [matching]="ui.url.matching.wildcard"
+                     [icon]="ui.icons.poop"></jnt-menu-item>
     </jnt-menu>
   </ng-template>
 </jnt-app-aside>
