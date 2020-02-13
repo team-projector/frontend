@@ -1,16 +1,19 @@
 <jnt-form cdkDropListGroup>
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
-    <jnt-block [padding]="ui.gutter.none" [state]="loading.tickets ? ui.layout.block.state.loading : null">
+    <jnt-block [padding]="ui.gutter.none">
       <jnt-gantt i18n-title="@@label.tickets" title="Tickets">
-        <ng-template #titleTemplate>
+        <ng-template #toolsTemplate>
           <jnt-stack [type]="ui.layout.stack.type.horizontal"
                      [gutter]="ui.gutter.small"
                      [align]="ui.flex.align.center">
-            <jnt-button [icon]="ui.icons.add" [size]="ui.size.small"
+            <jnt-button [scheme]="ui.scheme.secondary"
+                        [icon]="ui.icons.add" [size]="ui.size.small"
                         (click)="add()"></jnt-button>
-            <jnt-button [icon]="ui.icons.reload" [size]="ui.size.small"
+            <jnt-button [scheme]="ui.scheme.secondary"
+                        [icon]="loading.tickets ? ui.icons.animated.reload : ui.icons.reload"
+                        [size]="ui.size.small"
+                        [disabled]="loading.tickets"
                         (click)="loadTickets()"></jnt-button>
-            <div title>Tickets</div>
           </jnt-stack>
         </ng-template>
 
