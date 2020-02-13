@@ -60,18 +60,21 @@ export class BreaksComponent implements OnInit {
   breaks: Break[] = [];
   loading = false;
 
-  tableControl = this.builder.control({
+  tableControl = this.fb.control({
     q: null,
     sort: null,
     first: DEFAULT_FIRST,
     offset: DEFAULT_OFFSET
   });
 
-  form = this.builder.group({
+  teamControl = this.fb.control(null);
+
+  form = this.fb.group({
     table: this.tableControl,
     user: [null],
-    team: [null]
+    team: this.teamControl
   });
+
 
   set filter(filter: IssuesFilter) {
     this._filter = filter;
@@ -105,7 +108,7 @@ export class BreaksComponent implements OnInit {
   constructor(private breaksGQL: AllWorkBreaks,
               private deleteBreakGQL: DeleteWorkBreakGQL,
               private approveBreakGQL: ApproveWorkBreakGQL,
-              private builder: FormBuilder,
+              private fb: FormBuilder,
               private injector: Injector,
               private cfr: ComponentFactoryResolver,
               private modalService: ModalService,
@@ -144,6 +147,10 @@ export class BreaksComponent implements OnInit {
     const options = new ModalOptions({title: {text: $localize`:@@label.add_break:Add break`}});
     this.modalService.open(component, options);
     component.instance.break = workBreak;
+    component.instance.view = this.view;
+    if (this.view === ViewType.extended) {
+      component.instance.team = this.teamControl.value;
+    }
     component.instance.saved.subscribe(() => {
       this.modalService.close();
       this.table.load();

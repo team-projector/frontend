@@ -1,11 +1,13 @@
 <jnt-form [formGroup]="form" jntValidation (submitted)="save()">
   <jnt-stack [type]="ui.layout.stack.type.vertical" [align]="ui.flex.align.stretch">
-    <jnt-form-item >
+    <jnt-form-item *ngIf="view === viewType.extended">
       <jnt-form-label i18n="@@label.developer">Developer</jnt-form-label>
-      <jnt-select developers placeholder="Developer"
-                  formControlName="member"
-                  keyField="id">
-
+      <jnt-select developers placeholder="Developer" formControlName="user">
+        <jnt-select-option *ngFor="let member of members"
+                           [label]="member.user.name"
+                           [value]="member.user.id"
+                           [key]="member.user.id">
+        </jnt-select-option>
       </jnt-select>
     </jnt-form-item>
 

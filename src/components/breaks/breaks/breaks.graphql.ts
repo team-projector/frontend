@@ -15,6 +15,7 @@ export class AllWorkBreaks extends Query<{ breaks }> {
             id
             createdAt
             user {
+              id
               name
               glAvatar
             }

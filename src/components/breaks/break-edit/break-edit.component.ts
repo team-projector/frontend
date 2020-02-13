@@ -1,44 +1,59 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { UI } from 'junte-ui';
 import { of } from 'rxjs';
-import { finalize } from 'rxjs/operators';
-import { serialize } from 'serialize-ts/dist';
+import { delay, finalize, map } from 'rxjs/operators';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { MeManager } from 'src/managers/me.manager';
 import { Break, BreakUpdate } from 'src/models/break';
 import { BreakReasons } from 'src/models/enums/break';
-import { User } from 'src/models/user';
-import { CreateBreakGQL, EditBreakGQL } from './break-create.graphql';
+import { ViewType } from 'src/models/enums/view-type';
+import { PagingTeamMembers, TeamMember } from 'src/models/team';
+import { getMock } from 'src/utils/mocks';
+import { CreateBreakGQL, GetTeamMembersGQL, UpdateWorkBreakGQL } from './break-create.graphql';
 
 @Component({
   selector: 'app-break-edit',
   templateUrl: './break-edit.component.html',
   styleUrls: ['./break-edit.component.scss']
 })
-export class BreakEditComponent {
+export class BreakEditComponent implements OnInit {
 
   private _break: Break;
   ui = UI;
   saving = false;
-  user: User;
   reasons = BreakReasons;
+  viewType = ViewType;
+  members: TeamMember[] = [];
 
-  form = this.builder.group({
+  form = this.fb.group({
     id: [null],
     user: [this.me.user.id],
+    team: [this.team],
     comment: [null, Validators.required],
     reason: [null, Validators.required],
     fromDate: [new Date(), Validators.required],
     toDate: [new Date(), Validators.required]
   });
 
+  teamControl = this.fb.control(null);
+  teamForm = this.fb.group({team: this.teamControl});
+
+  @Input() view = ViewType.default;
+
   @Input() set break(workBreak: Break) {
     if (!!workBreak) {
       this._break = workBreak;
-      this._break.user = null;
-      this.form.patchValue(this._break);
+      this.form.patchValue({...this._break, user: workBreak.user.id});
+    }
+  }
+
+  @Input() set team(team: string) {
+    if (!!team) {
+      this.teamControl.patchValue(team);
     }
   }
 
@@ -50,14 +65,29 @@ export class BreakEditComponent {
   @Output() canceled = new EventEmitter<any>();
 
   constructor(private me: MeManager,
-              private builder: FormBuilder,
+              private fb: FormBuilder,
               private createBreakGQL: CreateBreakGQL,
-              private editBreakGQL: EditBreakGQL) {
+              private updateWorkBreakGQL: UpdateWorkBreakGQL,
+              private getTeamMembersGQL: GetTeamMembersGQL) {
+  }
+
+  ngOnInit() {
+    this.teamControl.valueChanges.subscribe(() => this.loadMembers());
+  }
+
+  loadMembers() {
+    (environment.mocks
+        ? of(getMock(PagingTeamMembers, {user: !!this.break ? this.break.user : this.me.user})).pipe(delay(MOCKS_DELAY))
+        : this.getTeamMembersGQL.fetch(this.teamForm.getRawValue() as R)
+          .pipe(map(({data: {team: {members}}}) => {
+            return deserialize(members, PagingTeamMembers);
+          }))
+    ).subscribe(teams => this.members = teams.results);
   }
 
   save() {
     this.saving = true;
-    const mutation = !!this.break ? this.editBreakGQL : this.createBreakGQL;
+    const mutation = !!this.break ? this.updateWorkBreakGQL : this.createBreakGQL;
     (environment.mocks ? of(null)
       : mutation.mutate(serialize(new BreakUpdate(this.form.getRawValue())) as R)
         .pipe(finalize(() => this.saving = false)))
