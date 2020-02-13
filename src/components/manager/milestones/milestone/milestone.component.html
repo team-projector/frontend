@@ -1,7 +1,9 @@
 <jnt-form cdkDropListGroup>
   <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
     <jnt-block [padding]="ui.gutter.none">
-      <jnt-gantt i18n-title="@@label.tickets" title="Tickets">
+      <jnt-gantt i18n-title="@@label.tickets"
+                 title="Tickets"
+                 [loading]="loading.tickets">
         <ng-template #toolsTemplate>
           <jnt-stack [type]="ui.layout.stack.type.horizontal"
                      [gutter]="ui.gutter.small"
