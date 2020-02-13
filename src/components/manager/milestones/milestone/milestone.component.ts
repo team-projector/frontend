@@ -11,7 +11,7 @@ import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
-import { TicketProblem, TicketTypes } from 'src/models/enums/ticket';
+import { TicketProblem, TicketStates, TicketTypes } from 'src/models/enums/ticket';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Milestone } from 'src/models/milestone';
 import { PagingTickets, Ticket, TicketsFilter } from 'src/models/ticket';
@@ -46,6 +46,7 @@ export class MilestoneComponent implements OnInit {
   ticketTypes = TicketTypes;
   ticketProblem = TicketProblem;
   issueStates = IssueState.opened;
+  ticketStates = TicketStates;
 
   private _milestone: Milestone;
 

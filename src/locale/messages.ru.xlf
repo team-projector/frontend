@@ -551,6 +551,26 @@
           <context context-type="linenumber">66</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="label.planning" datatype="html">
+        <source>Planning</source>
+        <target>Планирование</target>
+      </trans-unit>
+      <trans-unit id="label.doing" datatype="html">
+        <source>Doing</source>
+        <target>В процессе</target>
+      </trans-unit>
+      <trans-unit id="label.testing" datatype="html">
+        <source>Testing</source>
+        <target>Тестирование</target>
+      </trans-unit>
+      <trans-unit id="label.accepting" datatype="html">
+        <source>Accepting</source>
+        <target>На одобрении</target>
+      </trans-unit>
+      <trans-unit id="label.done" datatype="html">
+        <source>Done</source>
+        <target>Готово</target>
+      </trans-unit>
       <trans-unit id="label.break_state" datatype="html">
         <source>State</source>
         <target>Состояние</target>
