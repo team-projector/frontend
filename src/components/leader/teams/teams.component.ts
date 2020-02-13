@@ -60,6 +60,10 @@ export class TeamsComponent implements OnInit {
     return this._state;
   }
 
+  get pagesCount() {
+    return Math.ceil(this.count / DEFAULT_FIRST);
+  }
+
   constructor(private allTeamsGQL: AllTeamsGQL,
               private fb: FormBuilder,
               private router: Router,
