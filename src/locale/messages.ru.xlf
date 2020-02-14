@@ -571,6 +571,18 @@
         <source>Done</source>
         <target>Готово</target>
       </trans-unit>
+      <trans-unit id="label.tomorrow" datatype="html">
+        <source>Tomorrow</source>
+        <target>Завтра</target>
+      </trans-unit>
+      <trans-unit id="label.today" datatype="html">
+        <source>Today</source>
+        <target>Сегодня</target>
+      </trans-unit>
+      <trans-unit id="label.yesterday" datatype="html">
+        <source>Yesterday</source>
+        <target>Вчера</target>
+      </trans-unit>
       <trans-unit id="label.break_state" datatype="html">
         <source>State</source>
         <target>Состояние</target>
