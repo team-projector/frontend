@@ -14,6 +14,7 @@ import { detectLanguage } from '../utils/lang';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
+import {JunteUiModule} from 'junte-ui';
 
 const CURRENCY_CODE = '₽';
 const FIRST_DAY_OF_WEEK: 0 | 1 | 2 | 3 | 4 | 5 | 6 = 1;
@@ -49,14 +50,15 @@ function registerLocale() {
   declarations: [
     AppComponent
   ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    AppRoutingModule,
-    GraphQLModule,
-    HttpClientModule,
-    DateFnsModule.forRoot()
-  ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        AppRoutingModule,
+        GraphQLModule,
+        HttpClientModule,
+        DateFnsModule.forRoot(),
+        JunteUiModule
+    ],
   providers: [
     ...registerLocale(),
     {

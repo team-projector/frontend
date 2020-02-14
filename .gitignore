@@ -50,3 +50,4 @@ Thumbs.db
 /src/assets/themes/*.css
 
 /src/locale/messages.xlf
+/src/assets/fonts/icons/
