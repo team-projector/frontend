@@ -22,16 +22,14 @@ export class DueDatePipe implements PipeTransform {
 
     const endNextWeek = endOfWeek(addDays(today, 7), {weekStartsOn: 1});
     const difference = differenceInDays(dueDate, today);
-    const comingDay = (d) => isTomorrow(d) ? 'Tomorrow' : isToday(d) ? 'Today' :
-      isYesterday(d) ? 'Yesterday' : format(d, 'd MMMM yyyy');
+    const comingDay = (d) => isTomorrow(d) ? $localize`:@@label.tomorrow:Tomorrow` : isToday(d) ? $localize`:@@label.today:Today` :
+      isYesterday(d) ? $localize`:@@label.yesterday:Yesterday` : format(d, 'd MMMM yyyy');
 
     let date: string = null;
     if (difference < 2) {
       date = comingDay(dueDate);
     } else if (isThisWeek(dueDate, {weekStartsOn: 1})) {
       date = format(dueDate, 'EEEE');
-    } else if (isSameWeek(dueDate, endNextWeek, {weekStartsOn: 1})) {
-      date = `Next ${format(dueDate, 'EEEE')}`;
     } else if (isThisYear(dueDate)) {
       date = format(dueDate, 'd MMMM');
     } else {
