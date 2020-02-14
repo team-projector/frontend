@@ -7,6 +7,7 @@ import { DateFnsModule } from 'ngx-date-fns';
 import { IssuesModule } from 'src/components/issues/issues.module';
 import { IssuesPipesModule } from 'src/components/issues/issues.pipes';
 import { EditTicketComponent } from 'src/components/manager/milestones/milestone/edit-ticket/edit-ticket.component';
+import { TicketStateColorPipe } from 'src/components/manager/milestones/ticket-state-color.pipe';
 import { OutletModule } from 'src/components/outlet/outlet.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { DueDateResolver, IssuesTypeResolver } from 'src/resolvers/issue';
@@ -25,7 +26,8 @@ import { MilestonesComponent } from './milestones.component';
     MilestonesComponent,
     MilestoneComponent,
     MilestoneIssuesComponent,
-    EditTicketComponent
+    EditTicketComponent,
+    TicketStateColorPipe
   ],
   imports: [
     CommonModule,

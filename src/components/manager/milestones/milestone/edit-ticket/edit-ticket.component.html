@@ -81,24 +81,39 @@
             <jnt-form-label for="state">State</jnt-form-label>
             <jnt-form-control name="state">
               <jnt-select formControlName="state" [allowEmpty]="false">
+                <ng-template #selectOptionTemplate let-label="label" let-state="value">
+                  <jnt-stack [type]="ui.layout.stack.type.horizontal"
+                             [gutter]="ui.gutter.small"
+                             [align]="ui.flex.align.center">
+                    <jnt-dot [color]="state | ticketStateColor"></jnt-dot>
+                    <div>{{label}}</div>
+                  </jnt-stack>
+                </ng-template>
+
                 <jnt-select-option label="Created"
                                    i18n-label="@@label.created"
-                                   [key]="milestoneTicketStates.created"></jnt-select-option>
+                                   [key]="milestoneTicketStates.created"
+                                   [value]="milestoneTicketStates.created"></jnt-select-option>
                 <jnt-select-option label="Planning"
                                    i18n-label="@@label.planning"
-                                   [key]="milestoneTicketStates.planning"></jnt-select-option>
+                                   [key]="milestoneTicketStates.planning"
+                                   [value]="milestoneTicketStates.planning"></jnt-select-option>
                 <jnt-select-option label="Doing"
                                    i18n-label="@@label.doing"
-                                   [key]="milestoneTicketStates.doing"></jnt-select-option>
+                                   [key]="milestoneTicketStates.doing"
+                                   [value]="milestoneTicketStates.doing"></jnt-select-option>
                 <jnt-select-option label="Testing"
                                    i18n-label="@@label.testing"
-                                   [key]="milestoneTicketStates.testing"></jnt-select-option>
+                                   [key]="milestoneTicketStates.testing"
+                                   [value]="milestoneTicketStates.testing"></jnt-select-option>
                 <jnt-select-option label="Accepting"
                                    i18n-label="@@label.accepting"
-                                   [key]="milestoneTicketStates.accepting"></jnt-select-option>
+                                   [key]="milestoneTicketStates.accepting"
+                                   [value]="milestoneTicketStates.accepting"></jnt-select-option>
                 <jnt-select-option label="Done"
                                    i18n-label="@@label.done"
-                                   [key]="milestoneTicketStates.done"></jnt-select-option>
+                                   [key]="milestoneTicketStates.done"
+                                   [value]="milestoneTicketStates.done"></jnt-select-option>
               </jnt-select>
             </jnt-form-control>
           </jnt-form-item>
