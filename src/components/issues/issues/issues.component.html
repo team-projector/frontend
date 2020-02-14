@@ -68,7 +68,7 @@
               <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.center"
                          [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
                 <div metric>
-                  {{totalTimeSpent | duration}}
+                  {{timeSpent | duration}}
                   <span collaboration *ngIf="totalTimeSpent !== timeSpent">
                     +{{totalTimeSpent - timeSpent | duration}}
                   </span>
