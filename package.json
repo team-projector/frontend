@@ -5,6 +5,7 @@
     "ng": "ng",
     "gulp": "gulp",
     "start": "npm run themes && npm run iconfont && ng serve",
+    "start:mocks": "npm run themes && npm run iconfont && ng serve --configuration=mocks",
     "build": "npm run themes && npm run iconfont && ng build --prod --localize",
     "build:mocks": "npm run themes && ng build --configuration=mocks --localize && ng build --configuration=ru",
     "test": "ng test",
