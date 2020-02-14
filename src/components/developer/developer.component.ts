@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UI } from 'junte-ui';
+import { LocalUI } from '../../enums/local-ui';
 
 @Component({
   selector: 'app-developer',
@@ -8,5 +9,8 @@ import { UI } from 'junte-ui';
 })
 
 export class DeveloperComponent {
+
   ui = UI;
+  localUi = LocalUI;
+
 }
