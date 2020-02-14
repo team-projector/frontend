@@ -14,34 +14,74 @@ import { detectLanguage } from '../utils/lang';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
-import {JunteUiModule} from 'junte-ui';
 
-const CURRENCY_CODE = '₽';
+enum Currencies {
+  usd = 'usd',
+  rur = 'rur'
+}
+
+const CURRENCY_CODE = Currencies.rur;
 const FIRST_DAY_OF_WEEK: 0 | 1 | 2 | 3 | 4 | 5 | 6 = 1;
+
+const fnsConfig = new DateFnsConfigurationService();
+
+enum LocaleData {
+  NumberFormats = 14,
+  CurrencyCode = 16
+}
+
+function getLocaleData(locale: any) {
+  let data;
+  switch (CURRENCY_CODE) {
+    case Currencies.rur:
+      data = {
+        [LocaleData.NumberFormats]: localeRu[LocaleData.NumberFormats],
+        [LocaleData.CurrencyCode]: localeRu[LocaleData.CurrencyCode]
+      };
+      break;
+    case Currencies.usd:
+      data = {
+        [LocaleData.NumberFormats]: localeEn[LocaleData.NumberFormats],
+        [LocaleData.CurrencyCode]: localeEn[LocaleData.CurrencyCode]
+      };
+      break;
+    default:
+
+  }
+  return {...locale, ...data};
+}
 
 function mergeLocale(l: Locale): Locale {
   return {...l, ...{options: {weekStartsOn: FIRST_DAY_OF_WEEK}}};
 }
 
-const fnsConfig = new DateFnsConfigurationService();
-
 function registerLocale() {
+  let data;
   switch (detectLanguage()) {
     case Language.ru:
-      registerLocaleData(localeRu);
+      data = getLocaleData(localeRu);
+      registerLocaleData(data);
       fnsConfig.setLocale(mergeLocale(dfnsRu));
       return [{
         provide: LOCALE_ID,
         useValue: 'ru'
+      }, {
+        provide: DEFAULT_CURRENCY_CODE,
+        useValue: data[LocaleData.CurrencyCode]
       }];
     case Language.en:
     default:
-      registerLocaleData(localeEn);
+      data = getLocaleData(localeEn);
+      registerLocaleData(data);
       fnsConfig.setLocale(mergeLocale(dfnsEnUS));
       return [{
         provide: LOCALE_ID,
         useValue: 'en'
-      }];
+      },
+        {
+          provide: DEFAULT_CURRENCY_CODE,
+          useValue: data[LocaleData.CurrencyCode]
+        }];
   }
 }
 
@@ -50,21 +90,16 @@ function registerLocale() {
   declarations: [
     AppComponent
   ],
-    imports: [
-        BrowserModule,
-        BrowserAnimationsModule,
-        AppRoutingModule,
-        GraphQLModule,
-        HttpClientModule,
-        DateFnsModule.forRoot(),
-        JunteUiModule
-    ],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    DateFnsModule.forRoot(),
+    AppRoutingModule,
+    GraphQLModule,
+    HttpClientModule
+  ],
   providers: [
     ...registerLocale(),
-    {
-      provide: DEFAULT_CURRENCY_CODE,
-      useValue: CURRENCY_CODE
-    },
     {
       provide: Language,
       useValue: detectLanguage()
