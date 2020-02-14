@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { UI } from 'junte-ui';
 import { CookieService } from 'ngx-cookie-service';
@@ -23,7 +23,7 @@ export class SelectLangComponent implements OnInit {
 
   constructor(private cookie: CookieService,
               private fb: FormBuilder,
-              private lang: Language) {
+              @Inject(Language) private lang: Language) {
   }
 
   ngOnInit() {

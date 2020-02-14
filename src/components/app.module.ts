@@ -31,58 +31,66 @@ enum LocaleData {
 }
 
 function getLocaleData(locale: any) {
-  let data;
+  let changes;
   switch (CURRENCY_CODE) {
     case Currencies.rur:
-      data = {
+      changes = {
         [LocaleData.NumberFormats]: localeRu[LocaleData.NumberFormats],
         [LocaleData.CurrencyCode]: localeRu[LocaleData.CurrencyCode]
       };
       break;
     case Currencies.usd:
     default:
-      data = {
+      changes = {
         [LocaleData.NumberFormats]: localeEn[LocaleData.NumberFormats],
         [LocaleData.CurrencyCode]: localeEn[LocaleData.CurrencyCode]
       };
 
   }
-  return {...locale, ...data};
+  return {...locale, ...changes};
 }
 
-function mergeLocale(l: Locale): Locale {
+function mergeDfnsLocale(l: Locale): Locale {
   return {...l, ...{options: {weekStartsOn: FIRST_DAY_OF_WEEK}}};
 }
 
-function registerLocale() {
-  let data;
-  switch (detectLanguage()) {
-    case Language.ru:
-      data = getLocaleData(localeRu);
-      registerLocaleData(data);
-      fnsConfig.setLocale(mergeLocale(dfnsRu));
-      return [{
-        provide: LOCALE_ID,
-        useValue: 'ru'
-      }, {
-        provide: DEFAULT_CURRENCY_CODE,
-        useValue: data[LocaleData.CurrencyCode]
-      }];
-    case Language.en:
-    default:
-      data = getLocaleData(localeEn);
-      registerLocaleData(data);
-      fnsConfig.setLocale(mergeLocale(dfnsEnUS));
-      return [{
-        provide: LOCALE_ID,
-        useValue: 'en'
-      },
-        {
-          provide: DEFAULT_CURRENCY_CODE,
-          useValue: data[LocaleData.CurrencyCode]
-        }];
-  }
+const providers: any[] = [{
+  provide: Language,
+  useValue: detectLanguage()
+},
+  {
+    provide: DateFnsConfigurationService,
+    useValue: fnsConfig
+  },
+  MeManager,
+  CurrencyPipe];
+
+let data;
+switch (detectLanguage()) {
+  case Language.ru:
+    data = getLocaleData(localeRu);
+    registerLocaleData(data);
+    fnsConfig.setLocale(mergeDfnsLocale(dfnsRu));
+    providers.push({
+      provide: LOCALE_ID,
+      useValue: 'ru'
+    });
+    break;
+  case Language.en:
+  default:
+    data = getLocaleData(localeEn);
+    registerLocaleData(data);
+    fnsConfig.setLocale(mergeDfnsLocale(dfnsEnUS));
+    providers.push({
+      provide: LOCALE_ID,
+      useValue: 'en'
+    });
 }
+
+providers.push({
+  provide: DEFAULT_CURRENCY_CODE,
+  useValue: data[LocaleData.CurrencyCode]
+});
 
 
 @NgModule({
@@ -97,19 +105,7 @@ function registerLocale() {
     GraphQLModule,
     HttpClientModule
   ],
-  providers: [
-    ...registerLocale(),
-    {
-      provide: Language,
-      useValue: detectLanguage()
-    },
-    {
-      provide: DateFnsConfigurationService,
-      useValue: fnsConfig
-    },
-    MeManager,
-    CurrencyPipe
-  ],
+  providers: providers,
   bootstrap: [AppComponent]
 })
 export class AppModule {
