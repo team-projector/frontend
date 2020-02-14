@@ -40,12 +40,11 @@ function getLocaleData(locale: any) {
       };
       break;
     case Currencies.usd:
+    default:
       data = {
         [LocaleData.NumberFormats]: localeEn[LocaleData.NumberFormats],
         [LocaleData.CurrencyCode]: localeEn[LocaleData.CurrencyCode]
       };
-      break;
-    default:
 
   }
   return {...locale, ...data};
