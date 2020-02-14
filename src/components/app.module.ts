@@ -16,11 +16,11 @@ import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
 
 enum Currencies {
-  usd = 'usd',
-  rur = 'rur'
+  rur = 'rur',
+  usd = 'usd'
 }
 
-const CURRENCY_CODE = Currencies.rur;
+const CURRENCY_CODE: Currencies = Currencies.rur;
 const FIRST_DAY_OF_WEEK: 0 | 1 | 2 | 3 | 4 | 5 | 6 = 1;
 
 const fnsConfig = new DateFnsConfigurationService();

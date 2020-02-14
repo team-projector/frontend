@@ -82,32 +82,32 @@
                   <ng-container [ngSwitch]="ticket.state">
                     <jnt-label *ngSwitchCase="ticketStates.created"
                                i18n-label="@@label.created"
-                               [color]="ui.color.purple"
+                               [color]="ticketStates.created | ticketStateColor"
                                label="Created">
                     </jnt-label>
                     <jnt-label *ngSwitchCase="ticketStates.planning"
                                i18n-label="@@label.planning"
-                               [color]="ui.color.red"
+                               [color]="ticketStates.planning | ticketStateColor"
                                label="Planning">
                     </jnt-label>
                     <jnt-label *ngSwitchCase="ticketStates.doing"
                                i18n-label="@@label.doing"
-                               [color]="ui.color.blue"
+                               [color]="ticketStates.doing | ticketStateColor"
                                label="Doing">
                     </jnt-label>
                     <jnt-label *ngSwitchCase="ticketStates.testing"
                                i18n-label="@@label.testing"
-                               [color]="ui.color.yellow"
+                               [color]="ticketStates.testing | ticketStateColor"
                                label="Testing">
                     </jnt-label>
                     <jnt-label *ngSwitchCase="ticketStates.accepting"
                                i18n-label="@@label.accepting"
-                               [color]="ui.color.gray"
+                               [color]="ticketStates.accepting | ticketStateColor"
                                label="Accepting">
                     </jnt-label>
                     <jnt-label *ngSwitchCase="ticketStates.done"
                                i18n-label="@@label.done"
-                               [color]="ui.color.green"
+                               [color]="ticketStates.done | ticketStateColor"
                                label="Done">
                     </jnt-label>
                   </ng-container>
