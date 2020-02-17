@@ -1,5 +1,5 @@
 import { addDays } from 'date-fns';
-import * as faker from 'faker';
+import { faker } from '../utils/mocks';
 import { SearchFilter, UI } from 'junte-ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { IssueProblem, IssueState } from 'src/models/enums/issue';

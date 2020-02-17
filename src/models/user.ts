@@ -1,5 +1,5 @@
 import { endOfDay, endOfMonth, endOfWeek, format, isPast, startOfDay, startOfMonth, startOfToday, startOfWeek } from 'date-fns';
-import * as faker from 'faker';
+import { faker } from '../utils/mocks';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
 import { UserPermission, UserProblem, UserRole } from 'src/models/enums/user';
 import { DATE_FORMAT } from '../consts';

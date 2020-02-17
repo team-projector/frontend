@@ -1,5 +1,5 @@
 import { addDays, startOfMonth } from 'date-fns';
-import * as faker from 'faker';
+import { faker } from '../utils/mocks';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';

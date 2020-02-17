@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import { faker } from '../utils/mocks';
 import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
 import { TimeExpenseState } from 'src/models/enums/time-expenses';

@@ -1,5 +1,5 @@
 import { subDays } from 'date-fns';
-import * as faker from 'faker';
+import { faker } from '../utils/mocks';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { BreakReasons, ApproveStates } from 'src/models/enums/break';

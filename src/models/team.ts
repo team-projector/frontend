@@ -1,5 +1,3 @@
-import { addDays, startOfMonth } from 'date-fns';
-import * as faker from 'faker';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { TeamMemberRole } from 'src/models/enums/team';
 import { IssuesMetrics } from 'src/models/metrics';
@@ -8,6 +6,7 @@ import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { faker } from '../utils/mocks';
 import { Metrics } from './enums/metrics';
 import { Paging } from './paging';
 import { User, UserProgressMetrics } from './user';

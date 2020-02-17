@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import { faker } from '../utils/mocks';
 import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { field, model } from '../decorators/model';
 import { mocks } from '../utils/mocks';

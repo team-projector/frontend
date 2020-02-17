@@ -1,5 +1,5 @@
 import { addDays } from 'date-fns';
-import * as faker from 'faker';
+import { faker } from '../utils/mocks';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';

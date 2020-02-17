@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import { faker } from '../utils/mocks';
 import { field, model } from 'src/decorators/model';
 import { StandardLabel } from 'src/models/enums/standard-label';
 

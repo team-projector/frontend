@@ -1,5 +1,5 @@
 import { field, model } from '../decorators/model';
-import * as faker from 'faker';
+import { faker } from '../utils/mocks';
 import { DateSerializer } from '../serializers/date';
 
 @model()

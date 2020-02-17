@@ -1,4 +1,4 @@
-import * as faker from 'faker';
+import { faker } from '../utils/mocks';
 import { helpers } from 'faker';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';

@@ -1,9 +1,22 @@
 import { addDays } from 'date-fns';
-import * as faker from 'faker';
+import * as fakerEn from 'faker/locale/en';
+import * as fakerRu from 'faker/locale/ru';
 import { MOCK_FIELDS_METADATA_KEY, MOCKING_METADATA_KEY } from '../decorators/model';
+import { Language } from '../enums/language';
+import { detectLanguage } from './lang';
 
 export const SECONDS_IN_MINUTE = 60;
 export const SECONDS_IN_HOUR = 3600;
+
+export const faker = ((): any => {
+  switch (detectLanguage()) {
+    case Language.ru:
+      return fakerRu;
+    case Language.en:
+    default:
+      return fakerEn;
+  }
+})();
 
 export function getMock<T>(model: new () => T, context: Object = null, index: number = 0): T {
   const obj = new model() as T;
@@ -79,7 +92,7 @@ export const mocks = {
     return faker.random.number({min: min, max: max}) / 100;
   },
   efficiency: (min: number = 10, max: number = 200) => {
-    return faker.random.number({min: min, max: max, }) / 100;
+    return faker.random.number({min: min, max: max,}) / 100;
   },
   random: (min: number, max: number) => {
     return faker.random.number({min: min, max: max});
