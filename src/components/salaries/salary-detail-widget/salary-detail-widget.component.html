@@ -1,10 +1,14 @@
-<jnt-block *ngIf="salary" title="Details" [width]="ui.width.fluid">
+<jnt-block *ngIf="salary"
+           title="Details"
+           i18n-title="@@label.details"
+           [width]="ui.width.fluid">
   <jnt-date-period [start]="salary.periodFrom" [end]="salary.periodTo"></jnt-date-period>
 
   <table>
     <tbody>
     <tr>
-      <td title>Charged Time</td>
+      <td title
+          i18n="@@label.detail">Charged Time</td>
       <td value>{{salary.chargedTime | duration}}</td>
     </tr>
     <tr>

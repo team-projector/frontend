@@ -1,8 +1,11 @@
 <jnt-app-aside #aside>
   <ng-template #contentTemplate>
     <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
-      <jnt-menu-item [link]="['.']" [matching]="ui.url.matching.wildcard" i18n-title="@@action.milestones" title="Milestones"
-                     [icon]="ui.icons.dashboard"></jnt-menu-item>
+      <jnt-menu-item [link]="['.']"
+                     [matching]="ui.url.matching.wildcard"
+                     [icon]="ui.icons.dashboard"
+                     title="Milestones"
+                     i18n-title="@@action.milestones"></jnt-menu-item>
     </jnt-menu>
   </ng-template>
 </jnt-app-aside>

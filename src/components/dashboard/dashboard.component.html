@@ -9,8 +9,8 @@
     <ng-template #headerMenuTemplate>
       <jnt-menu menu>
         <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.developer)"
-                       i18n-title="@@action.developer"
                        title="Developer"
+                       i18n-title="@@action.developer"
                        [link]="['/developer']"
                        [icon]="localUi.icons.developer"
                        [matching]="ui.url.matching.wildcard"></jnt-menu-item>

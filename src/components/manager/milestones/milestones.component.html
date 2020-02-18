@@ -1,10 +1,14 @@
 <jnt-stack [gutter]="ui.gutter.large">
-  <jnt-link [icon]="ui.icons.settings" source="/admin/development/milestone/"
-            target="_blank" title="Manage" i18n-title="@@action.manage"></jnt-link>
+  <jnt-link [icon]="ui.icons.settings"
+            source="/admin/development/milestone/"
+            target="_blank"
+            title="Manage"
+            i18n-title="@@action.manage"></jnt-link>
   <jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
     <jnt-form [formGroup]="form">
       <jnt-table #table [features]="[ui.collections.table.features.search]" formControlName="table">
-        <jnt-table-column i18n-title="@@label.title" title="Title">
+        <jnt-table-column title="Title"
+                          i18n-title="@@label.title">
           <ng-template #cellTemplate let-title="title" let-id="id" let-owner="owner">
             <jnt-stack [type]="ui.layout.stack.type.horizontal">
               <jnt-avatar [size]="ui.size.small" [image]="owner.glAvatar"></jnt-avatar>
@@ -15,7 +19,8 @@
             </jnt-stack>
           </ng-template>
         </jnt-table-column>
-        <jnt-table-column i18n-title="@@label.period" title="Period">
+        <jnt-table-column title="Period"
+                          i18n-title="@@label.period">
           <ng-template #cellTemplate let-startDate="startDate" let-problems="problems" let-dueDate="dueDate">
             <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.stretch">
               <jnt-date-period [start]="startDate" [end]="dueDate"></jnt-date-period>
@@ -25,7 +30,8 @@
             </jnt-stack>
           </ng-template>
         </jnt-table-column>
-        <jnt-table-column i18n-title="@@label.budget" title="Budget">
+        <jnt-table-column title="Budget"
+                          i18n-title="@@label.budget">
           <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
             <ng-container *ngIf="budget">
               <jnt-progress-bar progress [value]="metrics.budgetSpent / budget * 100">
@@ -45,7 +51,8 @@
             </ng-container>
           </ng-template>
         </jnt-table-column>
-        <jnt-table-column i18n-title="@@label.profit" title="Profit">
+        <jnt-table-column title="Profit"
+                          i18n-title="@@label.profit">
           <ng-template #cellTemplate let-budget="budget" let-metrics="metrics">
             <jnt-progress-bar progress [value]="metrics.payroll / budget * 100">
               <ng-template #progressBarLegendTemplate>
@@ -65,7 +72,8 @@
             </div>
           </ng-template>
         </jnt-table-column>
-        <jnt-table-column i18n-title="@@label.progress" title="Progress">
+        <jnt-table-column title="Progress"
+                          i18n-title="@@label.progress">
           <ng-template #cellTemplate let-metrics="metrics">
             <jnt-progress-bar progress *ngIf="!!metrics.timeEstimate"
                               [value]="metrics.timeSpent / metrics.timeEstimate * 100">
@@ -86,7 +94,8 @@
             </div>
           </ng-template>
         </jnt-table-column>
-        <jnt-table-column title="Issues" i18n-title="@@label.issues">
+        <jnt-table-column title="Issues"
+                          i18n-title="@@label.issues">
           <ng-template #cellTemplate let-metrics="metrics">
             <jnt-stack [justify]="ui.flex.justify.center"
                        [type]="ui.layout.stack.type.horizontal"
@@ -100,13 +109,19 @@
         </jnt-table-column>
         <ng-template #rowActions let-row="row">
           <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
-            <jnt-menu-item [icon]="ui.icons.link" title="View on GitLab" i18n-title="@@action.view_on_Gitlab"
+            <jnt-menu-item [icon]="ui.icons.link"
+                           title="View on GitLab"
+                           i18n-title="@@action.view_on_Gitlab"
                            target="_blank"
                            [link]="row.glUrl"></jnt-menu-item>
-            <jnt-menu-item [icon]="ui.icons.edit" title="Edit" i18n-title="@@action.edit"
+            <jnt-menu-item [icon]="ui.icons.edit"
+                           title="Edit"
+                           i18n-title="@@action.edit"
                            target="_blank"
                            [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
-            <jnt-menu-item [icon]="ui.icons.sync" title="Sync from GitLab" i18n-title="@@action.sync_from_Gitlab"
+            <jnt-menu-item [icon]="ui.icons.sync"
+                           title="Sync from GitLab"
+                           i18n-title="@@action.sync_from_Gitlab"
                            (click)="sync(row.id)"></jnt-menu-item>
           </jnt-menu>
         </ng-template>

@@ -82,11 +82,16 @@
       <jnt-col [tablet]="12" [desktop]="7">
         <jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid" block>
           <jnt-calendar formControlName="dueDate" (updated)="period = $event">
-            <jnt-week-metric i18n-title="@@label.est" title="Est"></jnt-week-metric>
-            <jnt-week-metric i18n-title="@@label.spent" title="Spent"></jnt-week-metric>
-            <jnt-week-metric i18n-title="@@label.eff" title="Eff"></jnt-week-metric>
-            <jnt-week-metric i18n-title="@@label.payroll" title="Payroll"></jnt-week-metric>
-            <jnt-week-metric i18n-title="@@label.paid" title="Paid"></jnt-week-metric>
+            <jnt-week-metric title="Est"
+                             i18n-title="@@label.est"></jnt-week-metric>
+            <jnt-week-metric title="Spent"
+                             i18n-title="@@label.spent"></jnt-week-metric>
+            <jnt-week-metric title="Eff"
+                             i18n-title="@@label.eff"></jnt-week-metric>
+            <jnt-week-metric title="Payroll"
+                             i18n-title="@@label.payroll"></jnt-week-metric>
+            <jnt-week-metric title="Paid"
+                             i18n-title="@@label.paid"></jnt-week-metric>
             <ng-template #calendarDayTemplate let-date="date">
               <div class="day" [attr.today]="(date | isToday)">
                 <ng-container *ngTemplateOutlet="dayTemplate; context: {presentation: metric.value,
@@ -120,7 +125,8 @@
       </jnt-col>
       <jnt-col [tablet]="12" [desktop]="5">
         <jnt-chart formControlName="project"
-                   title="Opened project" metric="Hours"
+                   title="Opened project"
+                   metric="Hours"
                    i18n-title="@@label.opened_project"
                    i18n-metric="@@label.hours"
                    keyField="id" [widthMark]="50">
@@ -185,7 +191,9 @@
       </div>
     </jnt-stack>
     <jnt-menu>
-      <jnt-menu-item [link]="['.']" i18n-title="@@action.issues" title="Issues">
+      <jnt-menu-item [link]="['.']"
+                     title="Issues"
+                     i18n-title="@@action.issues">
         <jnt-badge *ngIf="summary?.issues?.count"
                    [value]="summary?.issues.count"
                    [color]="ui.color.green"></jnt-badge>
@@ -193,13 +201,17 @@
                    [value]="summary?.issues.problemsCount"
                    [color]="ui.color.red"></jnt-badge>
       </jnt-menu-item>
-      <jnt-menu-item [link]="['merge-requests']" i18n-title="@@action.merge_requests" title="Merge Requests">
+      <jnt-menu-item [link]="['merge-requests']"
+                     title="Merge Requests"
+                     i18n-title="@@action.merge_requests">
         <jnt-badge *ngIf="summary?.mergeRequests?.count"
                    [value]="summary?.mergeRequests.count"
                    [color]="ui.color.red"></jnt-badge>
       </jnt-menu-item>
-      <jnt-menu-item title="Time Expenses" i18n-title="@@action.time_expenses"
-                     [link]="['time-expenses']">
+      <jnt-menu-item [link]="['time-expenses']"
+                     title="Time Expenses"
+                     i18n-title="@@action.time_expenses"
+                     >
         <jnt-badge *ngIf="summary?.spentTimes?.spent"
                    [text]="summary?.spentTimes.spent | duration:durationFormat.short"></jnt-badge>
       </jnt-menu-item>

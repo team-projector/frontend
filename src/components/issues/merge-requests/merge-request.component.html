@@ -5,16 +5,22 @@
       <ng-template #filters>
         <jnt-stack [type]="ui.layout.stack.type.horizontal">
           <jnt-switcher formControlName="state">
-            <jnt-switcher-option i18n-label="@@action.filter_type_closed" label="Closed" [value]="mergeRequestState.closed">
+            <jnt-switcher-option label="Closed"
+                                 i18n-label="@@action.filter_type_closed"
+                                 [value]="mergeRequestState.closed">
               <jnt-badge *ngIf="summary?.closedCount"
                          [value]="summary?.closedCount.toString()"></jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option i18n-label="@@action.filter_type_opened" label="Opened" [value]="mergeRequestState.opened">
+            <jnt-switcher-option label="Opened"
+                                 i18n-label="@@action.filter_type_opened"
+                                 [value]="mergeRequestState.opened">
               <jnt-badge *ngIf="summary?.openedCount"
                          [value]="summary?.openedCount.toString()"
                          [color]="ui.color.green"></jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option i18n-label="@@action.filter_type_merged" label="Merged" [value]="mergeRequestState.merged">
+            <jnt-switcher-option label="Merged"
+                                 i18n-label="@@action.filter_type_merged"
+                                 [value]="mergeRequestState.merged">
               <jnt-badge *ngIf="summary?.mergedCount"
                          [value]="summary?.mergedCount.toString()"
                          [color]="ui.color.red"></jnt-badge>
@@ -22,7 +28,9 @@
           </jnt-switcher>
         </jnt-stack>
       </ng-template>
-      <jnt-table-column i18n-title="@@label.title" title="Title" sort="title">
+      <jnt-table-column sort="title"
+                        title="Title"
+                        i18n-title="@@label.title">
         <ng-template #cellTemplate let-title="title" let-labels="labels" let-url="glUrl" let-state="state"
                      let-issues="issues" let-user="user" let-project="project">
           <jnt-stack [type]="ui.layout.stack.type.horizontal"
@@ -55,7 +63,8 @@
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.progress" title="Progress">
+      <jnt-table-column title="Progress"
+                        i18n-title="@@label.progress">
         <ng-template #cellTemplate let-timeEstimate="timeEstimate"
                      let-totalTimeSpent="totalTimeSpent"
                      let-metrics="metrics"
@@ -75,12 +84,16 @@
             </span>
           </div>
           <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
-                     [color]="ui.color.red" i18n-label="@@label.estimate" label="estimate">
+                     [color]="ui.color.red"
+                     label="estimate"
+                     i18n-label="@@label.estimate">
           </jnt-label>
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@label.payroll" title="Payroll">
+      <jnt-table-column *ngIf="view === viewType.extended"
+                        title="Payroll"
+                        i18n-title="@@label.payroll">
         <ng-template #cellTemplate let-metrics="metrics">
           <div style="text-align: right;">
             {{!!metrics.payroll ? (metrics.payroll | currency) : '&mdash;'}}
