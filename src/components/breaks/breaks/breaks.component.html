@@ -4,14 +4,17 @@
   <jnt-form [formGroup]="form">
     <jnt-table #table formControlName="table" [features]="[ui.collections.table.features]">
       <ng-template #filters>
-        <jnt-button text="Add" i18n-text="@@action.add"
+        <jnt-button text="Add"
+                    i18n-text="@@action.add"
                     [icon]="ui.icons.add"
                     [outline]="ui.outline.transparent"
                     (click)="open()">
         </jnt-button>
       </ng-template>
 
-      <jnt-table-column *ngIf="view === viewType.extended" i18n-title="@@label.developer" title="Developer">
+      <jnt-table-column *ngIf="view === viewType.extended"
+                        title="Developer"
+                        i18n-title="@@label.developer">
         <ng-template #cellTemplate let-user="user">
           <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.center">
             <jnt-avatar avatar [image]="user?.avatar"
@@ -23,13 +26,15 @@
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.period" title="Period">
+      <jnt-table-column title="Period"
+                        i18n-title="@@label.period">
         <ng-template #cellTemplate let-fromDate="fromDate" let-toDate="toDate">
           <jnt-date-period [start]="fromDate" [end]="toDate"></jnt-date-period>
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.reason" title="Reason">
+      <jnt-table-column title="Reason"
+                        i18n-title="@@label.reason">
         <ng-template #cellTemplate let-reason="reason">
           <ng-container [ngSwitch]="reason">
             <ng-container *ngSwitchCase="reasons.vacation"
@@ -45,13 +50,15 @@
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.comment" title="Comment">
+      <jnt-table-column title="Comment"
+                        i18n-title="@@label.comment">
         <ng-template #cellTemplate let-comment="comment">
           {{comment}}
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.break_state" title="State">
+      <jnt-table-column title="State"
+                        i18n-title="@@label.break_state">
         <ng-template ngIf #cellTemplate
                      let-approveState="approveState"
                      let-approvedBy="approvedBy"
@@ -100,15 +107,25 @@
 
       <ng-template #rowActions let-break="row">
         <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
-          <jnt-menu-item *ngIf="view === viewType.extended" i18n-title="@@action.approve" title="Approve"
-                         [icon]="ui.icons.checked" (click)="approve(break.id)">
+          <jnt-menu-item *ngIf="view === viewType.extended"
+                         title="Approve"
+                         i18n-title="@@action.approve"
+                         [icon]="ui.icons.checked"
+                         (click)="approve(break.id)">
           </jnt-menu-item>
-          <jnt-menu-item *ngIf="view === viewType.extended" i18n-title="@@action.decline" title="Decline"
-                         [icon]="ui.icons.cancel" (click)="openDecline(break)">
+          <jnt-menu-item *ngIf="view === viewType.extended"
+                         title="Decline"
+                         i18n-title="@@action.decline"
+                         [icon]="ui.icons.cancel"
+                         (click)="openDecline(break)">
           </jnt-menu-item>
-          <jnt-menu-item i18n-title="@@action.edit" title="Edit" [icon]="ui.icons.edit"
+          <jnt-menu-item title="Edit"
+                         i18n-title="@@action.edit"
+                         [icon]="ui.icons.edit"
                          (click)="open(break)"></jnt-menu-item>
-          <jnt-menu-item i18n-title="@@action.delete" title="Delete" [icon]="ui.icons.delete"
+          <jnt-menu-item title="Delete"
+                         i18n-title="@@action.delete"
+                         [icon]="ui.icons.delete"
                          (click)="delete(break.id)"></jnt-menu-item>
         </jnt-menu>
       </ng-template>

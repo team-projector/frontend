@@ -2,7 +2,8 @@
           [loading]="progress.loading">
   <p *ngFor="let e of errors">{{e}}</p>
   <jnt-tabs>
-    <jnt-tab i18n-title="@@label.common" title="Common">
+    <jnt-tab title="Common"
+             i18n-title="@@label.common">
       <ng-template #tabContentTemplate>
         <jnt-stack
           [gutter]="ui.gutter.small"
@@ -11,8 +12,8 @@
             <jnt-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
                       [icon]="ui.icons.settings"
                       target="_blank"
-                      i18n-title="@@action.edit"
                       title="Edit"
+                      i18n-title="@@action.edit"
                       [outline]="ui.outline.ghost">
             </jnt-link>
             ticket in admin dashboard.
@@ -20,15 +21,18 @@
           <jnt-form-item>
             <jnt-form-control name="type">
               <jnt-switcher formControlName="type">
-                <jnt-switcher-option i18n-title="@@label.feature" label="Feature"
+                <jnt-switcher-option label="Feature"
+                                     i18n-title="@@label.feature"
                                      [value]="milestoneTicketTypes.feature">
                   <jnt-dot [color]="ui.color.green"></jnt-dot>
                 </jnt-switcher-option>
-                <jnt-switcher-option i18n-title="@@label.improvement" label="Improvement"
+                <jnt-switcher-option label="Improvement"
+                                     i18n-title="@@label.improvement"
                                      [value]="milestoneTicketTypes.improvement">
                   <jnt-dot [color]="ui.color.purple"></jnt-dot>
                 </jnt-switcher-option>
-                <jnt-switcher-option i18n-title="@@label.bug_fixing" label="Bug fixing"
+                <jnt-switcher-option label="Bug fixing"
+                                     i18n-title="@@label.bug_fixing"
                                      [value]="milestoneTicketTypes.bugFixing">
                   <jnt-dot [color]="ui.color.red"></jnt-dot>
                 </jnt-switcher-option>
@@ -131,7 +135,8 @@
         </jnt-stack>
       </ng-template>
     </jnt-tab>
-    <jnt-tab i18n-title="@@label.issues" title="Issues">
+    <jnt-tab title="Issues"
+             i18n-title="@@label.issues">
       <jnt-badge *ngIf="ticket?.issues.length"
                  [value]="ticket?.issues.length"></jnt-badge>
       <ng-template #tabContentTemplate>
@@ -162,10 +167,12 @@
   <ng-template #formFooterTemplate>
     <jnt-stack [type]="ui.layout.stack.type.horizontal"
                [justify]="ui.flex.justify.between">
-      <jnt-button i18n-text="@@action.save" text="Save"
+      <jnt-button text="Save"
+                  i18n-text="@@action.save"
                   [type]="ui.form.button.type.submit"
                   [loading]="progress.saving"></jnt-button>
-      <jnt-button i18n-text="@@action.cancel" text="Cancel"
+      <jnt-button text="Cancel"
+                  i18n-text="@@action.cancel"
                   (click)="canceled.emit()"
                   [scheme]="ui.scheme.secondary"></jnt-button>
     </jnt-stack>

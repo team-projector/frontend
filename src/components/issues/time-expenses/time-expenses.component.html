@@ -4,19 +4,22 @@
       <ng-template *ngIf="view === viewType.extended" #filters>
         <jnt-stack [type]="ui.layout.stack.type.horizontal">
           <jnt-switcher formControlName="type">
-            <jnt-switcher-option label="All" i18n-label="@@action.filter_type_all"
+            <jnt-switcher-option label="All"
+                                 i18n-label="@@action.filter_type_all"
                                  [value]="timeExpensesType.all">
               <jnt-badge *ngIf="!!summary?.spent"
                          [text]="summary.spent | duration">
               </jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option label="Closed" i18n-label="@@action.filter_type_closed"
+            <jnt-switcher-option label="Closed"
+                                 i18n-label="@@action.filter_type_closed"
                                  [value]="timeExpensesType.closed">
               <jnt-badge *ngIf="!!summary?.closedSpent"
                          [text]="summary.closedSpent | duration">
               </jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option label="Opened" i18n-label="@@action.filter_type_opened"
+            <jnt-switcher-option label="Opened"
+                                 i18n-label="@@action.filter_type_opened"
                                  [value]="timeExpensesType.opened">
               <jnt-badge *ngIf="!!summary?.openedSpent"
                          [text]="summary.openedSpent | duration"
@@ -26,25 +29,31 @@
           </jnt-switcher>
         </jnt-stack>
       </ng-template>
-      <jnt-table-column i18n-title="@@label.title" title="Title" sort="title">
+      <jnt-table-column sort="title"
+                        title="Title"
+                        i18n-title="@@label.title">
         <ng-template #cellTemplate let-owner="owner">
           <app-issue [issue]="owner"></app-issue>
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.created_at" title="Created at" sort="created_at">
+      <jnt-table-column sort="created_at"
+                        title="Created at"
+                        i18n-title="@@label.created_at">
         <ng-template #cellTemplate let-createdAt="createdAt">
           {{createdAt | date:'medium'}}
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.spent" title="Spent">
+      <jnt-table-column title="Spent"
+                        i18n-title="@@label.spent">
         <ng-template #cellTemplate let-timeSpent="timeSpent">
           {{timeSpent | duration}}
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.earn" title="Earn">
+      <jnt-table-column title="Earn"
+                        i18n-title="@@label.earn">
         <ng-template #cellTemplate let-sum="sum">
           {{!!sum ? (sum | currency) : '&mdash;'}}
         </ng-template>

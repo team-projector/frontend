@@ -26,9 +26,12 @@
         [attr.active]="(dueDate.value | isEqualDate: days[i])">
       <span i18n>{{day}}</span> {{days[i] | dfnsGetDate}}
     </th>
-    <th name-metric i18n="@@label.est">Est</th>
-    <th name-metric i18n="@@label.sp">Sp</th>
-    <th name-metric i18n="@@label.eff">Eff</th>
+    <th name-metric
+        i18n="@@label.est">Est</th>
+    <th name-metric
+        i18n="@@label.sp">Sp</th>
+    <th name-metric
+        i18n="@@label.eff">Eff</th>
     <th gutter></th>
   </tr>
   </thead>
