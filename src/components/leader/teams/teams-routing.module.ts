@@ -7,8 +7,8 @@ import { ProjectResolver } from 'src/resolvers/project';
 import { TeamResolver } from 'src/resolvers/team';
 import { UserResolver } from 'src/resolvers/user';
 
-const TEAMS_BREADCRUMB = $localize`:@@label.teams:Teams`;
-const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
+export const TEAMS_BREADCRUMB = $localize`:@@label.teams:Teams`;
+export const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
 
 export function getTeam(data: any) {
   return data.team.title;

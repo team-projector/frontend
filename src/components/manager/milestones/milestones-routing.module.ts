@@ -7,7 +7,7 @@ import { MilestoneResolver } from 'src/resolvers/milestone';
 import { TicketResolver } from 'src/resolvers/ticket';
 import { MilestonesComponent } from './milestones.component';
 
-const MILESTONES_BREADCRUMB = $localize`:@@label.milestones:Milestones`;
+export const MILESTONES_BREADCRUMB = $localize`:@@label.milestones:Milestones`;
 
 export function getMilestone(data: any) {
   return data.milestone.title;

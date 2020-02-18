@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ManagerComponent } from './manager.component';
 
-const MANAGER_BREADCRUMB = $localize`:@@label.manager:Manager`;
+export const MANAGER_BREADCRUMB = $localize`:@@label.manager:Manager`;
 
 const routes: Routes = [
   {

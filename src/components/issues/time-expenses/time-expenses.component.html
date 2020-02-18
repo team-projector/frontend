@@ -4,19 +4,22 @@
       <ng-template *ngIf="view === viewType.extended" #filters>
         <jnt-stack [type]="ui.layout.stack.type.horizontal">
           <jnt-switcher formControlName="type">
-            <jnt-switcher-option i18n-label="@@action.filter_type_all" label="All" [value]="timeExpensesType.all">
+            <jnt-switcher-option label="All" i18n-label="@@action.filter_type_all"
+                                 [value]="timeExpensesType.all">
               <jnt-badge *ngIf="!!summary?.spent"
-                         [value]="summary.spent | duration">
+                         [text]="summary.spent | duration">
               </jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option i18n-label="@@action.filter_type_closed" label="Closed" [value]="timeExpensesType.closed">
+            <jnt-switcher-option label="Closed" i18n-label="@@action.filter_type_closed"
+                                 [value]="timeExpensesType.closed">
               <jnt-badge *ngIf="!!summary?.closedSpent"
-                         [value]="summary.closedSpent | duration">
+                         [text]="summary.closedSpent | duration">
               </jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option i18n-label="@@action.filter_type_opened" label="Opened" [value]="timeExpensesType.opened">
+            <jnt-switcher-option label="Opened" i18n-label="@@action.filter_type_opened"
+                                 [value]="timeExpensesType.opened">
               <jnt-badge *ngIf="!!summary?.openedSpent"
-                         [value]="summary.openedSpent | duration"
+                         [text]="summary.openedSpent | duration"
                          [color]="ui.color.green">
               </jnt-badge>
             </jnt-switcher-option>

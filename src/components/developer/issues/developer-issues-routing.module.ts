@@ -9,9 +9,9 @@ import { MergeRequestStateResolver } from 'src/resolvers/merge-request';
 import { ProjectResolver } from 'src/resolvers/project';
 import { DeveloperIssuesComponent } from './developer-issues.component';
 
-const ISSUES_BREADCRUMB = $localize`:@@label.issues:Issues`;
-const TIME_EXPENSES_BREADCRUMB = $localize`:@@label.time_expenses:Time Expenses`;
-const MERGE_REQUESTS_BREADCRUMB = $localize`:@@label.merge_requests:Merge Requests`;
+export const ISSUES_BREADCRUMB = $localize`:@@label.issues:Issues`;
+export const TIME_EXPENSES_BREADCRUMB = $localize`:@@label.time_expenses:Time Expenses`;
+export const MERGE_REQUESTS_BREADCRUMB = $localize`:@@label.merge_requests:Merge Requests`;
 
 const routes: Routes = [
   {

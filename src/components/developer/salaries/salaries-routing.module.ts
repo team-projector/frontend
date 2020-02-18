@@ -5,7 +5,7 @@ import { SalaryDetailComponent } from './salary-detail/salary-detail.component';
 import { SalaryResolver } from 'src/resolvers/salary';
 import { MeUserResolver } from '../../../resolvers/me';
 
-const SALARY_BREADCRUMB = $localize`:@@label.salary:Salary Detail`;
+export const SALARY_BREADCRUMB = $localize`:@@label.salary:Salary Detail`;
 
 const routes: Routes = [
   {

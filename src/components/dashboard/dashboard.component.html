@@ -66,10 +66,8 @@
         <ng-template #userbarMenuTemplate>
           <app-select-lang></app-select-lang>
           <p>{{me.user?.name}}</p>
-          <jnt-user-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
-            <jnt-button *ngIf="config.token" (click)="logout()"
-                        text="Logout"></jnt-button>
-          </jnt-user-menu>
+          <jnt-button *ngIf="config.token" (click)="logout()"
+                      text="Logout"></jnt-button>
         </ng-template>
       </jnt-app-header-userbar>
     </ng-template>

@@ -5,7 +5,7 @@ import { DeveloperBreaksComponent } from './developer-breaks.component';
 import { DeveloperBreaksListComponent } from './breaks/breaks-list.component';
 import { MeUserResolver } from 'src/resolvers/me';
 
-const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
+export const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
 
 const routes: Routes = [
   {
