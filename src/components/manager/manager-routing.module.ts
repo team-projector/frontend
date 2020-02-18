@@ -1,12 +1,14 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {ManagerComponent} from './manager.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { ManagerComponent } from './manager.component';
+
+const MANAGER_BREADCRUMB = $localize`:@@label.manager:Manager`;
 
 const routes: Routes = [
   {
     path: '',
     component: ManagerComponent,
-    data: {breadcrumb: $localize`:@@label.manager:Manager`},
+    data: {breadcrumb: MANAGER_BREADCRUMB},
     children: [
       {
         path: '',

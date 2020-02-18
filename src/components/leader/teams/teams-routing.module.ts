@@ -7,6 +7,9 @@ import { ProjectResolver } from 'src/resolvers/project';
 import { TeamResolver } from 'src/resolvers/team';
 import { UserResolver } from 'src/resolvers/user';
 
+const TEAMS_BREADCRUMB = $localize`:@@label.teams:Teams`;
+const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
+
 export function getTeam(data: any) {
   return data.team.title;
 }
@@ -15,7 +18,7 @@ const routes: Routes = [
   {
     path: '',
     component: OutletComponent,
-    data: {breadcrumb: $localize`:@@label.teams:Teams`},
+    data: {breadcrumb: TEAMS_BREADCRUMB},
     children: [
       {
         path: '',
@@ -42,7 +45,7 @@ const routes: Routes = [
           },
           {
             path: 'breaks',
-            data: {breadcrumb: 'Work breaks'},
+            data: {breadcrumb: WORK_BREAKS_BREADCRUMB},
             loadChildren: () => import('./team/breaks/team-breaks.module').then(m => m.TeamBreaksModule)
           }
         ]
