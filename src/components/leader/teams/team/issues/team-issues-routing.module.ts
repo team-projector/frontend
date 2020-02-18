@@ -10,6 +10,10 @@ import { ProjectResolver } from 'src/resolvers/project';
 import { TeamResolver } from 'src/resolvers/team';
 import { UserResolver } from 'src/resolvers/user';
 
+const ISSUES_BREADCRUMB = $localize`:@@label.issues:Issues`;
+const TIME_EXPENSES_BREADCRUMB = $localize`:@@label.time_expenses:Time Expenses`;
+const MERGE_REQUESTS_BREADCRUMB = $localize`:@@label.merge_requests:Merge Requests`;
+
 const routes: Routes = [
   {
     path: '',
@@ -28,7 +32,7 @@ const routes: Routes = [
       },
       {
         path: 'issues',
-        data: {breadcrumb: $localize`:@@label.issues:Issues`},
+        data: {breadcrumb: ISSUES_BREADCRUMB},
         component: TeamIssuesListComponent,
         resolve: {
           type: IssuesTypeResolver
@@ -36,7 +40,7 @@ const routes: Routes = [
       },
       {
         path: 'merge-requests',
-        data: {breadcrumb: $localize`:@@label.merge_requests:Merge Requests`},
+        data: {breadcrumb: MERGE_REQUESTS_BREADCRUMB},
         component: TeamMergeRequestsListComponent,
         resolve: {
           state: MergeRequestStateResolver
@@ -44,7 +48,7 @@ const routes: Routes = [
       },
       {
         path: 'time-expenses',
-        data: {breadcrumb: $localize`:@@label.time_expenses:Time Expenses`},
+        data: {breadcrumb: TIME_EXPENSES_BREADCRUMB},
         component: TeamTimeExpensesListComponent
       }
     ]

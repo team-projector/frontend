@@ -5,6 +5,8 @@ import { DeveloperBreaksComponent } from './developer-breaks.component';
 import { DeveloperBreaksListComponent } from './breaks/breaks-list.component';
 import { MeUserResolver } from 'src/resolvers/me';
 
+const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
+
 const routes: Routes = [
   {
     path: '',
@@ -12,7 +14,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        data: {breadcrumb: $localize`:@@label.work_breaks:Work Breaks`},
+        data: {breadcrumb: WORK_BREAKS_BREADCRUMB},
         component: DeveloperBreaksListComponent,
         resolve: {
           user: MeUserResolver

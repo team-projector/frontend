@@ -5,6 +5,8 @@ import { TeamResolver } from 'src/resolvers/team';
 import { UserResolver } from 'src/resolvers/user';
 import { TeamBreaksListComponent } from './breaks/breaks-list.component';
 
+const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
+
 const routes: Routes = [
   {
     path: '',
@@ -16,7 +18,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        data: {breadcrumb: $localize`:@@label.work_breaks:Work Breaks`},
+        data: {breadcrumb: WORK_BREAKS_BREADCRUMB},
         component: TeamBreaksListComponent
       },
       // {

@@ -430,6 +430,10 @@
         <source>Salaries</source>
         <target>Выплаты</target>
       </trans-unit>
+      <trans-unit id="label.salary" datatype="html">
+        <source>Salary Detail</source>
+        <target>Выплата?</target>
+      </trans-unit>
       <trans-unit id="label.work_breaks" datatype="html">
         <source>Work Breaks</source>
         <target>Отпуска</target>
