@@ -112,13 +112,13 @@
                     </jnt-label>
                   </ng-container>
                   <jnt-dropdown>
-                    <ng-template #trigger let-open="trigger">
+                    <ng-template #triggerTemplate let-open="trigger">
                       <jnt-button [outline]="ui.outline.transparent"
                                   [icon]="ui.icons.actions"
                                   (click)="open()">
                       </jnt-button>
                     </ng-template>
-                    <ng-template #dropdown let-close="trigger">
+                    <ng-template #dropdownTemplate let-close="trigger">
                       <jnt-menu [type]="ui.orientation.vertical"
                                 [spacer]="ui.size.small">
                         <jnt-menu-item i18n-title="@@action.edit" title="Edit"

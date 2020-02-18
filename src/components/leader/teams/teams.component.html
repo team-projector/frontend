@@ -23,7 +23,8 @@
             <a *ngFor="let team of teams" [routerLink]="[team.id]" team>
               <jnt-block [title]="team.title"
                          [padding]="ui.gutter.none" block>
-                <jnt-label *ngIf="team.metrics.problemsCount" problems [icon]="ui.icons.warning"
+                <jnt-label problems *ngIf="team.metrics.problemsCount"
+                           [icon]="ui.icons.warning"
                            [color]="ui.color.red"
                            [label]="team.metrics.problemsCount.toString()"></jnt-label>
                 <jnt-avatars-group avatars [size]="ui.size.normal">

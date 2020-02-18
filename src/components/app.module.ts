@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Locale } from 'date-fns';
 import { enUS as dfnsEnUS, ru as dfnsRu } from 'date-fns/locale';
+import { JunteUiModule } from 'junte-ui';
 import { DateFnsConfigurationService, DateFnsModule } from 'ngx-date-fns';
 import { Language } from '../enums/language';
 import { MeManager } from '../managers/me.manager';
@@ -101,6 +102,7 @@ providers.push({
     BrowserModule,
     BrowserAnimationsModule,
     DateFnsModule.forRoot(),
+    JunteUiModule.forRoot(),
     AppRoutingModule,
     GraphQLModule,
     HttpClientModule
@@ -110,3 +112,4 @@ providers.push({
 })
 export class AppModule {
 }
+
