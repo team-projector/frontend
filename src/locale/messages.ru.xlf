@@ -385,10 +385,26 @@
       <trans-unit id="action.save" datatype="html">
         <source>Save</source>
         <target>Сохранить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-decline/break-decline.component.html</context>
+          <context context-type="linenumber">16</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/breaks/break-edit/break-edit.component.html</context>
+          <context context-type="linenumber">70</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
+          <context context-type="linenumber">165</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="action.cancel" datatype="html">
         <source>Cancel</source>
         <target>Отменить</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
+          <context context-type="linenumber">168</context>
+        </context-group>
       </trans-unit>
       <trans-unit id="action.add" datatype="html">
         <source>Add</source>
@@ -408,6 +424,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestones.component.html</context>
           <context context-type="linenumber">106</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
+          <context context-type="linenumber">15</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
@@ -490,7 +510,6 @@
           <context context-type="linenumber">79</context>
         </context-group>
       </trans-unit>
-
       <trans-unit id="label.created" datatype="html">
         <source>Approving</source>
         <target>Запрос открыт</target>
@@ -500,7 +519,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
-          <context context-type="linenumber">93</context>
+          <context context-type="linenumber">94</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
@@ -512,7 +531,7 @@
         <target>Планирование</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
-          <context context-type="linenumber">97</context>
+          <context context-type="linenumber">98</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
@@ -524,7 +543,7 @@
         <target>В процессе</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
-          <context context-type="linenumber">101</context>
+          <context context-type="linenumber">102</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
@@ -536,7 +555,7 @@
         <target>Тестирование</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">106</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
@@ -548,7 +567,7 @@
         <target>На одобрении</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
-          <context context-type="linenumber">109</context>
+          <context context-type="linenumber">110</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
@@ -560,7 +579,7 @@
         <target>Готово</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
-          <context context-type="linenumber">113</context>
+          <context context-type="linenumber">114</context>
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
@@ -803,7 +822,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
-          <context context-type="linenumber">133</context>
+          <context context-type="linenumber">134</context>
         </context-group>
       </trans-unit>
       <trans-unit id="label.opened_project" datatype="html">
@@ -856,91 +875,6 @@
           <context context-type="linenumber">163</context>
         </context-group>
       </trans-unit>
-
-
-      <trans-unit id="label.feature" datatype="html">
-        <source>Feature</source>
-        <target>Фича</target>
-      </trans-unit>
-      <trans-unit id="label.improvement" datatype="html">
-        <source>Improvement</source>
-        <target>Улучшение</target>
-      </trans-unit>
-      <trans-unit id="label.bug_fixing" datatype="html">
-        <source>Bug fixing</source>
-        <target>Исправление бага</target>
-      </trans-unit>
-
-      <trans-unit id="mocks.merge_title_features" datatype="html">
-        <source>New features added</source>
-        <target>Добавлены новые фичи</target>
-      </trans-unit>
-      <trans-unit id="mocks.merge_title_bug" datatype="html">
-        <source>Bug fixed</source>
-        <target>Баг исправлен</target>
-      </trans-unit>
-      <trans-unit id="mocks.merge_title_refactored" datatype="html">
-        <source>Refactored</source>
-        <target>Рефактор</target>
-      </trans-unit>
-
-      <trans-unit id="mocks.decline_urgent" datatype="html">
-        <source>Sorry we have an urgent project</source>
-        <target>Извните, но у нас срочный проект</target>
-      </trans-unit>
-      <trans-unit id="mocks.decline_meetup" datatype="html">
-        <source>You need to be on next week meetup</source>
-        <target>Вы должны присутствовать на встрече на следующей неделе</target>
-      </trans-unit>
-      <trans-unit id="mocks.decline_next_week" datatype="html">
-        <source>Only next week</source>
-        <target>Только со следующей недели</target>
-      </trans-unit>
-
-      <trans-unit id="mocks.break_comment_weekend" datatype="html">
-        <source>Wanna have weekend</source>
-        <target>Хочу выходной</target>
-      </trans-unit>
-      <trans-unit id="mocks.break_comment_party" datatype="html">
-        <source>Going to party</source>
-        <target>Собираюсь на вечеринку</target>
-      </trans-unit>
-      <trans-unit id="mocks.break_comment_vacation" datatype="html">
-        <source>I need a vacation</source>
-        <target>Мне нужен отпуск</target>
-      </trans-unit>
-
-      <trans-unit id="mocks.issue_title_implement" datatype="html">
-        <source>Implement design for login feature</source>
-        <target>Расширить дизайн для логин фичи</target>
-      </trans-unit>
-      <trans-unit id="mocks.issue_title_graphql" datatype="html">
-        <source>GraphQL API for login</source>
-        <target>GraphQL API для логина</target>
-      </trans-unit>
-      <trans-unit id="mocks.issue_title_fix" datatype="html">
-        <source>Fix bugs in login form</source>
-        <target>Исправить баги в логин форме</target>
-      </trans-unit>
-
-      <trans-unit id="mocks.ticket_title_login" datatype="html">
-        <source>Login feature</source>
-        <target>Логин фича</target>
-      </trans-unit>
-      <trans-unit id="mocks.ticket_title_emails" datatype="html">
-        <source>Sending emails</source>
-        <target>Рассылка почты</target>
-      </trans-unit>
-      <trans-unit id="mocks.ticket_title_design" datatype="html">
-        <source>Design improvements</source>
-        <target>Изменение дизайна</target>
-      </trans-unit>
-      <trans-unit id="mocks.ticket_title_bug" datatype="html">
-        <source>Bug fixes</source>
-        <target>Починка багов</target>
-      </trans-unit>
-
-
     </body>
   </file>
 </xliff>

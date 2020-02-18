@@ -1,9 +1,0 @@
-{
-    "outDirProject": "./dist/out-tsc",
-    "modelsDir": "./src/models",
-    "helpersDir": "./src/mocks/helpers",
-    "objectsDir": "./src/mocks/objects",
-    "servicesDir": "./src/mocks/services",
-    "outObjectsJsonDir": "./src/mocks/objects",
-    "outServicesJsonDir": "./src/assets/mocks"
-}

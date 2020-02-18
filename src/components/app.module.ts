@@ -7,7 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { Locale } from 'date-fns';
 import { enUS as dfnsEnUS, ru as dfnsRu } from 'date-fns/locale';
-import { JunteUiModule } from 'junte-ui';
+import { JunteUiModule, ru as jntRu, en as jntEn } from 'junte-ui';
 import { DateFnsConfigurationService, DateFnsModule } from 'ngx-date-fns';
 import { Language } from '../enums/language';
 import { MeManager } from '../managers/me.manager';
@@ -55,23 +55,29 @@ function mergeDfnsLocale(l: Locale): Locale {
   return {...l, ...{options: {weekStartsOn: FIRST_DAY_OF_WEEK}}};
 }
 
-const providers: any[] = [{
-  provide: Language,
-  useValue: detectLanguage()
-},
+const language = detectLanguage();
+const providers: any[] = [
+  {
+    provide: Language,
+    useValue: language
+  },
   {
     provide: DateFnsConfigurationService,
     useValue: fnsConfig
   },
-  MeManager,
-  CurrencyPipe];
+];
+
+const imports = [];
 
 let data;
-switch (detectLanguage()) {
+switch (language) {
   case Language.ru:
     data = getLocaleData(localeRu);
     registerLocaleData(data);
     fnsConfig.setLocale(mergeDfnsLocale(dfnsRu));
+    imports.push(JunteUiModule.forRoot({
+      i18n: jntRu
+    }));
     providers.push({
       provide: LOCALE_ID,
       useValue: 'ru'
@@ -82,6 +88,9 @@ switch (detectLanguage()) {
     data = getLocaleData(localeEn);
     registerLocaleData(data);
     fnsConfig.setLocale(mergeDfnsLocale(dfnsEnUS));
+    imports.push(JunteUiModule.forRoot({
+      i18n: jntRu
+    }));
     providers.push({
       provide: LOCALE_ID,
       useValue: 'en'
@@ -102,12 +111,16 @@ providers.push({
     BrowserModule,
     BrowserAnimationsModule,
     DateFnsModule.forRoot(),
-    JunteUiModule.forRoot(),
     AppRoutingModule,
     GraphQLModule,
-    HttpClientModule
+    HttpClientModule,
+    ...imports
   ],
-  providers: providers,
+  providers: [
+    MeManager,
+    CurrencyPipe,
+    ...providers
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
