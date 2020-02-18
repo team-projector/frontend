@@ -11,6 +11,7 @@
             <jnt-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
                       [icon]="ui.icons.settings"
                       target="_blank"
+                      i18n-title="@@action.edit"
                       title="Edit"
                       [outline]="ui.outline.ghost">
             </jnt-link>
@@ -161,10 +162,10 @@
   <ng-template #formFooterTemplate>
     <jnt-stack [type]="ui.layout.stack.type.horizontal"
                [justify]="ui.flex.justify.between">
-      <jnt-button i18n-title="@@action.save" text="Save"
+      <jnt-button i18n-text="@@action.save" text="Save"
                   [type]="ui.form.button.type.submit"
                   [loading]="progress.saving"></jnt-button>
-      <jnt-button i18n-title="@@action.cancel" text="Cancel"
+      <jnt-button i18n-text="@@action.cancel" text="Cancel"
                   (click)="canceled.emit()"
                   [scheme]="ui.scheme.secondary"></jnt-button>
     </jnt-stack>

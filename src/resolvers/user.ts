@@ -18,7 +18,7 @@ export class UserResolver implements Resolve<Observable<User>> {
           state: RouterStateSnapshot): Observable<User> {
     const id = route.params['user'];
     const action = environment.mocks
-      ? of(getMock(User))
+      ? of(getMock(User, {id: id}))
       : this.userGQL.fetch({user: id})
       .pipe(map(({data: {user}}) => deserialize(user, User)));
 

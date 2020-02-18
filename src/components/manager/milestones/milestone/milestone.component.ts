@@ -147,7 +147,7 @@ export class MilestoneComponent implements OnInit {
 
     const options = new ModalOptions({
       title: !!ticket ? {text: $localize`:@@action.edit:Edit`, icon: UI.icons.edit}
-        : {text: 'Add', icon: UI.icons.add},
+        : {text: $localize`:@@action.add:Add`, icon: UI.icons.add},
       maxWidth: '400px'
     });
 
