@@ -69,9 +69,9 @@ export class Issue {
 
   @field({
     mock: () => faker.helpers.randomize([
-      'Implement design for login feature',
-      'GraphQL API for login',
-      'Fix bugs in login form'
+      $localize`:@@mocks.issue_title_implement:Implement design for login feature`,
+      $localize`:@@mocks.issue_title_graphql:GraphQL API for login`,
+      $localize`:@@mocks.issue_title_fix:Fix bugs in login form`
     ])
   })
   title: string;
@@ -133,10 +133,10 @@ export class Ticket {
 
   @field({
     mock: () => faker.helpers.randomize([
-      'Login feature',
-      'Sending emails',
-      'Design improvements',
-      'Bug fixes'
+      $localize`:@@mocks.ticket_title_login:Login feature`,
+      $localize`:@@mocks.ticket_title_emails:Sending emails`,
+      $localize`:@@mocks.ticket_title_design:Design improvements`,
+      $localize`:@@mocks.ticket_title_bug:Bug fixes`
     ])
   })
   title: string;

@@ -68,9 +68,9 @@ export class MergeRequest {
 
   @field({
     mock: () => helpers.randomize([
-      'New features added',
-      'Bug fixed',
-      'Refactored'
+      $localize`:@@mocks.merge_title_features:New features added`,
+      $localize`:@@mocks.merge_title_bug:Bug fixed`,
+      $localize`:@@mocks.merge_title_refactored:Refactored`
     ])
   })
   title: string;

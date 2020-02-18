@@ -26,9 +26,9 @@ import { User } from './user';
         workBreak.approvedBy = getMock(User);
         workBreak.approvedAt = approvedAt;
         workBreak.declineReason = faker.helpers.randomize([
-          'Sorry we have an urgent project',
-          'You need to be on next week meetup',
-          'Only next week'
+          $localize`:@@mocks.decline_urgent:Sorry we have an urgent project`,
+          $localize`:@@mocks.decline_meetup:You need to be on next week meetup`,
+          $localize`:@@mocks.decline_next_week:Only next week`
         ]);
         break;
       default:
@@ -55,9 +55,9 @@ export class Break {
 
   @field({
     mock: () => faker.helpers.randomize([
-      'Wanna have weekend',
-      'Going to party',
-      'I need a vacation'
+      $localize`:@@mocks.break_comment_weekend:Wanna have weekend`,
+      $localize`:@@mocks.break_comment_party:Going to party`,
+      $localize`:@@mocks.break_comment_vacation:I need a vacation`
     ])
   })
   comment: string;

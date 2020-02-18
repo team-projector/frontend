@@ -129,9 +129,9 @@ export class Issue {
 
   @field({
     mock: () => faker.helpers.randomize([
-      'Implement design for login feature',
-      'GraphQL API for login',
-      'Fix bugs in login form'
+      $localize`:@@mocks.issue_title_implement:Implement design for login feature`,
+      $localize`:@@mocks.issue_title_graphql:GraphQL API for login`,
+      $localize`:@@mocks.issue_title_fix:Fix bugs in login form`
     ])
   })
   title: string;
