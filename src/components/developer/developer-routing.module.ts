@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DeveloperComponent } from 'src/components/developer/developer.component';
 
-export const SALARIES_BREADCRUMB = $localize`:@@label.salaries:Salaries`;
-export const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
+const SALARIES_BREADCRUMB = $localize`:@@label.salaries:Salaries`;
+const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
 
 const routes: Routes = [
   {

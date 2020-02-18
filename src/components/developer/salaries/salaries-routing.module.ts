@@ -5,6 +5,8 @@ import { SalaryDetailComponent } from './salary-detail/salary-detail.component';
 import { SalaryResolver } from 'src/resolvers/salary';
 import { MeUserResolver } from '../../../resolvers/me';
 
+const SALARY_BREADCRUMB = $localize`:@@label.salary:Salary Detail`;
+
 const routes: Routes = [
   {
     path: '',
@@ -13,7 +15,7 @@ const routes: Routes = [
   },
   {
     path: ':salary',
-    data: {breadcrumb: 'Salary Detail'},
+    data: {breadcrumb: SALARY_BREADCRUMB},
     component: SalaryDetailComponent,
     resolve: {salary: SalaryResolver}
   }

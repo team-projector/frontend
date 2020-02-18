@@ -7,6 +7,8 @@ import { MilestoneResolver } from 'src/resolvers/milestone';
 import { TicketResolver } from 'src/resolvers/ticket';
 import { MilestonesComponent } from './milestones.component';
 
+const MILESTONES_BREADCRUMB = $localize`:@@label.milestones:Milestones`;
+
 export function getMilestone(data: any) {
   return data.milestone.title;
 }
@@ -19,7 +21,7 @@ const routes: Routes = [
   {
     path: '',
     component: OutletComponent,
-    data: {breadcrumb: $localize`:@@label.milestones:Milestones`},
+    data: {breadcrumb: MILESTONES_BREADCRUMB},
     children: [
       {
         path: '',
