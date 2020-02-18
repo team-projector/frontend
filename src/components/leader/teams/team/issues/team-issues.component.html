@@ -10,10 +10,12 @@
       </jnt-col>
       <jnt-col [tablet]="12" [wide]="5">
         <jnt-chart formControlName="project"
-                   title="Opened project" metric="Hours"
+                   title="Opened project"
+                   metric="Hours"
                    i18n-title="@@label.opened_project"
                    i18n-metric="@@label.hours"
-                   keyField="id" [widthMark]="50">
+                   keyField="id"
+                   [widthMark]="50">
           <jnt-chart-indicator *ngFor="let p of summary.first?.projects;let i = index"
                                [data]="p.project"
                                [value]="p.issues.percentage * 100"
@@ -47,7 +49,8 @@
                       [icon]="ui.icons.close"
                       (click)="filter.patchValue({user: null, dueDate: filter.value.dueDate})"></jnt-button>
         </ng-container>
-        <ng-template i18n="@@action.pick_user" #noFilterUser>
+        <ng-template #noFilterUser
+                     i18n="@@action.pick_user">
           <jnt-icon [icon]="ui.icons.user"></jnt-icon>
           Pick a user
         </ng-template>
@@ -61,7 +64,8 @@
                       [icon]="ui.icons.close"
                       (click)="filter.patchValue({user: filter.value.user,  dueDate: null})"></jnt-button>
         </ng-container>
-        <ng-template i18n="@@action.pick_due_date" #noFilterDueDate>
+        <ng-template #noFilterDueDate
+                     i18n="@@action.pick_due_date">
           <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
           Pick a due date
         </ng-template>
@@ -78,14 +82,17 @@
                       [icon]="ui.icons.close"
                       (click)="project.patchValue(null)"></jnt-button>
         </ng-container>
-        <ng-template i18n="@@action.pick_project" #noFilterProject>
+        <ng-template #noFilterProject
+                     i18n="@@action.pick_project">
           <jnt-icon [icon]="ui.icons.poop"></jnt-icon>
           Pick a project
         </ng-template>
       </div>
     </jnt-stack>
     <jnt-menu>
-      <jnt-menu-item [link]="['issues']" i18n-title="@@action.issues" title="Issues">
+      <jnt-menu-item [link]="['issues']"
+                     title="Issues"
+                     i18n-title="@@action.issues">
         <jnt-badge *ngIf="summary?.second?.issues.count"
                    [value]="summary?.second?.issues.count"
                    [color]="ui.color.green"></jnt-badge>
@@ -93,12 +100,16 @@
                    [value]="summary?.second?.issues.problemsCount"
                    [color]="ui.color.red"></jnt-badge>
       </jnt-menu-item>
-      <jnt-menu-item [link]="['merge-requests']" i18n-title="@@action.merge_requests" title="Merge Requests">
+      <jnt-menu-item [link]="['merge-requests']"
+                     title="Merge Requests"
+                     i18n-title="@@action.merge_requests">
         <jnt-badge *ngIf="summary?.second?.mergeRequests.count"
                    [value]="summary?.second?.mergeRequests.count"
                    [color]="ui.color.red"></jnt-badge>
       </jnt-menu-item>
-      <jnt-menu-item [link]="['time-expenses']" i18n-title="@@action.time_expenses" title="Time Expenses">
+      <jnt-menu-item [link]="['time-expenses']"
+                     title="Time Expenses"
+                     i18n-title="@@action.time_expenses">
         <jnt-badge
           *ngIf="(filter.value.user || filter.value.dueDate || project.value) && summary?.second?.spentTimes.spent"
           [value]="summary?.second?.spentTimes.spent | duration"

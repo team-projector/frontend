@@ -1,7 +1,8 @@
 <jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
     <jnt-table #table formControlName="table">
-      <jnt-table-column i18n-title="@@label.charged_time" title="Charged Time">
+      <jnt-table-column title="Charged Time"
+                        i18n-title="@@label.charged_time">
         <ng-template #cellTemplate let-id="id" let-chargedTime="chargedTime">
           <jnt-link [source]="[id]" [title]="chargedTime | duration"
                     [icon]="ui.icons.time"
@@ -9,31 +10,36 @@
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.period" title="Period">
+      <jnt-table-column title="Period"
+                        i18n-title="@@label.period">
         <ng-template #cellTemplate let-periodTo="periodTo" let-periodFrom="periodFrom">
           <jnt-date-period [start]="periodFrom" [end]="periodTo"></jnt-date-period>
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.bonus" title="Bonus">
+      <jnt-table-column title="Bonus"
+                        i18n-title="@@label.bonus">
         <ng-template #cellTemplate let-bonus="bonus">
           {{bonus | currency}}
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.penalty" title="Penalty">
+      <jnt-table-column title="Penalty"
+                        i18n-title="@@label.penalty">
         <ng-template #cellTemplate let-penalty="penalty">
           {{penalty | currency}}
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.total" title="Total">
+      <jnt-table-column title="Total"
+                        i18n-title="@@label.total">
         <ng-template #cellTemplate let-total="total">
           {{total | currency}}
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column i18n-title="@@label.payed" title="Payed">
+      <jnt-table-column title="Payed"
+                        i18n-title="@@label.payed">
         <ng-template #cellTemplate let-payed="payed">
           <jnt-icon *ngIf="payed" [icon]="ui.icons.checked"></jnt-icon>
         </ng-template>
