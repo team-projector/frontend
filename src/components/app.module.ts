@@ -89,7 +89,7 @@ switch (language) {
     registerLocaleData(data);
     fnsConfig.setLocale(mergeDfnsLocale(dfnsEnUS));
     imports.push(JunteUiModule.forRoot({
-      i18n: jntRu
+      i18n: jntEn
     }));
     providers.push({
       provide: LOCALE_ID,
