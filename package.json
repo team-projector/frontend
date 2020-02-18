@@ -51,7 +51,7 @@
     "gulp-rename": "^2.0.0",
     "gulpclass": "^0.2.0",
     "jasmine": "^3.5.0",
-    "junte-ui": "0.0.430",
+    "junte-ui": "0.0.431",
     "ngx-cookie-service": "^2.3.0",
     "ngx-date-fns": "5.0.0",
     "rxjs": "^6.5.4",
