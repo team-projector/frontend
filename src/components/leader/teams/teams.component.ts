@@ -86,7 +86,6 @@ export class TeamsComponent implements OnInit {
   }
 
   private load() {
-    console.log(this.state);
     this.loading = true;
     (environment.mocks
       ? of(getMock(PagingTeams)).pipe(delay(MOCKS_DELAY))

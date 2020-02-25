@@ -35,7 +35,7 @@ gulp.task('themes:script', function () {
     .pipe(map((file, cb) => {
       const content = file.contents.toString();
       const str = `themes = ${JSON.stringify(themes)}`;
-      file.contents = new Buffer(content.replace(/themes = \{.*\}/, str));
+      file.contents = Buffer.from(content.replace(/themes = \{.*\}/, str));
       return cb(null, file);
     }))
     .pipe(gulp.dest('src/assets/themes'))

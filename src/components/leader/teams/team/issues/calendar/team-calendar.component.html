@@ -24,7 +24,7 @@
     <th *ngFor="let day of daysOfWeek; let i = index" day (click)="form.patchValue({user: null, dueDate: days[i]})"
         [attr.today]="(today | isEqualDate: days[i])"
         [attr.active]="(dueDate.value | isEqualDate: days[i])">
-      <span i18n>{{day}}</span> {{days[i] | dfnsGetDate}}
+      <span>{{day}}</span> {{days[i] | dfnsGetDate}}
     </th>
     <th name-metric
         i18n="@@label.est">Est</th>
