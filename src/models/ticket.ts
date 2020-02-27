@@ -1,5 +1,4 @@
 import { addDays, startOfMonth } from 'date-fns';
-import { faker } from '../utils/mocks';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
@@ -11,7 +10,7 @@ import { User } from 'src/models/user';
 import { DateSerializer } from 'src/serializers/date';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
 import { field, model } from '../decorators/model';
-import { mocks } from '../utils/mocks';
+import { faker, mocks } from '../utils/mocks';
 import { TicketProblem, TicketStates, TicketTypes } from './enums/ticket';
 
 @model()
@@ -234,6 +233,9 @@ export class TicketsFilter implements SearchFilter {
   milestone: string;
 
   @field()
+  state: string;
+
+  @field()
   orderBy?: string;
 
   @field()
@@ -247,4 +249,29 @@ export class TicketsFilter implements SearchFilter {
       Object.assign(this, defs);
     }
   }
+}
+
+@model()
+export class TicketsSummary {
+
+  @field({mock: () => faker.random.number()})
+  count: number;
+
+  @field({mock: () => faker.random.number()})
+  createdCount: number;
+
+  @field({mock: () => faker.random.number()})
+  planningCount: number;
+
+  @field({mock: () => faker.random.number()})
+  doingCount: number;
+
+  @field({mock: () => faker.random.number()})
+  testingCount: number;
+
+  @field({mock: () => faker.random.number()})
+  acceptingCount: number;
+
+  @field({mock: () => faker.random.number()})
+  doneCount: number;
 }

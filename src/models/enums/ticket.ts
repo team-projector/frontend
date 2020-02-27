@@ -16,3 +16,13 @@ export enum TicketStates {
   accepting = 'ACCEPTING',
   done = 'DONE'
 }
+
+export enum TicketsTypes {
+  all = 'all',
+  created = 'created',
+  planning = 'planning',
+  doing = 'doing',
+  testing = 'testing',
+  accepting = 'accepting',
+  done = 'done'
+}

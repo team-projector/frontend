@@ -29,8 +29,8 @@ export class MilestoneIssuesSummaryGQL extends Query<{ summary }> {
 })
 export class AllTicketsGQL extends Query<{ allTickets }> {
   document = gql`
-    query ($milestone: ID!, $offset: Int, $first: Int) {
-      allTickets(milestone: $milestone, orderBy: "dueDate,startDate,title", offset: $offset, first: $first) {
+    query ($milestone: ID!, $state: String, $offset: Int, $first: Int) {
+      allTickets(milestone: $milestone, state: $state, orderBy: "dueDate,startDate,title", offset: $offset, first: $first) {
         count
         edges {
           node {
@@ -60,6 +60,24 @@ export class AllTicketsGQL extends Query<{ allTickets }> {
         }
       }
     }`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TicketsSummaryGQL extends Query<{ summary }> {
+  document = gql`
+    query ($milestone: ID!) {
+    summary: ticketsSummary(milestone: $milestone) {
+      count
+      createdCount
+      planningCount
+      doingCount
+      testingCount
+      acceptingCount
+      doneCount
+    }
+  }`
 }
 
 @Injectable({
