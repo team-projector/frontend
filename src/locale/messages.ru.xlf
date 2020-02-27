@@ -434,6 +434,50 @@
           <context context-type="linenumber">174</context>
         </context-group>
       </trans-unit>
+      <trans-unit id="action.filter_type_created" datatype="html">
+        <source>Created</source>
+        <target state="new">Created</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
+          <context context-type="linenumber">28</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="action.filter_type_planning" datatype="html">
+        <source>Planning</source>
+        <target state="new">Planning</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
+          <context context-type="linenumber">34</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="action.filter_type_doing" datatype="html">
+        <source>Doing</source>
+        <target state="new">Doing</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
+          <context context-type="linenumber">41</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
+          <context context-type="linenumber">55</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="action.filter_type_testing" datatype="html">
+        <source>Testing</source>
+        <target state="new">Testing</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
+          <context context-type="linenumber">48</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="action.filter_type_done" datatype="html">
+        <source>Done</source>
+        <target state="new">Done</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
+          <context context-type="linenumber">62</context>
+        </context-group>
+      </trans-unit>
       <trans-unit id="action.add" datatype="html">
         <source>Add</source>
         <target>Добавить</target>
@@ -459,7 +503,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
-          <context context-type="linenumber">124</context>
+          <context context-type="linenumber">176</context>
         </context-group>
       </trans-unit>
       <trans-unit id="action.delete" datatype="html">
@@ -471,7 +515,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
-          <context context-type="linenumber">128</context>
+          <context context-type="linenumber">180</context>
         </context-group>
       </trans-unit>
       <trans-unit id="action.manage" datatype="html">
@@ -551,7 +595,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
-          <context context-type="linenumber">85</context>
+          <context context-type="linenumber">137</context>
         </context-group>
       </trans-unit>
       <trans-unit id="label.planning" datatype="html">
@@ -563,7 +607,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
-          <context context-type="linenumber">90</context>
+          <context context-type="linenumber">142</context>
         </context-group>
       </trans-unit>
       <trans-unit id="label.doing" datatype="html">
@@ -575,7 +619,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
-          <context context-type="linenumber">95</context>
+          <context context-type="linenumber">147</context>
         </context-group>
       </trans-unit>
       <trans-unit id="label.testing" datatype="html">
@@ -587,7 +631,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
-          <context context-type="linenumber">100</context>
+          <context context-type="linenumber">152</context>
         </context-group>
       </trans-unit>
       <trans-unit id="label.accepting" datatype="html">
@@ -599,7 +643,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
-          <context context-type="linenumber">105</context>
+          <context context-type="linenumber">157</context>
         </context-group>
       </trans-unit>
       <trans-unit id="label.done" datatype="html">
@@ -611,7 +655,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
-          <context context-type="linenumber">110</context>
+          <context context-type="linenumber">162</context>
         </context-group>
       </trans-unit>
       <trans-unit id="label.break_state" datatype="html">
@@ -778,7 +822,7 @@
         <target>Тикеты?</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
-          <context context-type="linenumber">5</context>
+          <context context-type="linenumber">4</context>
         </context-group>
       </trans-unit>
       <trans-unit id="label.estimated" datatype="html">
@@ -811,6 +855,10 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/issues/issues/issues.component.html</context>
           <context context-type="linenumber">9</context>
+        </context-group>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
+          <context context-type="linenumber">22</context>
         </context-group>
       </trans-unit>
       <trans-unit id="action.filter_type_closed" datatype="html">

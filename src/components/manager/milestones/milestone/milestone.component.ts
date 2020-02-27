@@ -1,31 +1,39 @@
 import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
-import { Component, ComponentFactoryResolver, Injector, Input, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, Injector, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { R } from 'apollo-angular/types';
-import { ModalOptions, ModalService, UI } from 'junte-ui';
-import { of } from 'rxjs';
-import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { isEqual, ModalOptions, ModalService, UI } from 'junte-ui';
+import { combineLatest, of } from 'rxjs';
+import { debounceTime, delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { MOCKS_DELAY } from 'src/consts';
+import { MOCKS_DELAY, PLATFORM_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
-import { TicketProblem, TicketStates, TicketTypes } from 'src/models/enums/ticket';
+import { IssueState } from 'src/models/enums/issue';
+import { TicketProblem, TicketStates, TicketsTypes, TicketTypes } from 'src/models/enums/ticket';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
-import { Milestone } from 'src/models/milestone';
-import { PagingTickets, Ticket, TicketsFilter } from 'src/models/ticket';
-import { equals } from 'src/utils/equals';
+import { PagingTickets, Ticket, TicketsFilter, TicketsSummary } from 'src/models/ticket';
 import { getMock } from 'src/utils/mocks';
-import { IssueState } from '../../../../models/enums/issue';
 import { EditTicketComponent } from './edit-ticket/edit-ticket.component';
-import { AllTicketsGQL, AttachIssueGQL, DeleteTicketGQL, MilestoneIssuesSummaryGQL, TicketIssuesGQL } from './milestone.graphql';
+import {
+  AllTicketsGQL,
+  AttachIssueGQL,
+  DeleteTicketGQL,
+  MilestoneIssuesSummaryGQL,
+  TicketIssuesGQL,
+  TicketsSummaryGQL
+} from './milestone.graphql';
 
 @model()
 class MilestoneState {
 
   @field()
   ticket?: string;
+
+  @field()
+  type?: TicketsTypes;
 
   constructor(defs: MilestoneState = null) {
     if (!!defs) {
@@ -47,33 +55,25 @@ export class MilestoneComponent implements OnInit {
   ticketProblem = TicketProblem;
   issueStates = IssueState.opened;
   ticketStates = TicketStates;
+  ticketsTypes = TicketsTypes;
 
-  private _milestone: Milestone;
-
+  milestoneControl = new FormControl(null);
   ticketControl = new FormControl(null);
+  typeControl = new FormControl(TicketsTypes.all);
 
   form = this.fb.group({
-    ticket: this.ticketControl
+    milestone: this.milestoneControl,
+    type: this.typeControl
   });
 
-  loading = {tickets: false, issues: false};
+  loading = {tickets: false, summary: false, issues: false};
   tickets: Ticket[] = [];
+  summary: TicketsSummary;
   issues: Issue[] = [];
-
-  @Input()
-  set milestone(milestone: Milestone) {
-    if (!this._milestone || this._milestone.id !== milestone.id) {
-      this._milestone = milestone;
-      this.loadTickets();
-    }
-  }
-
-  get milestone() {
-    return this._milestone;
-  }
 
   constructor(private milestoneIssuesSummaryGQL: MilestoneIssuesSummaryGQL,
               private allTicketsGQL: AllTicketsGQL,
+              private ticketsSummaryGQL: TicketsSummaryGQL,
               private deleteTicketGQL: DeleteTicketGQL,
               private attachIssueGQL: AttachIssueGQL,
               private ticketIssuesGQL: TicketIssuesGQL,
@@ -86,24 +86,57 @@ export class MilestoneComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form.valueChanges.pipe(distinctUntilChanged((a, b) => equals(a, b)))
-      .subscribe(({ticket}) => {
-        this.issues = [];
-        this.loadIssues(ticket);
-        const state = new MilestoneState({ticket: ticket || undefined});
-        this.router.navigate([serialize(state)],
-          {relativeTo: this.route}).then(() => null);
+    this.ticketControl.valueChanges
+      .pipe(distinctUntilChanged((a, b) => isEqual(a, b)))
+      .subscribe(ticket => {
+        const state = new MilestoneState({
+          ticket: ticket || undefined,
+          type: this.typeControl.value
+        });
+        this.router.navigate([serialize(state)], {relativeTo: this.route}).then(() => null);
+        this.loadIssues();
       });
 
-    this.route.data.subscribe(({milestone, ticket}) => {
-      this.milestone = milestone;
-      this.form.patchValue({ticket: !!ticket ? ticket.id : null});
-    });
+    this.typeControl.valueChanges
+      .pipe(distinctUntilChanged((a, b) => isEqual(a, b)))
+      .subscribe(type => {
+        const state = new MilestoneState({type: type !== TicketsTypes.all ? type : undefined});
+        this.ticketControl.setValue(null);
+        this.router.navigate([serialize(state)], {relativeTo: this.route}).then(() => null);
+        this.load();
+      });
+
+    combineLatest([this.route.data, this.route.params])
+      .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged((a, b) => isEqual(a, b)))
+      .subscribe(([{milestone, ticket}, {type}]) => {
+        this.milestoneControl.patchValue(!!milestone ? milestone.id : null);
+        this.typeControl.patchValue(type || TicketsTypes.all);
+        this.ticketControl.patchValue(!!ticket ? ticket.id : null);
+      });
+  }
+
+  getState() {
+    switch (this.typeControl.value) {
+      case TicketsTypes.created:
+        return TicketStates.created;
+      case TicketsTypes.planning:
+        return TicketStates.planning;
+      case TicketsTypes.accepting:
+        return TicketStates.accepting;
+      case TicketsTypes.doing:
+        return TicketStates.doing;
+      case TicketsTypes.testing:
+        return TicketStates.testing;
+      case TicketsTypes.done:
+        return TicketStates.done;
+      default:
+        return undefined;
+    }
   }
 
   loadTickets() {
     this.loading.tickets = true;
-    const filter = new TicketsFilter({milestone: this.milestone.id});
+    const filter = new TicketsFilter({milestone: this.milestoneControl.value, state: this.getState()});
     (environment.mocks
       ? of(getMock(PagingTickets, filter)).pipe(delay(MOCKS_DELAY))
       : this.allTicketsGQL.fetch(serialize(filter) as R).pipe(
@@ -112,10 +145,26 @@ export class MilestoneComponent implements OnInit {
       .subscribe(tickets => this.tickets = tickets.results);
   }
 
-  private loadIssues(ticket: string) {
-    if (!!ticket) {
+  loadSummary() {
+    this.loading.summary = true;
+    const filter = new TicketsFilter({milestone: this.milestoneControl.value, state: this.getState()});
+    return (environment.mocks
+      ? of(getMock(TicketsSummary)).pipe(delay(MOCKS_DELAY))
+      : this.ticketsSummaryGQL.fetch(serialize(filter) as R)
+        .pipe(map(({data: {summary}}) => deserialize(summary, TicketsSummary))))
+      .pipe(finalize(() => this.loading.summary = false))
+      .subscribe(summary => this.summary = summary);
+  }
+
+  private load() {
+    this.loadSummary();
+    this.loadTickets();
+  }
+
+  private loadIssues() {
+    if (!!this.ticketControl.value) {
       this.loading.issues = true;
-      const filter = new IssuesFilter({ticket});
+      const filter = new IssuesFilter({ticket: this.ticketControl.value});
       (environment.mocks
         ? of(getMock(PagingIssues).results).pipe(delay(MOCKS_DELAY))
         : this.ticketIssuesGQL.fetch(serialize(filter) as R)
@@ -131,14 +180,13 @@ export class MilestoneComponent implements OnInit {
 
   edit(ticket: Ticket = null) {
     const component = this.cfr.resolveComponentFactory(EditTicketComponent).create(this.injector);
-    component.instance.milestone = this.milestone.id;
+    component.instance.milestone = this.milestoneControl.value;
     component.instance.canceled.subscribe(() => this.modal.close());
     component.instance.saved.subscribe(() => {
       this.modal.close();
       this.loadTickets();
-      const {ticket: active} = this.form.getRawValue();
-      if (!!ticket && ticket.id === active) {
-        this.loadIssues(active);
+      if (!!ticket && ticket.id !== this.ticketControl.value) {
+        this.ticketControl.patchValue(ticket.id);
       }
     });
     if (!!ticket) {
@@ -146,7 +194,8 @@ export class MilestoneComponent implements OnInit {
     }
 
     const options = new ModalOptions({
-      title: !!ticket ? {text: $localize`:@@action.edit:Edit`, icon: UI.icons.edit}
+      title: !!ticket
+        ? {text: $localize`:@@action.edit:Edit`, icon: UI.icons.edit}
         : {text: $localize`:@@action.add:Add`, icon: UI.icons.add},
       maxWidth: '400px'
     });
@@ -160,6 +209,7 @@ export class MilestoneComponent implements OnInit {
   }
 
   toggleIssues(ticket: string) {
+    this.issues = [];
     this.ticketControl.setValue(this.ticketControl.value === ticket ? null : ticket);
   }
 
@@ -178,7 +228,7 @@ export class MilestoneComponent implements OnInit {
       ticket: ticket
     }).subscribe(() => {
       this.loadTickets();
-      this.form.patchValue({ticket: ticket});
+      this.ticketControl.patchValue(ticket);
     });
   }
 
