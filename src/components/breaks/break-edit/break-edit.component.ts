@@ -20,7 +20,7 @@ import { CreateBreakGQL, GetTeamMembersGQL, UpdateWorkBreakGQL } from './break-c
   templateUrl: './break-edit.component.html',
   styleUrls: ['./break-edit.component.scss']
 })
-export class BreakEditComponent implements OnInit {
+export class BreakEditComponent {
 
   private _break: Break;
   ui = UI;
@@ -54,6 +54,7 @@ export class BreakEditComponent implements OnInit {
   @Input() set team(team: string) {
     if (!!team) {
       this.teamControl.patchValue(team);
+      this.loadMembers();
     }
   }
 
@@ -69,10 +70,6 @@ export class BreakEditComponent implements OnInit {
               private createBreakGQL: CreateBreakGQL,
               private updateWorkBreakGQL: UpdateWorkBreakGQL,
               private getTeamMembersGQL: GetTeamMembersGQL) {
-  }
-
-  ngOnInit() {
-    this.teamControl.valueChanges.subscribe(() => this.loadMembers());
   }
 
   loadMembers() {
