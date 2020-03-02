@@ -10,7 +10,8 @@ import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
-import { MilestoneProblem } from 'src/models/enums/milestone';
+import { IssuesType } from 'src/models/enums/issue';
+import { MilestoneProblem, MilestoneState, MilestoneType } from 'src/models/enums/milestone';
 import { IssuesFilter } from 'src/models/issue';
 import { MilestonesFilter, PagingMilestones } from 'src/models/milestone';
 import { getMock } from 'src/utils/mocks';
@@ -27,6 +28,9 @@ export class MilestonesState {
 
   @field()
   offset?: number;
+
+  @field()
+  type?: IssuesType;
 
   constructor(defs: MilestonesState = null) {
     if (!!defs) {
@@ -46,6 +50,8 @@ export class MilestonesComponent implements OnInit {
   ui = UI;
   durationFormat = DurationFormat;
   milestoneProblem = MilestoneProblem;
+  milestoneType = MilestoneType;
+  milestoneState = MilestoneState;
   progress = {sync: false};
 
   tableControl = this.builder.control({
@@ -56,7 +62,8 @@ export class MilestonesComponent implements OnInit {
   });
 
   form = this.builder.group({
-    table: this.tableControl
+    table: this.tableControl,
+    type: [IssuesType.opened]
   });
 
   set filter(filter: IssuesFilter) {
@@ -87,30 +94,34 @@ export class MilestonesComponent implements OnInit {
             deserialize(allMilestones, PagingMilestones)));
     };
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({table: {offset, first, q}}) => {
+      .subscribe(({table: {offset, first, q}, type}) => {
         const state = new MilestonesState({
           q: q || undefined,
           first: first !== DEFAULT_FIRST ? first : undefined,
-          offset: offset !== DEFAULT_OFFSET ? offset : undefined
+          offset: offset !== DEFAULT_OFFSET ? offset : undefined,
+          type: type !== MilestoneType.opened ? type : undefined
         });
 
         this.filter = new MilestonesFilter({
           offset: offset,
           first: first,
-          q: q
+          q: q,
+          active: type === MilestoneType.opened ? true :
+            type === MilestoneType.closed ? false : undefined
         });
 
         this.router.navigate([serialize(state)], {relativeTo: this.route})
           .then(() => null);
       });
 
-    this.route.params.subscribe(({q, first, offset}) => {
+    this.route.params.subscribe(({q, first, offset, type}) => {
       this.form.patchValue({
         table: {
           q: q || null,
           first: first || DEFAULT_FIRST,
           offset: offset || DEFAULT_OFFSET
-        }
+        },
+        type: type || IssuesType.opened
       });
     });
   }

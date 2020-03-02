@@ -7,13 +7,26 @@
   <jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
     <jnt-form [formGroup]="form">
       <jnt-table #table [features]="[ui.collections.table.features.search]" formControlName="table">
-        <jnt-table-column title="Title"
-                          i18n-title="@@label.title">
-          <ng-template #cellTemplate let-title="title" let-id="id" let-owner="owner">
+        <ng-template #filters>
+          <jnt-stack [type]="ui.layout.stack.type.horizontal">
+            <jnt-switcher formControlName="type">
+              <jnt-switcher-option i18n-label="@@action.filter_issues_all" label="All" [value]="milestoneType.all">
+              </jnt-switcher-option>
+              <jnt-switcher-option i18n-label="@@action.filter_type_closed" label="Closed" [value]="milestoneType.closed">
+              </jnt-switcher-option>
+              <jnt-switcher-option i18n-label="@@action.filter_type_opened" label="Opened" [value]="milestoneType.opened">
+              </jnt-switcher-option>
+            </jnt-switcher>
+          </jnt-stack>
+        </ng-template>
+        <jnt-table-column i18n-title="@@label.title" title="Title">
+          <ng-template #cellTemplate let-title="title" let-id="id" let-owner="owner" let-state="state">
             <jnt-stack [type]="ui.layout.stack.type.horizontal">
               <jnt-avatar [size]="ui.size.small" [image]="owner.glAvatar"></jnt-avatar>
               <jnt-stack [gutter]="ui.gutter.tiny">
-                <jnt-link [source]="[id]" target="_blank" [title]="title"></jnt-link>
+                <jnt-link [source]="[id]" target="_blank" [title]="title"
+                          [attr.closed]="state == milestoneState.closed">
+                </jnt-link>
                 <small>{{owner?.fullTitle}}</small>
               </jnt-stack>
             </jnt-stack>
