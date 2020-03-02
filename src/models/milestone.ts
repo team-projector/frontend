@@ -1,9 +1,11 @@
 import { addDays } from 'date-fns';
 import { faker } from '../utils/mocks';
 import { SearchFilter } from 'junte-ui';
-import { ArraySerializer } from 'serialize-ts';
+import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { PrimitiveSerializer } from 'serialize-ts/dist';
-import { MilestoneProblem } from 'src/models/enums/milestone';
+import { IssueState } from 'src/models/enums/issue';
+import { MilestoneProblem, MilestoneState } from 'src/models/enums/milestone';
+import { ProjectSummary, TeamSummary } from 'src/models/issue';
 import { DateSerializer } from 'src/serializers/date';
 import { mocks } from 'src/utils/mocks';
 import { field, model } from '../decorators/model';
@@ -88,6 +90,9 @@ export class Milestone {
   @field({mock: ProjectGroup, serializer: new ProjectSerializer()})
   owner: Project | ProjectGroup;
 
+  @field({mock: () => faker.helpers.randomize([MilestoneState.opened, MilestoneState.closed])})
+  state: MilestoneState;
+
   @field({mock: () => faker.random.number()})
   budget: number;
 
@@ -135,6 +140,9 @@ export class MilestonesFilter implements SearchFilter {
 
   @field()
   q?: string;
+
+  @field()
+  active?: boolean;
 
   constructor(defs: MilestonesFilter = null) {
     if (!!defs) {

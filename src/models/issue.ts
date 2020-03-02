@@ -317,5 +317,4 @@ export class IssuesSummary {
     serializer: new ArraySerializer(new ModelSerializer(TeamSummary))
   })
   teams: TeamSummary[];
-
 }

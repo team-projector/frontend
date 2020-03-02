@@ -30,3 +30,7 @@
     color: $primary-text-light-color;
   }
 }
+
+[closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
+  text-decoration: line-through;
+}
