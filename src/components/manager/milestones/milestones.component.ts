@@ -9,13 +9,13 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
+import { MeManager } from 'src/managers/me.manager';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { IssuesType } from 'src/models/enums/issue';
 import { MilestoneProblem, MilestoneState, MilestoneType } from 'src/models/enums/milestone';
-import { IssuesFilter } from 'src/models/issue';
-import { MilestonesFilter, PagingMilestones } from 'src/models/milestone';
+import { MilestonesFilter, MilestonesSummary, PagingMilestones } from 'src/models/milestone';
 import { getMock } from 'src/utils/mocks';
-import { AllMilestonesGQL, SyncMilestoneGQL } from './milestones.graphql';
+import { AllMilestonesGQL, MilestonesSummaryGQL, SyncMilestoneGQL } from './milestones.graphql';
 
 @model()
 export class MilestonesState {
@@ -52,7 +52,8 @@ export class MilestonesComponent implements OnInit {
   milestoneProblem = MilestoneProblem;
   milestoneType = MilestoneType;
   milestoneState = MilestoneState;
-  progress = {sync: false};
+  progress = {sync: false, summary: false};
+  summary: MilestonesSummary;
 
   tableControl = this.builder.control({
     q: null,
@@ -66,9 +67,9 @@ export class MilestonesComponent implements OnInit {
     type: [IssuesType.opened]
   });
 
-  set filter(filter: IssuesFilter) {
+  set filter(filter: MilestonesFilter) {
     this._filter = filter;
-    this.table.load();
+    this.load();
   }
 
   get filter() {
@@ -80,7 +81,9 @@ export class MilestonesComponent implements OnInit {
 
   constructor(private allMilestonesGQL: AllMilestonesGQL,
               private syncMilestoneGQL: SyncMilestoneGQL,
+              private milestonesSummaryGQL: MilestonesSummaryGQL,
               private builder: FormBuilder,
+              private me: MeManager,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -124,6 +127,22 @@ export class MilestonesComponent implements OnInit {
         type: type || IssuesType.opened
       });
     });
+  }
+
+  private load() {
+    this.loadSummary();
+    this.table.load();
+  }
+
+  loadSummary() {
+    this.progress.summary = true;
+    return (environment.mocks
+      ? of(getMock(MilestonesSummary)).pipe(delay(MOCKS_DELAY))
+      : this.milestonesSummaryGQL.fetch()
+        .pipe(map(({data: {summary}}) =>
+          deserialize(summary, MilestonesSummary))))
+      .pipe(finalize(() => this.progress.summary = false))
+      .subscribe(summary => this.summary = summary);
   }
 
   sync(issue: number) {

@@ -11,10 +11,15 @@
           <jnt-stack [type]="ui.layout.stack.type.horizontal">
             <jnt-switcher formControlName="type">
               <jnt-switcher-option i18n-label="@@action.filter_issues_all" label="All" [value]="milestoneType.all">
+                <jnt-badge *ngIf="summary?.count" [value]="summary?.count"></jnt-badge>
               </jnt-switcher-option>
-              <jnt-switcher-option i18n-label="@@action.filter_type_closed" label="Closed" [value]="milestoneType.closed">
+              <jnt-switcher-option i18n-label="@@action.filter_type_closed" label="Closed"
+                                   [value]="milestoneType.closed">
+                <jnt-badge *ngIf="summary?.closedCount" [value]="summary?.closedCount"></jnt-badge>
               </jnt-switcher-option>
-              <jnt-switcher-option i18n-label="@@action.filter_type_opened" label="Opened" [value]="milestoneType.opened">
+              <jnt-switcher-option i18n-label="@@action.filter_type_opened" label="Opened"
+                                   [value]="milestoneType.opened">
+                <jnt-badge *ngIf="summary?.activeCount" [value]="summary?.activeCount"></jnt-badge>
               </jnt-switcher-option>
             </jnt-switcher>
           </jnt-stack>
