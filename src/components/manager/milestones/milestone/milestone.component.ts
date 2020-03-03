@@ -53,7 +53,7 @@ export class MilestoneComponent implements OnInit {
   durationFormat = DurationFormat;
   ticketTypes = TicketTypes;
   ticketProblem = TicketProblem;
-  issueStates = IssueState.opened;
+  issueStates = IssueState;
   ticketStates = TicketStates;
   ticketsTypes = TicketsTypes;
 

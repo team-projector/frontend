@@ -1,4 +1,56 @@
 <jnt-stack cdkDropListGroup [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
+  <jnt-form filter [formGroup]="form">
+    <jnt-switcher formControlName="type">
+      <jnt-switcher-option label="All"
+                           i18n-label="@@action.filter_issues_all"
+                           [value]="ticketsTypes.all">
+        <jnt-badge *ngIf="summary?.count"
+                   [value]="summary?.count"></jnt-badge>
+      </jnt-switcher-option>
+      <jnt-switcher-option label="Created"
+                           i18n-label="@@label.created"
+                           [value]="ticketsTypes.created">
+        <jnt-badge *ngIf="summary?.createdCount"
+                   [value]="summary?.createdCount"
+                   [color]="ui.color.purple"></jnt-badge>
+      </jnt-switcher-option>
+      <jnt-switcher-option label="Planning"
+                           i18n-label="@@label.planning"
+                           [value]="ticketsTypes.planning">
+        <jnt-badge *ngIf="summary?.planningCount"
+                   [value]="summary?.planningCount"
+                   [color]="ui.color.red"></jnt-badge>
+      </jnt-switcher-option>
+      <jnt-switcher-option label="Doing"
+                           i18n-label="@@label.doing"
+                           [value]="ticketsTypes.doing">
+        <jnt-badge *ngIf="summary?.doingCount"
+                   [value]="summary?.doingCount"
+                   [color]="ui.color.blue"></jnt-badge>
+      </jnt-switcher-option>
+      <jnt-switcher-option label="Testing"
+                           i18n-label="@@label.testing"
+                           [value]="ticketsTypes.testing">
+        <jnt-badge *ngIf="summary?.testingCount"
+                   [value]="summary?.testingCount"
+                   [color]="ui.color.yellow"></jnt-badge>
+      </jnt-switcher-option>
+      <jnt-switcher-option label="Accepting"
+                           i18n-label="@@label.accepting"
+                           [value]="ticketsTypes.accepting">
+        <jnt-badge *ngIf="summary?.acceptingCount"
+                   [value]="summary?.acceptingCount"
+                   [color]="ui.color.gray"></jnt-badge>
+      </jnt-switcher-option>
+      <jnt-switcher-option label="Done"
+                           i18n-label="@@label.done"
+                           [value]="ticketsTypes.done">
+        <jnt-badge *ngIf="summary?.doneCount"
+                   [value]="summary?.doneCount"
+                   [color]="ui.color.green"></jnt-badge>
+      </jnt-switcher-option>
+    </jnt-switcher>
+  </jnt-form>
   <jnt-block [padding]="ui.gutter.none">
     <jnt-gantt i18n-title="@@label.tickets"
                title="Tickets"
@@ -17,57 +69,6 @@
                       [disabled]="loading.tickets"
                       (click)="loadTickets()">
           </jnt-button>
-          <jnt-form [formGroup]="form">
-            <jnt-switcher formControlName="type">
-              <jnt-switcher-option label="All"
-                                   i18n-label="@@action.filter_issues_all"
-                                   [value]="ticketsTypes.all">
-                <jnt-badge *ngIf="summary?.count"
-                           [value]="summary?.count"></jnt-badge>
-              </jnt-switcher-option>
-              <jnt-switcher-option label="Created"
-                                   i18n-label="@@label.created"
-                                   [value]="ticketsTypes.created">
-                <jnt-badge *ngIf="summary?.createdCount"
-                           [value]="summary?.createdCount"></jnt-badge>
-              </jnt-switcher-option>
-              <jnt-switcher-option label="Planning"
-                                   i18n-label="@@label.planning"
-                                   [value]="ticketsTypes.planning">
-                <jnt-badge *ngIf="summary?.planningCount"
-                           [value]="summary?.planningCount"
-                           [color]="ui.color.green"></jnt-badge>
-              </jnt-switcher-option>
-              <jnt-switcher-option label="Doing"
-                                   i18n-label="@@label.doing"
-                                   [value]="ticketsTypes.doing">
-                <jnt-badge *ngIf="summary?.doingCount"
-                           [value]="summary?.doingCount"
-                           [color]="ui.color.red"></jnt-badge>
-              </jnt-switcher-option>
-              <jnt-switcher-option label="Testing"
-                                   i18n-label="@@label.testing"
-                                   [value]="ticketsTypes.testing">
-                <jnt-badge *ngIf="summary?.testingCount"
-                           [value]="summary?.testingCount"
-                           [color]="ui.color.red"></jnt-badge>
-              </jnt-switcher-option>
-              <jnt-switcher-option label="Accepting"
-                                   i18n-label="@@label.accepting"
-                                   [value]="ticketsTypes.accepting">
-                <jnt-badge *ngIf="summary?.acceptingCount"
-                           [value]="summary?.acceptingCount"
-                           [color]="ui.color.red"></jnt-badge>
-              </jnt-switcher-option>
-              <jnt-switcher-option label="Done"
-                                   i18n-label="@@label.done"
-                                   [value]="ticketsTypes.done">
-                <jnt-badge *ngIf="summary?.doneCount"
-                           [value]="summary?.doneCount"
-                           [color]="ui.color.red"></jnt-badge>
-              </jnt-switcher-option>
-            </jnt-switcher>
-          </jnt-form>
         </jnt-stack>
       </ng-template>
 
