@@ -4,9 +4,9 @@ import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { AppConfig } from 'src/app-config';
 import { environment } from '../environments/environment';
-import { Me, User } from '../models/user';
-import { getMock } from '../utils/mocks';
+import { Me } from '../models/user';
 import { equals } from '../utils/equals';
+import { getMock } from '../utils/mocks';
 import { MeManagerGQL } from './me-manager.graphql';
 
 @Injectable()

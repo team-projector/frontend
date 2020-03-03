@@ -150,3 +150,16 @@ export class MilestonesFilter implements SearchFilter {
     }
   }
 }
+
+@model()
+export class MilestonesSummary {
+
+  @field({mock: () => faker.random.number()})
+  count: number;
+
+  @field({mock: () => faker.random.number()})
+  closedCount: number;
+
+  @field({mock: () => faker.random.number()})
+  activeCount: number;
+}
