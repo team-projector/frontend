@@ -179,6 +179,7 @@ export class MilestoneComponent implements OnInit {
   }
 
   edit(ticket: Ticket = null) {
+    console.log(this.milestoneControl.value);
     const component = this.cfr.resolveComponentFactory(EditTicketComponent).create(this.injector);
     component.instance.milestone = this.milestoneControl.value;
     component.instance.canceled.subscribe(() => this.modal.close());
