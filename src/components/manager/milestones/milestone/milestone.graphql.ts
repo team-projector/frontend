@@ -43,6 +43,9 @@ export class AllTicketsGQL extends Query<{ allTickets }> {
             dueDate
             url
             problems
+            milestone {
+              id
+            }
             metrics {
               budgetEstimate
               budgetRemains
