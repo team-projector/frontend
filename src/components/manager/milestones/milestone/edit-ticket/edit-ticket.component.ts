@@ -41,7 +41,7 @@ export class EditTicketComponent {
 
   form = this.fb.group({
     id: [null],
-    milestone: [this.milestoneControl],
+    milestone: [this.milestoneControl.value],
     type: [TicketTypes.feature, Validators.required],
     title: [null, Validators.required],
     role: [null],
@@ -81,6 +81,8 @@ export class EditTicketComponent {
         url: ticket.url,
         issues: ticket.issues.map(i => i.id)
       });
+
+      this.loadMilestones();
     }
   }
 
@@ -99,16 +101,6 @@ export class EditTicketComponent {
               private issuesGQL: IssuesGQL) {
   }
 
-  ngOnInit() {
-    (environment.mocks
-        ? of(getMock(PagingMilestones)).pipe(delay(MOCKS_DELAY))
-        : this.allMilestonesGQL.fetch()
-          .pipe(
-            catchGQLErrors(),
-            map(({data: {allMilestones}}) => deserialize(allMilestones, PagingMilestones)))
-    ).subscribe(({results: milestones}) => this.milestones = milestones);
-  }
-
   private load() {
     this.progress.loading = true;
     const action = this.getTicketGQL.fetch({ticket: this.id} as R)
@@ -117,6 +109,16 @@ export class EditTicketComponent {
     (environment.mocks ? of(getMock(Ticket)).pipe(delay(MOCKS_DELAY)) : action)
       .pipe(finalize(() => this.progress.loading = false))
       .subscribe(ticket => this.ticket = ticket);
+  }
+
+  private loadMilestones() {
+    (environment.mocks
+        ? of(getMock(PagingMilestones)).pipe(delay(MOCKS_DELAY))
+        : this.allMilestonesGQL.fetch()
+          .pipe(
+            catchGQLErrors(),
+            map(({data: {allMilestones}}) => deserialize(allMilestones, PagingMilestones)))
+    ).subscribe(({results: milestones}) => this.milestones = milestones);
   }
 
   save() {
