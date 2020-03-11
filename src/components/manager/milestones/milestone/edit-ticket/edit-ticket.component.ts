@@ -12,13 +12,14 @@ import { environment } from 'src/environments/environment';
 import { TicketStates, TicketTypes } from 'src/models/enums/ticket';
 import { GqlError } from 'src/models/gql-errors';
 import { IssuesFilter, PagingIssues } from 'src/models/issue';
-import { Milestone, PagingMilestones } from 'src/models/milestone';
+import { Milestone, MilestonesFilter, PagingMilestones } from 'src/models/milestone';
 import { Issue, Ticket, TicketUpdate } from 'src/models/ticket';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
 import { CreateTicketGQL, EditTicketGQL, GetTicketGQL } from './edit-ticket.graphql';
 
 const FOUND_ISSUES_COUNT = 10;
+const FOUND_MILESTONES_COUNT = 10;
 
 @Component({
   selector: 'app-edit-ticket',
@@ -81,8 +82,6 @@ export class EditTicketComponent {
         url: ticket.url,
         issues: ticket.issues.map(i => i.id)
       });
-
-      this.loadMilestones();
     }
   }
 
@@ -111,16 +110,6 @@ export class EditTicketComponent {
       .subscribe(ticket => this.ticket = ticket);
   }
 
-  private loadMilestones() {
-    (environment.mocks
-        ? of(getMock(PagingMilestones)).pipe(delay(MOCKS_DELAY))
-        : this.allMilestonesGQL.fetch()
-          .pipe(
-            catchGQLErrors(),
-            map(({data: {allMilestones}}) => deserialize(allMilestones, PagingMilestones)))
-    ).subscribe(({results: milestones}) => this.milestones = milestones);
-  }
-
   save() {
     this.progress.saving = true;
     const mutation = !!this.ticket ? this.editTicketGQL : this.createTicketGQL;
@@ -128,6 +117,24 @@ export class EditTicketComponent {
     action.pipe(catchGQLErrors(), finalize(() => this.progress.saving = false))
       .subscribe(() => this.saved.emit(),
         (err: GqlError[]) => this.errors = err);
+  }
+
+  findMilestones() {
+    return (query: string) => new Observable<Milestone[]>(o => {
+      const filter = new MilestonesFilter({
+        q: query,
+        first: FOUND_MILESTONES_COUNT
+      });
+      (environment.mocks
+          ? of(getMock(PagingMilestones)).pipe(delay(MOCKS_DELAY))
+          : this.allMilestonesGQL.fetch(serialize(filter) as R).pipe(
+            catchGQLErrors(),
+            map(({data: {allMilestones}}) => deserialize(allMilestones, PagingMilestones)))
+      ).subscribe(({results: allMilestones}) => {
+        o.next(allMilestones);
+        o.complete();
+      }, (err: GqlError[]) => this.errors = err);
+    });
   }
 
   findIssues() {
