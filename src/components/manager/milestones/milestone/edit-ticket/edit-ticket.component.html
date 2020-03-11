@@ -46,13 +46,16 @@
           <jnt-form-item *ngIf="!!ticket">
             <jnt-form-label for="milestone">Milestone</jnt-form-label>
             <jnt-form-control name="milestone">
-              <jnt-select issues placeholder="Milestone"
+              <jnt-select placeholder="Milestone"
                           formControlName="milestone"
-                          [allowEmpty]="false">
-                <jnt-select-option *ngFor="let milestone of milestones"
-                                   [key]="milestone.id"
-                                   [label]="milestone.title"
-                                   [value]="milestone">
+                          [allowEmpty]="false"
+                          [search]="true"
+                          [loader]="findMilestones()"
+                          keyField="id"
+                          labelField="title">
+                <jnt-select-option [key]="ticket.milestone.id"
+                                   [label]="ticket.milestone.title"
+                                   [value]="ticket.milestone">
                 </jnt-select-option>
               </jnt-select>
             </jnt-form-control>

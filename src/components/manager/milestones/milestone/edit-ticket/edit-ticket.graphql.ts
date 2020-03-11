@@ -19,6 +19,7 @@ export class GetTicketGQL extends Query<{ ticket }> {
         url
         milestone {
           id
+          title
         }
         issues {
           count
