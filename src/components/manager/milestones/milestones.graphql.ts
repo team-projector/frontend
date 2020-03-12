@@ -36,8 +36,8 @@ export class MilestonesSummaryGQL extends Query<{ summary }> {
 })
 export class AllMilestonesGQL extends Query<{ allMilestones }> {
   document = gql`
-    query ($offset: Int, $first: Int, $active: Boolean) {
-      allMilestones(offset: $offset, first: $first, active: $active, orderBy: "dueDate") {
+    query ($offset: Int, $first: Int, $active: Boolean, $q: String) {
+      allMilestones(offset: $offset, first: $first, active: $active, orderBy: "dueDate", q: $q) {
         count
         edges {
           node {
