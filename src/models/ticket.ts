@@ -4,6 +4,7 @@ import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
 import { IssueState } from 'src/models/enums/issue';
 import { Label } from 'src/models/label';
+import { Milestone } from 'src/models/milestone';
 import { Paging } from 'src/models/paging';
 import { Project } from 'src/models/project';
 import { User } from 'src/models/user';
@@ -157,6 +158,9 @@ export class Ticket {
 
   @field({mock: TicketMetrics})
   metrics: TicketMetrics;
+
+  @field({mock: Milestone})
+  milestone: Milestone;
 
   @field({
     mock: [],

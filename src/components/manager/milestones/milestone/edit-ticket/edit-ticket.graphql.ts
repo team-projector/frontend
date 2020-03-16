@@ -17,6 +17,10 @@ export class GetTicketGQL extends Query<{ ticket }> {
         dueDate
         state
         url
+        milestone {
+          id
+          title
+        }
         issues {
           count
           edges {
