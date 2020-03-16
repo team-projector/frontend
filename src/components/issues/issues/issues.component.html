@@ -10,12 +10,14 @@
                                  i18n-label="@@action.filter_issues_all"
                                  [value]="issuesType.all">
               <jnt-badge *ngIf="summary?.count"
+                         [overflow]="1000"
                          [value]="summary?.count.toString()"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Closed"
                                  i18n-label="@@action.filter_type_closed"
                                  [value]="issuesType.closed">
               <jnt-badge *ngIf="summary?.closedCount"
+                         [overflow]="1000"
                          [value]="summary?.closedCount.toString()"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Opened"

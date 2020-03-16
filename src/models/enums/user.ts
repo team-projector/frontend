@@ -5,7 +5,7 @@ export enum UserPermission {
 export enum UserRole {
   developer = 'DEVELOPER',
   teamLeader = 'TEAM_LEADER',
-  projectManager = 'PROJECT_MANAGER',
+  projectManager = 'MANAGER',
   customer = 'CUSTOMER',
   shareholder = 'SHAREHOLDER'
 }
