@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BreaksGanttComponent } from 'src/components/developer/breaks/breaks-gantt/breaks-gantt.component';
-import { DeveloperBreaksComponent } from './developer-breaks.component';
-import { DeveloperBreaksListComponent } from './breaks/breaks-list.component';
 import { MeUserResolver } from 'src/resolvers/me';
+import { DeveloperBreaksListComponent } from './breaks/breaks-list.component';
+import { DeveloperBreaksComponent } from './developer-breaks.component';
 
 export const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
 
