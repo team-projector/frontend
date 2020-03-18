@@ -20,11 +20,7 @@ const routes: Routes = [
         path: '',
         data: {breadcrumb: WORK_BREAKS_BREADCRUMB},
         component: TeamBreaksListComponent
-      },
-      // {
-      //   path: 'gantt',
-      //
-      // },
+      }
     ]
   }
 ];

@@ -117,11 +117,12 @@ export class BreaksComponent implements OnInit {
 
   ngOnInit() {
     this.table.fetcher = () => {
-      return environment.mocks ? of(getMock(PagingBreaks)).pipe(delay(MOCKS_DELAY))
+      return environment.mocks
+        ? of(getMock(PagingBreaks)).pipe(delay(MOCKS_DELAY))
         : this.breaksGQL.fetch(this.filter as R)
-        .pipe(map(({data: {breaks}}) =>
-          deserialize(breaks, PagingBreaks)));
+          .pipe(map(({data: {breaks}}) => deserialize(breaks, PagingBreaks)));
     };
+
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
       .subscribe(({table: {offset, first, q}, team, user}) => {
         this.stateChange.emit(new BreaksState({
@@ -158,14 +159,12 @@ export class BreaksComponent implements OnInit {
   }
 
   delete(id: string) {
-    (environment.mocks ? of(null)
-      : this.deleteBreakGQL.fetch({id}))
+    (environment.mocks ? of(null) : this.deleteBreakGQL.fetch({id}))
       .subscribe(() => this.table.load());
   }
 
   approve(id: string) {
-    (environment.mocks ? of(null)
-      : this.approveBreakGQL.fetch({id}))
+    (environment.mocks ? of(null) : this.approveBreakGQL.fetch({id}))
       .subscribe(() => this.table.load());
   }
 
