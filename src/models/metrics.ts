@@ -20,6 +20,24 @@ export class IssuesMetrics {
 
   @field({mock: () => mocks.time(10, 50)})
   openedEstimated: number;
+
+  @field({mock: () => faker.random.number()})
+  payroll: number;
+
+  @field({mock: () => faker.random.number()})
+  payrollClosed: number;
+
+  @field({mock: () => faker.random.number()})
+  payrollOpened: number;
+
+  @field({mock: () => faker.random.number()})
+  taxes: number;
+
+  @field({mock: () => faker.random.number()})
+  taxesClosed: number;
+
+  @field({mock: () => faker.random.number()})
+  taxesOpened: number;
 }
 
 @model()
@@ -39,4 +57,22 @@ export class MergeRequestsMetrics {
 
   @field({mock: () => mocks.time(10, 50)})
   openedEstimated: number;
+
+  @field({mock: () => faker.random.number()})
+  payroll: number;
+
+  @field({mock: () => faker.random.number()})
+  payrollClosed: number;
+
+  @field({mock: () => faker.random.number()})
+  payrollOpened: number;
+
+  @field({mock: () => faker.random.number()})
+  taxes: number;
+
+  @field({mock: () => faker.random.number()})
+  taxesClosed: number;
+
+  @field({mock: () => faker.random.number()})
+  taxesOpened: number;
 }

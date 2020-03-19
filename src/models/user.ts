@@ -19,10 +19,28 @@ export class UserMetrics {
   penalty: number;
 
   @field({mock: () => faker.random.number()})
+  payroll: number;
+
+  @field({mock: () => faker.random.number()})
   payrollClosed: number;
 
   @field({mock: () => faker.random.number()})
   payrollOpened: number;
+
+  @field({mock: () => faker.random.number()})
+  taxes: number;
+
+  @field({mock: () => faker.random.number()})
+  taxesClosed: number;
+
+  @field({mock: () => faker.random.number()})
+  taxesOpened: number;
+
+  @field({mock: () => faker.random.number()})
+  paidWorkBreaksDays: number;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  lastSalaryDate: Date;
 
   @field({mock: IssuesMetrics})
   issues: IssuesMetrics;
@@ -30,6 +48,13 @@ export class UserMetrics {
   @field({mock: MergeRequestsMetrics})
   mergeRequests: MergeRequestsMetrics;
 
+}
+
+@model()
+export class UserPosition {
+
+  @field({mock: () => faker.name.findName()})
+  title: string;
 }
 
 @model()
@@ -46,6 +71,18 @@ export class User {
 
   @field({name: 'glAvatar', mock: () => faker.internet.avatar()})
   avatar: string;
+
+  @field({mock: () => faker.random.number()})
+  hourRate: number;
+
+  @field({mock: () => faker.random.number()})
+  taxRate: number;
+
+  @field({mock: () => faker.random.number()})
+  annualPaidWorkBreaksDays: number;
+
+  @field({mock: UserPosition})
+  position: UserPosition;
 
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
@@ -96,7 +133,6 @@ export class Me extends User {
     mock: [UserPermission.inviteUser]
   })
   permissions: UserPermission[];
-
 }
 
 @model()

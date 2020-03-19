@@ -4,7 +4,7 @@ import { UI } from 'junte-ui';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
 import { SalariesState } from 'src/components/salaries/salaries.component';
-import { UserMetrics } from 'src/models/user';
+import { Me } from 'src/models/user';
 
 @Component({
   selector: 'app-salaries-list',
@@ -16,7 +16,7 @@ export class SalariesListComponent implements OnInit {
 
   private _state = new SalariesState();
   ui = UI;
-  metrics: UserMetrics;
+  user: Me;
 
   set state(state: SalariesState) {
     this._state = state;
@@ -38,10 +38,10 @@ export class SalariesListComponent implements OnInit {
         this.state = new SalariesState({
           first: +first || undefined,
           offset: +offset || undefined,
-          user: !!user ? user.id : user
+          user: !!user ? user.id : undefined
         });
 
-        this.metrics = user.metrics;
+        this.user = user;
       });
   }
 

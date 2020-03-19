@@ -20,21 +20,21 @@
       <jnt-table-column title="Bonus"
                         i18n-title="@@label.bonus">
         <ng-template #cellTemplate let-bonus="bonus">
-          {{bonus | currency}}
+          {{bonus | currency:undefined:'symbol':'1.0-0'}}
         </ng-template>
       </jnt-table-column>
 
       <jnt-table-column title="Penalty"
                         i18n-title="@@label.penalty">
         <ng-template #cellTemplate let-penalty="penalty">
-          {{penalty | currency}}
+          {{penalty | currency:undefined:'symbol':'1.0-0'}}
         </ng-template>
       </jnt-table-column>
 
       <jnt-table-column title="Total"
                         i18n-title="@@label.total">
         <ng-template #cellTemplate let-total="total">
-          {{total | currency}}
+          {{total | currency:undefined:'symbol':'1.0-0'}}
         </ng-template>
       </jnt-table-column>
 
