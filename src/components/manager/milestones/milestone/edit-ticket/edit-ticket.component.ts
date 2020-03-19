@@ -42,7 +42,7 @@ export class EditTicketComponent {
 
   form = this.fb.group({
     id: [null],
-    milestone: [this.milestoneControl.value],
+    milestone: this.milestoneControl,
     type: [TicketTypes.feature, Validators.required],
     title: [null, Validators.required],
     role: [null],
