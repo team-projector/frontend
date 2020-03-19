@@ -1,40 +1,169 @@
-<jnt-block *ngIf="metrics" title="Current payroll"
+<jnt-block *ngIf="user.metrics as metrics" title="Current payroll"
            i18n-title="@@label.current_payroll"
            [width]="ui.width.fluid"
-           [padding]="ui.gutter.large">
-  <jnt-stack [gutter]="ui.gutter.large" [align]="ui.flex.align.stretch">
-    <jnt-stack [gutter]="ui.gutter.small" [align]="ui.flex.justify.end">
-      <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
-        <span payroll closed>{{metrics.payrollClosed | currency}}</span>
-        <jnt-label label [label]="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) | duration"
-                   [color]="ui.color.paleNavy"></jnt-label>
+           [padding]="ui.gutter.none">
+  <jnt-form [formGroup]="form">
+    <jnt-stack [align]="ui.flex.align.stretch">
+      <jnt-stack [align]="ui.flex.align.center" [gutter]="ui.gutter.small">
+        <span position>{{user.position.title}}</span>
+        <jnt-label i18n-label="@@label.hour"
+                   [label]="(user.hourRate | currency:undefined:'symbol':'1.0-0') + ' / ' + 'Hour'"
+                   [icon]="ui.icons.money" [color]="ui.color.green">
+        </jnt-label>
       </jnt-stack>
 
-      <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.end" [align]="ui.flex.align.center">
-        <span payroll opened>{{metrics.payrollOpened | currency}}</span>
-        <jnt-label label [label]="(metrics.issues.openedSpent + metrics.mergeRequests.openedSpent ) | duration"
-                   [color]="ui.color.paleNavy"></jnt-label>
+      <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.between" taxes>
+        <jnt-switch formControlName="taxes" i18n-label="@@label.taxes" label="Taxes" [size]="ui.size.small"></jnt-switch>
+        <span position>{{metrics.taxes | currency:undefined:'symbol':'1.0-0'}}</span>
       </jnt-stack>
-    </jnt-stack>
 
-    <ng-template #blockFooterTemplate>
-      <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.stretch" [justify]="ui.flex.justify.center">
+      <jnt-stack [gutter]="ui.gutter.small" [align]="ui.flex.align.stretch" salary>
+
+        <jnt-date-period [start]="metrics.lastSalaryDate" [end]="today"></jnt-date-period>
+
+        <jnt-stack [type]="ui.layout.stack.type.horizontal"
+                   [justify]="ui.flex.justify.end"
+                   [align]="ui.flex.align.center">
+          <ng-template #contentClosed>
+            <jnt-stack [type]="ui.layout.stack.type.vertical"
+                       [gutter]="ui.gutter.tiny"
+                       [align]="ui.flex.align.stretch"
+                       separation>
+              <span title i18n-label="@@label.closed_tasks">Closed Tasks</span>
+              <span sum>
+                {{(taxesControl.value ? metrics.issues.payrollClosed + metrics.issues.taxesClosed
+                : metrics.payrollClosed) | currency:undefined:'symbol':'1.0-0'}}
+              </span>
+              <div separator></div>
+              <span title i18n-label="@@label.closed_merge_requests">Closed Merge requests</span>
+              <span sum>
+                {{(taxesControl.value ? metrics.mergeRequests.payrollClosed + metrics.mergeRequests.taxesClosed
+                : metrics.mergeRequests.payrollClosed) | currency:undefined:'symbol':'1.0-0'}}
+              </span>
+            </jnt-stack>
+          </ng-template>
+          <span [jntPopover]="getOptions({contentTemplate: contentClosed, scheme: ui.scheme.primary})">
+            {{(taxesControl.value ? metrics.payrollClosed + metrics.taxesClosed : metrics.payrollClosed)
+            | currency:undefined:'symbol':'1.0-0'}}
+          </span>
+          <jnt-label *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) as spent"
+                     [label]="spent | duration"
+                     [color]="ui.color.purpleLight">
+          </jnt-label>
+        </jnt-stack>
+
+        <jnt-stack [type]="ui.layout.stack.type.horizontal"
+                   [justify]="ui.flex.justify.end"
+                   [align]="ui.flex.align.center">
+          <ng-template #contentOpened>
+            <jnt-stack [type]="ui.layout.stack.type.vertical"
+                       [gutter]="ui.gutter.tiny"
+                       [align]="ui.flex.align.stretch"
+                       separation>
+              <span title i18n-label="@@label.opened_tasks">Opened Tasks</span>
+              <span sum>
+                {{(taxesControl.value ? metrics.issues.payrollOpened + metrics.issues.taxesOpened
+                : metrics.payrollOpened) | currency:undefined:'symbol':'1.0-0'}}
+              </span>
+              <div separator></div>
+              <span title i18n-label="@@label.opened_merge_requests">Opened Merge requests</span>
+              <span sum>
+                {{(taxesControl.value ? metrics.mergeRequests.payrollOpened + metrics.mergeRequests.taxesOpened
+                : metrics.mergeRequests.payrollOpened) | currency:undefined:'symbol':'1.0-0'}}
+              </span>
+            </jnt-stack>
+          </ng-template>
+          <span [jntPopover]="getOptions({contentTemplate: contentOpened, scheme: ui.scheme.primary})">
+            {{(taxesControl.value ? metrics.payrollOpened + metrics.taxesOpened : metrics.payrollOpened)
+            | currency:undefined:'symbol':'1.0-0'}}</span>
+          <jnt-label *ngIf="(metrics.issues.openedSpent + metrics.mergeRequests.openedSpent) as spent"
+                     [label]="spent | duration"
+                     [color]="ui.color.purpleLight">
+          </jnt-label>
+        </jnt-stack>
+      </jnt-stack>
+
+      <ng-template #contentAll>
+        <jnt-stack [type]="ui.layout.stack.type.vertical"
+                   [gutter]="ui.gutter.tiny"
+                   [align]="ui.flex.align.stretch"
+                   separation>
+          <span title i18n-label="@@label.tasks">Tasks</span>
+          <span sum>{{(taxesControl.value ? metrics.issues.payroll + metrics.issues.taxes
+            : metrics.payroll) | currency:undefined:'symbol':'1.0-0'}}
+          </span>
+          <div separator></div>
+          <span title i18n-label="@@label.merge_requests ">Merge requests</span>
+          <span sum>{{(taxesControl.value ? metrics.mergeRequests.payroll + metrics.mergeRequests.taxes
+            : metrics.mergeRequests.payroll) | currency:undefined:'symbol':'1.0-0'}}
+              </span>
+        </jnt-stack>
+      </ng-template>
+      <div payroll>
+        <span [jntPopover]="getOptions({contentTemplate: contentAll, scheme: ui.scheme.primary})">
+        {{(taxesControl.value ? metrics.payroll + metrics.taxes : metrics.payroll)
+          | currency:undefined:'symbol':'1.0-0'}}</span>
+      </div>
+
+      <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.stretch"
+                 [justify]="ui.flex.justify.center">
         <div metrics>
-          <jnt-stack [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
-                     [align]="ui.flex.align.center">
+          <ng-template #contentBonuses>
+            <jnt-stack [gutter]="ui.gutter.tiny"
+                       [align]="ui.flex.align.stretch"
+                       separation>
+              <jnt-stack *ngFor="let bonus of bonuses"
+                         [type]="ui.layout.stack.type.horizontal"
+                         bonus>
+                <span>{{bonus.sum | currency:undefined:'symbol':'1.0-0'}}</span>
+                <span>{{bonus.comment}}</span>
+              </jnt-stack>
+            </jnt-stack>
+          </ng-template>
+          <jnt-stack
+            [jntPopover]="getOptions({contentTemplate: contentBonuses, title: 'Bonuses', scheme: ui.scheme.primary}, !!bonuses.length)"
+            [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
+            [align]="ui.flex.align.center">
             <jnt-icon like [icon]="ui.icons.like"></jnt-icon>
-            <span>{{metrics.bonus | currency}}</span>
+            <span>{{metrics.bonus | currency:undefined:'symbol':'1.0-0'}}</span>
           </jnt-stack>
         </div>
         <div separator></div>
         <div metrics>
-          <jnt-stack [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
-                     [align]="ui.flex.align.center">
+          <ng-template #contentPenalties>
+            <jnt-stack [type]="ui.layout.stack.type.vertical"
+                       [gutter]="ui.gutter.tiny"
+                       [align]="ui.flex.align.stretch"
+                       separation>
+              <jnt-stack *ngFor="let penalty of penalties">
+                <span>{{penalty.sum | currency:undefined:'symbol':'1.0-0'}}</span>
+                <span>{{penalty.comment}}</span>
+              </jnt-stack>
+            </jnt-stack>
+          </ng-template>
+          <jnt-stack
+            [jntPopover]="getOptions({contentTemplate: contentPenalties, title: 'Penalties', scheme: ui.scheme.primary}, !!penalties.length)"
+            [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
+            [align]="ui.flex.align.center">
             <jnt-icon dislike [icon]="ui.icons.dislike"></jnt-icon>
-            <span>{{metrics.penalty | currency}}</span>
+            <span>{{metrics.penalty | currency:undefined:'symbol':'1.0-0'}}</span>
           </jnt-stack>
         </div>
       </jnt-stack>
-    </ng-template>
-  </jnt-stack>
+      <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.stretch" paidDays>
+        <jnt-progress-bar [value]="(metrics.paidWorkBreaksDays / 30) * 100">
+          <ng-template #progressBarLegendTemplate>
+            <jnt-stack [type]="ui.layout.stack.type.horizontal"
+                       [align]="ui.flex.align.center"
+                       [justify]="ui.flex.justify.between"
+                       [gutter]="ui.gutter.normal">
+              <div>{{metrics.paidWorkBreaksDays}}</div>
+              <div>30</div>
+            </jnt-stack>
+          </ng-template>
+        </jnt-progress-bar>
+        <span paidDaysLabel>paid {{metrics.paidWorkBreaksDays}} days</span>
+      </jnt-stack>
+    </jnt-stack>
+  </jnt-form>
 </jnt-block>

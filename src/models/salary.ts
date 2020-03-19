@@ -1,5 +1,4 @@
 import { addDays } from 'date-fns';
-import { faker } from '../utils/mocks';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
@@ -7,6 +6,7 @@ import { mocks, TimeAccuracy } from 'src/utils/mocks';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
+import { faker } from '../utils/mocks';
 import { Paging } from './paging';
 
 @model({
@@ -20,8 +20,6 @@ import { Paging } from './paging';
     salary.penalty = mocks.money(100, 500);
     salary.taxes = mocks.money(100, 500);
     salary.total = salary.sum + salary.bonus - salary.penalty;
-
-
   }
 })
 export class Salary {
@@ -73,7 +71,6 @@ export class PagingSalaries implements Paging<Salary> {
     mock: {type: Salary, length: 10}
   })
   results: Salary[];
-
 }
 
 @model()
@@ -92,4 +89,58 @@ export class SalariesFilter implements SearchFilter {
     Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});
   }
 
+}
+
+@model()
+export class Bonus {
+
+  @field({mock: () => faker.random.number()})
+  id: number;
+
+  @field({mock: () => faker.random.number()})
+  sum: number;
+
+  @field()
+  comment: string;
+}
+
+@model()
+export class Penalty {
+
+  @field({mock: () => faker.random.number()})
+  id: number;
+
+  @field({mock: () => faker.random.number()})
+  sum: number;
+
+  @field()
+  comment: string;
+}
+
+@model()
+export class PagingBonuses implements Paging<Bonus> {
+
+  @field({mock: () => faker.random.number()})
+  count: number;
+
+  @field({
+    name: 'edges',
+    serializer: new ArraySerializer(new EdgesToPaging<Bonus>(Bonus)),
+    mock: {type: Bonus, length: 10}
+  })
+  results: Bonus[];
+}
+
+@model()
+export class PagingPenalties implements Paging<Penalty> {
+
+  @field({mock: () => faker.random.number()})
+  count: number;
+
+  @field({
+    name: 'edges',
+    serializer: new ArraySerializer(new EdgesToPaging<Penalty>(Penalty)),
+    mock: {type: Penalty, length: 10}
+  })
+  results: Penalty[];
 }

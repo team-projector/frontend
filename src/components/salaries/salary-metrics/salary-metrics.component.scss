@@ -4,20 +4,60 @@
   display: block;
 }
 
-h6 {
-  text-align: center;
-  color: $primary-text-dark-color;
+[position] {
+  color: $success-color;
+  font-size: 12px;
+  margin-top: $gutter-small;
+}
+
+[taxes] {
+  padding: $gutter-small $gutter-large;
+  background-color: $blue-100-color;
+}
+
+[salary] {
+  padding: $gutter-tiny $gutter-large;
+  font-size: 26px;
+  background: linear-gradient(132.05deg, $primary-color 5.04%, $purple-light-color 92.57%), $primary-color;
+  color: $white-color;
+}
+
+[separation] {
+  min-width: 150px;
+
+  [title] {
+    color: $purple-lighten-color;
+    font-size: 12px;
+  }
+
+  [separator] {
+    height: 1px;
+    background-color: $purple-lighten-color;
+    border-radius: 3px;
+  }
+
+  [sum] {
+    color: $white-color;
+    font-size: 21px;
+    font-weight: $font-weight-bold;
+  }
+
+  [bonus] {
+    font-size: 12px;
+    color: $white-color;
+    padding: $gutter-small;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $purple-lighten-color;
+    }
+  }
 }
 
 [payroll] {
-  font-size: 1.625rem;
-
-  &[opened] {
-    color: $primary-text-light-color;
-  }
-  &[closed] {
-    color: $primary-dark-color;
-  }
+  font-size: 26px;
+  text-align: center;
+  color: $primary-dark-color;
+  font-weight: $font-weight-bold;
 }
 
 [metrics] {
@@ -32,16 +72,22 @@ h6 {
   }
 
   [dislike] {
-   color: $fail-color;
+    color: $fail-color;
   }
-}
-
-[label] ::ng-deep span[child-of=#{$jnt-label-host}] {
-  color: $primary-text-color;
 }
 
 [separator] {
   min-width: 1px;
   min-height: 100%;
   background-color: $muted-color;
+}
+
+[paidDays] {
+  padding: $gutter-normal $gutter-large;
+
+  [paidDaysLabel] {
+    text-align: center;
+    color: $purple-color;
+    font-size: 12px;
+  }
 }
