@@ -5,7 +5,7 @@
   <jnt-form [formGroup]="form">
     <jnt-stack [align]="ui.flex.align.stretch">
       <jnt-stack [align]="ui.flex.align.center" [gutter]="ui.gutter.small">
-        <span position>{{user.position.title}}</span>
+        <span *ngIf="!!user.position" position>{{user.position.title}}</span>
         <jnt-label i18n-label="@@label.hour"
                    [label]="(user.hourRate | currency:undefined:'symbol':'1.0-0') + ' / ' + 'Hour'"
                    [icon]="ui.icons.money" [color]="ui.color.green">
