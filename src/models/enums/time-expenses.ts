@@ -1,3 +1,8 @@
+export enum OwnerType {
+  issue = 'issue',
+  mergeRequest = 'merge_request'
+}
+
 export enum TimeExpenseType {
   opened = 'opened',
   closed = 'closed',

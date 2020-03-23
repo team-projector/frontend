@@ -19,6 +19,11 @@ export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
               __typename
               title
               state
+              user {
+                id
+                name
+                glAvatar
+              }
               labels {
                 count
                 edges {

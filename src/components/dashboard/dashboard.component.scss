@@ -4,22 +4,3 @@
   display: block
 }
 
-[menu] {
-  ::ng-deep {
-    div[child-of=#{$jnt-menu-host}]:nth-child(1) svg path {
-      fill: url(#purple-light-gradient);
-    }
-    div[child-of=#{$jnt-menu-host}]:nth-child(2) svg path {
-      fill: url(#green-light-gradient);
-    }
-    div[child-of=#{$jnt-menu-host}]:nth-child(3) svg path {
-      fill: url(#blue-light-gradient);
-    }
-    div[child-of=#{$jnt-menu-host}]:nth-child(4) svg path {
-      fill: url(#orange-light-gradient);
-    }
-    div[child-of=#{$jnt-menu-host}]:nth-child(5) svg path {
-      fill: url(#green-light-gradient);
-    }
-  }
-}

@@ -9,7 +9,7 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
-import { TimeExpenseState, TimeExpenseType } from 'src/models/enums/time-expenses';
+import { OwnerType, TimeExpenseState, TimeExpenseType } from 'src/models/enums/time-expenses';
 import { ViewType } from 'src/models/enums/view-type';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter } from 'src/models/spent-time';
 import { DateSerializer } from 'src/serializers/date';
@@ -67,6 +67,7 @@ export class TimeExpensesComponent implements OnInit {
   timeExpensesType = TimeExpenseType;
   summary: SpentTimesSummary;
   viewType = ViewType;
+  ownerType = OwnerType;
 
   tableControl = this.builder.control({
     q: null,

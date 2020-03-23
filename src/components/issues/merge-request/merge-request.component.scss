@@ -1,0 +1,33 @@
+@import "variables";
+
+:host {
+  display: block;
+}
+
+[ticket] {
+  font-size: 12px;
+}
+
+[state] {
+  color: $success-color;
+  &[doing] {
+    min-width: 18px;
+    width: 18px;
+    min-height: 18px;
+    height: 18px;
+    border-radius: 50%;
+    fill: $success-color;
+    padding: 1px;
+    border: 1px solid $success-color;
+  }
+  &[delayed] {
+    color: $orange-color;
+  }
+  &[bug] {
+    color: $fail-color;
+  }
+}
+
+[closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
+  text-decoration: line-through;
+}

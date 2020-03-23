@@ -51,8 +51,8 @@ export class MergeRequestsState {
 
 @Component({
   selector: 'app-merge-requests',
-  templateUrl: './merge-request.component.html',
-  styleUrls: ['./merge-request.component.scss']
+  templateUrl: './merge-requests.component.html',
+  styleUrls: ['./merge-requests.component.scss']
 })
 export class MergeRequestsComponent implements OnInit {
 

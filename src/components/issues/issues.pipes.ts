@@ -1,7 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { NgModule, Pipe, PipeTransform } from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { Label } from 'src/models/label';
+import { OwnerType } from '../../models/enums/time-expenses';
+import { Issue } from '../../models/issue';
+import { MergeRequest } from '../../models/merge-request';
 
 @Pipe({name: 'labels'})
 export class LabelsPipe implements PipeTransform {
@@ -21,19 +23,15 @@ export class HasLabelPipe implements PipeTransform {
   }
 }
 
-@NgModule({
-  declarations: [
-    LabelsPipe,
-    HasLabelPipe
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    LabelsPipe,
-    HasLabelPipe
-  ]
-})
-export class IssuesPipesModule {
-
+@Pipe({name: 'getOwnerType'})
+export class GetOwnerTypePipe implements PipeTransform {
+  transform(owner: Issue | MergeRequest): OwnerType {
+    if (owner instanceof Issue) {
+      return OwnerType.issue;
+    } else if (owner instanceof MergeRequest) {
+      return OwnerType.mergeRequest;
+    }
+    throw new Error('Wrong owner type');
+  }
 }
+

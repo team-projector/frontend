@@ -33,7 +33,10 @@
                         title="Title"
                         i18n-title="@@label.title">
         <ng-template #cellTemplate let-owner="owner">
-          <app-issue [issue]="owner"></app-issue>
+          <ng-container [ngSwitch]="owner | getOwnerType">
+            <app-issue *ngSwitchCase="ownerType.issue" [issue]="owner"></app-issue>
+            <app-merge-request *ngSwitchCase="ownerType.mergeRequest" [mergeRequest]="owner"></app-merge-request>
+          </ng-container>
         </ng-template>
       </jnt-table-column>
 
