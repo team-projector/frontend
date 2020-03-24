@@ -21,8 +21,8 @@
 
 [admin] {
   position: absolute;
-  top: $gutter-normal;
-  right: $gutter-normal;
+  top: $jnt-gutter-normal;
+  right: $jnt-gutter-normal;
 }
 
 [form] {
@@ -31,15 +31,15 @@
   a {
     display: block;
     text-align: center;
-    margin-top: $gutter-big;
+    margin-top: $jnt-gutter-big;
   }
 
   [logo] {
     text-align: center;
-    padding-bottom: $gutter-big;
+    padding-bottom: $jnt-gutter-big;
   }
   [fields] {
-    margin-top: $gutter-normal;
+    margin-top: $jnt-gutter-normal;
   }
   button {
     display: block;
@@ -49,6 +49,6 @@
 }
 
 [god] ::ng-deep [host=#{$jnt-button-host}] button {
-  padding-left: $gutter-normal !important;
-  padding-right: $gutter-normal !important;
+  padding-left: $jnt-gutter-normal !important;
+  padding-right: $jnt-gutter-normal !important;
 }

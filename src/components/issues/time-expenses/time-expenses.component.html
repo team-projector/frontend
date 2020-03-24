@@ -1,7 +1,7 @@
 <jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
     <jnt-table #table (reloaded)="reloaded.emit()" formControlName="table">
-      <ng-template *ngIf="view === viewType.extended" #filters>
+      <ng-template *ngIf="view === viewType.extended" #tableFiltersTemplate>
         <jnt-stack [type]="ui.layout.stack.type.horizontal">
           <jnt-switcher formControlName="type">
             <jnt-switcher-option label="All"
@@ -32,7 +32,7 @@
       <jnt-table-column sort="title"
                         title="Title"
                         i18n-title="@@label.title">
-        <ng-template #cellTemplate let-owner="owner">
+        <ng-template #tableCellTemplate let-owner="owner">
           <ng-container [ngSwitch]="owner | getOwnerType">
             <app-issue *ngSwitchCase="ownerType.issue" [issue]="owner"></app-issue>
             <app-merge-request *ngSwitchCase="ownerType.mergeRequest" [mergeRequest]="owner"></app-merge-request>
@@ -43,21 +43,21 @@
       <jnt-table-column sort="created_at"
                         title="Created at"
                         i18n-title="@@label.created_at">
-        <ng-template #cellTemplate let-createdAt="createdAt">
+        <ng-template #tableCellTemplate let-createdAt="createdAt">
           {{createdAt | date:'medium'}}
         </ng-template>
       </jnt-table-column>
 
       <jnt-table-column title="Spent"
                         i18n-title="@@label.spent">
-        <ng-template #cellTemplate let-timeSpent="timeSpent">
+        <ng-template #tableCellTemplate let-timeSpent="timeSpent">
           {{timeSpent | duration}}
         </ng-template>
       </jnt-table-column>
 
       <jnt-table-column title="Earn"
                         i18n-title="@@label.earn">
-        <ng-template #cellTemplate let-sum="sum">
+        <ng-template #tableCellTemplate let-sum="sum">
           {{!!sum ? (sum | currency) : '&mdash;'}}
         </ng-template>
       </jnt-table-column>

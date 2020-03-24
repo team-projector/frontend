@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Themes } from '../../models/enums/themes';
+import { Themes } from 'src/models/enums/themes';
 
 @Component({
   selector: 'app-theme-switcher',
@@ -10,8 +10,6 @@ import { Themes } from '../../models/enums/themes';
 export class AppThemeSwitcherComponent implements OnInit {
 
   themes = Themes;
-  loading = false;
-
   themeControl = this.fb.control(!!localStorage.theme ? Themes[localStorage.theme] as Themes : Themes.light);
 
   form = this.fb.group({
@@ -22,12 +20,13 @@ export class AppThemeSwitcherComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.themeControl.valueChanges.subscribe(theme => this.load(theme));
+    this.themeControl.valueChanges
+      .subscribe(theme => {
+        if (theme !== Themes.light) {
+          localStorage.setItem('theme', theme);
+        } else {
+          localStorage.removeItem('theme');
+        }
+      });
   }
-
-  private load(theme: Themes) {
-    this.loading = true;
-    window['themes'](theme, () => this.loading = false);
-  }
-
 }

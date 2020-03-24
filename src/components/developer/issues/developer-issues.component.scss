@@ -10,7 +10,7 @@
 
 [block] {
   @media screen and (max-width: map_get($grid-breakpoints, wide)) {
-    margin-bottom: $gutter-normal;
+    margin-bottom: $jnt-gutter-normal;
   }
 }
 
@@ -19,41 +19,41 @@
   display: flex;
   align-items: center;
   min-height: 40px;
-  color: $primary-text-light-color;
-  padding: $gutter-small $gutter-normal;
-  border: 1px dashed $secondary-dark-color;
-  border-radius: $corner-normal;
+  color: $jnt-primary-text-light-color;
+  padding: $jnt-gutter-small $jnt-gutter-normal;
+  border: 1px dashed $jnt-secondary-dark-color;
+  border-radius: $jnt-corner-normal;
   line-height: 1em;
 
   &[active='true'] {
     border-color: transparent;
-    background: $primary-light-color;
-    color: $white-color;
-    padding-right: $gutter-huge;
-    box-shadow: $shadow-normal;
+    background: $jnt-primary-light-color;
+    color: $jnt-white-color;
+    padding-right: $jnt-gutter-huge;
+    box-shadow: $jnt-shadow-normal;
   }
 
   [avatar], [host=#{$jnt-icon-host}] {
-    margin-right: $gutter-small;
+    margin-right: $jnt-gutter-small;
   }
 
   [reset] {
     position: absolute;
-    top: $gutter-small;
-    right: $gutter-small;
+    top: $jnt-gutter-small;
+    right: $jnt-gutter-small;
   }
 }
 
 [presentations] {
   div {
-    padding: $gutter-tiny $gutter-normal;
+    padding: $jnt-gutter-tiny $jnt-gutter-normal;
     background-color: silver;
-    color: $primary-text-color;
+    color: $jnt-primary-text-color;
     cursor: pointer;
-    border-radius: $corner-small;
+    border-radius: $jnt-corner-small;
   }
 
-  margin-bottom: $gutter-normal;
+  margin-bottom: $jnt-gutter-normal;
 }
 
 .user-metrics {
@@ -91,8 +91,8 @@
 }
 
 ::ng-deep [current-day='true'] {
-  background-color: $primary-light-color;
-  color: $white-color;
+  background-color: $jnt-primary-light-color;
+  color: $jnt-white-color;
 }
 
 .day {
@@ -106,8 +106,8 @@
   border: 2px solid transparent;
 
   &[today='true'] {
-    border-radius: $corner-normal;
-    border: 2px solid $warning-color;
+    border-radius: $jnt-corner-normal;
+    border: 2px solid $jnt-warning-color;
   }
 
   [issues] {
@@ -130,7 +130,7 @@
       height: 40px;
 
       &[time] {
-        color: $primary-text-light-color
+        color: $jnt-primary-text-light-color
       }
     }
   }

@@ -9,21 +9,21 @@
 }
 
 [efficiency] {
-  margin-top: $gutter-tiny;
+  margin-top: $jnt-gutter-tiny;
   text-align: center;
   font-size: .85em;
   [slow='true'] {
-    background: $fail-color;
-    color: $white-color;
-    border-radius: $gutter-tiny;
+    background: $jnt-fail-color;
+    color: $jnt-white-color;
+    border-radius: $jnt-gutter-tiny;
     line-height: 1em;
-    padding: 0 $gutter-tiny;
+    padding: 0 $jnt-gutter-tiny;
   }
 }
 
 [metric] {
   overflow: hidden;
-  white-space: nowrap;
+  jnt-white-space: nowrap;
   text-overflow: ellipsis;
   font-size: .85em;
   &:first-of-type {
@@ -31,9 +31,9 @@
     text-align: left;
   }
   &[estimate] {
-    color: $primary-text-light-color;
+    color: $jnt-primary-text-light-color;
   }
   [collaboration] {
-    color: $fail-color;
+    color: $jnt-fail-color;
   }
 }

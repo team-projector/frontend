@@ -5,50 +5,50 @@
 }
 
 [position] {
-  color: $success-color;
+  color: $jnt-success-color;
   font-size: 12px;
-  margin-top: $gutter-small;
+  margin-top: $jnt-gutter-small;
 }
 
 [taxes] {
-  padding: $gutter-small $gutter-large;
-  background-color: $blue-100-color;
+  padding: $jnt-gutter-small $jnt-gutter-large;
+  background-color: $jnt-blue-100-color;
 }
 
 [salary] {
-  padding: $gutter-tiny $gutter-large;
+  padding: $jnt-gutter-tiny $jnt-gutter-large;
   font-size: 26px;
-  background: linear-gradient(132.05deg, $primary-color 5.04%, $purple-light-color 92.57%), $primary-color;
-  color: $white-color;
+  background: linear-gradient(132.05deg, $jnt-primary-color 5.04%, $jnt-purple-light-color 92.57%), $jnt-primary-color;
+  color: $jnt-white-color;
 }
 
 [separation] {
   min-width: 150px;
 
   [title] {
-    color: $purple-lighten-color;
+    color: $jnt-purple-lighten-color;
     font-size: 12px;
   }
 
   [separator] {
     height: 1px;
-    background-color: $purple-lighten-color;
+    background-color: $jnt-purple-lighten-color;
     border-radius: 3px;
   }
 
   [sum] {
-    color: $white-color;
+    color: $jnt-white-color;
     font-size: 21px;
-    font-weight: $font-weight-bold;
+    font-weight: $jnt-font-weight-bold;
   }
 
   [bonus] {
     font-size: 12px;
-    color: $white-color;
-    padding: $gutter-small;
+    color: $jnt-white-color;
+    padding: $jnt-gutter-small;
 
     &:not(:last-child) {
-      border-bottom: 1px solid $purple-lighten-color;
+      border-bottom: 1px solid $jnt-purple-lighten-color;
     }
   }
 }
@@ -56,38 +56,38 @@
 [payroll] {
   font-size: 26px;
   text-align: center;
-  color: $primary-dark-color;
-  font-weight: $font-weight-bold;
+  color: $jnt-primary-dark-color;
+  font-weight: $jnt-font-weight-bold;
 }
 
 [metrics] {
-  color: $primary-text-dark-color;
+  color: $jnt-primary-text-dark-color;
 
   [like], [dislike] {
     font-size: 15px;
   }
 
   [like] {
-    color: $success-color;
+    color: $jnt-success-color;
   }
 
   [dislike] {
-    color: $fail-color;
+    color: $jnt-fail-color;
   }
 }
 
 [separator] {
   min-width: 1px;
   min-height: 100%;
-  background-color: $muted-color;
+  background-color: $jnt-muted-color;
 }
 
 [paidDays] {
-  padding: $gutter-normal $gutter-large;
+  padding: $jnt-gutter-normal $jnt-gutter-large;
 
   [paidDaysLabel] {
     text-align: center;
-    color: $purple-color;
+    color: $jnt-purple-color;
     font-size: 12px;
   }
 }

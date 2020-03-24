@@ -56,16 +56,15 @@
               "node_modules/junte-ui/lib/assets/fonts/junte-ui-icons-default/junte-ui-icons-default-font.scss",
               "node_modules/junte-ui/lib/assets/fonts/open-sans/import.scss",
               "src/assets/fonts/icons/icons-font.scss",
-              "src/styles.scss"
+              "src/styles.scss",
+              "src/assets/themes/light.scss",
+              "src/assets/themes/dark.scss"
             ],
             "stylePreprocessorOptions": {
               "includePaths": [
-                "src/style"
+                "./node_modules/junte-ui/lib/assets/styles"
               ]
             },
-            "scripts": [
-              "src/assets/themes/themes.js"
-            ],
             "es5BrowserSupport": true
           },
           "configurations": {

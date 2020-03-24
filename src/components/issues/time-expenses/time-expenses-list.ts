@@ -9,10 +9,12 @@ export abstract class TimeExpensesListComponent implements OnInit {
   private _state = new TimeExpensesState();
   @Output() reloaded = new EventEmitter();
 
+  skipLocation = false;
+
   set state(state: TimeExpensesState) {
     this._state = state;
     this.router.navigate([this.getState(serialize(state))],
-      {relativeTo: this.route}).then(() => null);
+      {relativeTo: this.route, skipLocationChange: this.skipLocation}).then(() => null);
   }
 
   get state() {

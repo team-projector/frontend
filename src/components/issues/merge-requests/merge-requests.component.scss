@@ -5,7 +5,7 @@
 }
 
 [slow='true'] {
-  border-bottom: 2px solid $fail-color;
+  border-bottom: 2px solid $jnt-fail-color;
 }
 
 [closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
@@ -18,7 +18,7 @@
 
 [metric] {
   overflow: hidden;
-  white-space: nowrap;
+  jnt-white-space: nowrap;
   text-overflow: ellipsis;
   font-size: .85em;
   &:first-of-type {
@@ -26,6 +26,6 @@
     text-align: left;
   }
   &[estimate] {
-    color: $primary-text-light-color;
+    color: $jnt-primary-text-light-color;
   }
 }
