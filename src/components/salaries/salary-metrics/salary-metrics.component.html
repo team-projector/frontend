@@ -13,7 +13,8 @@
       </jnt-stack>
 
       <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.between" taxes>
-        <jnt-switch formControlName="taxes" i18n-label="@@label.taxes" label="Taxes" [size]="ui.size.small"></jnt-switch>
+        <jnt-switch formControlName="taxes" i18n-label="@@label.taxes" label="Taxes"
+                    [size]="ui.size.small"></jnt-switch>
         <span position>{{metrics.taxes | currency:undefined:'symbol':'1.0-0'}}</span>
       </jnt-stack>
 
@@ -121,7 +122,8 @@
             </jnt-stack>
           </ng-template>
           <jnt-stack
-            [jntPopover]="getOptions({contentTemplate: contentBonuses, title: 'Bonuses', scheme: ui.scheme.primary}, !!bonuses.length)"
+            [jntPopover]="getOptions({contentTemplate: contentBonuses, title: 'Bonuses', scheme: ui.scheme.primary},
+              !!bonuses.length)"
             [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
             [align]="ui.flex.align.center">
             <jnt-icon like [icon]="ui.icons.like"></jnt-icon>
@@ -142,7 +144,8 @@
             </jnt-stack>
           </ng-template>
           <jnt-stack
-            [jntPopover]="getOptions({contentTemplate: contentPenalties, title: 'Penalties', scheme: ui.scheme.primary}, !!penalties.length)"
+            [jntPopover]="getOptions({contentTemplate: contentPenalties, title: 'Penalties', scheme: ui.scheme.primary},
+              !!penalties.length)"
             [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
             [align]="ui.flex.align.center">
             <jnt-icon dislike [icon]="ui.icons.dislike"></jnt-icon>

@@ -4,30 +4,84 @@
   display: block;
 }
 
-:host-context([theme='dark']) {
-  table {
-    tbody {
-      [title] {
-        color: $gray-600-color;
-      }
-      [value] {
-        color: $gray-100-color;
-      }
+[position] {
+  color: $success-color;
+  font-size: 12px;
+  margin-top: $gutter-small;
+}
+
+[taxes] {
+  padding: $gutter-small $gutter-large;
+  background-color: $blue-100-color;
+}
+
+[salary] {
+  padding: $gutter-tiny $gutter-large;
+  font-size: 26px;
+  background: linear-gradient(132.05deg, $primary-color 5.04%, $purple-light-color 92.57%), $primary-color;
+  color: $white-color;
+}
+
+[separation] {
+  min-width: 150px;
+
+  [title] {
+    color: $purple-lighten-color;
+    font-size: 12px;
+  }
+
+  [separator] {
+    height: 1px;
+    background-color: $purple-lighten-color;
+    border-radius: 3px;
+  }
+
+  [sum] {
+    color: $white-color;
+    font-size: 21px;
+    font-weight: $font-weight-bold;
+  }
+
+  [bonus] {
+    font-size: 12px;
+    color: $white-color;
+    padding: $gutter-small;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $purple-lighten-color;
     }
   }
 }
 
-table {
-  width: 100%;
-  border-spacing: 0 $gutter-normal;
-  tbody {
-    [title] {
-      color: $primary-text-light-color;
-      width: 70%;
+[payroll] {
+  font-size: 26px;
+  text-align: center;
+  color: $primary-dark-color;
+  font-weight: $font-weight-bold;
+}
+
+[metrics] {
+  padding: 0 $gutter-large $gutter-normal $gutter-large;
+
+  [metric] {
+    color: $primary-text-dark-color;
+
+    [like], [dislike] {
+      font-size: 15px;
     }
-    [value] {
-      color: $primary-text-dark-color;
-      text-align: right;
+
+    [like] {
+      color: $success-color;
     }
+
+    [dislike] {
+      color: $fail-color;
+    }
+  }
+
+  [separator] {
+    min-width: 1px;
+    min-height: 100%;
+    background-color: $muted-color;
   }
 }

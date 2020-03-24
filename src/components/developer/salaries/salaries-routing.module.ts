@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SalariesListComponent } from './salaries-list.component';
 import { SalaryDetailComponent } from './salary-detail/salary-detail.component';
 import { SalaryResolver } from 'src/resolvers/salary';
-import { MeUserResolver } from '../../../resolvers/me';
+import { MeUserResolver } from 'src/resolvers/me';
 
 export const SALARY_BREADCRUMB = $localize`:@@label.salary:Salary Detail`;
 

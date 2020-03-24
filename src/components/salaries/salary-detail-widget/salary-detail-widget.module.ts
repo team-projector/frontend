@@ -1,8 +1,9 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SalaryDetailWidgetComponent } from './salary-detail-widget.component';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from 'junte-ui';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
+import { SalaryDetailWidgetComponent } from './salary-detail-widget.component';
 
 @NgModule({
   declarations: [
@@ -10,6 +11,7 @@ import { DatePipesModule } from 'src/pipes/date-pipes.module';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     JunteUiModule,
     DatePipesModule
   ],

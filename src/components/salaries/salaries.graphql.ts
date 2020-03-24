@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class AllSalariesGQL extends Query<{allSalaries}> {
+export class AllSalariesGQL extends Query<{ allSalaries }> {
   document = gql`
     query ($user: ID, $offset: Int, $first: Int){
       allSalaries (user: $user, offset: $offset, first: $first) {
@@ -23,6 +23,54 @@ export class AllSalariesGQL extends Query<{allSalaries}> {
             sum
             total
             payed
+          }
+        }
+      }
+    }`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AllBonusesGQL extends Query<{ allBonuses }> {
+  document = gql`
+    query ($salary: ID, $user: ID) {
+      allBonuses(salary: $salary, user: $user) {
+        count
+        edges {
+          node {
+            id
+            sum
+            comment
+            createdAt
+            createdBy {
+              id
+              name
+            }
+          }
+        }
+      }
+    }`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AllPenaltiesGQL extends Query<{ allPenalties }> {
+  document = gql`
+    query ($salary: ID, $user: ID) {
+      allPenalties(salary: $salary, user: $user) {
+        count
+        edges {
+          node {
+            id
+            sum
+            comment
+            createdAt
+            createdBy {
+              id
+              name
+            }
           }
         }
       }

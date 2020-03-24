@@ -4,7 +4,7 @@ import { PopoverOptions, UI } from 'junte-ui';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
-import { AllBonusesGQL, AllPenaltiesGQL } from 'src/components/salaries/salary-metrics/salary-metrics.graphql';
+import { AllBonusesGQL, AllPenaltiesGQL } from 'src/components/salaries/salaries.graphql';
 import { environment } from 'src/environments/environment';
 import { Bonus, PagingBonuses, PagingPenalties, Penalty } from 'src/models/salary';
 import { Me } from 'src/models/user';

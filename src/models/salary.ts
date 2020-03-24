@@ -2,6 +2,7 @@ import { addDays } from 'date-fns';
 import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
+import { User, UserPosition } from 'src/models/user';
 import { mocks, TimeAccuracy } from 'src/utils/mocks';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
@@ -26,6 +27,15 @@ export class Salary {
 
   @field({mock: () => faker.random.uuid()})
   id: string;
+
+  @field({mock: () => faker.random.number()})
+  hourRate: string;
+
+  @field({mock: () => faker.random.number()})
+  taxRate: string;
+
+  @field({mock: UserPosition})
+  position: UserPosition;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
@@ -97,6 +107,12 @@ export class Bonus {
   @field({mock: () => faker.random.number()})
   id: number;
 
+  @field({mock: faker.date.future(), serializer: new DateSerializer()})
+  createdAt: Date;
+
+  @field({mock: User})
+  createdBy: User;
+
   @field({mock: () => faker.random.number()})
   sum: number;
 
@@ -109,6 +125,12 @@ export class Penalty {
 
   @field({mock: () => faker.random.number()})
   id: number;
+
+  @field({mock: faker.date.future(), serializer: new DateSerializer()})
+  createdAt: Date;
+
+  @field({mock: User})
+  createdBy: User;
 
   @field({mock: () => faker.random.number()})
   sum: number;
