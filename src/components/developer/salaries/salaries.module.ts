@@ -2,7 +2,9 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from 'junte-ui';
+import { BonusesModule } from 'src/components/bonuses/bonuses.module';
 import { SalariesRoutingModule } from 'src/components/developer/salaries/salaries-routing.module';
+import { PenaltiesModule } from 'src/components/penalties/penalties.module';
 import { SalariesComponent } from 'src/components/salaries/salaries.component';
 import { SalaryDetailWidgetModule } from 'src/components/salaries/salary-detail-widget/salary-detail-widget.module';
 import { SalaryMetricsComponent } from 'src/components/salaries/salary-metrics/salary-metrics.component';
@@ -28,7 +30,9 @@ import { SalaryDetailComponent } from './salary-detail/salary-detail.component';
     SalariesRoutingModule,
     SalaryDetailWidgetModule,
     DatePipesModule,
-    IssuesModule
+    IssuesModule,
+    BonusesModule,
+    PenaltiesModule
   ],
   exports: [
     SalariesComponent,
