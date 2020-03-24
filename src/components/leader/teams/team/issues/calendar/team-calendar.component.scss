@@ -13,18 +13,18 @@
         &[rewind] {
           th {
             [date] {
-              color: $gray-100-color;
+              color: $jnt-gray-100-color;
               [arrow] {
-                color: $gray-200-color;
+                color: $jnt-gray-200-color;
               }
             }
           }
         }
         &[timeline] {
-          background-color: $gray-800-color;
+          background-color: $jnt-gray-800-color;
           th[day] {
             &:hover, &[active='true'] {
-              background-color: $gray-700-color;
+              background-color: $jnt-gray-700-color;
             }
           }
         }
@@ -35,11 +35,11 @@
         td {
           &[day] {
             &:hover, &[active='true'] {
-              background-color: $gray-700-color;
+              background-color: $jnt-gray-700-color;
             }
 
             &[active-day='true'] {
-              background: $gray-800-color;
+              background: $jnt-gray-800-color;
             }
           }
         }
@@ -50,12 +50,12 @@
 
 [presentations] {
   div {
-    padding: 0 $gutter-normal;
+    padding: 0 $jnt-gutter-normal;
     background-color: silver;
     cursor: pointer;
-    border-radius: $corner-small;
+    border-radius: $jnt-corner-small;
   }
-  margin-bottom: $gutter-normal;
+  margin-bottom: $jnt-gutter-normal;
 }
 
 table {
@@ -63,18 +63,18 @@ table {
   table-layout: auto;
   border: 0;
   border-spacing: 0;
-  background-color: $white-color;
-  border-radius: $corner-normal;
-  box-shadow: $shadow-normal;
-  font-size: $font-size-small;
+  background-color: $jnt-white-color;
+  border-radius: $jnt-corner-normal;
+  box-shadow: $jnt-shadow-normal;
+  font-size: $jnt-font-size-small;
   thead {
     tr {
       &[rewind] {
         th {
           [date] {
             display: flex;
-            color: $primary-text-dark-color;
-            font-weight: $font-weight-bold;
+            color: $jnt-primary-text-dark-color;
+            font-weight: $jnt-font-weight-bold;
             span {
               margin: auto;
             }
@@ -82,7 +82,7 @@ table {
               background-color: transparent;
               border-width: 0;
               font-size: 1rem;
-              color: $primary-text-color;
+              color: $jnt-primary-text-color;
               cursor: pointer;
               padding: 0;
               vertical-align: middle;
@@ -97,38 +97,38 @@ table {
               &:focus {
                 outline: none;
                 box-shadow: 0 0 6px rgba(8, 35, 202, 0.4);
-                border: 1px solid $primary-color;
+                border: 1px solid $jnt-primary-color;
               }
               &:hover {
-                color: lighten($primary-text-color, 10%);
+                color: lighten($jnt-primary-text-color, 10%);
               }
             }
           }
         }
       }
       &[timeline] {
-        background-color: $secondary-background;
+        background-color: $jnt-secondary-background;
         th {
           &[day] {
             cursor: pointer;
             user-select: none;
             &:hover, &[active='true'] {
-              background-color: $secondary-dark-color;
+              background-color: $jnt-secondary-dark-color;
             }
             &[today='true']:not(:hover):not([active='true']) {
-              background-color: $success-color;
-              color: $white-color;
+              background-color: $jnt-success-color;
+              color: $jnt-white-color;
             }
           }
           &[name-metric] {
-            color: $primary-dark-color;
+            color: $jnt-primary-dark-color;
           }
         }
       }
       th {
-        padding: $gutter-normal $gutter-tiny;
+        padding: $jnt-gutter-normal $jnt-gutter-tiny;
         &[gutter] {
-          width: $gutter-tiny;
+          width: $jnt-gutter-tiny;
         }
       }
     }
@@ -143,7 +143,7 @@ table {
         }
       }
       td {
-        border-top: 1px solid $muted-color;
+        border-top: 1px solid $jnt-muted-color;
       }
       &[nodata] {
         height: 200px;
@@ -154,39 +154,39 @@ table {
           text-align: center;
           [icon] {
             font-size: 80px;
-            color: $muted-color;
+            color: $jnt-muted-color;
           }
           [message] {
-            color: $primary-text-light-color;
+            color: $jnt-primary-text-light-color;
           }
         }
       }
       &[loading] {
         pointer-events: none;
         td {
-          padding: $gutter-normal;
+          padding: $jnt-gutter-normal;
         }
       }
       td {
-        padding: $gutter-tiny;
+        padding: $jnt-gutter-tiny;
         &[slow='true'] span {
-          border-bottom: 2px solid $fail-color;
+          border-bottom: 2px solid $jnt-fail-color;
         }
         &[day] {
           cursor: pointer;
           width: 50px;
           &[active-day='true'] {
-            background: $secondary-background;
+            background: $jnt-secondary-background;
           }
           &:hover {
-            background-color: $secondary-dark-color;
+            background-color: $jnt-secondary-dark-color;
           }
 
           &[active='true'] {
-            background-color: rgba($primary-light-color, .5);
-            border: 1px solid $primary-color;
+            background-color: rgba($jnt-primary-light-color, .5);
+            border: 1px solid $jnt-primary-color;
             border-radius: 3px;
-            color: $white-color;
+            color: $jnt-white-color;
           }
           [metric] {
             position: relative;
@@ -225,25 +225,25 @@ table {
 
         [developer] {
           cursor: pointer;
-          padding: $gutter-small;
+          padding: $jnt-gutter-small;
           &:focus {
             outline: 0;
-            border: 1px solid $primary-color;
-            border-radius: $corner-small;
-            box-shadow: $shadow-primary;
+            border: 1px solid $jnt-primary-color;
+            border-radius: $jnt-corner-small;
+            box-shadow: $jnt-shadow-primary;
           }
         }
       }
       &[active='true'] {
         td {
-          background-color: $secondary-background;
+          background-color: $jnt-secondary-background;
         }
         &:last-child {
           td:first-child {
-            border-bottom-left-radius: $corner-normal;
+            border-bottom-left-radius: $jnt-corner-normal;
           }
           td:last-child {
-            border-bottom-right-radius: $corner-normal;
+            border-bottom-right-radius: $jnt-corner-normal;
           }
         }
       }
@@ -275,7 +275,7 @@ table {
 
   th:nth-child(2),
   tbody tr td:nth-child(2) {
-    padding: $gutter-tiny 0;
+    padding: $jnt-gutter-tiny 0;
     min-width: 120px;
   }
 
@@ -289,6 +289,6 @@ table {
   td:nth-child(3),
   th:nth-child(10),
   td:nth-child(10) {
-    border-right: 1px solid $muted-color;
+    border-right: 1px solid $jnt-muted-color;
   }
 }

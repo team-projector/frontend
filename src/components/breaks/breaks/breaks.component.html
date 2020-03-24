@@ -3,7 +3,7 @@
            [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
     <jnt-table #table formControlName="table" [features]="[ui.collections.table.features]">
-      <ng-template #filters>
+      <ng-template #tableFiltersTemplate>
         <jnt-button text="Add"
                     i18n-text="@@action.add"
                     [icon]="ui.icons.add"
@@ -15,7 +15,7 @@
       <jnt-table-column *ngIf="view === viewType.extended"
                         title="Developer"
                         i18n-title="@@label.developer">
-        <ng-template #cellTemplate let-user="user">
+        <ng-template #tableCellTemplate let-user="user">
           <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.center">
             <jnt-avatar avatar [image]="user?.avatar"
                         [size]="ui.size.small"></jnt-avatar>
@@ -28,14 +28,14 @@
 
       <jnt-table-column title="Period"
                         i18n-title="@@label.period">
-        <ng-template #cellTemplate let-fromDate="fromDate" let-toDate="toDate">
+        <ng-template #tableCellTemplate let-fromDate="fromDate" let-toDate="toDate">
           <jnt-date-period [start]="fromDate" [end]="toDate"></jnt-date-period>
         </ng-template>
       </jnt-table-column>
 
       <jnt-table-column title="Reason"
                         i18n-title="@@label.reason">
-        <ng-template #cellTemplate let-reason="reason">
+        <ng-template #tableCellTemplate let-reason="reason">
           <ng-container [ngSwitch]="reason">
             <ng-container *ngSwitchCase="reasons.vacation"
                           i18n="@@action.vacation">Vacation
@@ -52,14 +52,14 @@
 
       <jnt-table-column title="Comment"
                         i18n-title="@@label.comment">
-        <ng-template #cellTemplate let-comment="comment">
+        <ng-template #tableCellTemplate let-comment="comment">
           {{comment}}
         </ng-template>
       </jnt-table-column>
 
       <jnt-table-column title="State"
                         i18n-title="@@label.break_state">
-        <ng-template ngIf #cellTemplate
+        <ng-template ngIf #tableCellTemplate
                      let-approveState="approveState"
                      let-approvedBy="approvedBy"
                      let-approvedAt="approvedAt"
@@ -105,7 +105,7 @@
         </ng-template>
       </jnt-table-column>
 
-      <ng-template #rowActions let-break="row">
+      <ng-template #tableRowActionsTemplate let-break="row">
         <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
           <jnt-menu-item *ngIf="view === viewType.extended"
                          title="Approve"

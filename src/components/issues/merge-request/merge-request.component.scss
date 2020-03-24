@@ -9,22 +9,22 @@
 }
 
 [state] {
-  color: $success-color;
+  color: $jnt-success-color;
   &[doing] {
     min-width: 18px;
     width: 18px;
     min-height: 18px;
     height: 18px;
     border-radius: 50%;
-    fill: $success-color;
+    fill: $jnt-success-color;
     padding: 1px;
-    border: 1px solid $success-color;
+    border: 1px solid $jnt-success-color;
   }
   &[delayed] {
-    color: $orange-color;
+    color: $jnt-orange-color;
   }
   &[bug] {
-    color: $fail-color;
+    color: $jnt-fail-color;
   }
 }
 

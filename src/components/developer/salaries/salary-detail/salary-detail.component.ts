@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from 'junte-ui';
 import { TimeExpensesListComponent } from 'src/components/issues/time-expenses/time-expenses-list';
 import { TimeExpensesState } from 'src/components/issues/time-expenses/time-expenses.component';
+import { TimeExpenseType } from 'src/models/enums/time-expenses';
 import { ViewType } from 'src/models/enums/view-type';
 import { Salary } from 'src/models/salary';
 
@@ -16,6 +17,7 @@ export class SalaryDetailComponent extends TimeExpensesListComponent {
   ui = UI;
   salary: Salary;
   viewType = ViewType;
+  skipLocation = true;
 
   constructor(route: ActivatedRoute,
               router: Router) {
@@ -26,7 +28,7 @@ export class SalaryDetailComponent extends TimeExpensesListComponent {
   getState(state: TimeExpensesState) {
     delete state['salary'];
     delete state['user'];
-    // state.type = TimeExpenseType.all;
+    state.type = TimeExpenseType.all;
     return state;
   }
 }

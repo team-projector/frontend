@@ -3,7 +3,7 @@
     <jnt-table #table formControlName="table">
       <jnt-table-column title="Charged Time"
                         i18n-title="@@label.charged_time">
-        <ng-template #cellTemplate let-id="id" let-chargedTime="chargedTime">
+        <ng-template #tableCellTemplate let-id="id" let-chargedTime="chargedTime">
           <jnt-link [source]="[id]" [title]="chargedTime | duration"
                     [icon]="ui.icons.time"
                     [outline]="ui.outline.ghost"></jnt-link>
@@ -12,35 +12,35 @@
 
       <jnt-table-column title="Period"
                         i18n-title="@@label.period">
-        <ng-template #cellTemplate let-periodTo="periodTo" let-periodFrom="periodFrom">
+        <ng-template #tableCellTemplate let-periodTo="periodTo" let-periodFrom="periodFrom">
           <jnt-date-period [start]="periodFrom" [end]="periodTo"></jnt-date-period>
         </ng-template>
       </jnt-table-column>
 
       <jnt-table-column title="Bonus"
                         i18n-title="@@label.bonus">
-        <ng-template #cellTemplate let-bonus="bonus">
+        <ng-template #tableCellTemplate let-bonus="bonus">
           {{bonus | currency:undefined:'symbol':'1.0-0'}}
         </ng-template>
       </jnt-table-column>
 
       <jnt-table-column title="Penalty"
                         i18n-title="@@label.penalty">
-        <ng-template #cellTemplate let-penalty="penalty">
+        <ng-template #tableCellTemplate let-penalty="penalty">
           {{penalty | currency:undefined:'symbol':'1.0-0'}}
         </ng-template>
       </jnt-table-column>
 
       <jnt-table-column title="Total"
                         i18n-title="@@label.total">
-        <ng-template #cellTemplate let-total="total">
+        <ng-template #tableCellTemplate let-total="total">
           {{total | currency:undefined:'symbol':'1.0-0'}}
         </ng-template>
       </jnt-table-column>
 
       <jnt-table-column title="Payed"
                         i18n-title="@@label.payed">
-        <ng-template #cellTemplate let-payed="payed">
+        <ng-template #tableCellTemplate let-payed="payed">
           <jnt-icon *ngIf="payed" [icon]="ui.icons.checked"></jnt-icon>
         </ng-template>
       </jnt-table-column>

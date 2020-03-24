@@ -9,12 +9,12 @@
 [week] {
   display: flex;
   justify-content: center;
-  margin-top: $gutter-tiny;
+  margin-top: $jnt-gutter-tiny;
   [weekday] {
     width: 8px;
     height: 5px;
     &:not(:last-child) {
-      margin-right: $gutter-tiny;
+      margin-right: $jnt-gutter-tiny;
     }
   }
 }

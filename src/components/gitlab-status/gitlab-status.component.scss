@@ -8,8 +8,8 @@
   width: 100%;
   &:not(:last-child) {
     display: block;
-    padding-top: $gutter-tiny;
-    margin-bottom: $gutter-tiny;
-    border-bottom: 1px solid $secondary-color;
+    padding-top: $jnt-gutter-tiny;
+    margin-bottom: $jnt-gutter-tiny;
+    border-bottom: 1px solid $jnt-secondary-color;
   }
 }
