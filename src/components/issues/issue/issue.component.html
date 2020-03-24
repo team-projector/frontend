@@ -29,7 +29,9 @@
                 [icon]="ui.icons.pause"></jnt-icon>
       <jnt-icon state *ngIf="issue.labels | hasLabel:standardLabel.done"
                 [icon]="ui.icons.checked"></jnt-icon>
-      <small *ngIf="issue.state == issueState.closed">{{issue.closedAt | dfnsFormatDistanceToNow}}</small>
+      <small *ngIf="issue.state == issueState.closed && !!issue.closedAt">
+        {{issue.closedAt | dfnsFormatDistanceToNow}}
+      </small>
     </jnt-stack>
     <small>{{issue.project?.fullTitle}}</small>
   </jnt-stack>
