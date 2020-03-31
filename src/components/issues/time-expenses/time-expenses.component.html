@@ -8,21 +8,21 @@
                                  i18n-label="@@action.filter_type_all"
                                  [value]="timeExpensesType.all">
               <jnt-badge *ngIf="!!summary?.spent"
-                         [text]="summary.spent | duration">
+                         [text]="summary.spent | duration:durationFormat.short">
               </jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Closed"
                                  i18n-label="@@action.filter_type_closed"
                                  [value]="timeExpensesType.closed">
               <jnt-badge *ngIf="!!summary?.closedSpent"
-                         [text]="summary.closedSpent | duration">
+                         [text]="summary.closedSpent | duration:durationFormat.short">
               </jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Opened"
                                  i18n-label="@@action.filter_type_opened"
                                  [value]="timeExpensesType.opened">
               <jnt-badge *ngIf="!!summary?.openedSpent"
-                         [text]="summary.openedSpent | duration"
+                         [text]="summary.openedSpent | duration:durationFormat.short"
                          [color]="ui.color.green">
               </jnt-badge>
             </jnt-switcher-option>

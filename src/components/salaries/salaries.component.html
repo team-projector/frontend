@@ -4,7 +4,7 @@
       <jnt-table-column title="Charged Time"
                         i18n-title="@@label.charged_time">
         <ng-template #tableCellTemplate let-id="id" let-chargedTime="chargedTime">
-          <jnt-link [source]="[id]" [title]="chargedTime | duration"
+          <jnt-link [source]="[id, {type: 'all'}]" [title]="chargedTime | duration"
                     [icon]="ui.icons.time"
                     [outline]="ui.outline.ghost"></jnt-link>
         </ng-template>

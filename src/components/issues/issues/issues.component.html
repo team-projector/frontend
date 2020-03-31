@@ -84,12 +84,12 @@
               <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.center"
                          [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
                 <div metric>
-                  {{timeSpent | duration}}
+                  {{timeSpent | duration:durationFormat.short}}
                   <span collaboration *ngIf="totalTimeSpent !== timeSpent">
-                    +{{totalTimeSpent - timeSpent | duration}}
+                    +{{totalTimeSpent - timeSpent | duration:durationFormat.short}}
                   </span>
                 </div>
-                <div metric estimate>{{timeEstimate | duration}}</div>
+                <div metric estimate>{{timeEstimate | duration:durationFormat.short}}</div>
               </jnt-stack>
             </ng-template>
           </jnt-progress-bar>

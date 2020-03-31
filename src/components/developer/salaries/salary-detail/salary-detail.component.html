@@ -5,33 +5,32 @@
     </jnt-col>
 
     <jnt-col [desktop]="8" [mobile]="12">
-      <jnt-tabs [outline]="ui.outline.transparent">
-        <jnt-tab title="Time spent"
-                 i18n-title="@@label.time_spent"
-                 [padding]="ui.gutter.none">
-          <ng-template #tabContentTemplate>
-            <app-time-expenses [(state)]="state" [view]="viewType.default" tab></app-time-expenses>
-          </ng-template>
-        </jnt-tab>
-        <jnt-tab title="Bonuses"
-                 i18n-title="@@label.bonuses"
-                 [padding]="ui.gutter.none">
+      <jnt-menu>
+        <jnt-menu-item [link]="['.']"
+                       title="Time Expenses"
+                       i18n-title="@@action.time_expenses">
+          <jnt-badge *ngIf="salary?.total"
+                     [text]="salary.total | duration:durationFormat.short">
+          </jnt-badge>
+        </jnt-menu-item>
+        <jnt-menu-item [link]="['bonuses']"
+                       title="Bonuses"
+                       i18n-title="@@action.bonuses">
           <jnt-badge *ngIf="!!salary.bonus"
-                     [text]="salary.bonus | currency:undefined:'symbol':'1.0-0'"></jnt-badge>
-          <ng-template #tabContentTemplate>
-            <app-bonuses [salary]="salary.id" [user]="state.user" tab></app-bonuses>
-          </ng-template>
-        </jnt-tab>
-        <jnt-tab title="Penalties"
-                 i18n-title="@@label.penalties"
-                 [padding]="ui.gutter.none">
+                     [color]="ui.color.green"
+                     [text]="salary.bonus | currency:undefined:'symbol':'1.0-0'">
+          </jnt-badge>
+        </jnt-menu-item>
+        <jnt-menu-item [link]="['penalties']"
+                       title="Penalties"
+                       i18n-title="@@action.penalties">
           <jnt-badge *ngIf="!!salary.penalty"
-                     [text]="salary.penalty | currency:undefined:'symbol':'1.0-0'"></jnt-badge>
-          <ng-template #tabContentTemplate>
-            <app-penalties [salary]="salary.id" [user]="state.user" tab></app-penalties>
-          </ng-template>
-        </jnt-tab>
-      </jnt-tabs>
+                     [color]="ui.color.red"
+                     [text]="salary.penalty | currency:undefined:'symbol':'1.0-0'">
+          </jnt-badge>
+        </jnt-menu-item>
+      </jnt-menu>
+      <router-outlet></router-outlet>
     </jnt-col>
   </jnt-row>
 </jnt-container>
