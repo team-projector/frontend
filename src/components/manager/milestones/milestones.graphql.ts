@@ -7,13 +7,13 @@ import gql from 'graphql-tag';
 })
 export class SyncMilestoneGQL extends Mutation<{ syncMilestone: { milestone: { id } } }> {
   document = gql`
-    mutation ($id: ID) {
-      syncMilestone(id: $id) {
-        milestone {
-          id
-        }
+   mutation ($id: ID!) {  
+    syncMilestone(id: $id) {
+      milestone {
+        id
       }
     }
+  }
   `;
 }
 
