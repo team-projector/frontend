@@ -9,6 +9,7 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
+import { DurationFormat } from 'src/models/enums/duration-format';
 import { OwnerType, TimeExpenseState, TimeExpenseType } from 'src/models/enums/time-expenses';
 import { ViewType } from 'src/models/enums/view-type';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter } from 'src/models/spent-time';
@@ -68,6 +69,7 @@ export class TimeExpensesComponent implements OnInit {
   summary: SpentTimesSummary;
   viewType = ViewType;
   ownerType = OwnerType;
+  durationFormat = DurationFormat;
 
   tableControl = this.builder.control({
     q: null,
@@ -152,7 +154,7 @@ export class TimeExpensesComponent implements OnInit {
             type === TimeExpenseType.closed ? TimeExpenseState.closed : undefined,
           orderBy: type === TimeExpenseType.opened ? 'dueDate' : '-closedAt',
           project: project,
-          salary: salary,
+          salary: +salary,
           team: team,
           user: user,
           date: !!dueDate ? startOfDay(dueDate) : null

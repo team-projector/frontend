@@ -9,6 +9,7 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
+import { DurationFormat } from 'src/models/enums/duration-format';
 import { IssueProblem, IssueState, IssuesType } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { ViewType } from 'src/models/enums/view-type';
@@ -72,6 +73,7 @@ export class IssuesComponent implements OnInit {
   issuesType = IssuesType;
   viewType = ViewType;
   standardLabel = StandardLabel;
+  durationFormat = DurationFormat;
 
   summary: IssuesSummary;
   progress = {summary: false, sync: false};
