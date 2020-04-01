@@ -8,7 +8,6 @@ import { AllPenaltiesGQL } from 'src/components/salaries/salaries.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
-import { TimeExpenseType } from 'src/models/enums/time-expenses';
 import { PagingPenalties, PenaltiesFilter } from 'src/models/salary';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
@@ -58,12 +57,8 @@ export class PenaltiesComponent implements OnInit {
   });
   form = this.builder.group({
     table: this.tableControl,
-    type: [TimeExpenseType.opened],
-    dueDate: [null],
-    team: [null],
-    project: [null],
     salary: [null],
-    user: [null],
+    user: [null]
   });
 
   set filter(filter: PenaltiesFilter) {
@@ -75,17 +70,7 @@ export class PenaltiesComponent implements OnInit {
     return this._filter;
   }
 
-  @Input() set state({first, offset, q, user, salary}: PenaltiesState) {
-    this.form.patchValue({
-      table: {
-        q: q || null,
-        first: first || DEFAULT_FIRST,
-        offset: offset || DEFAULT_OFFSET
-      },
-      user: user || null,
-      salary: salary || null,
-    });
-  }
+  @Input() state: PenaltiesState;
 
   @Output() stateChange = new EventEmitter<PenaltiesState>();
 
@@ -97,8 +82,15 @@ export class PenaltiesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.table.fetcher = () => {
+      return environment.mocks
+        ? of(getMock(PagingPenalties)).pipe(delay(MOCKS_DELAY))
+        : this.allPenaltiesGQL.fetch(this.filter)
+          .pipe(catchGQLErrors(), map(({data: {allPenalties}}) => deserialize(allPenalties, PagingPenalties)));
+    };
+
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({table: {offset, first, q}, type, user, salary}) => {
+      .subscribe(({table: {offset, first, q}, user, salary}) => {
         this.stateChange.emit(new PenaltiesState({
           q: q || undefined,
           first: first !== DEFAULT_FIRST ? first : undefined,
@@ -110,19 +102,21 @@ export class PenaltiesComponent implements OnInit {
         this.filter = new PenaltiesFilter({
           offset: offset,
           first: first,
-          orderBy: type === TimeExpenseType.opened ? 'dueDate' : '-closedAt',
+          orderBy: 'dueDate',
           salary: salary,
           user: user
         });
       });
 
-    this.table.fetcher = () => {
-      return environment.mocks
-        ? of(getMock(PagingPenalties)).pipe(delay(MOCKS_DELAY))
-        : this.allPenaltiesGQL.fetch(this.filter)
-          .pipe(catchGQLErrors(), map(({data: {allPenalties}}) => deserialize(allPenalties, PagingPenalties)));
-    };
-    this.table.load();
+    this.form.patchValue({
+      table: {
+        q: this.state.q || null,
+        first: this.state.first || DEFAULT_FIRST,
+        offset: this.state.offset || DEFAULT_OFFSET
+      },
+      user: this.state.user || null,
+      salary: this.state.salary || null,
+    });
   }
 
 }
