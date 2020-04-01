@@ -71,6 +71,8 @@ export class TimeExpensesComponent implements OnInit {
   ownerType = OwnerType;
   durationFormat = DurationFormat;
 
+  @Input() type = TimeExpenseType.opened;
+
   tableControl = this.builder.control({
     q: null,
     sort: null,
@@ -79,7 +81,7 @@ export class TimeExpensesComponent implements OnInit {
   });
   form = this.builder.group({
     table: this.tableControl,
-    type: [TimeExpenseType.opened],
+    type: [this.type],
     dueDate: [null],
     team: [null],
     project: [null],
@@ -105,7 +107,7 @@ export class TimeExpensesComponent implements OnInit {
         first: first || DEFAULT_FIRST,
         offset: offset || DEFAULT_OFFSET
       },
-      type: type || TimeExpenseType.opened,
+      type: type || type,
       dueDate: dueDate || null,
       team: team || null,
       user: user || null,

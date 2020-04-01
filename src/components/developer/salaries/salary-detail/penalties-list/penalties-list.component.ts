@@ -16,7 +16,7 @@ export class SalaryPenaltiesListComponent extends PenaltiesListComponent {
 
   getState(state: Object) {
     delete state['user'];
-    delete state['project'];
+    delete state['salary'];
     return state;
   }
 

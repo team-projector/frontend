@@ -8,7 +8,6 @@ import { AllBonusesGQL } from 'src/components/salaries/salaries.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
-import { TimeExpenseType } from 'src/models/enums/time-expenses';
 import { BonusesFilter, PagingBonuses } from 'src/models/salary';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
@@ -58,12 +57,8 @@ export class BonusesComponent implements OnInit {
   });
   form = this.builder.group({
     table: this.tableControl,
-    type: [TimeExpenseType.opened],
-    dueDate: [null],
-    team: [null],
-    project: [null],
     salary: [null],
-    user: [null],
+    user: [null]
   });
 
   set filter(filter: BonusesFilter) {
@@ -75,17 +70,7 @@ export class BonusesComponent implements OnInit {
     return this._filter;
   }
 
-  @Input() set state({first, offset, q, user, salary}: BonusesState) {
-    this.form.patchValue({
-      table: {
-        q: q || null,
-        first: first || DEFAULT_FIRST,
-        offset: offset || DEFAULT_OFFSET
-      },
-      user: user || null,
-      salary: salary || null,
-    });
-  }
+  @Input() state: BonusesState;
 
   @Output() stateChange = new EventEmitter<BonusesState>();
 
@@ -94,11 +79,19 @@ export class BonusesComponent implements OnInit {
 
   constructor(private allBonusesGQL: AllBonusesGQL,
               private builder: FormBuilder) {
+
   }
 
   ngOnInit() {
+    this.table.fetcher = () => {
+      return environment.mocks
+        ? of(getMock(PagingBonuses)).pipe(delay(MOCKS_DELAY))
+        : this.allBonusesGQL.fetch(this.filter)
+          .pipe(catchGQLErrors(), map(({data: {allBonuses}}) => deserialize(allBonuses, PagingBonuses)));
+    };
+
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({table: {offset, first, q}, type, user, salary}) => {
+      .subscribe(({table: {offset, first, q}, user, salary}) => {
         this.stateChange.emit(new BonusesState({
           q: q || undefined,
           first: first !== DEFAULT_FIRST ? first : undefined,
@@ -110,18 +103,21 @@ export class BonusesComponent implements OnInit {
         this.filter = new BonusesFilter({
           offset: offset,
           first: first,
-          orderBy: type === TimeExpenseType.opened ? 'dueDate' : '-closedAt',
+          orderBy: 'dueDate',
           salary: salary,
           user: user
         });
       });
 
-    this.table.fetcher = () => {
-      return environment.mocks
-        ? of(getMock(PagingBonuses)).pipe(delay(MOCKS_DELAY))
-        : this.allBonusesGQL.fetch(this.filter)
-          .pipe(catchGQLErrors(), map(({data: {allBonuses}}) => deserialize(allBonuses, PagingBonuses)));
-    };
+    this.form.patchValue({
+      table: {
+        q: this.state.q || null,
+        first: this.state.first || DEFAULT_FIRST,
+        offset: this.state.offset || DEFAULT_OFFSET
+      },
+      user: this.state.user || null,
+      salary: this.state.salary || null,
+    });
   }
 
 }
