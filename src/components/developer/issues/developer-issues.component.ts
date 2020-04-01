@@ -97,7 +97,7 @@ export class DeveloperIssuesComponent implements OnInit {
     new Map<string, UserProgressMetrics>(),
     new Map<string, UserProgressMetrics>()
   );
-  dueDate = new FormControl();
+  dueDate = new FormControl(new Date());
   project = new FormControl();
   metric = new FormControl(localStorage.getItem(METRIC_TYPE) || MetricType.all);
   form = this.formBuilder.group({
@@ -127,18 +127,24 @@ export class DeveloperIssuesComponent implements OnInit {
           {relativeTo: this.route}).then(() => null);
       });
 
-    this.route.data.subscribe(({user, dueDate, project}) => {
-      this.user = user;
-      this.form.patchValue({dueDate: dueDate, project: project}, {emitEvent: false});
+    combineLatest([this.route.data, this.route.params])
+      .subscribe(([{user, project}, {dueDate}]) => {
+        this.user = user;
+        const date = !!dueDate ? new Date(dueDate) : new Date();
 
-      this.filter = new IssuesFilter({
-        user: user.id,
-        dueDate: dueDate,
-        project: !!project ? project.id : null
+        this.form.patchValue(
+          {dueDate: date, project: project},
+          {emitEvent: false}
+        );
+
+        this.filter = new IssuesFilter({
+          user: user.id,
+          dueDate: date,
+          project: !!project ? project.id : null
+        });
+
+        this.loadSummary();
       });
-
-      this.loadSummary();
-    });
 
     combineLatest([this.user$, this.period$])
       .pipe(filtering(([user, period]) => !!user && !!period))
