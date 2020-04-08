@@ -1,6 +1,9 @@
 <jnt-app-aside #aside>
-  <ng-template #contentTemplate>
-    <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
+  <ng-template #asideContentTemplate let-collapsed="collapsed" let-toggle="toggle">
+    <jnt-menu [spacer]="ui.size.small"
+              [type]="ui.orientation.vertical"
+              [collapsed]="collapsed"
+              (selected)="toggle()">
       <jnt-menu-item [link]="['issues']"
                      [matching]="ui.url.matching.wildcard"
                      [icon]="ui.icons.dashboard"
