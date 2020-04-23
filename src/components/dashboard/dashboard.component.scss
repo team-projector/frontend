@@ -1,5 +1,9 @@
 @import 'variables';
 
+[data-content] {
+  margin: $jnt-gutter-normal
+}
+
 :host {
   display: block
 }

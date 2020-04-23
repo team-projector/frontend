@@ -63,10 +63,17 @@
                       [image]="me.user?.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
         </ng-template>
         <ng-template #userbarMenuTemplate>
+          <jnt-stack data-content
+            [type]="ui.layout.stack.type.vertical"
+            [gutter]="ui.gutter.small"
+            [align]="ui.flex.align.start"
+            [justify]="ui.flex.justify.center"
+            [wrap]="ui.flex.wrap.nowrap">
           <app-select-lang></app-select-lang>
           <p>{{me.user?.name}}</p>
           <jnt-button *ngIf="config.token" (click)="logout()"
                       text="Logout"></jnt-button>
+          </jnt-stack>
         </ng-template>
       </jnt-app-header-userbar>
     </ng-template>
