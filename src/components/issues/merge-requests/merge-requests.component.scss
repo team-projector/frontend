@@ -1,4 +1,4 @@
-@import "variables";
+@import 'jnt-variables';
 
 :host {
   display: block;
@@ -21,10 +21,12 @@
   jnt-white-space: nowrap;
   text-overflow: ellipsis;
   font-size: .85em;
+
   &:first-of-type {
     flex: 1;
     text-align: left;
   }
+
   &[estimate] {
     color: $jnt-primary-text-light-color;
   }

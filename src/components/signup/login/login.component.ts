@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UI, validate } from 'junte-ui';
+import { UI } from 'junte-ui';
 import 'reflect-metadata';
 import { of } from 'rxjs';
 import { delay, filter, finalize, map } from 'rxjs/operators';
@@ -68,17 +68,15 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (validate(this.loginForm)) {
-      this.progress.login = true;
-      (environment.mocks ? of(getMock(AccessToken)).pipe(delay(MOCKS_DELAY))
-        : this.loginGQL.mutate(this.loginForm.value)
-          .pipe(catchGQLErrors(),
-            map(({data: {login: {token}}}) =>
-              deserialize(token, AccessToken))))
-        .pipe(finalize(() => this.progress.login = false))
-        .subscribe((token: AccessToken) => this.logged(token),
-          (err: GqlError[]) => this.errors = err);
-    }
+    this.progress.login = true;
+    (environment.mocks ? of(getMock(AccessToken)).pipe(delay(MOCKS_DELAY))
+      : this.loginGQL.mutate(this.loginForm.value)
+        .pipe(catchGQLErrors(),
+          map(({data: {login: {token}}}) =>
+            deserialize(token, AccessToken))))
+      .pipe(finalize(() => this.progress.login = false))
+      .subscribe((token: AccessToken) => this.logged(token),
+        (err: GqlError[]) => this.errors = err);
   }
 
   private logged(token: AccessToken) {

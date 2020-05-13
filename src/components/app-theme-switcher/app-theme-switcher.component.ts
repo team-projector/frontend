@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { Themes } from 'src/models/enums/themes';
 
@@ -11,6 +11,7 @@ export class AppThemeSwitcherComponent implements OnInit {
 
   themes = Themes;
   themeControl = this.fb.control(!!localStorage.theme ? Themes[localStorage.theme] as Themes : Themes.light);
+  @Output() changed = new EventEmitter<Themes>();
 
   form = this.fb.group({
     theme: this.themeControl
@@ -27,6 +28,7 @@ export class AppThemeSwitcherComponent implements OnInit {
         } else {
           localStorage.removeItem('theme');
         }
+        this.changed.emit(theme);
       });
   }
 }

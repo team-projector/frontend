@@ -1,5 +1,5 @@
-<jnt-form [formGroup]="form" jntValidation (submitted)="save()"
-          [loading]="progress.loading">
+<jnt-form [formGroup]="form" (submitted)="save()"
+          [state]="progress.loading ? ui.forms.form.state.loading : null">
   <p *ngFor="let e of errors">{{e}}</p>
   <jnt-tabs>
     <jnt-tab title="Common"
@@ -37,7 +37,7 @@
                   <jnt-dot [color]="ui.color.red"></jnt-dot>
                 </jnt-switcher-option>
               </jnt-switcher>
-              <jnt-form-message [type]="ui.form.validators.typeError.required">
+              <jnt-form-message [type]="ui.forms.validators.typeError.required">
                 This field is required
               </jnt-form-message>
             </jnt-form-control>
@@ -65,7 +65,7 @@
             <jnt-form-label for="title">Title</jnt-form-label>
             <jnt-form-control name="title">
               <jnt-input placeholder="Title" formControlName="title"></jnt-input>
-              <jnt-form-message [type]="ui.form.validators.typeError.required">
+              <jnt-form-message [type]="ui.forms.validators.typeError.required">
                 This field is required
               </jnt-form-message>
             </jnt-form-control>
@@ -83,7 +83,7 @@
               <jnt-form-label for="startDate">Start date</jnt-form-label>
               <jnt-form-control name="startDate">
                 <jnt-date-picker placeholder="Start date" formControlName="startDate"></jnt-date-picker>
-                <jnt-form-message [type]="ui.form.validators.typeError.required">
+                <jnt-form-message [type]="ui.forms.validators.typeError.required">
                   This field is required
                 </jnt-form-message>
               </jnt-form-control>
@@ -93,7 +93,7 @@
               <jnt-form-label for="dueDate">Due date</jnt-form-label>
               <jnt-form-control name="dueDate">
                 <jnt-date-picker placeholder="Due date" formControlName="dueDate"></jnt-date-picker>
-                <jnt-form-message [type]="ui.form.validators.typeError.required">
+                <jnt-form-message [type]="ui.forms.validators.typeError.required">
                   This field is required
                 </jnt-form-message>
               </jnt-form-control>
@@ -145,7 +145,7 @@
             <jnt-form-label for="url">Url</jnt-form-label>
             <jnt-form-control name="url">
               <jnt-input placeholder="Url" formControlName="url"></jnt-input>
-              <jnt-form-message [type]="ui.form.validators.typeError.required">
+              <jnt-form-message [type]="ui.forms.validators.typeError.required">
                 This field is required
               </jnt-form-message>
             </jnt-form-control>
@@ -161,7 +161,7 @@
         <jnt-form-item>
           <jnt-select issues placeholder="Issues"
                       formControlName="issues"
-                      [mode]="ui.form.select.mode.multiple"
+                      [mode]="ui.forms.select.mode.multiple"
                       [search]="true"
                       [loader]="findIssues()"
                       keyField="id"
@@ -187,7 +187,7 @@
                [justify]="ui.flex.justify.between">
       <jnt-button text="Save"
                   i18n-text="@@action.save"
-                  [type]="ui.form.button.type.submit"
+                  [type]="ui.forms.button.type.submit"
                   [loading]="progress.saving"></jnt-button>
       <jnt-button text="Cancel"
                   i18n-text="@@action.cancel"

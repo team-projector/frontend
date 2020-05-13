@@ -7,7 +7,7 @@
 </jnt-link>
 
 <jnt-block [padding]="ui.gutter.large" [state]="progress.gitlab ? ui.layout.block.state.loading : null">
-  <jnt-form form [formGroup]="loginForm" (submitted)="login()" jntValidation>
+  <jnt-form form [formGroup]="loginForm" (submitted)="login()">
     <div logo>
       <img [src]="'assets/images/' + (theme === 'dark' ? 'logo-dark' : 'logo') + '.svg'" height="50">
     </div>
@@ -15,7 +15,7 @@
     <jnt-form-item>
       <jnt-form-control name="login">
         <jnt-input formControlName="login" placeholder="Login" [icon]="ui.icons.user"></jnt-input>
-        <jnt-form-message [type]="ui.form.validators.typeError.required">
+        <jnt-form-message [type]="ui.forms.validators.typeError.required">
           Field is required!
         </jnt-form-message>
       </jnt-form-control>
@@ -24,8 +24,8 @@
     <jnt-form-item>
       <jnt-form-control name="password">
         <jnt-input formControlName="password" placeholder="Password" [icon]="ui.icons.lock" required
-                   [type]="ui.form.input.type.password"></jnt-input>
-        <jnt-form-message [type]="ui.form.validators.typeError.required">
+                   [type]="ui.forms.input.type.password"></jnt-input>
+        <jnt-form-message [type]="ui.forms.validators.typeError.required">
           Field is required!
         </jnt-form-message>
       </jnt-form-control>
@@ -34,7 +34,7 @@
     <ng-template #formFooterTemplate>
       <jnt-form-item>
         <jnt-button [loading]="progress.login"
-                    [type]="ui.form.button.type.submit"
+                    [type]="ui.forms.button.type.submit"
                     [icon]="ui.icons.arrowRight"
                     text="Login"
                     [width]="ui.width.fluid">

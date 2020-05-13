@@ -1,4 +1,4 @@
-@import 'variables';
+@import 'jnt-variables';
 
 :host {
   display: block;
@@ -9,7 +9,7 @@
 }
 
 [calendar] {
-  @media screen and (max-width: map_get($grid-breakpoints, wide)) {
+  @media screen and (max-width: map-get($jnt-grid-breakpoints, wide)) {
     margin-bottom: $jnt-gutter-normal;
   }
 }

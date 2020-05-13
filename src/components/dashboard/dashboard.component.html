@@ -6,41 +6,44 @@
       <img [src]="'assets/images/logo-' + (theme === 'dark' ? 'dark' : 'light') + '.svg'">
     </ng-template>
 
-    <ng-template #headerMenuTemplate>
-      <jnt-menu menu>
-        <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.developer)"
-                       title="Developer"
-                       i18n-title="@@action.developer" [link]="['/developer']"
-                       [icon]="localUi.icons.developer"
-                       [matching]="ui.url.matching.wildcard"></jnt-menu-item>
-        <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.teamLeader)"
-                       title="Team Leader"
-                       i18n-title="@@action.team_leader"
-                       [link]="['/leader']"
-                       [icon]="localUi.icons.teamLeader"
-                       [matching]="ui.url.matching.wildcard"></jnt-menu-item>
-        <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.projectManager)"
-                       title="Project Manager"
-                       i18n-title="@@action.project_manager"
-                       [link]="['/manager']"
-                       [icon]="localUi.icons.projectManager"
-                       [matching]="ui.url.matching.wildcard"></jnt-menu-item>
-        <!--<jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.customer)"
-                       title="Customer"
-                       i18n-title="@@action.customer"
-                       [link]="['/customer']"
-                       [icon]="localUi.icons.customer"
-                       [matching]="ui.url.matching.wildcard"></jnt-menu-item>-->
-        <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.shareholder)"
-                       title="Shareholder"
-                       i18n-title="@@action.shareholder"
-                       [link]="['/shareholder']"
-                       [icon]="localUi.icons.shareholder"
-                       [matching]="ui.url.matching.wildcard"></jnt-menu-item>
-      </jnt-menu>
-    </ng-template>
+    <jnt-menu menu>
+      <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.developer)"
+                     title="Developer"
+                     i18n-title="@@action.developer" [link]="['/developer']"
+                     [icon]="localUi.icons.developer"
+                     [matching]="ui.url.matching.wildcard"></jnt-menu-item>
+      <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.teamLeader)"
+                     title="Team Leader"
+                     i18n-title="@@action.team_leader"
+                     [link]="['/leader']"
+                     [icon]="localUi.icons.teamLeader"
+                     [matching]="ui.url.matching.wildcard"></jnt-menu-item>
+      <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.projectManager)"
+                     title="Project Manager"
+                     i18n-title="@@action.project_manager"
+                     [link]="['/manager']"
+                     [icon]="localUi.icons.projectManager"
+                     [matching]="ui.url.matching.wildcard"></jnt-menu-item>
+      <!--<jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.customer)"
+                     title="Customer"
+                     i18n-title="@@action.customer"
+                     [link]="['/customer']"
+                     [icon]="localUi.icons.customer"
+                     [matching]="ui.url.matching.wildcard"></jnt-menu-item>-->
+      <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.shareholder)"
+                     title="Shareholder"
+                     i18n-title="@@action.shareholder"
+                     [link]="['/shareholder']"
+                     [icon]="localUi.icons.shareholder"
+                     [matching]="ui.url.matching.wildcard"></jnt-menu-item>
+    </jnt-menu>
 
-    <app-theme-switcher></app-theme-switcher>
+    <ng-template #contentTemplate>
+      <jnt-stack [type]="ui.layout.stack.type.horizontal"
+                 [align]="ui.flex.align.center">
+        <app-theme-switcher (changed)="theme = $event"></app-theme-switcher>
+      </jnt-stack>
+    </ng-template>
 
     <ng-template #headerActionsTemplate>
       <jnt-app-header-actions>
@@ -64,15 +67,15 @@
         </ng-template>
         <ng-template #userbarMenuTemplate>
           <jnt-stack data-content
-            [type]="ui.layout.stack.type.vertical"
-            [gutter]="ui.gutter.small"
-            [align]="ui.flex.align.start"
-            [justify]="ui.flex.justify.center"
-            [wrap]="ui.flex.wrap.nowrap">
-          <app-select-lang></app-select-lang>
-          <p>{{me.user?.name}}</p>
-          <jnt-button *ngIf="config.token" (click)="logout()"
-                      text="Logout"></jnt-button>
+                     [type]="ui.layout.stack.type.vertical"
+                     [gutter]="ui.gutter.small"
+                     [align]="ui.flex.align.start"
+                     [justify]="ui.flex.justify.center"
+                     [wrap]="ui.flex.wrap.noWrap">
+            <app-select-lang></app-select-lang>
+            <p>{{me.user?.name}}</p>
+            <jnt-button *ngIf="config.token" (click)="logout()"
+                        text="Logout"></jnt-button>
           </jnt-stack>
         </ng-template>
       </jnt-app-header-userbar>
