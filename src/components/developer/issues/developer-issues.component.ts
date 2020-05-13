@@ -130,18 +130,14 @@ export class DeveloperIssuesComponent implements OnInit {
     combineLatest([this.route.data, this.route.params])
       .subscribe(([{user, project}, {dueDate}]) => {
         this.user = user;
-        const date = !!dueDate ? new Date(dueDate) : new Date();
-
-        this.form.patchValue(
-          {dueDate: date, project: project},
-          {emitEvent: false}
-        );
 
         this.filter = new IssuesFilter({
           user: user.id,
-          dueDate: date,
-          project: !!project ? project.id : null
+          dueDate: !!dueDate ? new Date(dueDate) : undefined,
+          project: !!project ? project.id : undefined
         });
+
+        this.form.patchValue(deserialize(this.filter, IssuesFilter), {emitEvent: false});
 
         this.loadSummary();
       });

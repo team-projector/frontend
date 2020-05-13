@@ -157,10 +157,10 @@
       </jnt-col>
     </jnt-row>
     <jnt-stack [type]="ui.layout.stack.type.horizontal">
-      <div filter [attr.active]="!!dueDate.value">
-        <ng-container *ngIf="dueDate.value;else noFilterDueDate">
+      <div filter [attr.active]="!!filter.dueDate">
+        <ng-container *ngIf="filter.dueDate;else noFilterDueDate">
           <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
-          {{dueDate.value | date}}
+          {{filter.dueDate | date}}
           <jnt-button reset [scheme]="ui.scheme.secondary"
                       [size]="ui.size.tiny"
                       [icon]="ui.icons.close"

@@ -1,25 +1,21 @@
 <jnt-app-aside #aside>
-  <ng-template #asideContentTemplate let-collapsed="collapsed" let-toggle="toggle">
-    <jnt-menu [spacer]="ui.size.small"
-              [type]="ui.orientation.vertical"
-              [collapsed]="collapsed"
-              (selected)="toggle()">
-      <jnt-menu-item [link]="['issues']"
-                     [matching]="ui.url.matching.wildcard"
-                     [icon]="ui.icons.dashboard"
-                     title="Issues"
-                     i18n-title="@@action.issues"
-                     ></jnt-menu-item>
-      <jnt-menu-item [link]="['breaks']"
-                     [matching]="ui.url.matching.wildcard"
-                     [icon]="localUi.icons.workBreak"
-                     title="Work breaks"
-                     i18n-title="@@action.work_breaks"></jnt-menu-item>
-    </jnt-menu>
-  </ng-template>
+  <jnt-menu [spacer]="ui.size.small"
+            [orientation]="ui.orientation.vertical">
+    <jnt-menu-item [link]="['issues']"
+                   [matching]="ui.url.matching.wildcard"
+                   [icon]="ui.icons.dashboard"
+                   title="Issues"
+                   i18n-title="@@action.issues"
+    ></jnt-menu-item>
+    <jnt-menu-item [link]="['breaks']"
+                   [matching]="ui.url.matching.wildcard"
+                   [icon]="localUi.icons.workBreak"
+                   title="Work breaks"
+                   i18n-title="@@action.work_breaks"></jnt-menu-item>
+  </jnt-menu>
 </jnt-app-aside>
 <jnt-app-content [aside]="aside">
-  <jnt-app-sub-header (burger)="aside.toggle()">
+  <jnt-app-sub-header (burgerToggle)="aside.toggle()">
     <jnt-breadcrumb></jnt-breadcrumb>
   </jnt-app-sub-header>
   <jnt-app-body>

@@ -4,6 +4,7 @@ import { ModalComponent, ModalService, PopoverComponent, PopoverService, UI } fr
 import { AppConfig } from 'src/app-config';
 import { APPLICATION_READY } from 'src/consts';
 import { MeManager } from 'src/managers/me.manager';
+import { Themes } from 'src/models/enums/themes';
 import { UserRole } from 'src/models/enums/user';
 import { LocalUI } from '../../enums/local-ui';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
@@ -17,6 +18,7 @@ export class DashboardComponent implements OnInit {
   ui = UI;
   localUi = LocalUI;
   userRole = UserRole;
+  theme: Themes;
 
   @ViewChild('layout', {read: ElementRef, static: true}) backdrop;
   @ViewChild('modal', {static: true}) modal: ModalComponent;

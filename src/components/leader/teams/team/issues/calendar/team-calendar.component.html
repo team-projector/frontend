@@ -22,8 +22,8 @@
     <th i18n="@@label.developer">Developer</th>
     <th></th>
     <th *ngFor="let day of daysOfWeek; let i = index" day (click)="form.patchValue({user: null, dueDate: days[i]})"
-        [attr.today]="(today | isEqualDate: days[i])"
-        [attr.active]="(dueDate.value | isEqualDate: days[i])">
+        [attr.today]="(today | dfnsIsEqual: days[i])"
+        [attr.active]="(dueDate.value | dfnsIsEqual: days[i])">
       <span>{{day}}</span> {{days[i] | dfnsGetDate}}
     </th>
     <th name-metric
@@ -66,8 +66,8 @@
       </td>
       <td day *ngFor="let day of days"
           (click)="form.patchValue({user: member.user, dueDate: day})"
-          [attr.active]="(dueDate.value | isEqualDate: day) && (user.value?.id === member.user.id)"
-          [attr.active-day]="(dueDate.value | isEqualDate: day)">
+          [attr.active]="(dueDate.value | dfnsIsEqual: day) && (user.value?.id === member.user.id)"
+          [attr.active-day]="(dueDate.value | dfnsIsEqual: day)">
         <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {presentation: metric, date: (day | dfnsEndOfDay),
               metric: metrics?.days?.get(member.user.id)?.get((day | dfnsFormat: formatDate))}">
         </ng-container>
@@ -83,7 +83,7 @@
     <ng-container *ngIf="!loading; else skeleton">
       <tr nodata>
         <td [attr.colspan]="17">
-          <jnt-icon [icon]="ui.icons.stopping"></jnt-icon>
+          <jnt-icon [icon]="ui.icons.stop"></jnt-icon>
         </td>
       </tr>
     </ng-container>
