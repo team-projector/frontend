@@ -23,9 +23,8 @@
     max-width: 170px;
     width: 170px;
     text-align: center;
-    align-items: center;
     [avatars] {
-      margin: $jnt-gutter-big $jnt-gutter-normal;
+      margin: $jnt-gutter-big auto;
     }
     [footer] {
       padding: $jnt-gutter-normal $jnt-gutter-small;
