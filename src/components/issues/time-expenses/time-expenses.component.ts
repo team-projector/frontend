@@ -156,7 +156,7 @@ export class TimeExpensesComponent implements OnInit {
             type === TimeExpenseType.closed ? TimeExpenseState.closed : undefined,
           orderBy: type === TimeExpenseType.opened ? 'dueDate' : '-closedAt',
           project: project,
-          salary: +salary,
+          salary: +salary || undefined,
           team: team,
           user: user,
           date: !!dueDate ? startOfDay(dueDate) : null
