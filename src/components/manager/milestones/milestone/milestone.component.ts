@@ -3,7 +3,7 @@ import { Component, ComponentFactoryResolver, Injector, OnInit } from '@angular/
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { R } from 'apollo-angular/types';
-import { isEqual, ModalOptions, ModalService, UI } from 'junte-ui';
+import { isEqual, ModalOptions, ModalService, UI } from '@junte/ui';
 import { combineLatest, of } from 'rxjs';
 import { debounceTime, delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';

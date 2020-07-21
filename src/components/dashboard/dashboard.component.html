@@ -49,11 +49,10 @@
       <jnt-app-header-actions>
         <jnt-app-header-action>
           <ng-template #actionLabelTemplate>
-            <img src="assets/images/gitlab-logo.svg" (mouseenter)="gitlabStatus.load()">
-            <div></div>
+            <jnt-icon data-gitlab [icon]="ui.icons.gitlab" (mouseenter)="gitlabStatus.load()"></jnt-icon>
           </ng-template>
           <ng-template #actionContentTemplate>
-            <app-gitlab-status></app-gitlab-status>
+            <app-gitlab-status #gitlabStatus></app-gitlab-status>
           </ng-template>
         </jnt-app-header-action>
       </jnt-app-header-actions>

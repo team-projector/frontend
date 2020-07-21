@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { DueDateComponent } from 'src/components/due-date/due-date.component';
 import { CommonModule } from '@angular/common';
-import { JunteUiModule } from 'junte-ui';
+import { JunteUiModule } from '@junte/ui';
 import { DueDatePipe } from 'src/components/due-date/due-date.pipe';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 

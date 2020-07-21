@@ -1,5 +1,5 @@
 <jnt-block [padding]="ui.gutter.none"
-           [state]="loading ? ui.layout.block.state.loading : null"
+           [state]="loading ? ui.state.loading : null"
            [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
     <jnt-table #table formControlName="table" [features]="[ui.collections.table.features]">
@@ -106,7 +106,7 @@
       </jnt-table-column>
 
       <ng-template #tableRowActionsTemplate let-break="row">
-        <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.size.small">
+        <jnt-menu [orientation]="ui.orientation.vertical" [spacer]="ui.gutter.small">
           <jnt-menu-item *ngIf="view === viewType.extended"
                          title="Approve"
                          i18n-title="@@action.approve"

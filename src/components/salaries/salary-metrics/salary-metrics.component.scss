@@ -1,4 +1,4 @@
-@import 'jnt-variables';
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
 
 :host {
   display: block;
@@ -26,7 +26,7 @@
   min-width: 150px;
 
   [title] {
-    color: $jnt-purple-lighten-color;
+    color: $jnt-primary-dark-color;
     font-size: 12px;
   }
 
@@ -37,14 +37,14 @@
   }
 
   [sum] {
-    color: $jnt-white-color;
+    color: $jnt-primary-color;
     font-size: 21px;
     font-weight: $jnt-font-weight-bold;
   }
 
   [bonus] {
     font-size: 12px;
-    color: $jnt-white-color;
+    color: $jnt-primary-color;
     padding: $jnt-gutter-small;
 
     &:not(:last-child) {

@@ -1,4 +1,5 @@
-@import 'jnt-variables';
+@import '~@junte/ui/lib/assets/styles/layout/responsive';
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
 
 :host {
   display: block;
@@ -9,7 +10,7 @@
 }
 
 [calendar] {
-  @media screen and (max-width: map-get($jnt-grid-breakpoints, wide)) {
+  @include max-for-desktop() {
     margin-bottom: $jnt-gutter-normal;
   }
 }
@@ -30,9 +31,6 @@
     color: $jnt-white-color;
     padding-right: $jnt-gutter-huge;
     box-shadow: $jnt-shadow-normal;
-  }
-  [avatar], [host=#{$jnt-icon-host}] {
-    margin-right: $jnt-gutter-small;
   }
   [reset] {
     position: absolute;

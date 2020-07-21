@@ -6,7 +6,7 @@
           admin>
 </jnt-link>
 
-<jnt-block [padding]="ui.gutter.large" [state]="progress.gitlab ? ui.layout.block.state.loading : null">
+<jnt-block [padding]="ui.gutter.large" [state]="progress.gitlab ? ui.state.loading : null">
   <jnt-form form [formGroup]="loginForm" (submitted)="login()">
     <div logo>
       <img [src]="'assets/images/' + (theme === 'dark' ? 'logo-dark' : 'logo') + '.svg'" height="50">

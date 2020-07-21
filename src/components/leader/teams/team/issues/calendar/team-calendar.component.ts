@@ -2,7 +2,7 @@ import { Component, forwardRef, Input, OnInit } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { addDays, addWeeks, endOfWeek, getDate, startOfDay, startOfWeek, subWeeks } from 'date-fns';
-import { UI } from 'junte-ui';
+import { UI } from '@junte/ui';
 import { BehaviorSubject, combineLatest, of, zip } from 'rxjs';
 import { delay, distinctUntilChanged, filter as filtering, finalize, map, tap } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';

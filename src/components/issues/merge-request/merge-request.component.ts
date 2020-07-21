@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UI } from 'junte-ui';
+import { UI } from '@junte/ui';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { MergeRequestState } from '../../../models/enums/merge-requests';
 import { MergeRequest } from '../../../models/merge-request';

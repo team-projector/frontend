@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { UI } from 'junte-ui';
+import { UI } from '@junte/ui';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { ViewType } from 'src/models/enums/view-type';
 import { Salary } from 'src/models/salary';

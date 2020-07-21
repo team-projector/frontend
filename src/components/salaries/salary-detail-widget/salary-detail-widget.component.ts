@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { PopoverOptions, UI } from 'junte-ui';
+import { PopoverOptions, UI } from '@junte/ui';
 import { of } from 'rxjs';
 import { filter, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';

@@ -1,6 +1,6 @@
 import { addDays } from 'date-fns';
 import { faker } from '../utils/mocks';
-import { SearchFilter } from 'junte-ui';
+import { SearchFilter } from '@junte/ui';
 import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { PrimitiveSerializer } from 'serialize-ts/dist';
 import { IssueState } from 'src/models/enums/issue';

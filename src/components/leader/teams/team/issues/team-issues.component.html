@@ -41,9 +41,11 @@
     <jnt-stack [type]="ui.layout.stack.type.horizontal">
       <div filter [attr.active]="!!filter.value.user">
         <ng-container *ngIf="filter.value.user;else noFilterUser">
-          <jnt-avatar avatar [image]="filter.value.user.avatar"
-                      [size]="ui.size.tiny"></jnt-avatar>
-          {{filter.value.user.name}}
+          <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small" [align]="ui.flex.align.center">
+            <jnt-avatar avatar [image]="filter.value.user.avatar"
+                        [size]="ui.size.tiny"></jnt-avatar>
+            <span>{{filter.value.user.name}}</span>
+          </jnt-stack>
           <jnt-button reset [scheme]="ui.scheme.secondary"
                       [size]="ui.size.tiny"
                       [icon]="ui.icons.close"
@@ -51,14 +53,18 @@
         </ng-container>
         <ng-template #noFilterUser
                      i18n="@@action.pick_user">
-          <jnt-icon [icon]="ui.icons.user"></jnt-icon>
-          Pick a user
+          <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small">
+            <jnt-icon [icon]="ui.icons.user"></jnt-icon>
+            <span>Pick a user</span>
+          </jnt-stack>
         </ng-template>
       </div>
       <div filter [attr.active]="!!filter.value.dueDate">
         <ng-container *ngIf="filter.value.dueDate;else noFilterDueDate">
-          <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
-          {{filter.value.dueDate | date}}
+          <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small">
+            <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
+            <span>{{filter.value.dueDate | date}}</span>
+          </jnt-stack>
           <jnt-button reset [scheme]="ui.scheme.secondary"
                       [size]="ui.size.tiny"
                       [icon]="ui.icons.close"
@@ -66,8 +72,10 @@
         </ng-container>
         <ng-template #noFilterDueDate
                      i18n="@@action.pick_due_date">
-          <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
-          Pick a due date
+          <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small">
+            <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
+            <span>Pick a due date</span>
+          </jnt-stack>
         </ng-template>
       </div>
       <div filter [attr.active]="!!project.value">
@@ -84,8 +92,10 @@
         </ng-container>
         <ng-template #noFilterProject
                      i18n="@@action.pick_project">
-          <jnt-icon [icon]="ui.icons.poop"></jnt-icon>
-          Pick a project
+          <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small">
+            <jnt-icon [icon]="ui.icons.poop"></jnt-icon>
+            <span>Pick a project</span>
+          </jnt-stack>
         </ng-template>
       </div>
     </jnt-stack>

@@ -1,6 +1,6 @@
 import { subDays } from 'date-fns';
 import { faker } from '../utils/mocks';
-import { SearchFilter } from 'junte-ui';
+import { SearchFilter } from '@junte/ui';
 import { ArraySerializer } from 'serialize-ts';
 import { BreakReasons, ApproveStates } from 'src/models/enums/break';
 import { DATE_TIME_FORMAT } from '../consts';

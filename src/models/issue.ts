@@ -1,6 +1,6 @@
 import { addDays } from 'date-fns';
 import { faker } from '../utils/mocks';
-import { SearchFilter, UI } from 'junte-ui';
+import { SearchFilter, UI } from '@junte/ui';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { IssueProblem, IssueState } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';

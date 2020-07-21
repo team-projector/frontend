@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { R } from 'apollo-angular/types';
-import { isEqual, UI } from 'junte-ui';
+import { isEqual, UI } from '@junte/ui';
 import { of } from 'rxjs';
 import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
@@ -66,8 +66,8 @@ export class TeamsComponent implements OnInit {
 
   constructor(private allTeamsGQL: AllTeamsGQL,
               private fb: FormBuilder,
-              private router: Router,
-              private route: ActivatedRoute) {
+              public router: Router,
+              public route: ActivatedRoute) {
   }
 
   ngOnInit() {

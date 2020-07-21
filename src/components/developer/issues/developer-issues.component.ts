@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { R } from 'apollo-angular/types';
-import { Period, UI } from 'junte-ui';
+import { Period, UI } from '@junte/ui';
 import { BehaviorSubject, combineLatest, of, zip } from 'rxjs';
 import { delay, distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';

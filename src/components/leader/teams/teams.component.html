@@ -9,11 +9,12 @@
                   i18n-title="@@action.manage"></jnt-link>
 
         <jnt-stack [type]="ui.layout.stack.type.horizontal"
+                   [spacing]="ui.gutter.normal"
                    [wrap]="ui.flex.wrap.wrap">
           <ng-container *ngIf="loading; then loadingTemplate; else teamsTemplate"></ng-container>
           <ng-template #loadingTemplate>
-            <div *ngFor="let i of 5 | mockArray" team>
-              <jnt-block [width]="ui.width.fluid" block>
+            <div *ngFor="let i of 5 | mockArray">
+              <jnt-block [width]="ui.width.fluid">
                 <jnt-stack [align]="ui.flex.align.center">
                   <jnt-skeleton [lines]="1"></jnt-skeleton>
                   <jnt-skeleton [type]="ui.layout.skeleton.type.avatar"></jnt-skeleton>
@@ -23,9 +24,11 @@
             </div>
           </ng-template>
           <ng-template #teamsTemplate>
-            <a *ngFor="let team of teams" [routerLink]="[team.id]" team>
-              <jnt-block [title]="team.title"
-                         [padding]="ui.gutter.none" block>
+              <jnt-card *ngFor="let team of teams"
+                        [title]="team.title"
+                        [features]="[ui.feature.clickable]"
+                        (selected)="router.navigate([team.id], {relativeTo: this.route})"
+                        [padding]="ui.gutter.normal">
                 <jnt-label problems *ngIf="team.metrics.problemsCount"
                            [icon]="ui.icons.warning"
                            [color]="ui.color.red"
@@ -35,21 +38,18 @@
                               [image]="member.user.avatar">
                   </jnt-avatar>
                 </jnt-avatars-group>
-                <ng-template #blockFooterTemplate>
-                  <div footer>
-                    <div><b>{{!!team.metrics.issues.openedEstimated ? (team.metrics.issues.openedEstimated |
+                <ng-template #cardFooterTemplate>
+                    <div footer><b>{{!!team.metrics.issues.openedEstimated ? (team.metrics.issues.openedEstimated |
                       duration:durationFormat.short) : '&ndash;'}}</b>
                       hours for <b>{{team.metrics.issues.openedCount || '&ndash;'}}</b> tasks
                     </div>
-                  </div>
                 </ng-template>
-              </jnt-block>
-            </a>
+              </jnt-card>
           </ng-template>
         </jnt-stack>
         <ng-container *ngIf="pagesCount > 1">
           <jnt-form [formGroup]="form">
-            <jnt-pagination [pagesCount]="pagesCount" formControlName="page"></jnt-pagination>
+            <jnt-pager [pagesCount]="pagesCount" formControlName="page"></jnt-pager>
           </jnt-form>
         </ng-container>
       </jnt-stack>

@@ -4,7 +4,7 @@ import localeRu from '@angular/common/locales/ru';
 import { DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
 import { Locale } from 'date-fns';
 import { enUS as dfnsEnUS, ru as dfnsRu } from 'date-fns/locale';
-import { en as jntEn, JunteUiModule, ru as jntRu } from 'junte-ui';
+import { en as jntEn, JunteUiModule, ru as jntRu } from '@junte/ui';
 import { DateFnsConfigurationService } from 'ngx-date-fns';
 import { detectLanguage } from 'src/utils/lang';
 import { Language } from './enums/language';

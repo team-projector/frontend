@@ -1,4 +1,4 @@
-@import 'jnt-variables';
+@import '~@junte/ui/lib/assets/styles/layout/responsive';
 
 :host {
   display: block;
@@ -9,7 +9,7 @@
 }
 
 [block] {
-  @media screen and (max-width: map-get($jnt-grid-breakpoints, wide)) {
+  @include max-for-desktop() {
     margin-bottom: $jnt-gutter-normal;
   }
 }
@@ -31,10 +31,6 @@
     color: $jnt-white-color;
     padding-right: $jnt-gutter-huge;
     box-shadow: $jnt-shadow-normal;
-  }
-
-  [avatar], [host=#{$jnt-icon-host}] {
-    margin-right: $jnt-gutter-small;
   }
 
   [reset] {
@@ -89,11 +85,11 @@
     }
   }
 }
-
-::ng-deep [data-current-day='true'] {
-  background-color: $jnt-primary-light-color;
-  color: $jnt-white-color;
-}
+//TODO mixin api
+//::ng-deep [data-current-day='true'] {
+//  background-color: $jnt-primary-light-color;
+//  color: $jnt-white-color;
+//}
 
 .day {
   display: flex;

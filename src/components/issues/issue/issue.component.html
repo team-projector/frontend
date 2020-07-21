@@ -1,8 +1,8 @@
-<jnt-stack [type]="ui.orientation.horizontal"
+<jnt-stack [orientation]="ui.orientation.horizontal"
            [gutter]="ui.gutter.small">
   <jnt-avatar *ngIf="!!issue.user" [text]="issue.user.name" [image]="issue.user.avatar"
               [size]="ui.size.tiny"></jnt-avatar>
-  <jnt-stack [type]="ui.layout.stack.type.vertical"
+  <jnt-stack [orientation]="ui.orientation.vertical"
              [gutter]="ui.gutter.tiny">
     <jnt-link *ngIf="issue.ticket" ticket [icon]="ui.icons.link"
               target="_blank"
@@ -10,7 +10,7 @@
               [title]="issue.ticket.title"
               [outline]="ui.outline.ghost">
     </jnt-link>
-    <jnt-stack [type]="ui.orientation.horizontal"
+    <jnt-stack [orientation]="ui.orientation.horizontal"
                [gutter]="ui.gutter.small"
                [justify]="ui.flex.justify.start"
                [wrap]="ui.flex.wrap.wrap">

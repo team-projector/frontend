@@ -1,7 +1,7 @@
 <jnt-block *ngIf="user.metrics as metrics" title="Current payroll"
            i18n-title="@@label.current_payroll"
            [width]="ui.width.fluid"
-           [padding]="ui.gutter.none">
+           [padding]="ui.gutter.normal">
   <jnt-form [formGroup]="form">
     <jnt-stack [align]="ui.flex.align.stretch">
       <jnt-stack [align]="ui.flex.align.center" [gutter]="ui.gutter.small">
@@ -43,7 +43,7 @@
               </span>
             </jnt-stack>
           </ng-template>
-          <span [jntPopover]="getOptions({contentTemplate: contentClosed, scheme: ui.scheme.primary})">
+          <span [jntPopover]="getOptions({contentTemplate: contentClosed})">
             {{(taxesControl.value ? metrics.payrollClosed + metrics.taxesClosed : metrics.payrollClosed)
             | currency:undefined:'symbol':'1.0-0'}}
           </span>
@@ -74,7 +74,7 @@
               </span>
             </jnt-stack>
           </ng-template>
-          <span [jntPopover]="getOptions({contentTemplate: contentOpened, scheme: ui.scheme.primary})">
+          <span [jntPopover]="getOptions({contentTemplate: contentOpened})">
             {{(taxesControl.value ? metrics.payrollOpened + metrics.taxesOpened : metrics.payrollOpened)
             | currency:undefined:'symbol':'1.0-0'}}</span>
           <jnt-label *ngIf="(metrics.issues.openedSpent + metrics.mergeRequests.openedSpent) as spent"
@@ -101,7 +101,7 @@
         </jnt-stack>
       </ng-template>
       <div payroll>
-        <span [jntPopover]="getOptions({contentTemplate: contentAll, scheme: ui.scheme.primary})">
+        <span [jntPopover]="getOptions({contentTemplate: contentAll})">
         {{(taxesControl.value ? metrics.payroll + metrics.taxes : metrics.payroll)
           | currency:undefined:'symbol':'1.0-0'}}</span>
       </div>
@@ -122,7 +122,7 @@
             </jnt-stack>
           </ng-template>
           <jnt-stack
-            [jntPopover]="getOptions({contentTemplate: contentBonuses, title: 'Bonuses', scheme: ui.scheme.primary},
+            [jntPopover]="getOptions({contentTemplate: contentBonuses, title: 'Bonuses'},
               !!bonuses.length)"
             [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
             [align]="ui.flex.align.center">
@@ -144,7 +144,7 @@
             </jnt-stack>
           </ng-template>
           <jnt-stack
-            [jntPopover]="getOptions({contentTemplate: contentPenalties, title: 'Penalties', scheme: ui.scheme.primary},
+            [jntPopover]="getOptions({contentTemplate: contentPenalties, title: 'Penalties'},
               !!penalties.length)"
             [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
             [align]="ui.flex.align.center">

@@ -43,8 +43,8 @@ $jnt-shadow-normal: 2px 1px 10px rgba(0, 67, 167, 0.07);
 
 $jnt-body-color: $jnt-primary-text-color;
 
-@import 'jnt-variables';
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
 
 [theme='dark'] {
-  @import 'jnt-all';
+  @import "~@junte/ui/lib/assets/styles/jnt-all";
 }

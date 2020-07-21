@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from 'junte-ui';
+import { JunteUiModule } from '@junte/ui';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { SalaryDetailWidgetComponent } from './salary-detail-widget.component';
 

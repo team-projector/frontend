@@ -1,9 +1,8 @@
-@import 'jnt-variables';
-
 :host {
   display: block;
 }
 
-[closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
-  text-decoration: line-through;
-}
+//TODO mixinAPI
+//[closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
+//  text-decoration: line-through;
+//}
