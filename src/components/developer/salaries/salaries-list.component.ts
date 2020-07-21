@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UI } from 'junte-ui';
+import { UI } from '@junte/ui';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
 import { SalariesState } from 'src/components/salaries/salaries.component';

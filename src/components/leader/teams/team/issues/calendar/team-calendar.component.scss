@@ -1,4 +1,4 @@
-@import 'jnt-variables';
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
 
 :host {
   display: block;
@@ -207,15 +207,7 @@ table {
             }
           }
         }
-        [link] ::ng-deep {
-          width: 100%;
-          text-align: left;
-          a[child-of=#{$jnt-link-host}][active='true'] {
-            span {
-              border-bottom: 0;
-            }
-          }
-        }
+        //TODO mixin API
         jnt-label ::ng-deep {
           justify-content: center;
         }
@@ -228,9 +220,8 @@ table {
           padding: $jnt-gutter-small;
           &:focus {
             outline: 0;
-            border: 1px solid $jnt-primary-color;
             border-radius: $jnt-corner-small;
-            box-shadow: $jnt-shadow-primary;
+            box-shadow: $jnt-outline-shadow-small $jnt-secondary-dark-color;
           }
         }
       }

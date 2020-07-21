@@ -1,4 +1,5 @@
-@import 'jnt-variables';
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/forms/button";
 
 :host {
   display: flex;
@@ -48,7 +49,6 @@
   }
 }
 
-[god] ::ng-deep [host=#{$jnt-button-host}] button {
-  padding-left: $jnt-gutter-normal !important;
-  padding-right: $jnt-gutter-normal !important;
+[god] {
+  @include jnt-button((padding: 0 $jnt-gutter-normal), null, true);
 }

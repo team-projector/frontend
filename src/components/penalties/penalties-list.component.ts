@@ -1,6 +1,6 @@
 import { OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TableComponent } from 'junte-ui';
+import { TableComponent } from '@junte/ui';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
 import { TimeExpensesState } from 'src/components/issues/time-expenses/time-expenses.component';

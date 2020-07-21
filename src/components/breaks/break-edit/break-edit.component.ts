@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { R } from 'apollo-angular/types';
-import { UI } from 'junte-ui';
+import { UI } from '@junte/ui';
 import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';

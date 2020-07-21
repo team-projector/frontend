@@ -1,4 +1,5 @@
-@import 'jnt-variables';
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/forms/select";
 
 :host {
   display: block;
@@ -13,15 +14,6 @@ p {
   pointer-events: none;
 }
 
-[issues] ::ng-deep {
-  [select][child-of=#{$jnt-select-host}] {
-    ul {
-      max-height: 200px;
-      overflow-y: scroll;
-      li {
-        width: 100%;
-        box-sizing: border-box;
-      }
-    }
-  }
+[issues] {
+  @include jnt-select((chips: (width: 'fluid')), '&', true);
 }

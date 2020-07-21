@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { getDay, isThisWeek, startOfDay } from 'date-fns';
-import { UI } from 'junte-ui';
+import { UI } from '@junte/ui';
 
 @Component({
   selector: 'app-due-date',

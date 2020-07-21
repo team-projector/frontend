@@ -1,5 +1,5 @@
 <jnt-form [formGroup]="form" (submitted)="save()"
-          [state]="progress.loading ? ui.forms.form.state.loading : null">
+          [state]="progress.loading ? ui.state.loading : null">
   <p *ngFor="let e of errors">{{e}}</p>
   <jnt-tabs>
     <jnt-tab title="Common"

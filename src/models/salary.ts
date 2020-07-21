@@ -1,5 +1,5 @@
 import { addDays } from 'date-fns';
-import { SearchFilter } from 'junte-ui';
+import { SearchFilter } from '@junte/ui';
 import { ArraySerializer } from 'serialize-ts';
 import { BonusesState } from 'src/components/bonuses/bonuses.component';
 import { PenaltiesState } from 'src/components/penalties/penalties.component';

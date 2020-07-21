@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from 'junte-ui';
+import { JunteUiModule } from '@junte/ui';
 import { BreaksModule } from 'src/components/breaks/breaks.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { NumberModule } from 'src/pipes/number.module';

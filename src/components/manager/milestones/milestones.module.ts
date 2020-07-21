@@ -2,7 +2,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from 'junte-ui';
+import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { IssuesModule } from 'src/components/issues/issues.module';
 import { EditTicketComponent } from 'src/components/manager/milestones/milestone/edit-ticket/edit-ticket.component';

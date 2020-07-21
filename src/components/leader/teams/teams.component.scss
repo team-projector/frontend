@@ -1,48 +1,27 @@
-@import 'jnt-variables';
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/layout/card";
 
 :host {
   display: block;
 }
 
-[manage] {
-  margin-bottom: $jnt-gutter-normal;
+@include jnt-card((
+  shadow: $jnt-shadow-normal,
+  title: (
+    text-align: center,
+    font-weight: $jnt-font-weight-semi-bold,
+    color: $jnt-primary-color,
+    font-size: $jnt-font-size-base
+  )), null, true);
+
+[footer] {
+  padding-top: $jnt-gutter-normal;
+  border-top: 1px solid $jnt-muted-color;
+  font-size: 12px;
 }
 
-:host-context([theme="dark"]) {
-  [team] [block] [footer] {
-    color: $jnt-gray-200-color;
-    background-color: $jnt-gray-800-color;
-  }
-}
-
-[team] {
-  margin-bottom: $jnt-gutter-normal;
-  text-decoration: none;
-  [block] {
-    height: 100%;
-    max-width: 170px;
-    width: 170px;
-    text-align: center;
-    [avatars] {
-      margin: $jnt-gutter-big auto;
-    }
-    [footer] {
-      padding: $jnt-gutter-normal $jnt-gutter-small;
-      background-color: $jnt-secondary-background;
-      color: $jnt-primary-text-color;
-      border-bottom-left-radius: $jnt-corner-normal;
-      border-bottom-right-radius: $jnt-corner-normal;
-      font-size: 12px;
-      font-weight: $jnt-font-weight-light;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex: 1;
-      span {
-        font-weight: $jnt-font-weight-bold;
-      }
-    }
-  }
+[avatars] {
+  margin: $jnt-gutter-big auto $jnt-gutter-small auto;
 }
 
 [problems] {

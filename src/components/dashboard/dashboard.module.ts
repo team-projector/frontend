@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from 'junte-ui';
+import { JunteUiModule } from '@junte/ui';
 import { CookieService } from 'ngx-cookie-service';
 import { DateFnsModule } from 'ngx-date-fns';
 import { IssuesModule } from 'src/components/issues/issues.module';

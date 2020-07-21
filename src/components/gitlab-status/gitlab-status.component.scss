@@ -1,7 +1,14 @@
-@import 'jnt-variables';
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
 
 :host {
   display: block;
+  min-width: 500px;
+  max-height: 500px;
+  overflow: auto;
+}
+
+hr {
+  width: 100%;
 }
 
 [issue] {

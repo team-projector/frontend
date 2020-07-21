@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { ModalComponent, ModalService, PopoverComponent, PopoverService, UI } from 'junte-ui';
+import { ModalComponent, ModalService, PopoverComponent, PopoverService, UI } from '@junte/ui';
 import { AppConfig } from 'src/app-config';
 import { APPLICATION_READY } from 'src/consts';
 import { MeManager } from 'src/managers/me.manager';

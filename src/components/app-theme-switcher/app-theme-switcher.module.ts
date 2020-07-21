@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { AppThemeSwitcherComponent } from './app-theme-switcher.component';
 import { CommonModule } from '@angular/common';
-import { JunteUiModule } from 'junte-ui';
+import { JunteUiModule } from '@junte/ui';
 import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({

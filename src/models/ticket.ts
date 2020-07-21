@@ -1,5 +1,5 @@
 import { addDays, startOfMonth } from 'date-fns';
-import { SearchFilter } from 'junte-ui';
+import { SearchFilter } from '@junte/ui';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
 import { IssueState } from 'src/models/enums/issue';

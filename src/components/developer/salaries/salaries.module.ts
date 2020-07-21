@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from 'junte-ui';
+import { JunteUiModule } from '@junte/ui';
 import { BonusesModule } from 'src/components/bonuses/bonuses.module';
 import { DeveloperIssuesModule } from 'src/components/developer/issues/developer-issues.module';
 import { SalariesRoutingModule } from 'src/components/developer/salaries/salaries-routing.module';

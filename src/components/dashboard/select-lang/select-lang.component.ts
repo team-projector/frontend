@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { UI } from 'junte-ui';
+import { UI } from '@junte/ui';
 import { CookieService } from 'ngx-cookie-service';
 import { Language } from 'src/enums/language';
 

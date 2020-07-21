@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { UI } from 'junte-ui';
+import { UI } from '@junte/ui';
 import { interval, of } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
