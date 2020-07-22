@@ -77,8 +77,8 @@
                         [from]="ticket.startDate"
                         [to]="ticket.dueDate">
           <ng-template #indicator let-period="period" let-current="current">
-            <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
-                 [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)"
+            <div [attr.over-from]="(period['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
+                 [attr.over-to]="(period['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)"
                  [attr.over-due]="ticket.problems | includes:ticketProblem.overDueDate" period>
               <div label>
                 {{(ticket.metrics.issuesOpenedCount ? ticket.metrics.openedTimeRemains : ticket.metrics.timeRemains) |
@@ -216,8 +216,8 @@
                             cdkDropList
                             [cdkDropListEnterPredicate]="predicateIssue">
               <ng-template #indicator let-period="period" let-current="current">
-                <div [attr.over-from]="(period['startDate'] | fullMonth) < (current | fullMonth)"
-                     [attr.over-to]="(period['dueDate'] | fullMonth) > (current | fullMonth)" period>
+                <div [attr.over-from]="(period['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
+                     [attr.over-to]="(period['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)" period>
                   <ng-container *ngIf="issue.timeEstimate">
                     <div label>{{issue.metrics.remains | duration:durationFormat.short}}</div>
                     <div progress [style.transform]="'translateX(-' + (issue.state === issueStates.opened
