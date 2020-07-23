@@ -207,10 +207,6 @@ table {
             }
           }
         }
-        //TODO mixin API
-        jnt-label ::ng-deep {
-          justify-content: center;
-        }
         [roles] {
           text-transform: lowercase;
         }

@@ -85,11 +85,6 @@
     }
   }
 }
-//TODO mixin api
-//::ng-deep [data-current-day='true'] {
-//  background-color: $jnt-primary-light-color;
-//  color: $jnt-white-color;
-//}
 
 .day {
   display: flex;
@@ -104,6 +99,7 @@
   &[today='true'] {
     border-radius: $jnt-corner-normal;
     border: 2px solid $jnt-warning-color;
+    color: $jnt-white-color;
   }
 
   [issues] {

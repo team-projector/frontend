@@ -1,8 +1,11 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/layout/block";
 
 :host {
   display: block;
 }
+
+@include jnt-block((header: (padding: $jnt-gutter-normal 0 0 0)), null, true);
 
 [position] {
   color: $jnt-success-color;
