@@ -1,4 +1,5 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/navigation/link";
 
 :host {
   display: block;
@@ -31,7 +32,6 @@
   }
 }
 
-//TODO mixinAPI
-//[closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
-//  text-decoration: line-through;
-//}
+[closed='true'] {
+  @include jnt-link((text-decoration: line-through), '&', true);
+}
