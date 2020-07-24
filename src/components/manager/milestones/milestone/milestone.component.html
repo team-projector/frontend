@@ -166,19 +166,20 @@
                 </ng-container>
                 <jnt-button [outline]="ui.outline.transparent"
                             [icon]="ui.icons.actions"
+                            (jntPopoverDisplayed)="popover = $event"
                             [jntPopover]="{contentTemplate: dropdownTemplate, trigger: ui.overlays.popover.trigger.click}">
                 </jnt-button>
-                <ng-template #dropdownTemplate let-hide="hide">
+                <ng-template #dropdownTemplate>
                   <jnt-menu [orientation]="ui.orientation.vertical"
                             [spacer]="ui.gutter.small">
                     <jnt-menu-item title="Edit"
                                    i18n-title="@@action.edit"
                                    [icon]="ui.icons.edit"
-                                   (click)="edit(ticket); hide()"></jnt-menu-item>
+                                   (click)="edit(ticket); popover.hide()"></jnt-menu-item>
                     <jnt-menu-item title="Delete"
                                    i18n-title="@@action.delete"
                                    [icon]="ui.icons.delete"
-                                   (click)="delete(ticket.id); hide()"></jnt-menu-item>
+                                   (click)="delete(ticket.id); popover.hide()"></jnt-menu-item>
                   </jnt-menu>
                 </ng-template>
               </jnt-stack>
