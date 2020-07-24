@@ -2,8 +2,8 @@ import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ComponentFactoryResolver, Injector, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { isEqual, ModalOptions, ModalService, PopoverComponent, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
-import { isEqual, ModalOptions, ModalService, UI } from '@junte/ui';
 import { combineLatest, of } from 'rxjs';
 import { debounceTime, delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
@@ -56,6 +56,7 @@ export class MilestoneComponent implements OnInit {
   issueStates = IssueState;
   ticketStates = TicketStates;
   ticketsTypes = TicketsTypes;
+  popover: PopoverComponent;
 
   milestoneControl = new FormControl(null);
   ticketControl = new FormControl(null);
