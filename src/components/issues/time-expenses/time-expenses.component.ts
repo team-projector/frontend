@@ -141,7 +141,7 @@ export class TimeExpensesComponent implements OnInit {
           q: q || undefined,
           first: first !== DEFAULT_FIRST ? first : undefined,
           offset: offset !== DEFAULT_OFFSET ? offset : undefined,
-          type: type !== TimeExpenseType.opened ? type : undefined,
+          type: type || undefined,
           user: user || undefined,
           team: team || undefined,
           project: project || undefined,

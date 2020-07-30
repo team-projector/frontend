@@ -218,7 +218,7 @@
                      title="Time Expenses"
                      i18n-title="@@action.time_expenses">
         <jnt-badge *ngIf="summary?.spentTimes?.spent"
-                   [text]="summary.spentTimes.spent | duration:durationFormat.short">
+                   [text]="summary.spentTimes.spent | duration:durationFormat.full">
         </jnt-badge>
       </jnt-menu-item>
     </jnt-menu>
