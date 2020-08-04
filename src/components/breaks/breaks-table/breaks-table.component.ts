@@ -1,13 +1,13 @@
 import { Component, ComponentFactoryResolver, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, ModalOptions, ModalService, PopoverComponent, TableComponent, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, ModalOptions, ModalService, TableComponent, UI } from '@junte/ui';
 import { of } from 'rxjs';
 import { delay, distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { BreakDeclineComponent } from 'src/components/breaks/break-decline/break-decline.component';
 import { BreakEditComponent } from 'src/components/breaks/break-edit/break-edit.component';
-import { AllWorkBreaks, ApproveWorkBreakGQL, DeleteWorkBreakGQL } from 'src/components/breaks/breaks/breaks.graphql';
+import { AllWorkBreaks, ApproveWorkBreakGQL, DeleteWorkBreakGQL } from 'src/components/breaks/breaks.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
@@ -15,7 +15,6 @@ import { MeManager } from 'src/managers/me.manager';
 import { Break, BreaksFilter, PagingBreaks } from 'src/models/break';
 import { ApproveStates, BreakReasons } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
-import { IssuesFilter } from 'src/models/issue';
 import { User } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
 
@@ -45,11 +44,14 @@ export class BreaksState {
 }
 
 @Component({
-  selector: 'app-breaks',
-  templateUrl: './breaks.component.html',
-  styleUrls: ['./breaks.component.scss']
+  selector: 'app-breaks-table',
+  templateUrl: './breaks-table.component.html',
+  styleUrls: ['./breaks-table.component.scss']
 })
-export class BreaksComponent implements OnInit {
+export class BreaksTableComponent implements OnInit {
+
+  @ViewChild('table', {static: true})
+  table: TableComponent;
 
   private _filter: BreaksFilter;
   user: User;
@@ -58,9 +60,11 @@ export class BreaksComponent implements OnInit {
   reasons = BreakReasons;
   approveStates = ApproveStates;
   breaks: Break[] = [];
+  popover: PopoverComponent;
+
   loading = false;
 
-  tableControl = this.fb.control({
+  viewControl = this.fb.control({
     q: null,
     sort: null,
     first: DEFAULT_FIRST,
@@ -70,13 +74,12 @@ export class BreaksComponent implements OnInit {
   teamControl = this.fb.control(null);
 
   form = this.fb.group({
-    table: this.tableControl,
+    view: this.viewControl,
     user: [null],
     team: this.teamControl
   });
 
-
-  set filter(filter: IssuesFilter) {
+  set filter(filter: BreaksFilter) {
     this._filter = filter;
     this.table.load();
   }
@@ -89,7 +92,7 @@ export class BreaksComponent implements OnInit {
 
   @Input() set state({first, offset, q, team, user}: BreaksState) {
     this.form.patchValue({
-      table: {
+      view: {
         q: q || null,
         first: first || DEFAULT_FIRST,
         offset: offset || DEFAULT_OFFSET
@@ -101,9 +104,6 @@ export class BreaksComponent implements OnInit {
 
   @Output() stateChange = new EventEmitter<BreaksState>();
   @Output() reloaded = new EventEmitter();
-
-  @ViewChild('table', {static: true})
-  table: TableComponent;
 
   constructor(private breaksGQL: AllWorkBreaks,
               private deleteBreakGQL: DeleteWorkBreakGQL,
@@ -124,7 +124,7 @@ export class BreaksComponent implements OnInit {
     };
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({table: {offset, first, q}, team, user}) => {
+      .subscribe(({view: {offset, first, q}, team, user}) => {
         this.stateChange.emit(new BreaksState({
           q: q || undefined,
           first: first !== DEFAULT_FIRST ? first : undefined,

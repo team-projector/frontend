@@ -25,10 +25,24 @@
     border-right: 10px solid $jnt-fail-color;
   }
 
+  &[accepting='true'] {
+    cursor: pointer;
+    pointer-events: all;
+    background-color: $jnt-primary-color;
+  }
+
+  &[accepted='true'] {
+    background-color: $jnt-success-color;
+  }
+
+  &[declined='true'] {
+    background-color: $jnt-fail-color;
+  }
+
   [label] {
     position: absolute;
     font-size: $jnt-font-size-small;
-    white-space: nowrap;
+    text-align: center;
     top: 0;
     right: 0;
     bottom: 0;
@@ -43,49 +57,5 @@
     background-color: $jnt-success-color;
     transform: translateX(-50%);
     height: 100%;
-  }
-}
-
-[issue] {
-  margin-left: $jnt-gutter-tiny;
-
-  [state] {
-    color: $jnt-success-color;
-
-    &[doing] {
-      min-width: 18px;
-      width: 18px;
-      min-height: 18px;
-      height: 18px;
-      border-radius: 50%;
-      fill: $jnt-success-color;
-      padding: 1px;
-      border: 1px solid $jnt-success-color;
-    }
-  }
-
-  [closed='true'] {
-    @include jnt-link((text-decoration: line-through), '&', true);
-  }
-
-}
-
-.cdk- {
-  &drag- {
-    &preview {
-      border-radius: $jnt-corner-normal;
-      box-shadow: $jnt-shadow-normal;
-      padding: $jnt-gutter-tiny;
-      background-color: $jnt-primary-background;
-    }
-    &placeholder {
-      display: none;
-    }
-  }
-  &drop- {
-    &list-dragging {
-      display: flex;
-      outline: 1px solid $jnt-secondary-color;
-    }
   }
 }

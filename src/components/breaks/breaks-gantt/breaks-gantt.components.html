@@ -1,0 +1,97 @@
+<jnt-block [padding]="ui.gutter.none"
+           [state]="loading ? ui.state.loading : null"
+           [width]="ui.width.fluid">
+  <jnt-form [formGroup]="form">
+    <jnt-gantt [type]="ui.collections.gantt.type.year">
+      <ng-template #toolsTemplate>
+        <jnt-button-group>
+          <jnt-button
+            text="Reload"
+            [icon]="ui.icons.reload"></jnt-button>
+        </jnt-button-group>
+      </ng-template>
+      <jnt-gantt-line *ngFor="let workBreak of ganttBreaks"
+                      [period]="workBreak"
+                      [from]="workBreak.fromDate"
+                      [to]="workBreak.toDate">
+        <ng-template #title>
+          <jnt-row [align]="ui.flex.align.center">
+            <jnt-col [tablet]="12" [desktop]="1">
+              <jnt-button data-trigger
+                          [outline]="ui.outline.transparent"
+                          [icon]="ui.icons.actions"
+                          (jntPopoverDisplayed)="popover = $event"
+                          [jntPopover]="{contentTemplate: dropdownTemplate, trigger: ui.overlays.popover.trigger.click}">
+              </jnt-button>
+              <ng-template #dropdownTemplate>
+                <ng-container
+                  *ngTemplateOutlet="ganttLineActionsTemplate;context: {workBreak: workBreak}"></ng-container>
+              </ng-template>
+              <ng-template #ganttLineActionsTemplate>
+                <jnt-menu [orientation]="ui.orientation.vertical" [spacer]="ui.gutter.small">
+                  <jnt-menu-item *ngIf="view === viewType.extended"
+                                 title="Approve"
+                                 i18n-title="@@action.approve"
+                                 [icon]="ui.icons.checked"
+                                 (click)="approve(workBreak.id); popover.hide()">
+                  </jnt-menu-item>
+                  <jnt-menu-item *ngIf="view === viewType.extended"
+                                 title="Decline"
+                                 i18n-title="@@action.decline"
+                                 [icon]="ui.icons.cancel"
+                                 (click)="openDecline(workBreak); popover.hide()">
+                  </jnt-menu-item>
+                  <jnt-menu-item title="Edit"
+                                 i18n-title="@@action.edit"
+                                 [icon]="ui.icons.edit"
+                                 (click)="open(workBreak); popover.hide()"></jnt-menu-item>
+                  <jnt-menu-item title="Delete"
+                                 i18n-title="@@action.delete"
+                                 [icon]="ui.icons.delete"
+                                 (click)="delete(workBreak.id); popover.hide()"></jnt-menu-item>
+                </jnt-menu>
+              </ng-template>
+            </jnt-col>
+
+            <jnt-col [tablet]="12" [desktop]="2">
+              <ng-container [ngSwitch]="workBreak.reason">
+                <ng-container *ngSwitchCase="reasons.vacation"
+                              i18n="@@action.vacation">Vacation
+                </ng-container>
+                <ng-container *ngSwitchCase="reasons.disease"
+                              i18n="@@action.disease">Disease
+                </ng-container>
+                <ng-container *ngSwitchCase="reasons.dayoff"
+                              i18n="@@action.dayoff">Dayoff
+                </ng-container>
+              </ng-container>
+            </jnt-col>
+
+            <jnt-col [tablet]="12" [desktop]="3">
+              <div comment>
+                {{workBreak.comment}}
+              </div>
+            </jnt-col>
+
+            <jnt-col [tablet]="12" [desktop]="3">
+              <div comment>
+                {{workBreak.approveState}}
+              </div>
+            </jnt-col>
+          </jnt-row>
+        </ng-template>
+        <ng-template #indicatorYear let-period="period" let-current="current">
+          <div [attr.accepting]="period['approveState'] === approveStates.created"
+               [attr.accepted]="period['approveState'] === approveStates.approved"
+               [attr.declined]="period['approveState'] === approveStates.declined"
+               [attr.over-from]="(period['fromDate'] | dfnsGetYear) < (current | dfnsGetYear)"
+               [attr.over-to]="(period['toDate'] | dfnsGetYear) > (current | dfnsGetYear)" period>
+                          <span label>
+                            {{(period['toDate'] | dfnsDifferenceInDays:period['fromDate']) + 1 }}d
+                          </span>
+          </div>
+        </ng-template>
+      </jnt-gantt-line>
+    </jnt-gantt>
+  </jnt-form>
+</jnt-block>
