@@ -2,7 +2,7 @@
            [state]="loading ? ui.state.loading : null"
            [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
-    <jnt-table #table formControlName="table" [features]="[ui.collections.table.features]">
+    <jnt-table #table formControlName="view" [features]="[ui.collections.table.features]">
       <ng-template #tableFiltersTemplate>
         <jnt-button text="Add"
                     i18n-text="@@action.add"
@@ -11,7 +11,6 @@
                     (click)="open()">
         </jnt-button>
       </ng-template>
-
       <jnt-table-column *ngIf="view === viewType.extended"
                         title="Developer"
                         i18n-title="@@label.developer">
@@ -80,7 +79,7 @@
                            label="Approved">
                 </jnt-label>
 
-                <jnt-label *ngSwitchCase="approveStates.decline"
+                <jnt-label *ngSwitchCase="approveStates.declined"
                            i18n-label="@@label.declined"
                            [color]="ui.color.red"
                            label="Declined">

@@ -6,16 +6,16 @@ import { BreaksModule } from 'src/components/breaks/breaks.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { NumberModule } from 'src/pipes/number.module';
 import { MeUserResolver } from 'src/resolvers/me';
-import { BreaksGanttComponent } from './breaks-gantt/breaks-gantt.component';
-import { DeveloperBreaksListComponent } from './breaks/breaks-list.component';
+import { DeveloperBreaksListGanttComponent } from './breaks-list-gantt/breaks-list-gantt.component';
+import { DeveloperBreaksListTableComponent } from './breaks-list-table/breaks-list-table.component';
 import { DeveloperBreaksRoutingModule } from './developer-breaks-routing.module';
 import { DeveloperBreaksComponent } from './developer-breaks.component';
 
 @NgModule({
   declarations: [
     DeveloperBreaksComponent,
-    BreaksGanttComponent,
-    DeveloperBreaksListComponent,
+    DeveloperBreaksListGanttComponent,
+    DeveloperBreaksListTableComponent,
   ],
   imports: [
     BreaksModule,
@@ -24,7 +24,6 @@ import { DeveloperBreaksComponent } from './developer-breaks.component';
     DeveloperBreaksRoutingModule,
     ReactiveFormsModule,
     DatePipesModule,
-    DeveloperBreaksRoutingModule,
     NumberModule
   ],
   providers: [

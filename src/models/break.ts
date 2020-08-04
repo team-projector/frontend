@@ -22,7 +22,7 @@ import { User } from './user';
         workBreak.approvedAt = approvedAt;
         break;
       case 3:
-        workBreak.approveState = ApproveStates.decline;
+        workBreak.approveState = ApproveStates.declined;
         workBreak.approvedBy = getMock(User);
         workBreak.approvedAt = approvedAt;
         workBreak.declineReason = faker.helpers.randomize([
@@ -47,10 +47,10 @@ export class Break {
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
 
-  @field({serializer: new DateSerializer()})
+  @field({mock: () => faker.date.recent(-90), serializer: new DateSerializer()})
   toDate: Date;
 
-  @field({serializer: new DateSerializer()})
+  @field({mock: () => faker.date.recent(90), serializer: new DateSerializer()})
   fromDate: Date;
 
   @field({
