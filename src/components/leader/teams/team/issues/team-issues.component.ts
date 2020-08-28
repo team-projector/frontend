@@ -63,9 +63,11 @@ export class TeamIssuesComponent implements OnInit {
     UI.color.purpleLight
   ];
 
+  project: Project;
+
   team: Team;
   filter = new FormControl();
-  project = new FormControl();
+  projectControl = new FormControl();
 
   summary: {
     first?: IssuesSummary, second?: {
@@ -79,7 +81,7 @@ export class TeamIssuesComponent implements OnInit {
   metric = new FormControl(localStorage.getItem(METRIC_TYPE) || MetricType.all);
   form: FormGroup = this.formBuilder.group({
     filter: this.filter,
-    project: this.project,
+    project: this.projectControl,
     metric: this.metric
   });
 
@@ -95,7 +97,7 @@ export class TeamIssuesComponent implements OnInit {
       .subscribe(({filter: {user, dueDate}, project}) => {
         const state = new TeamState({
           user: !!user ? user.id : undefined,
-          project: !!project ? project.id : undefined,
+          project: project || undefined,
           dueDate: dueDate || undefined
         });
         const path = [];
@@ -125,7 +127,8 @@ export class TeamIssuesComponent implements OnInit {
       map(({project}: { project: Project }) => ({project: project})),
       distinctUntilChanged(),
       tap(({project}) => {
-        this.project.patchValue(project, {emitEvent: false});
+        this.project = project;
+        this.projectControl.setValue(project?.id || null, {emitEvent: false});
         this.filter2.project = !!project ? project.id : null;
       }));
 

@@ -27,6 +27,7 @@ export class FirstSummaryGQL extends Query<{ summary }> {
             }
             group {
               title
+              fullTitle
             }
           }
           issues {

@@ -21,6 +21,7 @@ import { DateSerializer } from 'src/serializers/date';
 import { getMock } from 'src/utils/mocks';
 import { TeamState } from '../../leader/teams/team/issues/team-issues.component';
 import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
+import { Project } from '../../../models/project';
 
 class Metric {
   constructor(public days: Map<string, UserProgressMetrics>,
@@ -69,6 +70,7 @@ export class DeveloperIssuesComponent implements OnInit {
   ];
 
   formatDate = 'dd/MM/yyyy';
+  project: Project;
   filter: IssuesFilter;
 
   summary: {
@@ -97,12 +99,12 @@ export class DeveloperIssuesComponent implements OnInit {
     new Map<string, UserProgressMetrics>(),
     new Map<string, UserProgressMetrics>()
   );
-  dueDate = new FormControl(new Date());
-  project = new FormControl();
+  dueDateControl = new FormControl(new Date());
+  projectControl = this.formBuilder.control(null);
   metric = new FormControl(localStorage.getItem(METRIC_TYPE) || MetricType.all);
   form = this.formBuilder.group({
-    dueDate: this.dueDate,
-    project: this.project,
+    dueDate: this.dueDateControl,
+    project: this.projectControl,
     metric: this.metric
   });
 
@@ -117,7 +119,7 @@ export class DeveloperIssuesComponent implements OnInit {
     this.form.valueChanges.pipe(distinctUntilChanged())
       .subscribe(({dueDate, project}) => {
         const state = new DeveloperState({
-          project: !!project ? project.id : undefined,
+          project: project || undefined,
           dueDate: dueDate || undefined
         });
         const path = [];
@@ -129,16 +131,15 @@ export class DeveloperIssuesComponent implements OnInit {
 
     combineLatest([this.route.data, this.route.params])
       .subscribe(([{user, project}, {dueDate}]) => {
-        this.user = user;
+        [this.user, this.project] = [user, project];
 
         this.filter = new IssuesFilter({
           user: user.id,
-          dueDate: !!dueDate ? new Date(dueDate) : undefined,
-          project: !!project ? project.id : undefined
+          dueDate: !!dueDate ? new Date(dueDate) : null,
+          project: project?.id || null
         });
 
-        this.form.patchValue(deserialize(this.filter, IssuesFilter), {emitEvent: false});
-
+        this.form.patchValue(this.filter, {emitEvent: false});
         this.loadSummary();
       });
 
