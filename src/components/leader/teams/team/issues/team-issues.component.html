@@ -3,8 +3,7 @@
     <app-metrics-type formControlName="metric" metrics></app-metrics-type>
     <jnt-row>
       <jnt-col [tablet]="12" [wide]="7">
-        <app-team-calendar calendar
-                           formControlName="filter"
+        <app-team-calendar formControlName="filter"
                            [metric]="metric.value"
                            [team]="team"></app-team-calendar>
       </jnt-col>
@@ -15,7 +14,8 @@
                    i18n-title="@@label.opened_project"
                    i18n-metric="@@label.hours"
                    keyField="id"
-                   [widthMark]="50">
+                   [widthMark]="50"
+                   (selected)="project = $event">
           <jnt-chart-indicator *ngFor="let p of summary.first?.projects;let i = index"
                                [data]="p.project"
                                [titleTemplate]="titleTemplate"
@@ -39,67 +39,49 @@
         </jnt-chart>
       </jnt-col>
     </jnt-row>
-    <jnt-stack [type]="ui.layout.stack.type.horizontal">
-      <div filter [attr.active]="!!filter.value.user">
-        <ng-container *ngIf="filter.value.user;else noFilterUser">
-          <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small" [align]="ui.flex.align.center">
-            <jnt-avatar avatar [image]="filter.value.user.avatar"
+
+    <jnt-stack [orientation]="ui.orientation.horizontal">
+
+      <jnt-filter [selected]="!!filter.value.user"
+                  (clear)="filter.patchValue({user: null, dueDate: filter.value.dueDate})"
+                  placeholder="Pick a user"
+                  [icon]="ui.icons.user">
+        <ng-template #filterContentTemplate>
+          <jnt-stack [orientation]="ui.orientation.horizontal"
+                     [gutter]="ui.gutter.small"
+                     [align]="ui.flex.align.center">
+            <jnt-avatar [image]="filter.value.user?.icon"
                         [size]="ui.size.tiny"></jnt-avatar>
-            <span>{{filter.value.user.name}}</span>
-          </jnt-stack>
-          <jnt-button reset [scheme]="ui.scheme.secondary"
-                      [size]="ui.size.tiny"
-                      [icon]="ui.icons.close"
-                      (click)="filter.patchValue({user: null, dueDate: filter.value.dueDate})"></jnt-button>
-        </ng-container>
-        <ng-template #noFilterUser
-                     i18n="@@action.pick_user">
-          <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small">
-            <jnt-icon [icon]="ui.icons.user"></jnt-icon>
-            <span>Pick a user</span>
+            <span>{{filter.value.user?.name}}</span>
           </jnt-stack>
         </ng-template>
-      </div>
-      <div filter [attr.active]="!!filter.value.dueDate">
-        <ng-container *ngIf="filter.value.dueDate;else noFilterDueDate">
+      </jnt-filter>
+      <jnt-filter [selected]="!!filter.value.dueDate"
+                  placeholder="Pick a due date"
+                  [icon]="ui.icons.calendar"
+                  (clear)="filter.patchValue({user: filter.value.user, dueDate: null})">
+        <ng-template #filterContentTemplate>
           <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small">
             <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
             <span>{{filter.value.dueDate | date}}</span>
           </jnt-stack>
-          <jnt-button reset [scheme]="ui.scheme.secondary"
-                      [size]="ui.size.tiny"
-                      [icon]="ui.icons.close"
-                      (click)="filter.patchValue({user: filter.value.user,  dueDate: null})"></jnt-button>
-        </ng-container>
-        <ng-template #noFilterDueDate
-                     i18n="@@action.pick_due_date">
-          <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small">
-            <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
-            <span>Pick a due date</span>
-          </jnt-stack>
         </ng-template>
-      </div>
-      <div filter [attr.active]="!!project.value">
-        <ng-container *ngIf="!!project.value;else noFilterProject">
+      </jnt-filter>
+
+      <jnt-filter [control]="projectControl"
+                  placeholder="Pick a project"
+                  [icon]="ui.icons.poop">
+        <ng-template #filterContentTemplate>
           <jnt-icon [icon]="ui.icons.project"></jnt-icon>
           <div>
-            {{project.value.title}}<br>
-            <small>{{project.value.group?.fullTitle}}</small>
+            {{project.title}}<br>
+            <small>{{project.group?.fullTitle}}</small>
           </div>
-          <jnt-button reset [scheme]="ui.scheme.secondary"
-                      [size]="ui.size.tiny"
-                      [icon]="ui.icons.close"
-                      (click)="project.patchValue(null)"></jnt-button>
-        </ng-container>
-        <ng-template #noFilterProject
-                     i18n="@@action.pick_project">
-          <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small">
-            <jnt-icon [icon]="ui.icons.poop"></jnt-icon>
-            <span>Pick a project</span>
-          </jnt-stack>
         </ng-template>
-      </div>
+      </jnt-filter>
+
     </jnt-stack>
+
     <jnt-menu>
       <jnt-menu-item [link]="['issues']"
                      title="Issues"
@@ -122,7 +104,7 @@
                      title="Time Expenses"
                      i18n-title="@@action.time_expenses">
         <jnt-badge
-          *ngIf="(filter.value.user || filter.value.dueDate || project.value) && summary?.second?.spentTimes.spent"
+          *ngIf="(filter.value.user || filter.value.dueDate || projectControl.value) && summary?.second?.spentTimes.spent"
           [value]="summary?.second?.spentTimes.spent | duration"
           [color]="ui.color.purple"></jnt-badge>
         <jnt-badge *ngIf="summary?.second?.spentTimes.openedSpent"

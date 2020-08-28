@@ -80,7 +80,7 @@
     <app-metrics-type formControlName="metric" metrics></app-metrics-type>
     <jnt-row>
       <jnt-col [tablet]="12" [desktop]="7">
-        <jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid" block>
+        <jnt-block [padding]="ui.gutter.normal" [width]="ui.width.fluid" block>
           <jnt-calendar formControlName="dueDate" (updated)="period = $event">
             <jnt-week-metric title="Est"
                              i18n-title="@@label.est"></jnt-week-metric>
@@ -129,9 +129,11 @@
                    metric="Hours"
                    i18n-title="@@label.opened_project"
                    i18n-metric="@@label.hours"
-                   keyField="id" [widthMark]="50">
+                   keyField="id"
+                   [widthMark]="50"
+                   (selected)="project = $event">
           <jnt-chart-indicator *ngFor="let p of summary.issues?.projects;let i = index"
-                               [title]="p.project.fullTitle"
+                               [titleTemplate]="titleTemplate"
                                [data]="p.project"
                                [value]="p.issues.percentage * 100"
                                [label]="p.issues.remains  | duration:durationFormat.short"
@@ -139,63 +141,48 @@
             <ng-template #titleTemplate>
               <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
               {{p.project.title}}
-              <ng-container *ngIf="p.project.milestones as milestones">
-                <jnt-stack *ngIf="milestones[0] as m" milestone
-                           [type]="ui.layout.stack.type.horizontal"
-                           [gutter]="ui.gutter.tiny"
-                           [align]="ui.flex.align.center">
-                  <jnt-link [source]="m.glUrl" [title]="m.title"
-                            target="_blank"></jnt-link>
-                  <jnt-label *ngIf="m.dueDate" [label]="m.dueDate | dueDate"
-                             [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.color.red : ui.color.paleNavy">
-                  </jnt-label>
-                </jnt-stack>
-              </ng-container>
+              <jnt-stack *ngIf="p.project.milestones as m" milestone
+                         [type]="ui.layout.stack.type.horizontal"
+                         [gutter]="ui.gutter.tiny"
+                         [align]="ui.flex.align.center">
+                <jnt-link [source]="m.glUrl" [title]="m.title"
+                          target="_blank"></jnt-link>
+                <jnt-label *ngIf="m.dueDate" [label]="m.dueDate | dueDate"
+                           [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.color.red : ui.color.paleNavy">
+                </jnt-label>
+              </jnt-stack>
             </ng-template>
           </jnt-chart-indicator>
         </jnt-chart>
       </jnt-col>
     </jnt-row>
-    <jnt-stack [type]="ui.layout.stack.type.horizontal">
-      <div filter [attr.active]="!!filter.dueDate">
-        <ng-container *ngIf="filter.dueDate;else noFilterDueDate">
+
+    <jnt-stack [orientation]="ui.orientation.horizontal">
+      <jnt-filter [control]="dueDateControl"
+                  placeholder="Pick a due date"
+                  [icon]="ui.icons.calendar">
+        <ng-template #filterContentTemplate>
           <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small">
             <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
-            <span>{{filter.dueDate | date}}</span>
-          </jnt-stack>
-          <jnt-button reset [scheme]="ui.scheme.secondary"
-                      [size]="ui.size.tiny"
-                      [icon]="ui.icons.close"
-                      (click)="form.patchValue({dueDate: null})"></jnt-button>
-        </ng-container>
-        <ng-template i18n="@@action.pick_due_date" #noFilterDueDate>
-          <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small">
-            <jnt-icon [icon]="ui.icons.calendar"></jnt-icon>
-            <span>Pick a due date</span>
+            <span>{{dueDateControl.value | date}}</span>
           </jnt-stack>
         </ng-template>
-      </div>
-
-      <div filter [attr.active]="!!project.value">
-        <ng-container *ngIf="!!project.value;else noFilterProject">
-          <jnt-icon [icon]="ui.icons.anchor"></jnt-icon>
-          <div>
-            {{project.value.title}}<br>
-            <small>{{project.value.group?.fullTitle}}</small>
-          </div>
-          <jnt-button reset [scheme]="ui.scheme.secondary"
-                      [size]="ui.size.tiny"
-                      [icon]="ui.icons.close"
-                      (click)="project.patchValue(null)"></jnt-button>
-        </ng-container>
-        <ng-template i18n="@@action.pick_project" #noFilterProject>
+      </jnt-filter>
+      <jnt-filter [control]="projectControl"
+                  placeholder="Pick a project"
+                  [icon]="ui.icons.anchor">
+        <ng-template #filterContentTemplate>
           <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small">
             <jnt-icon [icon]="ui.icons.anchor"></jnt-icon>
-            <span>Pick a project</span>
+            <div>
+              {{project?.title}}<br>
+              <small>{{project?.group?.fullTitle}}</small>
+            </div>
           </jnt-stack>
         </ng-template>
-      </div>
+      </jnt-filter>
     </jnt-stack>
+
     <jnt-menu>
       <jnt-menu-item [link]="['.']"
                      title="Issues"

@@ -50,6 +50,7 @@ export class IssuesSummaryGQL extends Query<{ issues, mergeRequests, spentTimes 
             }
             group {
               title
+              fullTitle
             }
           }
           issues {

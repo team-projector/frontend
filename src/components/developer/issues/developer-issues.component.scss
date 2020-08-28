@@ -14,32 +14,6 @@
   }
 }
 
-[filter] {
-  position: relative;
-  display: flex;
-  align-items: center;
-  min-height: 40px;
-  color: $jnt-primary-text-light-color;
-  padding: $jnt-gutter-small $jnt-gutter-normal;
-  border: 1px dashed $jnt-secondary-dark-color;
-  border-radius: $jnt-corner-normal;
-  line-height: 1em;
-
-  &[active='true'] {
-    border-color: transparent;
-    background: $jnt-primary-light-color;
-    color: $jnt-white-color;
-    padding-right: $jnt-gutter-huge;
-    box-shadow: $jnt-shadow-normal;
-  }
-
-  [reset] {
-    position: absolute;
-    top: $jnt-gutter-small;
-    right: $jnt-gutter-small;
-  }
-}
-
 [presentations] {
   div {
     padding: $jnt-gutter-tiny $jnt-gutter-normal;
