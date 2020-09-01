@@ -1,12 +1,9 @@
 image: docker:18
 variables:
-  DOCKER_DRIVER: overlay
-  DOCKER_IMAGE: $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
-  DOCKER_TEST_IMAGE: $CI_REGISTRY_IMAGE:test-$CI_PIPELINE_IID
-  DOCKER_MOCKS_IMAGE: $CI_REGISTRY_IMAGE:mocks-$CI_PIPELINE_IID
-  DOCKER_DEV_IMAGE: $CI_REGISTRY_IMAGE:dev
-  DOCKER_CACHE_IMAGE: $CI_REGISTRY_IMAGE:cache
-  GIT_STRATEGY: none
+  DOCKER_CACHE_IMAGE: $CI_REGISTRY_IMAGE/cache
+  DOCKER_IMAGE: $CI_REGISTRY_IMAGE/tmp:${CI_PIPELINE_IID}_${CI_COMMIT_SHA}
+  DOCKER_TEST_IMAGE: $CI_REGISTRY_IMAGE/tmp:${CI_PIPELINE_IID}_${CI_COMMIT_SHA}_test
+  GIT_DEPTH: 1
 
 stages:
   - lint_dockerfile
@@ -17,48 +14,41 @@ stages:
 
 lint_dockerfile:
   image: hadolint/hadolint:v1.18.0-6-ga0d655d-debian
-  variables:
-    GIT_DEPTH: 1
-    GIT_STRATEGY: fetch
   stage: lint_dockerfile
   script:
     - hadolint deploy/Dockerfile
 
-build:
+.base_build:
   stage: build
-  except:
-    - mocks
-  variables:
-    GIT_DEPTH: 5
-    GIT_STRATEGY: fetch
-  services:
-    - docker:dind
-  script:
+  before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
     - docker pull $DOCKER_CACHE_IMAGE || true
+
+build:
+  extends: .base_build
+  except:
+    - mocks
+  script:
+    - APP_VERSION=$(cat VERSION)
     - docker build --cache-from $DOCKER_CACHE_IMAGE --target build -t $DOCKER_CACHE_IMAGE -t $DOCKER_TEST_IMAGE -f deploy/Dockerfile .
-    - docker build --cache-from $DOCKER_CACHE_IMAGE -t $DOCKER_IMAGE -f deploy/Dockerfile .
+    - docker build --cache-from $DOCKER_CACHE_IMAGE --target production -t $DOCKER_IMAGE  -f deploy/Dockerfile --build-arg APP_VERSION=${APP_VERSION} .
     - docker push $DOCKER_IMAGE
     - docker push $DOCKER_CACHE_IMAGE
     - docker push $DOCKER_TEST_IMAGE
 
 build_mocks:
-  stage: build
+  extends: .base_build
   only:
     - mocks
-  variables:
-    GIT_DEPTH: 5
-    GIT_STRATEGY: fetch
-  services:
-    - docker:dind
   script:
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
     - docker build -t $DOCKER_MOCKS_IMAGE --build-arg BUILD_COMMAND="npm run build:mocks" -f deploy/Dockerfile .
-    - docker push $DOCKER_MOCKS_IMAGE
+    - docker push $DOCKER_IMAGE
 
 e2e:
   stage: test
   image: $DOCKER_TEST_IMAGE
+  variables:
+    GIT_STRATEGY: none
   except:
     - mocks
   before_script:
@@ -80,63 +70,61 @@ e2e:
     - cd /src
     - npm run e2e
 
-publish_master:
+.base_publish:
   stage: publish
   dependencies: []
-  services:
-    - docker:dind
-  script:
+  variables:
+    GIT_STRATEGY: none
+  before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
     - docker pull $DOCKER_IMAGE
-    - docker tag $DOCKER_IMAGE $DOCKER_DEV_IMAGE
-    - docker push $DOCKER_DEV_IMAGE
+  script:
+    - docker tag $DOCKER_IMAGE $TARGET_IMAGE
+    - docker push $TARGET_IMAGE
+
+publish_unstable:
+  extends: .base_publish
   only:
     - master
+  variables:
+    TARGET_IMAGE: $CI_REGISTRY_IMAGE/unstable:${CI_PIPELINE_ID}
+
+publish_mocks:
+  extends: .base_publish
+  only:
+    - mocks 
+  variables:
+    TARGET_IMAGE: $CI_REGISTRY_IMAGE/mocks:${CI_PIPELINE_ID}
+
+publish_stable:
+  extends: .base_publish
+  only:
+    - tags
+  variables:
+    TARGET_IMAGE: $CI_REGISTRY_IMAGE/stable:${CI_COMMIT_TAG}
+
+.base_deploy:
+  image: junte/helm-deploy:1.8-helm2.16.1
+  stage: deploy
+  dependencies: []
+  variables:
+    HELM_IMAGE_TAG: $CI_PIPELINE_IID
+  script:
+    - helm_deploy
 
 deploy_master:
-  image: junte/helm-deploy:1.3-helm2.16.1
-  stage: deploy
-  dependencies: []
-  variables:
-    GIT_DEPTH: 5
-    GIT_STRATEGY: fetch
-    HELM_IMAGE_TAG: $CI_PIPELINE_IID
-  script:
-    - helm_deploy
-  environment:
-    name: production
-    url: $SITE_ADDRESS
+  extends: .base_deploy
   only:
     - master
-
-deploy_demo:
-  image: junte/helm-deploy:1.3-helm2.16.1
-  stage: deploy
-  dependencies: []
-  variables:
-    GIT_DEPTH: 5
-    GIT_STRATEGY: fetch
-    HELM_IMAGE_TAG: $CI_PIPELINE_IID
-  script:
-    - helm_deploy
   environment:
-    name: demo
-    url: $DEMO_SITE_ADDRESS
-  only:
-    - demo
+    name: development 
+    url: $SITE_ADDRESS
 
 deploy_mocks:
-  image: junte/helm-deploy:1.3-helm2.16.1
-  stage: deploy
-  dependencies: []
-  variables:
-    GIT_DEPTH: 5
-    GIT_STRATEGY: fetch
-    HELM_IMAGE_TAG: mocks-$CI_PIPELINE_IID
-  script:
-    - helm_deploy
-  environment:
-    name: mocks
-    url: $MOCKS_SITE_ADDRESS
+  extends: .base_deploy
   only:
     - mocks
+  environment:
+    name: mocks
+    url: $SITE_ADDRESS
+  
