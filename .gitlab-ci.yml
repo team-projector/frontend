@@ -30,7 +30,7 @@ build:
   script:
     - APP_VERSION=$(cat VERSION)
     - docker build --cache-from $DOCKER_CACHE_IMAGE --target build -t $DOCKER_CACHE_IMAGE -t $DOCKER_TEST_IMAGE -f deploy/Dockerfile .
-    - docker build --cache-from $DOCKER_CACHE_IMAGE --target production -t $DOCKER_IMAGE  -f deploy/Dockerfile --build-arg APP_VERSION=${APP_VERSION} .
+    - docker build --cache-from $DOCKER_CACHE_IMAGE --target production -t $DOCKER_IMAGE  --build-arg APP_VERSION=${APP_VERSION} -f deploy/Dockerfile .
     - docker push $DOCKER_IMAGE
     - docker push $DOCKER_CACHE_IMAGE
     - docker push $DOCKER_TEST_IMAGE
@@ -40,7 +40,7 @@ build_mocks:
   only:
     - mocks
   script:
-    - docker build -t $DOCKER_MOCKS_IMAGE --build-arg BUILD_COMMAND="npm run build:mocks" -f deploy/Dockerfile .
+    - docker build --cache-from $DOCKER_CACHE_IMAGE --target production -t $DOCKER_IMAGE --build-arg BUILD_COMMAND="npm run build:mocks" --build-arg APP_VERSION=${APP_VERSION} -f deploy/Dockerfile .
     - docker push $DOCKER_IMAGE
 
 e2e:
