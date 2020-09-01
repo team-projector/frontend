@@ -3,7 +3,6 @@ variables:
   DOCKER_CACHE_IMAGE: $CI_REGISTRY_IMAGE/cache
   DOCKER_IMAGE: $CI_REGISTRY_IMAGE/tmp:${CI_PIPELINE_IID}_${CI_COMMIT_SHA}
   DOCKER_TEST_IMAGE: $CI_REGISTRY_IMAGE/tmp:${CI_PIPELINE_IID}_${CI_COMMIT_SHA}_test
-  GIT_DEPTH: 1
 
 stages:
   - lint_dockerfile
@@ -13,8 +12,8 @@ stages:
   - deploy
 
 lint_dockerfile:
-  image: hadolint/hadolint:v1.18.0-6-ga0d655d-debian
   stage: lint_dockerfile
+  image: hadolint/hadolint:v1.18.0-6-ga0d655d-debian
   script:
     - hadolint deploy/Dockerfile
 
@@ -108,11 +107,11 @@ publish_stable:
   stage: deploy
   dependencies: []
   variables:
-    HELM_IMAGE_TAG: $CI_PIPELINE_IID
+    HELM_IMAGE_TAG: $CI_PIPELINE_ID
   script:
     - helm_deploy
 
-deploy_master:
+deploy_development:
   extends: .base_deploy
   only:
     - master
