@@ -15,7 +15,7 @@
     <jnt-form-item>
       <jnt-form-control name="login">
         <jnt-input formControlName="login" placeholder="Login" [icon]="ui.icons.user"></jnt-input>
-        <jnt-form-message [type]="ui.forms.validators.typeError.required">
+        <jnt-form-message [validator]="ui.validator.required">
           Field is required!
         </jnt-form-message>
       </jnt-form-control>
@@ -24,8 +24,8 @@
     <jnt-form-item>
       <jnt-form-control name="password">
         <jnt-input formControlName="password" placeholder="Password" [icon]="ui.icons.lock" required
-                   [type]="ui.forms.input.type.password"></jnt-input>
-        <jnt-form-message [type]="ui.forms.validators.typeError.required">
+                   [type]="ui.input.type.password"></jnt-input>
+        <jnt-form-message [validator]="ui.validator.required">
           Field is required!
         </jnt-form-message>
       </jnt-form-control>
@@ -34,7 +34,7 @@
     <ng-template #formFooterTemplate>
       <jnt-form-item>
         <jnt-button [loading]="progress.login"
-                    [type]="ui.forms.button.type.submit"
+                    [type]="ui.button.type.submit"
                     [icon]="ui.icons.arrowRight"
                     text="Login"
                     [width]="ui.width.fluid">
@@ -47,7 +47,7 @@
       <div *ngIf="mocks" god>
         <p>The current version uses mocks! No real backend or database is needed. You can be a god 😎!</p>
         <p><b>Select your role:</b></p>
-        <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.center">
+        <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.center">
           <jnt-button [scheme]="ui.scheme.success"
                       [size]="ui.size.small"
                       [outline]="ui.outline.ghost"

@@ -8,16 +8,16 @@
                   title="Manage"
                   i18n-title="@@action.manage"></jnt-link>
 
-        <jnt-stack [type]="ui.layout.stack.type.horizontal"
+        <jnt-stack [orientation]="ui.orientation.horizontal"
                    [spacing]="ui.gutter.normal"
-                   [wrap]="ui.flex.wrap.wrap">
+                   [wrap]="ui.wrap.wrap">
           <ng-container *ngIf="loading; then loadingTemplate; else teamsTemplate"></ng-container>
           <ng-template #loadingTemplate>
             <div *ngFor="let i of 5 | mockArray">
               <jnt-block [width]="ui.width.fluid">
-                <jnt-stack [align]="ui.flex.align.center">
+                <jnt-stack [align]="ui.align.center">
                   <jnt-skeleton [lines]="1"></jnt-skeleton>
-                  <jnt-skeleton [type]="ui.layout.skeleton.type.avatar"></jnt-skeleton>
+                  <jnt-skeleton [type]="ui.skeleton.type.avatar"></jnt-skeleton>
                   <jnt-skeleton [lines]="1"></jnt-skeleton>
                 </jnt-stack>
               </jnt-block>

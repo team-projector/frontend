@@ -6,9 +6,9 @@
             i18n-title="@@action.manage"></jnt-link>
   <jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
     <jnt-form [formGroup]="form">
-      <jnt-table #table [features]="[ui.collections.table.features.search]" formControlName="table">
+      <jnt-table #table [features]="[ui.feature.search]" formControlName="table">
         <ng-template #tableFiltersTemplate>
-          <jnt-stack [type]="ui.layout.stack.type.horizontal">
+          <jnt-stack [orientation]="ui.orientation.horizontal">
             <jnt-switcher formControlName="type">
               <jnt-switcher-option i18n-label="@@action.filter_issues_all" label="All" [value]="milestoneType.all">
                 <jnt-badge *ngIf="summary?.count" [value]="summary?.count"></jnt-badge>
@@ -26,7 +26,7 @@
         </ng-template>
         <jnt-table-column i18n-title="@@label.title" title="Title">
           <ng-template #tableCellTemplate let-title="title" let-id="id" let-owner="owner" let-state="state">
-            <jnt-stack [type]="ui.layout.stack.type.horizontal">
+            <jnt-stack [orientation]="ui.orientation.horizontal">
               <jnt-avatar [size]="ui.size.small" [image]="owner.glAvatar"></jnt-avatar>
               <jnt-stack [gutter]="ui.gutter.tiny">
                 <jnt-link [source]="[id]" target="_blank" [title]="title"
@@ -40,7 +40,7 @@
         <jnt-table-column title="Period"
                           i18n-title="@@label.period">
           <ng-template #tableCellTemplate let-startDate="startDate" let-problems="problems" let-dueDate="dueDate">
-            <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.stretch">
+            <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.stretch">
               <jnt-date-period [start]="startDate" [end]="dueDate"></jnt-date-period>
               <jnt-label *ngIf="problems?.includes(milestoneProblem.overDueDate)"
                          [color]="ui.color.red" label="overdue">
@@ -54,8 +54,8 @@
             <ng-container *ngIf="budget">
               <jnt-progress-bar progress [value]="metrics.budgetSpent / budget * 100">
                 <ng-template #progressBarLegendTemplate>
-                  <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.center"
-                             [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
+                  <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
+                             [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
                     <div metric>{{budget - metrics.budgetRemains | currency}}</div>
                     <div metric budget>{{budget | currency}}</div>
                   </jnt-stack>
@@ -74,9 +74,9 @@
           <ng-template #tableCellTemplate let-budget="budget" let-metrics="metrics">
             <jnt-progress-bar progress [value]="metrics.payroll / budget * 100">
               <ng-template #progressBarLegendTemplate>
-                <jnt-stack [type]="ui.layout.stack.type.horizontal"
-                           [align]="ui.flex.align.center"
-                           [justify]="ui.flex.justify.between"
+                <jnt-stack [orientation]="ui.orientation.horizontal"
+                           [align]="ui.align.center"
+                           [justify]="ui.justify.between"
                            [gutter]="ui.gutter.normal">
                   <div metric>{{metrics.payroll | currency}}</div>
                   <div metric budget>{{budget | currency}}</div>
@@ -96,9 +96,9 @@
             <jnt-progress-bar progress *ngIf="!!metrics.timeEstimate"
                               [value]="metrics.timeSpent / metrics.timeEstimate * 100">
               <ng-template #progressBarLegendTemplate>
-                <jnt-stack [type]="ui.layout.stack.type.horizontal"
-                           [align]="ui.flex.align.center"
-                           [justify]="ui.flex.justify.between"
+                <jnt-stack [orientation]="ui.orientation.horizontal"
+                           [align]="ui.align.center"
+                           [justify]="ui.justify.between"
                            [gutter]="ui.gutter.normal">
                   <div metric>{{metrics.timeSpent | duration:durationFormat.short}}</div>
                   <div metric estimate>{{metrics.timeEstimate | duration:durationFormat.short}}</div>
@@ -115,8 +115,8 @@
         <jnt-table-column title="Issues"
                           i18n-title="@@label.issues">
           <ng-template #tableCellTemplate let-metrics="metrics">
-            <jnt-stack [justify]="ui.flex.justify.center"
-                       [type]="ui.layout.stack.type.horizontal"
+            <jnt-stack [justify]="ui.justify.center"
+                       [orientation]="ui.orientation.horizontal"
                        [gutter]="ui.gutter.tiny">
               <jnt-label *ngIf="metrics.issuesOpenedCount" [label]="metrics.issuesOpenedCount"
                          [color]="ui.color.green"></jnt-label>

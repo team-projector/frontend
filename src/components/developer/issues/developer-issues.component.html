@@ -76,7 +76,7 @@
 </ng-template>
 
 <jnt-form [formGroup]="form">
-  <jnt-stack [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
+  <jnt-stack [align]="ui.align.stretch" [gutter]="ui.gutter.big">
     <app-metrics-type formControlName="metric" metrics></app-metrics-type>
     <jnt-row>
       <jnt-col [tablet]="12" [desktop]="7">
@@ -142,9 +142,9 @@
               <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
               {{p.project.title}}
               <jnt-stack *ngIf="p.project.milestones as m" milestone
-                         [type]="ui.layout.stack.type.horizontal"
+                         [orientation]="ui.orientation.horizontal"
                          [gutter]="ui.gutter.tiny"
-                         [align]="ui.flex.align.center">
+                         [align]="ui.align.center">
                 <jnt-link [source]="m.glUrl" [title]="m.title"
                           target="_blank"></jnt-link>
                 <jnt-label *ngIf="m.dueDate" [label]="m.dueDate | dueDate"

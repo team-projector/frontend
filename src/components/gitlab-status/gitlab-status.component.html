@@ -3,16 +3,16 @@
 </ng-container>
 
 <ng-template #dataTemplate>
-  <jnt-stack [align]="ui.flex.align.stretch" *ngIf="status; else noDataTemplate">
-    <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.between">
+  <jnt-stack [align]="ui.align.stretch" *ngIf="status; else noDataTemplate">
+    <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between">
       <div>Last Sync Time</div>
       <jnt-label [label]="status.lastSync | dfnsFormat:'HH:mm:ss'"></jnt-label>
     </jnt-stack>
-    <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.between">
+    <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between">
       <div>WEB</div>
       <jnt-label [label]="status.services.webHooks | diff | duration"></jnt-label>
     </jnt-stack>
-    <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.between">
+    <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between">
       <div>API</div>
       <jnt-label [label]="status.services.api | diff | duration"></jnt-label>
     </jnt-stack>
