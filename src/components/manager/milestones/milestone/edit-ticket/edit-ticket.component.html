@@ -7,7 +7,7 @@
       <ng-template #tabContentTemplate>
         <jnt-stack
           [gutter]="ui.gutter.small"
-          [align]="ui.flex.align.stretch">
+          [align]="ui.align.stretch">
           <p *ngIf="!!ticket">
             <jnt-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
                       [icon]="ui.icons.settings"
@@ -37,7 +37,7 @@
                   <jnt-dot [color]="ui.color.red"></jnt-dot>
                 </jnt-switcher-option>
               </jnt-switcher>
-              <jnt-form-message [type]="ui.forms.validators.typeError.required">
+              <jnt-form-message [validator]="ui.validator.required">
                 This field is required
               </jnt-form-message>
             </jnt-form-control>
@@ -65,7 +65,7 @@
             <jnt-form-label for="title">Title</jnt-form-label>
             <jnt-form-control name="title">
               <jnt-input placeholder="Title" formControlName="title"></jnt-input>
-              <jnt-form-message [type]="ui.forms.validators.typeError.required">
+              <jnt-form-message [validator]="ui.validator.required">
                 This field is required
               </jnt-form-message>
             </jnt-form-control>
@@ -78,12 +78,12 @@
             </jnt-form-control>
           </jnt-form-item>
 
-          <jnt-stack [type]="ui.layout.stack.type.horizontal">
+          <jnt-stack [orientation]="ui.orientation.horizontal">
             <jnt-form-item>
               <jnt-form-label for="startDate">Start date</jnt-form-label>
               <jnt-form-control name="startDate">
                 <jnt-date-picker placeholder="Start date" formControlName="startDate"></jnt-date-picker>
-                <jnt-form-message [type]="ui.forms.validators.typeError.required">
+                <jnt-form-message [validator]="ui.validator.required">
                   This field is required
                 </jnt-form-message>
               </jnt-form-control>
@@ -93,7 +93,7 @@
               <jnt-form-label for="dueDate">Due date</jnt-form-label>
               <jnt-form-control name="dueDate">
                 <jnt-date-picker placeholder="Due date" formControlName="dueDate"></jnt-date-picker>
-                <jnt-form-message [type]="ui.forms.validators.typeError.required">
+                <jnt-form-message [validator]="ui.validator.required">
                   This field is required
                 </jnt-form-message>
               </jnt-form-control>
@@ -105,9 +105,9 @@
             <jnt-form-control name="state">
               <jnt-select formControlName="state" [allowEmpty]="false">
                 <ng-template #selectOptionTemplate let-label="label" let-state="value">
-                  <jnt-stack [type]="ui.layout.stack.type.horizontal"
+                  <jnt-stack [orientation]="ui.orientation.horizontal"
                              [gutter]="ui.gutter.small"
-                             [align]="ui.flex.align.center">
+                             [align]="ui.align.center">
                     <jnt-dot [color]="state | ticketStateColor"></jnt-dot>
                     <div>{{label}}</div>
                   </jnt-stack>
@@ -145,7 +145,7 @@
             <jnt-form-label for="url">Url</jnt-form-label>
             <jnt-form-control name="url">
               <jnt-input placeholder="Url" formControlName="url"></jnt-input>
-              <jnt-form-message [type]="ui.forms.validators.typeError.required">
+              <jnt-form-message [validator]="ui.validator.required">
                 This field is required
               </jnt-form-message>
             </jnt-form-control>
@@ -161,7 +161,7 @@
         <jnt-form-item>
           <jnt-select issues placeholder="Issues"
                       formControlName="issues"
-                      [mode]="ui.forms.select.mode.multiple"
+                      [mode]="ui.select.mode.multiple"
                       [search]="true"
                       [loader]="findIssues()"
                       keyField="id"
@@ -183,11 +183,11 @@
   </jnt-tabs>
 
   <ng-template #formFooterTemplate>
-    <jnt-stack [type]="ui.layout.stack.type.horizontal"
-               [justify]="ui.flex.justify.between">
+    <jnt-stack [orientation]="ui.orientation.horizontal"
+               [justify]="ui.justify.between">
       <jnt-button text="Save"
                   i18n-text="@@action.save"
-                  [type]="ui.forms.button.type.submit"
+                  [type]="ui.button.type.submit"
                   [loading]="progress.saving"></jnt-button>
       <jnt-button text="Cancel"
                   i18n-text="@@action.cancel"

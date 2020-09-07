@@ -1,5 +1,5 @@
 <jnt-form [formGroup]="form" (submitted)="decline()">
-  <jnt-stack [type]="ui.layout.stack.type.vertical" [align]="ui.flex.align.stretch">
+  <jnt-stack [orientation]="ui.orientation.vertical" [align]="ui.align.stretch">
     <jnt-form-item>
       <jnt-form-label for="declineReason"
                       i18n="@@label.comment">Comment</jnt-form-label>
@@ -7,8 +7,7 @@
         <jnt-input placeholder="Decline Reason"
                    i18n-placeholder="@@label.decline_reason"
                    formControlName="declineReason"></jnt-input>
-        <jnt-form-message i18n="@@label.required"
-                          [type]="ui.forms.validators.typeError.required">
+        <jnt-form-message i18n="@@label.required" [validator]="ui.validator.required">
           This field is required
         </jnt-form-message>
       </jnt-form-control>
@@ -16,10 +15,10 @@
   </jnt-stack>
 
   <ng-template #formFooterTemplate>
-    <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.center">
+    <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.center">
       <jnt-button text="Save"
                   i18n-text="@@action.save"
-                  [type]="ui.forms.button.type.submit"
+                  [type]="ui.button.type.submit"
                   [loading]="saving"></jnt-button>
     </jnt-stack>
   </ng-template>

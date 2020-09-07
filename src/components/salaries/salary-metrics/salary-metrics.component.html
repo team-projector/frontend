@@ -3,8 +3,8 @@
            [width]="ui.width.fluid"
            [padding]="ui.gutter.none">
   <jnt-form [formGroup]="form">
-    <jnt-stack [align]="ui.flex.align.stretch">
-      <jnt-stack [align]="ui.flex.align.center" [gutter]="ui.gutter.small">
+    <jnt-stack [align]="ui.align.stretch">
+      <jnt-stack [align]="ui.align.center" [gutter]="ui.gutter.small">
         <span *ngIf="!!user.position" position>{{user.position.title}}</span>
         <jnt-label i18n-label="@@label.hour"
                    [label]="(user.hourRate | currency:undefined:'symbol':'1.0-0') + ' / ' + 'Hour'"
@@ -12,23 +12,23 @@
         </jnt-label>
       </jnt-stack>
 
-      <jnt-stack [type]="ui.layout.stack.type.horizontal" [justify]="ui.flex.justify.between" taxes>
+      <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between" taxes>
         <jnt-switch formControlName="taxes" i18n-label="@@label.taxes" label="Taxes"
                     [size]="ui.size.small"></jnt-switch>
         <span position>{{metrics.taxes | currency:undefined:'symbol':'1.0-0'}}</span>
       </jnt-stack>
 
-      <jnt-stack [gutter]="ui.gutter.small" [align]="ui.flex.align.stretch" salary>
+      <jnt-stack [gutter]="ui.gutter.small" [align]="ui.align.stretch" salary>
 
         <jnt-date-period [start]="metrics.lastSalaryDate" [end]="today"></jnt-date-period>
 
-        <jnt-stack [type]="ui.layout.stack.type.horizontal"
-                   [justify]="ui.flex.justify.end"
-                   [align]="ui.flex.align.center">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end"
+                   [align]="ui.align.center">
           <ng-template #contentClosed>
-            <jnt-stack [type]="ui.layout.stack.type.vertical"
+            <jnt-stack [orientation]="ui.orientation.vertical"
                        [gutter]="ui.gutter.tiny"
-                       [align]="ui.flex.align.stretch"
+                       [align]="ui.align.stretch"
                        separation>
               <span title i18n-label="@@label.closed_tasks">Closed Tasks</span>
               <span sum>
@@ -53,13 +53,13 @@
           </jnt-label>
         </jnt-stack>
 
-        <jnt-stack [type]="ui.layout.stack.type.horizontal"
-                   [justify]="ui.flex.justify.end"
-                   [align]="ui.flex.align.center">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end"
+                   [align]="ui.align.center">
           <ng-template #contentOpened>
-            <jnt-stack [type]="ui.layout.stack.type.vertical"
+            <jnt-stack [orientation]="ui.orientation.vertical"
                        [gutter]="ui.gutter.tiny"
-                       [align]="ui.flex.align.stretch"
+                       [align]="ui.align.stretch"
                        separation>
               <span title i18n-label="@@label.opened_tasks">Opened Tasks</span>
               <span sum>
@@ -85,9 +85,9 @@
       </jnt-stack>
 
       <ng-template #contentAll>
-        <jnt-stack [type]="ui.layout.stack.type.vertical"
+        <jnt-stack [orientation]="ui.orientation.vertical"
                    [gutter]="ui.gutter.tiny"
-                   [align]="ui.flex.align.stretch"
+                   [align]="ui.align.stretch"
                    separation>
           <span title i18n-label="@@label.tasks">Tasks</span>
           <span sum>{{(taxesControl.value ? metrics.issues.payroll + metrics.issues.taxes
@@ -106,15 +106,15 @@
           | currency:undefined:'symbol':'1.0-0'}}</span>
       </div>
 
-      <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.stretch"
-                 [justify]="ui.flex.justify.center">
+      <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.stretch"
+                 [justify]="ui.justify.center">
         <div metrics>
           <ng-template #contentBonuses>
             <jnt-stack [gutter]="ui.gutter.tiny"
-                       [align]="ui.flex.align.stretch"
+                       [align]="ui.align.stretch"
                        separation>
               <jnt-stack *ngFor="let bonus of bonuses"
-                         [type]="ui.layout.stack.type.horizontal"
+                         [orientation]="ui.orientation.horizontal"
                          bonus>
                 <span>{{bonus.sum | currency:undefined:'symbol':'1.0-0'}}</span>
                 <span>{{bonus.comment}}</span>
@@ -124,8 +124,8 @@
           <jnt-stack
             [jntPopover]="getOptions({contentTemplate: contentBonuses, title: 'Bonuses'},
               !!bonuses.length)"
-            [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
-            [align]="ui.flex.align.center">
+            [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small"
+            [align]="ui.align.center">
             <jnt-icon like [icon]="ui.icons.like"></jnt-icon>
             <span>{{metrics.bonus | currency:undefined:'symbol':'1.0-0'}}</span>
           </jnt-stack>
@@ -133,9 +133,9 @@
         <div separator></div>
         <div metrics>
           <ng-template #contentPenalties>
-            <jnt-stack [type]="ui.layout.stack.type.vertical"
+            <jnt-stack [orientation]="ui.orientation.vertical"
                        [gutter]="ui.gutter.tiny"
-                       [align]="ui.flex.align.stretch"
+                       [align]="ui.align.stretch"
                        separation>
               <jnt-stack *ngFor="let penalty of penalties">
                 <span>{{penalty.sum | currency:undefined:'symbol':'1.0-0'}}</span>
@@ -146,19 +146,19 @@
           <jnt-stack
             [jntPopover]="getOptions({contentTemplate: contentPenalties, title: 'Penalties'},
               !!penalties.length)"
-            [type]="ui.layout.stack.type.horizontal" [gutter]="ui.gutter.small"
-            [align]="ui.flex.align.center">
+            [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small"
+            [align]="ui.align.center">
             <jnt-icon dislike [icon]="ui.icons.dislike"></jnt-icon>
             <span>{{metrics.penalty | currency:undefined:'symbol':'1.0-0'}}</span>
           </jnt-stack>
         </div>
       </jnt-stack>
-      <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.stretch" paidDays>
+      <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.stretch" paidDays>
         <jnt-progress-bar [value]="(metrics.paidWorkBreaksDays / 30) * 100">
           <ng-template #progressBarLegendTemplate>
-            <jnt-stack [type]="ui.layout.stack.type.horizontal"
-                       [align]="ui.flex.align.center"
-                       [justify]="ui.flex.justify.between"
+            <jnt-stack [orientation]="ui.orientation.horizontal"
+                       [align]="ui.align.center"
+                       [justify]="ui.justify.between"
                        [gutter]="ui.gutter.normal">
               <div>{{metrics.paidWorkBreaksDays}}</div>
               <div>30</div>

@@ -1,9 +1,9 @@
 <jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
-    <jnt-table #table [features]="[ui.collections.table.features.search]" (reloaded)="loadSummary(); reloaded.emit()"
+    <jnt-table #table [features]="[ui.feature.search]" (reloaded)="loadSummary(); reloaded.emit()"
                formControlName="table">
       <ng-template #tableFiltersTemplate>
-        <jnt-stack [type]="ui.layout.stack.type.horizontal">
+        <jnt-stack [orientation]="ui.orientation.horizontal">
           <jnt-switcher formControlName="state">
             <jnt-switcher-option label="Closed"
                                  i18n-label="@@action.filter_type_closed"
@@ -46,8 +46,8 @@
                      let-problems="problems">
           <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
             <ng-template #progressBarLegendTemplate>
-              <jnt-stack [type]="ui.layout.stack.type.horizontal" [align]="ui.flex.align.center"
-                         [justify]="ui.flex.justify.between" [gutter]="ui.gutter.normal">
+              <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
+                         [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
                 <div metric>{{totalTimeSpent | duration}}</div>
                 <div metric estimate>{{timeEstimate | duration}}</div>
               </jnt-stack>
