@@ -73,12 +73,13 @@
       </ng-template>
 
       <ng-container *ngFor="let ticket of tickets">
-        <jnt-gantt-line [period]="ticket"
-                        [from]="ticket.startDate"
-                        [to]="ticket.dueDate">
-          <ng-template #indicator let-period="period" let-current="current">
-            <div [attr.over-from]="(period['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
-                 [attr.over-to]="(period['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)"
+        <jnt-gantt-line>
+          <jnt-gantt-line-period
+            [from]="ticket.startDate"
+            [to]="ticket.dueDate">
+          <ng-template #indicatorMonth let-current="current">
+            <div [attr.over-from]="(ticket['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
+                 [attr.over-to]="(ticket['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)"
                  [attr.over-due]="ticket.problems | includes:ticketProblem.overDueDate" period>
               <div label>
                 {{(ticket.metrics.issuesOpenedCount ? ticket.metrics.openedTimeRemains : ticket.metrics.timeRemains) |
@@ -188,6 +189,7 @@
               </jnt-stack>
             </jnt-stack>
           </ng-template>
+          </jnt-gantt-line-period>
         </jnt-gantt-line>
 
         <ng-template #noIssuesTemplate>
