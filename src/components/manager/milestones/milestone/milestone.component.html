@@ -74,9 +74,7 @@
 
       <ng-container *ngFor="let ticket of tickets">
         <jnt-gantt-line>
-          <jnt-gantt-line-period
-            [from]="ticket.startDate"
-            [to]="ticket.dueDate">
+          <jnt-gantt-line-period [from]="ticket.startDate" [to]="ticket.dueDate">
           <ng-template #indicatorMonth let-current="current">
             <div [attr.over-from]="(ticket['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
                  [attr.over-to]="(ticket['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)"
@@ -167,7 +165,7 @@
                 </ng-container>
                 <jnt-button [outline]="ui.outline.transparent"
                             [icon]="ui.icons.actions"
-                            (jntPopoverDisplayed)="popover = $event"
+                            (attached)="popover = $event"
                             [jntPopover]="{
                               contentTemplate: dropdownTemplate,
                               trigger: ui.trigger.click
@@ -195,29 +193,35 @@
         <ng-template #noIssuesTemplate>
           <ng-template #loadingIssuesTemplate>
             <jnt-gantt-line>
-              <ng-template #title>
-                <jnt-skeleton [type]="ui.skeleton.type.text"
-                              [lines]="ticket.metrics.issuesCount"></jnt-skeleton>
-              </ng-template>
+              <jnt-gantt-line-period>
+                <ng-template #title>
+                  <jnt-skeleton [type]="ui.skeleton.type.text"
+                                [lines]="ticket.metrics.issuesCount"></jnt-skeleton>
+                </ng-template>
+              </jnt-gantt-line-period>
             </jnt-gantt-line>
           </ng-template>
           <ng-container *ngIf="!loading.issues; else loadingIssuesTemplate">
             <jnt-gantt-line>
-              <ng-template #title>
-                <p>No one issue has been attached to ticket.</p>
-              </ng-template>
+              <jnt-gantt-line-period>
+                <ng-template #title>
+                  <p>No one issue has been attached to ticket.</p>
+                </ng-template>
+              </jnt-gantt-line-period>
             </jnt-gantt-line>
           </ng-container>
         </ng-template>
         <ng-container *ngIf="ticketControl.value === ticket.id">
           <ng-container *ngIf="!!issues.length; else noIssuesTemplate">
+
+            <div *ngFor="let i of issues">{{i.title}}</div>
+
             <jnt-gantt-line *ngFor="let issue of issues"
-                            [period]="issue"
-                            [from]="[ticket.startDate, issue.dueDate] | dfnsMin"
-                            [to]="issue.dueDate"
                             cdkDropList
                             [cdkDropListEnterPredicate]="predicateIssue">
-              <ng-template #indicator let-period="period" let-current="current">
+              <jnt-gantt-line-period [from]="[ticket.startDate, issue.dueDate] | dfnsMin"
+                                     [to]="issue.dueDate">
+              <ng-template #indicatorMonth let-period="period" let-current="current">
                 <div [attr.over-from]="(period['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
                      [attr.over-to]="(period['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)" period>
                   <ng-container *ngIf="issue.timeEstimate">
@@ -238,6 +242,7 @@
                   <app-issue [issue]="issue"></app-issue>
                 </jnt-stack>
               </ng-template>
+              </jnt-gantt-line-period>
             </jnt-gantt-line>
           </ng-container>
         </ng-container>
