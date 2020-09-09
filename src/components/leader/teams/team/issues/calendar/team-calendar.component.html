@@ -42,7 +42,7 @@
       <td gutter></td>
       <td>
         <jnt-stack (click)="form.patchValue({user: member.user, dueDate: null})"
-                   [type]="ui.layout.stack.type.horizontal"
+                   [orientation]="ui.orientation.horizontal"
                    [gutter]="ui.gutter.small" developer tabindex="0">
           <jnt-avatar [image]="member.user.avatar"
                       [size]="ui.size.tiny"></jnt-avatar>
@@ -55,7 +55,7 @@
         </jnt-stack>
       </td>
       <td>
-        <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.flex.align.stretch">
+        <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.stretch">
           <jnt-label *ngIf="member.user.metrics.issues.closedSpent"
                      [label]="member.user.metrics.issues.closedSpent | duration:durationFormat.short"
                      [color]="ui.color.green"></jnt-label>

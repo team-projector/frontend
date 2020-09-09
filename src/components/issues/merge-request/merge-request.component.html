@@ -1,8 +1,8 @@
-<jnt-stack [type]="ui.layout.stack.type.horizontal"
+<jnt-stack [orientation]="ui.orientation.horizontal"
            [gutter]="ui.gutter.small">
-  <jnt-stack [type]="ui.layout.stack.type.horizontal"
+  <jnt-stack [orientation]="ui.orientation.horizontal"
              [gutter]="ui.gutter.small"
-             [align]="ui.flex.align.center">
+             [align]="ui.align.center">
     <ng-container *ngIf="mergeRequest.issues as issues">
       <jnt-avatar [text]="issues[0]?.user.name"
                   [image]="issues[0]?.user.avatar"
@@ -14,9 +14,9 @@
                 [size]="ui.size.tiny"></jnt-avatar>
   </jnt-stack>
 
-  <jnt-stack [type]="ui.layout.stack.type.vertical"
+  <jnt-stack [orientation]="ui.orientation.vertical"
              [gutter]="ui.gutter.tiny">
-    <jnt-stack [type]="ui.layout.stack.type.horizontal"
+    <jnt-stack [orientation]="ui.orientation.horizontal"
                [gutter]="ui.gutter.small">
       <jnt-link [source]="mergeRequest.glUrl" target="_blank"
                 [attr.closed]="mergeRequest.state == mergeRequestState.closed"

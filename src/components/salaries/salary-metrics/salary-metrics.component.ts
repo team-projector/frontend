@@ -51,7 +51,7 @@ export class SalaryMetricsComponent implements OnInit {
   getOptions(options: any, show: boolean = true) {
     return show ? new PopoverOptions({
       ...options,
-      trigger: UI.overlays.popover.trigger.hover
+      trigger: UI.trigger.hover
     }) : null;
   }
 }

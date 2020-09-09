@@ -1,4 +1,4 @@
-<jnt-stack cdkDropListGroup [align]="ui.flex.align.stretch" [gutter]="ui.gutter.big">
+<jnt-stack cdkDropListGroup [align]="ui.align.stretch" [gutter]="ui.gutter.big">
   <jnt-form filter [formGroup]="form">
     <jnt-switcher formControlName="type">
       <jnt-switcher-option label="All"
@@ -56,9 +56,9 @@
                title="Tickets"
                [loading]="loading.tickets">
       <ng-template #toolsTemplate>
-        <jnt-stack [type]="ui.layout.stack.type.horizontal"
+        <jnt-stack [orientation]="ui.orientation.horizontal"
                    [gutter]="ui.gutter.small"
-                   [align]="ui.flex.align.center">
+                   [align]="ui.align.center">
           <jnt-button [scheme]="ui.scheme.secondary"
                       [icon]="ui.icons.add" [size]="ui.size.small"
                       (click)="add()">
@@ -73,12 +73,11 @@
       </ng-template>
 
       <ng-container *ngFor="let ticket of tickets">
-        <jnt-gantt-line [period]="ticket"
-                        [from]="ticket.startDate"
-                        [to]="ticket.dueDate">
-          <ng-template #indicator let-period="period" let-current="current">
-            <div [attr.over-from]="(period['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
-                 [attr.over-to]="(period['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)"
+        <jnt-gantt-line>
+          <jnt-gantt-line-period [from]="ticket.startDate" [to]="ticket.dueDate">
+          <ng-template #indicatorMonth let-current="current">
+            <div [attr.over-from]="(ticket['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
+                 [attr.over-to]="(ticket['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)"
                  [attr.over-due]="ticket.problems | includes:ticketProblem.overDueDate" period>
               <div label>
                 {{(ticket.metrics.issuesOpenedCount ? ticket.metrics.openedTimeRemains : ticket.metrics.timeRemains) |
@@ -90,16 +89,16 @@
             </div>
           </ng-template>
           <ng-template #title>
-            <jnt-stack [type]="ui.layout.stack.type.horizontal"
-                       [justify]="ui.flex.justify.between"
-                       [align]="ui.flex.align.center"
+            <jnt-stack [orientation]="ui.orientation.horizontal"
+                       [justify]="ui.justify.between"
+                       [align]="ui.align.center"
                        [attr.ticket]="ticket.id"
                        [attr.current]="ticket.id === ticketControl.value"
                        cdkDropList
                        [cdkDropListEnterPredicate]="predicate"
                        (cdkDropListDropped)="drop($event, ticket.id)">
-              <jnt-stack [type]="ui.layout.stack.type.horizontal"
-                         [align]="ui.flex.align.center"
+              <jnt-stack [orientation]="ui.orientation.horizontal"
+                         [align]="ui.align.center"
                          [gutter]="ui.gutter.small">
                 <jnt-button [outline]="ui.outline.transparent"
                             [size]="ui.size.small"
@@ -117,8 +116,8 @@
                 </jnt-label>
               </jnt-stack>
 
-              <jnt-stack [type]="ui.layout.stack.type.horizontal"
-                         [align]="ui.flex.align.center"
+              <jnt-stack [orientation]="ui.orientation.horizontal"
+                         [align]="ui.align.center"
                          [gutter]="ui.gutter.small">
                 <jnt-link *ngIf="ticket.url"
                           [icon]="ui.icons.link"
@@ -166,8 +165,11 @@
                 </ng-container>
                 <jnt-button [outline]="ui.outline.transparent"
                             [icon]="ui.icons.actions"
-                            (jntPopoverDisplayed)="popover = $event"
-                            [jntPopover]="{contentTemplate: dropdownTemplate, trigger: ui.overlays.popover.trigger.click}">
+                            (attached)="popover = $event"
+                            [jntPopover]="{
+                              contentTemplate: dropdownTemplate,
+                              trigger: ui.trigger.click
+                            }">
                 </jnt-button>
                 <ng-template #dropdownTemplate>
                   <jnt-menu [orientation]="ui.orientation.vertical"
@@ -185,34 +187,41 @@
               </jnt-stack>
             </jnt-stack>
           </ng-template>
+          </jnt-gantt-line-period>
         </jnt-gantt-line>
 
         <ng-template #noIssuesTemplate>
           <ng-template #loadingIssuesTemplate>
             <jnt-gantt-line>
-              <ng-template #title>
-                <jnt-skeleton [type]="ui.layout.skeleton.type.text"
-                              [lines]="ticket.metrics.issuesCount"></jnt-skeleton>
-              </ng-template>
+              <jnt-gantt-line-period>
+                <ng-template #title>
+                  <jnt-skeleton [type]="ui.skeleton.type.text"
+                                [lines]="ticket.metrics.issuesCount"></jnt-skeleton>
+                </ng-template>
+              </jnt-gantt-line-period>
             </jnt-gantt-line>
           </ng-template>
           <ng-container *ngIf="!loading.issues; else loadingIssuesTemplate">
             <jnt-gantt-line>
-              <ng-template #title>
-                <p>No one issue has been attached to ticket.</p>
-              </ng-template>
+              <jnt-gantt-line-period>
+                <ng-template #title>
+                  <p>No one issue has been attached to ticket.</p>
+                </ng-template>
+              </jnt-gantt-line-period>
             </jnt-gantt-line>
           </ng-container>
         </ng-template>
         <ng-container *ngIf="ticketControl.value === ticket.id">
           <ng-container *ngIf="!!issues.length; else noIssuesTemplate">
+
+            <div *ngFor="let i of issues">{{i.title}}</div>
+
             <jnt-gantt-line *ngFor="let issue of issues"
-                            [period]="issue"
-                            [from]="[ticket.startDate, issue.dueDate] | dfnsMin"
-                            [to]="issue.dueDate"
                             cdkDropList
                             [cdkDropListEnterPredicate]="predicateIssue">
-              <ng-template #indicator let-period="period" let-current="current">
+              <jnt-gantt-line-period [from]="[ticket.startDate, issue.dueDate] | dfnsMin"
+                                     [to]="issue.dueDate">
+              <ng-template #indicatorMonth let-period="period" let-current="current">
                 <div [attr.over-from]="(period['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
                      [attr.over-to]="(period['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)" period>
                   <ng-container *ngIf="issue.timeEstimate">
@@ -224,7 +233,7 @@
                 </div>
               </ng-template>
               <ng-template #title>
-                <jnt-stack [type]="ui.layout.stack.type.horizontal"
+                <jnt-stack [orientation]="ui.orientation.horizontal"
                            [gutter]="ui.gutter.small"
                            issue cdkDrag [cdkDragData]="{issue: issue.id}">
                   <jnt-button [icon]="ui.icons.menu"
@@ -233,6 +242,7 @@
                   <app-issue [issue]="issue"></app-issue>
                 </jnt-stack>
               </ng-template>
+              </jnt-gantt-line-period>
             </jnt-gantt-line>
           </ng-container>
         </ng-container>
