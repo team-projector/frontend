@@ -103,20 +103,18 @@ publish_stable:
     TARGET_IMAGE: $CI_REGISTRY_IMAGE/stable:${CI_COMMIT_TAG}
 
 .base_deploy:
-  image: junte/helm-deploy:1.8-helm2.16.1
+  image: curlimages/curl:7.72.0
   stage: deploy
   dependencies: []
-  variables:
-    HELM_IMAGE_TAG: $CI_PIPELINE_ID
   script:
-    - helm_deploy
+    - curl -k -X POST -d "component=${DEPLOYER_COMPONENT}&key=${DEPLOYER_KEY}&tag=${CI_PIPELINE_ID}" ${DEPLOYER_HOST}
 
 deploy_development:
   extends: .base_deploy
   only:
     - master
   environment:
-    name: development 
+    name: development
     url: $SITE_ADDRESS
 
 deploy_mocks:
