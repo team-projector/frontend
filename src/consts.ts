@@ -77,6 +77,16 @@ switch (language) {
     fnsConfig.setLocale(mergeDfnsLocale(dfnsRu));
     config = {
       i18n: jntRu,
+      masks: {
+        date: '__.__.____',
+        time: '__:__',
+        datetime: '__.__.____ __:__'
+      },
+      formats: {
+        date: 'dd.MM.yyyy',
+        time: 'HH:mm',
+        datetime: 'dd.MM.yyyy HH:mm'
+      },
       locale: {
         dfns: dfnsRu
       }
@@ -93,6 +103,16 @@ switch (language) {
     fnsConfig.setLocale(mergeDfnsLocale(dfnsEnUS));
     config = {
       i18n: jntEn,
+      masks: {
+        date: '__.__.____',
+        time: '__:__',
+        datetime: '__.__.____ __:__'
+      },
+      formats: {
+        date: 'dd.MM.yyyy',
+        time: 'HH:mm',
+        datetime: 'dd.MM.yyyy HH:mm'
+      },
       locale: {
         dfns: dfnsEnUS
       }
