@@ -1,34 +1,26 @@
 import { EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
-import { IssuesState } from 'src/components/issues/issues/issues.component';
 import { ViewType } from 'src/models/enums/view-type';
+import { IssuesState } from './issues.types';
 
 export abstract class IssuesListComponent implements OnInit {
 
-  private _state = new IssuesState();
+  state: IssuesState;
   viewType = ViewType;
-  @Output() reloaded = new EventEmitter();
-
-  set state(state: IssuesState) {
-    this._state = state;
-    this.router.navigate([this.getState(serialize(state))],
-      {relativeTo: this.route}).then(() => null);
-  }
-
-  get state() {
-    return this._state;
-  }
 
   constructor(private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private logger: NGXLogger) {
   }
 
   ngOnInit() {
     combineLatest([this.route.data, this.route.params])
-      .subscribe(([{user, team, milestone, project, ticket, dueDate}, {q, sort, first, offset, type}]) => {
-        this.state = new IssuesState({
+      .subscribe(([{user, team, milestone, project, ticket, dueDate}, {q, first, offset, type}]) => {
+        this.logger.debug('read router data & params');
+        this.state = {
           first: +first || undefined,
           offset: +offset || undefined,
           q: q,
@@ -36,11 +28,16 @@ export abstract class IssuesListComponent implements OnInit {
           user: !!user ? user.id : user,
           team: !!team ? team.id : team,
           milestone: !!milestone ? milestone.id : undefined,
-          project: !!project ? project.id : undefined,
+          project: project || undefined,
           ticket: !!ticket ? ticket.id : undefined,
           dueDate: dueDate
-        });
+        };
       });
+  }
+
+  save(state: IssuesState) {
+    this.router.navigate([this.getState(serialize(state))],
+      {relativeTo: this.route}).then(() => null);
   }
 
   getState(state: Object) {

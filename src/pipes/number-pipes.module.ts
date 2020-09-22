@@ -9,5 +9,5 @@ import { PercentagePipe } from './number';
     PercentagePipe
   ]
 })
-export class NumberModule {
+export class NumberPipesModule {
 }

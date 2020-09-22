@@ -3,11 +3,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TimeExpensesListComponent } from 'src/components/issues/time-expenses/time-expenses-list';
 
 @Component({
-  selector: 'app-developer-time-expenses-list',
-  templateUrl: './time-expenses-list.component.html',
-  styleUrls: ['./time-expenses-list.component.scss']
+  selector: 'app-developer-time-expenses',
+  templateUrl: './developer-time-expenses.component.html',
+  styleUrls: ['./developer-time-expenses.component.scss']
 })
-export class DeveloperTimeExpensesListComponent extends TimeExpensesListComponent {
+export class DeveloperTimeExpensesComponent extends TimeExpensesListComponent {
+
   constructor(route: ActivatedRoute,
               router: Router) {
     super(route, router);
@@ -18,4 +19,5 @@ export class DeveloperTimeExpensesListComponent extends TimeExpensesListComponen
     delete state['project'];
     return state;
   }
+
 }

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { FormBuilder } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI } from '@junte/ui';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI, untilJSONChanged } from '@junte/ui';
 import { of } from 'rxjs';
 import { delay, distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
@@ -15,6 +15,7 @@ import { ViewType } from 'src/models/enums/view-type';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter } from 'src/models/spent-time';
 import { DateSerializer } from 'src/serializers/date';
 import { getMock } from 'src/utils/mocks';
+import { IssuesType } from '../../../models/enums/issue';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql';
 
 @model()
@@ -71,7 +72,7 @@ export class TimeExpensesComponent implements OnInit {
   ownerType = OwnerType;
   durationFormat = DurationFormat;
 
-  @Input() type = TimeExpenseType.opened;
+  @Input() type = TimeExpenseType.all;
 
   tableControl = this.builder.control({
     q: null,
@@ -107,7 +108,7 @@ export class TimeExpensesComponent implements OnInit {
         first: first || DEFAULT_FIRST,
         offset: offset || DEFAULT_OFFSET
       },
-      type: type || type,
+      type: type || TimeExpenseType.all,
       dueDate: dueDate || null,
       team: team || null,
       user: user || null,
@@ -135,13 +136,13 @@ export class TimeExpensesComponent implements OnInit {
           .pipe(map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingTimeExpenses)));
     };
 
-    this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
+    this.form.valueChanges.pipe(untilJSONChanged())
       .subscribe(({table: {offset, first, q}, type, user, team, project, salary, dueDate}) => {
         this.stateChange.emit(new TimeExpensesState({
           q: q || undefined,
           first: first !== DEFAULT_FIRST ? first : undefined,
           offset: offset !== DEFAULT_OFFSET ? offset : undefined,
-          type: type || undefined,
+          type: type !== TimeExpenseType.all ? type : undefined,
           user: user || undefined,
           team: team || undefined,
           project: project || undefined,

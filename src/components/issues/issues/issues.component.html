@@ -1,36 +1,71 @@
-<jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
     <jnt-table #table [features]="[ui.feature.search]"
-               (reloaded)="loadSummary(); reloaded.emit()"
+               (reloaded)="loadSummary()"
                formControlName="table">
       <ng-template #tableFiltersTemplate>
         <jnt-stack [orientation]="ui.orientation.horizontal">
+          <jnt-date-picker formControlName="dueDate"
+                           [features]="[ui.feature.clear]"></jnt-date-picker>
+          <ng-template #projectOption let-project="value">
+            <jnt-stack [orientation]="ui.orientation.horizontal"
+                       [align]="ui.align.center"
+                       [justify]="ui.justify.between"
+                       [gutter]="ui.gutter.small">
+              <jnt-stack [orientation]="ui.orientation.horizontal"
+                         [gutter]="ui.gutter.small">
+                <jnt-avatar [size]="ui.size.tiny"
+                            [image]="project.project.group?.glAvatar"></jnt-avatar>
+                <div>{{project.project.group?.title}} / {{project.project.title}}</div>
+              </jnt-stack>
+              <jnt-badge *ngIf="project.issues?.remains > 0"
+                         [position]="ui.position.inline"
+                         [text]="project.issues.remains | duration:durationFormat.short"
+                         [color]="ui.color.green"></jnt-badge>
+            </jnt-stack>
+          </ng-template>
+          <jnt-select formControlName="project"
+                      placeholder="Project"
+                      [state]="progress.summary ? ui.state.loading : null"
+                      [optionTemplate]="projectOption">
+            <jnt-select-option *ngIf="!!project"
+                               [key]="project.id"
+                               [value]="{project: project}"></jnt-select-option>
+            <jnt-select-option *ngFor="let p of summary?.projects"
+                               [key]="p.project.id"
+                               [value]="p"></jnt-select-option>
+          </jnt-select>
           <jnt-switcher formControlName="type">
             <jnt-switcher-option label="All"
                                  i18n-label="@@action.filter_issues_all"
+                                 [disabled]="summary?.count <= 0"
                                  [value]="issuesType.all">
-              <jnt-badge *ngIf="summary?.count"
+              <jnt-badge *ngIf="summary?.count > 0"
                          [overflow]="1000"
                          [value]="summary?.count"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Closed"
                                  i18n-label="@@action.filter_type_closed"
+                                 [disabled]="summary?.closedCount <= 0"
                                  [value]="issuesType.closed">
-              <jnt-badge *ngIf="summary?.closedCount"
+              <jnt-badge *ngIf="summary?.closedCount > 0"
                          [overflow]="1000"
                          [value]="summary?.closedCount"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Opened"
                                  i18n-label="@@action.filter_type_opened"
+                                 [disabled]="summary?.openedCount <= 0"
                                  [value]="issuesType.opened">
-              <jnt-badge *ngIf="summary?.openedCount"
+              <jnt-badge *ngIf="summary?.openedCount > 0"
                          [value]="summary?.openedCount"
                          [color]="ui.color.green"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Problems"
                                  i18n-label="@@action.filter_type_problems"
+                                 [disabled]="summary?.problemsCount <= 0"
                                  [value]="issuesType.problems">
-              <jnt-badge *ngIf="summary?.problemsCount"
+              <jnt-badge *ngIf="summary?.problemsCount > 0"
                          [value]="summary?.problemsCount"
                          [color]="ui.color.red"></jnt-badge>
             </jnt-switcher-option>
@@ -81,21 +116,21 @@
           <jnt-progress-bar progress *ngIf="!!timeEstimate"
                             [value]="totalTimeSpent / timeEstimate * 100">
             <ng-template #progressBarLegendTemplate>
-              <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
-                         [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
-                <div metric>
-                  {{timeSpent | duration:durationFormat.short}}
-                  <span collaboration *ngIf="totalTimeSpent !== timeSpent">
-                    +{{totalTimeSpent - timeSpent | duration:durationFormat.short}}
-                  </span>
-                </div>
+              <jnt-stack [orientation]="ui.orientation.horizontal"
+                         [align]="ui.align.center"
+                         [justify]="ui.justify.between"
+                         [gutter]="ui.gutter.normal">
+                <div></div>
                 <div metric estimate>{{timeEstimate | duration:durationFormat.short}}</div>
               </jnt-stack>
             </ng-template>
           </jnt-progress-bar>
           <div efficiency>
-            <span [attr.slow]="metrics.efficiency > 0 && metrics.efficiency < 0.8">
-              {{!!metrics.efficiency ? (metrics.efficiency | number:'1.2-2') : ''}}
+            <span [attr.slow]="totalTimeSpent > timeEstimate">
+              {{totalTimeSpent > timeEstimate ? '-' + (totalTimeSpent - timeEstimate | duration:durationFormat.short) : (totalTimeSpent | duration:durationFormat.short)}}
+              <span collaboration *ngIf="totalTimeSpent !== timeSpent">
+                    / {{totalTimeSpent - timeSpent | duration:durationFormat.short}}
+                  </span>
             </span>
           </div>
           <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
@@ -120,7 +155,8 @@
       </jnt-table-column>
 
       <ng-template #tableRowActionsTemplate let-row="row">
-        <jnt-menu [orientation]="ui.orientation.vertical" [spacer]="ui.size.small">
+        <jnt-menu [orientation]="ui.orientation.vertical"
+                  [spacer]="ui.size.small">
           <jnt-menu-item [icon]="ui.icons.sync"
                          title="Sync from GitLab"
                          i18n-title="@@action.sync_from_Gitlab"

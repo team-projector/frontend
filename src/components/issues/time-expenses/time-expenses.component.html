@@ -2,30 +2,39 @@
   <jnt-form [formGroup]="form">
     <jnt-table #table (reloaded)="reloaded.emit()" formControlName="table">
       <ng-template *ngIf="view === viewType.extended" #tableFiltersTemplate>
-        <jnt-switcher formControlName="type">
-          <jnt-switcher-option label="All"
-                               i18n-label="@@action.filter_type_all"
-                               [value]="timeExpensesType.all">
-            <jnt-badge *ngIf="!!summary?.spent"
-                       [text]="summary.spent | duration:durationFormat.full">
-            </jnt-badge>
-          </jnt-switcher-option>
-          <jnt-switcher-option label="Closed"
-                               i18n-label="@@action.filter_type_closed"
-                               [value]="timeExpensesType.closed">
-            <jnt-badge *ngIf="!!summary?.closedSpent"
-                       [text]="summary.closedSpent | duration:durationFormat.full">
-            </jnt-badge>
-          </jnt-switcher-option>
-          <jnt-switcher-option label="Opened"
-                               i18n-label="@@action.filter_type_opened"
-                               [value]="timeExpensesType.opened">
-            <jnt-badge *ngIf="!!summary?.openedSpent"
-                       [text]="summary.openedSpent | duration:durationFormat.full"
-                       [color]="ui.color.green">
-            </jnt-badge>
-          </jnt-switcher-option>
-        </jnt-switcher>
+        <jnt-stack [orientation]="ui.orientation.horizontal">
+          <jnt-stack [orientation]="ui.orientation.horizontal">
+            <jnt-date-picker formControlName="dueDate"
+                             [features]="[ui.feature.clear]"></jnt-date-picker>
+            <jnt-switcher formControlName="type">
+              <jnt-switcher-option label="All"
+                                   i18n-label="@@action.filter_type_all"
+                                   [disabled]="summary?.spent <= 0"
+                                   [value]="timeExpensesType.all">
+                <jnt-badge *ngIf="summary?.spent > 0"
+                           [text]="summary.spent | duration:durationFormat.full">
+                </jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Closed"
+                                   i18n-label="@@action.filter_type_closed"
+                                   [disabled]="summary?.closedSpent <= 0"
+                                   [value]="timeExpensesType.closed">
+                <jnt-badge *ngIf="summary?.closedSpent > 0"
+                           [text]="summary.closedSpent | duration:durationFormat.full">
+                </jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Opened"
+                                   i18n-label="@@action.filter_type_opened"
+                                   [disabled]="summary?.openedSpent <= 0"
+                                   [value]="timeExpensesType.opened">
+                <jnt-badge *ngIf="summary?.openedSpent > 0"
+                           [text]="summary.openedSpent | duration:durationFormat.full"
+                           [color]="ui.color.green">
+                </jnt-badge>
+              </jnt-switcher-option>
+            </jnt-switcher>
+          </jnt-stack>
+        </jnt-stack>
       </ng-template>
       <jnt-table-column sort="title"
                         title="Title"

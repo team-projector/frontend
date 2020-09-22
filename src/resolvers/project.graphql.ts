@@ -13,6 +13,8 @@ export class ProjectGQL extends Query<{project}> {
         title
         fullTitle
         group {
+          title
+          glAvatar
           fullTitle
         }
       }

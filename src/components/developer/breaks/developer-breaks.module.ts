@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { BreaksModule } from 'src/components/breaks/breaks.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
-import { NumberModule } from 'src/pipes/number.module';
+import { NumberPipesModule } from 'src/pipes/number-pipes.module';
 import { MeUserResolver } from 'src/resolvers/me';
 import { DeveloperBreaksListGanttComponent } from './breaks-list-gantt/breaks-list-gantt.component';
 import { DeveloperBreaksListTableComponent } from './breaks-list-table/breaks-list-table.component';
@@ -24,7 +24,7 @@ import { DeveloperBreaksComponent } from './developer-breaks.component';
     DeveloperBreaksRoutingModule,
     ReactiveFormsModule,
     DatePipesModule,
-    NumberModule
+    NumberPipesModule
   ],
   providers: [
     MeUserResolver

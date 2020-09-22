@@ -1,6 +1,6 @@
 <jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
-    <jnt-table #table [features]="[ui.feature.search]" (reloaded)="loadSummary(); reloaded.emit()"
+    <jnt-table #table (reloaded)="loadSummary()"
                formControlName="table">
       <ng-template #tableFiltersTemplate>
         <jnt-stack [orientation]="ui.orientation.horizontal">

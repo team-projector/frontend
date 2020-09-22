@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import { NGXLogger } from 'ngx-logger';
 import {IssuesListComponent} from 'src/components/issues/issues/issues-list';
 
 @Component({
@@ -9,8 +10,9 @@ import {IssuesListComponent} from 'src/components/issues/issues/issues-list';
 })
 export class TeamIssuesListComponent extends IssuesListComponent {
   constructor(route: ActivatedRoute,
-              router: Router) {
-    super(route, router);
+              router: Router,
+              logger: NGXLogger) {
+    super(route, router, logger);
   }
 
   getState(state: Object) {

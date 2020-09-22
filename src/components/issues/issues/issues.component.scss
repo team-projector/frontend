@@ -4,6 +4,10 @@
   display: block;
 }
 
+[data-group] {
+  color: $jnt-muted-color;
+}
+
 [progress] {
   min-width: 100px;
 }
@@ -23,7 +27,7 @@
 
 [metric] {
   overflow: hidden;
-  jnt-white-space: nowrap;
+  white-space: nowrap;
   text-overflow: ellipsis;
   font-size: .85em;
   &:first-of-type {

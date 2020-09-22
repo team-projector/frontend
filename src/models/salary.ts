@@ -1,8 +1,6 @@
 import { addDays } from 'date-fns';
 import { SearchFilter } from '@junte/ui';
 import { ArraySerializer } from 'serialize-ts';
-import { BonusesState } from 'src/components/bonuses/bonuses.component';
-import { PenaltiesState } from 'src/components/penalties/penalties.component';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
 import { User, UserPosition } from 'src/models/user';
 import { mocks, TimeAccuracy } from 'src/utils/mocks';
@@ -161,9 +159,6 @@ export class PenaltiesFilter {
 
   @field()
   offset?: number;
-
-  @field()
-  state?: PenaltiesState | null;
 
   constructor(defs: PenaltiesFilter = null) {
     Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});

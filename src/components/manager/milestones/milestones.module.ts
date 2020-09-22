@@ -15,7 +15,6 @@ import { ProjectResolver } from 'src/resolvers/project';
 import { TeamResolver } from 'src/resolvers/team';
 import { TicketResolver } from 'src/resolvers/ticket';
 import { UserResolver } from 'src/resolvers/user';
-import { MilestoneIssuesComponent } from './milestone/issues/milestone-issues.component';
 import { MilestoneComponent } from './milestone/milestone.component';
 import { MilestonesRoutingModule } from './milestones-routing.module';
 import { MilestonesComponent } from './milestones.component';
@@ -24,7 +23,6 @@ import { MilestonesComponent } from './milestones.component';
   declarations: [
     MilestonesComponent,
     MilestoneComponent,
-    MilestoneIssuesComponent,
     EditTicketComponent,
     TicketStateColorPipe
   ],

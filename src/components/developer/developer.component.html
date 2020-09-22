@@ -1,10 +1,21 @@
 <jnt-app-aside #aside>
   <jnt-menu [spacer]="ui.size.small" [orientation]="ui.orientation.vertical">
+    <jnt-menu-item title="Dashboard"
+                   i18n-title="@@action.dashboard"
+                   [link]="['']"
+                   [icon]="ui.icons.dashboard"></jnt-menu-item>
     <jnt-menu-item title="Issues"
                    i18n-title="@@action.issues"
                    [link]="['issues']"
-                   [matching]="ui.matching.wildcard"
-                   [icon]="ui.icons.dashboard"></jnt-menu-item>
+                   [icon]="ui.icons.question"></jnt-menu-item>
+    <jnt-menu-item title="Merge requests"
+                   i18n-title="@@action.merge_requests"
+                   [link]="['merge-requests']"
+                   [icon]="ui.icons.question"></jnt-menu-item>
+    <jnt-menu-item title="Time expenses"
+                   i18n-title="@@action.time_expenses"
+                   [link]="['time-expenses']"
+                   [icon]="ui.icons.question"></jnt-menu-item>
     <jnt-menu-item title="Salaries"
                    i18n-title="@@action.salaries"
                    [link]="['salaries']"

@@ -7,14 +7,13 @@ import gql from 'graphql-tag';
 })
 export class SyncIssueGQL extends Mutation<{ syncIssue: { issue: { id } } }> {
   document = gql`
-    mutation ($id: ID!) {
-      syncIssue(id: $id) {
+mutation($id: ID!) {
+    syncIssue(id: $id) {
         issue {
-          id
+            id
         }
-      }
     }
-  `;
+}`;
 }
 
 @Injectable({
@@ -22,64 +21,90 @@ export class SyncIssueGQL extends Mutation<{ syncIssue: { issue: { id } } }> {
 })
 export class IssuesGQL extends Query<{ issues }> {
   document = gql`
-    query($milestone: ID, $ticket: ID, $team: ID, $user: ID, $project: ID, $dueDate: Date, $state: String, $problems: Boolean, $orderBy: String, $offset: Int, $first: Int, $q: String) {
-      issues: allIssues(milestone: $milestone, ticket: $ticket, team: $team, user: $user, project: $project, dueDate: $dueDate, state: $state, problems: $problems, orderBy: $orderBy, offset: $offset, first: $first, q: $q) {
+query(
+    $milestone: ID
+    $ticket: ID
+    $team: ID
+    $user: ID
+    $project: ID
+    $dueDate: Date
+    $state: String
+    $problems: Boolean
+    $orderBy: String
+    $offset: Int
+    $first: Int
+    $q: String
+) {
+    issues: allIssues(
+        milestone: $milestone
+        ticket: $ticket
+        team: $team
+        user: $user
+        project: $project
+        dueDate: $dueDate
+        state: $state
+        problems: $problems
+        orderBy: $orderBy
+        offset: $offset
+        first: $first
+        q: $q
+    ) {
         count
         edges {
-          node {
-            title
-            id
-            dueDate
-            labels {
-              count
-              edges {
-                node {
-                  title
-                  color
+            node {
+                title
+                id
+                dueDate
+                labels {
+                    count
+                    edges {
+                        node {
+                            title
+                            color
+                        }
+                    }
                 }
-              }
-            }
-            project {
-              fullTitle
-            }
-            state
-            createdAt
-            timeEstimate
-            timeSpent
-            totalTimeSpent
-            timeEstimate
-            glUrl
-            ticket {
-              id
-              title
-              url
-            }
-            user {
-              id
-              name
-              glAvatar
-            }
-            participants {
-              count
-              edges {
-                node {
-                  name
-                  glAvatar
+                project {
+                    fullTitle
                 }
-              }
+                state
+                createdAt
+                timeEstimate
+                timeSpent
+                totalTimeSpent
+                timeEstimate
+                glUrl
+                ticket {
+                    id
+                    title
+                    url
+                }
+                user {
+                    id
+                    name
+                    glAvatar
+                }
+                participants {
+                    count
+                    edges {
+                        node {
+                            name
+                            glAvatar
+                        }
+                    }
+                }
+                closedAt
+                problems
+                metrics {
+                    remains
+                    efficiency
+                    payroll
+                    paid
+                }
             }
-            closedAt
-            problems
-            metrics {
-              remains
-              efficiency
-              payroll
-              paid
-            }
-          }
         }
-      }
-    }`;
+    }
+}`;
 }
 
 @Injectable({
@@ -87,12 +112,41 @@ export class IssuesGQL extends Query<{ issues }> {
 })
 export class IssuesSummaryGQL extends Query<{ summary }> {
   document = gql`
-    query ($milestone: ID, $ticket: ID, $team: ID, $user: ID, $project: ID, $dueDate: Date) {
-      summary: issuesSummary(milestone: $milestone, ticket: $ticket, team: $team, user: $user, project: $project, dueDate: $dueDate) {
+query(
+    $milestone: ID
+    $ticket: ID
+    $team: ID
+    $user: ID
+    $project: ID
+    $dueDate: Date
+) {
+    summary: issuesSummary(
+        milestone: $milestone
+        ticket: $ticket
+        team: $team
+        user: $user
+        project: $project
+        dueDate: $dueDate
+    ) {
         count
+        projects {
+            project {
+                id
+                title
+                group {
+                    title
+                    glAvatar
+                }
+            }
+            issues {
+                remains
+                percentage
+                openedCount
+            }
+        }
         closedCount
         openedCount
         problemsCount
-      }
-    }`;
+    }
+}`;
 }

@@ -3,15 +3,15 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { IssuesModule } from 'src/components/issues/issues.module';
-import { DeveloperIssuesRoutingModule } from './developer-issues-routing.module';
-import { DeveloperIssuesComponent } from './developer-issues.component';
+import { DeveloperMergeRequestsRoutingModule } from './developer-merge-requests-routing.module';
+import { DeveloperMergeRequestsComponent } from './developer-merge-requests.component';
 
 @NgModule({
   declarations: [
-    DeveloperIssuesComponent
+    DeveloperMergeRequestsComponent
   ],
   imports: [
-    DeveloperIssuesRoutingModule,
+    DeveloperMergeRequestsRoutingModule,
 
     CommonModule,
     ReactiveFormsModule,
@@ -20,6 +20,6 @@ import { DeveloperIssuesComponent } from './developer-issues.component';
     IssuesModule
   ]
 })
-export class DeveloperIssuesModule {
+export class DeveloperMergeRequestsModule {
 
 }

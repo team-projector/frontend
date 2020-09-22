@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { JunteUiModule } from '@junte/ui';
-import { SalariesModule } from 'src/components/developer/salaries/salaries.module';
 import { UserResolver } from 'src/resolvers/user';
 import { AppFooterModule } from '../app-footer/app-footer.module';
 import { DeveloperRoutingModule } from './developer-routing.module';
@@ -11,9 +10,9 @@ import { DeveloperComponent } from './developer.component';
     DeveloperComponent
   ],
   imports: [
-    JunteUiModule,
     DeveloperRoutingModule,
-    SalariesModule,
+
+    JunteUiModule,
     AppFooterModule
   ],
   providers: [
@@ -21,4 +20,5 @@ import { DeveloperComponent } from './developer.component';
   ]
 })
 export class DeveloperModule {
+
 }

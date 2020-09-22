@@ -8,7 +8,7 @@ import { getMock } from 'src/utils/mocks';
 import { Project } from '../models/project';
 import { ProjectGQL } from './project.graphql';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class ProjectResolver implements Resolve<Observable<Project>> {
 
   constructor(private projectGQL: ProjectGQL) {

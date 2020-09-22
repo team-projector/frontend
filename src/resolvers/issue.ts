@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { parseISO } from 'date-fns';
 import { IssuesType } from 'src/models/enums/issue';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class DueDateResolver implements Resolve<Date> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Date {
@@ -12,7 +12,7 @@ export class DueDateResolver implements Resolve<Date> {
   }
 }
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class IssuesTypeResolver implements Resolve<IssuesType> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): IssuesType {

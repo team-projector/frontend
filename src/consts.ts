@@ -4,12 +4,13 @@ import localeRu from '@angular/common/locales/ru';
 import { DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
 import { Locale } from 'date-fns';
 import { enUS as dfnsEnUS, ru as dfnsRu } from 'date-fns/locale';
-import { en as jntEn, JunteUiModule, ru as jntRu } from '@junte/ui';
+import { localeEnUs as jntEnUs, i18nEn, JunteUiModule, localeRu as jntRu, i18nRu } from '@junte/ui';
 import { DateFnsConfigurationService } from 'ngx-date-fns';
 import { detectLanguage } from 'src/utils/lang';
 import { Language } from './enums/language';
 
 export const PLATFORM_DELAY = 100;
+export const UI_DELAY = 500;
 export const MOCKS_DELAY = 1000;
 export const DEFAULT_PAGE_SIZE = 20;
 export const DATE_FORMAT = 'yyyy-MM-dd';
@@ -76,18 +77,9 @@ switch (language) {
     registerLocaleData(data);
     fnsConfig.setLocale(mergeDfnsLocale(dfnsRu));
     config = {
-      i18n: jntRu,
-      masks: {
-        date: '__.__.____',
-        time: '__:__',
-        datetime: '__.__.____ __:__'
-      },
-      formats: {
-        date: 'dd.MM.yyyy',
-        time: 'HH:mm',
-        datetime: 'dd.MM.yyyy HH:mm'
-      },
+      i18n: i18nRu,
       locale: {
+        ui: jntRu,
         dfns: dfnsRu
       }
     };
@@ -102,19 +94,10 @@ switch (language) {
     registerLocaleData(data);
     fnsConfig.setLocale(mergeDfnsLocale(dfnsEnUS));
     config = {
-      i18n: jntEn,
-      masks: {
-        date: '__.__.____',
-        time: '__:__',
-        datetime: '__.__.____ __:__'
-      },
-      formats: {
-        date: 'dd.MM.yyyy',
-        time: 'HH:mm',
-        datetime: 'dd.MM.yyyy HH:mm'
-      },
+      i18n: i18nEn,
       locale: {
-        dfns: dfnsEnUS
+        ui: jntRu,
+        dfns: dfnsRu
       }
     };
     providers.push({

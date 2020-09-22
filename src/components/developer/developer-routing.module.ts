@@ -12,12 +12,19 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        pathMatch: 'full',
-        redirectTo: 'issues'
+        loadChildren: () => import('./dashboard/developer-dashboard.module').then(m => m.DeveloperDashboardModule)
       },
       {
         path: 'issues',
         loadChildren: () => import('./issues/developer-issues.module').then(m => m.DeveloperIssuesModule)
+      },
+      {
+        path: 'merge-requests',
+        loadChildren: () => import('./merge-requests/developer-merge-requests.module').then(m => m.DeveloperMergeRequestsModule)
+      },
+      {
+        path: 'time-expenses',
+        loadChildren: () => import('./time-expenses/developer-time-expenses.module').then(m => m.DeveloperTimeExpensesModule)
       },
       {
         path: 'salaries',
@@ -38,4 +45,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class DeveloperRoutingModule {
+
 }

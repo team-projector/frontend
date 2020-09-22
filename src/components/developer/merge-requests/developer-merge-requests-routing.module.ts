@@ -1,17 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DeveloperIssuesComponent } from 'src/components/developer/issues/developer-issues.component';
 import { DueDateResolver } from 'src/resolvers/issue';
 import { MeUserResolver } from 'src/resolvers/me';
 import { ProjectResolver } from 'src/resolvers/project';
+import { DeveloperMergeRequestsComponent } from './developer-merge-requests.component';
 
-export const ISSUES_BREADCRUMB = $localize`:@@label.issues:Issues`;
+export const MERGE_REQUESTS_BREADCRUMB = $localize`:@@label.merge_requests:Merge requests`;
 
 const routes: Routes = [
   {
     path: '',
-    component: DeveloperIssuesComponent,
-    data: {breadcrumb: ISSUES_BREADCRUMB},
+    component: DeveloperMergeRequestsComponent,
+    data: {breadcrumb: MERGE_REQUESTS_BREADCRUMB},
     resolve: {
       user: MeUserResolver,
       dueDate: DueDateResolver,
@@ -24,6 +24,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DeveloperIssuesRoutingModule {
+export class DeveloperMergeRequestsRoutingModule {
 
 }

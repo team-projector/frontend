@@ -1,1 +1,1 @@
-<app-issues [(state)]="state" (reloaded)="reloaded.emit()"></app-issues>
+<app-issues [state]="state" (filtered)="save($event)"></app-issues>
