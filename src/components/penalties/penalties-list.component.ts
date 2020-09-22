@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { TableComponent } from '@junte/ui';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
-import { TimeExpensesState } from 'src/components/issues/time-expenses/time-expenses.component';
 import { PenaltiesState } from 'src/components/penalties/penalties.component';
 
 export abstract class PenaltiesListComponent implements OnInit {
@@ -30,13 +29,13 @@ export abstract class PenaltiesListComponent implements OnInit {
   ngOnInit() {
     combineLatest([this.route.data, this.route.params])
       .subscribe(([{user, salary}, {q, first, offset}]) => {
-        this.state = new TimeExpensesState({
+        this.state = {
           first: +first || undefined,
           offset: +offset || undefined,
           q: q,
           user: !!user ? user.id : user,
           salary: !!salary ? salary.id : undefined,
-        });
+        };
       });
   }
 

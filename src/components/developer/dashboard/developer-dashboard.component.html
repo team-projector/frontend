@@ -1,12 +1,14 @@
-<jnt-row>
-  <jnt-col [desktop]="8" [tablet]="12">
-    <app-developer-progress [me]="me" (selected)="issuesByDueDate($event)">
-    </app-developer-progress>
-  </jnt-col>
-  <jnt-col [desktop]="4" [tablet]="12">
-    <app-developer-payroll [me]="me"></app-developer-payroll>
-  </jnt-col>
-  <jnt-col [desktop]="6" [tablet]="12">
-    <app-developer-projects [me]="me" (selected)="issuesByProject($event)"></app-developer-projects>
-  </jnt-col>
-</jnt-row>
+<jnt-container>
+  <jnt-row>
+    <jnt-col [desktop]="8" [tablet]="12">
+      <app-developer-progress [me]="me" (selected)="issuesByDueDate($event)">
+      </app-developer-progress>
+    </jnt-col>
+    <jnt-col [desktop]="4" [tablet]="12">
+      <app-developer-payroll [me]="me"></app-developer-payroll>
+    </jnt-col>
+    <jnt-col [desktop]="6" [tablet]="12">
+      <app-developer-projects [me]="me" (selected)="issuesByProject($event)"></app-developer-projects>
+    </jnt-col>
+  </jnt-row>
+</jnt-container>

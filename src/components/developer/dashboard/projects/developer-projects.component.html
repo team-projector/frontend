@@ -17,14 +17,14 @@
       <ng-template #titleTemplate>
         <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
         {{p.project.title}}
-        <jnt-stack *ngIf="p.project.milestones as m" milestone
+        <jnt-stack *ngIf="p.project.milestones.length > 0"
                    [orientation]="ui.orientation.horizontal"
                    [gutter]="ui.gutter.tiny"
                    [align]="ui.align.center">
-          <jnt-link [source]="m.glUrl" [title]="m.title"
-                    target="_blank"></jnt-link>
-          <jnt-label *ngIf="m.dueDate" [label]="m.dueDate | dueDate"
-                     [color]="m.problems?.includes(milestoneProblem.overDueDate) ?  ui.color.red : ui.color.paleNavy">
+          <small>{{p.project.milestones[0].title}}</small>
+          <jnt-label *ngIf="p.project.milestones[0].dueDate as dueDate"
+                     [label]="dueDate | dueDate"
+                     [color]="p.project.milestones[0].problems?.includes(milestoneProblem.overDueDate) ?  ui.color.red : ui.color.paleNavy">
           </jnt-label>
         </jnt-stack>
       </ng-template>

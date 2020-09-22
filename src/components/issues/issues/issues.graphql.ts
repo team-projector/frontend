@@ -113,19 +113,13 @@ query(
 export class IssuesSummaryGQL extends Query<{ summary }> {
   document = gql`
 query(
-    $milestone: ID
-    $ticket: ID
     $team: ID
     $user: ID
-    $project: ID
     $dueDate: Date
 ) {
     summary: issuesSummary(
-        milestone: $milestone
-        ticket: $ticket
         team: $team
         user: $user
-        project: $project
         dueDate: $dueDate
     ) {
         count

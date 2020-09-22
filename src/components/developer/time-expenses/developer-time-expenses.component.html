@@ -1,2 +1,3 @@
-<app-time-expenses [(state)]="state"
-                   (reloaded)="reloaded.emit()"></app-time-expenses>
+<jnt-container>
+  <app-time-expenses [state]="state" (filtered)="save($event)"></app-time-expenses>
+</jnt-container>

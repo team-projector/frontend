@@ -26,8 +26,6 @@ import { IssuesState, IssuesStateUpdate } from './issues.types';
 })
 export class IssuesComponent implements OnInit {
 
-  filter: IssuesFilter;
-
   ui = UI;
   issuesState = IssueState;
   issueProblem = IssueProblem;
@@ -37,6 +35,7 @@ export class IssuesComponent implements OnInit {
   durationFormat = DurationFormat;
 
   progress = {summary: false, sync: false};
+  filter: IssuesFilter;
   project: Project;
   summary: IssuesSummary;
 
@@ -64,7 +63,8 @@ export class IssuesComponent implements OnInit {
   @ViewChild('table', {static: true})
   table: TableComponent;
 
-  @Input() set state({first, offset, q, type, dueDate, team, user, project, milestone, ticket}: IssuesState) {
+  @Input()
+  set state({first, offset, q, type, dueDate, team, user, project, milestone, ticket}: IssuesState) {
     this.project = project;
     this.form.patchValue({
       table: {
@@ -74,19 +74,16 @@ export class IssuesComponent implements OnInit {
       },
       type: type || IssuesType.opened,
       dueDate: dueDate || null,
-      team: team || null,
-      user: user || null,
-      milestone: milestone || null,
+      team: team?.id || null,
+      user: user?.id || null,
+      milestone: milestone?.id || null,
       project: project?.id || null,
-      ticket: ticket || null
+      ticket: ticket?.id || null
     });
   }
 
   @Output()
   filtered = new EventEmitter<IssuesStateUpdate>();
-
-  @Output()
-  reloaded = new EventEmitter();
 
   constructor(private issuesGQL: IssuesGQL,
               private issuesSummaryGQL: IssuesSummaryGQL,

@@ -14,15 +14,17 @@
                 [size]="ui.size.tiny"></jnt-avatar>
   </jnt-stack>
 
-  <jnt-stack [orientation]="ui.orientation.vertical"
-             [gutter]="ui.gutter.tiny">
+  <jnt-stack [gutter]="ui.gutter.none">
     <jnt-stack [orientation]="ui.orientation.horizontal"
                [gutter]="ui.gutter.small">
       <jnt-link [source]="mergeRequest.glUrl" target="_blank"
                 [attr.closed]="mergeRequest.state == mergeRequestState.closed"
                 [title]="mergeRequest.title">
       </jnt-link>
-      <jnt-label *ngFor="let l of mergeRequest.labels" [color]="l.color" [label]="l.title"></jnt-label>
+      <jnt-label *ngFor="let l of mergeRequest.labels"
+                 [color]="l.color"
+                 [label]="l.title"
+                 [size]="ui.size.small"></jnt-label>
     </jnt-stack>
     <small>{{mergeRequest.project?.fullTitle}}</small>
   </jnt-stack>

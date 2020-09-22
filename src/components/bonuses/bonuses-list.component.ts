@@ -4,7 +4,6 @@ import { TableComponent } from '@junte/ui';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
 import { BonusesState } from 'src/components/bonuses/bonuses.component';
-import { TimeExpensesState } from 'src/components/issues/time-expenses/time-expenses.component';
 
 export abstract class BonusesListComponent implements OnInit {
 
@@ -30,13 +29,13 @@ export abstract class BonusesListComponent implements OnInit {
   ngOnInit() {
     combineLatest([this.route.data, this.route.params])
       .subscribe(([{user, salary}, {q, first, offset}]) => {
-        this.state = new TimeExpensesState({
+        this.state = {
           first: +first || undefined,
           offset: +offset || undefined,
           q: q,
           user: !!user ? user.id : user,
           salary: !!salary ? salary.id : undefined,
-        });
+        };
       });
   }
 

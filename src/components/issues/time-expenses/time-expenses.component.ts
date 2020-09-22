@@ -1,61 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, TableComponent, UI, untilJSONChanged } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI, untilJSONChanged } from '@junte/ui';
 import { of } from 'rxjs';
-import { delay, distinctUntilChanged, map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
-import { field, model } from 'src/decorators/model';
+import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { OwnerType, TimeExpenseState, TimeExpenseType } from 'src/models/enums/time-expenses';
 import { ViewType } from 'src/models/enums/view-type';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter } from 'src/models/spent-time';
-import { DateSerializer } from 'src/serializers/date';
 import { getMock } from 'src/utils/mocks';
-import { IssuesType } from '../../../models/enums/issue';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses.graphql';
-
-@model()
-export class TimeExpensesState {
-  @field()
-  q?: string;
-
-  @field()
-  sort?: string;
-
-  @field()
-  first?: number;
-
-  @field()
-  offset?: number;
-
-  @field()
-  type?: TimeExpenseType;
-
-  @field()
-  team?: string;
-
-  @field()
-  user?: string;
-
-  @field()
-  project?: string;
-
-  @field()
-  salary?: string;
-
-  @field({serializer: new DateSerializer(DATE_FORMAT)})
-  dueDate?: Date;
-
-  constructor(defs: TimeExpensesState = null) {
-    if (!!defs) {
-      Object.assign(this, defs);
-    }
-  }
-}
+import { TimeExpensesState, TimeExpensesStateUpdate } from './time-expenses.types';
 
 @Component({
   selector: 'app-time-expenses',
@@ -64,7 +23,6 @@ export class TimeExpensesState {
 })
 export class TimeExpensesComponent implements OnInit {
 
-  private _filter: TimeExpensesFilter;
   ui = UI;
   timeExpensesType = TimeExpenseType;
   summary: SpentTimesSummary;
@@ -72,56 +30,46 @@ export class TimeExpensesComponent implements OnInit {
   ownerType = OwnerType;
   durationFormat = DurationFormat;
 
-  @Input() type = TimeExpenseType.all;
+  filter: TimeExpensesFilter;
+
+  @Input()
+  type = TimeExpenseType.all;
 
   tableControl = this.builder.control({
-    q: null,
-    sort: null,
     first: DEFAULT_FIRST,
     offset: DEFAULT_OFFSET
   });
   form = this.builder.group({
     table: this.tableControl,
     type: [this.type],
-    dueDate: [null],
+    date: [null],
     team: [null],
-    project: [null],
-    salary: [null],
     user: [null],
+    salary: [null]
   });
 
-  set filter(filter: TimeExpensesFilter) {
-    this._filter = filter;
-    this.load();
-  }
+  @Input()
+  view = ViewType.extended;
 
-  get filter() {
-    return this._filter;
-  }
+  @ViewChild('table', {static: true})
+  table: TableComponent;
 
-  @Input() view = ViewType.extended;
-
-  @Input() set state({first, offset, q, type, dueDate, team, user, project, salary}: TimeExpensesState) {
+  @Input() set state({first, offset, type, date, team, user, salary}: TimeExpensesState) {
     this.form.patchValue({
       table: {
-        q: q || null,
         first: first || DEFAULT_FIRST,
         offset: offset || DEFAULT_OFFSET
       },
       type: type || TimeExpenseType.all,
-      dueDate: dueDate || null,
-      team: team || null,
-      user: user || null,
-      project: project || null,
-      salary: salary || null,
+      date: date || null,
+      team: team?.id || null,
+      user: user?.id || null,
+      salary: salary?.id || null,
     });
   }
 
-  @Output() stateChange = new EventEmitter<TimeExpensesState>();
-  @Output() reloaded = new EventEmitter();
-
-  @ViewChild('table', {static: true})
-  table: TableComponent;
+  @Output()
+  filtered = new EventEmitter<TimeExpensesStateUpdate>();
 
   constructor(private timeExpensesGQL: TimeExpensesGQL,
               private timeExpensesSummaryGQL: TimeExpensesSummaryGQL,
@@ -137,35 +85,35 @@ export class TimeExpensesComponent implements OnInit {
     };
 
     this.form.valueChanges.pipe(untilJSONChanged())
-      .subscribe(({table: {offset, first, q}, type, user, team, project, salary, dueDate}) => {
-        this.stateChange.emit(new TimeExpensesState({
-          q: q || undefined,
+      .subscribe(({table: {offset, first}, type, team, user, salary, date}) => {
+        this.filtered.emit(new TimeExpensesStateUpdate({
           first: first !== DEFAULT_FIRST ? first : undefined,
           offset: offset !== DEFAULT_OFFSET ? offset : undefined,
           type: type !== TimeExpenseType.all ? type : undefined,
-          user: user || undefined,
           team: team || undefined,
-          project: project || undefined,
+          user: user || undefined,
           salary: salary || undefined,
-          dueDate: !!dueDate ? dueDate : undefined
+          date: date || undefined
         }));
 
-        this.filter = new TimeExpensesFilter({
-          offset: offset,
-          first: first,
-          state: type === TimeExpenseType.opened ? TimeExpenseState.opened :
-            type === TimeExpenseType.closed ? TimeExpenseState.closed : undefined,
-          orderBy: type === TimeExpenseType.opened ? 'dueDate' : '-closedAt',
-          project: project,
-          salary: +salary || undefined,
-          team: team,
-          user: user,
-          date: !!dueDate ? startOfDay(dueDate) : null
-        });
+        this.load();
       });
   }
 
   private load() {
+    const {table: {offset, first}, type, user, team, project, salary, date} = this.form.getRawValue();
+    this.filter = new TimeExpensesFilter({
+      offset: offset,
+      first: first,
+      state: type === TimeExpenseType.opened ? TimeExpenseState.opened :
+        type === TimeExpenseType.closed ? TimeExpenseState.closed : undefined,
+      orderBy: type === TimeExpenseType.opened ? 'dueDate' : '-closedAt',
+      date: !!date ? startOfDay(date) : null,
+      team: team,
+      user: user,
+      salary: salary || undefined
+    });
+
     this.loadSummary();
     this.table.load();
   }

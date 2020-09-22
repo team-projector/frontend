@@ -23,7 +23,8 @@
                                  [value]="mergeRequestState.merged">
               <jnt-badge *ngIf="summary?.mergedCount"
                          [value]="summary?.mergedCount.toString()"
-                         [color]="ui.color.red"></jnt-badge>
+                         [overflow]="null"
+                         [color]="ui.color.yellow"></jnt-badge>
             </jnt-switcher-option>
           </jnt-switcher>
         </jnt-stack>

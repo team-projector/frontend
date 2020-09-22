@@ -5,72 +5,79 @@
                (reloaded)="loadSummary()"
                formControlName="table">
       <ng-template #tableFiltersTemplate>
-        <jnt-stack [orientation]="ui.orientation.horizontal">
-          <jnt-date-picker formControlName="dueDate"
-                           [features]="[ui.feature.clear]"></jnt-date-picker>
-          <ng-template #projectOption let-project="value">
-            <jnt-stack [orientation]="ui.orientation.horizontal"
-                       [align]="ui.align.center"
-                       [justify]="ui.justify.between"
-                       [gutter]="ui.gutter.small">
+        <jnt-row>
+          <jnt-col [tablet]="2">
+            <jnt-date-picker formControlName="dueDate"
+                             [features]="[ui.feature.clear]"></jnt-date-picker>
+          </jnt-col>
+          <jnt-col [tablet]="4">
+            <ng-template #projectOption let-project="value">
               <jnt-stack [orientation]="ui.orientation.horizontal"
+                         [align]="ui.align.center"
+                         [justify]="ui.justify.between"
                          [gutter]="ui.gutter.small">
-                <jnt-avatar [size]="ui.size.tiny"
-                            [image]="project.project.group?.glAvatar"></jnt-avatar>
-                <div>{{project.project.group?.title}} / {{project.project.title}}</div>
+                <jnt-stack [orientation]="ui.orientation.horizontal"
+                           [gutter]="ui.gutter.small">
+                  <jnt-avatar [size]="ui.size.tiny"
+                              [image]="project.project.group?.glAvatar"></jnt-avatar>
+                  <div>{{project.project.group?.title}} / {{project.project.title}}</div>
+                </jnt-stack>
+                <jnt-badge *ngIf="project.issues?.remains > 0"
+                           [position]="ui.position.inline"
+                           [text]="project.issues.remains | duration:durationFormat.short"
+                           [color]="ui.color.green"></jnt-badge>
               </jnt-stack>
-              <jnt-badge *ngIf="project.issues?.remains > 0"
-                         [position]="ui.position.inline"
-                         [text]="project.issues.remains | duration:durationFormat.short"
-                         [color]="ui.color.green"></jnt-badge>
-            </jnt-stack>
-          </ng-template>
-          <jnt-select formControlName="project"
-                      placeholder="Project"
-                      [state]="progress.summary ? ui.state.loading : null"
-                      [optionTemplate]="projectOption">
-            <jnt-select-option *ngIf="!!project"
-                               [key]="project.id"
-                               [value]="{project: project}"></jnt-select-option>
-            <jnt-select-option *ngFor="let p of summary?.projects"
-                               [key]="p.project.id"
-                               [value]="p"></jnt-select-option>
-          </jnt-select>
-          <jnt-switcher formControlName="type">
-            <jnt-switcher-option label="All"
-                                 i18n-label="@@action.filter_issues_all"
-                                 [disabled]="summary?.count <= 0"
-                                 [value]="issuesType.all">
-              <jnt-badge *ngIf="summary?.count > 0"
-                         [overflow]="1000"
-                         [value]="summary?.count"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Closed"
-                                 i18n-label="@@action.filter_type_closed"
-                                 [disabled]="summary?.closedCount <= 0"
-                                 [value]="issuesType.closed">
-              <jnt-badge *ngIf="summary?.closedCount > 0"
-                         [overflow]="1000"
-                         [value]="summary?.closedCount"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Opened"
-                                 i18n-label="@@action.filter_type_opened"
-                                 [disabled]="summary?.openedCount <= 0"
-                                 [value]="issuesType.opened">
-              <jnt-badge *ngIf="summary?.openedCount > 0"
-                         [value]="summary?.openedCount"
-                         [color]="ui.color.green"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Problems"
-                                 i18n-label="@@action.filter_type_problems"
-                                 [disabled]="summary?.problemsCount <= 0"
-                                 [value]="issuesType.problems">
-              <jnt-badge *ngIf="summary?.problemsCount > 0"
-                         [value]="summary?.problemsCount"
-                         [color]="ui.color.red"></jnt-badge>
-            </jnt-switcher-option>
-          </jnt-switcher>
-        </jnt-stack>
+            </ng-template>
+            <jnt-select formControlName="project"
+                        placeholder="Project"
+                        [width]="ui.width.fluid"
+                        [state]="progress.summary ? ui.state.loading : null"
+                        [optionTemplate]="projectOption">
+              <jnt-select-option *ngIf="!!project"
+                                 [key]="project.id"
+                                 [value]="{project: project}"></jnt-select-option>
+              <jnt-select-option *ngFor="let p of summary?.projects"
+                                 [key]="p.project.id"
+                                 [value]="p"></jnt-select-option>
+            </jnt-select>
+          </jnt-col>
+          <jnt-col [tablet]="6">
+            <jnt-switcher formControlName="type">
+              <jnt-switcher-option label="All"
+                                   i18n-label="@@action.filter_issues_all"
+                                   [disabled]="summary?.count <= 0"
+                                   [value]="issuesType.all">
+                <jnt-badge *ngIf="summary?.count > 0"
+                           [overflow]="1000"
+                           [value]="summary?.count"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Closed"
+                                   i18n-label="@@action.filter_type_closed"
+                                   [disabled]="summary?.closedCount <= 0"
+                                   [value]="issuesType.closed">
+                <jnt-badge *ngIf="summary?.closedCount > 0"
+                           [overflow]="1000"
+                           [value]="summary?.closedCount"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Opened"
+                                   i18n-label="@@action.filter_type_opened"
+                                   [disabled]="summary?.openedCount <= 0"
+                                   [value]="issuesType.opened">
+                <jnt-badge *ngIf="summary?.openedCount > 0"
+                           [value]="summary?.openedCount"
+                           [color]="ui.color.green"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Problems"
+                                   i18n-label="@@action.filter_type_problems"
+                                   [disabled]="summary?.problemsCount <= 0"
+                                   [value]="issuesType.problems">
+                <jnt-badge *ngIf="summary?.problemsCount > 0"
+                           [value]="summary?.problemsCount"
+                           [color]="ui.color.red"></jnt-badge>
+              </jnt-switcher-option>
+            </jnt-switcher>
+          </jnt-col>
+        </jnt-row>
       </ng-template>
       <jnt-table-column title="Title"
                         i18n-title="@@label.title">
@@ -78,8 +85,17 @@
                      let-user="user" let-project="project" let-ticket="ticket"
                      let-closedAt="closedAt" let-id="id">
           <app-issue [issue]="{id: id, title: title, labels: labels, glUrl: glUrl, state: state,
-            user: user, project: project, ticket: ticket, closedAt: closedAt}">
+            user: user, project: project, closedAt: closedAt}">
           </app-issue>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column>
+        <ng-template #tableCellTemplate let-ticket="ticket">
+          <jnt-link *ngIf="ticket" [icon]="ui.icons.link"
+                    target="_blank"
+                    [source]="ticket.url">
+          </jnt-link>
         </ng-template>
       </jnt-table-column>
 

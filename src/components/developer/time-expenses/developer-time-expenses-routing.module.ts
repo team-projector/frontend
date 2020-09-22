@@ -13,7 +13,7 @@ const routes: Routes = [
     data: {breadcrumb: TIME_EXPENSES},
     resolve: {
       user: MeUserResolver,
-      dueDate: DueDateResolver
+      date: DueDateResolver
     }
   }
 ];

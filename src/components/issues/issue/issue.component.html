@@ -2,8 +2,7 @@
            [gutter]="ui.gutter.small">
   <jnt-avatar *ngIf="!!issue.user" [text]="issue.user.name" [image]="issue.user.avatar"
               [size]="ui.size.tiny"></jnt-avatar>
-  <jnt-stack [orientation]="ui.orientation.vertical"
-             [gutter]="ui.gutter.tiny">
+  <jnt-stack [gutter]="ui.gutter.none">
     <jnt-link *ngIf="issue.ticket" ticket [icon]="ui.icons.link"
               target="_blank"
               [source]="issue.ticket.url"
