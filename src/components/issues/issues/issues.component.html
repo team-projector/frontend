@@ -79,6 +79,20 @@
           </jnt-col>
         </jnt-row>
       </ng-template>
+
+      <jnt-table-column>
+        <ng-template #tableCellTemplate let-state="state" let-labels="labels">
+          <jnt-icon state doing *ngIf="state == issueState.opened && (labels | hasLabel:standardLabel.doing)"
+                    [icon]="ui.icons.animated.runningMan"></jnt-icon>
+          <jnt-icon state bug *ngIf="labels | hasLabel:standardLabel.bug"
+                    [icon]="ui.icons.bug"></jnt-icon>
+          <jnt-icon state delayed *ngIf="labels | hasLabel:standardLabel.delayed"
+                    [icon]="ui.icons.pause"></jnt-icon>
+          <jnt-icon state *ngIf="labels | hasLabel:standardLabel.done"
+                    [icon]="ui.icons.checked"></jnt-icon>
+        </ng-template>
+      </jnt-table-column>
+
       <jnt-table-column title="Title"
                         i18n-title="@@label.title">
         <ng-template #tableCellTemplate let-title="title" let-labels="labels" let-glUrl="glUrl" let-state="state"
@@ -93,7 +107,7 @@
       <jnt-table-column>
         <ng-template #tableCellTemplate let-ticket="ticket">
           <jnt-link *ngIf="ticket" [icon]="ui.icons.link"
-                    target="_blank"
+                    [target]="ui.target.blank"
                     [source]="ticket.url">
           </jnt-link>
         </ng-template>

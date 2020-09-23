@@ -65,7 +65,10 @@ query(
                     }
                 }
                 project {
-                    fullTitle
+                    title
+                    group {
+                      title
+                    }
                 }
                 state
                 createdAt
@@ -115,11 +118,13 @@ export class IssuesSummaryGQL extends Query<{ summary }> {
 query(
     $team: ID
     $user: ID
+    $project: ID
     $dueDate: Date
 ) {
     summary: issuesSummary(
         team: $team
         user: $user
+        project: $project
         dueDate: $dueDate
     ) {
         count

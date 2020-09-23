@@ -1,5 +1,5 @@
 <jnt-container>
-  <jnt-row>
+  <jnt-row [gutter]="ui.gutter.normal" [spacing]="ui.gutter.large">
     <jnt-col [desktop]="8" [tablet]="12">
       <app-developer-progress [me]="me" (selected)="issuesByDueDate($event)">
       </app-developer-progress>

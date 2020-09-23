@@ -35,7 +35,10 @@ export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
               }
               glUrl
               project {
-                fullTitle
+                title
+                group {
+                  title
+                }
               }
             }
             timeSpent

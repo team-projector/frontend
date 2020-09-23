@@ -20,18 +20,10 @@
       <jnt-label *ngFor="let l of (issue.labels | labels)"
                  [size]="ui.size.small"
                  [color]="l.color" [label]="l.title"></jnt-label>
-      <jnt-icon state doing *ngIf="issue.state == issueState.opened && (issue.labels | hasLabel:standardLabel.doing)"
-                [icon]="ui.icons.animated.runningMan"></jnt-icon>
-      <jnt-icon state bug *ngIf="issue.labels | hasLabel:standardLabel.bug"
-                [icon]="ui.icons.bug"></jnt-icon>
-      <jnt-icon state delayed *ngIf="issue.labels | hasLabel:standardLabel.delayed"
-                [icon]="ui.icons.pause"></jnt-icon>
-      <jnt-icon state *ngIf="issue.labels | hasLabel:standardLabel.done"
-                [icon]="ui.icons.checked"></jnt-icon>
       <small *ngIf="issue.state == issueState.closed && !!issue.closedAt">
         {{issue.closedAt | dfnsFormatDistanceToNow}}
       </small>
     </jnt-stack>
-    <small>{{issue.project?.fullTitle}}</small>
+    <small>{{issue.project?.group?.title}} / {{issue.project?.title}}</small>
   </jnt-stack>
 </jnt-stack>

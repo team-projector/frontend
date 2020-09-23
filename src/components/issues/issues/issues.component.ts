@@ -27,7 +27,7 @@ import { IssuesState, IssuesStateUpdate } from './issues.types';
 export class IssuesComponent implements OnInit {
 
   ui = UI;
-  issuesState = IssueState;
+  issueState = IssueState;
   issueProblem = IssueProblem;
   issuesType = IssuesType;
   viewType = ViewType;

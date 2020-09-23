@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { UI } from '@junte/ui';
+import { format, startOfDay } from 'date-fns';
+import { DATE_FORMAT } from '../../consts';
 import { LocalUI } from '../../enums/local-ui';
 
 @Component({
@@ -12,5 +14,6 @@ export class DeveloperComponent {
 
   ui = UI;
   localUi = LocalUI;
+  today = format(startOfDay(new Date()), DATE_FORMAT);
 
 }

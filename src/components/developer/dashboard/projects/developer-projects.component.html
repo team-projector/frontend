@@ -21,11 +21,7 @@
                    [orientation]="ui.orientation.horizontal"
                    [gutter]="ui.gutter.tiny"
                    [align]="ui.align.center">
-          <small>{{p.project.milestones[0].title}}</small>
-          <jnt-label *ngIf="p.project.milestones[0].dueDate as dueDate"
-                     [label]="dueDate | dueDate"
-                     [color]="p.project.milestones[0].problems?.includes(milestoneProblem.overDueDate) ?  ui.color.red : ui.color.paleNavy">
-          </jnt-label>
+          <small>{{p.project.milestones[0].title}} <ng-container *ngIf="p.project.milestones[0].dueDate as dueDate">| {{dueDate | dueDate}}</ng-container></small>
         </jnt-stack>
       </ng-template>
     </jnt-chart-indicator>

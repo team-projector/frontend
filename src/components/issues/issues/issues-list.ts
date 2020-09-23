@@ -4,12 +4,17 @@ import { NGXLogger } from 'ngx-logger';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
 import { ViewType } from 'src/models/enums/view-type';
+import { IssueState } from '../../../models/enums/issue';
+import { StandardLabel } from '../../../models/enums/standard-label';
 import { IssuesState, IssuesStateUpdate } from './issues.types';
 
 export abstract class IssuesListComponent implements OnInit {
 
-  state: IssuesState;
   viewType = ViewType;
+  issueState = IssueState;
+  standardLabel = StandardLabel;
+
+  state: IssuesState;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
