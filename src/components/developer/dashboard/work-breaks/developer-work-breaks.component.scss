@@ -1,0 +1,40 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+
+[vacations] {
+  padding-bottom: $jnt-gutter-normal;
+
+  [circle] {
+    width: 100px;
+    height: 100px;
+
+    ::ng-deep {
+      svg {
+        fill: $jnt-secondary-dark-color;
+      }
+
+      [data-content] {
+        width: 70%;
+        height: 70%;
+        background-color: $jnt-secondary-color;
+        position: absolute;
+        border-radius: 50%;
+      }
+    }
+
+    [days] {
+      font-weight: $jnt-font-weight-bold;
+      font-size: $jnt-font-size-big;
+      color: $jnt-secondary-dark-color;
+
+      [paid] {
+        color: $jnt-primary-color;
+      }
+
+      [label] {
+        font-size: $jnt-font-size-base;
+        font-weight: $jnt-font-weight-base;
+        color: $jnt-primary-color;
+      }
+    }
+  }
+}

@@ -1,0 +1,24 @@
+<jnt-block *ngIf="me?.metrics as metrics"
+           title="Vacations"
+           i18n-title="@@label.vacations"
+           [width]="ui.width.fluid"
+           [padding]="ui.gutter.none">
+  <jnt-stack [align]="ui.align.center" vacations>
+    <span>Remains</span>
+    <jnt-circle-bar circle>
+      <ng-template #circleBarContentTemplate>
+        <jnt-stack [align]="ui.align.center" [gutter]="ui.gutter.none" days>
+          <div>
+            <span paid>{{metrics.paidWorkBreaksDays}}</span><span>/30</span>
+          </div>
+          <span label>days</span>
+        </jnt-stack>
+      </ng-template>
+      <jnt-bar-indicator-group>
+        <jnt-bar-indicator [value]="metrics.paidWorkBreaksDays"
+                           [color]="ui.color.purple">
+        </jnt-bar-indicator>
+      </jnt-bar-indicator-group>
+    </jnt-circle-bar>
+  </jnt-stack>
+</jnt-block>

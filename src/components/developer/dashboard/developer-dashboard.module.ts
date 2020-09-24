@@ -4,21 +4,23 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { BreaksModule } from 'src/components/breaks/breaks.module';
-import { DatePipesModule } from '../../../pipes/date-pipes.module';
-import { NumberPipesModule } from '../../../pipes/number-pipes.module';
-import { DueDateModule } from '../../due-date/due-date.module';
+import { DueDateModule } from 'src/components/due-date/due-date.module';
+import { DatePipesModule } from 'src/pipes/date-pipes.module';
+import { NumberPipesModule } from 'src/pipes/number-pipes.module';
 import { DeveloperDashboardRoutingModule } from './developer-dashboard-routing.module';
 import { DeveloperDashboardComponent } from './developer-dashboard.component';
 import { DeveloperPayrollComponent } from './payroll/developer-payroll.component';
 import { DeveloperProgressComponent } from './progress/developer-progress.component';
 import { DeveloperProjectsComponent } from './projects/developer-projects.component';
+import { DeveloperWorkBreaksComponent } from './work-breaks/developer-work-breaks.component';
 
 @NgModule({
   declarations: [
     DeveloperDashboardComponent,
     DeveloperProgressComponent,
     DeveloperProjectsComponent,
-    DeveloperPayrollComponent
+    DeveloperPayrollComponent,
+    DeveloperWorkBreaksComponent
   ],
   imports: [
     DeveloperDashboardRoutingModule,
