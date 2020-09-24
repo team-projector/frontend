@@ -10,8 +10,7 @@ import { BreaksListComponent } from 'src/components/breaks/breaks-list';
 
 export class DeveloperBreaksListTableComponent extends BreaksListComponent {
   constructor(route: ActivatedRoute,
-              router: Router,
-              ) {
+              router: Router) {
     super(route, router);
   }
 

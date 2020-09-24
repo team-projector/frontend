@@ -10,6 +10,8 @@ import { EdgesToPaging } from '../serializers/graphql';
 import { getMock, mocks } from '../utils/mocks';
 import { Paging } from './paging';
 import { User } from './user';
+import { ModelRef } from '../utils/types';
+import { ModelSerializer } from '../serializers/model';
 
 @model({
   mocking: (workBreak: Break) => {
@@ -41,9 +43,6 @@ export class Break {
   @field({mock: () => faker.random.uuid()})
   id: number;
 
-  @field({mock: User})
-  user: User;
-
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
 
@@ -68,8 +67,8 @@ export class Break {
   @field({serializer: new DateSerializer()})
   approvedAt: Date;
 
-  @field()
-  approvedBy: User;
+  @field({serializer: new ModelSerializer(() => User)})
+  approvedBy: ModelRef<User>;
 
   @field({
     mock: () => faker.helpers.randomize([
@@ -89,9 +88,6 @@ export class BreakUpdate {
 
   @field()
   id: string;
-
-  @field()
-  user: string;
 
   @field()
   reason: BreakReasons;

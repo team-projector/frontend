@@ -7,10 +7,10 @@ import { BreaksListComponent } from 'src/components/breaks/breaks-list';
   templateUrl: './breaks-list-gantt.component.html',
   styleUrls: ['./breaks-list-gantt.component.scss']
 })
+
 export class DeveloperBreaksListGanttComponent extends BreaksListComponent {
   constructor(route: ActivatedRoute,
-              router: Router,
-  ) {
+              router: Router) {
     super(route, router);
   }
 
