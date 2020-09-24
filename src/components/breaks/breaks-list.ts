@@ -1,6 +1,7 @@
 import { OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { serialize } from 'serialize-ts/dist';
 import { BreaksState } from 'src/components/breaks/breaks-table/breaks-table.component';
 import { ViewType } from 'src/models/enums/view-type';
@@ -28,6 +29,7 @@ export abstract class BreaksListComponent implements OnInit {
 
   ngOnInit() {
     combineLatest([this.route.data, this.route.params])
+      .pipe(debounceTime(0))
       .subscribe(([{user, team}, {q, first, offset}]) => {
         this.state = new BreaksState({
           first: +first || undefined,

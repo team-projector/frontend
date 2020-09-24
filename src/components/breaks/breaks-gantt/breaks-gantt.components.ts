@@ -1,19 +1,19 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, PopoverComponent, UI } from '@junte/ui';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { AllWorkBreaks, ApproveWorkBreakGQL, DeleteWorkBreakGQL } from 'src/components/breaks/breaks.graphql';
+import { AllTeamWorkBreaks, ApproveWorkBreakGQL, DeleteWorkBreakGQL } from 'src/components/breaks/breaks.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { MeManager } from 'src/managers/me.manager';
-import { Break, BreaksFilter, PagingBreaks } from 'src/models/break';
-import { ApproveStates, BreakReasons } from 'src/models/enums/break';
+import { BreaksFilter } from 'src/models/break';
+import { ApproveStates } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
-import { User } from 'src/models/user';
+import { PagingUsers, User } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
 
 @model()
@@ -52,12 +52,8 @@ export class BreaksGanttComponent implements OnInit {
   user: User;
   ui = UI;
   viewType = ViewType;
-  reasons = BreakReasons;
   approveStates = ApproveStates;
-  breaks: Break[] = [];
-  popover: PopoverComponent;
-
-  ganttBreaks: Break[] = [];
+  usersWorkbreaks = [];
   loading = false;
 
   viewControl = this.fb.control({
@@ -75,7 +71,6 @@ export class BreaksGanttComponent implements OnInit {
   });
 
   set filter(filter: BreaksFilter) {
-    console.log(filter);
     this._filter = filter;
     this.loadBreaks();
   }
@@ -100,7 +95,7 @@ export class BreaksGanttComponent implements OnInit {
 
   @Output() stateChange = new EventEmitter<BreaksState>();
 
-  constructor(private breaksGQL: AllWorkBreaks,
+  constructor(private breaksGQL: AllTeamWorkBreaks,
               private deleteBreakGQL: DeleteWorkBreakGQL,
               private approveBreakGQL: ApproveWorkBreakGQL,
               private fb: FormBuilder,
@@ -108,7 +103,6 @@ export class BreaksGanttComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadBreaks();
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
       .subscribe(({view: {offset, first, q}, team, user}) => {
         this.stateChange.emit(new BreaksState({
@@ -132,10 +126,12 @@ export class BreaksGanttComponent implements OnInit {
   loadBreaks() {
     this.loading = true;
     (environment.mocks
-      ? of(getMock(PagingBreaks, this.filter)).pipe(delay(MOCKS_DELAY))
+      ? of(getMock(PagingUsers, this.filter)).pipe(delay(MOCKS_DELAY))
       : this.breaksGQL.fetch(serialize(this.filter) as R).pipe(
-        map(({data: {breaks}}) => deserialize(breaks, PagingBreaks))))
+        map(({data: {breaks}}) => deserialize(breaks, PagingUsers))))
       .pipe(finalize(() => this.loading = false))
-      .subscribe(ganttBreaks => [this.ganttBreaks = ganttBreaks.results, console.log(this.ganttBreaks)]);
+      .subscribe(ganttBreaks => {
+        this.usersWorkbreaks = ganttBreaks.results;
+      });
   }
 }

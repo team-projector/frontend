@@ -1,7 +1,10 @@
 import { endOfDay, endOfMonth, endOfWeek, format, isPast, startOfDay, startOfMonth, startOfToday, startOfWeek } from 'date-fns';
+import { Paging } from 'src/models/paging';
+import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
+import { Break } from './break';
 import { faker } from '../utils/mocks';
-import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
-import { UserPermission, UserProblem, UserRole } from 'src/models/enums/user';
+import { ArraySerializer, PrimitiveSerializer, ModelSerializer } from 'serialize-ts';
+import { UserPermission, UserProblem, UserRole } from './enums/user';
 import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
@@ -83,6 +86,12 @@ export class User {
 
   @field({mock: UserPosition})
   position: UserPosition;
+
+  @field({
+    serializer: new EdgesToArray<Break>(Break),
+    mock: {type: Break, length: 10}
+  })
+  workBreaks: Break[];
 
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
@@ -221,5 +230,21 @@ export class UserProgressMetrics {
   getKey(): string {
     return format(this.start, 'dd/MM/yyyy');
   }
+
+}
+
+
+@model()
+export class PagingUsers implements Paging<User> {
+
+  @field({mock: () => faker.random.number()})
+  count: number;
+
+  @field({
+    name: 'edges',
+    serializer: new ArraySerializer(new EdgesToPaging<User>(User)),
+    mock: {type: User, length: 10}
+  })
+  results: User[];
 
 }

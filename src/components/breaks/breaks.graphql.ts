@@ -78,3 +78,41 @@ export class DeclineWorkBreakGQL extends Query<{ break }> {
 }
 
 
+@Injectable({
+  providedIn: 'root'
+})
+export class AllTeamWorkBreaks extends Query<{ breaks }> {
+  document = gql`
+    query ($team: ID, $user: ID, $offset: Int, $first: Int) {
+      breaks: teamWorkBreaks(team: $team, user: $user, offset: $offset, first: $first) {
+        count
+        edges {
+          node {
+            id
+            name
+            glAvatar
+            workBreaks {
+              count
+              edges {
+                node {
+                  id
+                  createdAt
+                  fromDate
+                  toDate
+                  comment
+                  reason
+                  approveState
+                  approvedBy {
+                    name
+                    glAvatar
+                  }
+                  approvedAt
+                }
+              }
+            }
+          }
+        }
+      }
+    }`;
+}
+

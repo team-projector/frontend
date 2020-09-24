@@ -1,7 +1,5 @@
-import { faker } from '../utils/mocks';
-import { ArraySerializer, ModelSerializer } from 'serialize-ts';
 import { field, model } from '../decorators/model';
-import { mocks } from '../utils/mocks';
+import { faker, mocks } from '../utils/mocks';
 
 @model()
 export class IssuesMetrics {
