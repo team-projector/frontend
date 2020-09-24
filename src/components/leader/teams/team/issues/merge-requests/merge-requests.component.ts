@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MergeRequestsListComponent } from 'src/components/issues/merge-requests/merge-requests-list';
+import { MergeRequestsComponent } from 'src/components/shared/merge-requests/list/merge-requests';
 
 @Component({
   selector: 'app-team-merge-requests-list',
@@ -8,7 +8,7 @@ import { MergeRequestsListComponent } from 'src/components/issues/merge-requests
   styleUrls: ['./merge-requests.component.scss']
 })
 
-export class TeamMergeRequestsListComponent extends MergeRequestsListComponent {
+export class TeamMergeRequestsListComponent extends MergeRequestsComponent {
   constructor(route: ActivatedRoute,
               router: Router) {
     super(route, router);

@@ -5,7 +5,7 @@ import { UI } from '@junte/ui';
 import { Observable, of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssuesGQL } from 'src/components/issues/issues/issues.graphql';
+import { IssuesGQL } from 'src/components/shared/issues/list/issues-list.graphql';
 import { AllMilestonesGQL } from 'src/components/manager/milestones/milestones.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';

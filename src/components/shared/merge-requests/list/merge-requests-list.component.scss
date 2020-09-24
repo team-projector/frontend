@@ -1,0 +1,34 @@
+@import "../../../../../node_modules/@junte/ui/lib/assets/styles/jnt-variables";
+@import "../../../../../node_modules/@junte/ui/lib/assets/styles/navigation/link";
+
+:host {
+  display: block;
+}
+
+[slow='true'] {
+  border-bottom: 2px solid $jnt-fail-color;
+}
+
+[closed='true'] {
+  @include jnt-link((text-decoration: line-through), '&', true);
+}
+
+[progress] {
+  min-width: 100px;
+}
+
+[metric] {
+  overflow: hidden;
+  jnt-white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: .85em;
+
+  &:first-of-type {
+    flex: 1;
+    text-align: left;
+  }
+
+  &[estimate] {
+    color: $jnt-primary-text-light-color;
+  }
+}

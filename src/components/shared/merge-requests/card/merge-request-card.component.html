@@ -1,0 +1,32 @@
+<jnt-stack [orientation]="ui.orientation.horizontal"
+           [gutter]="ui.gutter.small">
+  <jnt-stack [orientation]="ui.orientation.horizontal"
+             [gutter]="ui.gutter.small"
+             [align]="ui.align.center">
+    <ng-container *ngIf="mergeRequest.issues as issues">
+      <jnt-avatar [text]="issues[0]?.user.name"
+                  [image]="issues[0]?.user.avatar"
+                  [size]="ui.size.tiny"></jnt-avatar>
+      <jnt-icon [icon]="ui.icons.chevronRight"></jnt-icon>
+    </ng-container>
+    <jnt-avatar [text]="mergeRequest.user?.name"
+                [image]="mergeRequest.user?.avatar"
+                [size]="ui.size.tiny"></jnt-avatar>
+  </jnt-stack>
+
+  <jnt-stack [gutter]="ui.gutter.none">
+    <jnt-stack [orientation]="ui.orientation.horizontal"
+               [gutter]="ui.gutter.small">
+      <jnt-link [source]="mergeRequest.glUrl" target="_blank"
+                [attr.closed]="mergeRequest.state == mergeRequestState.closed"
+                [icon]="localUi.icons.mergeRequest"
+                [title]="mergeRequest.title">
+      </jnt-link>
+      <jnt-label *ngFor="let l of mergeRequest.labels"
+                 [color]="l.color"
+                 [label]="l.title"
+                 [size]="ui.size.small"></jnt-label>
+    </jnt-stack>
+    <small>{{mergeRequest.project?.fullTitle}}</small>
+  </jnt-stack>
+</jnt-stack>

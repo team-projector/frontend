@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DueDateResolver } from 'src/resolvers/issue';
 import { MeUserResolver } from 'src/resolvers/me';
-import { ProjectResolver } from 'src/resolvers/project';
+import { TeamResolver } from '../../../resolvers/team';
 import { DeveloperMergeRequestsComponent } from './developer-merge-requests.component';
 
 export const MERGE_REQUESTS_BREADCRUMB = $localize`:@@label.merge_requests:Merge requests`;
@@ -14,8 +13,7 @@ const routes: Routes = [
     data: {breadcrumb: MERGE_REQUESTS_BREADCRUMB},
     resolve: {
       user: MeUserResolver,
-      dueDate: DueDateResolver,
-      project: ProjectResolver
+      team: TeamResolver
     }
   }
 ];

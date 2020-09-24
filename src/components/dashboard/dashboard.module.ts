@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { CookieService } from 'ngx-cookie-service';
 import { DateFnsModule } from 'ngx-date-fns';
-import { IssuesModule } from 'src/components/issues/issues.module';
+import { IssuesListModule } from 'src/components/shared/issues/list/issues-list.module';
 import { AuthorizationGuard } from 'src/guards/authorization.guard';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
@@ -29,7 +29,7 @@ import { AppThemeSwitcherModule } from '../app-theme-switcher/app-theme-switcher
     JunteUiModule,
     ArrayPipesModule,
     DatePipesModule,
-    IssuesModule,
+    IssuesListModule,
     AppThemeSwitcherModule,
     DateFnsModule
   ],

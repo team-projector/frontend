@@ -147,20 +147,18 @@ export class Bonus {
 export class PenaltiesFilter {
 
   @field()
-  user?: number;
+  user: string;
 
   @field()
-  salary?: number;
-
-  orderBy?: string;
+  salary: string;
 
   @field()
-  first?: number;
+  first: number;
 
   @field()
-  offset?: number;
+  offset: number;
 
-  constructor(defs: PenaltiesFilter = null) {
+  constructor(defs: Partial<PenaltiesFilter> = null) {
     Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});
   }
 

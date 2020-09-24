@@ -1,0 +1,99 @@
+<jnt-container [width]="ui.width.fluid">
+  <jnt-row>
+    <jnt-col [desktop]="4" [mobile]="12">
+
+      <jnt-block title="Summary"
+                 i18n-title="@@label.salary_summary"
+                 [width]="ui.width.fluid"
+                 [padding]="ui.gutter.none">
+        <jnt-stack [align]="ui.align.stretch">
+          <jnt-stack [align]="ui.align.center" [gutter]="ui.gutter.small">
+            <span *ngIf="!!salary.position" position>{{salary.position.title}}</span>
+            <jnt-label i18n-label="@@label.hour"
+                       [label]="(salary.hourRate | currency:undefined:'symbol':'1.0-0') + ' / ' + 'Hour'"
+                       [icon]="ui.icons.money" [color]="ui.color.green">
+            </jnt-label>
+          </jnt-stack>
+
+          <jnt-stack [orientation]="ui.orientation.horizontal"
+                     [justify]="ui.justify.between" taxes>
+            <span position>{{salary.taxes | currency:undefined:'symbol':'1.0-0'}}</span>
+          </jnt-stack>
+
+          <jnt-stack [gutter]="ui.gutter.small" [align]="ui.align.stretch" salary>
+
+            <jnt-date-period [start]="salary.periodFrom" [end]="salary.periodTo"></jnt-date-period>
+
+            <jnt-stack [orientation]="ui.orientation.horizontal"
+                       [justify]="ui.justify.end"
+                       [align]="ui.align.center">
+        <span>
+            {{salary.sum + salary.taxes | currency}}
+          </span>
+              <jnt-label [label]="salary.chargedTime | duration"
+                         [color]="ui.color.purpleLight">
+              </jnt-label>
+            </jnt-stack>
+          </jnt-stack>
+
+          <div payroll>
+        <span>
+        {{salary.total + salary.taxes| currency}}</span>
+          </div>
+
+          <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.stretch"
+                     [justify]="ui.justify.center" metrics>
+            <div metric>
+              <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small"
+                         [align]="ui.align.center">
+                <jnt-icon like [icon]="ui.icons.like"></jnt-icon>
+                <span>{{salary.bonus | currency}}</span>
+              </jnt-stack>
+            </div>
+            <div separator></div>
+            <div metric>
+              <jnt-stack [orientation]="ui.orientation.horizontal"
+                         [gutter]="ui.gutter.small"
+                [align]="ui.align.center">
+                <jnt-icon dislike [icon]="ui.icons.dislike"></jnt-icon>
+                <span>{{salary.penalty | currency}}</span>
+              </jnt-stack>
+            </div>
+          </jnt-stack>
+        </jnt-stack>
+      </jnt-block>
+
+    </jnt-col>
+
+    <jnt-col [desktop]="8" [mobile]="12">
+      <jnt-stack>
+        <jnt-menu [spacer]="ui.gutter.normal">
+          <jnt-menu-item [link]="['.']"
+                         title="Time Expenses"
+                         i18n-title="@@action.time_expenses">
+            <jnt-badge *ngIf="salary?.total"
+                       [text]="salary.total | duration:durationFormat.short">
+            </jnt-badge>
+          </jnt-menu-item>
+          <jnt-menu-item [link]="['bonuses']"
+                         title="Bonuses"
+                         i18n-title="@@action.bonuses">
+            <jnt-badge *ngIf="!!salary.bonus"
+                       [color]="ui.color.green"
+                       [text]="salary.bonus | currency:undefined:'symbol':'1.0-0'">
+            </jnt-badge>
+          </jnt-menu-item>
+          <jnt-menu-item [link]="['penalties']"
+                         title="Penalties"
+                         i18n-title="@@action.penalties">
+            <jnt-badge *ngIf="!!salary.penalty"
+                       [color]="ui.color.red"
+                       [text]="salary.penalty | currency:undefined:'symbol':'1.0-0'">
+            </jnt-badge>
+          </jnt-menu-item>
+        </jnt-menu>
+        <router-outlet></router-outlet>
+      </jnt-stack>
+    </jnt-col>
+  </jnt-row>
+</jnt-container>

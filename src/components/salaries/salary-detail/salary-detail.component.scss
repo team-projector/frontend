@@ -1,0 +1,87 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+
+:host {
+  display: block;
+}
+
+[position] {
+  color: $jnt-success-color;
+  font-size: 12px;
+  margin-top: $jnt-gutter-small;
+}
+
+[taxes] {
+  padding: $jnt-gutter-small $jnt-gutter-large;
+  background-color: $jnt-blue-100-color;
+}
+
+[salary] {
+  padding: $jnt-gutter-tiny $jnt-gutter-large;
+  font-size: 26px;
+  background: linear-gradient(132.05deg, $jnt-primary-color 5.04%, $jnt-purple-light-color 92.57%), $jnt-primary-color;
+  color: $jnt-white-color;
+}
+
+[separation] {
+  min-width: 150px;
+
+  [title] {
+    color: $jnt-purple-lighten-color;
+    font-size: 12px;
+  }
+
+  [separator] {
+    height: 1px;
+    background-color: $jnt-purple-lighten-color;
+    border-radius: 3px;
+  }
+
+  [sum] {
+    color: $jnt-white-color;
+    font-size: 21px;
+    font-weight: $jnt-font-weight-bold;
+  }
+
+  [bonus] {
+    font-size: 12px;
+    color: $jnt-white-color;
+    padding: $jnt-gutter-small;
+
+    &:not(:last-child) {
+      border-bottom: 1px solid $jnt-purple-lighten-color;
+    }
+  }
+}
+
+[payroll] {
+  font-size: 26px;
+  text-align: center;
+  color: $jnt-primary-dark-color;
+  font-weight: $jnt-font-weight-bold;
+}
+
+[metrics] {
+  padding: 0 $jnt-gutter-large $jnt-gutter-normal $jnt-gutter-large;
+
+  [metric] {
+    color: $jnt-primary-text-dark-color;
+
+    [like], [dislike] {
+      font-size: 15px;
+    }
+
+    [like] {
+      color: $jnt-success-color;
+    }
+
+    [dislike] {
+      color: $jnt-fail-color;
+    }
+  }
+
+  [separator] {
+    min-width: 1px;
+    min-height: 100%;
+    background-color: $jnt-muted-color;
+  }
+}

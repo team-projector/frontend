@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TimeExpensesListComponent } from 'src/components/issues/time-expenses/time-expenses-list';
+import { TimeExpensesComponent } from 'src/components/shared/time-expenses/list/time-expenses';
 
 @Component({
   selector: 'app-team-time-expenses-component',
@@ -8,7 +8,7 @@ import { TimeExpensesListComponent } from 'src/components/issues/time-expenses/t
   styleUrls: ['./time-expenses.component.scss']
 })
 
-export class TeamTimeExpensesListComponent extends TimeExpensesListComponent {
+export class TeamTimeExpensesListComponent extends TimeExpensesComponent {
   constructor(route: ActivatedRoute,
               router: Router) {
     super(route, router);

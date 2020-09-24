@@ -1,0 +1,197 @@
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <jnt-form [formGroup]="form">
+    <jnt-table #table [features]="[ui.feature.search]"
+               (reloaded)="loadSummary()"
+               formControlName="table">
+      <ng-template #tableFiltersTemplate>
+        <jnt-row>
+          <jnt-col [tablet]="2">
+            <jnt-date-picker formControlName="dueDate"
+                             [features]="[ui.feature.clear]"></jnt-date-picker>
+          </jnt-col>
+          <jnt-col [tablet]="4">
+            <ng-template #projectOption let-project="value">
+              <jnt-stack [orientation]="ui.orientation.horizontal"
+                         [align]="ui.align.center"
+                         [justify]="ui.justify.between"
+                         [gutter]="ui.gutter.small">
+                <jnt-stack [orientation]="ui.orientation.horizontal"
+                           [gutter]="ui.gutter.small">
+                  <jnt-avatar [size]="ui.size.tiny"
+                              [image]="project.project.group?.glAvatar"></jnt-avatar>
+                  <div>{{project.project.group?.title}} / {{project.project.title}}</div>
+                </jnt-stack>
+                <jnt-badge *ngIf="project.issues?.remains > 0"
+                           [position]="ui.position.inline"
+                           [text]="project.issues.remains | duration:durationFormat.short"
+                           [color]="ui.color.green"></jnt-badge>
+              </jnt-stack>
+            </ng-template>
+            <jnt-select formControlName="project"
+                        placeholder="Project"
+                        [width]="ui.width.fluid"
+                        [state]="progress.summary ? ui.state.loading : null"
+                        [optionTemplate]="projectOption">
+              <jnt-select-option *ngIf="!!project"
+                                 [key]="project.id"
+                                 [value]="{project: project}"></jnt-select-option>
+              <jnt-select-option *ngFor="let p of summary?.projects"
+                                 [key]="p.project.id"
+                                 [value]="p"></jnt-select-option>
+            </jnt-select>
+          </jnt-col>
+          <jnt-col [tablet]="6">
+            <jnt-switcher formControlName="type">
+              <jnt-switcher-option label="All"
+                                   i18n-label="@@action.filter_issues_all"
+                                   [disabled]="summary?.count <= 0"
+                                   [value]="issuesType.all">
+                <jnt-badge *ngIf="summary?.count > 0"
+                           [overflow]="1000"
+                           [value]="summary?.count"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Closed"
+                                   i18n-label="@@action.filter_type_closed"
+                                   [disabled]="summary?.closedCount <= 0"
+                                   [value]="issuesType.closed">
+                <jnt-badge *ngIf="summary?.closedCount > 0"
+                           [overflow]="1000"
+                           [value]="summary?.closedCount"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Opened"
+                                   i18n-label="@@action.filter_type_opened"
+                                   [disabled]="summary?.openedCount <= 0"
+                                   [value]="issuesType.opened">
+                <jnt-badge *ngIf="summary?.openedCount > 0"
+                           [value]="summary?.openedCount"
+                           [color]="ui.color.green"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Problems"
+                                   i18n-label="@@action.filter_type_problems"
+                                   [disabled]="summary?.problemsCount <= 0"
+                                   [value]="issuesType.problems">
+                <jnt-badge *ngIf="summary?.problemsCount > 0"
+                           [value]="summary?.problemsCount"
+                           [color]="ui.color.red"></jnt-badge>
+              </jnt-switcher-option>
+            </jnt-switcher>
+          </jnt-col>
+        </jnt-row>
+      </ng-template>
+
+      <jnt-table-column>
+        <ng-template #tableCellTemplate let-state="state" let-labels="labels">
+          <jnt-icon data-state data-doing *ngIf="state == issueState.opened && (labels | hasLabel:standardLabel.doing)"
+                    [icon]="ui.icons.animated.runningMan"></jnt-icon>
+          <jnt-icon data-state data-delayed *ngIf="labels | hasLabel:standardLabel.delayed"
+                    [icon]="ui.icons.pause"></jnt-icon>
+          <jnt-icon data-state *ngIf="labels | hasLabel:standardLabel.done"
+                    [icon]="ui.icons.checked"></jnt-icon>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column title="Title"
+                        i18n-title="@@label.title">
+        <ng-template #tableCellTemplate let-title="title" let-labels="labels" let-glUrl="glUrl" let-state="state"
+                     let-user="user" let-project="project" let-ticket="ticket"
+                     let-closedAt="closedAt" let-id="id">
+          <app-issue [issue]="{id: id, title: title, labels: labels, glUrl: glUrl, state: state,
+            user: user, project: project, closedAt: closedAt}">
+          </app-issue>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column title="Ticket"
+                        i18n-ticket="@@label.ticket">
+        <ng-template #tableCellTemplate let-ticket="ticket">
+          <jnt-link *ngIf="ticket" [icon]="ui.icons.link"
+                    [target]="ui.target.blank"
+                    [source]="ticket.url">
+          </jnt-link>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column title="Due date"
+                        i18n-title="@@label.due_date">
+        <ng-template #tableCellTemplate let-dueDate="dueDate" let-problems="problems">
+          <jnt-stack [gutter]="ui.gutter.tiny">
+            <app-due-date *ngIf="dueDate" [dueDate]="dueDate"></app-due-date>
+            <jnt-stack [orientation]="ui.orientation.vertical">
+              <jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
+                         [size]="ui.size.small"
+                         [color]="ui.color.red"
+                         label="empty"
+                         i18n-label="@@label.empty">
+              </jnt-label>
+              <jnt-label *ngIf="problems?.includes(issueProblem.overDueDate)"
+                         [size]="ui.size.small"
+                         [color]="ui.color.red"
+                         label="overdue"
+                         i18n-label="@@label.overdue">
+              </jnt-label>
+            </jnt-stack>
+          </jnt-stack>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column title="Progress"
+                        i18n-title="@@label.progress">
+        <ng-template #tableCellTemplate let-timeEstimate="timeEstimate"
+                     let-timeSpent="timeSpent"
+                     let-totalTimeSpent="totalTimeSpent"
+                     let-metrics="metrics"
+                     let-problems="problems">
+          <jnt-progress-bar progress *ngIf="!!timeEstimate"
+                            [value]="totalTimeSpent / timeEstimate * 100">
+            <ng-template #progressBarLegendTemplate>
+              <jnt-stack [orientation]="ui.orientation.horizontal"
+                         [align]="ui.align.center"
+                         [justify]="ui.justify.between"
+                         [gutter]="ui.gutter.normal">
+                <div></div>
+                <div metric estimate>{{timeEstimate | duration:durationFormat.short}}</div>
+              </jnt-stack>
+            </ng-template>
+          </jnt-progress-bar>
+          <div efficiency>
+            <span [attr.slow]="totalTimeSpent > timeEstimate">
+              {{totalTimeSpent > timeEstimate ? '-' + (totalTimeSpent - timeEstimate | duration:durationFormat.short) : (totalTimeSpent | duration:durationFormat.short)}}
+              <span collaboration *ngIf="totalTimeSpent !== timeSpent">
+                    / {{totalTimeSpent - timeSpent | duration:durationFormat.short}}
+                  </span>
+            </span>
+          </div>
+          <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
+                     [size]="ui.size.small"
+                     [color]="ui.color.red"
+                     label="estimate"
+                     i18n-label="@@label.estimate">
+          </jnt-label>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column *ngIf="view === viewType.extended"
+                        title="Payroll"
+                        i18n-title="@@label.payroll">
+        <ng-template #tableCellTemplate let-metrics="metrics">
+          <div style="text-align: right;">
+            {{!!metrics.payroll ? (metrics.payroll | currency) : '&mdash;'}}
+            /
+            {{!!metrics.paid ? (metrics.paid | currency) : '&mdash;'}}
+          </div>
+        </ng-template>
+      </jnt-table-column>
+
+      <ng-template #tableRowActionsTemplate let-row="row">
+        <jnt-menu [orientation]="ui.orientation.vertical"
+                  [spacer]="ui.size.small">
+          <jnt-menu-item [icon]="ui.icons.sync"
+                         title="Sync from GitLab"
+                         i18n-title="@@action.sync_from_Gitlab"
+                         (click)="sync(row.id)"></jnt-menu-item>
+        </jnt-menu>
+      </ng-template>
+    </jnt-table>
+  </jnt-form>
+</jnt-block>

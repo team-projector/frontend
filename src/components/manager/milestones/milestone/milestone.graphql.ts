@@ -108,7 +108,10 @@ export class TicketIssuesGQL extends Query<{ ticket: { issues } }> {
                 }
               }
               project {
-                fullTitle
+                title
+                group {
+                  title
+                }
               }
               state
               createdAt

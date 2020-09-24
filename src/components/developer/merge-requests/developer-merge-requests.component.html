@@ -1,4 +1,4 @@
 <jnt-container>
-  <app-merge-requests [(state)]="state"
-                      (reloaded)="reloaded.emit()"></app-merge-requests>
+  <app-merge-requests [state]="state"
+                      (filtered)="save($event)"></app-merge-requests>
 </jnt-container>

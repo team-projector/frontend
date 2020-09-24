@@ -1,35 +1,16 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { DEFAULT_FIRST, DEFAULT_OFFSET, TableComponent, UI, untilJSONChanged } from '@junte/ui';
 import { R } from 'apollo-angular/types';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI } from '@junte/ui';
 import { of } from 'rxjs';
-import { delay, distinctUntilChanged, map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { AllSalariesGQL } from 'src/components/salaries/salaries.graphql';
 import { MOCKS_DELAY } from 'src/consts';
-import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { PagingSalaries, SalariesFilter } from 'src/models/salary';
 import { getMock } from 'src/utils/mocks';
-
-@model()
-export class SalariesState {
-
-  @field()
-  first?: number;
-
-  @field()
-  offset?: number;
-
-  @field()
-  user?: string;
-
-  constructor(defs: SalariesState = null) {
-    if (!!defs) {
-      Object.assign(this, defs);
-    }
-  }
-}
+import { SalariesState, SalariesStateUpdate } from './salaries.types';
 
 @Component({
   selector: 'app-salaries',
@@ -38,8 +19,9 @@ export class SalariesState {
 })
 export class SalariesComponent implements OnInit {
 
-  private _filter: SalariesFilter;
   ui = UI;
+
+  filter: SalariesFilter;
 
   tableControl = this.builder.control({
     q: null,
@@ -47,36 +29,27 @@ export class SalariesComponent implements OnInit {
     first: DEFAULT_FIRST,
     offset: DEFAULT_OFFSET
   });
-
   form = this.builder.group({
     table: this.tableControl,
     user: [null]
   });
 
-  set filter(filter: SalariesFilter) {
-    this._filter = filter;
-    this.table.load();
-  }
-
-  get filter() {
-    return this._filter;
-  }
-
-  // TODO: @ViewChild(TableComponent) == undefined in AOT
   @ViewChild('table', {static: true})
   table: TableComponent;
 
-  @Input() set state({first, offset, user}: SalariesState) {
+  @Input()
+  set state({first, offset, user}: SalariesState) {
     this.form.patchValue({
       table: {
         first: first || DEFAULT_FIRST,
         offset: offset || DEFAULT_OFFSET
       },
-      user: user || null
-    });
+      user: user?.id || null
+    }, {emitEvent: false});
   }
 
-  @Output() stateChange = new EventEmitter<SalariesState>();
+  @Output()
+  filtered = new EventEmitter<SalariesStateUpdate>();
 
   constructor(private allSalaries: AllSalariesGQL,
               private builder: FormBuilder) {
@@ -87,22 +60,31 @@ export class SalariesComponent implements OnInit {
       return environment.mocks
         ? of(getMock(PagingSalaries)).pipe(delay(MOCKS_DELAY))
         : this.allSalaries.fetch(serialize(this.filter) as R)
-          .pipe(map(({data: {allSalaries}}: { data: { allSalaries } }) =>
-            deserialize(allSalaries, PagingSalaries)));
+          .pipe(map(({data: {salaries}}) => deserialize(salaries, PagingSalaries)));
     };
 
-    this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
+    this.form.valueChanges.pipe(untilJSONChanged())
       .subscribe(({table: {offset, first}, user}) => {
-        this.stateChange.emit(new SalariesState({
+        this.filtered.emit(new SalariesStateUpdate({
           first: first !== DEFAULT_FIRST ? first : undefined,
           offset: offset !== DEFAULT_OFFSET ? offset : undefined,
           user: user || undefined
         }));
-        this.filter = new SalariesFilter({
-          offset: offset,
-          first: first,
-          user: user
-        });
+
+        this.load();
       });
+
+    this.load();
+  }
+
+  private load() {
+    const {table: {offset, first}, user} = this.form.getRawValue();
+    this.filter = new SalariesFilter({
+      offset: offset,
+      first: first,
+      user: user
+    });
+
+    this.table.load();
   }
 }

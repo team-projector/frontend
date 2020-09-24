@@ -1,0 +1,89 @@
+<jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
+  <jnt-form [formGroup]="form">
+    <jnt-table #table (reloaded)="loadSummary()"
+               formControlName="table">
+      <ng-template #tableFiltersTemplate>
+        <jnt-stack [orientation]="ui.orientation.horizontal">
+          <jnt-switcher formControlName="type">
+            <jnt-switcher-option label="All"
+                                 i18n-label="@@action.filter_type_all"
+                                 [value]="mergeRequestType.all">
+              <jnt-badge *ngIf="summary?.count"
+                         [value]="summary?.count"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Closed"
+                                 i18n-label="@@action.filter_type_closed"
+                                 [value]="mergeRequestType.closed">
+              <jnt-badge *ngIf="summary?.closedCount"
+                         [value]="summary?.closedCount"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Opened"
+                                 i18n-label="@@action.filter_type_opened"
+                                 [value]="mergeRequestType.opened">
+              <jnt-badge *ngIf="summary?.openedCount"
+                         [value]="summary?.openedCount"
+                         [color]="ui.color.green"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Merged"
+                                 i18n-label="@@action.filter_type_merged"
+                                 [value]="mergeRequestType.merged">
+              <jnt-badge *ngIf="summary?.mergedCount"
+                         [value]="summary?.mergedCount"
+                         [overflow]="null"
+                         [color]="ui.color.yellow"></jnt-badge>
+            </jnt-switcher-option>
+          </jnt-switcher>
+        </jnt-stack>
+      </ng-template>
+      <jnt-table-column sort="title"
+                        title="Title"
+                        i18n-title="@@label.title">
+        <ng-template #tableCellTemplate let-title="title" let-labels="labels" let-glUrl="glUrl" let-state="state"
+                     let-issues="issues" let-user="user" let-project="project">
+          <app-merge-request [mergeRequest]="{id: id, title: title, labels: labels, glUrl: glUrl, state: state,
+                             issues: issues, user: user, project: project}"></app-merge-request>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column title="Progress"
+                        i18n-title="@@label.progress">
+        <ng-template #tableCellTemplate let-timeEstimate="timeEstimate"
+                     let-totalTimeSpent="totalTimeSpent"
+                     let-metrics="metrics"
+                     let-problems="problems">
+          <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
+            <ng-template #progressBarLegendTemplate>
+              <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
+                         [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
+                <div metric>{{totalTimeSpent | duration}}</div>
+                <div metric estimate>{{timeEstimate | duration}}</div>
+              </jnt-stack>
+            </ng-template>
+          </jnt-progress-bar>
+          <div style="text-align: center;">
+            <span [attr.slow]="metrics.efficiency > 0 && metrics.efficiency < 0.8">
+              {{!!metrics.efficiency ? (metrics.efficiency | number:'1.2-2') : ''}}
+            </span>
+          </div>
+          <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
+                     [color]="ui.color.red"
+                     label="estimate"
+                     i18n-label="@@label.estimate">
+          </jnt-label>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column *ngIf="view === viewType.extended"
+                        title="Payroll"
+                        i18n-title="@@label.payroll">
+        <ng-template #tableCellTemplate let-metrics="metrics">
+          <div style="text-align: right;">
+            {{!!metrics.payroll ? (metrics.payroll | currency) : '&mdash;'}}
+            /
+            {{!!metrics.paid ? (metrics.paid | currency) : '&mdash;'}}
+          </div>
+        </ng-template>
+      </jnt-table-column>
+    </jnt-table>
+  </jnt-form>
+</jnt-block>

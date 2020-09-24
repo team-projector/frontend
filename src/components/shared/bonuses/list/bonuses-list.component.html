@@ -1,0 +1,38 @@
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <jnt-form [formGroup]="form">
+    <jnt-table #table formControlName="table">
+
+      <jnt-table-column sort="created_at"
+                        title="Created at"
+                        i18n-title="@@label.created_at">
+        <ng-template #tableCellTemplate let-createdAt="createdAt">
+          {{createdAt | date:'medium'}}
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column sort="created_by"
+                        title="Created by"
+                        i18n-title="@@label.created_by">
+        <ng-template #tableCellTemplate let-createdBy="createdBy">
+          {{createdBy.name}}
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column sort="comment"
+                        title="Comment"
+                        i18n-title="@@label.comment">
+        <ng-template #tableCellTemplate let-comment="comment">
+          {{comment}}
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column title="Sum"
+                        i18n-title="@@label.sum">
+        <ng-template #tableCellTemplate let-sum="sum">
+          {{sum | currency}}
+        </ng-template>
+      </jnt-table-column>
+    </jnt-table>
+  </jnt-form>
+</jnt-block>

@@ -2,9 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DeveloperComponent } from 'src/components/developer/developer.component';
 
-export const SALARIES_BREADCRUMB = $localize`:@@label.salaries:Salaries`;
-export const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
-
 const routes: Routes = [
   {
     path: '',
@@ -27,13 +24,19 @@ const routes: Routes = [
         loadChildren: () => import('./time-expenses/developer-time-expenses.module').then(m => m.DeveloperTimeExpensesModule)
       },
       {
+        path: 'bonuses',
+        loadChildren: () => import('./bonuses/developer-bonuses.module').then(m => m.DeveloperBonusesModule)
+      },
+      {
+        path: 'penalties',
+        loadChildren: () => import('./penalties/developer-penalties.module').then(m => m.DeveloperPenaltiesModule)
+      },
+      {
         path: 'salaries',
-        data: {breadcrumb: SALARIES_BREADCRUMB},
-        loadChildren: () => import('./salaries/salaries.module').then(m => m.SalariesModule)
+        loadChildren: () => import('./salaries/developer-salaries.module').then(m => m.DeveloperSalariesModule)
       },
       {
         path: 'breaks',
-        data: {breadcrumb: WORK_BREAKS_BREADCRUMB},
         loadChildren: () => import('./breaks/developer-breaks.module').then(m => m.DeveloperBreaksModule)
       }
     ]

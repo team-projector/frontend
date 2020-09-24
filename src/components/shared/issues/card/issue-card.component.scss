@@ -1,0 +1,20 @@
+@import "../../../../../node_modules/@junte/ui/lib/assets/styles/jnt-variables";
+@import "../../../../../node_modules/@junte/ui/lib/assets/styles/navigation/link";
+
+:host {
+  display: block;
+}
+
+[ticket] {
+  font-size: 12px;
+}
+
+[closed='true'] {
+  @include jnt-link((text-decoration: line-through), '&', true);
+}
+
+[data-state] {
+  &[data-bug] {
+    color: $jnt-fail-color;
+  }
+}

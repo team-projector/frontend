@@ -5,74 +5,26 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class AllSalariesGQL extends Query<{ allSalaries }> {
+export class AllSalariesGQL extends Query<{ salaries }> {
   document = gql`
-    query ($user: ID, $offset: Int, $first: Int){
-      allSalaries (user: $user, offset: $offset, first: $first) {
+query($user: ID, $offset: Int, $first: Int) {
+    salaries: allSalaries(user: $user, offset: $offset, first: $first) {
         count
         edges {
-          node {
-            id
-            createdAt
-            periodFrom
-            periodTo
-            chargedTime
-            bonus
-            taxes
-            penalty
-            sum
-            total
-            payed
-          }
-        }
-      }
-    }`;
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AllBonusesGQL extends Query<{ allBonuses }> {
-  document = gql`
-    query ($salary: ID, $user: ID) {
-      allBonuses(salary: $salary, user: $user) {
-        count
-        edges {
-          node {
-            id
-            sum
-            comment
-            createdAt
-            createdBy {
-              id
-              name
+            node {
+                id
+                createdAt
+                periodFrom
+                periodTo
+                chargedTime
+                bonus
+                taxes
+                penalty
+                sum
+                total
+                payed
             }
-          }
         }
-      }
-    }`;
-}
-
-@Injectable({
-  providedIn: 'root'
-})
-export class AllPenaltiesGQL extends Query<{ allPenalties }> {
-  document = gql`
-    query ($salary: ID, $user: ID) {
-      allPenalties(salary: $salary, user: $user) {
-        count
-        edges {
-          node {
-            id
-            sum
-            comment
-            createdAt
-            createdBy {
-              id
-              name
-            }
-          }
-        }
-      }
-    }`;
+    }
+}`;
 }

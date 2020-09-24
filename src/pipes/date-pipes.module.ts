@@ -18,4 +18,5 @@ import { DurationPipe, IsFuturePipe, IsPastPipe, IsTodayPipe, PeriodPipe } from 
   ]
 })
 export class DatePipesModule {
+
 }

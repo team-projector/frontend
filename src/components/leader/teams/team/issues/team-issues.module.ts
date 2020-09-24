@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DueDateModule } from 'src/components/due-date/due-date.module';
-import { IssuesModule } from 'src/components/issues/issues.module';
+import { IssuesListModule } from 'src/components/shared/issues/list/issues-list.module';
 import { TeamCalendarComponent } from 'src/components/leader/teams/team/issues/calendar/team-calendar.component';
 import { TeamIssuesListComponent } from 'src/components/leader/teams/team/issues/issues/issues-list.component';
 import { TeamIssuesRoutingModule } from 'src/components/leader/teams/team/issues/team-issues-routing.module';
@@ -20,6 +20,8 @@ import { DueDateResolver, IssuesTypeResolver } from 'src/resolvers/issue';
 import { MergeRequestStateResolver } from 'src/resolvers/merge-request';
 import { ProjectResolver } from 'src/resolvers/project';
 import { UserResolver } from 'src/resolvers/user';
+import { MergeRequestsModule } from '../../../../shared/merge-requests/list/merge-requests.module';
+import { TimeExpensesListModule } from '../../../../shared/time-expenses/list/time-expenses-list.module';
 import { TeamMergeRequestsListComponent } from './merge-requests/merge-requests.component';
 
 @NgModule({
@@ -32,7 +34,9 @@ import { TeamMergeRequestsListComponent } from './merge-requests/merge-requests.
     MetricsTypeModule,
     DatePipesModule,
     OutletModule,
-    IssuesModule,
+    IssuesListModule,
+    MergeRequestsModule,
+    TimeExpensesListModule,
     ArrayPipesModule,
     DueDateModule,
     DateFnsModule
@@ -44,13 +48,6 @@ import { TeamMergeRequestsListComponent } from './merge-requests/merge-requests.
     TeamIssuesListComponent,
     TeamCalendarComponent,
     PercentagePipe
-  ],
-  providers: [
-    UserResolver,
-    ProjectResolver,
-    DueDateResolver,
-    IssuesTypeResolver,
-    MergeRequestStateResolver
   ]
 })
 export class TeamIssuesModule {

@@ -1,14 +1,14 @@
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import {IssuesListComponent} from 'src/components/issues/issues/issues-list';
+import {IssuesComponent} from 'src/components/shared/issues/list/issues';
 
 @Component({
   selector: 'app-team-list-issues-component',
   templateUrl: './issues-list.component.html',
   styleUrls: ['./issues-list.component.scss']
 })
-export class TeamIssuesListComponent extends IssuesListComponent {
+export class TeamIssuesListComponent extends IssuesComponent {
   constructor(route: ActivatedRoute,
               router: Router,
               logger: NGXLogger) {
