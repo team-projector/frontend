@@ -47,7 +47,7 @@ export class BreakEditComponent {
   @Input() set break(workBreak: Break) {
     if (!!workBreak) {
       this._break = workBreak;
-      this.form.patchValue({...this._break, user: workBreak.user.id});
+      this.form.patchValue({...this._break, user: this.me.user});
     }
   }
 
@@ -74,7 +74,7 @@ export class BreakEditComponent {
 
   loadMembers() {
     (environment.mocks
-        ? of(getMock(PagingTeamMembers, {user: !!this.break ? this.break.user : this.me.user})).pipe(delay(MOCKS_DELAY))
+        ? of(getMock(PagingTeamMembers, {user:  this.me.user})).pipe(delay(MOCKS_DELAY))
         : this.getTeamMembersGQL.fetch(this.teamForm.getRawValue() as R)
           .pipe(map(({data: {team: {members}}}) => {
             return deserialize(members, PagingTeamMembers);
