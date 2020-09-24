@@ -4,14 +4,13 @@ import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts';
-import { MOCKS_DELAY } from '../../../../consts';
-import { environment } from '../../../../environments/environment';
-import { DurationFormat } from '../../../../models/enums/duration-format';
-import { MilestoneProblem } from '../../../../models/enums/milestone';
-import { IssuesFilter, IssuesSummary } from '../../../../models/issue';
-import { Project } from '../../../../models/project';
-import { Me } from '../../../../models/user';
-import { getMock } from '../../../../utils/mocks';
+import { MOCKS_DELAY } from 'src/consts';
+import { environment } from 'src/environments/environment';
+import { DurationFormat } from 'src/models/enums/duration-format';
+import { IssuesFilter, IssuesSummary } from 'src/models/issue';
+import { Project } from 'src/models/project';
+import { Me } from 'src/models/user';
+import { getMock } from 'src/utils/mocks';
 import { DeveloperProjectsSummaryGQL } from './developer-projects.graphql';
 
 @Component({
@@ -23,7 +22,6 @@ export class DeveloperProjectsComponent implements OnInit {
 
   ui = UI;
   durationFormat = DurationFormat;
-  milestoneProblem = MilestoneProblem;
 
   project: Project;
   colors = [
@@ -42,7 +40,7 @@ export class DeveloperProjectsComponent implements OnInit {
   me: Me;
 
   @Output()
-  selected = new EventEmitter<Project>();
+  selected = new EventEmitter<string>();
 
   constructor(private summaryGQL: DeveloperProjectsSummaryGQL) {
   }
