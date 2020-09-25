@@ -105,7 +105,7 @@
       </jnt-table-column>
 
       <ng-template #tableRowActionsTemplate let-break="row">
-        <jnt-menu [orientation]="ui.orientation.vertical" [spacer]="ui.gutter.small">
+        <jnt-menu [orientation]="ui.orientation.vertical" [spacing]="ui.gutter.small">
           <jnt-menu-item *ngIf="view === viewType.extended"
                          title="Approve"
                          i18n-title="@@action.approve"
