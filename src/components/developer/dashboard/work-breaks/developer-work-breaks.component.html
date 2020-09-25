@@ -4,15 +4,15 @@
            [width]="ui.width.fluid"
            [padding]="ui.gutter.none">
   <jnt-stack data-vacations [align]="ui.align.center">
-    <p>Remains <span>{{30 - metrics.paidWorkBreaksDays}}</span>
-      {{(30 - metrics.paidWorkBreaksDays) | i18nPlural: daysMapping}}
+    <p>Remains <span>{{me.annualPaidWorkBreaksDays - metrics.paidWorkBreaksDays}}</span>
+      {{(me.annualPaidWorkBreaksDays - metrics.paidWorkBreaksDays) | i18nPlural: daysMapping}}
     </p>
     <jnt-circle-bar data-circle>
       <ng-template #circleBarContentTemplate>
         <jnt-stack data-days [align]="ui.align.center"
                    [justify]="ui.justify.center"
                    [gutter]="ui.gutter.none">
-          <div><span data-paid>{{metrics.paidWorkBreaksDays}}</span>/30</div>
+          <div><span data-paid>{{metrics.paidWorkBreaksDays}}</span>/{{me.annualPaidWorkBreaksDays}}</div>
           <span data-label>{{metrics.paidWorkBreaksDays | i18nPlural: daysMapping}}</span>
         </jnt-stack>
       </ng-template>
