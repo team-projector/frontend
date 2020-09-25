@@ -146,6 +146,7 @@ query(
         closedCount
         openedCount
         problemsCount
+        timeSpent
     }
 }`;
 }

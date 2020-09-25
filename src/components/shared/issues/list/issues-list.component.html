@@ -47,9 +47,9 @@
                                    i18n-label="@@action.filter_issues_all"
                                    [disabled]="summary?.count <= 0"
                                    [value]="issuesType.all">
-                <jnt-badge *ngIf="summary?.count > 0"
-                           [overflow]="1000"
-                           [value]="summary?.count"></jnt-badge>
+                <jnt-badge *ngIf="summary?.timeSpent > 0"
+                           [color]="ui.color.yellow"
+                           [text]="summary?.timeSpent | duration"></jnt-badge>
               </jnt-switcher-option>
               <jnt-switcher-option label="Closed"
                                    i18n-label="@@action.filter_type_closed"

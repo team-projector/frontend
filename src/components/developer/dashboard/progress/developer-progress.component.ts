@@ -6,13 +6,13 @@ import { NGXLogger } from 'ngx-logger';
 import { of, zip } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts';
-import { MOCKS_DELAY, UI_DELAY } from '../../../../consts';
-import { environment } from '../../../../environments/environment';
-import { DurationFormat } from '../../../../models/enums/duration-format';
-import { Metrics, MetricType } from '../../../../models/enums/metrics';
-import { Me, UserMetricsFilter, UserProgressMetrics } from '../../../../models/user';
-import { getMock } from '../../../../utils/mocks';
-import { METRIC_TYPE } from '../../../shared/metrics-type/consts';
+import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
+import { environment } from 'src/environments/environment';
+import { DurationFormat } from 'src/models/enums/duration-format';
+import { Metrics, MetricType } from 'src/models/enums/metrics';
+import { Me, UserMetricsFilter, UserProgressMetrics } from 'src/models/user';
+import { getMock } from 'src/utils/mocks';
+import { METRIC_TYPE } from 'src/components/shared/metrics-type/consts';
 import { DeveloperIssuesMetricsGQL } from './developer-progress.graphql';
 
 interface Metric {

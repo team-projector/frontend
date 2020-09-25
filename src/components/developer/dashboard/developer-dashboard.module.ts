@@ -12,13 +12,15 @@ import { DeveloperDashboardComponent } from './developer-dashboard.component';
 import { DeveloperPayrollComponent } from './payroll/developer-payroll.component';
 import { DeveloperProgressComponent } from './progress/developer-progress.component';
 import { DeveloperProjectsComponent } from './projects/developer-projects.component';
+import { DeveloperWorkBreaksComponent } from './work-breaks/developer-work-breaks.component';
 
 @NgModule({
   declarations: [
     DeveloperDashboardComponent,
     DeveloperProgressComponent,
     DeveloperProjectsComponent,
-    DeveloperPayrollComponent
+    DeveloperPayrollComponent,
+    DeveloperWorkBreaksComponent
   ],
   imports: [
     DeveloperDashboardRoutingModule,
