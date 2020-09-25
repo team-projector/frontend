@@ -3,15 +3,17 @@
            i18n-title="@@label.vacations"
            [width]="ui.width.fluid"
            [padding]="ui.gutter.none">
-  <jnt-stack [align]="ui.align.center" vacations>
-    <span>Remains</span>
-    <jnt-circle-bar circle>
+  <jnt-stack data-vacations [align]="ui.align.center">
+    <p>Remains <span>{{30 - metrics.paidWorkBreaksDays}}</span>
+      {{(30 - metrics.paidWorkBreaksDays) | i18nPlural: daysMapping}}
+    </p>
+    <jnt-circle-bar data-circle>
       <ng-template #circleBarContentTemplate>
-        <jnt-stack [align]="ui.align.center" [gutter]="ui.gutter.none" days>
-          <div>
-            <span paid>{{metrics.paidWorkBreaksDays}}</span><span>/30</span>
-          </div>
-          <span label>days</span>
+        <jnt-stack data-days [align]="ui.align.center"
+                   [justify]="ui.justify.center"
+                   [gutter]="ui.gutter.none">
+          <div><span data-paid>{{metrics.paidWorkBreaksDays}}</span>/30</div>
+          <span data-label>{{metrics.paidWorkBreaksDays | i18nPlural: daysMapping}}</span>
         </jnt-stack>
       </ng-template>
       <jnt-bar-indicator-group>

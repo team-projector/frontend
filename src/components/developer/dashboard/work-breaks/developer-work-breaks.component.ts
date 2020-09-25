@@ -1,6 +1,5 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { UI } from '@junte/ui';
-import { LocalUI } from 'src/enums/local-ui';
 import { Me } from 'src/models/user';
 
 @Component({
@@ -8,16 +7,15 @@ import { Me } from 'src/models/user';
   templateUrl: './developer-work-breaks.component.html',
   styleUrls: ['./developer-work-breaks.component.scss']
 })
-export class DeveloperWorkBreaksComponent implements OnInit {
+export class DeveloperWorkBreaksComponent {
 
   ui = UI;
 
   @Input()
   me: Me;
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  daysMapping = {
+    '=1': 'day',
+    'other': 'days'
+  };
 }

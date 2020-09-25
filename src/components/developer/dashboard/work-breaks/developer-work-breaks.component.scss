@@ -1,9 +1,27 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import '~@junte/ui/lib/assets/styles/jnt-variables';
 
-[vacations] {
+:host-context([theme='dark']) {
+  [data-vacations] [data-circle] [data-days] {
+    background-color: $jnt-gray-dark-color;
+
+    [data-label] {
+      color: $jnt-gray-600-color;
+    }
+  }
+}
+
+[data-vacations] {
   padding-bottom: $jnt-gutter-normal;
 
-  [circle] {
+  p {
+    color: $jnt-primary-text-light-color;
+    span {
+      font-weight: $jnt-font-weight-semi-bold;
+      color: $jnt-primary-color;
+    }
+  }
+
+  [data-circle] {
     width: 100px;
     height: 100px;
 
@@ -11,26 +29,24 @@
       svg {
         fill: $jnt-secondary-dark-color;
       }
-
-      [data-content] {
-        width: 80%;
-        height: 80%;
-        background-color: $jnt-secondary-color;
-        position: absolute;
-        border-radius: 50%;
-      }
     }
 
-    [days] {
+    [data-days] {
+      width: 75%;
+      height: 75%;
+      background-color: $jnt-primary-background;
+      position: relative;
+      border-radius: 50%;
       font-weight: $jnt-font-weight-bold;
-      font-size: $jnt-font-size-big;
+      font-size: 20px;
+      line-height: 1.2;
       color: $jnt-secondary-dark-color;
 
-      [paid] {
+      [data-paid] {
         color: $jnt-primary-color;
       }
 
-      [label] {
+      [data-label] {
         font-size: $jnt-font-size-base;
         font-weight: $jnt-font-weight-base;
         color: $jnt-primary-color;
