@@ -2,33 +2,32 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
-import { BreaksModule } from 'src/components/breaks/breaks.module';
+import { BreaksListModule } from 'src/components/shared/breaks/list/breaks-list.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { NumberPipesModule } from 'src/pipes/number-pipes.module';
-import { MeUserResolver } from 'src/resolvers/me';
-import { DeveloperBreaksListGanttComponent } from './breaks-list-gantt/breaks-list-gantt.component';
-import { DeveloperBreaksListTableComponent } from './breaks-list-table/breaks-list-table.component';
+import { DeveloperBreaksListGanttComponent } from './gantt/breaks-list-gantt.component';
 import { DeveloperBreaksRoutingModule } from './developer-breaks-routing.module';
 import { DeveloperBreaksComponent } from './developer-breaks.component';
+import { DeveloperBreaksTableComponent } from './list/developer-breaks-table.component';
 
 @NgModule({
   declarations: [
     DeveloperBreaksComponent,
+    DeveloperBreaksTableComponent,
     DeveloperBreaksListGanttComponent,
-    DeveloperBreaksListTableComponent,
   ],
   imports: [
-    BreaksModule,
-    CommonModule,
-    JunteUiModule,
     DeveloperBreaksRoutingModule,
+
+    CommonModule,
+    BreaksListModule,
+    JunteUiModule,
+
     ReactiveFormsModule,
     DatePipesModule,
     NumberPipesModule
-  ],
-  providers: [
-    MeUserResolver
   ]
 })
 export class DeveloperBreaksModule {
+
 }

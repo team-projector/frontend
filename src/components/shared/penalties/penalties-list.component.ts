@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI } from '@junte/ui';
+import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, distinctUntilChanged, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
@@ -23,8 +24,8 @@ export class PenaltiesListComponent implements OnInit {
 
   filter: PenaltiesFilter;
 
-  form = this.builder.group({
-    table: this.builder.control({
+  form = this.fb.group({
+    table: this.fb.control({
       first: DEFAULT_FIRST,
       offset: DEFAULT_OFFSET
     }),
@@ -51,7 +52,8 @@ export class PenaltiesListComponent implements OnInit {
   table: TableComponent;
 
   constructor(private allPenaltiesGQL: AllPenaltiesGQL,
-              private builder: FormBuilder) {
+              private fb: FormBuilder,
+              private logger: NGXLogger) {
   }
 
   ngOnInit() {
@@ -64,6 +66,7 @@ export class PenaltiesListComponent implements OnInit {
 
     this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
       .subscribe(({table: {offset, first}, user, salary}) => {
+        this.logger.debug('form state was changed');
         this.filtered.emit(new PenaltiesStateUpdate({
           first: first !== DEFAULT_FIRST ? first : undefined,
           offset: offset !== DEFAULT_OFFSET ? offset : undefined,
@@ -83,6 +86,7 @@ export class PenaltiesListComponent implements OnInit {
       salary: salary,
       user: user
     });
+    this.logger.debug('load penalties', this.filter);
 
     this.table.load();
   }

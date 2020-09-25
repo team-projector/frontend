@@ -6,7 +6,7 @@ import { UI } from '@junte/ui';
 import { combineLatest, of } from 'rxjs';
 import { delay, distinctUntilChanged, map, tap } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { METRIC_TYPE } from 'src/components/metrics-type/consts';
+import { METRIC_TYPE } from 'src/components/shared/metrics-type/consts';
 import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { DurationFormat } from 'src/models/enums/duration-format';

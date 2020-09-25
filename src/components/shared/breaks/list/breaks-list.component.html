@@ -1,0 +1,138 @@
+<jnt-block [padding]="ui.gutter.none"
+           [state]="loading ? ui.state.loading : null"
+           [width]="ui.width.fluid">
+  <jnt-form [formGroup]="form">
+    <jnt-table #table formControlName="table">
+      <ng-template #tableFiltersTemplate>
+        <jnt-button text="Add"
+                    i18n-text="@@action.add"
+                    [icon]="ui.icons.add"
+                    [outline]="ui.outline.ghost"
+                    (click)="open()">
+        </jnt-button>
+      </ng-template>
+      <jnt-table-column *ngIf="view === viewType.extended"
+                        title="Developer"
+                        i18n-title="@@label.developer">
+        <ng-template #tableCellTemplate let-user="user">
+          <jnt-stack [orientation]="ui.orientation.horizontal">
+            <jnt-avatar [image]="user?.avatar"
+                        [size]="ui.size.small"></jnt-avatar>
+            <jnt-stack [gutter]="ui.gutter.none">
+              <jnt-link [title]="user?.name"></jnt-link>
+              <small>{{user.position.title}}</small>
+            </jnt-stack>
+          </jnt-stack>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column title="Period"
+                        i18n-title="@@label.period">
+        <ng-template #tableCellTemplate let-fromDate="fromDate" let-toDate="toDate">
+          <jnt-date-period [start]="fromDate" [end]="toDate"></jnt-date-period>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column title="Reason"
+                        i18n-title="@@label.reason">
+        <ng-template #tableCellTemplate let-reason="reason">
+          <ng-container [ngSwitch]="reason">
+            <ng-container *ngSwitchCase="reasons.vacation"
+                          i18n="@@action.vacation">Vacation
+            </ng-container>
+            <ng-container *ngSwitchCase="reasons.disease"
+                          i18n="@@action.disease">Disease
+            </ng-container>
+            <ng-container *ngSwitchCase="reasons.dayoff"
+                          i18n="@@action.dayoff">Dayoff
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column title="Comment"
+                        i18n-title="@@label.comment">
+        <ng-template #tableCellTemplate let-comment="comment">
+          {{comment}}
+        </ng-template>
+      </jnt-table-column>
+
+      <jnt-table-column title="State"
+                        i18n-title="@@label.break_state">
+        <ng-template ngIf #tableCellTemplate
+                     let-approveState="approveState"
+                     let-approvedBy="approvedBy"
+                     let-approvedAt="approvedAt"
+                     let-comment="comment"
+                     let-declineReason="declineReason">
+
+          <jnt-stack [orientation]="ui.orientation.horizontal">
+            <jnt-stack [orientation]="ui.orientation.vertical" [gutter]="ui.gutter.tiny">
+              <ng-container [ngSwitch]="approveState">
+                <jnt-label *ngSwitchCase="approveStates.created"
+                           i18n-label="@@label.created"
+                           [color]="ui.color.purple"
+                           label="Approving">
+                </jnt-label>
+                <jnt-label *ngSwitchCase="approveStates.approved"
+                           i18n-label="@@label.approved"
+                           [color]="ui.color.green"
+                           label="Approved">
+                </jnt-label>
+
+                <jnt-label *ngSwitchCase="approveStates.declined"
+                           i18n-label="@@label.declined"
+                           [color]="ui.color.red"
+                           label="Declined">
+                </jnt-label>
+              </ng-container>
+              <small *ngIf="approvedAt">
+                {{ approvedAt | date}}
+              </small>
+            </jnt-stack>
+            <jnt-stack [orientation]="ui.orientation.vertical" [gutter]="ui.gutter.tiny">
+              <jnt-stack *ngIf="approvedBy"
+                         [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.tiny">
+                <jnt-avatar avatar [image]="approvedBy.avatar"
+                            [size]="ui.size.tiny"></jnt-avatar>
+                <jnt-stack [gutter]="ui.gutter.none">
+                  <jnt-link link [title]="approvedBy.name"></jnt-link>
+                  <small>{{approvedBy.position.title}}</small>
+                </jnt-stack>
+              </jnt-stack>
+              <small *ngIf="declineReason">
+                {{ declineReason }}
+              </small>
+            </jnt-stack>
+          </jnt-stack>
+        </ng-template>
+      </jnt-table-column>
+
+      <ng-template #tableRowActionsTemplate let-break="row" let-hide="hide">
+        <jnt-menu [orientation]="ui.orientation.vertical" [spacer]="ui.gutter.small">
+          <jnt-menu-item *ngIf="view === viewType.extended"
+                         title="Approve"
+                         i18n-title="@@action.approve"
+                         [icon]="ui.icons.checked"
+                         (click)="approve(break.id)">
+          </jnt-menu-item>
+          <jnt-menu-item *ngIf="view === viewType.extended"
+                         title="Decline"
+                         i18n-title="@@action.decline"
+                         [icon]="ui.icons.cancel"
+                         (click)="openDecline(break)">
+          </jnt-menu-item>
+          <jnt-menu-item title="Edit"
+                         i18n-title="@@action.edit"
+                         [icon]="ui.icons.edit"
+                         (click)="open(break);hide()"></jnt-menu-item>
+          <jnt-menu-item title="Delete"
+                         i18n-title="@@action.delete"
+                         [icon]="ui.icons.delete"
+                         (click)="delete(break.id)"></jnt-menu-item>
+        </jnt-menu>
+      </ng-template>
+
+    </jnt-table>
+  </jnt-form>
+</jnt-block>

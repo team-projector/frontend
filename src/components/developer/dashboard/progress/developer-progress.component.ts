@@ -12,7 +12,7 @@ import { DurationFormat } from '../../../../models/enums/duration-format';
 import { Metrics, MetricType } from '../../../../models/enums/metrics';
 import { Me, UserMetricsFilter, UserProgressMetrics } from '../../../../models/user';
 import { getMock } from '../../../../utils/mocks';
-import { METRIC_TYPE } from '../../../metrics-type/consts';
+import { METRIC_TYPE } from '../../../shared/metrics-type/consts';
 import { DeveloperIssuesMetricsGQL } from './developer-progress.graphql';
 
 interface Metric {

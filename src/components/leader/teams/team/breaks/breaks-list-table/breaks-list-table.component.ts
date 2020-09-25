@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BreaksListComponent } from 'src/components/breaks/breaks-list';
+import { BreaksTableComponent } from 'src/components/shared/breaks/list/breaks-list';
 
 @Component({
   selector: 'app-team-breaks-list-table-component',
@@ -8,7 +8,7 @@ import { BreaksListComponent } from 'src/components/breaks/breaks-list';
   styleUrls: ['./breaks-list-table.component.scss']
 })
 
-export class TeamBreaksListTableComponent extends BreaksListComponent {
+export class TeamBreaksListTableComponent extends BreaksTableComponent {
   constructor(route: ActivatedRoute,
               router: Router) {
     super(route, router);

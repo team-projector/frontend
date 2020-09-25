@@ -4,7 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
-import { DueDateModule } from 'src/components/due-date/due-date.module';
+import { DueDateModule } from 'src/components/shared/due-date/due-date.module';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { IssuePipesModule } from '../../../../pipes/issue-pipes.module';

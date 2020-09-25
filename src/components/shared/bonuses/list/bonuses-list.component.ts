@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { DEFAULT_FIRST, DEFAULT_OFFSET, TableComponent, UI, untilJSONChanged } from '@junte/ui';
+import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
@@ -23,11 +24,11 @@ export class BonusesListComponent implements OnInit {
 
   filter: BonusesFilter;
 
-  tableControl = this.builder.control({
+  tableControl = this.fb.control({
     first: DEFAULT_FIRST,
     offset: DEFAULT_OFFSET
   });
-  form = this.builder.group({
+  form = this.fb.group({
     table: this.tableControl,
     user: [null],
     salary: [null]
@@ -52,7 +53,8 @@ export class BonusesListComponent implements OnInit {
   table: TableComponent;
 
   constructor(private allBonusesGQL: AllBonusesGQL,
-              private builder: FormBuilder) {
+              private fb: FormBuilder,
+              private logger: NGXLogger) {
 
   }
 
@@ -66,6 +68,7 @@ export class BonusesListComponent implements OnInit {
 
     this.form.valueChanges.pipe(untilJSONChanged())
       .subscribe(({table: {offset, first}, user, salary}) => {
+        this.logger.debug('form state was changed');
         this.filtered.emit(new BonusesStateUpdate({
           first: first !== DEFAULT_FIRST ? first : undefined,
           offset: offset !== DEFAULT_OFFSET ? offset : undefined,
@@ -88,6 +91,7 @@ export class BonusesListComponent implements OnInit {
       user: user,
       salary: salary
     });
+    this.logger.debug('load bonuses', this.filter);
 
     this.table.load();
   }

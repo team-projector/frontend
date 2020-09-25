@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { SalariesList } from '../../salaries/salaries-list';
+import { Salaries } from '../../shared/salaries/list/salaries';
 
 @Component({
   selector: 'app-developer-salaries',
@@ -9,7 +9,7 @@ import { SalariesList } from '../../salaries/salaries-list';
   styleUrls: ['./developer-salaries.component.scss']
 })
 
-export class DeveloperSalariesComponent extends SalariesList {
+export class DeveloperSalariesComponent extends Salaries {
 
   constructor(route: ActivatedRoute,
               router: Router,

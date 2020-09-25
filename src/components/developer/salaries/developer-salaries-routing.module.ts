@@ -19,7 +19,7 @@ const routes: Routes = [
   },
   {
     path: ':salary',
-    loadChildren: () => import('../../salaries/salary-detail/salary-detail.module')
+    loadChildren: () => import('../../shared/salaries/detail/salary-detail.module')
       .then(m => m.SalaryDetailModule)
   }
 ];

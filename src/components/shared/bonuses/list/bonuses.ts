@@ -17,6 +17,7 @@ export abstract class BonusesComponent implements OnInit {
   ngOnInit() {
     combineLatest([this.route.data, this.route.params])
       .subscribe(([{user, salary}, {first, offset}]) => {
+        this.logger.debug('read router data & params');
         this.state = {
           first: +first || undefined,
           offset: +offset || undefined,
