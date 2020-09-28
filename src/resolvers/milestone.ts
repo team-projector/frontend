@@ -9,7 +9,7 @@ import { Milestone } from 'src/models/milestone';
 import { MilestoneGQL } from 'src/resolvers/milestone.graphql';
 import { getMock } from 'src/utils/mocks';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class MilestoneResolver implements Resolve<Observable<Milestone>> {
 
   constructor(private milestoneGQL: MilestoneGQL) {
