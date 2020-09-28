@@ -28,7 +28,10 @@ export class GitlabStatusGQL extends Query<{gitlabStatus}> {
             }
           }
           project {
-            fullTitle
+            title
+            group {
+              title
+            }
           }
           state
           createdAt

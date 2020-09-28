@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
-import { BreaksListModule } from 'src/components/shared/breaks/list/breaks-list.module';
+import { WorkBreaksListModule } from 'src/components/shared/work-breaks/list/work-breaks-list.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { NumberPipesModule } from 'src/pipes/number-pipes.module';
 import { DeveloperBreaksListGanttComponent } from './gantt/breaks-list-gantt.component';
@@ -20,7 +20,7 @@ import { DeveloperBreaksTableComponent } from './list/developer-breaks-table.com
     DeveloperBreaksRoutingModule,
 
     CommonModule,
-    BreaksListModule,
+    WorkBreaksListModule,
     JunteUiModule,
 
     ReactiveFormsModule,

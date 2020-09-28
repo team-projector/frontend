@@ -5,10 +5,11 @@ import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { environment } from 'src/environments/environment';
-import { Bonus, PagingBonuses, PagingPenalties, Penalty } from 'src/models/salary';
 import { Me } from 'src/models/user';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
+import { Bonus, PagingBonuses } from '../../../../models/bonus';
+import { PagingPenalties, Penalty } from '../../../../models/penalty';
 import { AllBonusesGQL, AllPenaltiesGQL } from './developer-payroll.graphql';
 
 @Component({

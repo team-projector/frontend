@@ -1,17 +1,20 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, TableComponent, UI, untilJSONChanged } from '@junte/ui';
+import { TableComponent, UI } from '@junte/ui';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
-import { MOCKS_DELAY } from 'src/consts';
+import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
-import { BonusesFilter, PagingBonuses } from 'src/models/salary';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
-import { BonusesState, BonusesStateUpdate } from './bonuses-list.types';
+import { BonusesFilter, PagingBonuses } from '../../../../models/bonus';
+import { ViewType } from '../../../../models/enums/view-type';
 import { AllBonusesGQL } from './bonuses-list.graphql';
+import { BonusesState, BonusesStateUpdate } from './bonuses-list.types';
+
+const DEFAULT_FIRST = 10;
 
 @Component({
   selector: 'app-bonuses',
@@ -21,13 +24,18 @@ import { AllBonusesGQL } from './bonuses-list.graphql';
 export class BonusesListComponent implements OnInit {
 
   ui = UI;
+  viewType = ViewType;
 
   filter: BonusesFilter;
 
+  @Input()
+  view = ViewType.default;
+
   tableControl = this.fb.control({
     first: DEFAULT_FIRST,
-    offset: DEFAULT_OFFSET
+    offset: 0
   });
+
   form = this.fb.group({
     table: this.tableControl,
     user: [null],
@@ -36,14 +44,15 @@ export class BonusesListComponent implements OnInit {
 
   @Input()
   set state({first, offset, user, salary}: BonusesState) {
+    this.logger.debug('set state');
     this.form.patchValue({
       table: {
         first: first || DEFAULT_FIRST,
-        offset: offset || DEFAULT_OFFSET
+        offset: offset || 0
       },
       user: user?.id || null,
       salary: salary?.id || null
-    });
+    }, {emitEvent: false});
   }
 
   @Output()
@@ -59,25 +68,27 @@ export class BonusesListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.tableControl.valueChanges.subscribe(() => this.logger.debug('table control was changed'));
+
+
     this.table.fetcher = () => {
       return environment.mocks
         ? of(getMock(PagingBonuses)).pipe(delay(MOCKS_DELAY))
         : this.allBonusesGQL.fetch(this.filter)
-          .pipe(catchGQLErrors(), map(({data: {bonuses}}) => deserialize(bonuses, PagingBonuses)));
+          .pipe(delay(UI_DELAY), catchGQLErrors(), map(({data: {bonuses}}) => deserialize(bonuses, PagingBonuses)));
     };
 
-    this.form.valueChanges.pipe(untilJSONChanged())
-      .subscribe(({table: {offset, first}, user, salary}) => {
-        this.logger.debug('form state was changed');
-        this.filtered.emit(new BonusesStateUpdate({
-          first: first !== DEFAULT_FIRST ? first : undefined,
-          offset: offset !== DEFAULT_OFFSET ? offset : undefined,
-          user: user || undefined,
-          salary: salary || undefined
-        }));
+    this.form.valueChanges.subscribe(({table: {offset, first}, user, salary}) => {
+      this.logger.debug('form state was changed');
+      this.filtered.emit(new BonusesStateUpdate({
+        first: first !== DEFAULT_FIRST ? first : undefined,
+        offset: offset !== 0 ? offset : undefined,
+        user: user || undefined,
+        salary: salary || undefined
+      }));
 
-        this.load();
-      });
+      this.load();
+    });
 
     this.load();
   }

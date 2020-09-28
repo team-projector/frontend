@@ -4,16 +4,16 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { CookieService } from 'ngx-cookie-service';
 import { DateFnsModule } from 'ngx-date-fns';
-import { IssuesListModule } from 'src/components/shared/issues/list/issues-list.module';
 import { AuthorizationGuard } from 'src/guards/authorization.guard';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
+import { AppThemeSwitcherModule } from '../app-theme-switcher/app-theme-switcher.module';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
+import { IssueCardModule } from '../shared/issues/card/issue-card.module';
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { DifferencePipe } from './dashboard.pipe';
 import { SelectLangComponent } from './select-lang/select-lang.component';
-import { AppThemeSwitcherModule } from '../app-theme-switcher/app-theme-switcher.module';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,7 @@ import { AppThemeSwitcherModule } from '../app-theme-switcher/app-theme-switcher
     JunteUiModule,
     ArrayPipesModule,
     DatePipesModule,
-    IssuesListModule,
+    IssueCardModule,
     AppThemeSwitcherModule,
     DateFnsModule
   ],

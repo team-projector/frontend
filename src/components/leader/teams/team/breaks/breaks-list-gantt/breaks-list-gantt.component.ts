@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BreaksTableComponent } from 'src/components/shared/breaks/list/breaks-list';
+import { BreaksTableComponent } from 'src/components/shared/work-breaks/list/work-breaks-list';
 
 @Component({
   selector: 'app-team-breaks-list-gantt-component',

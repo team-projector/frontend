@@ -2,48 +2,57 @@
           [state]="progress.saving ? ui.state.loading : null"
           (submitted)="save()">
   <jnt-stack [orientation]="ui.orientation.vertical" [align]="ui.align.stretch">
-    <jnt-form-item *ngIf="view === viewType.extended">
+    <jnt-form-item *ngIf="view === viewType.default">
       <jnt-form-label i18n="@@label.developer">Developer</jnt-form-label>
       <jnt-select developers
                   placeholder="Developer"
                   i18n-placeholder="@@label.developer"
                   formControlName="user">
+        <jnt-select-option *ngIf="!!user"
+                           [label]="user.name"
+                           [key]="user.id">
+        </jnt-select-option>
         <jnt-select-option *ngFor="let member of members"
                            [label]="member.user.name"
-                           [value]="member.user.id"
                            [key]="member.user.id">
         </jnt-select-option>
       </jnt-select>
     </jnt-form-item>
 
-    <jnt-form-item>
-      <jnt-form-label for="fromDate"
-                      i18n="@@label.from_date">From
-      </jnt-form-label>
-      <jnt-form-control name="fromDate">
-        <jnt-date-picker placeholder="Start date" formControlName="fromDate"></jnt-date-picker>
-        <jnt-form-message [validator]="ui.validator.required">
-          This field is required
-        </jnt-form-message>
-      </jnt-form-control>
-    </jnt-form-item>
-
-    <jnt-form-item>
-      <jnt-form-label for="toDate"
-                      i18n="@@label.to_date">To
-      </jnt-form-label>
-      <jnt-form-control name="toDate">
-        <jnt-date-picker placeholder="To date" formControlName="toDate"></jnt-date-picker>
-        <jnt-form-message [validator]="ui.validator.required">
-          This field is required
-        </jnt-form-message>
-      </jnt-form-control>
-    </jnt-form-item>
+    <jnt-row>
+      <jnt-col tablet="6">
+        <jnt-form-item>
+          <jnt-form-label for="fromDate"
+                          i18n="@@label.from_date">From
+          </jnt-form-label>
+          <jnt-form-control name="fromDate">
+            <jnt-date-picker placeholder="Start date" formControlName="fromDate"></jnt-date-picker>
+            <jnt-form-message [validator]="ui.validator.required">
+              This field is required
+            </jnt-form-message>
+          </jnt-form-control>
+        </jnt-form-item>
+      </jnt-col>
+      <jnt-col tablet="6">
+        <jnt-form-item>
+          <jnt-form-label for="toDate"
+                          i18n="@@label.to_date">To
+          </jnt-form-label>
+          <jnt-form-control name="toDate">
+            <jnt-date-picker placeholder="To date" formControlName="toDate"></jnt-date-picker>
+            <jnt-form-message [validator]="ui.validator.required">
+              This field is required
+            </jnt-form-message>
+          </jnt-form-control>
+        </jnt-form-item>
+      </jnt-col>
+    </jnt-row>
 
     <jnt-form-item>
       <jnt-form-label i18n="@@label.reason" for="reason">Reason</jnt-form-label>
       <jnt-form-control name="reason">
-        <jnt-switcher formControlName="reason" [orientation]="ui.orientation.horizontal">
+        <jnt-switcher formControlName="reason"
+                      [orientation]="ui.orientation.horizontal">
           <jnt-switcher-option label="Dayoff"
                                i18n-label="@@action.dayoff"
                                [value]="reasons.dayoff">

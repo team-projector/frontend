@@ -7,21 +7,25 @@ import gql from 'graphql-tag';
 })
 export class AllBonusesGQL extends Query<{ bonuses }> {
   document = gql`
-query($salary: ID, $user: ID) {
-    bonuses: allBonuses(salary: $salary, user: $user) {
-        count
-        edges {
-            node {
-                id
-                sum
-                comment
-                createdAt
-                createdBy {
-                    id
-                    name
-                }
-            }
+query ($salary: ID, $user: ID) {
+  bonuses: allBonuses(salary: $salary, user: $user) {
+    count
+    edges {
+      node {
+        id
+        sum
+        comment
+        createdAt
+        createdBy {
+          id
+          name
         }
+        salary {
+          id
+          createdAt
+        }
+      }
     }
+  }
 }`;
 }

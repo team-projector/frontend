@@ -1,7 +1,7 @@
 <jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
     <jnt-table #table formControlName="table">
-      <ng-template *ngIf="view === viewType.extended" #tableFiltersTemplate>
+      <ng-template *ngIf="view === viewType.short" #tableFiltersTemplate>
         <jnt-stack [orientation]="ui.orientation.horizontal">
           <jnt-stack [orientation]="ui.orientation.horizontal">
             <jnt-date-picker formControlName="date"

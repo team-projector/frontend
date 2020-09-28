@@ -1,5 +1,5 @@
 <jnt-app-aside #aside>
-  <jnt-menu [spacer]="ui.size.small" [orientation]="ui.orientation.vertical">
+  <jnt-menu [spacing]="ui.size.small" [orientation]="ui.orientation.vertical">
     <jnt-menu-item title="Dashboard"
                    i18n-title="@@action.dashboard"
                    [link]="['']"
@@ -15,22 +15,22 @@
     <jnt-menu-item title="Time expenses"
                    i18n-title="@@action.time_expenses"
                    [link]="['time-expenses', {dueDate: today}]"
-                   [icon]="localUi.icons.timeExpenses"></jnt-menu-item>
+                   [icon]="localUi.icons.spentTime"></jnt-menu-item>
     <jnt-menu-item title="Bonuses"
                    i18n-title="@@action.bonuses"
                    [link]="['bonuses']"
                    [matching]="ui.matching.wildcard"
-                   [icon]="ui.icons.question"></jnt-menu-item>
+                   [icon]="localUi.icons.bonus"></jnt-menu-item>
     <jnt-menu-item title="Penalties"
                    i18n-title="@@action.penalties"
                    [link]="['penalties']"
                    [matching]="ui.matching.wildcard"
-                   [icon]="ui.icons.question"></jnt-menu-item>
+                   [icon]="localUi.icons.penalty"></jnt-menu-item>
     <jnt-menu-item title="Salaries"
                    i18n-title="@@action.salaries"
                    [link]="['salaries']"
                    [matching]="ui.matching.wildcard"
-                   [icon]="ui.icons.money"></jnt-menu-item>
+                   [icon]="localUi.icons.salary"></jnt-menu-item>
     <jnt-menu-item title="Work breaks"
                    i18n-title="@@action.work_breaks"
                    [link]="['breaks']"

@@ -10,7 +10,7 @@ import { detectLanguage } from 'src/utils/lang';
 import { Language } from './enums/language';
 
 export const PLATFORM_DELAY = 100;
-export const UI_DELAY = 500;
+export const UI_DELAY = 250;
 export const MOCKS_DELAY = 1000;
 export const DEFAULT_PAGE_SIZE = 20;
 export const DATE_FORMAT = 'yyyy-MM-dd';

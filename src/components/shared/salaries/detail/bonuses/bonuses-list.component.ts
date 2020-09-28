@@ -10,6 +10,7 @@ import { BonusesComponent } from 'src/components/shared/bonuses/list/bonuses';
 })
 export class SalaryBonusesListComponent extends BonusesComponent {
 
+
   constructor(route: ActivatedRoute,
               router: Router,
               logger: NGXLogger) {

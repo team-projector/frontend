@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
+import { DateFnsModule } from 'ngx-date-fns';
 import { BonusesListComponent } from './bonuses-list.component';
 
 @NgModule({
@@ -14,7 +15,8 @@ import { BonusesListComponent } from './bonuses-list.component';
     imports: [
         CommonModule,
         JunteUiModule,
-        ReactiveFormsModule
+        ReactiveFormsModule,
+        DateFnsModule
     ]
 })
 export class BonusesListModule {

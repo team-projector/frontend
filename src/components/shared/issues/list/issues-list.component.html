@@ -7,7 +7,7 @@
       <ng-template #tableFiltersTemplate>
         <jnt-row>
           <jnt-col [tablet]="2">
-            <jnt-date-picker formControlName="dueDate"
+            <jnt-date-picker data-due-date formControlName="dueDate"
                              [features]="[ui.feature.clear]"></jnt-date-picker>
           </jnt-col>
           <jnt-col [tablet]="4">
@@ -171,7 +171,7 @@
         </ng-template>
       </jnt-table-column>
 
-      <jnt-table-column *ngIf="view === viewType.extended"
+      <jnt-table-column *ngIf="view === viewType.short"
                         title="Payroll"
                         i18n-title="@@label.payroll">
         <ng-template #tableCellTemplate let-metrics="metrics">
@@ -183,13 +183,13 @@
         </ng-template>
       </jnt-table-column>
 
-      <ng-template #tableRowActionsTemplate let-row="row">
-        <jnt-menu [orientation]="ui.orientation.vertical"
-                  [spacer]="ui.size.small">
+      <ng-template #tableRowActionsTemplate let-row="row" let-hide="hide">
+        <jnt-menu [orientation]="ui.orientation.vertical">
           <jnt-menu-item [icon]="ui.icons.sync"
                          title="Sync from GitLab"
                          i18n-title="@@action.sync_from_Gitlab"
-                         (click)="sync(row.id)"></jnt-menu-item>
+                         [loading]="progress.syncing"
+                         (click)="sync(row.id, hide)"></jnt-menu-item>
         </jnt-menu>
       </ng-template>
     </jnt-table>

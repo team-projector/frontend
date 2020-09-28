@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
 import { ViewType } from 'src/models/enums/view-type';
-import { BreaksStateUpdate } from './breaks-list-types';
+import { BreaksStateUpdate } from './work-breaks-list-types';
 
 export abstract class BreaksTableComponent implements OnInit {
 

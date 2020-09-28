@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, TableComponent, UI, untilJSONChanged } from '@junte/ui';
+import { TableComponent, UI, untilJSONChanged } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { MOCKS_DELAY } from 'src/consts';
+import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { IssueProblem } from 'src/models/enums/issue';
 import { MergeRequestState, MergeRequestType } from 'src/models/enums/merge-requests';
@@ -14,6 +14,8 @@ import { MergeRequestsFilter, MergeRequestSummary, PagingMergeRequest } from 'sr
 import { getMock } from 'src/utils/mocks';
 import { MergeRequestsGQL, MergeRequestSummaryGQL } from './merge-requests.graphql';
 import { MergeRequestsState, MergeRequestsStateUpdate } from './merge-requests-list.types';
+
+const DEFAULT_FIRST = 10;
 
 @Component({
   selector: 'app-merge-requests',
@@ -34,7 +36,7 @@ export class MergeRequestsListComponent implements OnInit {
     q: null,
     sort: null,
     first: DEFAULT_FIRST,
-    offset: DEFAULT_OFFSET
+    offset: 0
   });
   form = this.builder.group({
     table: this.tableControl,
@@ -50,12 +52,12 @@ export class MergeRequestsListComponent implements OnInit {
     this.form.patchValue({
       table: {
         first: first || DEFAULT_FIRST,
-        offset: offset || DEFAULT_OFFSET
+        offset: offset || 0
       },
       type: type || MergeRequestType.opened,
       team: team?.id || null,
       user: user?.id || null
-    });
+    }, {emitEvent: false});
   }
 
   @Output()
@@ -74,21 +76,22 @@ export class MergeRequestsListComponent implements OnInit {
       return environment.mocks
         ? of(getMock(PagingMergeRequest, this.filter)).pipe(delay(MOCKS_DELAY))
         : this.mergeRequestsGQL.fetch(serialize(this.filter) as R)
-          .pipe(map(({data: {mergeRequests}}) => deserialize(mergeRequests, PagingMergeRequest)));
+          .pipe(delay(UI_DELAY), map(({data: {mergeRequests}}) => deserialize(mergeRequests, PagingMergeRequest)));
     };
 
-    this.form.valueChanges.pipe(untilJSONChanged())
-      .subscribe(({table: {offset, first}, type, user, team}) => {
-        this.filtered.emit(new MergeRequestsStateUpdate({
-          first: first !== DEFAULT_FIRST ? first : undefined,
-          offset: offset !== DEFAULT_OFFSET ? offset : undefined,
-          type: type !== MergeRequestType.opened ? type : undefined,
-          user: user || undefined,
-          team: team || undefined
-        }));
+    this.form.valueChanges.subscribe(({table: {offset, first}, type, user, team}) => {
+      this.filtered.emit(new MergeRequestsStateUpdate({
+        first: first !== DEFAULT_FIRST ? first : undefined,
+        offset: offset !== 0 ? offset : undefined,
+        type: type !== MergeRequestType.opened ? type : undefined,
+        user: user || undefined,
+        team: team || undefined
+      }));
 
-        this.load();
-      });
+      this.load();
+    });
+
+    this.load();
   }
 
   private load() {

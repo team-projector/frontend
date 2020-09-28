@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, TableComponent, UI, untilJSONChanged } from '@junte/ui';
+import { TableComponent, UI, untilJSONChanged } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { MOCKS_DELAY } from 'src/consts';
+import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { IssueProblem, IssueState, IssuesType } from 'src/models/enums/issue';
@@ -18,6 +18,8 @@ import { getMock } from 'src/utils/mocks';
 import { Project } from '../../../../models/project';
 import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues-list.graphql';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
+
+const DEFAULT_FIRST = 10;
 
 @Component({
   selector: 'app-issues',
@@ -34,7 +36,7 @@ export class IssuesListComponent implements OnInit {
   standardLabel = StandardLabel;
   durationFormat = DurationFormat;
 
-  progress = {summary: false, sync: false};
+  progress = {summary: false, syncing: false};
   filter: IssuesFilter;
   summary: IssuesSummary;
   project: Project;
@@ -42,7 +44,7 @@ export class IssuesListComponent implements OnInit {
   tableControl = this.fb.control({
     q: null,
     first: DEFAULT_FIRST,
-    offset: DEFAULT_OFFSET
+    offset: 0
   });
 
   form = this.fb.group({
@@ -69,14 +71,14 @@ export class IssuesListComponent implements OnInit {
       table: {
         q: q || null,
         first: first || DEFAULT_FIRST,
-        offset: offset || DEFAULT_OFFSET
+        offset: offset || 0
       },
       type: type || IssuesType.opened,
       dueDate: dueDate || null,
       team: team?.id || null,
       user: user?.id || null,
       project: project?.id || null
-    });
+    }, {emitEvent: false});
   }
 
   @Output()
@@ -94,25 +96,26 @@ export class IssuesListComponent implements OnInit {
       return environment.mocks
         ? of(getMock(PagingIssues, this.filter)).pipe(delay(MOCKS_DELAY))
         : this.issuesGQL.fetch(serialize(this.filter) as R)
-          .pipe(map(({data: {issues}}) => deserialize(issues, PagingIssues)));
+          .pipe(delay(UI_DELAY), map(({data: {issues}}) => deserialize(issues, PagingIssues)));
     };
 
-    this.form.valueChanges.pipe(untilJSONChanged())
-      .subscribe(({table: {offset, first, q}, type, dueDate, user, team, project}) => {
-        this.logger.debug('form state was changed');
-        this.filtered.emit(new IssuesStateUpdate({
-          q: q || undefined,
-          first: first !== DEFAULT_FIRST ? first : undefined,
-          offset: offset !== DEFAULT_OFFSET ? offset : undefined,
-          type: type !== IssuesType.opened ? type : undefined,
-          dueDate: dueDate || undefined,
-          user: user || undefined,
-          team: team || undefined,
-          project: project || undefined
-        }));
+    this.form.valueChanges.subscribe(({table: {offset, first, q}, type, dueDate, user, team, project}) => {
+      this.logger.debug('form state was changed');
+      this.filtered.emit(new IssuesStateUpdate({
+        q: q || undefined,
+        first: first !== DEFAULT_FIRST ? first : undefined,
+        offset: offset !== 0 ? offset : undefined,
+        type: type !== IssuesType.opened ? type : undefined,
+        dueDate: dueDate || undefined,
+        user: user || undefined,
+        team: team || undefined,
+        project: project || undefined
+      }));
 
-        this.load();
-      });
+      this.load();
+    });
+
+    this.load();
   }
 
   private load() {
@@ -148,10 +151,13 @@ export class IssuesListComponent implements OnInit {
       .subscribe(summary => this.summary = summary);
   }
 
-  sync(issue: number) {
-    this.progress.sync = true;
+  sync(issue: number, hide: Function) {
+    this.progress.syncing = true;
     this.syncIssueGQL.mutate({id: issue})
-      .pipe(finalize(() => this.progress.sync = false))
+      .pipe(delay(UI_DELAY), finalize(() => {
+        hide();
+        this.progress.syncing = false;
+      }))
       .subscribe(() => this.table.load());
   }
 }

@@ -1,4 +1,4 @@
 export enum ViewType {
   default,
-  extended
+  short
 }

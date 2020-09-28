@@ -98,6 +98,20 @@ export class PagingTeamMembers implements Paging<TeamMember> {
 }
 
 @model()
+export class TeamMembersFilter {
+
+  @field()
+  team: string;
+
+  constructor(defs: Partial<TeamMembersFilter> = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+
+}
+
+@model()
 export class TeamMetricsFilter {
 
   @field()

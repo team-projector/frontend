@@ -11,7 +11,7 @@
                     (click)="open()">
         </jnt-button>
       </ng-template>
-      <jnt-table-column *ngIf="view === viewType.extended"
+      <jnt-table-column *ngIf="view === viewType.default"
                         title="Developer"
                         i18n-title="@@label.developer">
         <ng-template #tableCellTemplate let-user="user">
@@ -20,7 +20,7 @@
                         [size]="ui.size.small"></jnt-avatar>
             <jnt-stack [gutter]="ui.gutter.none">
               <jnt-link [title]="user?.name"></jnt-link>
-              <small>{{user.position.title}}</small>
+              <small>{{user.position?.title}}</small>
             </jnt-stack>
           </jnt-stack>
         </ng-template>
@@ -59,7 +59,7 @@
 
       <jnt-table-column title="State"
                         i18n-title="@@label.break_state">
-        <ng-template ngIf #tableCellTemplate
+        <ng-template #tableCellTemplate
                      let-approveState="approveState"
                      let-approvedBy="approvedBy"
                      let-approvedAt="approvedAt"
@@ -87,7 +87,7 @@
                 </jnt-label>
               </ng-container>
               <small *ngIf="approvedAt">
-                {{ approvedAt | date}}
+                {{ approvedAt | dfnsFormat: 'PPp'}}
               </small>
             </jnt-stack>
             <jnt-stack [orientation]="ui.orientation.vertical" [gutter]="ui.gutter.tiny">
@@ -97,7 +97,7 @@
                             [size]="ui.size.tiny"></jnt-avatar>
                 <jnt-stack [gutter]="ui.gutter.none">
                   <jnt-link link [title]="approvedBy.name"></jnt-link>
-                  <small>{{approvedBy.position.title}}</small>
+                  <small>{{approvedBy.position?.title}}</small>
                 </jnt-stack>
               </jnt-stack>
               <small *ngIf="declineReason">
@@ -108,15 +108,17 @@
         </ng-template>
       </jnt-table-column>
 
-      <ng-template #tableRowActionsTemplate let-break="row" let-hide="hide">
-        <jnt-menu [orientation]="ui.orientation.vertical" [spacer]="ui.gutter.small">
-          <jnt-menu-item *ngIf="view === viewType.extended"
+      <ng-template #tableRowActionsTemplate
+                   let-break="row" let-hide="hide">
+        <jnt-menu *ngIf="break.approveState === approveStates.created"
+                  [orientation]="ui.orientation.vertical">
+          <jnt-menu-item *ngIf="view === viewType.default"
                          title="Approve"
                          i18n-title="@@action.approve"
                          [icon]="ui.icons.checked"
                          (click)="approve(break.id)">
           </jnt-menu-item>
-          <jnt-menu-item *ngIf="view === viewType.extended"
+          <jnt-menu-item *ngIf="view === viewType.default"
                          title="Decline"
                          i18n-title="@@action.decline"
                          [icon]="ui.icons.cancel"

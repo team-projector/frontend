@@ -4,10 +4,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { GanttPipesModule, JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
-import { BreakDeclineComponent } from 'src/components/shared/breaks/decline/break-decline.component';
-import { BreakEditComponent } from 'src/components/shared/breaks/edit/break-edit.component';
+import { BreakDeclineComponent } from 'src/components/shared/work-breaks/decline/break-decline.component';
+import { BreakEditComponent } from 'src/components/shared/work-breaks/edit/break-edit.component';
 import { BreaksGanttComponent } from '../gantt/breaks-gantt.components';
-import { BreaksListComponent } from './breaks-list.component';
+import { WorkBreaksListComponent } from './work-breaks-list.component';
 
 
 @NgModule({
@@ -15,7 +15,7 @@ import { BreaksListComponent } from './breaks-list.component';
     BreakEditComponent,
     BreakDeclineComponent,
     BreaksGanttComponent,
-    BreaksListComponent
+    WorkBreaksListComponent
   ],
   imports: [
     CommonModule,
@@ -33,9 +33,9 @@ import { BreaksListComponent } from './breaks-list.component';
     BreakEditComponent,
     BreakDeclineComponent,
     BreaksGanttComponent,
-    BreaksListComponent
+    WorkBreaksListComponent
   ]
 })
-export class BreaksListModule {
+export class WorkBreaksListModule {
 
 }

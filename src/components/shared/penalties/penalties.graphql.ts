@@ -7,21 +7,25 @@ import gql from 'graphql-tag';
 })
 export class AllPenaltiesGQL extends Query<{ penalties }> {
   document = gql`
-query($salary: ID, $user: ID) {
-    penalties: allPenalties(salary: $salary, user: $user) {
-        count
-        edges {
-            node {
-                id
-                sum
-                comment
-                createdAt
-                createdBy {
-                    id
-                    name
-                }
-            }
+query ($salary: ID, $user: ID) {
+  penalties: allPenalties(salary: $salary, user: $user) {
+    count
+    edges {
+      node {
+        id
+        sum
+        comment
+        createdAt
+        createdBy {
+          id
+          name
         }
+        salary {
+          id
+          createdAt
+        }
+      }
     }
+  }
 }`;
 }

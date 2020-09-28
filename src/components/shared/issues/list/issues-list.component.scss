@@ -1,4 +1,5 @@
-@import "../../../../../node_modules/@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/forms/date-picker";
 
 :host {
   display: block;
@@ -6,6 +7,10 @@
 
 [data-group] {
   color: $jnt-muted-color;
+}
+
+[data-due-date] {
+ @include jnt-date-picker((width: 150px), '&', true);
 }
 
 [data-state] {

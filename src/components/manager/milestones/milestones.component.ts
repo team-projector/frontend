@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { R } from 'apollo-angular/types';
-import { DEFAULT_FIRST, DEFAULT_OFFSET, isEqual, TableComponent, UI } from '@junte/ui';
+import { isEqual, TableComponent, UI } from '@junte/ui';
 import { of } from 'rxjs';
 import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
@@ -16,6 +16,8 @@ import { MilestoneProblem, MilestoneState, MilestoneType } from 'src/models/enum
 import { MilestonesFilter, MilestonesSummary, PagingMilestones } from 'src/models/milestone';
 import { getMock } from 'src/utils/mocks';
 import { AllMilestonesGQL, MilestonesSummaryGQL, SyncMilestoneGQL } from './milestones.graphql';
+
+const DEFAULT_FIRST = 10;
 
 @model()
 export class MilestonesState {
@@ -59,7 +61,7 @@ export class MilestonesComponent implements OnInit {
     q: null,
     sort: null,
     first: DEFAULT_FIRST,
-    offset: DEFAULT_OFFSET
+    offset: 0
   });
 
   form = this.builder.group({
@@ -101,7 +103,7 @@ export class MilestonesComponent implements OnInit {
         const state = new MilestonesState({
           q: q || undefined,
           first: first !== DEFAULT_FIRST ? first : undefined,
-          offset: offset !== DEFAULT_OFFSET ? offset : undefined,
+          offset: offset !== 0 ? offset : undefined,
           type: type !== MilestoneType.opened ? type : undefined
         });
 
@@ -122,7 +124,7 @@ export class MilestonesComponent implements OnInit {
         table: {
           q: q || null,
           first: first || DEFAULT_FIRST,
-          offset: offset || DEFAULT_OFFSET
+          offset: offset || 0
         },
         type: type || IssuesType.opened
       });

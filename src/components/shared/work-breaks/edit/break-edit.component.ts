@@ -9,7 +9,7 @@ import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { BreakReasons } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
-import { PagingTeamMembers, Team, TeamMember } from 'src/models/team';
+import { PagingTeamMembers, Team, TeamMember, TeamMembersFilter } from 'src/models/team';
 import { BreakUpdate, WorkBreak } from 'src/models/work-break';
 import { getMock } from 'src/utils/mocks';
 import { User } from '../../../../models/user';
@@ -27,6 +27,7 @@ export class BreakEditComponent {
   viewType = ViewType;
 
   private _break: WorkBreak;
+  private _user: User;
   private _team: Team;
 
   progress = {saving: false};
@@ -66,15 +67,24 @@ export class BreakEditComponent {
 
   @Input()
   set user(user: User) {
+    this._user = user;
     this.form.patchValue({
       user: user.id
     });
+  }
+
+  get user() {
+    return this._user;
   }
 
   @Input()
   set team(team: Team) {
     this._team = team;
     this.loadMembers();
+  }
+
+  get team() {
+    return this._team;
   }
 
   @Output()
@@ -90,9 +100,10 @@ export class BreakEditComponent {
   }
 
   loadMembers() {
+    const request = new TeamMembersFilter({team: this.team.id});
     (environment.mocks
         ? of(getMock(PagingTeamMembers)).pipe(delay(MOCKS_DELAY))
-        : this.getTeamMembersGQL.fetch(this.teamForm.getRawValue() as R)
+        : this.getTeamMembersGQL.fetch(serialize(request) as R)
           .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers)))
     ).subscribe(teams => this.members = teams.results);
   }

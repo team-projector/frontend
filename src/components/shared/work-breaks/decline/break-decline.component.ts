@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UI } from '@junte/ui';
 import { of } from 'rxjs';
-import { DeclineWorkBreakGQL } from 'src/components/shared/breaks/list/breaks-list.graphql';
+import { DeclineWorkBreakGQL } from 'src/components/shared/work-breaks/list/work-breaks-list.graphql';
 import { environment } from 'src/environments/environment';
 import { WorkBreak, BreakDecline } from 'src/models/work-break';
 

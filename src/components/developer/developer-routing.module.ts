@@ -37,7 +37,7 @@ const routes: Routes = [
       },
       {
         path: 'breaks',
-        loadChildren: () => import('./breaks/developer-breaks.module').then(m => m.DeveloperBreaksModule)
+        loadChildren: () => import('./work-breaks/developer-breaks.module').then(m => m.DeveloperBreaksModule)
       }
     ]
   }
