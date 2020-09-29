@@ -1,4 +1,5 @@
 @import '~@junte/ui/lib/assets/styles/jnt-variables';
+@import '~@junte/ui/lib/assets/styles/dynamic/circle-bar';
 
 :host-context([theme='dark']) {
   [data-vacations] [data-circle] [data-days] {
@@ -22,14 +23,8 @@
   }
 
   [data-circle] {
-    width: 100px;
-    height: 100px;
-
-    ::ng-deep {
-      svg {
-        fill: $jnt-secondary-dark-color;
-      }
-    }
+    @include jnt-circle-bar((width: 100px, height: 100px), '&', true);
+    @include jnt-circle-bar-indicator((fill: $jnt-secondary-dark-color), null, true);
 
     [data-days] {
       width: 80%;

@@ -16,7 +16,7 @@
           <span data-label>{{metrics.paidWorkBreaksDays | i18nPlural: daysMapping}}</span>
         </jnt-stack>
       </ng-template>
-      <jnt-bar-indicator-group>
+      <jnt-bar-indicator-group data-indicator>
         <jnt-bar-indicator [value]="metrics.paidWorkBreaksDays * 100 / 30"
                            [color]="ui.color.purple">
         </jnt-bar-indicator>
