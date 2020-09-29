@@ -11,7 +11,7 @@
                              [features]="[ui.feature.clear]"></jnt-date-picker>
           </jnt-col>
           <jnt-col [tablet]="4">
-            <ng-template #projectOption let-project="value">
+            <ng-template #projectOption let-project="value" let-selected="selected">
               <jnt-stack [orientation]="ui.orientation.horizontal"
                          [align]="ui.align.center"
                          [justify]="ui.justify.between"
@@ -20,9 +20,9 @@
                            [gutter]="ui.gutter.small">
                   <jnt-avatar [size]="ui.size.tiny"
                               [image]="project.project.group?.glAvatar"></jnt-avatar>
-                  <div>{{project.project.group?.title}} / {{project.project.title}}</div>
+                  <div><span *ngIf="!selected">{{project.project.group?.title}} / </span>{{project.project.title}}</div>
                 </jnt-stack>
-                <jnt-badge *ngIf="project.issues?.remains > 0"
+                <jnt-badge *ngIf="!selected && project.issues?.remains > 0"
                            [position]="ui.position.inline"
                            [text]="project.issues.remains | duration:durationFormat.short"
                            [color]="ui.color.green"></jnt-badge>

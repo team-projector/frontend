@@ -19,7 +19,8 @@
           <span position>{{salary.taxes | currency:undefined:'symbol':'1.0-0'}}</span>
         </jnt-stack>
 
-        <jnt-stack [gutter]="ui.gutter.small" [align]="ui.align.stretch" salary>
+        <jnt-stack salary [gutter]="ui.gutter.small"
+                   [align]="ui.align.stretch">
 
           <jnt-date-period [start]="salary.periodFrom" [end]="salary.periodTo"></jnt-date-period>
 
@@ -36,14 +37,15 @@
         </jnt-stack>
 
         <div payroll>
-        <span>
-        {{salary.total + salary.taxes| currency}}</span>
+          <span>{{salary.total + salary.taxes| currency}}</span>
         </div>
 
-        <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.stretch"
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [align]="ui.align.stretch"
                    [justify]="ui.justify.center" metrics>
           <div metric>
-            <jnt-stack [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small"
+            <jnt-stack [orientation]="ui.orientation.horizontal"
+                       [gutter]="ui.gutter.small"
                        [align]="ui.align.center">
               <jnt-icon like [icon]="ui.icons.like"></jnt-icon>
               <span>{{salary.bonus | currency}}</span>
@@ -70,24 +72,24 @@
         <jnt-menu-item [link]="['.']"
                        title="Time Expenses"
                        i18n-title="@@action.time_expenses">
-          <jnt-badge *ngIf="salary?.total"
-                     [text]="salary.total | duration:durationFormat.short">
+          <jnt-badge *ngIf="salary.chargedTime > 0"
+                     [text]="salary.chargedTime | duration">
           </jnt-badge>
         </jnt-menu-item>
         <jnt-menu-item [link]="['bonuses']"
                        title="Bonuses"
                        i18n-title="@@action.bonuses">
-          <jnt-badge *ngIf="!!salary.bonus"
+          <jnt-badge *ngIf="salary.bonus > 0"
                      [color]="ui.color.green"
-                     [text]="salary.bonus | currency:undefined:'symbol':'1.0-0'">
+                     [text]="salary.bonus | currency">
           </jnt-badge>
         </jnt-menu-item>
         <jnt-menu-item [link]="['penalties']"
                        title="Penalties"
                        i18n-title="@@action.penalties">
-          <jnt-badge *ngIf="!!salary.penalty"
+          <jnt-badge *ngIf="salary.penalty > 0"
                      [color]="ui.color.red"
-                     [text]="salary.penalty | currency:undefined:'symbol':'1.0-0'">
+                     [text]="salary.penalty | currency">
           </jnt-badge>
         </jnt-menu-item>
       </jnt-menu>

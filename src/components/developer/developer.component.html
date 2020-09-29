@@ -2,7 +2,7 @@
   <jnt-menu [spacing]="ui.size.small" [orientation]="ui.orientation.vertical">
     <jnt-menu-item title="Dashboard"
                    i18n-title="@@action.dashboard"
-                   [link]="['']"
+                   [link]="['./']"
                    [icon]="ui.icons.dashboard"></jnt-menu-item>
     <jnt-menu-item title="Issues"
                    i18n-title="@@action.issues"
@@ -39,7 +39,7 @@
   </jnt-menu>
 </jnt-app-aside>
 <jnt-app-content [aside]="aside">
-  <jnt-app-sub-header (burgerToggle)="aside.toggle()">
+  <jnt-app-sub-header (menu)="aside.toggle()">
     <jnt-breadcrumb></jnt-breadcrumb>
   </jnt-app-sub-header>
   <jnt-app-body>

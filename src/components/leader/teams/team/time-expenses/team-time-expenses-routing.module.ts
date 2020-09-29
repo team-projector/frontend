@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DueDateResolver } from 'src/resolvers/issue';
-import { ProjectResolver } from 'src/resolvers/project';
+import { MeUserResolver } from 'src/resolvers/me';
 import { TeamResolver } from '../../../../../resolvers/team';
 import { UserResolver } from '../../../../../resolvers/user';
-import { TeamIssuesComponent } from './team-issues.component';
+import { TeamTimeExpensesComponent } from './time-expenses.component';
 
-export const ISSUES_BREADCRUMB = $localize`:@@label.issues:Issues`;
+export const TIME_EXPENSES = $localize`:@@label.time_expenses:Time expenses`;
 
 const routes: Routes = [
   {
     path: '',
-    component: TeamIssuesComponent,
-    data: {breadcrumb: ISSUES_BREADCRUMB},
+    component: TeamTimeExpensesComponent,
+    data: {breadcrumb: TIME_EXPENSES},
     resolve: {
       team: TeamResolver,
       user: UserResolver,
-      project: ProjectResolver,
-      dueDate: DueDateResolver
+      date: DueDateResolver
     }
   }
 ];
@@ -26,6 +25,6 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class TeamIssuesRoutingModule {
+export class TeamTimeExpensesRoutingModule {
 
 }

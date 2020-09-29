@@ -8,5 +8,7 @@ import { UI } from '@junte/ui';
 })
 
 export class LeaderComponent {
+
   ui = UI;
+
 }

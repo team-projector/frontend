@@ -98,4 +98,5 @@ export class TeamsComponent implements OnInit {
         this.count = teams.count;
       });
   }
+
 }

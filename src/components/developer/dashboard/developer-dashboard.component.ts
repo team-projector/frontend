@@ -13,6 +13,7 @@ import { Me } from 'src/models/user';
 export class DeveloperDashboardComponent {
 
   ui = UI;
+
   me: Me;
 
   constructor(public route: ActivatedRoute,
@@ -20,13 +21,13 @@ export class DeveloperDashboardComponent {
     this.route.data.subscribe(({me}) => this.me = me);
   }
 
-  issuesByDueDate(date: Date) {
-    this.router.navigate(['issues', {dueDate: format(date, DATE_FORMAT)}],
+  issuesByDueDate(dueDate: Date) {
+    this.router.navigate(['issues', {dueDate: format(dueDate, DATE_FORMAT)}],
       {relativeTo: this.route}).then(() => null);
   }
 
   issuesByProject(project: string) {
-    this.router.navigate(['issues', {project: project}],
+    this.router.navigate(['issues', {project}],
       {relativeTo: this.route}).then(() => null);
   }
 

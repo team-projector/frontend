@@ -1,14 +1,3 @@
-@import '~@junte/ui/lib/assets/styles/layout/responsive';
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-
 :host {
   display: block;
-}
-
-[metrics] {
-  align-self: start;
-}
-
-[milestone] {
-  font-size: .75rem;
 }

@@ -6,4 +6,3 @@ export class PercentagePipe implements PipeTransform {
     return Math.round(value / source * 100);
   }
 }
-

@@ -9,16 +9,17 @@ import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { Project } from 'src/models/project';
-import { Me } from 'src/models/user';
+import { User } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
-import { DeveloperProjectsSummaryGQL } from './developer-projects.graphql';
+import { Team } from '../../../../models/team';
+import { ProjectsSummaryGQL } from './projects-summary.graphql';
 
 @Component({
-  selector: 'app-developer-projects',
-  templateUrl: './developer-projects.component.html',
-  styleUrls: ['./developer-projects.component.scss']
+  selector: 'app-projects-summary',
+  templateUrl: './projects-summary.component.html',
+  styleUrls: ['./projects-summary.component.scss']
 })
-export class DeveloperProjectsComponent implements OnInit {
+export class ProjectsSummaryComponent implements OnInit {
 
   ui = UI;
   durationFormat = DurationFormat;
@@ -37,12 +38,15 @@ export class DeveloperProjectsComponent implements OnInit {
   summary: IssuesSummary;
 
   @Input()
-  me: Me;
+  user: User;
+
+  @Input()
+  team: Team;
 
   @Output()
   selected = new EventEmitter<string>();
 
-  constructor(private summaryGQL: DeveloperProjectsSummaryGQL) {
+  constructor(private summaryGQL: ProjectsSummaryGQL) {
   }
 
   ngOnInit() {
@@ -50,7 +54,7 @@ export class DeveloperProjectsComponent implements OnInit {
   }
 
   private load() {
-    const filter = new IssuesFilter({user: this.me.id});
+    const filter = new IssuesFilter({user: this.user?.id, team: this.team?.id});
     (environment.mocks
         ? of(getMock(IssuesSummary)).pipe(delay(MOCKS_DELAY))
         : this.summaryGQL.fetch(serialize(filter) as R)

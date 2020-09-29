@@ -1,4 +1,4 @@
-import { Component, forwardRef, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { R } from 'apollo-angular/types';
 import { addDays, addWeeks, endOfWeek, getDate, startOfDay, startOfWeek, subWeeks } from 'date-fns';
@@ -15,7 +15,8 @@ import { PagingTeamMembers, Team, TeamMember, TeamMemberProgressMetrics, TeamMet
 import { User, UserProgressMetrics } from 'src/models/user';
 import { equals } from 'src/utils/equals';
 import { getMock } from 'src/utils/mocks';
-import { CalendarMembersGQL, CalendarMetricsGQL } from './team-calendar.graphql';
+import { METRIC_TYPE } from '../../../../../shared/metrics-type/consts';
+import { TeamMembersGQL, TeamMetricsGQL } from './team-progress.graphql';
 
 const DAYS_IN_WEEK = 7;
 const DAYS_WEEK = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
@@ -33,19 +34,12 @@ class Metric {
 }
 
 @Component({
-  selector: 'app-team-calendar',
-  templateUrl: './team-calendar.component.html',
-  styleUrls: ['./team-calendar.component.scss'],
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TeamCalendarComponent),
-      multi: true
-    }
-  ]
+  selector: 'app-team-progress',
+  templateUrl: './team-progress.component.html',
+  styleUrls: ['./team-progress.component.scss']
 })
 
-export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
+export class TeamProgressComponent implements OnInit {
 
   ui = UI;
   userProblem = UserProblem;
@@ -67,12 +61,9 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
   metrics: Metric;
   loading: boolean;
 
-  user = new FormControl();
-  dueDate = new FormControl();
-
+  metricControl = this.fb.control(localStorage.getItem(METRIC_TYPE) || MetricType.all);
   form: FormGroup = this.fb.group({
-    dueDate: this.dueDate,
-    user: this.user
+    metric: this.metricControl
   });
 
   @Input()
@@ -106,8 +97,11 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
     return this.start$.getValue();
   }
 
-  constructor(private calendarMember: CalendarMembersGQL,
-              private calendarMetrics: CalendarMetricsGQL,
+  @Output()
+  selected = new EventEmitter<{ user: string, dueDate: Date }>();
+
+  constructor(private calendarMember: TeamMembersGQL,
+              private calendarMetrics: TeamMetricsGQL,
               private fb: FormBuilder) {
   }
 
@@ -115,9 +109,6 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
     this.date = new Date();
     this.team$.pipe(filtering(t => !!t))
       .subscribe(() => this.loadMembers());
-
-    this.form.valueChanges.pipe(distinctUntilChanged())
-      .subscribe(f => this.onChange(f));
 
     combineLatest(this.team$, this.start$)
       .pipe(filtering(([team, start]) => !!team && !!start))
@@ -171,28 +162,6 @@ export class TeamCalendarComponent implements OnInit, ControlValueAccessor {
     for (let i = 0; i < DAYS_IN_WEEK; i++) {
       this.days[i] = addDays(this.start, i);
     }
-  }
-
-  writeValue(value: UserFilter) {
-    if (value !== undefined) {
-      this.form.patchValue({
-        user: value.user, dueDate: value.dueDate
-      }, {emitEvent: false});
-    }
-  }
-
-  onChange(value: UserFilter) {
-  }
-
-  onTouched() {
-  }
-
-  registerOnChange(fn) {
-    this.onChange = fn;
-  }
-
-  registerOnTouched(fn) {
-    this.onTouched = fn;
   }
 
 }

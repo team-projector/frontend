@@ -1,12 +1,22 @@
 <jnt-app-aside #aside>
   <jnt-menu [spacing]="ui.size.small"
             [orientation]="ui.orientation.vertical">
-    <jnt-menu-item [link]="['issues']"
-                   [matching]="ui.matching.wildcard"
-                   [icon]="ui.icons.dashboard"
-                   title="Issues"
+    <jnt-menu-item title="Dashboard"
+                   i18n-title="@@action.dashboard"
+                   [link]="['./']"
+                   [icon]="ui.icons.dashboard"></jnt-menu-item>
+    <jnt-menu-item title="Issues"
                    i18n-title="@@action.issues"
-    ></jnt-menu-item>
+                   [link]="['issues']"
+                   [icon]="localUi.icons.issue"></jnt-menu-item>
+    <jnt-menu-item title="Merge requests"
+                   i18n-title="@@action.merge_requests"
+                   [link]="['merge-requests']"
+                   [icon]="localUi.icons.mergeRequest"></jnt-menu-item>
+    <jnt-menu-item title="Time expenses"
+                   i18n-title="@@action.time_expenses"
+                   [link]="['time-expenses']"
+                   [icon]="localUi.icons.spentTime"></jnt-menu-item>
     <jnt-menu-item [link]="['breaks']"
                    [matching]="ui.matching.wildcard"
                    [icon]="localUi.icons.workBreak"
@@ -15,7 +25,7 @@
   </jnt-menu>
 </jnt-app-aside>
 <jnt-app-content [aside]="aside">
-  <jnt-app-sub-header (burgerToggle)="aside.toggle()">
+  <jnt-app-sub-header (menu)="aside.toggle()">
     <jnt-breadcrumb></jnt-breadcrumb>
   </jnt-app-sub-header>
   <jnt-app-body>

@@ -12,6 +12,7 @@ import { Salary } from 'src/models/salary';
 })
 
 export class SalaryDetailComponent {
+
   ui = UI;
   salary: Salary;
   viewType = ViewType;

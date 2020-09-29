@@ -8,17 +8,14 @@ import { TimeExpensesComponent } from 'src/components/shared/time-expenses/list/
   styleUrls: ['./time-expenses.component.scss']
 })
 
-export class TeamTimeExpensesListComponent extends TimeExpensesComponent {
+export class TeamTimeExpensesComponent extends TimeExpensesComponent {
   constructor(route: ActivatedRoute,
               router: Router) {
     super(route, router);
   }
 
   getState(state: Object) {
-    delete state['user'];
     delete state['team'];
-    delete state['project'];
-    delete state['dueDate'];
     return state;
   }
 }

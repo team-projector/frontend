@@ -8,38 +8,33 @@
   table {
     background-color: #1A1A1A;
     box-shadow: 0 2px 8px rgba(255, 255, 255, 0.25);
+
     thead {
       tr {
         &[rewind] {
           th {
             [date] {
               color: $jnt-gray-100-color;
+
               [arrow] {
                 color: $jnt-gray-200-color;
               }
             }
           }
         }
+
         &[timeline] {
           background-color: $jnt-gray-800-color;
-          th[day] {
-            &:hover, &[active='true'] {
-              background-color: $jnt-gray-700-color;
-            }
-          }
         }
       }
     }
+
     tbody {
       tr {
         td {
           &[day] {
-            &:hover, &[active='true'] {
+            &:hover {
               background-color: $jnt-gray-700-color;
-            }
-
-            &[active-day='true'] {
-              background: $jnt-gray-800-color;
             }
           }
         }
@@ -55,6 +50,7 @@
     cursor: pointer;
     border-radius: $jnt-corner-small;
   }
+
   margin-bottom: $jnt-gutter-normal;
 }
 
@@ -67,6 +63,7 @@ table {
   border-radius: $jnt-corner-normal;
   box-shadow: $jnt-shadow-normal;
   font-size: $jnt-font-size-small;
+
   thead {
     tr {
       &[rewind] {
@@ -75,9 +72,11 @@ table {
             display: flex;
             color: $jnt-primary-text-dark-color;
             font-weight: $jnt-font-weight-bold;
+
             span {
               margin: auto;
             }
+
             [arrow] {
               background-color: transparent;
               border-width: 0;
@@ -94,11 +93,13 @@ table {
               align-items: center;
               transition: box-shadow .3s;
               line-height: 0;
+
               &:focus {
                 outline: none;
                 box-shadow: 0 0 6px rgba(8, 35, 202, 0.4);
                 border: 1px solid $jnt-primary-color;
               }
+
               &:hover {
                 color: lighten($jnt-primary-text-color, 10%);
               }
@@ -106,27 +107,32 @@ table {
           }
         }
       }
+
       &[timeline] {
         background-color: $jnt-secondary-background;
+
         th {
           &[day] {
             cursor: pointer;
             user-select: none;
-            &:hover, &[active='true'] {
-              background-color: $jnt-secondary-dark-color;
-            }
-            &[today='true']:not(:hover):not([active='true']) {
+
+            &:hover
+
+            &[today='true'] {
               background-color: $jnt-success-color;
               color: $jnt-white-color;
             }
           }
+
           &[name-metric] {
             color: $jnt-primary-dark-color;
           }
         }
       }
+
       th {
         padding: $jnt-gutter-normal $jnt-gutter-tiny;
+
         &[gutter] {
           width: $jnt-gutter-tiny;
         }
@@ -142,55 +148,58 @@ table {
           height: 61px;
         }
       }
+
       td {
         border-top: 1px solid $jnt-muted-color;
       }
+
       &[nodata] {
         height: 200px;
         pointer-events: none;
         border-bottom: 0;
+
         td {
           vertical-align: middle;
           text-align: center;
+
           [icon] {
             font-size: 80px;
             color: $jnt-muted-color;
           }
+
           [message] {
             color: $jnt-primary-text-light-color;
           }
         }
       }
+
       &[loading] {
         pointer-events: none;
+
         td {
           padding: $jnt-gutter-normal;
         }
       }
+
       td {
         padding: $jnt-gutter-tiny;
+
         &[slow='true'] span {
           border-bottom: 2px solid $jnt-fail-color;
         }
+
         &[day] {
           cursor: pointer;
           width: 50px;
-          &[active-day='true'] {
-            background: $jnt-secondary-background;
-          }
+
           &:hover {
             background-color: $jnt-secondary-dark-color;
           }
 
-          &[active='true'] {
-            background-color: rgba($jnt-primary-light-color, .5);
-            border: 1px solid $jnt-primary-color;
-            border-radius: 3px;
-            color: $jnt-white-color;
-          }
           [metric] {
             position: relative;
             display: inline-block;
+
             [issues] {
               position: absolute;
               top: 2px;
@@ -201,12 +210,14 @@ table {
               border-radius: 50%;
               z-index: 1;
             }
+
             [circle] {
               width: 35px;
               height: 35px;
             }
           }
         }
+
         [roles] {
           text-transform: lowercase;
         }
@@ -214,6 +225,7 @@ table {
         [developer] {
           cursor: pointer;
           padding: $jnt-gutter-small;
+
           &:focus {
             outline: 0;
             border-radius: $jnt-corner-small;
@@ -221,25 +233,20 @@ table {
           }
         }
       }
+
       &[active='true'] {
         td {
           background-color: $jnt-secondary-background;
         }
+
         &:last-child {
           td:first-child {
             border-bottom-left-radius: $jnt-corner-normal;
           }
+
           td:last-child {
             border-bottom-right-radius: $jnt-corner-normal;
           }
-        }
-      }
-    }
-    &[personalized='true'] {
-      tr {
-        display: none;
-        &[selected='true'] {
-          display: table-row;
         }
       }
     }

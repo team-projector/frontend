@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class CalendarMembersGQL extends Query<{ team: { members } }> {
+export class TeamMembersGQL extends Query<{ team: { members } }> {
   document = gql`
     query($team: ID!) {
       team(id: $team) {
@@ -36,7 +36,7 @@ export class CalendarMembersGQL extends Query<{ team: { members } }> {
 @Injectable({
   providedIn: 'root'
 })
-export class CalendarMetricsGQL extends Query<{ metrics }> {
+export class TeamMetricsGQL extends Query<{ metrics }> {
   document = gql`
     query ($team: ID!, $start: Date!, $end: Date!, $group: String!) {
       metrics: teamProgressMetrics(team: $team, start: $start, end: $end, group: $group) {
