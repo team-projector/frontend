@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { WorkBreaksListModule } from 'src/components/shared/work-breaks/list/work-breaks-list.module';
+import { CurrencyPipesModule } from '../../../pipes/currency-pipes.module';
 import { DatePipesModule } from '../../../pipes/date-pipes.module';
 import { NumberPipesModule } from '../../../pipes/number-pipes.module';
 import { ProjectsSummaryModule } from '../../shared/dashboard/projects/projects-summary.module';
@@ -23,7 +24,7 @@ import { DeveloperWorkBreaksComponent } from './work-breaks/developer-work-break
   ],
   imports: [
     DeveloperDashboardRoutingModule,
-
+    CurrencyPipesModule,
     CommonModule,
     ReactiveFormsModule,
     DateFnsModule,
