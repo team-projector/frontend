@@ -78,9 +78,9 @@
                         i18n-title="@@label.payroll">
         <ng-template #tableCellTemplate let-metrics="metrics">
           <div style="text-align: right;">
-            {{!!metrics.payroll ? (metrics.payroll | currency) : '&mdash;'}}
+            {{!!metrics.payroll ? (metrics.payroll | money) : '&mdash;'}}
             /
-            {{!!metrics.paid ? (metrics.paid | currency) : '&mdash;'}}
+            {{!!metrics.paid ? (metrics.paid | money) : '&mdash;'}}
           </div>
         </ng-template>
       </jnt-table-column>

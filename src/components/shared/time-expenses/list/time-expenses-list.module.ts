@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DatePipesModule } from '../../../../pipes/date-pipes.module';
+import { MoneyPipesModule } from '../../../../pipes/money-pipes.module';
 import { IssueCardModule } from '../../issues/card/issue-card.module';
 import { MergeRequestCardModule } from '../../merge-requests/card/merge-request-card.module';
 import { TimeExpensesListComponent } from './time-expenses-list.component';
@@ -21,6 +22,7 @@ import { GetOwnerTypePipe } from './time-expenses-list.pipes';
     JunteUiModule,
     DateFnsModule,
     DatePipesModule,
+    MoneyPipesModule,
 
     IssueCardModule,
     MergeRequestCardModule

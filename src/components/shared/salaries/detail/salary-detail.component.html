@@ -9,14 +9,14 @@
         <jnt-stack [align]="ui.align.center" [gutter]="ui.gutter.small">
           <span *ngIf="!!salary.position" position>{{salary.position.title}}</span>
           <jnt-label i18n-label="@@label.hour"
-                     [label]="(salary.hourRate | currency:undefined:'symbol':'1.0-0') + ' / ' + 'Hour'"
+                     [label]="(salary.hourRate | money) + ' / ' + 'Hour'"
                      [icon]="ui.icons.money" [color]="ui.color.green">
           </jnt-label>
         </jnt-stack>
 
         <jnt-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.between" taxes>
-          <span position>{{salary.taxes | currency:undefined:'symbol':'1.0-0'}}</span>
+          <span position>{{salary.taxes | money}}</span>
         </jnt-stack>
 
         <jnt-stack salary [gutter]="ui.gutter.small"
@@ -28,7 +28,7 @@
                      [justify]="ui.justify.end"
                      [align]="ui.align.center">
         <span>
-            {{salary.sum + salary.taxes | currency}}
+            {{salary.sum + salary.taxes | money}}
           </span>
             <jnt-label [label]="salary.chargedTime | duration"
                        [color]="ui.color.purpleLight">
@@ -37,7 +37,7 @@
         </jnt-stack>
 
         <div payroll>
-          <span>{{salary.total + salary.taxes| currency}}</span>
+          <span>{{salary.total + salary.taxes| money}}</span>
         </div>
 
         <jnt-stack [orientation]="ui.orientation.horizontal"
@@ -48,7 +48,7 @@
                        [gutter]="ui.gutter.small"
                        [align]="ui.align.center">
               <jnt-icon like [icon]="ui.icons.like"></jnt-icon>
-              <span>{{salary.bonus | currency}}</span>
+              <span>{{salary.bonus | money}}</span>
             </jnt-stack>
           </div>
           <div separator></div>
@@ -57,7 +57,7 @@
                        [gutter]="ui.gutter.small"
                        [align]="ui.align.center">
               <jnt-icon dislike [icon]="ui.icons.dislike"></jnt-icon>
-              <span>{{salary.penalty | currency}}</span>
+              <span>{{salary.penalty | money}}</span>
             </jnt-stack>
           </div>
         </jnt-stack>
@@ -81,7 +81,7 @@
                        i18n-title="@@action.bonuses">
           <jnt-badge *ngIf="salary.bonus > 0"
                      [color]="ui.color.green"
-                     [text]="salary.bonus | currency">
+                     [text]="salary.bonus | money">
           </jnt-badge>
         </jnt-menu-item>
         <jnt-menu-item [link]="['penalties']"
@@ -89,7 +89,7 @@
                        i18n-title="@@action.penalties">
           <jnt-badge *ngIf="salary.penalty > 0"
                      [color]="ui.color.red"
-                     [text]="salary.penalty | currency">
+                     [text]="salary.penalty | money">
           </jnt-badge>
         </jnt-menu-item>
       </jnt-menu>

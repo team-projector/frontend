@@ -3,9 +3,9 @@ import { UI } from '@junte/ui';
 import { interval, of } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
-import { environment } from '../../environments/environment';
-import { GitLabStatus } from '../../models/gitlab';
-import { getMock } from '../../utils/mocks';
+import { environment } from 'src/environments/environment';
+import { GitLabStatus } from 'src/models/gitlab';
+import { getMock } from 'src/utils/mocks';
 import { GitlabStatusGQL } from './gitlab-status.graphql';
 
 const STATUS_TIMEOUT = 60000;

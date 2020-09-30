@@ -134,10 +134,10 @@
                 {{!!weekMetric.efficiency ? (weekMetric.efficiency | number:'1.2-2') : '&ndash;'}}
               </ng-container>
               <ng-container *ngSwitchCase="3">
-                {{!!weekMetric.payroll ? (weekMetric.payroll | currency) : '&ndash;'}}
+                {{!!weekMetric.payroll ? (weekMetric.payroll | money) : '&ndash;'}}
               </ng-container>
               <ng-container *ngSwitchCase="4">
-                {{!!weekMetric.paid ? (weekMetric.paid | currency) : '&ndash;'}}
+                {{!!weekMetric.paid ? (weekMetric.paid | money) : '&ndash;'}}
               </ng-container>
             </ng-container>
           </ng-container>

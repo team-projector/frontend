@@ -56,14 +56,14 @@
                 <ng-template #progressBarLegendTemplate>
                   <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
                              [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
-                    <div metric>{{budget - metrics.budgetRemains | currency}}</div>
-                    <div metric budget>{{budget | currency}}</div>
+                    <div metric>{{budget - metrics.budgetRemains | money}}</div>
+                    <div metric budget>{{budget | money}}</div>
                   </jnt-stack>
                 </ng-template>
               </jnt-progress-bar>
               <div remains>
             <span [attr.overflow]="metrics.budgetRemains < 0">
-              {{metrics.budgetRemains | currency}}
+              {{metrics.budgetRemains | money}}
             </span>
               </div>
             </ng-container>
@@ -78,14 +78,14 @@
                            [align]="ui.align.center"
                            [justify]="ui.justify.between"
                            [gutter]="ui.gutter.normal">
-                  <div metric>{{metrics.payroll | currency}}</div>
-                  <div metric budget>{{budget | currency}}</div>
+                  <div metric>{{metrics.payroll | money}}</div>
+                  <div metric budget>{{budget | money}}</div>
                 </jnt-stack>
               </ng-template>
             </jnt-progress-bar>
             <div remains>
             <span [attr.overflow]="metrics.profit < 0">
-              {{metrics.profit | currency}}
+              {{metrics.profit | money}}
             </span>
             </div>
           </ng-template>

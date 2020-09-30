@@ -4,6 +4,7 @@ import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { SalariesListComponent } from 'src/components/shared/salaries/list/salaries-list.component';
 import { DatePipesModule } from '../../../../pipes/date-pipes.module';
+import { MoneyPipesModule } from '../../../../pipes/money-pipes.module';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { DatePipesModule } from '../../../../pipes/date-pipes.module';
     CommonModule,
     JunteUiModule,
     DateFnsModule,
-    DatePipesModule
+    DatePipesModule,
+    MoneyPipesModule
   ],
   exports: [
     SalariesListComponent

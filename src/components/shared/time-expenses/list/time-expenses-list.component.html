@@ -67,7 +67,7 @@
       <jnt-table-column title="Earn"
                         i18n-title="@@label.earn">
         <ng-template #tableCellTemplate let-sum="sum">
-          {{!!sum ? (sum | currency) : '&mdash;'}}
+          {{!!sum ? (sum | money) : '&mdash;'}}
         </ng-template>
       </jnt-table-column>
     </jnt-table>

@@ -7,7 +7,7 @@
       <jnt-stack [align]="ui.align.center" [gutter]="ui.gutter.small">
         <span *ngIf="!!me.position" position>{{me.position.title}}</span>
         <jnt-label i18n-label="@@label.hour"
-                   [label]="(me.hourRate | currency:undefined:'symbol':'1.0-0') + ' / ' + 'Hour'"
+                   [label]="(me.hourRate | money) + ' / ' + 'Hour'"
                    [icon]="ui.icons.money" [color]="ui.color.green">
         </jnt-label>
       </jnt-stack>
@@ -15,7 +15,7 @@
       <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between" taxes>
         <jnt-switch formControlName="taxes" i18n-label="@@label.taxes" label="Taxes"
                     [size]="ui.size.small"></jnt-switch>
-        <span position>{{metrics.taxes | currency:undefined:'symbol':'1.0-0'}}</span>
+        <span position>{{metrics.taxes | money}}</span>
       </jnt-stack>
 
       <jnt-stack [gutter]="ui.gutter.small" [align]="ui.align.stretch" salary>
@@ -33,19 +33,19 @@
               <span title i18n-label="@@label.closed_tasks">Closed Tasks</span>
               <span sum>
                 {{(taxesControl.value ? metrics.issues.payrollClosed + metrics.issues.taxesClosed
-                : metrics.payrollClosed) | currency:undefined:'symbol':'1.0-0'}}
+                : metrics.payrollClosed) | money}}
               </span>
               <div separator></div>
               <span title i18n-label="@@label.closed_merge_requests">Closed Merge requests</span>
               <span sum>
                 {{(taxesControl.value ? metrics.mergeRequests.payrollClosed + metrics.mergeRequests.taxesClosed
-                : metrics.mergeRequests.payrollClosed) | currency:undefined:'symbol':'1.0-0'}}
+                : metrics.mergeRequests.payrollClosed) | money}}
               </span>
             </jnt-stack>
           </ng-template>
           <span [jntPopover]="getOptions({contentTemplate: contentClosed})">
             {{(taxesControl.value ? metrics.payrollClosed + metrics.taxesClosed : metrics.payrollClosed)
-            | currency:undefined:'symbol':'1.0-0'}}
+            | money}}
           </span>
           <jnt-label *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) as spent"
                      [label]="spent | duration"
@@ -64,19 +64,19 @@
               <span title i18n-label="@@label.opened_tasks">Opened Tasks</span>
               <span sum>
                 {{(taxesControl.value ? metrics.issues.payrollOpened + metrics.issues.taxesOpened
-                : metrics.payrollOpened) | currency:undefined:'symbol':'1.0-0'}}
+                : metrics.payrollOpened) | money}}
               </span>
               <div separator></div>
               <span title i18n-label="@@label.opened_merge_requests">Opened Merge requests</span>
               <span sum>
                 {{(taxesControl.value ? metrics.mergeRequests.payrollOpened + metrics.mergeRequests.taxesOpened
-                : metrics.mergeRequests.payrollOpened) | currency:undefined:'symbol':'1.0-0'}}
+                : metrics.mergeRequests.payrollOpened) | money}}
               </span>
             </jnt-stack>
           </ng-template>
           <span [jntPopover]="getOptions({contentTemplate: contentOpened})">
             {{(taxesControl.value ? metrics.payrollOpened + metrics.taxesOpened : metrics.payrollOpened)
-            | currency:undefined:'symbol':'1.0-0'}}</span>
+            | money}}</span>
           <jnt-label *ngIf="(metrics.issues.openedSpent + metrics.mergeRequests.openedSpent) as spent"
                      [label]="spent | duration"
                      [color]="ui.color.purpleLight">
@@ -91,19 +91,19 @@
                    separation>
           <span title i18n-label="@@label.tasks">Tasks</span>
           <span sum>{{(taxesControl.value ? metrics.issues.payroll + metrics.issues.taxes
-            : metrics.payroll) | currency:undefined:'symbol':'1.0-0'}}
+            : metrics.payroll) | money}}
           </span>
           <div separator></div>
           <span title i18n-label="@@label.merge_requests ">Merge requests</span>
           <span sum>{{(taxesControl.value ? metrics.mergeRequests.payroll + metrics.mergeRequests.taxes
-            : metrics.mergeRequests.payroll) | currency:undefined:'symbol':'1.0-0'}}
+            : metrics.mergeRequests.payroll) | money}}
               </span>
         </jnt-stack>
       </ng-template>
       <div payroll>
         <span [jntPopover]="getOptions({contentTemplate: contentAll})">
         {{(taxesControl.value ? metrics.payroll + metrics.taxes : metrics.payroll)
-          | currency:undefined:'symbol':'1.0-0'}}</span>
+          | money}}</span>
       </div>
 
       <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.stretch"
@@ -116,7 +116,7 @@
               <jnt-stack *ngFor="let bonus of bonuses"
                          [orientation]="ui.orientation.horizontal"
                          bonus>
-                <span>{{bonus.sum | currency:undefined:'symbol':'1.0-0'}}</span>
+                <span>{{bonus.sum | money}}</span>
                 <span>{{bonus.comment}}</span>
               </jnt-stack>
             </jnt-stack>
@@ -127,7 +127,7 @@
             [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small"
             [align]="ui.align.center">
             <jnt-icon like [icon]="ui.icons.like"></jnt-icon>
-            <span>{{metrics.bonus | currency:undefined:'symbol':'1.0-0'}}</span>
+            <span>{{metrics.bonus | money}}</span>
           </jnt-stack>
         </div>
         <div separator></div>
@@ -138,7 +138,7 @@
                        [align]="ui.align.stretch"
                        separation>
               <jnt-stack *ngFor="let penalty of penalties">
-                <span>{{penalty.sum | currency:undefined:'symbol':'1.0-0'}}</span>
+                <span>{{penalty.sum | money}}</span>
                 <span>{{penalty.comment}}</span>
               </jnt-stack>
             </jnt-stack>
@@ -149,7 +149,7 @@
             [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small"
             [align]="ui.align.center">
             <jnt-icon dislike [icon]="ui.icons.dislike"></jnt-icon>
-            <span>{{metrics.penalty | currency:undefined:'symbol':'1.0-0'}}</span>
+            <span>{{metrics.penalty | money}}</span>
           </jnt-stack>
         </div>
       </jnt-stack>

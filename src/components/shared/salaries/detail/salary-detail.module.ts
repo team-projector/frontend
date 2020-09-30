@@ -5,6 +5,7 @@ import { JunteUiModule } from '@junte/ui';
 import { BonusesListModule } from 'src/components/shared/bonuses/list/bonuses-list.module';
 import { PenaltiesModule } from 'src/components/shared/penalties/penalties.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
+import { MoneyPipesModule } from '../../../../pipes/money-pipes.module';
 import { IssuesListModule } from '../../issues/list/issues-list.module';
 import { TimeExpensesListModule } from '../../time-expenses/list/time-expenses-list.module';
 import { SalaryBonusesListComponent } from './bonuses/bonuses-list.component';
@@ -27,6 +28,7 @@ import { SalaryTimeExpensesListComponent } from './time-expenses/time-expenses-l
     ReactiveFormsModule,
     JunteUiModule,
     DatePipesModule,
+    MoneyPipesModule,
     IssuesListModule,
     TimeExpensesListModule,
     BonusesListModule,
