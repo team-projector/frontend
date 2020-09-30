@@ -1,5 +1,6 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/forms/date-picker";
+@import "~@junte/ui/lib/assets/styles/elements/icon";
 
 :host {
   display: block;
@@ -10,27 +11,19 @@
 }
 
 [data-due-date] {
- @include jnt-date-picker((width: 150px), '&', true);
+  @include jnt-date-picker((width: 150px), '&', true);
 }
 
-[data-state] {
-  color: $jnt-success-color;
-  &[data-doing] {
-    min-width: 18px;
-    width: 18px;
-    min-height: 18px;
-    height: 18px;
-    border-radius: 50%;
-    fill: $jnt-success-color;
-    padding: 1px;
-    border: 1px solid $jnt-success-color;
-  }
-  &[data-delayed] {
-    color: $jnt-orange-color;
-  }
-  &[data-bug] {
-    color: $jnt-fail-color;
-  }
+[data-doing], [data-done] {
+  @include jnt-icon((size: 20px, color: $jnt-green-color), '&', true);
+}
+
+[data-delayed] {
+  color: $jnt-orange-color;
+}
+
+[data-bug] {
+  color: $jnt-fail-color;
 }
 
 [progress] {
@@ -41,6 +34,7 @@
   margin-top: $jnt-gutter-tiny;
   text-align: center;
   font-size: .85em;
+
   [slow='true'] {
     background: $jnt-fail-color;
     color: $jnt-white-color;
@@ -55,13 +49,16 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: .85em;
+
   &:first-of-type {
     flex: 1;
     text-align: left;
   }
+
   &[estimate] {
     color: $jnt-primary-text-light-color;
   }
+
   [collaboration] {
     color: $jnt-fail-color;
   }

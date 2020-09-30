@@ -13,10 +13,12 @@ import { DurationFormat } from 'src/models/enums/duration-format';
 import { IssueProblem, IssueState, IssuesType } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { ViewType } from 'src/models/enums/view-type';
-import { IssuesFilter, IssuesSummary, PagingIssues } from 'src/models/issue';
+import { IssuesFilter, IssuesSummary, PagingIssues, ProjectSummary } from 'src/models/issue';
 import { getMock } from 'src/utils/mocks';
 import { Project } from '../../../../models/project';
-import { IssuesGQL, IssuesSummaryGQL, SyncIssueGQL } from './issues-list.graphql';
+import { PagingTeamMembers, Team, TeamMember } from '../../../../models/team';
+import { User } from '../../../../models/user';
+import { IssuesGQL, IssuesSummaryGQL, ProjectsSummaryGQL, SyncIssueGQL, TeamMembersGQL } from './issues-list.graphql';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
 
 const DEFAULT_FIRST = 10;
@@ -36,9 +38,27 @@ export class IssuesListComponent implements OnInit {
   standardLabel = StandardLabel;
   durationFormat = DurationFormat;
 
-  progress = {summary: false, syncing: false};
+  private _team: Team;
+
+  progress = {projects: false, team: false, summary: false, syncing: false};
+  projects: ProjectSummary[] = [];
+  members: TeamMember[] = [];
+
   filter: IssuesFilter;
   summary: IssuesSummary;
+
+  set team(team: Team) {
+    if (!!team && team.id !== this._team?.id) {
+      this._team = team;
+      this.loadMembers();
+    }
+  }
+
+  get team() {
+    return this._team;
+  }
+
+  user: User;
   project: Project;
 
   tableControl = this.fb.control({
@@ -66,6 +86,8 @@ export class IssuesListComponent implements OnInit {
 
   @Input()
   set state({first, offset, q, type, dueDate, team, user, project}: IssuesState) {
+    this.team = team;
+    this.user = user;
     this.project = project;
     this.form.patchValue({
       table: {
@@ -85,6 +107,8 @@ export class IssuesListComponent implements OnInit {
   filtered = new EventEmitter<IssuesStateUpdate>();
 
   constructor(private issuesGQL: IssuesGQL,
+              private teamMembersGQL: TeamMembersGQL,
+              private projectsSummaryGQL: ProjectsSummaryGQL,
               private issuesSummaryGQL: IssuesSummaryGQL,
               private syncIssueGQL: SyncIssueGQL,
               private fb: FormBuilder,
@@ -115,7 +139,35 @@ export class IssuesListComponent implements OnInit {
       this.load();
     });
 
+    this.loadProjects();
     this.load();
+  }
+
+  private loadMembers() {
+    this.progress.team = true;
+    (environment.mocks
+      ? of(getMock(PagingTeamMembers)).pipe(delay(MOCKS_DELAY))
+      : this.teamMembersGQL.fetch({team: this.team.id} as R)
+        .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
+      .pipe(finalize(() => this.progress.team = false))
+      .subscribe(teams => this.members = teams.results);
+  }
+
+  private loadProjects() {
+    const {user, team} = this.form.getRawValue();
+    const filter = new IssuesFilter({
+      user: user,
+      team: team
+    });
+    this.logger.debug('load projects');
+    this.progress.projects = true;
+    return (environment.mocks
+      ? of(getMock(IssuesSummary)).pipe(delay(MOCKS_DELAY))
+      : this.projectsSummaryGQL.fetch(serialize(filter) as R)
+        .pipe(map(({data: {summary}}) =>
+          deserialize(summary, IssuesSummary))))
+      .pipe(finalize(() => this.progress.projects = false))
+      .subscribe(({projects}) => this.projects = projects);
   }
 
   private load() {

@@ -113,6 +113,42 @@ query(
 @Injectable({
   providedIn: 'root'
 })
+export class ProjectsSummaryGQL extends Query<{ summary }> {
+  document = gql`
+query(
+    $team: ID
+    $user: ID
+    $project: ID
+    $dueDate: Date
+) {
+    summary: issuesSummary(
+        team: $team
+        user: $user
+        project: $project
+        dueDate: $dueDate
+    ) {
+        projects (orderBy: "-issues__remains") {
+            project {
+                id
+                title
+                group {
+                    title
+                    glAvatar
+                }
+            }
+            issues {
+                remains
+                percentage
+                openedCount
+            }
+        }
+    }
+}`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
 export class IssuesSummaryGQL extends Query<{ summary }> {
   document = gql`
 query(
@@ -128,25 +164,41 @@ query(
         dueDate: $dueDate
     ) {
         count
-        projects {
-            project {
-                id
-                title
-                group {
-                    title
-                    glAvatar
-                }
-            }
-            issues {
-                remains
-                percentage
-                openedCount
-            }
-        }
         closedCount
         openedCount
         problemsCount
         timeSpent
     }
+}`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TeamMembersGQL extends Query<{ team: { members } }> {
+  document = gql`
+query ($team: ID!) {
+  team(id: $team) {
+    members(roles: "DEVELOPER", orderBy: "user__name") {
+      count
+      edges {
+        node {
+          roles
+          user {
+            id
+            glAvatar
+            name
+            problems
+            metrics {
+              issues {
+                closedSpent
+                openedSpent
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }`;
 }

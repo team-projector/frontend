@@ -9,7 +9,8 @@
                   i18n-title="@@action.manage"></jnt-link>
 
         <jnt-stack [orientation]="ui.orientation.horizontal"
-                   [spacing]="ui.gutter.normal"
+                   [gutter]="ui.gutter.big"
+                   [spacing]="ui.gutter.big"
                    [wrap]="ui.wrap.wrap">
           <ng-container *ngIf="loading; then loadingTemplate; else teamsTemplate"></ng-container>
           <ng-template #loadingTemplate>
@@ -49,7 +50,7 @@
         </jnt-stack>
         <ng-container *ngIf="pagesCount > 1">
           <jnt-form [formGroup]="form">
-            <jnt-pager [pagesCount]="pagesCount" formControlName="page"></jnt-pager>
+            <jnt-pager [count]="count" formControlName="page"></jnt-pager>
           </jnt-form>
         </ng-container>
       </jnt-stack>

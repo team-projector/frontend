@@ -41,9 +41,10 @@ export class TeamsState {
 })
 export class TeamsComponent implements OnInit {
 
-  private _state: TeamsState;
   ui = UI;
   durationFormat = DurationFormat;
+
+  private _state: TeamsState;
   teams: Team[] = [];
   loading: boolean;
   count: number;

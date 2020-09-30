@@ -100,8 +100,8 @@ export class TeamProgressComponent implements OnInit {
   @Output()
   selected = new EventEmitter<{ user: string, dueDate: Date }>();
 
-  constructor(private calendarMember: TeamMembersGQL,
-              private calendarMetrics: TeamMetricsGQL,
+  constructor(private teamMembersGQL: TeamMembersGQL,
+              private teamMetrics: TeamMetricsGQL,
               private fb: FormBuilder) {
   }
 
@@ -126,7 +126,7 @@ export class TeamProgressComponent implements OnInit {
       return (environment.mocks
         ? of(Array.apply(null, Array(10))
           .map((v, i) => getMock(TeamMemberProgressMetrics, filter, i))).pipe(delay(MOCKS_DELAY))
-        : this.calendarMetrics.fetch(serialize(filter) as R)
+        : this.teamMetrics.fetch(serialize(filter) as R)
           .pipe(filtering(({data: {metrics}}) => !!metrics),
             map(({data: {metrics}}) => metrics.map(el => deserialize(el, TeamMemberProgressMetrics)))))
         .pipe(map(metrics => {
@@ -149,7 +149,7 @@ export class TeamProgressComponent implements OnInit {
     this.loading = true;
     (environment.mocks
       ? of(getMock(PagingTeamMembers)).pipe(delay(MOCKS_DELAY))
-      : this.calendarMember.fetch({team: this.team.id} as R)
+      : this.teamMembersGQL.fetch({team: this.team.id} as R)
         .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
       .pipe(finalize(() => this.loading = false))
       .subscribe(teams => this.members = teams.results);

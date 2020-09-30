@@ -10,10 +10,10 @@ p {
   font-size: $jnt-font-size-small;
 }
 
-[issue] {
+[data-issue] {
   pointer-events: none;
 }
 
-[issues] {
+[data-issues] {
   @include jnt-select((chips: (width: 'fluid')), '&', true);
 }

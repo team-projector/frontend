@@ -7,30 +7,30 @@ import gql from 'graphql-tag';
 })
 export class TeamMembersGQL extends Query<{ team: { members } }> {
   document = gql`
-    query($team: ID!) {
-      team(id: $team) {
-        members(roles: "DEVELOPER", orderBy: "user__name") {
-          count
-          edges {
-            node {
-              roles
-              user {
-                id
-                glAvatar
-                name
-                problems
-                metrics {
-                  issues {
-                    closedSpent
-                    openedSpent
-                  }
-                }
+query ($team: ID!) {
+  team(id: $team) {
+    members(roles: "DEVELOPER", orderBy: "user__name") {
+      count
+      edges {
+        node {
+          roles
+          user {
+            id
+            glAvatar
+            name
+            problems
+            metrics {
+              issues {
+                closedSpent
+                openedSpent
               }
             }
           }
         }
       }
-    }`;
+    }
+  }
+}`;
 }
 
 @Injectable({

@@ -10,11 +10,10 @@
           [align]="ui.align.stretch">
           <p *ngIf="!!ticket">
             <jnt-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
-                      [icon]="ui.icons.settings"
+                      [icon]="ui.icons.link"
                       target="_blank"
                       title="Edit"
-                      i18n-title="@@action.edit"
-                      [outline]="ui.outline.ghost">
+                      i18n-title="@@action.edit">
             </jnt-link>
             ticket in admin dashboard.
           </p>
@@ -103,16 +102,18 @@
           <jnt-form-item>
             <jnt-form-label for="state">State</jnt-form-label>
             <jnt-form-control name="state">
-              <jnt-select formControlName="state" [allowEmpty]="false">
-                <ng-template #selectOptionTemplate let-label="label" let-state="value">
-                  <jnt-stack [orientation]="ui.orientation.horizontal"
-                             [gutter]="ui.gutter.small"
-                             [align]="ui.align.center">
-                    <jnt-dot [color]="state | ticketStateColor"></jnt-dot>
-                    <div>{{label}}</div>
-                  </jnt-stack>
-                </ng-template>
+              <ng-template #stateTemplate let-label="label" let-state="value">
+                <jnt-stack [orientation]="ui.orientation.horizontal"
+                           [gutter]="ui.gutter.small"
+                           [align]="ui.align.center">
+                  <jnt-dot [color]="state | ticketStateColor"></jnt-dot>
+                  <div>{{label}}</div>
+                </jnt-stack>
+              </ng-template>
 
+              <jnt-select formControlName="state"
+                          [optionTemplate]="stateTemplate"
+                          [allowEmpty]="false">
                 <jnt-select-option label="Created"
                                    i18n-label="@@label.created"
                                    [key]="milestoneTicketStates.created"
@@ -159,23 +160,22 @@
                  [value]="ticket?.issues.length"></jnt-badge>
       <ng-template #tabContentTemplate>
         <jnt-form-item>
-          <jnt-select issues placeholder="Issues"
+          <ng-template #issueTemplate let-issue="value">
+            <app-issue data-issue [issue]="issue"></app-issue>
+          </ng-template>
+          <jnt-select data-issues placeholder="Issues"
                       formControlName="issues"
                       [mode]="ui.select.mode.multiple"
                       [search]="true"
                       [loader]="findIssues()"
                       keyField="id"
-                      labelField="title">
+                      labelField="title"
+                      [optionTemplate]="issueTemplate">
             <jnt-select-option *ngFor="let issue of ticket?.issues"
                                [key]="issue.id"
                                [label]="issue.title"
                                [value]="issue">
             </jnt-select-option>
-            <ng-template #selectOptionTemplate let-issue="value">
-              <div issue>
-                <app-issue [issue]="issue"></app-issue>
-              </div>
-            </ng-template>
           </jnt-select>
         </jnt-form-item>
       </ng-template>

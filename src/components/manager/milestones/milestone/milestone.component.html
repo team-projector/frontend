@@ -16,8 +16,9 @@
       </jnt-switcher-option>
       <jnt-switcher-option label="Planning"
                            i18n-label="@@label.planning"
+                           [disabled]="summary?.planningCount <= 0"
                            [value]="ticketsTypes.planning">
-        <jnt-badge *ngIf="summary?.planningCount"
+        <jnt-badge *ngIf="summary?.planningCount > 0"
                    [value]="summary?.planningCount"
                    [color]="ui.color.red"></jnt-badge>
       </jnt-switcher-option>

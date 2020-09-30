@@ -1,5 +1,5 @@
 <jnt-link *ngIf="!mocks" [icon]="ui.icons.settings"
-          [outline]="ui.outline.fill"
+          [outline]="ui.outline.ghost"
           source="/admin/"
           title="Administrator"
           i18n-title="@@action.administrator"
@@ -8,34 +8,36 @@
 
 <jnt-block [padding]="ui.gutter.large" [state]="progress.gitlab ? ui.state.loading : null">
   <jnt-form form [formGroup]="loginForm" (submitted)="login()">
-    <div logo>
-      <img [src]="'assets/images/' + (theme === 'dark' ? 'logo-dark' : 'logo') + '.svg'" height="50">
-    </div>
-    <p *ngFor="let e of errors">{{e}}</p>
-    <jnt-form-item>
-      <jnt-form-control name="login">
-        <jnt-input formControlName="login" placeholder="Login" [icon]="ui.icons.user"></jnt-input>
-        <jnt-form-message [validator]="ui.validator.required">
-          Field is required!
-        </jnt-form-message>
-      </jnt-form-control>
-    </jnt-form-item>
+    <jnt-stack [align]="ui.align.stretch">
+      <div logo>
+        <img [src]="'assets/images/' + (theme === 'dark' ? 'logo-dark' : 'logo') + '.svg'" height="50">
+      </div>
+      <p *ngFor="let e of errors">{{e}}</p>
+      <jnt-form-item>
+        <jnt-form-control name="login">
+          <jnt-input formControlName="login" placeholder="Login" [icon]="ui.icons.user"></jnt-input>
+          <jnt-form-message [validator]="ui.validator.required">
+            Field is required!
+          </jnt-form-message>
+        </jnt-form-control>
+      </jnt-form-item>
 
-    <jnt-form-item>
-      <jnt-form-control name="password">
-        <jnt-input formControlName="password" placeholder="Password" [icon]="ui.icons.lock" required
-                   [type]="ui.input.type.password"></jnt-input>
-        <jnt-form-message [validator]="ui.validator.required">
-          Field is required!
-        </jnt-form-message>
-      </jnt-form-control>
-    </jnt-form-item>
+      <jnt-form-item>
+        <jnt-form-control name="password">
+          <jnt-input formControlName="password" placeholder="Password" [icon]="ui.icons.lock" required
+                     [type]="ui.input.type.password"></jnt-input>
+          <jnt-form-message [validator]="ui.validator.required">
+            Field is required!
+          </jnt-form-message>
+        </jnt-form-control>
+      </jnt-form-item>
+    </jnt-stack>
 
     <ng-template #formFooterTemplate>
       <jnt-form-item>
         <jnt-button [loading]="progress.login"
                     [type]="ui.button.type.submit"
-                    [icon]="ui.icons.arrowRight"
+                    [icon]="{icon: ui.icons.chevronRight, position: ui.position.right}"
                     text="Login"
                     [width]="ui.width.fluid">
         </jnt-button>
@@ -59,7 +61,8 @@
                       [outline]="ui.outline.ghost"
                       text="Team Leader"
                       i18n-text="@@action.team_leader"
-                      (click)="god(userRole.teamLeader)"></jnt-button>s
+                      (click)="god(userRole.teamLeader)"></jnt-button>
+
           <jnt-button [scheme]="ui.scheme.success"
                       [size]="ui.size.small"
                       [outline]="ui.outline.ghost"

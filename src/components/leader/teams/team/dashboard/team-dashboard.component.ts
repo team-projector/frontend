@@ -61,7 +61,11 @@ export class TeamDashboardComponent {
   }
 
   issuesByDeveloper({user, dueDate}) {
-    this.router.navigate(['issues', {user, dueDate: format(dueDate, DATE_FORMAT)}],
+    const params = {user};
+    if (!!dueDate) {
+      Object.assign(params, {dueDate: format(dueDate, DATE_FORMAT)});
+    }
+    this.router.navigate(['issues', params],
       {relativeTo: this.route}).then(() => null);
   }
 

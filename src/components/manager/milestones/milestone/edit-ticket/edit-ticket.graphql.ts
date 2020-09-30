@@ -39,7 +39,10 @@ export class GetTicketGQL extends Query<{ ticket }> {
                 }
               }
               project {
-                fullTitle
+                title
+                group {
+                  title
+                }
               }
               state
               createdAt
