@@ -15,7 +15,7 @@ import { getMock } from 'src/utils/mocks';
 import { METRIC_TYPE } from 'src/components/shared/metrics-type/consts';
 import { DeveloperIssuesMetricsGQL } from './developer-progress.graphql';
 
-interface Metric {
+interface DeveloperMetrics {
   days: Map<string, UserProgressMetrics>;
   weeks: Map<string, UserProgressMetrics>;
 }
@@ -35,10 +35,7 @@ export class DeveloperProgressComponent implements OnInit {
   progress = {loading: false};
 
   period: Period;
-  metrics = {
-    days: new Map<string, UserProgressMetrics>(),
-    weeks: new Map<string, UserProgressMetrics>()
-  };
+  metrics: DeveloperMetrics;
 
   metricControl = this.fb.control(localStorage.getItem(METRIC_TYPE) || MetricType.all);
   form = this.fb.group({
@@ -61,9 +58,8 @@ export class DeveloperProgressComponent implements OnInit {
       .subscribe(metric => localStorage.setItem(METRIC_TYPE, metric));
   }
 
-  loadMetrics(period: Period) {
-    this.period = period;
-    this.logger.debug('load metrics', period);
+  loadMetrics() {
+    this.logger.debug('load metrics', this.period);
     const getMetric = (group: Metrics) => {
       const filter = new UserMetricsFilter({
         user: this.me.id,

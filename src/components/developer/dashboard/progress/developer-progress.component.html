@@ -78,7 +78,7 @@
 <jnt-block title="Work progress"
            [width]="ui.width.fluid">
   <jnt-form [formGroup]="form"
-            [state]="progress.loading ? ui.state.loading: null">
+            [state]="progress.loading && !!metrics ? ui.state.loading: null">
     <jnt-stack [align]="ui.align.stretch">
       <jnt-switcher formControlName="metric">
         <jnt-switcher-option label="Spent"
@@ -102,7 +102,7 @@
           <jnt-dot [color]="ui.color.purpleDark"></jnt-dot>
         </jnt-switcher-option>
       </jnt-switcher>
-      <jnt-calendar (updated)="loadMetrics($event)"
+      <jnt-calendar (updated)="period = $event;loadMetrics()"
                     (selected)="selected.emit($event)">
         <jnt-week-metric title="Est"
                          i18n-title="@@label.est"></jnt-week-metric>
@@ -117,12 +117,13 @@
         <ng-template #calendarDayTemplate let-date="date">
           <div class="day" [attr.today]="(date | isToday)">
             <ng-container *ngTemplateOutlet="dayTemplate; context: {presentation: metricControl.value,
-                date: date, metric: metrics.days.get((date | dfnsFormat : formatDate))}">
+                date: date, metric: metrics?.days.get((date | dfnsFormat : formatDate))}">
             </ng-container>
           </div>
         </ng-template>
         <ng-template #calendarMetricTemplate let-metric="metric" let-date="date">
-          <ng-container *ngIf="metrics.weeks.get((date | dfnsFormat: formatDate)) as weekMetric">
+          <ng-template #noMetricTemplate>&ndash;</ng-template>
+          <ng-container *ngIf="metrics?.weeks.get((date | dfnsFormat: formatDate)) as weekMetric;else noMetricTemplate">
             <ng-container [ngSwitch]="metric">
               <ng-container *ngSwitchCase="0">
                 {{!!weekMetric.timeEstimate ? (weekMetric.timeEstimate | duration:durationFormat.short) : '&ndash;'}}
