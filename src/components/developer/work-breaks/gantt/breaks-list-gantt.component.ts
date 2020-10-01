@@ -14,8 +14,4 @@ export class DeveloperBreaksListGanttComponent extends BreaksTableComponent {
     super(route, router);
   }
 
-  getState(state: Object) {
-    delete state['user'];
-    return state;
-  }
 }

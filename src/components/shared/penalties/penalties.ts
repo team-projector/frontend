@@ -31,11 +31,8 @@ export abstract class PenaltiesComponent implements OnInit {
   }
 
   save(state: PenaltiesStateUpdate) {
-    this.router.navigate([this.getState(serialize(state))],
+    this.router.navigate([serialize(state)],
       {relativeTo: this.route}).then(() => null);
   }
 
-  getState(state: Object) {
-    throw new Error('Must be overridden');
-  }
 }

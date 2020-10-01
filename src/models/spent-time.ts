@@ -89,33 +89,35 @@ export class TimeExpensesSummary {
 export class TimeExpensesFilter {
 
   @field()
-  team?: number;
+  team: string;
 
   @field()
-  user?: number;
+  user: string;
 
   @field()
-  project?: number;
+  project: string;
 
   @field()
-  salary?: number;
+  salary: string;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
-  date?: Date;
+  date: Date;
 
-  orderBy?: string;
-
-  @field()
-  first?: number;
+  orderBy: string;
 
   @field()
-  offset?: number;
+  first: number;
 
   @field()
-  state?: TimeExpenseState | null;
+  offset: number;
 
-  constructor(defs: TimeExpensesFilter = null) {
-    Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});
+  @field()
+  state: TimeExpenseState | null;
+
+  constructor(defs: Partial<TimeExpensesFilter> = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
   }
 
 }

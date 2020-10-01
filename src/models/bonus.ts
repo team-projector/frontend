@@ -50,21 +50,23 @@ export class PagingBonuses implements Paging<Bonus> {
 export class BonusesFilter {
 
   @field()
-  user?: number;
+  user: string;
 
   @field()
-  salary?: number;
+  salary: string;
 
-  orderBy?: string;
-
-  @field()
-  first?: number;
+  orderBy: string;
 
   @field()
-  offset?: number;
+  first: number;
 
-  constructor(defs: BonusesFilter = null) {
-    Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});
+  @field()
+  offset: number;
+
+  constructor(defs: Partial<BonusesFilter> = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
   }
 
 }

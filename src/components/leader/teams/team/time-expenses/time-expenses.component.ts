@@ -9,13 +9,10 @@ import { TimeExpensesComponent } from 'src/components/shared/time-expenses/list/
 })
 
 export class TeamTimeExpensesComponent extends TimeExpensesComponent {
+
   constructor(route: ActivatedRoute,
               router: Router) {
     super(route, router);
   }
 
-  getState(state: Object) {
-    delete state['team'];
-    return state;
-  }
 }

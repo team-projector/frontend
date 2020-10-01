@@ -11,8 +11,7 @@ export class LabelsPipe implements PipeTransform {
     return labels.filter(l => l.title !== StandardLabel.toDo
       && l.title !== StandardLabel.doing
       && l.title !== StandardLabel.done
-      && l.title !== StandardLabel.delayed
-      && l.title !== StandardLabel.bug);
+      && l.title !== StandardLabel.delayed);
   }
 }
 

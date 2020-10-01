@@ -5,16 +5,6 @@
   display: block;
 }
 
-[ticket] {
-  font-size: 12px;
-}
-
-[closed='true'] {
+[data-closed='true'] {
   @include jnt-link((text-decoration: line-through), '&', true);
-}
-
-[data-state] {
-  &[data-bug] {
-    color: $jnt-fail-color;
-  }
 }

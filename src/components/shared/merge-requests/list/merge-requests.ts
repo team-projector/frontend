@@ -26,11 +26,8 @@ export abstract class MergeRequestsComponent implements OnInit {
   }
 
   save(state: MergeRequestsStateUpdate) {
-    this.router.navigate([this.getState(serialize(state))],
+    this.router.navigate([serialize(state)],
       {relativeTo: this.route}).then(() => null);
   }
 
-  getState(state: Object) {
-    throw new Error('Must be overridden');
-  }
 }

@@ -28,11 +28,8 @@ export abstract class TimeExpensesComponent implements OnInit {
   }
 
   save(state: TimeExpensesStateUpdate) {
-    this.router.navigate([this.getState(serialize(state))],
+    this.router.navigate([serialize(state)],
       {relativeTo: this.route}).then(() => null);
   }
 
-  getState(state: Object) {
-    throw new Error('Must be overridden');
-  }
 }

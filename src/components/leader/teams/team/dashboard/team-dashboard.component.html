@@ -1,10 +1,9 @@
 <jnt-row>
-  <jnt-col [tablet]="12" [wide]="7">
-    <app-team-progress [metric]="metric.value"
-                       [team]="team"
+  <jnt-col [tablet]="12" [wide]="8">
+    <app-team-progress [team]="team"
                        (selected)="issuesByDeveloper($event)"></app-team-progress>
   </jnt-col>
-  <jnt-col [tablet]="12" [wide]="5">
+  <jnt-col [tablet]="12" [wide]="4">
     <app-projects-summary [team]="team" (selected)="issuesByProject($event)"></app-projects-summary>
   </jnt-col>
 </jnt-row>

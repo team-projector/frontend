@@ -15,7 +15,7 @@ const routes: Routes = [
     data: {breadcrumb: ISSUES_BREADCRUMB},
     resolve: {
       team: TeamResolver,
-      user: UserResolver,
+      developer: UserResolver,
       project: ProjectResolver,
       dueDate: DueDateResolver
     }

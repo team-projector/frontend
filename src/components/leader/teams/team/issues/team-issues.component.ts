@@ -9,14 +9,11 @@ import { IssuesComponent } from 'src/components/shared/issues/list/issues';
   styleUrls: ['./team-issues.component.scss']
 })
 export class TeamIssuesComponent extends IssuesComponent {
+
   constructor(route: ActivatedRoute,
               router: Router,
               logger: NGXLogger) {
     super(route, router, logger);
   }
 
-  getState(state: Object) {
-    delete state['team'];
-    return state;
-  }
 }

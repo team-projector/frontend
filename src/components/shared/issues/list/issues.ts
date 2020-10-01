@@ -23,7 +23,7 @@ export abstract class IssuesComponent implements OnInit {
 
   ngOnInit() {
     combineLatest([this.route.data, this.route.params])
-      .subscribe(([{user, team, project, dueDate}, {q, first, offset, type}]) => {
+      .subscribe(([{user, developer, team, project, dueDate}, {q, first, offset, type}]) => {
         this.logger.debug('read router data & params');
         this.state = {
           first: +first || undefined,
@@ -33,17 +33,15 @@ export abstract class IssuesComponent implements OnInit {
           dueDate: dueDate,
           user: user || undefined,
           team: team || undefined,
-          project: project || undefined
+          project: project || undefined,
+          developer: developer || undefined
         };
       });
   }
 
   save(state: IssuesStateUpdate) {
-    this.router.navigate([this.getState(serialize(state))],
+    this.router.navigate([serialize(state)],
       {relativeTo: this.route}).then(() => null);
   }
 
-  getState(state: Object) {
-    throw new Error('Must be overridden');
-  }
 }

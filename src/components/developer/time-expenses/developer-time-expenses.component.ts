@@ -14,10 +14,4 @@ export class DeveloperTimeExpensesComponent extends TimeExpensesComponent {
     super(route, router);
   }
 
-  getState(state: Object) {
-    delete state['user'];
-    delete state['project'];
-    return state;
-  }
-
 }

@@ -11,19 +11,15 @@
 
     thead {
       tr {
-        &[rewind] {
+        &[data-rewind] {
           th {
             [date] {
               color: $jnt-gray-100-color;
-
-              [arrow] {
-                color: $jnt-gray-200-color;
-              }
             }
           }
         }
 
-        &[timeline] {
+        &[data-week] {
           background-color: $jnt-gray-800-color;
         }
       }
@@ -32,7 +28,7 @@
     tbody {
       tr {
         td {
-          &[day] {
+          &[data-day] {
             &:hover {
               background-color: $jnt-gray-700-color;
             }
@@ -41,17 +37,6 @@
       }
     }
   }
-}
-
-[presentations] {
-  div {
-    padding: 0 $jnt-gutter-normal;
-    background-color: silver;
-    cursor: pointer;
-    border-radius: $jnt-corner-small;
-  }
-
-  margin-bottom: $jnt-gutter-normal;
 }
 
 table {
@@ -64,11 +49,45 @@ table {
   box-shadow: $jnt-shadow-normal;
   font-size: $jnt-font-size-small;
 
+  td, th:not([data-tools]) {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1;
+    box-sizing: border-box;
+  }
+
+  th:not([data-gutter]), td:not([data-gutter]) {
+    min-width: 48px;
+  }
+
+  td {
+    min-height: 62px;
+  }
+
+  th:nth-child(2),
+  tbody tr td:nth-child(2) {
+    padding: $jnt-gutter-tiny 0;
+    min-width: 120px;
+  }
+
+  th:nth-child(3),
+  td:nth-child(3) {
+    min-width: 76px;
+    width: 76px;
+  }
+
+  th:nth-child(3),
+  td:nth-child(3),
+  th:nth-child(10),
+  td:nth-child(10) {
+    border-right: 1px solid $jnt-muted-color;
+  }
+
   thead {
     tr {
-      &[rewind] {
+      &[data-rewind] {
         th {
-          [date] {
+          [data-date] {
             display: flex;
             color: $jnt-primary-text-dark-color;
             font-weight: $jnt-font-weight-bold;
@@ -76,55 +95,26 @@ table {
             span {
               margin: auto;
             }
-
-            [arrow] {
-              background-color: transparent;
-              border-width: 0;
-              font-size: 1rem;
-              color: $jnt-primary-text-color;
-              cursor: pointer;
-              padding: 0;
-              vertical-align: middle;
-              border-radius: 50%;
-              width: 25px;
-              height: 25px;
-              display: inline-flex;
-              justify-content: center;
-              align-items: center;
-              transition: box-shadow .3s;
-              line-height: 0;
-
-              &:focus {
-                outline: none;
-                box-shadow: 0 0 6px rgba(8, 35, 202, 0.4);
-                border: 1px solid $jnt-primary-color;
-              }
-
-              &:hover {
-                color: lighten($jnt-primary-text-color, 10%);
-              }
-            }
           }
         }
       }
 
-      &[timeline] {
+      &[data-week] {
         background-color: $jnt-secondary-background;
 
         th {
-          &[day] {
+          &[data-day] {
             cursor: pointer;
             user-select: none;
 
             &:hover
-
             &[today='true'] {
               background-color: $jnt-success-color;
               color: $jnt-white-color;
             }
           }
 
-          &[name-metric] {
+          &[data-metric-name] {
             color: $jnt-primary-dark-color;
           }
         }
@@ -133,7 +123,7 @@ table {
       th {
         padding: $jnt-gutter-normal $jnt-gutter-tiny;
 
-        &[gutter] {
+        &[data-gutter] {
           width: $jnt-gutter-tiny;
         }
       }
@@ -151,31 +141,26 @@ table {
 
       td {
         border-top: 1px solid $jnt-muted-color;
+
+        [data-developer] {
+          min-width: 150px;
+        }
       }
 
-      &[nodata] {
-        height: 200px;
+      &[data-nodata] {
+        height: 300px;
         pointer-events: none;
         border-bottom: 0;
 
         td {
           vertical-align: middle;
           text-align: center;
-
-          [icon] {
-            font-size: 80px;
-            color: $jnt-muted-color;
-          }
-
-          [message] {
-            color: $jnt-primary-text-light-color;
-          }
+          font-size: 80px;
+          color: $jnt-muted-color;
         }
       }
 
-      &[loading] {
-        pointer-events: none;
-
+      &[data-loading] {
         td {
           padding: $jnt-gutter-normal;
         }
@@ -188,7 +173,7 @@ table {
           border-bottom: 2px solid $jnt-fail-color;
         }
 
-        &[day] {
+        &[data-day] {
           cursor: pointer;
           width: 50px;
 
@@ -196,11 +181,11 @@ table {
             background-color: $jnt-secondary-dark-color;
           }
 
-          [metric] {
+          [data-metric] {
             position: relative;
             display: inline-block;
 
-            [issues] {
+            [data-issues] {
               position: absolute;
               top: 2px;
               right: 2px;
@@ -211,20 +196,20 @@ table {
               z-index: 1;
             }
 
-            [circle] {
+            [data-circle] {
               width: 35px;
               height: 35px;
             }
           }
         }
 
-        [roles] {
-          text-transform: lowercase;
-        }
-
-        [developer] {
+        [data-developer] {
           cursor: pointer;
           padding: $jnt-gutter-small;
+
+          [data-roles] {
+            text-transform: lowercase;
+          }
 
           &:focus {
             outline: 0;
@@ -250,39 +235,5 @@ table {
         }
       }
     }
-  }
-
-  td, th {
-    text-align: center;
-    vertical-align: middle;
-    line-height: 1;
-    box-sizing: border-box;
-  }
-
-  th:not([gutter]), td:not([gutter]) {
-    min-width: 48px;
-  }
-
-  td {
-    min-height: 62px;
-  }
-
-  th:nth-child(2),
-  tbody tr td:nth-child(2) {
-    padding: $jnt-gutter-tiny 0;
-    min-width: 120px;
-  }
-
-  th:nth-child(3),
-  td:nth-child(3) {
-    min-width: 76px;
-    width: 76px;
-  }
-
-  th:nth-child(3),
-  td:nth-child(3),
-  th:nth-child(10),
-  td:nth-child(10) {
-    border-right: 1px solid $jnt-muted-color;
   }
 }

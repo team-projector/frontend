@@ -9,14 +9,10 @@ import { BreaksTableComponent } from 'src/components/shared/work-breaks/list/wor
 })
 
 export class TeamBreaksListGanttComponent extends BreaksTableComponent {
+
   constructor(route: ActivatedRoute,
               router: Router) {
     super(route, router);
   }
 
-  getState(state: Object) {
-    delete state['user'];
-    delete state['team'];
-    return state;
-  }
 }

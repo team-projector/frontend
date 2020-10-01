@@ -18,12 +18,6 @@ export class BreaksStateUpdate {
   @field()
   offset: number;
 
-  @field()
-  user: string;
-
-  @field()
-  team: string;
-
   constructor(defs: Partial<BreaksStateUpdate> = null) {
     if (!!defs) {
       Object.assign(this, defs);

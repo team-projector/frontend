@@ -30,7 +30,7 @@
                         [features]="[ui.feature.clickable]"
                         (selected)="router.navigate([team.id], {relativeTo: this.route})"
                         [padding]="ui.gutter.normal">
-                <jnt-label problems *ngIf="team.metrics.problemsCount"
+                <jnt-label problems *ngIf="team.metrics.problemsCount > 0"
                            [icon]="ui.icons.warning"
                            [color]="ui.color.red"
                            [label]="team.metrics.problemsCount.toString()"></jnt-label>

@@ -50,15 +50,15 @@
                 </jnt-stack>
               </jnt-stack>
             </ng-template>
-            <jnt-select formControlName="user"
+            <jnt-select formControlName="developer"
                         placeholder="Developer"
                         [width]="ui.width.fluid"
-                        [state]="progress.team ? ui.state.loading : null"
+                        [state]="progress.developers ? ui.state.loading : null"
                         [optionTemplate]="userOption">
-              <jnt-select-option *ngIf="!!user"
-                                 [key]="user.id"
-                                 [value]="{user: user}"></jnt-select-option>
-              <jnt-select-option *ngFor="let m of members"
+              <jnt-select-option *ngIf="!!developer"
+                                 [key]="developer.id"
+                                 [value]="{user: developer}"></jnt-select-option>
+              <jnt-select-option *ngFor="let m of developers"
                                  [key]="m.user.id"
                                  [value]="m"></jnt-select-option>
             </jnt-select>
@@ -75,7 +75,7 @@
                                    [value]="issuesType.all">
                 <jnt-badge *ngIf="summary?.timeSpent > 0"
                            [color]="ui.color.yellow"
-                           [text]="summary?.timeSpent | duration"></jnt-badge>
+                           [text]="summary?.timeSpent | duration:durationFormat.short"></jnt-badge>
               </jnt-switcher-option>
               <jnt-switcher-option label="Closed"
                                    i18n-label="@@action.filter_type_closed"

@@ -16,10 +16,4 @@ export class SalaryPenaltiesComponent extends PenaltiesComponent {
     super(route, router, logger);
   }
 
-  getState(state: Object) {
-    delete state['user'];
-    delete state['salary'];
-    return state;
-  }
-
 }

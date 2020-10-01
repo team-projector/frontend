@@ -14,6 +14,7 @@ export interface IssuesState {
   dueDate: Date;
   user: User;
   team: Team;
+  developer: User;
   project: Project;
 }
 
@@ -36,13 +37,10 @@ export class IssuesStateUpdate {
   dueDate: Date;
 
   @field()
-  user: string;
-
-  @field()
   project: string;
 
   @field()
-  team: string;
+  developer: string;
 
   constructor(defs: Partial<IssuesStateUpdate> = null) {
     if (!!defs) {

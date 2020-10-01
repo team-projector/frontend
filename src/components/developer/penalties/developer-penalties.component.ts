@@ -16,9 +16,4 @@ export class DeveloperPenaltiesComponent extends BonusesComponent {
     super(route, router, logger);
   }
 
-  getState(state: Object) {
-    delete state['user'];
-    return state;
-  }
-
 }

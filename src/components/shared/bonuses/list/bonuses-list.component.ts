@@ -11,6 +11,8 @@ import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
 import { BonusesFilter, PagingBonuses } from '../../../../models/bonus';
 import { ViewType } from '../../../../models/enums/view-type';
+import { Salary } from '../../../../models/salary';
+import { User } from '../../../../models/user';
 import { AllBonusesGQL } from './bonuses-list.graphql';
 import { BonusesState, BonusesStateUpdate } from './bonuses-list.types';
 
@@ -31,27 +33,28 @@ export class BonusesListComponent implements OnInit {
   @Input()
   view = ViewType.default;
 
+  user: User;
+  salary: Salary;
+
   tableControl = this.fb.control({
     first: DEFAULT_FIRST,
     offset: 0
   });
 
   form = this.fb.group({
-    table: this.tableControl,
-    user: [null],
-    salary: [null]
+    table: this.tableControl
   });
 
   @Input()
   set state({first, offset, user, salary}: BonusesState) {
     this.logger.debug('set state');
+    this.user = user;
+    this.salary = salary;
     this.form.patchValue({
       table: {
         first: first || DEFAULT_FIRST,
         offset: offset || 0
-      },
-      user: user?.id || null,
-      salary: salary?.id || null
+      }
     }, {emitEvent: false});
   }
 
@@ -78,13 +81,11 @@ export class BonusesListComponent implements OnInit {
           .pipe(delay(UI_DELAY), catchGQLErrors(), map(({data: {bonuses}}) => deserialize(bonuses, PagingBonuses)));
     };
 
-    this.form.valueChanges.subscribe(({table: {offset, first}, user, salary}) => {
+    this.form.valueChanges.subscribe(({table: {offset, first}}) => {
       this.logger.debug('form state was changed');
       this.filtered.emit(new BonusesStateUpdate({
         first: first !== DEFAULT_FIRST ? first : undefined,
-        offset: offset !== 0 ? offset : undefined,
-        user: user || undefined,
-        salary: salary || undefined
+        offset: offset !== 0 ? offset : undefined
       }));
 
       this.load();
@@ -94,13 +95,13 @@ export class BonusesListComponent implements OnInit {
   }
 
   private load() {
-    const {table: {offset, first}, user, salary} = this.form.getRawValue();
+    const {table: {offset, first}} = this.form.getRawValue();
     this.filter = new BonusesFilter({
       offset: offset,
       first: first,
       orderBy: 'dueDate',
-      user: user,
-      salary: salary
+      user: this.user?.id,
+      salary: this.salary?.id
     });
     this.logger.debug('load bonuses', this.filter);
 

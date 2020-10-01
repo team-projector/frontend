@@ -1,1 +1,3 @@
-<app-breaks-list [state]="state"></app-breaks-list>
+<app-breaks-list [me]="me"
+                 [state]="state"
+                 (filtered)="save($event)"></app-breaks-list>

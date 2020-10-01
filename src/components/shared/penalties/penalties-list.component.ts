@@ -11,6 +11,8 @@ import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
 import { ViewType } from '../../../models/enums/view-type';
 import { PagingPenalties, PenaltiesFilter } from '../../../models/penalty';
+import { Salary } from '../../../models/salary';
+import { User } from '../../../models/user';
 import { AllPenaltiesGQL } from './penalties.graphql';
 import { PenaltiesState, PenaltiesStateUpdate } from './penalties.types';
 
@@ -31,24 +33,25 @@ export class PenaltiesListComponent implements OnInit {
   @Input()
   view = ViewType.default;
 
+  user: User;
+  salary: Salary;
+
   form = this.fb.group({
     table: this.fb.control({
       first: DEFAULT_FIRST,
       offset: 0
-    }),
-    salary: [null],
-    user: [null]
+    })
   });
 
   @Input()
   set state({first, offset, user, salary}: PenaltiesState) {
+    this.user = user;
+    this.salary = salary;
     this.form.patchValue({
       table: {
         first: first || DEFAULT_FIRST,
         offset: offset || 0
-      },
-      user: user?.id || null,
-      salary: salary?.id || null
+      }
     }, {emitEvent: false});
   }
 
@@ -71,13 +74,11 @@ export class PenaltiesListComponent implements OnInit {
           .pipe(delay(UI_DELAY), catchGQLErrors(), map(({data: {penalties}}) => deserialize(penalties, PagingPenalties)));
     };
 
-    this.form.valueChanges.subscribe(({table: {offset, first}, user, salary}) => {
+    this.form.valueChanges.subscribe(({table: {offset, first}}) => {
       this.logger.debug('form state was changed');
       this.filtered.emit(new PenaltiesStateUpdate({
         first: first !== DEFAULT_FIRST ? first : undefined,
-        offset: offset !== 0 ? offset : undefined,
-        user: user || undefined,
-        salary: salary || undefined
+        offset: offset !== 0 ? offset : undefined
       }));
 
       this.load();
@@ -87,12 +88,12 @@ export class PenaltiesListComponent implements OnInit {
   }
 
   private load() {
-    const {table: {offset, first}, user, salary} = this.form.getRawValue();
+    const {table: {offset, first}} = this.form.getRawValue();
     this.filter = new PenaltiesFilter({
       offset: offset,
       first: first,
-      salary: salary,
-      user: user
+      user: this.user?.id,
+      salary: this.salary?.id
     });
     this.logger.debug('load penalties', this.filter);
 

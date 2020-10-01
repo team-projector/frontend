@@ -13,16 +13,10 @@ export interface BonusesState {
 export class BonusesStateUpdate {
 
   @field()
-  first?: number;
+  first: number;
 
   @field()
-  offset?: number;
-
-  @field()
-  user?: string;
-
-  @field()
-  salary?: string;
+  offset: number;
 
   constructor(defs: Partial<BonusesStateUpdate> = null) {
     if (!!defs) {

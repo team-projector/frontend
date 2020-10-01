@@ -12,6 +12,9 @@ import { MergeRequestState, MergeRequestType } from 'src/models/enums/merge-requ
 import { ViewType } from 'src/models/enums/view-type';
 import { MergeRequestsFilter, MergeRequestSummary, PagingMergeRequest } from 'src/models/merge-request';
 import { getMock } from 'src/utils/mocks';
+import { Project } from '../../../../models/project';
+import { Team } from '../../../../models/team';
+import { User } from '../../../../models/user';
 import { MergeRequestsGQL, MergeRequestSummaryGQL } from './merge-requests.graphql';
 import { MergeRequestsState, MergeRequestsStateUpdate } from './merge-requests-list.types';
 
@@ -40,23 +43,24 @@ export class MergeRequestsListComponent implements OnInit {
   });
   form = this.builder.group({
     table: this.tableControl,
-    type: [MergeRequestType.opened],
-    team: [null],
-    user: [null]
+    type: [MergeRequestType.opened]
   });
 
   @Input()
   view = ViewType.default;
 
+  team: Team;
+  user: User;
+
   @Input() set state({first, offset, type, team, user}: MergeRequestsState) {
+    this.team = team;
+    this.user = user;
     this.form.patchValue({
       table: {
         first: first || DEFAULT_FIRST,
         offset: offset || 0
       },
-      type: type || MergeRequestType.opened,
-      team: team?.id || null,
-      user: user?.id || null
+      type: type || MergeRequestType.opened
     }, {emitEvent: false});
   }
 
@@ -79,13 +83,11 @@ export class MergeRequestsListComponent implements OnInit {
           .pipe(delay(UI_DELAY), map(({data: {mergeRequests}}) => deserialize(mergeRequests, PagingMergeRequest)));
     };
 
-    this.form.valueChanges.subscribe(({table: {offset, first}, type, user, team}) => {
+    this.form.valueChanges.subscribe(({table: {offset, first}, type}) => {
       this.filtered.emit(new MergeRequestsStateUpdate({
         first: first !== DEFAULT_FIRST ? first : undefined,
         offset: offset !== 0 ? offset : undefined,
-        type: type !== MergeRequestType.opened ? type : undefined,
-        user: user || undefined,
-        team: team || undefined
+        type: type !== MergeRequestType.opened ? type : undefined
       }));
 
       this.load();
@@ -103,8 +105,8 @@ export class MergeRequestsListComponent implements OnInit {
       state: type === MergeRequestType.opened ? MergeRequestState.opened :
         (type === MergeRequestType.closed ? MergeRequestState.closed
           : (type === MergeRequestType.merged ? MergeRequestState.merged : null)),
-      team: team,
-      user: user
+      team: this.team?.id,
+      user: this.user?.id
     });
 
     this.loadSummary();

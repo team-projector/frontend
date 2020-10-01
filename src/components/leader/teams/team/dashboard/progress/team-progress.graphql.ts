@@ -38,26 +38,31 @@ query ($team: ID!) {
 })
 export class TeamMetricsGQL extends Query<{ metrics }> {
   document = gql`
-    query ($team: ID!, $start: Date!, $end: Date!, $group: String!) {
-      metrics: teamProgressMetrics(team: $team, start: $start, end: $end, group: $group) {
+query($team: ID!, $start: Date!, $end: Date!, $group: String!) {
+    metrics: teamProgressMetrics(
+        team: $team
+        start: $start
+        end: $end
+        group: $group
+    ) {
         user {
-          id
-          name
+            id
+            name
         }
         metrics {
-          start
-          end
-          timeEstimate
-          timeSpent
-          timeRemains
-          plannedWorkHours
-          loading
-          payroll
-          paid
-          issuesCount
-          efficiency
+            start
+            end
+            timeEstimate
+            timeSpent
+            timeRemains
+            plannedWorkHours
+            loading
+            payroll
+            paid
+            issuesCount
+            efficiency
         }
-      }
-    }`;
+    }
+}`;
 }
 

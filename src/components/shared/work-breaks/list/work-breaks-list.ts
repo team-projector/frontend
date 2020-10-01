@@ -29,11 +29,8 @@ export abstract class BreaksTableComponent implements OnInit {
   }
 
   save(state: BreaksStateUpdate) {
-    this.router.navigate([this.getState(serialize(state))],
+    this.router.navigate([serialize(state)],
       {relativeTo: this.route}).then(() => null);
   }
 
-  getState(state: Object) {
-    throw new Error('Must be overriden');
-  }
 }

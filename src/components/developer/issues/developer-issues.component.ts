@@ -16,9 +16,4 @@ export class DeveloperIssuesComponent extends IssuesComponent {
     super(route, router, logger);
   }
 
-  getState(state: Object) {
-    delete state['user'];
-    return state;
-  }
-
 }

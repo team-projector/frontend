@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { TableComponent, UI, untilJSONChanged } from '@junte/ui';
+import { TableComponent, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
@@ -40,9 +40,9 @@ export class IssuesListComponent implements OnInit {
 
   private _team: Team;
 
-  progress = {projects: false, team: false, summary: false, syncing: false};
+  progress = {projects: false, developers: false, summary: false, syncing: false};
   projects: ProjectSummary[] = [];
-  members: TeamMember[] = [];
+  developers: TeamMember[] = [];
 
   filter: IssuesFilter;
   summary: IssuesSummary;
@@ -50,7 +50,7 @@ export class IssuesListComponent implements OnInit {
   set team(team: Team) {
     if (!!team && team.id !== this._team?.id) {
       this._team = team;
-      this.loadMembers();
+      this.loadDevelopers();
     }
   }
 
@@ -60,6 +60,7 @@ export class IssuesListComponent implements OnInit {
 
   user: User;
   project: Project;
+  developer: User;
 
   tableControl = this.fb.control({
     q: null,
@@ -71,11 +72,8 @@ export class IssuesListComponent implements OnInit {
     table: this.tableControl,
     type: [IssuesType.opened],
     dueDate: [null],
-    team: [null],
-    milestone: [null],
-    user: [null],
     project: [null],
-    ticket: [null]
+    developer: [null]
   });
 
   @Input()
@@ -85,10 +83,11 @@ export class IssuesListComponent implements OnInit {
   table: TableComponent;
 
   @Input()
-  set state({first, offset, q, type, dueDate, team, user, project}: IssuesState) {
+  set state({first, offset, q, type, dueDate, user, team, developer, project}: IssuesState) {
     this.team = team;
     this.user = user;
     this.project = project;
+    this.developer = developer;
     this.form.patchValue({
       table: {
         q: q || null,
@@ -97,9 +96,8 @@ export class IssuesListComponent implements OnInit {
       },
       type: type || IssuesType.opened,
       dueDate: dueDate || null,
-      team: team?.id || null,
-      user: user?.id || null,
-      project: project?.id || null
+      project: project?.id || null,
+      developer: developer?.id || null
     }, {emitEvent: false});
   }
 
@@ -123,7 +121,7 @@ export class IssuesListComponent implements OnInit {
           .pipe(delay(UI_DELAY), map(({data: {issues}}) => deserialize(issues, PagingIssues)));
     };
 
-    this.form.valueChanges.subscribe(({table: {offset, first, q}, type, dueDate, user, team, project}) => {
+    this.form.valueChanges.subscribe(({table: {offset, first, q}, type, dueDate, project, developer}) => {
       this.logger.debug('form state was changed');
       this.filtered.emit(new IssuesStateUpdate({
         q: q || undefined,
@@ -131,26 +129,15 @@ export class IssuesListComponent implements OnInit {
         offset: offset !== 0 ? offset : undefined,
         type: type !== IssuesType.opened ? type : undefined,
         dueDate: dueDate || undefined,
-        user: user || undefined,
-        team: team || undefined,
-        project: project || undefined
+        project: project || undefined,
+        developer: developer || undefined
       }));
 
       this.load();
     });
 
-    this.loadProjects();
     this.load();
-  }
-
-  private loadMembers() {
-    this.progress.team = true;
-    (environment.mocks
-      ? of(getMock(PagingTeamMembers)).pipe(delay(MOCKS_DELAY))
-      : this.teamMembersGQL.fetch({team: this.team.id} as R)
-        .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
-      .pipe(finalize(() => this.progress.team = false))
-      .subscribe(teams => this.members = teams.results);
+    this.loadProjects();
   }
 
   private loadProjects() {
@@ -170,17 +157,27 @@ export class IssuesListComponent implements OnInit {
       .subscribe(({projects}) => this.projects = projects);
   }
 
+  private loadDevelopers() {
+    this.progress.developers = true;
+    (environment.mocks
+      ? of(getMock(PagingTeamMembers)).pipe(delay(MOCKS_DELAY))
+      : this.teamMembersGQL.fetch({team: this.team.id} as R)
+        .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
+      .pipe(finalize(() => this.progress.developers = false))
+      .subscribe(members => this.developers = members.results);
+  }
+
   private load() {
-    const {table: {offset, first, q}, type, dueDate, user, team, project} = this.form.getRawValue();
+    const {table: {offset, first, q}, type, dueDate, project, developer} = this.form.getRawValue();
     this.filter = new IssuesFilter({
       offset: offset,
       first: first,
       q: q,
       orderBy: type === IssuesType.opened ? 'dueDate' : '-closedAt',
       dueDate: !!dueDate ? startOfDay(dueDate) : null,
-      user: user,
       project: project,
-      team: team,
+      user: this.user?.id || developer,
+      team: this.team?.id,
       state: type === IssuesType.opened ? IssueState.opened :
         (type === IssuesType.closed ? IssueState.closed : null),
       problems: type === IssuesType.problems ? true : null

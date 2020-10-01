@@ -19,10 +19,4 @@ export class SalaryTimeExpensesListComponent extends TimeExpensesComponent {
     super(route, router);
   }
 
-  getState(state: Object) {
-    delete state['user'];
-    delete state['salary'];
-    delete state['type'];
-    return state;
-  }
 }

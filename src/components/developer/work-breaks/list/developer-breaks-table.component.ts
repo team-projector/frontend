@@ -20,8 +20,4 @@ export class DeveloperBreaksTableComponent extends BreaksTableComponent {
     route.data.subscribe(({me}) => this.me = me);
   }
 
-  getState(state: Object) {
-    delete state['user'];
-    return state;
-  }
 }

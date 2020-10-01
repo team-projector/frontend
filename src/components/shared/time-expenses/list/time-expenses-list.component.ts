@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { TableComponent, UI, untilJSONChanged } from '@junte/ui';
+import { TableComponent, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { of } from 'rxjs';
@@ -13,6 +13,9 @@ import { OwnerType, TimeExpenseState, TimeExpenseType } from 'src/models/enums/t
 import { ViewType } from 'src/models/enums/view-type';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter } from 'src/models/spent-time';
 import { getMock } from 'src/utils/mocks';
+import { Salary } from '../../../../models/salary';
+import { Team } from '../../../../models/team';
+import { User } from '../../../../models/user';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses-list.graphql';
 import { TimeExpensesState, TimeExpensesStateUpdate } from './time-expenses-list.types';
 
@@ -37,6 +40,10 @@ export class TimeExpensesListComponent implements OnInit {
   @Input()
   type = TimeExpenseType.all;
 
+  team: Team;
+  user: User;
+  salary: Salary;
+
   tableControl = this.builder.control({
     first: DEFAULT_FIRST,
     offset: 0
@@ -44,10 +51,7 @@ export class TimeExpensesListComponent implements OnInit {
   form = this.builder.group({
     table: this.tableControl,
     type: [this.type],
-    date: [null],
-    team: [null],
-    user: [null],
-    salary: [null]
+    date: [null]
   });
 
   @Input()
@@ -58,16 +62,17 @@ export class TimeExpensesListComponent implements OnInit {
 
   @Input()
   set state({first, offset, type, date, team, user, salary}: TimeExpensesState) {
+    this.team = team;
+    this.salary = salary;
+    this.user = user;
+    this.salary = salary;
     this.form.patchValue({
       table: {
         first: first || DEFAULT_FIRST,
         offset: offset || 0
       },
       type: type || TimeExpenseType.all,
-      date: date || null,
-      team: team?.id || null,
-      user: user?.id || null,
-      salary: salary?.id || null,
+      date: date || null
     }, {emitEvent: false});
   }
 
@@ -87,14 +92,11 @@ export class TimeExpensesListComponent implements OnInit {
           .pipe(delay(UI_DELAY), map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingTimeExpenses)));
     };
 
-    this.form.valueChanges.subscribe(({table: {offset, first}, type, team, user, salary, date}) => {
+    this.form.valueChanges.subscribe(({table: {offset, first}, type, date}) => {
         this.filtered.emit(new TimeExpensesStateUpdate({
           first: first !== DEFAULT_FIRST ? first : undefined,
           offset: offset !== 0 ? offset : undefined,
           type: type !== TimeExpenseType.all ? type : undefined,
-          team: team || undefined,
-          user: user || undefined,
-          salary: salary || undefined,
           date: date || undefined
         }));
 
@@ -113,9 +115,9 @@ export class TimeExpensesListComponent implements OnInit {
         type === TimeExpenseType.closed ? TimeExpenseState.closed : undefined,
       orderBy: type === TimeExpenseType.opened ? 'dueDate' : '-closedAt',
       date: !!date ? startOfDay(date) : null,
-      team: team,
-      user: user,
-      salary: salary || undefined
+      team: this.team?.id,
+      user: this.user?.id,
+      salary: this.salary?.id
     });
 
     this.loadSummary();

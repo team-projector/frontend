@@ -17,9 +17,4 @@ export class DeveloperSalariesComponent extends Salaries {
     super(route, router, logger);
   }
 
-  getState(state: Object) {
-    delete state['user'];
-    return state;
-  }
-
 }

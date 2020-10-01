@@ -17,9 +17,4 @@ export class SalaryBonusesListComponent extends BonusesComponent {
     super(route, router, logger);
   }
 
-  getState(state: Object) {
-    delete state['salary'];
-    return state;
-  }
-
 }

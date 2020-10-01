@@ -95,10 +95,6 @@ export class IssueMetrics {
 
     issue.labels.push(faker.helpers.randomize([
       new Label({
-        title: StandardLabel.bug,
-        color: UI.color.red
-      }),
-      new Label({
         title: 'Discuss',
         color: UI.color.blue
       }),
@@ -198,42 +194,39 @@ export class PagingIssues implements Paging<Issue> {
 export class IssuesFilter implements SearchFilter {
 
   @field()
-  team?: string;
+  team: string;
 
   @field()
-  user?: string;
+  user: string;
 
   @field()
-  project?: string;
+  project: string;
 
   @field()
-  milestone?: string;
-
-  @field()
-  ticket?: string;
+  ticket: string;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
-  dueDate?: Date;
+  dueDate: Date;
 
   @field()
-  state?: IssueState | null;
+  state: IssueState | null;
 
   @field()
-  problems?: boolean | null;
+  problems: boolean | null;
 
   @field()
-  first?: number;
+  first: number;
 
   @field()
-  offset?: number;
+  offset: number;
 
   @field()
-  q?: string;
+  q: string;
 
   @field()
-  orderBy?: string;
+  orderBy: string;
 
-  constructor(defs: IssuesFilter = null) {
+  constructor(defs: Partial<IssuesFilter> = null) {
     if (!!defs) {
       Object.assign(this, defs);
     }

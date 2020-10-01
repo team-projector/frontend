@@ -1,13 +1,13 @@
 import { Component, ComponentFactoryResolver, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ModalOptions, ModalService, TableComponent, UI, untilJSONChanged } from '@junte/ui';
+import { ModalOptions, ModalService, TableComponent, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
-import { AllWorkBreaks, ApproveWorkBreakGQL, DeleteWorkBreakGQL } from 'src/components/shared/work-breaks/list/work-breaks-list.graphql';
 import { BreakDeclineComponent } from 'src/components/shared/work-breaks/decline/break-decline.component';
 import { BreakEditComponent } from 'src/components/shared/work-breaks/edit/break-edit.component';
+import { AllWorkBreaks, ApproveWorkBreakGQL, DeleteWorkBreakGQL } from 'src/components/shared/work-breaks/list/work-breaks-list.graphql';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { ApproveStates, BreakReasons } from 'src/models/enums/break';
@@ -16,7 +16,7 @@ import { BreaksFilter, PagingBreaks, WorkBreak } from 'src/models/work-break';
 import { getMock } from 'src/utils/mocks';
 import { LocalUI } from '../../../../enums/local-ui';
 import { Team } from '../../../../models/team';
-import { Me } from '../../../../models/user';
+import { Me, User } from '../../../../models/user';
 import { BreaksState, BreaksStateUpdate } from './work-breaks-list-types';
 
 const DEFAULT_FIRST = 10;
@@ -35,7 +35,9 @@ export class WorkBreaksListComponent implements OnInit {
 
   filter: BreaksFilter;
   breaks: WorkBreak[] = [];
+
   team: Team;
+  user: User;
 
   loading = false;
 
@@ -45,9 +47,7 @@ export class WorkBreaksListComponent implements OnInit {
   });
 
   form = this.fb.group({
-    table: this.tableControl,
-    user: [null],
-    team: [null],
+    table: this.tableControl
   });
 
   @Input()
@@ -56,13 +56,12 @@ export class WorkBreaksListComponent implements OnInit {
   @Input()
   set state({first, offset, team, user}: BreaksState) {
     this.team = team;
+    this.user = user;
     this.form.patchValue({
       view: {
         first: first || DEFAULT_FIRST,
         offset: offset || 0
-      },
-      team: team?.id || null,
-      user: user?.id || null
+      }
     }, {emitEvent: false});
   }
 
@@ -92,12 +91,10 @@ export class WorkBreaksListComponent implements OnInit {
           .pipe(delay(UI_DELAY), map(({data: {breaks}}) => deserialize(breaks, PagingBreaks)));
     };
 
-    this.form.valueChanges.subscribe(({table: {offset, first}, team, user}) => {
+    this.form.valueChanges.subscribe(({table: {offset, first}}) => {
       this.filtered.emit(new BreaksStateUpdate({
         first: first !== DEFAULT_FIRST ? first : undefined,
-        offset: offset !== 0 ? offset : undefined,
-        user: user || undefined,
-        team: team || undefined
+        offset: offset !== 0 ? offset : undefined
       }));
       this.load();
     });
@@ -106,12 +103,12 @@ export class WorkBreaksListComponent implements OnInit {
   }
 
   load() {
-    const {table: {offset, first}, user, team} = this.form.getRawValue();
+    const {table: {offset, first}} = this.form.getRawValue();
     this.filter = new BreaksFilter({
       offset: offset,
       first: first,
-      user: user,
-      team: team
+      team: this.team?.id,
+      user: this.user?.id
     });
     this.table.load();
   }

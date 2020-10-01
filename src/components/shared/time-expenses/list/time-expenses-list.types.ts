@@ -31,15 +31,6 @@ export class TimeExpensesStateUpdate {
   @field({serializer: new DateSerializer(DATE_FORMAT)})
   date: Date;
 
-  @field()
-  team: string;
-
-  @field()
-  user: string;
-
-  @field()
-  salary: string;
-
   constructor(defs: Partial<TimeExpensesStateUpdate> = null) {
     if (!!defs) {
       Object.assign(this, defs);

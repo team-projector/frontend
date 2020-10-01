@@ -14,8 +14,4 @@ export class TeamMergeRequestsComponent extends MergeRequestsComponent {
     super(route, router);
   }
 
-  getState(state: Object) {
-    delete state['team'];
-    return state;
-  }
 }

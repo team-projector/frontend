@@ -1,19 +1,18 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, FormBuilder, FormControl, FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import { UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { addDays, addWeeks, endOfWeek, getDate, startOfDay, startOfWeek, subWeeks } from 'date-fns';
-import { UI } from '@junte/ui';
-import { BehaviorSubject, combineLatest, of, zip } from 'rxjs';
-import { delay, distinctUntilChanged, filter as filtering, finalize, map, tap } from 'rxjs/operators';
+import { of, zip } from 'rxjs';
+import { delay, filter as filtering, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { MOCKS_DELAY } from 'src/consts';
+import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { Metrics, MetricType } from 'src/models/enums/metrics';
 import { UserProblem } from 'src/models/enums/user';
 import { PagingTeamMembers, Team, TeamMember, TeamMemberProgressMetrics, TeamMetricsFilter } from 'src/models/team';
-import { User, UserProgressMetrics } from 'src/models/user';
-import { equals } from 'src/utils/equals';
+import { UserProgressMetrics } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
 import { METRIC_TYPE } from '../../../../../shared/metrics-type/consts';
 import { TeamMembersGQL, TeamMetricsGQL } from './team-progress.graphql';
@@ -22,15 +21,9 @@ const DAYS_IN_WEEK = 7;
 const DAYS_WEEK = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 const L = 'dd/MM/yyyy';
 
-export class UserFilter {
-  user: User;
-  dueDate: Date;
-}
-
-class Metric {
-  constructor(public days: Map<string, Map<string, UserProgressMetrics>>,
-              public weeks: Map<string, Map<string, UserProgressMetrics>>) {
-  }
+interface TeamMetrics {
+  days: Map<string, Map<string, UserProgressMetrics>>;
+  weeks: Map<string, Map<string, UserProgressMetrics>>;
 }
 
 @Component({
@@ -52,53 +45,42 @@ export class TeamProgressComponent implements OnInit {
   today = startOfDay(new Date());
   daysOfWeek = DAYS_WEEK;
 
-  private team$ = new BehaviorSubject<Team>(null);
-  private start$ = new BehaviorSubject<Date>(null);
-  private _date: Date;
+  private _team: Team;
+  private _current: Date = this.today;
+
+  progress = {developers: false, metrics: false};
 
   days: Date[] = [];
-  members: TeamMember[] = [];
-  metrics: Metric;
-  loading: boolean;
+  developers: TeamMember[] = [];
+  metrics: TeamMetrics;
 
   metricControl = this.fb.control(localStorage.getItem(METRIC_TYPE) || MetricType.all);
-  form: FormGroup = this.fb.group({
+  form = this.fb.group({
     metric: this.metricControl
   });
 
   @Input()
-  metric: MetricType;
-
-  @Input()
   set team(team: Team) {
-    if (!equals(this.team, team)) {
-      this.team$.next(team);
-    }
+    this._team = team;
+    this.loadMembers();
+    this.loadMetrics();
   }
 
   get team() {
-    return this.team$.getValue();
+    return this._team;
   }
 
-  set date(date: Date) {
-    this._date = date;
-    this.update();
+  set current(current: Date) {
+    this._current = current;
+    this.render();
   }
 
-  get date() {
-    return this._date;
-  }
-
-  set start(start: Date) {
-    this.start$.next(start);
-  }
-
-  get start() {
-    return this.start$.getValue();
+  get current() {
+    return this._current;
   }
 
   @Output()
-  selected = new EventEmitter<{ user: string, dueDate: Date }>();
+  selected = new EventEmitter<{ developer: string, dueDate: Date }>();
 
   constructor(private teamMembersGQL: TeamMembersGQL,
               private teamMetrics: TeamMetricsGQL,
@@ -106,21 +88,25 @@ export class TeamProgressComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.date = new Date();
-    this.team$.pipe(filtering(t => !!t))
-      .subscribe(() => this.loadMembers());
-
-    combineLatest(this.team$, this.start$)
-      .pipe(filtering(([team, start]) => !!team && !!start))
-      .subscribe(() => this.loadMetrics());
+    this.current = new Date();
   }
 
-  private loadMetrics() {
+  private loadMembers() {
+    this.progress.developers = true;
+    (environment.mocks
+      ? of(getMock(PagingTeamMembers)).pipe(delay(MOCKS_DELAY))
+      : this.teamMembersGQL.fetch({team: this.team.id} as R)
+        .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
+      .pipe(delay(UI_DELAY), finalize(() => this.progress.developers = false))
+      .subscribe(members => this.developers = members.results);
+  }
+
+  loadMetrics() {
     const getMetric = (group: Metrics) => {
       const filter = new TeamMetricsFilter({
         team: this.team.id,
-        start: this.start,
-        end: endOfWeek(this.start, {weekStartsOn: 1}),
+        start: startOfWeek(this.current, {weekStartsOn: 1}),
+        end: endOfWeek(this.current, {weekStartsOn: 1}),
         group: group
       });
       return (environment.mocks
@@ -141,26 +127,17 @@ export class TeamProgressComponent implements OnInit {
         }));
     };
 
+    this.progress.metrics = true;
     zip(getMetric(Metrics.day), getMetric(Metrics.week))
-      .subscribe(([days, weeks]) => this.metrics = new Metric(days, weeks));
+      .pipe(finalize(() => this.progress.metrics = false))
+      .subscribe(([days, weeks]) => this.metrics = {days, weeks});
   }
 
-  private loadMembers() {
-    this.loading = true;
-    (environment.mocks
-      ? of(getMock(PagingTeamMembers)).pipe(delay(MOCKS_DELAY))
-      : this.teamMembersGQL.fetch({team: this.team.id} as R)
-        .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(teams => this.members = teams.results);
-  }
-
-  private update() {
-    // TODO: use week starts on from locale
-    this.start = startOfWeek(this.date, {weekStartsOn: 1});
+  private render() {
+    const start = startOfWeek(this.current, {weekStartsOn: 1});
     this.days = [];
     for (let i = 0; i < DAYS_IN_WEEK; i++) {
-      this.days[i] = addDays(this.start, i);
+      this.days[i] = addDays(start, i);
     }
   }
 

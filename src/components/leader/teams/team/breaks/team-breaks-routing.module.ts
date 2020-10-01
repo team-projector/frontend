@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TeamBreaksComponent } from 'src/components/leader/teams/team/breaks/team-breaks.component';
 import { TeamResolver } from 'src/resolvers/team';
 import { UserResolver } from 'src/resolvers/user';
+import { MeUserResolver } from '../../../../../resolvers/me';
 import { TeamBreaksListTableComponent } from './breaks-list-table/breaks-list-table.component';
 import { TeamBreaksListGanttComponent } from './breaks-list-gantt/breaks-list-gantt.component';
 
@@ -20,7 +21,10 @@ const routes: Routes = [
       {
         path: '',
         data: {breadcrumb: WORK_BREAKS_BREADCRUMB},
-        component: TeamBreaksListTableComponent
+        component: TeamBreaksListTableComponent,
+        resolve: {
+          me: MeUserResolver
+        }
       },
       {
         path: 'gantt',
@@ -36,4 +40,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class TeamBreaksRoutingModule {
+
 }
