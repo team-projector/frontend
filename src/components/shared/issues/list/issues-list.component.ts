@@ -141,10 +141,9 @@ export class IssuesListComponent implements OnInit {
   }
 
   private loadProjects() {
-    const {user, team} = this.form.getRawValue();
     const filter = new IssuesFilter({
-      user: user,
-      team: team
+      team: this.team?.id,
+      user: this.user?.id
     });
     this.logger.debug('load projects');
     this.progress.projects = true;
