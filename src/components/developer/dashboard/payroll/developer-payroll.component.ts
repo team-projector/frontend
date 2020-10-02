@@ -11,6 +11,7 @@ import { getMock } from 'src/utils/mocks';
 import { Bonus, PagingBonuses } from '../../../../models/bonus';
 import { PagingPenalties, Penalty } from '../../../../models/penalty';
 import { AllBonusesGQL, AllPenaltiesGQL } from './developer-payroll.graphql';
+import { LocalUI } from '../../../../enums/local-ui';
 
 @Component({
   selector: 'app-developer-payroll',
@@ -24,11 +25,8 @@ export class DeveloperPayrollComponent implements OnInit {
   today = new Date();
   bonuses: Bonus[] = [];
   penalties: Penalty[] = [];
-
-  taxesControl = this.fb.control(true);
-  form = this.fb.group({
-    taxes: this.taxesControl
-  });
+  localUi = LocalUI;
+  opened = false;
 
   @Input()
   me: Me;
