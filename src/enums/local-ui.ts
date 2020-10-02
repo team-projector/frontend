@@ -8,6 +8,7 @@ export class LocalUI {
     salary: 'salary:font:icons',
     workBreak: 'work-break:font:icons',
 
+    money: 'money:font:icons',
     developer: 'developer:svg:local',
     teamLeader: 'team-leader:svg:local',
     projectManager: 'project-manager:svg:local',
