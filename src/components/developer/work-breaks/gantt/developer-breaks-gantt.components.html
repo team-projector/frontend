@@ -1,0 +1,48 @@
+<jnt-block [padding]="ui.gutter.none"
+           [state]="loading ? ui.state.loading : null"
+           [width]="ui.width.fluid">
+    <jnt-gantt [type]="ui.gantt.type.year">
+      <ng-template #titleTemplate>
+        <strong>Developer</strong>
+      </ng-template>
+      <jnt-gantt-line *ngFor="let workBreak of workbreaks"
+                      [title]="workBreak.user.name">
+        <ng-template #title>
+          <jnt-stack>
+            <jnt-date-period [start]="workBreak.fromDate" [end]="workBreak.toDate"></jnt-date-period>
+
+            <ng-container [ngSwitch]="workBreak.reason">
+              <ng-container *ngSwitchCase="reasons.vacation"
+                            i18n="@@action.vacation">Vacation
+              </ng-container>
+              <ng-container *ngSwitchCase="reasons.disease"
+                            i18n="@@action.disease">Disease
+              </ng-container>
+              <ng-container *ngSwitchCase="reasons.dayoff"
+                            i18n="@@action.dayoff">Dayoff
+              </ng-container>
+            </ng-container>
+
+            <div data-comment>{{workBreak.comment}}</div>
+          </jnt-stack>
+        </ng-template>
+        <jnt-gantt-line-period [from]="workBreak.fromDate"
+                               [to]="workBreak.toDate">
+
+          <ng-template #indicatorYear let-current="current" let-today="today">
+            <div [attr.accepting]="workBreak['approveState'] === approveStates.created"
+                 [attr.accepted]="workBreak['approveState'] === approveStates.approved"
+                 [attr.declined]="workBreak['approveState'] === approveStates.declined"
+                 [attr.short]="workBreak['toDate'] | dfnsDifferenceInMonths:workBreak['fromDate'] < 2"
+                 [attr.over-from]="(workBreak['fromDate'] | dfnsGetYear) < (current | dfnsGetYear)"
+                 [attr.over-to]="(workBreak['toDate'] | dfnsGetYear) > (current | dfnsGetYear)" period>
+                            <span label>
+                              {{(workBreak['toDate'] | dfnsDifferenceInDays:workBreak['fromDate']) + 1 }} days
+                            </span>
+            </div>
+          </ng-template>
+
+        </jnt-gantt-line-period>
+      </jnt-gantt-line>
+    </jnt-gantt>
+</jnt-block>
