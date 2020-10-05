@@ -9,7 +9,10 @@
   display: block
 }
 
+small {
+  color: $jnt-primary-text-light-color;
+}
+
 [data-gitlab] {
   @include jnt-icon((size: 30px), '&', true);
 }
-

@@ -70,17 +70,11 @@ table {
     min-width: 120px;
   }
 
-  th:nth-child(3),
-  td:nth-child(3) {
-    min-width: 76px;
-    width: 76px;
-  }
-
-  th:nth-child(3),
-  td:nth-child(3),
-  th:nth-child(10),
-  td:nth-child(10) {
-    border-right: 1px solid $jnt-muted-color;
+  tr[data-week] {
+    th:nth-child(2),
+    th:nth-child(9) {
+      border-right: 1px solid $jnt-muted-color;
+    }
   }
 
   thead {
@@ -132,6 +126,10 @@ table {
 
   tbody {
     tr {
+      td[data-spent] {
+        min-width: 76px;
+        width: 76px;
+      }
       &:not(:first-child),
       &:not(:nth-child(2)) {
         td {

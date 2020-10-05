@@ -27,7 +27,8 @@
               <div data-title>Closed</div>
               <jnt-stack data-time [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.small"
                          [align]="ui.align.center">
-                <jnt-icon *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) > 0" [icon]="ui.icons.time"></jnt-icon>
+                <jnt-icon *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) > 0"
+                          [icon]="ui.icons.time"></jnt-icon>
                 <span>{{(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) | duration}}</span>
               </jnt-stack>
             </jnt-stack>
@@ -75,7 +76,7 @@
           </span>
         </jnt-stack>
 
-        <jnt-stack [gutter]="ui.gutter.none" [align]="ui.align.end" data-opened>
+        <jnt-stack data-opened [gutter]="ui.gutter.none" [align]="ui.align.end">
           <span data-label>Opened tasks:</span>
           <span data-digit>
             {{metrics.payrollOpened | currency:undefined:'symbol':'1.0-0'}}</span>
@@ -89,7 +90,13 @@
 
     </jnt-stack>
 
-    <div data-more (click)="opened = !opened">{{opened ? 'Hide details' : 'More details'}}</div>
-
+    <jnt-stack [orientation]="ui.orientation.horizontal"
+               [justify]="ui.justify.center">
+      <jnt-button [text]="opened ? 'Hide details' : 'More details'"
+                  [outline]="ui.outline.transparent"
+                  [size]="ui.size.small"
+                  (click)="opened = !opened"></jnt-button>
+    </jnt-stack>
   </jnt-stack>
+
 </jnt-block>

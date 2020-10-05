@@ -8,30 +8,30 @@
     </ng-template>
 
     <jnt-menu menu>
-      <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.developer)"
+      <jnt-menu-item *ngIf="me.roles?.includes(userRole.developer)"
                      title="Developer"
                      i18n-title="@@action.developer" [link]="['/developer']"
                      [icon]="localUi.icons.developer"
                      [matching]="ui.matching.wildcard"></jnt-menu-item>
-      <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.teamLeader)"
+      <jnt-menu-item *ngIf="me.roles?.includes(userRole.teamLeader)"
                      title="Team Leader"
                      i18n-title="@@action.team_leader"
                      [link]="['/leader']"
                      [icon]="localUi.icons.teamLeader"
                      [matching]="ui.matching.wildcard"></jnt-menu-item>
-      <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.projectManager)"
+      <jnt-menu-item *ngIf="me.roles?.includes(userRole.projectManager)"
                      title="Project Manager"
                      i18n-title="@@action.project_manager"
                      [link]="['/manager']"
                      [icon]="localUi.icons.projectManager"
                      [matching]="ui.matching.wildcard"></jnt-menu-item>
-      <!--<jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.customer)"
+      <!--<jnt-menu-item *ngIf="me.roles?.includes(userRole.customer)"
                      title="Customer"
                      i18n-title="@@action.customer"
                      [link]="['/customer']"
                      [icon]="localUi.icons.customer"
                      [matching]="ui.matching.wildcard"></jnt-menu-item>-->
-      <jnt-menu-item *ngIf="me.user?.roles?.includes(userRole.shareholder)"
+      <jnt-menu-item *ngIf="me.roles?.includes(userRole.shareholder)"
                      title="Shareholder"
                      i18n-title="@@action.shareholder"
                      [link]="['/shareholder']"
@@ -63,19 +63,25 @@
       <jnt-app-header-userbar>
         <ng-template #userbarAvatarTemplate>
           <jnt-avatar [size]="ui.size.small"
-                      [image]="me.user?.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
+                      [image]="me.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
         </ng-template>
         <ng-template #userbarMenuTemplate>
-          <jnt-stack data-content
-                     [orientation]="ui.orientation.vertical"
-                     [gutter]="ui.gutter.small"
-                     [align]="ui.align.start"
-                     [justify]="ui.justify.center"
-                     [wrap]="ui.wrap.noWrap">
+          <jnt-stack>
+            <jnt-stack [orientation]="ui.orientation.horizontal"
+                       [gutter]="ui.gutter.small">
+              <jnt-avatar [size]="ui.size.small"
+                          [image]="me.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
+              <jnt-stack [gutter]="ui.gutter.none">
+                <div>{{me.name}}</div>
+                <small>{{me.position?.title}}</small>
+              </jnt-stack>
+            </jnt-stack>
             <app-select-lang></app-select-lang>
-            <p>{{me.user?.name}}</p>
-            <jnt-button *ngIf="config.token" (click)="logout()"
-                        text="Logout"></jnt-button>
+            <jnt-button *ngIf="config.token"
+                        text="Logout"
+                        [icon]="{icon: ui.icons.chevronRight, position: ui.position.right}"
+                        (click)="logout()"
+                        [width]="ui.width.fluid"></jnt-button>
           </jnt-stack>
         </ng-template>
       </jnt-app-header-userbar>

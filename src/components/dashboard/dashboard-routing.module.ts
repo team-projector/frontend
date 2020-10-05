@@ -1,13 +1,17 @@
-import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
-import {DashboardComponent} from './dashboard.component';
-import {AuthorizationGuard} from '../../guards/authorization.guard';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { MeUserResolver } from '../../resolvers/me';
+import { DashboardComponent } from './dashboard.component';
+import { AuthorizationGuard } from '../../guards/authorization.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: DashboardComponent,
     canActivate: [AuthorizationGuard],
+    resolve: {
+      me: MeUserResolver
+    },
     children: [
       {
         path: '',

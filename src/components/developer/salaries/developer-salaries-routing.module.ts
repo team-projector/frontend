@@ -1,26 +1,30 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { format } from 'date-fns';
 import { MeUserResolver } from 'src/resolvers/me';
-import { Salary } from '../../../models/salary';
+import { OutletComponent } from '../../outlet/outlet.component';
 import { DeveloperSalariesComponent } from './developer-salaries.component';
 
-export function getSalary({salary}: { salary: Salary }) {
-  return format(salary.createdAt, 'PPp');
-}
+export const SALARIES_BREADCRUMB = $localize`:@@label.salaries:Salaries`;
 
 const routes: Routes = [
   {
     path: '',
-    component: DeveloperSalariesComponent,
-    resolve: {
-      user: MeUserResolver
-    }
-  },
-  {
-    path: ':salary',
-    loadChildren: () => import('../../shared/salaries/detail/salary-detail.module')
-      .then(m => m.SalaryDetailModule)
+    component: OutletComponent,
+    data: {breadcrumb: SALARIES_BREADCRUMB},
+    children: [
+      {
+        path: '',
+        component: DeveloperSalariesComponent,
+        resolve: {
+          user: MeUserResolver
+        }
+      },
+      {
+        path: ':salary',
+        loadChildren: () => import('../../shared/salaries/detail/salary-detail.module')
+          .then(m => m.SalaryDetailModule)
+      }
+    ]
   }
 ];
 

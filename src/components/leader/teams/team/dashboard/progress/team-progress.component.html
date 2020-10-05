@@ -89,113 +89,106 @@
 </ng-template>
 
 <jnt-form [formGroup]="form">
-  <jnt-stack [align]="ui.align.stretch">
-    <app-metrics-type formControlName="metric"></app-metrics-type>
+  <table>
+    <thead>
+    <tr data-rewind>
+      <th data-gutter></th>
+      <th colspan="2" data-tools>
+        <app-metrics-type formControlName="metric"></app-metrics-type>
+      </th>
+      <th colspan="10">
+        <div data-date>
+          <jnt-button [icon]="ui.icons.chevronLeft"
+                      [size]="ui.size.small"
+                      [outline]="ui.outline.transparent"
+                      [disabled]="progress.metrics"
+                      (click)="current = subWeeks(current, 1);loadMetrics()"></jnt-button>
+          <span [innerHTML]="days[0] | period:days[6]"></span>
+          <jnt-button [icon]="ui.icons.chevronRight"
+                      [size]="ui.size.small"
+                      [outline]="ui.outline.transparent"
+                      [disabled]="progress.metrics"
+                      (click)="current = addWeeks(current, 1);loadMetrics()"></jnt-button>
+        </div>
+      </th>
+      <th data-gutter></th>
+    </tr>
+    <tr data-week>
+      <th data-gutter></th>
+      <th colspan="2" i18n="@@label.developer">Developer</th>
+      <th data-day *ngFor="let day of daysOfWeek; let i = index"
+          (click)="selected.emit({developer: null, dueDate: days[i]})"
+          [attr.today]="(today | dfnsIsEqual: days[i])">
+        <span>{{day}}</span> {{days[i] | dfnsGetDate}}
+      </th>
+      <th data-metric-name
+          i18n="@@label.est">Est
+      </th>
+      <th data-metric-name
+          i18n="@@label.sp">Sp
+      </th>
+      <th data-metric-name
+          i18n="@@label.eff">Eff
+      </th>
+      <th data-gutter></th>
+    </tr>
+    </thead>
 
-    <table>
-      <thead>
-      <tr data-rewind>
-        <th data-gutter></th>
-        <th data-tools>
-          <jnt-spinner *ngIf="progress.metrics"
-                       [size]="ui.size.small"></jnt-spinner>
-        </th>
-        <th></th>
-        <th colspan="10">
-          <div data-date>
-            <jnt-button [icon]="ui.icons.chevronLeft"
-                        [size]="ui.size.small"
-                        [outline]="ui.outline.transparent"
-                        [disabled]="progress.metrics"
-                        (click)="current = subWeeks(current, 1);loadMetrics()"></jnt-button>
-            <span [innerHTML]="days[0] | period:days[6]"></span>
-            <jnt-button [icon]="ui.icons.chevronRight"
-                        [size]="ui.size.small"
-                        [outline]="ui.outline.transparent"
-                        [disabled]="progress.metrics"
-                        (click)="current = addWeeks(current, 1);loadMetrics()"></jnt-button>
-          </div>
-        </th>
-        <th data-gutter></th>
-      </tr>
-      <tr data-week>
-        <th data-gutter></th>
-        <th i18n="@@label.developer">Developer</th>
-        <th></th>
-        <th data-day *ngFor="let day of daysOfWeek; let i = index"
-            (click)="selected.emit({developer: null, dueDate: days[i]})"
-            [attr.today]="(today | dfnsIsEqual: days[i])">
-          <span>{{day}}</span> {{days[i] | dfnsGetDate}}
-        </th>
-        <th data-metric-name
-            i18n="@@label.est">Est
-        </th>
-        <th data-metric-name
-            i18n="@@label.sp">Sp
-        </th>
-        <th data-metric-name
-            i18n="@@label.eff">Eff
-        </th>
-        <th data-gutter></th>
-      </tr>
-      </thead>
-
-      <tbody>
-      <ng-container *ngIf="!!developers.length; else noDataTemplate">
-        <tr *ngFor="let member of developers">
-          <td data-gutter></td>
-          <td (click)="selected.emit({developer: member.user.id, dueDate: null})">
-            <jnt-stack  data-developer [orientation]="ui.orientation.horizontal"
-                       [gutter]="ui.gutter.small" tabindex="0">
-              <jnt-avatar [image]="member.user.avatar"
-                          [size]="ui.size.tiny"></jnt-avatar>
-              <div>
-                <jnt-link [title]="member.user.name"></jnt-link>
-                <br>
-                <small data-roles>{{member.roles | join:', '}}</small>
-              </div>
-            </jnt-stack>
-          </td>
-          <td>
-            <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.stretch">
-              <jnt-label *ngIf="member.user.metrics.issues.closedSpent"
-                         [label]="member.user.metrics.issues.closedSpent | duration:durationFormat.short"
-                         [color]="ui.color.green"></jnt-label>
-              <jnt-label *ngIf="member.user.metrics.issues.openedSpent"
-                         [label]="member.user.metrics.issues.openedSpent | duration:durationFormat.short"
-                         [color]="member.user.problems?.includes(userProblem.payrollOpenedOverflow) ? ui.color.red : ui.color.paleNavy"></jnt-label>
-            </jnt-stack>
-          </td>
-          <td data-day *ngFor="let day of days"
-              (click)="selected.emit({developer: member.user.id, dueDate: day})">
-            <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {date: (day | dfnsEndOfDay),
+    <tbody>
+    <ng-container *ngIf="!!developers.length; else noDataTemplate">
+      <tr *ngFor="let member of developers">
+        <td data-gutter></td>
+        <td (click)="selected.emit({developer: member.user.id, dueDate: null})">
+          <jnt-stack data-developer [orientation]="ui.orientation.horizontal"
+                     [gutter]="ui.gutter.small" tabindex="0">
+            <jnt-avatar [image]="member.user.avatar"
+                        [size]="ui.size.tiny"></jnt-avatar>
+            <div>
+              <jnt-link [title]="member.user.name"></jnt-link>
+              <br>
+              <small data-roles>{{member.roles | join:', '}}</small>
+            </div>
+          </jnt-stack>
+        </td>
+        <td data-spent>
+          <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.stretch">
+            <jnt-label *ngIf="member.user.metrics.issues.closedSpent"
+                       [label]="member.user.metrics.issues.closedSpent | duration:durationFormat.short"
+                       [color]="ui.color.green"></jnt-label>
+            <jnt-label *ngIf="member.user.metrics.issues.openedSpent"
+                       [label]="member.user.metrics.issues.openedSpent | duration:durationFormat.short"
+                       [color]="member.user.problems?.includes(userProblem.payrollOpenedOverflow) ? ui.color.red : ui.color.paleNavy"></jnt-label>
+          </jnt-stack>
+        </td>
+        <td data-day *ngFor="let day of days"
+            (click)="selected.emit({developer: member.user.id, dueDate: day})">
+          <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {date: (day | dfnsEndOfDay),
               metric: metrics?.days?.get(member.user.id)?.get((day | dfnsFormat: formatDate))}">
-            </ng-container>
-          </td>
-
-          <ng-container
-            *ngTemplateOutlet="weekMetricTemplate; context: {metric: metrics?.weeks?.get(member.user.id)?.get((current | dfnsStartOfWeek | dfnsFormat: formatDate))}">
           </ng-container>
-          <td data-gutter></td>
+        </td>
+
+        <ng-container
+          *ngTemplateOutlet="weekMetricTemplate; context: {metric: metrics?.weeks?.get(member.user.id)?.get((current | dfnsStartOfWeek | dfnsFormat: formatDate))}">
+        </ng-container>
+        <td data-gutter></td>
+      </tr>
+    </ng-container>
+    <ng-template #noDataTemplate>
+      <ng-container *ngIf="progress.developers; else emptyTemplate">
+        <tr data-loading>
+          <td [attr.colspan]="17">
+            <jnt-skeleton [lines]="6"></jnt-skeleton>
+          </td>
         </tr>
       </ng-container>
-      <ng-template #noDataTemplate>
-        <ng-container *ngIf="progress.developers; else emptyTemplate">
-          <tr data-loading>
-            <td [attr.colspan]="17">
-              <jnt-skeleton [lines]="6"></jnt-skeleton>
-            </td>
-          </tr>
-        </ng-container>
-        <ng-template #emptyTemplate>
-          <tr data-nodata>
-            <td [attr.colspan]="17">
-              <jnt-icon [icon]="ui.icons.sad"></jnt-icon>
-            </td>
-          </tr>
-        </ng-template>
+      <ng-template #emptyTemplate>
+        <tr data-nodata>
+          <td [attr.colspan]="17">
+            <jnt-icon [icon]="ui.icons.sad"></jnt-icon>
+          </td>
+        </tr>
       </ng-template>
-      </tbody>
-    </table>
-  </jnt-stack>
+    </ng-template>
+    </tbody>
+  </table>
 </jnt-form>
