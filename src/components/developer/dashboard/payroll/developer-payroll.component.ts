@@ -51,10 +51,10 @@ export class DeveloperPayrollComponent implements OnInit {
   }
 
   getOptions(options: any, show: boolean = true) {
-    return show ? new PopoverOptions({
+    return show ? {
       ...options,
       trigger: UI.trigger.hover
-    }) : null;
+    } : null;
   }
 
 }
