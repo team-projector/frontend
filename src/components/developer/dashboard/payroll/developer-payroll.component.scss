@@ -1,5 +1,6 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/layout/block";
+@import "~@junte/ui/lib/assets/styles/elements/label";
 
 :host {
   display: block;
@@ -7,90 +8,99 @@
 
 @include jnt-block((header: (padding: $jnt-gutter-normal 0 0 0)), null, true);
 
-[position] {
-  color: $jnt-success-color;
-  font-size: 12px;
-  margin-top: $jnt-gutter-small;
+[data-user] {
+  padding: 0 $jnt-gutter-large;
+  @include jnt-label((color: $jnt-primary-color), null, true);
+  [data-position] {
+    color: $jnt-primary-light-color;
+    font-weight: $jnt-font-weight-bold;
+    font-size: $jnt-font-size-base;
+  }
 }
 
-[taxes] {
-  padding: $jnt-gutter-small $jnt-gutter-large;
-  background-color: $jnt-blue-100-color;
-}
-
-[salary] {
-  padding: $jnt-gutter-tiny $jnt-gutter-large;
+[data-salary] {
+  position: relative;
+  padding: $jnt-gutter-normal $jnt-gutter-large;
   font-size: 26px;
-  background: linear-gradient(132.05deg, $jnt-primary-color 5.04%, $jnt-purple-light-color 92.57%), $jnt-primary-color;
+  background: $jnt-primary-color;
   color: $jnt-white-color;
-}
-
-[separation] {
-  min-width: 150px;
-
-  [title] {
-    color: $jnt-primary-dark-color;
+  [data-label] {
     font-size: 12px;
   }
-
-  [separator] {
-    height: 1px;
-    background-color: $jnt-purple-lighten-color;
-    border-radius: 3px;
+  [data-money] {
+    color: $jnt-primary-light-color;
+    font-size: 30px;
   }
-
-  [sum] {
-    color: $jnt-primary-color;
-    font-size: 21px;
+  [data-opened] {
+    color: rgba($jnt-white-color, .5);
+    font-size: 18px;
+    [data-label] {
+      font-size: 12px;
+      color: $jnt-primary-light-color;
+    }
+  }
+  [data-digit] {
     font-weight: $jnt-font-weight-bold;
   }
-
-  [bonus] {
-    font-size: 12px;
-    color: $jnt-primary-color;
-    padding: $jnt-gutter-small;
-
-    &:not(:last-child) {
-      border-bottom: 1px solid $jnt-purple-lighten-color;
+  [data-line] {
+    font-size: $jnt-font-size-base;
+    padding: $jnt-gutter-small 0;
+    &:not(:last-of-type) {
+      border-bottom: 1px dashed $jnt-primary-light-color;
+    }
+    [data-title] {
+      font-weight: $jnt-font-weight-bold;
+    }
+    [data-time] {
+      color: $jnt-secondary-dark-color;
+      font-size: $jnt-font-size-normal;
+      span {
+        font-size: 12px;
+      }
+    }
+    > span {
+      font-size: 18px;
+      font-weight: $jnt-font-weight-bold;
+    }
+    &[data-success] {
+      > span {
+        color: $jnt-success-color;
+      }
+    }
+    &[data-fail] {
+      > span {
+        color: $jnt-fail-color;
+      }
+    }
+  }
+  hr {
+    border: 0;
+    height: 1px;
+    background: $jnt-primary-light-color;
+    width: 80px;
+    align-self: flex-end;
+    margin-right: 0;
+  }
+  svg {
+    fill: $jnt-primary-color;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    &[data-opened='true'] {
+      transform: translateX(-50%) rotate(180deg);
+      fill: $jnt-white-color;
+      top: auto;
+      bottom: 0;
     }
   }
 }
 
-[payroll] {
-  font-size: 26px;
+[data-more] {
+  font-size: 12px;
+  color: $jnt-primary-color;
+  text-decoration: underline;
   text-align: center;
-  color: $jnt-primary-dark-color;
-  font-weight: $jnt-font-weight-bold;
-}
-
-[metrics] {
-  color: $jnt-primary-text-dark-color;
-
-  [like], [dislike] {
-    font-size: 15px;
-  }
-
-  [like] {
-    color: $jnt-success-color;
-  }
-
-  [dislike] {
-    color: $jnt-fail-color;
-  }
-}
-
-[separator] {
-  min-width: 1px;
-  min-height: 100%;
-  background-color: $jnt-muted-color;
-}
-
-[paidDays] {
-  padding: $jnt-gutter-normal $jnt-gutter-large;
-
-  [paidDaysLabel] {
-    text-align: center;
-    color: $jnt-purple-color;
-    font-size: 12px;
-  }
+  cursor: pointer;
+  padding-bottom: $jnt-gutter-normal;
 }

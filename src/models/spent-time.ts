@@ -1,3 +1,4 @@
+import { ModelSerializer } from '../serializers/model';
 import { faker } from '../utils/mocks';
 import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
@@ -8,9 +9,11 @@ import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { OwnerSerializer } from '../serializers/owner';
+import { ModelRef } from '../utils/types';
 import { Issue } from './issue';
 import { MergeRequest } from './merge-request';
 import { Paging } from './paging';
+import { Salary } from './salary';
 
 @model()
 export class SpentTime {
@@ -38,6 +41,9 @@ export class SpentTime {
 
   @field({mock: () => mocks.money(10, 100)})
   sum: number;
+
+  @field({serializer: new ModelSerializer(() => Salary)})
+  salary: ModelRef<Salary>;
 }
 
 @model()

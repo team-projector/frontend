@@ -5,60 +5,86 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class TimeExpensesGQL extends Query<{ allSpentTimes }> {
+export class TimeExpensesGQL extends Query<{ timeExpenses }> {
   document = gql`
-    query ($team: ID, $user: ID, $salary: ID, $project: ID, $date: Date, $offset: Int, $first: Int, $state: String) {
-      allSpentTimes(team: $team, user: $user, salary: $salary, project: $project, date: $date, offset: $offset, first: $first, state: $state) {
+query(
+    $team: ID
+    $user: ID
+    $salary: ID
+    $date: Date
+    $offset: Int
+    $first: Int
+    $state: String
+) {
+    timeExpenses: allSpentTimes(
+        team: $team
+        user: $user
+        salary: $salary
+        date: $date
+        offset: $offset
+        first: $first
+        state: $state
+        orderBy: "-createdAt"
+    ) {
         count
         edges {
-          node {
-            id
-            createdAt
-            date
-            owner {
-              __typename
-              title
-              state
-              user {
+            node {
                 id
-                name
-                glAvatar
-              }
-              labels {
-                count
-                edges {
-                  node {
+                createdAt
+                date
+                owner {
+                    __typename
                     title
-                    color
-                  }
+                    state
+                    user {
+                        id
+                        name
+                        glAvatar
+                    }
+                    labels {
+                        count
+                        edges {
+                            node {
+                                title
+                                color
+                            }
+                        }
+                    }
+                    glUrl
+                    project {
+                        title
+                        group {
+                            title
+                        }
+                    }
                 }
-              }
-              glUrl
-              project {
-                title
-                group {
-                  title
+                timeSpent
+                sum
+                salary {
+                    id
+                    createdAt
                 }
-              }
             }
-            timeSpent
-            sum
-          }
         }
-      }
-    }`;
+    }
+}`;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class TimeExpensesSummaryGQL extends Query<{ spentTimes }> {
+export class TimeExpensesSummaryGQL extends Query<{ summary }> {
   document = gql`
-    query ($team: ID, $user: ID, $date: Date) {
-      spentTimes: spentTimesSummary(team: $team, user: $user, date: $date) {
+query($team: ID, $user: ID, $salary: ID, $date: Date) {
+    summary: spentTimesSummary(
+        team: $team
+        user: $user
+        salary: $salary
+        date: $date
+    ) {
         spent
         openedSpent
         closedSpent
-      }
-    }`;
+    }
+}`;
 }

@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { DeveloperWorkBreaksGanttComponent } from './gantt/developer-breaks-gantt.components';
 import { MeUserResolver } from 'src/resolvers/me';
 import { DeveloperBreaksTableComponent } from './list/developer-breaks-table.component';
-import { DeveloperBreaksListGanttComponent } from './gantt/breaks-list-gantt.component';
 import { DeveloperBreaksComponent } from './developer-breaks.component';
 
 export const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
@@ -24,7 +24,7 @@ const routes: Routes = [
       {
         path: 'gantt',
         data: {breadcrumb: 'Gantt'},
-        component: DeveloperBreaksListGanttComponent,
+        component: DeveloperWorkBreaksGanttComponent,
         resolve: {
           user: MeUserResolver
         }

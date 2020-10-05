@@ -1,7 +1,4 @@
-{{dueDate | dueDate }}
-<div week>
-  <div weekday *ngFor="let day of 7 | mockArray"
-       [style.background-color]="(getDay(dueDate) === day + 1) ? ui.color.purple
-        : (isThisWeek(dueDate) && getDay(today) === day + 1 ? ui.color.green : ui.color.gray)">
-  </div>
+<jnt-label [color]="(dueDate | dfnsDifferenceInDays: today) > 0 ? ui.color.paleNavy : ui.color.purpleLight" [label]="dueDate | dueDate"></jnt-label>
+<div *ngIf="(dueDate | dfnsDifferenceInDays: today) > 0" remains>
+  {{(dueDate | dfnsFormatDistanceStrict:today:{unit: 'day'})}}
 </div>

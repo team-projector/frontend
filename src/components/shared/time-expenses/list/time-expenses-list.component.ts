@@ -55,7 +55,7 @@ export class TimeExpensesListComponent implements OnInit {
   });
 
   @Input()
-  view = ViewType.short;
+  view = ViewType.default;
 
   @ViewChild('table', {static: true})
   table: TableComponent;
@@ -89,7 +89,7 @@ export class TimeExpensesListComponent implements OnInit {
       return environment.mocks
         ? of(getMock(PagingTimeExpenses, this.filter)).pipe(delay(MOCKS_DELAY))
         : this.timeExpensesGQL.fetch(serialize(this.filter) as R)
-          .pipe(delay(UI_DELAY), map(({data: {allSpentTimes}}) => deserialize(allSpentTimes, PagingTimeExpenses)));
+          .pipe(delay(UI_DELAY), map(({data: {timeExpenses}}) => deserialize(timeExpenses, PagingTimeExpenses)));
     };
 
     this.form.valueChanges.subscribe(({table: {offset, first}, type, date}) => {
@@ -128,7 +128,7 @@ export class TimeExpensesListComponent implements OnInit {
     (environment.mocks
       ? of(getMock(SpentTimesSummary)).pipe(delay(MOCKS_DELAY))
       : this.timeExpensesSummaryGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {spentTimes}}) => deserialize(spentTimes, SpentTimesSummary))))
+        .pipe(map(({data: {summary}}) => deserialize(summary, SpentTimesSummary))))
       .subscribe(summary => this.summary = summary);
   }
 }

@@ -1,6 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { getDay, isThisWeek, startOfDay } from 'date-fns';
+import { Component, Input } from '@angular/core';
 import { UI } from '@junte/ui';
+import { startOfDay } from 'date-fns';
 
 @Component({
   selector: 'app-due-date',
@@ -8,19 +8,12 @@ import { UI } from '@junte/ui';
   styleUrls: ['./due-date.component.scss']
 })
 
-export class DueDateComponent implements OnInit {
+export class DueDateComponent {
 
   ui = UI;
   today = startOfDay(new Date());
-  getDay = getDay;
-  isThisWeek = isThisWeek;
 
   @Input()
   dueDate: Date;
 
-  constructor() {
-  }
-
-  ngOnInit() {
-  }
 }

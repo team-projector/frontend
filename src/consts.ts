@@ -70,17 +70,19 @@ export const providers: any[] = [
 ];
 
 let data;
+let dfnsLocale;
 let config;
 switch (language) {
   case Language.ru:
     data = getLocaleData(localeRu);
     registerLocaleData(data);
-    fnsConfig.setLocale(mergeDfnsLocale(dfnsRu));
+    dfnsLocale = mergeDfnsLocale(dfnsRu);
+    fnsConfig.setLocale(dfnsLocale);
     config = {
       i18n: i18nRu,
       locale: {
         ui: jntRu,
-        dfns: dfnsRu
+        dfns: dfnsLocale
       }
     };
     providers.push({
@@ -92,12 +94,13 @@ switch (language) {
   default:
     data = getLocaleData(localeEn);
     registerLocaleData(data);
-    fnsConfig.setLocale(mergeDfnsLocale(dfnsEnUS));
+    dfnsLocale = mergeDfnsLocale(dfnsEnUS);
+    fnsConfig.setLocale(dfnsLocale);
     config = {
       i18n: i18nEn,
       locale: {
         ui: jntRu,
-        dfns: dfnsRu
+        dfns: dfnsLocale
       }
     };
     providers.push({
