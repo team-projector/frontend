@@ -1,18 +1,55 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BreaksTableComponent } from 'src/components/shared/work-breaks/list/work-breaks-list';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { UI } from '@junte/ui';
+import { R } from 'apollo-angular/types';
+import { of } from 'rxjs';
+import { delay, finalize, map } from 'rxjs/operators';
+import { deserialize, serialize } from 'serialize-ts/dist';
+import { MOCKS_DELAY } from 'src/consts';
+import { environment } from 'src/environments/environment';
+import { MeManager } from 'src/managers/me.manager';
+import { ApproveStates } from 'src/models/enums/break';
+import { ViewType } from 'src/models/enums/view-type';
+import { Team } from 'src/models/team';
+import { PagingUsers } from 'src/models/user';
+import { getMock } from 'src/utils/mocks';
+import { AllTeamWorkBreaks } from './breaks-gantt.graphql';
+
 
 @Component({
-  selector: 'app-team-breaks-list-gantt-component',
-  templateUrl: './breaks-list-gantt.component.html',
-  styleUrls: ['./breaks-list-gantt.component.scss']
+  selector: 'app-team-breaks-list-gantt',
+  templateUrl: './breaks-list-gantt.components.html',
+  styleUrls: ['./breaks-list-gantt.components.scss']
 })
+export class TeamBreaksListGanttComponent implements OnInit {
 
-export class TeamBreaksListGanttComponent extends BreaksTableComponent {
+  team: Team;
+  ui = UI;
+  viewType = ViewType;
+  approveStates = ApproveStates;
+  workbreaks = [];
+  loading = false;
 
-  constructor(route: ActivatedRoute,
-              router: Router) {
-    super(route, router);
+
+  constructor(private teamBreaksGQL: AllTeamWorkBreaks,
+              public me: MeManager,
+              private route: ActivatedRoute) {
+    route.data.subscribe(({team}) => this.team = team);
   }
 
+  ngOnInit() {
+    this.loadBreaks();
+  }
+
+  loadBreaks() {
+    this.loading = true;
+    (environment.mocks
+      ? of(getMock(PagingUsers, {team: this.team.id})).pipe(delay(MOCKS_DELAY))
+      : this.teamBreaksGQL.fetch({team: this.team.id} as R).pipe(
+        map(({data: {breaks}}) => deserialize(breaks, PagingUsers))))
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(ganttBreaks => {
+        this.workbreaks = ganttBreaks.results;
+      });
+  }
 }
