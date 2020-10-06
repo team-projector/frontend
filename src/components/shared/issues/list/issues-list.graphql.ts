@@ -127,7 +127,7 @@ query(
         project: $project
         dueDate: $dueDate
     ) {
-        projects (orderBy: "-issues__remains") {
+        projects (orderBy: "-issues__remains", isArchived: false) {
             project {
                 id
                 title
