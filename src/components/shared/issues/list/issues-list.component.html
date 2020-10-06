@@ -44,14 +44,9 @@
           <jnt-col *ngIf="!!team" [tablet]="5">
             <ng-template #userOption let-member="value"
                          let-selected="selected">
-              <jnt-stack [orientation]="ui.orientation.horizontal">
-                <jnt-avatar [image]="member.user.avatar"
-                            [size]="selected ? ui.size.tiny : ui.size.small"></jnt-avatar>
-                <jnt-stack [gutter]="ui.gutter.none">
-                  <div>{{member.user.name}}</div>
-                  <small *ngIf="!selected">{{member.roles | join}}</small>
-                </jnt-stack>
-              </jnt-stack>
+              <app-user [user]="member.user"
+                        [roles]="member.roles"
+                        [size]="selected ? userCardSize.small : userCardSize.base"></app-user>
             </ng-template>
             <jnt-select formControlName="developer"
                         placeholder="Developer"

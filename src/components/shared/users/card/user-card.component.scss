@@ -5,7 +5,10 @@
   line-height: 1.2em;
 }
 
+[data-role]:not(:first-child):before {
+ content: ', ';
+}
+
 small {
   color: $jnt-primary-text-light-color;
-  text-transform: lowercase;
 }

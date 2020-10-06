@@ -5,7 +5,11 @@
   <jnt-stack [gutter]="ui.gutter.none">
     <div>{{user.name}}</div>
     <small *ngIf="!!roles;else positionTemplate">
-      {{roles | join:', '}}
+      <ng-container *ngFor="let r of roles" [ngSwitch]="r">
+        <span data-role *ngSwitchCase="teamMemberRole.developer">Developer</span>
+        <span data-role *ngSwitchCase="teamMemberRole.leader">Leader</span>
+        <span data-role *ngSwitchCase="teamMemberRole.watcher">Watcher</span>
+      </ng-container>
     </small>
     <ng-template #positionTemplate>
       <small>{{user.position?.title}}</small>

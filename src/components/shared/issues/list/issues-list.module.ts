@@ -8,6 +8,7 @@ import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { IssuePipesModule } from '../../../../pipes/issue-pipes.module';
 import { MoneyPipesModule } from '../../../../pipes/money-pipes.module';
+import { UserCardModule } from '../../users/card/user-card.module';
 import { IssueCardModule } from '../card/issue-card.module';
 import { IssuesListComponent } from './issues-list.component';
 
@@ -27,7 +28,8 @@ import { IssuesListComponent } from './issues-list.component';
     MoneyPipesModule,
     DueDateModule,
     IssueCardModule,
-    IssuePipesModule
+    IssuePipesModule,
+    UserCardModule
   ],
   exports: [
     IssuesListComponent

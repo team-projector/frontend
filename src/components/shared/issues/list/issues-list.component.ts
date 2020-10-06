@@ -18,6 +18,7 @@ import { getMock } from 'src/utils/mocks';
 import { Project } from '../../../../models/project';
 import { PagingTeamMembers, Team, TeamMember } from '../../../../models/team';
 import { User } from '../../../../models/user';
+import { CardSize } from '../../users/card/user-card.types';
 import { IssuesGQL, IssuesSummaryGQL, ProjectsSummaryGQL, SyncIssueGQL, TeamMembersGQL } from './issues-list.graphql';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
 
@@ -37,6 +38,7 @@ export class IssuesListComponent implements OnInit {
   viewType = ViewType;
   standardLabel = StandardLabel;
   durationFormat = DurationFormat;
+  userCardSize = CardSize;
 
   private _team: Team;
 
