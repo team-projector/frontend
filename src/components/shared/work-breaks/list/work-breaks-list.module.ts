@@ -7,7 +7,6 @@ import { DateFnsModule } from 'ngx-date-fns';
 import { BreakDeclineComponent } from 'src/components/shared/work-breaks/decline/break-decline.component';
 import { BreakEditComponent } from 'src/components/shared/work-breaks/edit/break-edit.component';
 import { UserCardModule } from '../../users/card/user-card.module';
-import { BreaksGanttComponent } from '../gantt/breaks-gantt.components';
 import { WorkBreaksListComponent } from './work-breaks-list.component';
 
 
@@ -15,7 +14,6 @@ import { WorkBreaksListComponent } from './work-breaks-list.component';
   declarations: [
     BreakEditComponent,
     BreakDeclineComponent,
-    BreaksGanttComponent,
     WorkBreaksListComponent
   ],
     imports: [
@@ -34,7 +32,6 @@ import { WorkBreaksListComponent } from './work-breaks-list.component';
   exports: [
     BreakEditComponent,
     BreakDeclineComponent,
-    BreaksGanttComponent,
     WorkBreaksListComponent
   ]
 })
