@@ -7,8 +7,8 @@ import gql from 'graphql-tag';
 })
 export class AllPenaltiesGQL extends Query<{ penalties }> {
   document = gql`
-query ($salary: ID, $user: ID) {
-  penalties: allPenalties(salary: $salary, user: $user) {
+query ($user: ID, $offset: Int, $first: Int) {
+  penalties: allPenalties(user: $user, offset: $offset, first: $first) {
     count
     edges {
       node {
@@ -16,9 +16,20 @@ query ($salary: ID, $user: ID) {
         sum
         comment
         createdAt
-        createdBy {
-          id
+        user {
+          glAvatar
           name
+          position {
+            title
+          }
+        }
+        createdAt
+        createdBy {
+          glAvatar
+          name
+          position {
+            title
+          }
         }
         salary {
           id

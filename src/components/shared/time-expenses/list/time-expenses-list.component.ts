@@ -55,7 +55,7 @@ export class TimeExpensesListComponent implements OnInit {
   });
 
   @Input()
-  view = ViewType.default;
+  view = ViewType.developer;
 
   @ViewChild('table', {static: true})
   table: TableComponent;

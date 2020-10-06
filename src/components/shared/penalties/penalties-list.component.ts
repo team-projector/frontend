@@ -13,6 +13,7 @@ import { ViewType } from '../../../models/enums/view-type';
 import { PagingPenalties, PenaltiesFilter } from '../../../models/penalty';
 import { Salary } from '../../../models/salary';
 import { User } from '../../../models/user';
+import { CardSize } from '../users/card/user-card.types';
 import { AllPenaltiesGQL } from './penalties.graphql';
 import { PenaltiesState, PenaltiesStateUpdate } from './penalties.types';
 
@@ -27,11 +28,12 @@ export class PenaltiesListComponent implements OnInit {
 
   ui = UI;
   viewType = ViewType;
+  userCardSize = CardSize;
 
   filter: PenaltiesFilter;
 
   @Input()
-  view = ViewType.default;
+  view = ViewType.developer;
 
   user: User;
   salary: Salary;

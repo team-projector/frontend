@@ -12,6 +12,7 @@ import { MetricsTypeModule } from 'src/components/shared/metrics-type/metrics-ty
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { ProjectsSummaryModule } from '../../../../shared/dashboard/projects/projects-summary.module';
+import { UserCardModule } from '../../../../shared/users/card/user-card.module';
 import { TeamDashboardRoutingModule } from './team-dashboard-routing.module';
 
 @NgModule({
@@ -32,6 +33,7 @@ import { TeamDashboardRoutingModule } from './team-dashboard-routing.module';
     ArrayPipesModule,
     DueDateModule,
     DateFnsModule,
+    UserCardModule,
     ProjectsSummaryModule
   ]
 })

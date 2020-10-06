@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { IssuesComponent } from 'src/components/shared/issues/list/issues';
+import { ViewType } from '../../../models/enums/view-type';
 import { BonusesComponent } from '../../shared/bonuses/list/bonuses';
-import { BonusesListComponent } from '../../shared/bonuses/list/bonuses-list.component';
 
 @Component({
   selector: 'app-developer-bonuses',
@@ -11,6 +10,8 @@ import { BonusesListComponent } from '../../shared/bonuses/list/bonuses-list.com
   styleUrls: ['./developer-bonuses.component.scss']
 })
 export class DeveloperBonusesComponent extends BonusesComponent {
+
+  viewType = ViewType;
 
   constructor(route: ActivatedRoute,
               router: Router,

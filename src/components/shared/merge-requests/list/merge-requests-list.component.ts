@@ -47,7 +47,7 @@ export class MergeRequestsListComponent implements OnInit {
   });
 
   @Input()
-  view = ViewType.default;
+  view = ViewType.developer;
 
   team: Team;
   user: User;

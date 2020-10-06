@@ -29,7 +29,15 @@ const routes: Routes = [
       {
         path: 'manager',
         loadChildren: () => import('../manager/manager.module').then(m => m.ManagerModule),
-      }
+      },
+      {
+        path: 'shareholder',
+        loadChildren: () => import('../shareholder/shareholder.module').then(m => m.ShareholderModule),
+      },
+      {
+        path: '**',
+        redirectTo: 'developer'
+      },
     ]
   }];
 

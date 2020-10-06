@@ -36,6 +36,18 @@ const routes: Routes = [
         loadChildren: () => import('./time-expenses/team-time-expenses.module').then(m => m.TeamTimeExpensesModule)
       },
       {
+        path: 'bonuses',
+        loadChildren: () => import('./bonuses/team-bonuses.module').then(m => m.TeamBonusesModule)
+      },
+      {
+        path: 'penalties',
+        loadChildren: () => import('./penalties/team-penalties.module').then(m => m.TeamPenaltiesModule)
+      },
+      {
+        path: 'salaries',
+        loadChildren: () => import('./salaries/team-salaries.module').then(m => m.TeamSalariesModule)
+      },
+      {
         path: 'breaks',
         loadChildren: () => import('./breaks/team-breaks.module').then(m => m.TeamBreaksModule)
       }

@@ -11,18 +11,11 @@
                     (click)="open()">
         </jnt-button>
       </ng-template>
-      <jnt-table-column *ngIf="view === viewType.default"
+      <jnt-table-column *ngIf="view === viewType.leader || view === viewType.shareholder"
                         title="Developer"
                         i18n-title="@@label.developer">
         <ng-template #tableCellTemplate let-user="user">
-          <jnt-stack [orientation]="ui.orientation.horizontal">
-            <jnt-avatar [image]="user?.avatar"
-                        [size]="ui.size.small"></jnt-avatar>
-            <jnt-stack [gutter]="ui.gutter.none">
-              <div>{{user.name}}</div>
-              <small>{{user.position?.title}}</small>
-            </jnt-stack>
-          </jnt-stack>
+          <app-user [user]="user"></app-user>
         </ng-template>
       </jnt-table-column>
 
@@ -90,15 +83,9 @@
                      let-declineReason="declineReason">
           <jnt-stack [orientation]="ui.orientation.vertical"
                      [gutter]="ui.gutter.tiny">
-            <jnt-stack *ngIf="approvedBy"
-                       [orientation]="ui.orientation.horizontal" [gutter]="ui.gutter.tiny">
-              <jnt-avatar [image]="approvedBy.avatar"
-                          [size]="ui.size.tiny"></jnt-avatar>
-              <jnt-stack [gutter]="ui.gutter.none">
-                <div>{{approvedBy.name}}</div>
-                <small>{{approvedBy.position?.title}}</small>
-              </jnt-stack>
-            </jnt-stack>
+            <app-user *ngIf="approvedBy"
+                      [user]="approvedBy"
+                      [size]="userCardSize.small"></app-user>
             <small *ngIf="approvedAt">
               {{ approvedAt | dfnsFormat: 'PPp'}}
             </small>
@@ -113,14 +100,12 @@
                    let-break="row" let-hide="hide">
         <jnt-menu *ngIf="break.approveState === approveStates.created"
                   [orientation]="ui.orientation.vertical">
-          <jnt-menu-item *ngIf="view === viewType.default"
-                         title="Approve"
+          <jnt-menu-item title="Approve"
                          i18n-title="@@action.approve"
                          [icon]="ui.icons.checked"
                          (click)="approve(break.id)">
           </jnt-menu-item>
-          <jnt-menu-item *ngIf="view === viewType.default"
-                         title="Decline"
+          <jnt-menu-item title="Decline"
                          i18n-title="@@action.decline"
                          [icon]="ui.icons.cancel"
                          (click)="openDecline(break)">

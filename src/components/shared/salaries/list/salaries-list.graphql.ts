@@ -7,8 +7,13 @@ import gql from 'graphql-tag';
 })
 export class AllSalariesGQL extends Query<{ salaries }> {
   document = gql`
-query($user: ID, $offset: Int, $first: Int) {
-    salaries: allSalaries(user: $user, offset: $offset, first: $first) {
+query($team: ID, $user: ID, $offset: Int, $first: Int) {
+    salaries: allSalaries(
+        team: $team
+        user: $user
+        offset: $offset
+        first: $first
+    ) {
         count
         edges {
             node {
@@ -23,6 +28,13 @@ query($user: ID, $offset: Int, $first: Int) {
                 sum
                 total
                 payed
+                user {
+                    glAvatar
+                    name
+                    position {
+                        title
+                    }
+                }
             }
         }
     }

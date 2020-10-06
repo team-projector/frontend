@@ -15,6 +15,7 @@ import { PagingTeamMembers, Team, TeamMember, TeamMemberProgressMetrics, TeamMet
 import { UserProgressMetrics } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
 import { METRIC_TYPE } from '../../../../../shared/metrics-type/consts';
+import { CardSize } from '../../../../../shared/users/card/user-card.types';
 import { TeamMembersGQL, TeamMetricsGQL } from './team-progress.graphql';
 
 const DAYS_IN_WEEK = 7;
@@ -44,6 +45,7 @@ export class TeamProgressComponent implements OnInit {
   metricType = MetricType;
   today = startOfDay(new Date());
   daysOfWeek = DAYS_WEEK;
+  userCardSize = CardSize;
 
   private _team: Team;
   private _current: Date = this.today;

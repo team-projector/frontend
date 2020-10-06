@@ -205,10 +205,6 @@ table {
           cursor: pointer;
           padding: $jnt-gutter-small;
 
-          [data-roles] {
-            text-transform: lowercase;
-          }
-
           &:focus {
             outline: 0;
             border-radius: $jnt-corner-small;

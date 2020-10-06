@@ -2,6 +2,15 @@
            [width]="ui.width.fluid">
   <jnt-table #table formControlName="table">
 
+    <jnt-table-column *ngIf="view === viewType.leader || view === viewType.shareholder"
+                      title="For developer"
+                      i18n-title="@@label.user">
+      <ng-template #tableCellTemplate
+                   let-user="user">
+        <app-user [user]="user"></app-user>
+      </ng-template>
+    </jnt-table-column>
+
     <jnt-table-column sort="created_at"
                       title="Created at"
                       i18n-title="@@label.created_at">
@@ -14,7 +23,7 @@
                       title="Created by"
                       i18n-title="@@label.created_by">
       <ng-template #tableCellTemplate let-createdBy="createdBy">
-        {{createdBy.name}}
+        <app-user *ngIf="!!createdBy" [user]="createdBy" [size]="userCardSize.small"></app-user>
       </ng-template>
     </jnt-table-column>
 
@@ -33,7 +42,7 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column *ngIf="view == viewType.default" title="Salary"
+    <jnt-table-column *ngIf="view !== viewType.salary" title="Salary"
                       i18n-title="@@label.salary">
       <ng-template #tableCellTemplate let-salary="salary">
         <jnt-link *ngIf="!!salary" [title]="salary.createdAt | dfnsFormat: 'PPp'"

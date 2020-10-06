@@ -1,6 +1,16 @@
 <jnt-block [padding]="ui.gutter.none" [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
     <jnt-table #table formControlName="table">
+
+      <jnt-table-column *ngIf="view === viewType.leader || view === viewType.shareholder"
+                        title="Developer"
+                        i18n-title="@@label.user">
+        <ng-template #tableCellTemplate
+                     let-user="user">
+          <app-user [user]="user"></app-user>
+        </ng-template>
+      </jnt-table-column>
+
       <jnt-table-column title="Created"
                         i18n-title="@@label.charged_time">
         <ng-template #tableCellTemplate let-id="id" let-createdAt="createdAt">

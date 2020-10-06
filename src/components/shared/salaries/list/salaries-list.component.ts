@@ -10,6 +10,7 @@ import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { PagingSalaries, SalariesFilter } from 'src/models/salary';
 import { getMock } from 'src/utils/mocks';
+import { ViewType } from '../../../../models/enums/view-type';
 import { SalariesState, SalariesStateUpdate } from './salaries-list.types';
 
 const DEFAULT_FIRST = 10;
@@ -22,6 +23,7 @@ const DEFAULT_FIRST = 10;
 export class SalariesListComponent implements OnInit {
 
   ui = UI;
+  viewType = ViewType;
 
   filter: SalariesFilter;
 
@@ -38,6 +40,9 @@ export class SalariesListComponent implements OnInit {
 
   @ViewChild('table', {static: true})
   table: TableComponent;
+
+  @Input()
+  view = ViewType.developer;
 
   @Input()
   set state({first, offset, user}: SalariesState) {

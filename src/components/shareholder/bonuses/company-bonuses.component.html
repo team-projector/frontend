@@ -1,0 +1,13 @@
+<jnt-stack [gutter]="ui.gutter.large"
+           [align]="ui.align.stretch">
+  <div>
+    <jnt-link [icon]="ui.icons.settings"
+              source="/admin/payroll/bonus/"
+              target="_blank"
+              title="Manage"
+              i18n-title="@@action.manage"></jnt-link>
+  </div>
+  <app-bonuses [view]="viewType.shareholder"
+               [state]="state"
+               (filtered)="save($event)"></app-bonuses>
+</jnt-stack>

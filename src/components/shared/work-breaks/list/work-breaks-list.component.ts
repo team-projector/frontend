@@ -17,6 +17,7 @@ import { getMock } from 'src/utils/mocks';
 import { LocalUI } from '../../../../enums/local-ui';
 import { Team } from '../../../../models/team';
 import { Me, User } from '../../../../models/user';
+import { CardSize } from '../../users/card/user-card.types';
 import { BreaksState, BreaksStateUpdate } from './work-breaks-list-types';
 
 const DEFAULT_FIRST = 10;
@@ -32,6 +33,7 @@ export class WorkBreaksListComponent implements OnInit {
   viewType = ViewType;
   reasons = BreakReasons;
   approveStates = ApproveStates;
+  userCardSize = CardSize;
 
   filter: BreaksFilter;
   breaks: WorkBreak[] = [];
@@ -51,7 +53,7 @@ export class WorkBreaksListComponent implements OnInit {
   });
 
   @Input()
-  view = ViewType.default;
+  view = ViewType.developer;
 
   @Input()
   set state({first, offset, team, user}: BreaksState) {
@@ -120,7 +122,7 @@ export class WorkBreaksListComponent implements OnInit {
     if (!!workBreak) {
       component.instance.break = workBreak;
     }
-    if (this.view === ViewType.default) {
+    if (!!this.team) {
       component.instance.team = this.team;
     }
 

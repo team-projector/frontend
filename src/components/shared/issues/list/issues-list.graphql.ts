@@ -131,6 +131,7 @@ query(
             project {
                 id
                 title
+                fullTitle
                 group {
                     title
                     glAvatar

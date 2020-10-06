@@ -13,6 +13,7 @@ import { BonusesFilter, PagingBonuses } from '../../../../models/bonus';
 import { ViewType } from '../../../../models/enums/view-type';
 import { Salary } from '../../../../models/salary';
 import { User } from '../../../../models/user';
+import { CardSize } from '../../users/card/user-card.types';
 import { AllBonusesGQL } from './bonuses-list.graphql';
 import { BonusesState, BonusesStateUpdate } from './bonuses-list.types';
 
@@ -27,11 +28,12 @@ export class BonusesListComponent implements OnInit {
 
   ui = UI;
   viewType = ViewType;
+  userCardSize = CardSize;
 
   filter: BonusesFilter;
 
   @Input()
-  view = ViewType.default;
+  view = ViewType.developer;
 
   user: User;
   salary: Salary;

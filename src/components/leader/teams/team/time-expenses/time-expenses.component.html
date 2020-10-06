@@ -1,1 +1,3 @@
-<app-time-expenses [state]="state" (filtered)="save($event)"></app-time-expenses>
+<app-time-expenses [view]="viewType.leader"
+                   [state]="state"
+                   (filtered)="save($event)"></app-time-expenses>

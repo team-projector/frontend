@@ -2,7 +2,7 @@
           [state]="progress.saving ? ui.state.loading : null"
           (submitted)="save()">
   <jnt-stack [orientation]="ui.orientation.vertical" [align]="ui.align.stretch">
-    <jnt-form-item *ngIf="view === viewType.default">
+    <jnt-form-item *ngIf="view === viewType.leader">
       <jnt-form-label i18n="@@label.developer">Developer</jnt-form-label>
       <jnt-select developers
                   placeholder="Developer"

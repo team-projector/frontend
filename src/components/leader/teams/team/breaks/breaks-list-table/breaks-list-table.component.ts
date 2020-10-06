@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BreaksTableComponent } from 'src/components/shared/work-breaks/list/work-breaks-list';
+import { ViewType } from '../../../../../../models/enums/view-type';
 import { Me } from '../../../../../../models/user';
 
 @Component({
@@ -10,6 +11,8 @@ import { Me } from '../../../../../../models/user';
 })
 
 export class TeamBreaksListTableComponent extends BreaksTableComponent {
+
+  viewType = ViewType;
 
   me: Me;
 

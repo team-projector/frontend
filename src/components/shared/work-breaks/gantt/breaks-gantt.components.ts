@@ -81,9 +81,11 @@ export class BreaksGanttComponent implements OnInit {
     return this._filter;
   }
 
-  @Input() view = ViewType.default;
+  @Input()
+  view = ViewType.developer;
 
-  @Input() set state({first, offset, q, team, user}: BreaksState) {
+  @Input()
+  set state({first, offset, q, team, user}: BreaksState) {
     this.form.setValue({
       view: {
         q: q || null,

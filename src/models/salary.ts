@@ -69,6 +69,9 @@ export class Salary {
   @field({mock: () => faker.helpers.randomize([true, false])})
   payed: boolean;
 
+  @field({mock: User})
+  user: User;
+
 }
 
 @model()

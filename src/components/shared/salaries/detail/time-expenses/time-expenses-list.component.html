@@ -1,4 +1,4 @@
-<app-time-expenses [state]="state"
+<app-time-expenses [view]="viewType.salary"
+                   [state]="state"
                    (filtered)="save($event)"
-                   [type]="timeExpenseType.all"
-                   [view]="viewType.short"></app-time-expenses>
+                   [type]="timeExpenseType.all"></app-time-expenses>

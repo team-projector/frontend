@@ -46,7 +46,7 @@ export class BreakEditComponent {
   teamForm = this.fb.group({team: this.teamControl});
 
   @Input()
-  view = ViewType.default;
+  view = ViewType.developer;
 
   @Input()
   set break(workBreak: WorkBreak) {

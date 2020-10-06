@@ -99,7 +99,7 @@ switch (language) {
     config = {
       i18n: i18nEn,
       locale: {
-        ui: jntRu,
+        ui: jntEnUs,
         dfns: dfnsLocale
       }
     };

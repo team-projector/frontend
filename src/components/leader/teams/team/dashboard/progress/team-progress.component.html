@@ -139,16 +139,10 @@
       <tr *ngFor="let member of developers">
         <td data-gutter></td>
         <td (click)="selected.emit({developer: member.user.id, dueDate: null})">
-          <jnt-stack data-developer [orientation]="ui.orientation.horizontal"
-                     [gutter]="ui.gutter.small" tabindex="0">
-            <jnt-avatar [image]="member.user.avatar"
-                        [size]="ui.size.tiny"></jnt-avatar>
-            <div>
-              <jnt-link [title]="member.user.name"></jnt-link>
-              <br>
-              <small data-roles>{{member.roles | join:', '}}</small>
-            </div>
-          </jnt-stack>
+          <app-user data-developer tabindex="0"
+                    [user]="member.user"
+                    [size]="userCardSize.small"
+                    [roles]="member.roles"></app-user>
         </td>
         <td data-spent>
           <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.stretch">

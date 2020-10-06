@@ -20,6 +20,9 @@ export class Penalty {
   createdAt: Date;
 
   @field({mock: User})
+  user: User;
+
+  @field({mock: User})
   createdBy: User;
 
   @field({mock: () => faker.random.number()})
