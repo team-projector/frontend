@@ -66,7 +66,8 @@
                              [features]="[ui.feature.clear]"></jnt-date-picker>
           </jnt-col>
           <jnt-col [tablet]="!!team ? 12 : 6">
-            <jnt-switcher formControlName="type">
+            <jnt-switcher formControlName="type"
+                          [allowEmpty]="false">
               <jnt-switcher-option label="All"
                                    i18n-label="@@action.filter_issues_all"
                                    [disabled]="summary?.count <= 0"

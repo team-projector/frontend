@@ -27,13 +27,13 @@ export class SalariesListComponent implements OnInit {
 
   filter: SalariesFilter;
 
-  tableControl = this.builder.control({
+  tableControl = this.fb.control({
     q: null,
     sort: null,
     first: DEFAULT_FIRST,
     offset: 0
   });
-  form = this.builder.group({
+  form = this.fb.group({
     table: this.tableControl,
     user: [null]
   });
@@ -59,7 +59,7 @@ export class SalariesListComponent implements OnInit {
   filtered = new EventEmitter<SalariesStateUpdate>();
 
   constructor(private allSalaries: AllSalariesGQL,
-              private builder: FormBuilder) {
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {

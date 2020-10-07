@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { SalariesListComponent } from 'src/components/shared/salaries/list/salaries-list.component';
@@ -13,6 +14,8 @@ import { UserCardModule } from '../../users/card/user-card.module';
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
+
     JunteUiModule,
     DateFnsModule,
     DatePipesModule,

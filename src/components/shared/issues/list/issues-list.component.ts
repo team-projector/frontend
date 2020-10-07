@@ -5,7 +5,7 @@ import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
-import { delay, finalize, map } from 'rxjs/operators';
+import { delay, finalize, map, tap } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
@@ -18,6 +18,7 @@ import { getMock } from 'src/utils/mocks';
 import { Project } from '../../../../models/project';
 import { PagingTeamMembers, Team, TeamMember } from '../../../../models/team';
 import { User } from '../../../../models/user';
+import { equals } from '../../../../utils/equals';
 import { CardSize } from '../../users/card/user-card.types';
 import { IssuesGQL, IssuesSummaryGQL, ProjectsSummaryGQL, SyncIssueGQL, TeamMembersGQL } from './issues-list.graphql';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
@@ -41,18 +42,30 @@ export class IssuesListComponent implements OnInit {
   userCardSize = CardSize;
 
   private _team: Team;
+  private _user: User;
+  // will be used for reset offset
+  private reset: Object;
 
-  progress = {projects: false, developers: false, summary: false, syncing: false};
+  progress = {
+    projects: false,
+    developers: false,
+    summary: false,
+    syncing: false
+  };
   projects: ProjectSummary[] = [];
   developers: TeamMember[] = [];
 
   filter: IssuesFilter;
   summary: IssuesSummary;
 
+  project: Project;
+  developer: User;
+
   set team(team: Team) {
     if (!!team && team.id !== this._team?.id) {
       this._team = team;
       this.loadDevelopers();
+      this.loadProjects();
     }
   }
 
@@ -60,9 +73,16 @@ export class IssuesListComponent implements OnInit {
     return this._team;
   }
 
-  user: User;
-  project: Project;
-  developer: User;
+  set user(user: User) {
+    if (!!user && user.id !== this._user?.id) {
+      this._user = user;
+      this.loadProjects();
+    }
+  }
+
+  get user() {
+    return this._user;
+  }
 
   tableControl = this.fb.control({
     q: null,
@@ -101,6 +121,8 @@ export class IssuesListComponent implements OnInit {
       project: project?.id || null,
       developer: developer?.id || null
     }, {emitEvent: false});
+
+    this.load();
   }
 
   @Output()
@@ -123,23 +145,12 @@ export class IssuesListComponent implements OnInit {
           .pipe(delay(UI_DELAY), map(({data: {issues}}) => deserialize(issues, PagingIssues)));
     };
 
-    this.form.valueChanges.subscribe(({table: {offset, first, q}, type, dueDate, project, developer}) => {
+    this.form.valueChanges.subscribe(() => {
       this.logger.debug('form state was changed');
-      this.filtered.emit(new IssuesStateUpdate({
-        q: q || undefined,
-        first: first !== DEFAULT_FIRST ? first : undefined,
-        offset: offset !== 0 ? offset : undefined,
-        type: type !== IssuesType.opened ? type : undefined,
-        dueDate: dueDate || undefined,
-        project: project || undefined,
-        developer: developer || undefined
-      }));
-
       this.load();
     });
 
-    this.load();
-    this.loadProjects();
+    this.table.load();
   }
 
   private loadProjects() {
@@ -169,24 +180,50 @@ export class IssuesListComponent implements OnInit {
   }
 
   private load() {
-    const {table: {offset, first, q}, type, dueDate, project, developer} = this.form.getRawValue();
-    this.filter = new IssuesFilter({
-      offset: offset,
+    const {table: {first, q}, type, dueDate, project, developer} = this.form.getRawValue();
+    const filter = new IssuesFilter({
       first: first,
       q: q,
       orderBy: type === IssuesType.opened ? 'dueDate' : '-closedAt',
       dueDate: !!dueDate ? startOfDay(dueDate) : null,
+      team: this.team?.id,
       project: project,
       user: this.user?.id || developer,
-      team: this.team?.id,
       state: type === IssuesType.opened ? IssueState.opened :
         (type === IssuesType.closed ? IssueState.closed : null),
       problems: type === IssuesType.problems ? true : null
     });
-    this.logger.debug('load issues', this.filter);
+    const reset = serialize(filter);
+    if (!!this.reset && !equals(reset, this.reset)) {
+      this.logger.debug('reset offset');
+      this.tableControl.setValue({q, first, offset: 0}, {emitEvent: false});
+    }
+    this.reset = reset;
 
+    const {table: {offset}} = this.form.getRawValue();
+    filter.offset = offset;
+
+    if (equals(filter, this.filter)) {
+      this.logger.debug('filter was not changed');
+      return;
+    }
+    this.filter = filter;
+
+    this.logger.debug('load issues', this.filter);
     this.loadSummary();
-    this.table.load();
+    if (this.table) {
+      this.table.load();
+    }
+
+    this.filtered.emit(new IssuesStateUpdate({
+      q: q || undefined,
+      first: first !== DEFAULT_FIRST ? first : undefined,
+      offset: offset > 0 ? offset : undefined,
+      type: type !== IssuesType.opened ? type : undefined,
+      dueDate: dueDate || undefined,
+      project: project || undefined,
+      developer: developer || undefined
+    }));
   }
 
   loadSummary() {

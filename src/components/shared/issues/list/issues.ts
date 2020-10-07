@@ -23,18 +23,18 @@ export abstract class IssuesComponent implements OnInit {
 
   ngOnInit() {
     combineLatest([this.route.data, this.route.params])
-      .subscribe(([{user, developer, team, project, dueDate}, {q, first, offset, type}]) => {
+      .subscribe(([{team, user, developer, project, dueDate}, {q, first, offset, type}]) => {
         this.logger.debug('read router data & params');
         this.state = {
-          first: +first || undefined,
-          offset: +offset || undefined,
+          first: +first || null,
+          offset: +offset || null,
           q: q,
           type: type,
           dueDate: dueDate,
-          user: user || undefined,
-          team: team || undefined,
-          project: project || undefined,
-          developer: developer || undefined
+          team: team || null,
+          user: user || null,
+          project: project || null,
+          developer: developer || null
         };
       });
   }
