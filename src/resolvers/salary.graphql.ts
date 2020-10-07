@@ -15,6 +15,12 @@ export class SalaryGQL extends Query<{ salary }> {
         position {
           title
         }
+        user {
+          glAvatar
+          position {
+            title
+          }
+        }
         createdAt
         periodFrom
         periodTo
