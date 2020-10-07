@@ -1,2 +1,6 @@
-<app-issues [state]="state"
+<jnt-app-page-header [icon]="localUi.icons.issue"
+                     title="Issues"></jnt-app-page-header>
+
+<app-issues [view]="viewType.leader"
+            [state]="state"
             (filtered)="save($event)"></app-issues>

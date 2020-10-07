@@ -7,7 +7,13 @@
               title="Manage"
               i18n-title="@@action.manage"></jnt-link>
   </div>
-  <app-bonuses [view]="viewType.shareholder"
-               [state]="state"
-               (filtered)="save($event)"></app-bonuses>
+  <jnt-app-page-header [icon]="localUi.icons.bonus"
+                       title="Bonuses"></jnt-app-page-header>
+
+  <jnt-block [padding]="ui.gutter.none"
+             [width]="ui.width.fluid">
+    <app-bonuses [view]="viewType.shareholder"
+                 [state]="state"
+                 (filtered)="save($event)"></app-bonuses>
+  </jnt-block>
 </jnt-stack>

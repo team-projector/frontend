@@ -91,11 +91,14 @@
 <jnt-form [formGroup]="form">
   <table>
     <thead>
-    <tr data-rewind>
-      <th data-gutter></th>
-      <th colspan="2" data-tools>
+    <tr>
+      <th colspan="14" data-tools>
         <app-metrics-type formControlName="metric"></app-metrics-type>
       </th>
+    </tr>
+    <tr data-rewind>
+      <th data-gutter></th>
+      <th colspan="2"></th>
       <th colspan="10">
         <div data-date>
           <jnt-button [icon]="ui.icons.chevronLeft"

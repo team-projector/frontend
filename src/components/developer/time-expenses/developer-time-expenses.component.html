@@ -1,2 +1,8 @@
-<app-time-expenses [state]="state"
-                   (filtered)="save($event)"></app-time-expenses>
+<jnt-app-page-header [icon]="localUi.icons.spentTime"
+                     title="Time Expenses"></jnt-app-page-header>
+
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <app-time-expenses [state]="state"
+                     (filtered)="save($event)"></app-time-expenses>
+</jnt-block>
