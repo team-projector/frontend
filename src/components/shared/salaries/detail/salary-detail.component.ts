@@ -4,6 +4,7 @@ import { UI } from '@junte/ui';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { ViewType } from 'src/models/enums/view-type';
 import { Salary } from 'src/models/salary';
+import { LocalUI } from '../../../../enums/local-ui';
 
 @Component({
   selector: 'app-salary-detail',
@@ -17,6 +18,7 @@ export class SalaryDetailComponent {
   salary: Salary;
   viewType = ViewType;
   durationFormat = DurationFormat;
+  localUi = LocalUI;
 
   constructor(route: ActivatedRoute) {
     route.data.subscribe(({salary}) => this.salary = salary);

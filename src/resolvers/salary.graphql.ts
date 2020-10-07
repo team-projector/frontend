@@ -7,13 +7,19 @@ import gql from 'graphql-tag';
 })
 export class SalaryGQL extends Query<{ salary }> {
   document = gql`
-    query ($salary: ID!){
-      salary (id: $salary) {
+query($salary: ID!) {
+    salary(id: $salary) {
         id
         hourRate
         taxRate
         position {
-          title
+            title
+        }
+        user {
+            glAvatar
+            position {
+                title
+            }
         }
         createdAt
         periodFrom
@@ -25,6 +31,6 @@ export class SalaryGQL extends Query<{ salary }> {
         sum
         total
         payed
-      }
-    }`;
+    }
+}`;
 }
