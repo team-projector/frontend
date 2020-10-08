@@ -9,6 +9,8 @@ import { DateFnsConfigurationService } from 'ngx-date-fns';
 import { detectLanguage } from 'src/utils/lang';
 import { Language } from './enums/language';
 
+declare const backend: { config: { firstWeekDay: 0 | 1 } };
+
 export const PLATFORM_DELAY = 100;
 export const UI_DELAY = 250;
 export const MOCKS_DELAY = 1000;
@@ -24,7 +26,7 @@ enum Currencies {
 }
 
 const CURRENCY_CODE: Currencies = Currencies.rur;
-const FIRST_DAY_OF_WEEK: 0 | 1 | 2 | 3 | 4 | 5 | 6 = 1;
+const FIRST_DAY_OF_WEEK: 0 | 1 | 2 | 3 | 4 | 5 | 6 = backend.config.firstWeekDay || 0;
 
 const fnsConfig = new DateFnsConfigurationService();
 

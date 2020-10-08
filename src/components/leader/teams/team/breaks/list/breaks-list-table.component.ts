@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UI } from '@junte/ui';
 import { BreaksTableComponent } from 'src/components/shared/work-breaks/list/work-breaks-list';
+import { LocalUI } from '../../../../../../enums/local-ui';
 import { ViewType } from '../../../../../../models/enums/view-type';
 import { Me } from '../../../../../../models/user';
 
@@ -12,6 +14,8 @@ import { Me } from '../../../../../../models/user';
 
 export class TeamBreaksListTableComponent extends BreaksTableComponent {
 
+  ui = UI;
+  localUi = LocalUI;
   viewType = ViewType;
 
   me: Me;

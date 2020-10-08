@@ -4,6 +4,7 @@ import { TableComponent, UI } from '@junte/ui';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+import { serialize } from 'serialize-ts';
 import { deserialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
@@ -13,11 +14,12 @@ import { BonusesFilter, PagingBonuses } from '../../../../models/bonus';
 import { ViewType } from '../../../../models/enums/view-type';
 import { Salary } from '../../../../models/salary';
 import { User } from '../../../../models/user';
+import { equals } from '../../../../utils/equals';
 import { CardSize } from '../../users/card/user-card.types';
 import { AllBonusesGQL } from './bonuses-list.graphql';
 import { BonusesState, BonusesStateUpdate } from './bonuses-list.types';
 
-const DEFAULT_FIRST = 10;
+const PAGE_SIZE = 10;
 
 @Component({
   selector: 'app-bonuses',
@@ -30,19 +32,17 @@ export class BonusesListComponent implements OnInit {
   viewType = ViewType;
   userCardSize = CardSize;
 
-  filter: BonusesFilter;
-
-  @Input()
-  view = ViewType.developer;
+  // will be used for reset offset
+  private reset: Object;
 
   user: User;
   salary: Salary;
+  filter: BonusesFilter;
 
   tableControl = this.fb.control({
-    first: DEFAULT_FIRST,
+    first: PAGE_SIZE,
     offset: 0
   });
-
   form = this.fb.group({
     table: this.tableControl
   });
@@ -54,11 +54,16 @@ export class BonusesListComponent implements OnInit {
     this.salary = salary;
     this.form.patchValue({
       table: {
-        first: first || DEFAULT_FIRST,
+        first: first || PAGE_SIZE,
         offset: offset || 0
       }
     }, {emitEvent: false});
+
+    this.load();
   }
+
+  @Input()
+  view = ViewType.developer;
 
   @Output()
   filtered = new EventEmitter<BonusesStateUpdate>();
@@ -73,41 +78,56 @@ export class BonusesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.tableControl.valueChanges.subscribe(() => this.logger.debug('table control was changed'));
+    this.tableControl.valueChanges.subscribe(() =>
+      this.logger.debug('table control was changed'));
 
 
     this.table.fetcher = () => {
       return environment.mocks
         ? of(getMock(PagingBonuses)).pipe(delay(MOCKS_DELAY))
         : this.allBonusesGQL.fetch(this.filter)
-          .pipe(delay(UI_DELAY), catchGQLErrors(), map(({data: {bonuses}}) => deserialize(bonuses, PagingBonuses)));
+          .pipe(delay(UI_DELAY), catchGQLErrors(), map(({data: {bonuses}}) =>
+            deserialize(bonuses, PagingBonuses)));
     };
 
-    this.form.valueChanges.subscribe(({table: {offset, first}}) => {
+    this.form.valueChanges.subscribe(() => {
       this.logger.debug('form state was changed');
-      this.filtered.emit(new BonusesStateUpdate({
-        first: first !== DEFAULT_FIRST ? first : undefined,
-        offset: offset !== 0 ? offset : undefined
-      }));
-
       this.load();
     });
-
-    this.load();
+    this.table.load();
   }
 
   private load() {
-    const {table: {offset, first}} = this.form.getRawValue();
-    this.filter = new BonusesFilter({
-      offset: offset,
+    const {table: {first}} = this.form.getRawValue();
+    const filter = new BonusesFilter({
       first: first,
       orderBy: 'dueDate',
       user: this.user?.id,
       salary: this.salary?.id
     });
-    this.logger.debug('load bonuses', this.filter);
+    const reset = serialize(filter);
+    if (!!this.reset && !equals(reset, this.reset)) {
+      this.logger.debug('reset offset');
+      this.tableControl.setValue({first, offset: 0}, {emitEvent: false});
+    }
+    this.reset = reset;
 
+    const {table: {offset}} = this.form.getRawValue();
+    filter.offset = offset;
+
+    if (equals(filter, this.filter)) {
+      this.logger.debug('filter was not changed');
+      return;
+    }
+    this.filter = filter;
+
+    this.logger.debug('load bonuses', this.filter);
     this.table.load();
+
+    this.filtered.emit(new BonusesStateUpdate({
+      first: first !== PAGE_SIZE ? first : undefined,
+      offset: offset !== 0 ? offset : undefined
+    }));
   }
 
 }

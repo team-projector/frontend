@@ -3,7 +3,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalComponent, ModalService, PopoverComponent, PopoverService, UI } from '@junte/ui';
 import { AppConfig } from 'src/app-config';
 import { APPLICATION_READY } from 'src/consts';
-import { MeManager } from 'src/managers/me.manager';
 import { Themes } from 'src/models/enums/themes';
 import { UserRole } from 'src/models/enums/user';
 import { LocalUI } from '../../enums/local-ui';
@@ -11,11 +10,11 @@ import { Me } from '../../models/user';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-layout',
+  templateUrl: './layout.component.html',
+  styleUrls: ['./layout.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class LayoutComponent implements OnInit {
 
   ui = UI;
   localUi = LocalUI;

@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MeUserResolver } from '../../resolvers/me';
-import { DashboardComponent } from './dashboard.component';
+import { LayoutComponent } from './layout.component';
 import { AuthorizationGuard } from '../../guards/authorization.guard';
 
 const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent,
+    component: LayoutComponent,
     canActivate: [AuthorizationGuard],
     resolve: {
       me: MeUserResolver
@@ -45,5 +45,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DashboardRoutingModule {
+export class LayoutRoutingModule {
 }

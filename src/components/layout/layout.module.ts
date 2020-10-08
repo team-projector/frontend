@@ -10,14 +10,14 @@ import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { AppThemeSwitcherModule } from '../app-theme-switcher/app-theme-switcher.module';
 import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
 import { IssueCardModule } from '../shared/issues/card/issue-card.module';
-import { DashboardRoutingModule } from './dashboard-routing.module';
-import { DashboardComponent } from './dashboard.component';
-import { DifferencePipe } from './dashboard.pipe';
+import { LayoutRoutingModule } from './layout-routing.module';
+import { LayoutComponent } from './layout.component';
+import { DifferencePipe } from './layout.pipes';
 import { SelectLangComponent } from './select-lang/select-lang.component';
 
 @NgModule({
   declarations: [
-    DashboardComponent,
+    LayoutComponent,
     GitlabStatusComponent,
     DifferencePipe,
     SelectLangComponent
@@ -25,7 +25,7 @@ import { SelectLangComponent } from './select-lang/select-lang.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    DashboardRoutingModule,
+    LayoutRoutingModule,
     JunteUiModule,
     ArrayPipesModule,
     DatePipesModule,
@@ -38,5 +38,5 @@ import { SelectLangComponent } from './select-lang/select-lang.component';
     CookieService
   ]
 })
-export class DashboardModule {
+export class LayoutModule {
 }

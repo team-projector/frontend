@@ -37,9 +37,11 @@ export class EditTicketComponent {
 
   errors: GqlError[] = [];
   progress = {loading: false, saving: false};
-  milestones: Milestone[] = [];
-  milestoneControl = this.fb.control(null);
+  selected = {issues: []};
 
+  milestones: Milestone[] = [];
+
+  milestoneControl = this.fb.control(null);
   form = this.fb.group({
     id: [null],
     milestone: this.milestoneControl,

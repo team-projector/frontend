@@ -7,8 +7,8 @@ import { TeamBreaksRoutingModule } from 'src/components/leader/teams/team/breaks
 import { TeamBreaksComponent } from 'src/components/leader/teams/team/breaks/team-breaks.component';
 import { NumberPipesModule } from 'src/pipes/number-pipes.module';
 import { MeUserResolver } from 'src/resolvers/me';
-import { TeamBreaksListTableComponent } from './breaks-list-table/breaks-list-table.component';
-import { TeamBreaksListGanttComponent } from 'src/components/leader/teams/team/breaks/breaks-list-gantt/breaks-list-gantt.component';
+import { TeamBreaksListTableComponent } from './list/breaks-list-table.component';
+import { TeamBreaksListGanttComponent } from 'src/components/leader/teams/team/breaks/gantt/breaks-list-gantt.component';
 
 @NgModule({
   declarations: [

@@ -1,14 +1,11 @@
-<jnt-stack [gutter]="ui.gutter.large"
-           [align]="ui.align.stretch">
-  <div>
-    <jnt-link [icon]="ui.icons.settings"
-              source="/admin/payroll/salary/"
-              target="_blank"
-              title="Manage"
-              i18n-title="@@action.manage"></jnt-link>
-  </div>
+<jnt-app-page-header [icon]="localUi.icons.salary"
+                     title="Salaries"></jnt-app-page-header>
+
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
   <app-salaries [view]="viewType.shareholder"
                 [state]="state"
                 (filtered)="save($event)"></app-salaries>
-</jnt-stack>
+</jnt-block>
+
 

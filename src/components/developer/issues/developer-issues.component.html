@@ -1,6 +1,9 @@
 <jnt-app-page-header [icon]="localUi.icons.issue"
                      title="Issues"></jnt-app-page-header>
 
-<app-issues [view]="viewType.developer"
-            [state]="state"
-            (filtered)="save($event)"></app-issues>
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <app-issues [view]="viewType.developer"
+              [state]="state"
+              (filtered)="save($event)"></app-issues>
+</jnt-block>

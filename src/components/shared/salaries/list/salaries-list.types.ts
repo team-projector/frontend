@@ -16,9 +16,6 @@ export class SalariesStateUpdate {
   @field()
   offset: number;
 
-  @field()
-  user: string;
-
   constructor(defs: Partial<SalariesStateUpdate> = null) {
     if (!!defs) {
       Object.assign(this, defs);

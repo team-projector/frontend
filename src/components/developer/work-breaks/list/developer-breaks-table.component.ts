@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UI } from '@junte/ui';
 import { BreaksTableComponent } from 'src/components/shared/work-breaks/list/work-breaks-list';
+import { LocalUI } from '../../../../enums/local-ui';
 import { Me } from '../../../../models/user';
 
 @Component({
@@ -10,6 +12,9 @@ import { Me } from '../../../../models/user';
 })
 
 export class DeveloperBreaksTableComponent extends BreaksTableComponent {
+
+  ui = UI;
+  localUi = LocalUI;
 
   me: Me;
 

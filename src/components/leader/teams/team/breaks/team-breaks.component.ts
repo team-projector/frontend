@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { UI } from '@junte/ui';
+import { LocalUI } from '../../../../../enums/local-ui';
 
 @Component({
   selector: 'app-team-breaks',
@@ -7,5 +8,8 @@ import { UI } from '@junte/ui';
   styleUrls: ['./team-breaks.component.scss']
 })
 export class TeamBreaksComponent {
+
   ui = UI;
+  localUi = LocalUI;
+
 }

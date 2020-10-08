@@ -12,7 +12,7 @@ const routes: Routes = [
   },
   {
     matcher: dashboardMatcher,
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+    loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule)
   },
   {
     path: '**',

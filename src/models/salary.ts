@@ -92,16 +92,16 @@ export class PagingSalaries implements Paging<Salary> {
 export class SalariesFilter implements SearchFilter {
 
   @field()
-  user?: number;
+  first: number;
 
   @field()
-  first?: number;
+  offset: number;
 
   @field()
-  offset?: number;
+  user: string;
 
-  constructor(defs: SalariesFilter = null) {
-    Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});
+  constructor(defs: Partial<SalariesFilter> = null) {
+    Object.assign(this, defs);
   }
 
 }

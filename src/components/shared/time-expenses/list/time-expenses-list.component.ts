@@ -16,10 +16,11 @@ import { getMock } from 'src/utils/mocks';
 import { Salary } from '../../../../models/salary';
 import { Team } from '../../../../models/team';
 import { User } from '../../../../models/user';
+import { equals } from '../../../../utils/equals';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses-list.graphql';
 import { TimeExpensesState, TimeExpensesStateUpdate } from './time-expenses-list.types';
 
-const DEFAULT_FIRST = 10;
+const PAGE_SIZE = 10;
 
 @Component({
   selector: 'app-time-expenses',
@@ -34,23 +35,23 @@ export class TimeExpensesListComponent implements OnInit {
   ownerType = OwnerType;
   durationFormat = DurationFormat;
 
+  // will be used for reset offset
+  private reset: Object;
+
   summary: SpentTimesSummary;
   filter: TimeExpensesFilter;
-
-  @Input()
-  type = TimeExpenseType.all;
 
   team: Team;
   user: User;
   salary: Salary;
 
-  tableControl = this.builder.control({
-    first: DEFAULT_FIRST,
+  tableControl = this.fb.control({
+    first: PAGE_SIZE,
     offset: 0
   });
-  form = this.builder.group({
+  form = this.fb.group({
     table: this.tableControl,
-    type: [this.type],
+    type: [TimeExpenseType.all],
     date: [null]
   });
 
@@ -68,12 +69,14 @@ export class TimeExpensesListComponent implements OnInit {
     this.salary = salary;
     this.form.patchValue({
       table: {
-        first: first || DEFAULT_FIRST,
+        first: first || PAGE_SIZE,
         offset: offset || 0
       },
       type: type || TimeExpenseType.all,
       date: date || null
     }, {emitEvent: false});
+
+    this.load();
   }
 
   @Output()
@@ -81,7 +84,7 @@ export class TimeExpensesListComponent implements OnInit {
 
   constructor(private timeExpensesGQL: TimeExpensesGQL,
               private timeExpensesSummaryGQL: TimeExpensesSummaryGQL,
-              private builder: FormBuilder) {
+              private fb: FormBuilder) {
   }
 
   ngOnInit() {
@@ -89,27 +92,17 @@ export class TimeExpensesListComponent implements OnInit {
       return environment.mocks
         ? of(getMock(PagingTimeExpenses, this.filter)).pipe(delay(MOCKS_DELAY))
         : this.timeExpensesGQL.fetch(serialize(this.filter) as R)
-          .pipe(delay(UI_DELAY), map(({data: {timeExpenses}}) => deserialize(timeExpenses, PagingTimeExpenses)));
+          .pipe(delay(UI_DELAY), map(({data: {timeExpenses}}) =>
+            deserialize(timeExpenses, PagingTimeExpenses)));
     };
 
-    this.form.valueChanges.subscribe(({table: {offset, first}, type, date}) => {
-        this.filtered.emit(new TimeExpensesStateUpdate({
-          first: first !== DEFAULT_FIRST ? first : undefined,
-          offset: offset !== 0 ? offset : undefined,
-          type: type !== TimeExpenseType.all ? type : undefined,
-          date: date || undefined
-        }));
-
-        this.load();
-      });
-
-    this.load();
+    this.form.valueChanges.subscribe(() => this.load());
+    this.table.load();
   }
 
   private load() {
-    const {table: {offset, first}, type, user, team, salary, date} = this.form.getRawValue();
-    this.filter = new TimeExpensesFilter({
-      offset: offset,
+    const {table: {first}, type, date} = this.form.getRawValue();
+    const filter = new TimeExpensesFilter({
       first: first,
       state: type === TimeExpenseType.opened ? TimeExpenseState.opened :
         type === TimeExpenseType.closed ? TimeExpenseState.closed : undefined,
@@ -120,8 +113,31 @@ export class TimeExpensesListComponent implements OnInit {
       salary: this.salary?.id
     });
 
+    const reset = serialize(filter);
+    if (!!this.reset && !equals(reset, this.reset)) {
+      this.tableControl.setValue({first, offset: 0}, {emitEvent: false});
+    }
+    this.reset = reset;
+
+    const {table: {offset}} = this.form.getRawValue();
+    filter.offset = offset;
+
+    if (equals(filter, this.filter)) {
+      return;
+    }
+    this.filter = filter;
+
     this.loadSummary();
-    this.table.load();
+    if (!!this.table) {
+      this.table.load();
+    }
+
+    this.filtered.emit(new TimeExpensesStateUpdate({
+      first: first !== PAGE_SIZE ? first : undefined,
+      offset: offset !== 0 ? offset : undefined,
+      type: type !== TimeExpenseType.all ? type : undefined,
+      date: date || undefined
+    }));
   }
 
   loadSummary() {

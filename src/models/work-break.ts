@@ -145,21 +145,18 @@ export class PagingBreaks implements Paging<WorkBreak> {
 export class BreaksFilter implements SearchFilter {
 
   @field()
-  user?: string;
-
-  @field()
   first?: number;
 
   @field()
   offset?: number;
 
   @field()
-  q?: string;
-
-  @field()
   team?: string;
 
-  constructor(defs: BreaksFilter = null) {
+  @field()
+  user?: string;
+
+  constructor(defs: Partial<BreaksFilter> = null) {
     if (!!defs) {
       Object.assign(this, defs);
     }

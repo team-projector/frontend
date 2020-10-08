@@ -1,13 +1,19 @@
-<jnt-stack [align]="ui.align.stretch">
-  <jnt-menu [spacing]="ui.gutter.normal">
-    <jnt-menu-item [link]="['.']"
-                   title="Table"
-                   i18n-title="@@action.table">
-    </jnt-menu-item>
-    <jnt-menu-item [link]="['gantt']"
-                   title="Gantt"
-                   i18n-title="@@action.gantt">
-    </jnt-menu-item>
-  </jnt-menu>
-  <router-outlet></router-outlet>
-</jnt-stack>
+<jnt-app-page-header [icon]="localUi.icons.workBreak"
+                     title="Work Breaks"></jnt-app-page-header>
+
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <jnt-stack [align]="ui.align.stretch">
+    <jnt-menu [spacing]="ui.gutter.normal">
+      <jnt-menu-item [link]="['.']"
+                     title="Table"
+                     i18n-title="@@action.table">
+      </jnt-menu-item>
+      <jnt-menu-item [link]="['gantt']"
+                     title="Gantt"
+                     i18n-title="@@action.gantt">
+      </jnt-menu-item>
+    </jnt-menu>
+    <router-outlet></router-outlet>
+  </jnt-stack>
+</jnt-block>

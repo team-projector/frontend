@@ -80,28 +80,30 @@
   <jnt-form [formGroup]="form"
             [state]="progress.loading && !!metrics ? ui.state.loading: null">
     <jnt-stack [align]="ui.align.stretch">
-      <jnt-switcher formControlName="metric">
-        <jnt-switcher-option label="Spent"
-                             i18n-label="@@label.spent"
-                             [value]="metricType.spent">
-          <jnt-dot [color]="ui.color.green"></jnt-dot>
-        </jnt-switcher-option>
-        <jnt-switcher-option label="Estimated"
-                             i18n-label="@@label.estimated"
-                             [value]="metricType.estimate">
-          <jnt-dot [color]="ui.color.red"></jnt-dot>
-        </jnt-switcher-option>
-        <jnt-switcher-option label="Remains"
-                             i18n-label="@@label.remains"
-                             [value]="metricType.remains">
-          <jnt-dot [color]="ui.color.yellow"></jnt-dot>
-        </jnt-switcher-option>
-        <jnt-switcher-option label="Loading"
-                             i18n-label="@@label.loading"
-                             [value]="metricType.loading">
-          <jnt-dot [color]="ui.color.purpleDark"></jnt-dot>
-        </jnt-switcher-option>
-      </jnt-switcher>
+      <div>
+        <jnt-switcher formControlName="metric">
+          <jnt-switcher-option label="Spent"
+                               i18n-label="@@label.spent"
+                               [value]="metricType.spent">
+            <jnt-dot [color]="ui.color.green"></jnt-dot>
+          </jnt-switcher-option>
+          <jnt-switcher-option label="Estimated"
+                               i18n-label="@@label.estimated"
+                               [value]="metricType.estimate">
+            <jnt-dot [color]="ui.color.red"></jnt-dot>
+          </jnt-switcher-option>
+          <jnt-switcher-option label="Remains"
+                               i18n-label="@@label.remains"
+                               [value]="metricType.remains">
+            <jnt-dot [color]="ui.color.yellow"></jnt-dot>
+          </jnt-switcher-option>
+          <jnt-switcher-option label="Loading"
+                               i18n-label="@@label.loading"
+                               [value]="metricType.loading">
+            <jnt-dot [color]="ui.color.purpleDark"></jnt-dot>
+          </jnt-switcher-option>
+        </jnt-switcher>
+      </div>
       <jnt-calendar (updated)="period = $event;loadMetrics()"
                     (selected)="selected.emit($event)">
         <jnt-week-metric title="Est"

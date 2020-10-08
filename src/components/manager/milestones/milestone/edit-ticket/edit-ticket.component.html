@@ -170,12 +170,16 @@
                       [loader]="findIssues()"
                       keyField="id"
                       labelField="title"
+                      (selected)="selected.issues.push($event)"
                       [optionTemplate]="issueTemplate">
-            <jnt-select-option *ngFor="let issue of ticket?.issues"
-                               [key]="issue.id"
-                               [label]="issue.title"
-                               [value]="issue">
-            </jnt-select-option>
+            <jnt-select-option *ngFor="let i of selected.issues"
+                               [key]="i.id"
+                               [label]="i.title"
+                               [value]="i"></jnt-select-option>
+            <jnt-select-option *ngFor="let i of ticket?.issues"
+                               [key]="i.id"
+                               [label]="i.title"
+                               [value]="i"></jnt-select-option>
           </jnt-select>
         </jnt-form-item>
       </ng-template>

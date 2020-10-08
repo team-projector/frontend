@@ -52,14 +52,13 @@ export class IssuesListComponent implements OnInit {
     summary: false,
     syncing: false
   };
-  projects: ProjectSummary[] = [];
-  developers: TeamMember[] = [];
-
-  filter: IssuesFilter;
-  summary: IssuesSummary;
 
   project: Project;
   developer: User;
+  filter: IssuesFilter;
+  projects: ProjectSummary[] = [];
+  developers: TeamMember[] = [];
+  summary: IssuesSummary;
 
   set team(team: Team) {
     if (!!team && team.id !== this._team?.id) {
@@ -99,12 +98,6 @@ export class IssuesListComponent implements OnInit {
   });
 
   @Input()
-  view = ViewType.developer;
-
-  @ViewChild('table', {static: true})
-  table: TableComponent;
-
-  @Input()
   set state({first, offset, q, type, dueDate, user, team, developer, project}: IssuesState) {
     this.team = team;
     this.user = user;
@@ -125,8 +118,14 @@ export class IssuesListComponent implements OnInit {
     this.load();
   }
 
+  @Input()
+  view = ViewType.developer;
+
   @Output()
   filtered = new EventEmitter<IssuesStateUpdate>();
+
+  @ViewChild('table', {static: true})
+  table: TableComponent;
 
   constructor(private issuesGQL: IssuesGQL,
               private teamMembersGQL: TeamMembersGQL,
@@ -211,7 +210,7 @@ export class IssuesListComponent implements OnInit {
 
     this.logger.debug('load issues', this.filter);
     this.loadSummary();
-    if (this.table) {
+    if (!!this.table) {
       this.table.load();
     }
 

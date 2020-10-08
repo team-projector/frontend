@@ -1,23 +1,27 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { isEqual, TableComponent, UI } from '@junte/ui';
+import { TableComponent, UI } from '@junte/ui';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
-import { delay, distinctUntilChanged, map } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
+import { serialize } from 'serialize-ts';
 import { deserialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
+import { BonusesFilter } from '../../../models/bonus';
 import { ViewType } from '../../../models/enums/view-type';
 import { PagingPenalties, PenaltiesFilter } from '../../../models/penalty';
 import { Salary } from '../../../models/salary';
 import { User } from '../../../models/user';
+import { equals } from '../../../utils/equals';
+import { BonusesStateUpdate } from '../bonuses/list/bonuses-list.types';
 import { CardSize } from '../users/card/user-card.types';
 import { AllPenaltiesGQL } from './penalties.graphql';
 import { PenaltiesState, PenaltiesStateUpdate } from './penalties.types';
 
-const DEFAULT_FIRST = 10;
+const PAGE_SIZE = 10;
 
 @Component({
   selector: 'app-penalties',
@@ -30,19 +34,19 @@ export class PenaltiesListComponent implements OnInit {
   viewType = ViewType;
   userCardSize = CardSize;
 
-  filter: PenaltiesFilter;
-
-  @Input()
-  view = ViewType.developer;
+  // will be used for reset offset
+  private reset: Object;
 
   user: User;
   salary: Salary;
+  filter: PenaltiesFilter;
 
+  tableControl = this.fb.control({
+    first: PAGE_SIZE,
+    offset: 0
+  });
   form = this.fb.group({
-    table: this.fb.control({
-      first: DEFAULT_FIRST,
-      offset: 0
-    })
+    table: this.tableControl
   });
 
   @Input()
@@ -51,11 +55,14 @@ export class PenaltiesListComponent implements OnInit {
     this.salary = salary;
     this.form.patchValue({
       table: {
-        first: first || DEFAULT_FIRST,
+        first: first || PAGE_SIZE,
         offset: offset || 0
       }
     }, {emitEvent: false});
   }
+
+  @Input()
+  view = ViewType.developer;
 
   @Output()
   filtered = new EventEmitter<PenaltiesStateUpdate>();
@@ -73,33 +80,48 @@ export class PenaltiesListComponent implements OnInit {
       return environment.mocks
         ? of(getMock(PagingPenalties)).pipe(delay(MOCKS_DELAY))
         : this.allPenaltiesGQL.fetch(this.filter)
-          .pipe(delay(UI_DELAY), catchGQLErrors(), map(({data: {penalties}}) => deserialize(penalties, PagingPenalties)));
+          .pipe(delay(UI_DELAY), catchGQLErrors(), map(({data: {penalties}}) =>
+            deserialize(penalties, PagingPenalties)));
     };
 
-    this.form.valueChanges.subscribe(({table: {offset, first}}) => {
+    this.form.valueChanges.subscribe(() => {
       this.logger.debug('form state was changed');
-      this.filtered.emit(new PenaltiesStateUpdate({
-        first: first !== DEFAULT_FIRST ? first : undefined,
-        offset: offset !== 0 ? offset : undefined
-      }));
-
       this.load();
     });
-
-    this.load();
+    this.table.load();
   }
 
   private load() {
-    const {table: {offset, first}} = this.form.getRawValue();
-    this.filter = new PenaltiesFilter({
-      offset: offset,
+    const {table: {first}} = this.form.getRawValue();
+    const filter = new BonusesFilter({
       first: first,
+      orderBy: 'dueDate',
       user: this.user?.id,
       salary: this.salary?.id
     });
-    this.logger.debug('load penalties', this.filter);
+    const reset = serialize(filter);
+    if (!!this.reset && !equals(reset, this.reset)) {
+      this.logger.debug('reset offset');
+      this.tableControl.setValue({first, offset: 0}, {emitEvent: false});
+    }
+    this.reset = reset;
 
+    const {table: {offset}} = this.form.getRawValue();
+    filter.offset = offset;
+
+    if (equals(filter, this.filter)) {
+      this.logger.debug('filter was not changed');
+      return;
+    }
+    this.filter = filter;
+
+    this.logger.debug('load penalties', this.filter);
     this.table.load();
+
+    this.filtered.emit(new BonusesStateUpdate({
+      first: first !== PAGE_SIZE ? first : undefined,
+      offset: offset !== 0 ? offset : undefined
+    }));
   }
 
 }

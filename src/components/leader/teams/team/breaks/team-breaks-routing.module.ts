@@ -4,8 +4,8 @@ import { TeamBreaksComponent } from 'src/components/leader/teams/team/breaks/tea
 import { TeamResolver } from 'src/resolvers/team';
 import { UserResolver } from 'src/resolvers/user';
 import { MeUserResolver } from '../../../../../resolvers/me';
-import { TeamBreaksListTableComponent } from './breaks-list-table/breaks-list-table.component';
-import { TeamBreaksListGanttComponent } from './breaks-list-gantt/breaks-list-gantt.component';
+import { TeamBreaksListTableComponent } from './list/breaks-list-table.component';
+import { TeamBreaksListGanttComponent } from './gantt/breaks-list-gantt.component';
 
 export const WORK_BREAKS_BREADCRUMB = $localize`:@@label.work_breaks:Work Breaks`;
 

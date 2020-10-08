@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { TableComponent, UI, untilJSONChanged } from '@junte/ui';
+import { TableComponent, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
@@ -12,11 +12,11 @@ import { MergeRequestState, MergeRequestType } from 'src/models/enums/merge-requ
 import { ViewType } from 'src/models/enums/view-type';
 import { MergeRequestsFilter, MergeRequestSummary, PagingMergeRequest } from 'src/models/merge-request';
 import { getMock } from 'src/utils/mocks';
-import { Project } from '../../../../models/project';
 import { Team } from '../../../../models/team';
 import { User } from '../../../../models/user';
-import { MergeRequestsGQL, MergeRequestSummaryGQL } from './merge-requests.graphql';
+import { equals } from '../../../../utils/equals';
 import { MergeRequestsState, MergeRequestsStateUpdate } from './merge-requests-list.types';
+import { MergeRequestsGQL, MergeRequestSummaryGQL } from './merge-requests.graphql';
 
 const DEFAULT_FIRST = 10;
 
@@ -32,12 +32,13 @@ export class MergeRequestsListComponent implements OnInit {
   issueProblem = IssueProblem;
   viewType = ViewType;
 
+  // will be used for reset offset
+  private reset: Object;
+
   filter: MergeRequestsFilter;
   summary: MergeRequestSummary;
 
   tableControl = this.builder.control({
-    q: null,
-    sort: null,
     first: DEFAULT_FIRST,
     offset: 0
   });
@@ -46,13 +47,11 @@ export class MergeRequestsListComponent implements OnInit {
     type: [MergeRequestType.opened]
   });
 
-  @Input()
-  view = ViewType.developer;
-
   team: Team;
   user: User;
 
-  @Input() set state({first, offset, type, team, user}: MergeRequestsState) {
+  @Input()
+  set state({first, offset, type, team, user}: MergeRequestsState) {
     this.team = team;
     this.user = user;
     this.form.patchValue({
@@ -62,7 +61,12 @@ export class MergeRequestsListComponent implements OnInit {
       },
       type: type || MergeRequestType.opened
     }, {emitEvent: false});
+
+    this.load();
   }
+
+  @Input()
+  view = ViewType.developer;
 
   @Output()
   filtered = new EventEmitter<MergeRequestsStateUpdate>();
@@ -80,27 +84,17 @@ export class MergeRequestsListComponent implements OnInit {
       return environment.mocks
         ? of(getMock(PagingMergeRequest, this.filter)).pipe(delay(MOCKS_DELAY))
         : this.mergeRequestsGQL.fetch(serialize(this.filter) as R)
-          .pipe(delay(UI_DELAY), map(({data: {mergeRequests}}) => deserialize(mergeRequests, PagingMergeRequest)));
+          .pipe(delay(UI_DELAY), map(({data: {mergeRequests}}) =>
+            deserialize(mergeRequests, PagingMergeRequest)));
     };
 
-    this.form.valueChanges.subscribe(({table: {offset, first}, type}) => {
-      this.filtered.emit(new MergeRequestsStateUpdate({
-        first: first !== DEFAULT_FIRST ? first : undefined,
-        offset: offset !== 0 ? offset : undefined,
-        type: type !== MergeRequestType.opened ? type : undefined
-      }));
-
-      this.load();
-    });
-
-    this.load();
+    this.form.valueChanges.subscribe(() => this.load());
+    this.table.load();
   }
 
   private load() {
-    const {table: {offset, first}, type, user, team} = this.form.getRawValue();
-
-    this.filter = new MergeRequestsFilter({
-      offset: offset,
+    const {table: {first}, type} = this.form.getRawValue();
+    const filter = new MergeRequestsFilter({
       first: first,
       state: type === MergeRequestType.opened ? MergeRequestState.opened :
         (type === MergeRequestType.closed ? MergeRequestState.closed
@@ -109,8 +103,30 @@ export class MergeRequestsListComponent implements OnInit {
       user: this.user?.id
     });
 
-    this.loadSummary();
-    this.table.load();
+    const reset = serialize(filter);
+    if (!!this.reset && !equals(reset, this.reset)) {
+      this.tableControl.setValue({first, offset: 0}, {emitEvent: false});
+    }
+    this.reset = reset;
+
+    const {table: {offset}} = this.form.getRawValue();
+    filter.offset = offset;
+
+    if (equals(filter, this.filter)) {
+      return;
+    }
+    this.filter = filter;
+
+    if (!!this.table) {
+      this.loadSummary();
+      this.table.load();
+    }
+
+    this.filtered.emit(new MergeRequestsStateUpdate({
+      first: first !== DEFAULT_FIRST ? first : undefined,
+      offset: offset !== 0 ? offset : undefined,
+      type: type !== MergeRequestType.opened ? type : undefined
+    }));
   }
 
   loadSummary() {
@@ -120,5 +136,6 @@ export class MergeRequestsListComponent implements OnInit {
         .pipe(map(({data: {summary}}) =>
           deserialize(summary, MergeRequestSummary))))
       .subscribe(summary => this.summary = summary);
+
   }
 }

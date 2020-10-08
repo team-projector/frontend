@@ -1,19 +1,10 @@
-<jnt-stack [gutter]="ui.gutter.large"
-           [align]="ui.align.stretch">
-  <div>
-    <jnt-link [icon]="ui.icons.settings"
-              source="/admin/payroll/bonus/"
-              target="_blank"
-              title="Manage"
-              i18n-title="@@action.manage"></jnt-link>
-  </div>
-  <jnt-app-page-header [icon]="localUi.icons.bonus"
-                       title="Bonuses"></jnt-app-page-header>
+<jnt-app-page-header [icon]="localUi.icons.bonus"
+                     title="Bonuses"></jnt-app-page-header>
 
-  <jnt-block [padding]="ui.gutter.none"
-             [width]="ui.width.fluid">
-    <app-bonuses [view]="viewType.shareholder"
-                 [state]="state"
-                 (filtered)="save($event)"></app-bonuses>
-  </jnt-block>
-</jnt-stack>
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <app-bonuses [view]="viewType.shareholder"
+               [state]="state"
+               (filtered)="save($event)"></app-bonuses>
+</jnt-block>
+
