@@ -10,7 +10,7 @@ describe('Signin', () => {
   });
 
   it('check user login', () => {
-    signinPage.login();
+    // signinPage.login();
     // browser.wait(() => signinPage.getUserbar().isPresent(), 10000);
   });
 });
