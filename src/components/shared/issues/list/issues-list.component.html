@@ -132,7 +132,8 @@
     </jnt-table-column>
 
     <jnt-table-column title="Ticket"
-                      i18n-ticket="@@label.ticket">
+                      i18n-ticket="@@label.ticket"
+                      [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-ticket="ticket">
         <jnt-link *ngIf="!!ticket && !!ticket.url"
                   [icon]="ui.icons.link"
@@ -143,16 +144,18 @@
     </jnt-table-column>
 
     <jnt-table-column title="Due date"
-                      i18n-title="@@label.due_date">
+                      i18n-title="@@label.due_date"
+                      [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-dueDate="dueDate" let-problems="problems">
-        <jnt-stack [gutter]="ui.gutter.tiny">
+        <jnt-stack [align]="ui.align.center">
           <app-due-date [dueDate]="dueDate" [problems]="problems"></app-due-date>
         </jnt-stack>
       </ng-template>
     </jnt-table-column>
 
     <jnt-table-column title="Progress"
-                      i18n-title="@@label.progress">
+                      i18n-title="@@label.progress"
+                      [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-timeEstimate="timeEstimate"
                    let-timeSpent="timeSpent"
                    let-totalTimeSpent="totalTimeSpent"
