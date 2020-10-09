@@ -60,6 +60,9 @@
               "src/assets/themes/light.scss",
               "src/assets/themes/dark.scss"
             ],
+            "scripts": [
+              "node_modules/@junte/ui/polyfills/event-path.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {
@@ -150,7 +153,6 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": [],
             "assets": [
               "src/favicon.ico",
               "src/assets"
