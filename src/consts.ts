@@ -26,7 +26,7 @@ enum Currencies {
 }
 
 const CURRENCY_CODE: Currencies = Currencies.rur;
-const FIRST_DAY_OF_WEEK: 0 | 1 | 2 | 3 | 4 | 5 | 6 = backend.config.firstWeekDay || 0;
+const FIRST_DAY_OF_WEEK: 0 | 1 | 2 | 3 | 4 | 5 | 6 = backend?.config?.firstWeekDay || 0;
 
 const fnsConfig = new DateFnsConfigurationService();
 
