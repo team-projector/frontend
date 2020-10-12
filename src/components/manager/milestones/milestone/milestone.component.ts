@@ -218,7 +218,7 @@ export class MilestoneComponent implements OnInit {
     return !!item.data['issue'];
   }
 
-  predicateIssue(item: CdkDrag<number>) {
+  predicateIssue(_item: CdkDrag<number>) {
     return false;
   }
 
