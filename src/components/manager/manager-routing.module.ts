@@ -2,13 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ManagerComponent } from './manager.component';
 
-export const MANAGER_BREADCRUMB = $localize`:@@label.manager:Manager`;
-
 const routes: Routes = [
   {
     path: '',
     component: ManagerComponent,
-    data: {breadcrumb: MANAGER_BREADCRUMB},
     children: [
       {
         path: '',
@@ -28,4 +25,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class ManagerRoutingModule {
+
 }

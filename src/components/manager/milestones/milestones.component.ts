@@ -15,6 +15,7 @@ import { IssuesType } from 'src/models/enums/issue';
 import { MilestoneProblem, MilestoneState, MilestoneType } from 'src/models/enums/milestone';
 import { MilestonesFilter, MilestonesSummary, PagingMilestones } from 'src/models/milestone';
 import { getMock } from 'src/utils/mocks';
+import { LocalUI } from '../../../enums/local-ui';
 import { AllMilestonesGQL, MilestonesSummaryGQL, SyncMilestoneGQL } from './milestones.graphql';
 
 const DEFAULT_FIRST = 10;
@@ -49,7 +50,9 @@ export class MilestonesState {
 export class MilestonesComponent implements OnInit {
 
   private _filter: MilestonesFilter;
+
   ui = UI;
+  localUi = LocalUI;
   durationFormat = DurationFormat;
   milestoneProblem = MilestoneProblem;
   milestoneType = MilestoneType;

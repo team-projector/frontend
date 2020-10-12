@@ -4,6 +4,7 @@ import { UI } from '@junte/ui';
 import { format } from 'date-fns';
 import { DATE_FORMAT } from 'src/consts';
 import { Me } from 'src/models/user';
+import { LocalUI } from '../../../enums/local-ui';
 
 @Component({
   selector: 'app-developer-dashboard',
@@ -13,6 +14,7 @@ import { Me } from 'src/models/user';
 export class DeveloperDashboardComponent {
 
   ui = UI;
+  localUi = LocalUI;
 
   me: Me;
 

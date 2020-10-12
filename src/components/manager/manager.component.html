@@ -1,15 +1,5 @@
-<jnt-app-aside #aside>
-  <jnt-menu [orientation]="ui.orientation.vertical"
-            [spacing]="ui.size.small">
-    <jnt-menu-item [link]="['.']"
-                   [matching]="ui.matching.wildcard"
-                   [icon]="ui.icons.dashboard"
-                   title="Milestones"
-                   i18n-title="@@action.milestones"></jnt-menu-item>
-  </jnt-menu>
-</jnt-app-aside>
-<jnt-app-content [aside]="aside">
-  <jnt-app-sub-header (menu)="aside.toggle()">
+<jnt-app-content>
+  <jnt-app-sub-header>
     <jnt-breadcrumb></jnt-breadcrumb>
   </jnt-app-sub-header>
   <jnt-app-body>
