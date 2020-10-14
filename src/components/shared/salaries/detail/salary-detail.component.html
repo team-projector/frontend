@@ -100,7 +100,8 @@
   <jnt-col [desktop]="8" [mobile]="12">
     <jnt-block data-tabs [padding]="ui.gutter.none"
                [width]="ui.width.fluid">
-      <jnt-menu [spacing]="ui.gutter.normal">
+      <jnt-menu data-nav [style]="ui.menu.style.tabs"
+                [spacing]="ui.gutter.normal">
         <jnt-menu-item [link]="['.']"
                        title="Time Expenses"
                        i18n-title="@@action.time_expenses">

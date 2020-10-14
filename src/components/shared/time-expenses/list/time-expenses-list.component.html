@@ -1,6 +1,6 @@
 <jnt-form [formGroup]="form">
-  <jnt-table #table formControlName="table">
-
+  <jnt-table #table [features]="[view !== viewType.salary ? ui.feature.reload : null]"
+             formControlName="table">
     <ng-template *ngIf="view !== viewType.salary" #tableFiltersTemplate>
       <jnt-stack [orientation]="ui.orientation.horizontal">
         <jnt-stack [orientation]="ui.orientation.horizontal">

@@ -1,5 +1,5 @@
 <jnt-form [formGroup]="form">
-  <jnt-table #table [features]="[ui.feature.search]"
+  <jnt-table #table [features]="[ui.feature.reload, ui.feature.search]"
              (reloaded)="loadSummary()"
              formControlName="table">
     <ng-template #tableFiltersTemplate>
@@ -85,7 +85,7 @@
                                  [disabled]="summary?.closedCount <= 0"
                                  [value]="issuesType.closed">
               <jnt-badge *ngIf="summary?.closedCount > 0"
-                         [overflow]="1000"
+                         [overflow]="9999"
                          [value]="summary?.closedCount"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Opened"
@@ -206,11 +206,12 @@
       <jnt-menu [orientation]="ui.orientation.vertical">
         <jnt-menu-item [icon]="ui.icons.sync"
                        title="Sync from GitLab"
-                       i18n-title="@@action.sync_from_Gitlab"
+                       i18n-title="@@action.sync_from_gitlab"
                        [loading]="progress.syncing"
                        (click)="sync(row.id, hide)"></jnt-menu-item>
       </jnt-menu>
     </ng-template>
+
   </jnt-table>
 </jnt-form>
 

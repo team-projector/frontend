@@ -9,8 +9,19 @@ import { DateFnsConfigurationService } from 'ngx-date-fns';
 import { detectLanguage } from 'src/utils/lang';
 import { Language } from './enums/language';
 
-const backend: { config: { firstWeekDay: 0 | 1 } } = window['backend'] || {
+enum CurrencyCode {
+  usd = 'usd',
+  rur = 'rur'
+}
+
+const backend: {
   config: {
+    currencyCode: CurrencyCode,
+    firstWeekDay: 0 | 1
+  }
+} = window['backend'] || {
+  config: {
+    currencyCode: CurrencyCode.usd,
     firstWeekDay: 0
   }
 };
@@ -18,19 +29,13 @@ const backend: { config: { firstWeekDay: 0 | 1 } } = window['backend'] || {
 export const PLATFORM_DELAY = 100;
 export const UI_DELAY = 250;
 export const MOCKS_DELAY = 1000;
-export const DEFAULT_PAGE_SIZE = 20;
 export const DATE_FORMAT = 'yyyy-MM-dd';
 export const DATE_TIME_FORMAT = 'yyyy-MM-dd\'T\'HH:mm:ss';
 export const APPLICATION_READY = 'application_ready';
 export const CURRENT_LANGUAGE = 'current_language';
 
-enum Currencies {
-  rur = 'rur',
-  usd = 'usd'
-}
-
-const CURRENCY_CODE: Currencies = Currencies.rur;
-const FIRST_DAY_OF_WEEK: 0 | 1 | 2 | 3 | 4 | 5 | 6 = backend.config.firstWeekDay || 0;
+const CURRENCY_CODE: CurrencyCode = backend.config.currencyCode;
+const FIRST_DAY_OF_WEEK: 0 | 1 = backend.config.firstWeekDay;
 
 const fnsConfig = new DateFnsConfigurationService();
 
@@ -42,13 +47,13 @@ enum LocaleData {
 function getLocaleData(locale: any) {
   let changes;
   switch (CURRENCY_CODE) {
-    case Currencies.rur:
+    case CurrencyCode.rur:
       changes = {
         [LocaleData.NumberFormats]: localeRu[LocaleData.NumberFormats],
         [LocaleData.CurrencyCode]: localeRu[LocaleData.CurrencyCode]
       };
       break;
-    case Currencies.usd:
+    case CurrencyCode.usd:
     default:
       changes = {
         [LocaleData.NumberFormats]: localeEn[LocaleData.NumberFormats],

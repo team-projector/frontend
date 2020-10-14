@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TeamBreaksComponent } from 'src/components/leader/teams/team/breaks/team-breaks.component';
+import { TeamBreaksComponent } from 'src/components/leader/teams/team/work-breaks/team-breaks.component';
 import { TeamResolver } from 'src/resolvers/team';
 import { UserResolver } from 'src/resolvers/user';
 import { MeUserResolver } from '../../../../../resolvers/me';

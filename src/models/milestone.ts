@@ -14,7 +14,6 @@ import { ProjectSerializer } from '../serializers/project';
 import { Paging } from './paging';
 import { Project, ProjectGroup } from './project';
 
-
 @model()
 export class MilestoneMetrics {
 
@@ -133,18 +132,21 @@ export class PagingMilestones implements Paging<Milestone> {
 export class MilestonesFilter implements SearchFilter {
 
   @field()
-  first?: number;
+  first: number;
 
   @field()
-  offset?: number;
+  offset: number;
 
   @field()
-  q?: string;
+  q: string;
 
   @field()
-  active?: boolean;
+  active: boolean;
 
-  constructor(defs: MilestonesFilter = null) {
+  @field()
+  orderBy: string;
+
+  constructor(defs: Partial<MilestonesFilter> = null) {
     if (!!defs) {
       Object.assign(this, defs);
     }

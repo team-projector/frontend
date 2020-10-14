@@ -2,10 +2,11 @@
                      title="Work Breaks"
                      teaser="when you can't work"></jnt-app-page-header>
 
-<jnt-block [padding]="ui.gutter.none"
+<jnt-block data-tabs [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
   <jnt-stack [align]="ui.align.stretch">
-    <jnt-menu [spacing]="ui.gutter.normal">
+    <jnt-menu data-nav [style]="ui.menu.style.tabs"
+              [spacing]="ui.gutter.normal">
       <jnt-menu-item [link]="['.']"
                      title="Table"
                      i18n-title="@@action.table">

@@ -1,5 +1,4 @@
 import { ArraySerializer } from 'serialize-ts';
-import { DEFAULT_PAGE_SIZE } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
@@ -65,7 +64,7 @@ export class PenaltiesFilter {
   offset: number;
 
   constructor(defs: Partial<PenaltiesFilter> = null) {
-    Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});
+    Object.assign(this, defs);
   }
 
 }

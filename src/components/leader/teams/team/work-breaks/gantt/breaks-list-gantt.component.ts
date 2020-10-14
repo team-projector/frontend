@@ -7,7 +7,6 @@ import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
-import { MeManager } from 'src/managers/me.manager';
 import { ApproveStates } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
 import { Team } from 'src/models/team';
@@ -32,7 +31,6 @@ export class TeamBreaksListGanttComponent implements OnInit {
 
 
   constructor(private teamBreaksGQL: AllTeamWorkBreaks,
-              public me: MeManager,
               private route: ActivatedRoute) {
     route.data.subscribe(({team}) => this.team = team);
   }

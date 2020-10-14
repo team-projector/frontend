@@ -1,7 +1,6 @@
 import { addDays } from 'date-fns';
 import { SearchFilter } from '@junte/ui';
 import { ArraySerializer } from 'serialize-ts';
-import { DEFAULT_PAGE_SIZE } from 'src/consts';
 import { User, UserPosition } from 'src/models/user';
 import { mocks, TimeAccuracy } from 'src/utils/mocks';
 import { field, model } from '../decorators/model';

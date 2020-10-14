@@ -16,8 +16,8 @@ import { ManagerComponent } from './manager.component';
     ManagerRoutingModule,
     JunteUiModule,
     AppFooterModule
-  ],
-  providers: []
+  ]
 })
 export class ManagerModule {
+
 }

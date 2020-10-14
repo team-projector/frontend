@@ -75,12 +75,13 @@
   </div>
 </ng-template>
 
-<jnt-block title="Work progress"
-           [width]="ui.width.fluid">
-  <jnt-form [formGroup]="form"
-            [state]="progress.loading && !!metrics ? ui.state.loading: null">
-    <jnt-stack [align]="ui.align.stretch">
-      <div>
+<jnt-form [formGroup]="form">
+  <jnt-block [state]="progress.loading && !!metrics ? ui.state.loading: null"
+             [width]="ui.width.fluid">
+    <ng-template #blockHeaderTemplate>
+      <jnt-stack [orientation]="ui.orientation.horizontal"
+                 [align]="ui.align.center">
+        <div data-title>Work progress</div>
         <jnt-switcher formControlName="metric">
           <jnt-switcher-option label="Spent"
                                i18n-label="@@label.spent"
@@ -103,49 +104,51 @@
             <jnt-dot [color]="ui.color.purpleDark"></jnt-dot>
           </jnt-switcher-option>
         </jnt-switcher>
-      </div>
-      <jnt-calendar (updated)="period = $event;loadMetrics()"
-                    (selected)="selected.emit($event)">
-        <jnt-week-metric title="Est"
-                         i18n-title="@@label.est"></jnt-week-metric>
-        <jnt-week-metric title="Spent"
-                         i18n-title="@@label.spent"></jnt-week-metric>
-        <jnt-week-metric title="Eff"
-                         i18n-title="@@label.eff"></jnt-week-metric>
-        <jnt-week-metric title="Payroll"
-                         i18n-title="@@label.payroll"></jnt-week-metric>
-        <jnt-week-metric title="Paid"
-                         i18n-title="@@label.paid"></jnt-week-metric>
-        <ng-template #calendarDayTemplate let-date="date">
-          <div class="day" [attr.today]="(date | isToday)">
-            <ng-container *ngTemplateOutlet="dayTemplate; context: {presentation: metricControl.value,
+      </jnt-stack>
+    </ng-template>
+
+    <jnt-calendar (updated)="period = $event;loadMetrics()"
+                  (selected)="selected.emit($event)">
+      <jnt-week-metric title="Est"
+                       i18n-title="@@label.est"></jnt-week-metric>
+      <jnt-week-metric title="Spent"
+                       i18n-title="@@label.spent"></jnt-week-metric>
+      <jnt-week-metric title="Eff"
+                       i18n-title="@@label.eff"></jnt-week-metric>
+      <jnt-week-metric title="Payroll"
+                       i18n-title="@@label.payroll"></jnt-week-metric>
+      <jnt-week-metric title="Paid"
+                       i18n-title="@@label.paid"></jnt-week-metric>
+      <ng-template #calendarDayTemplate let-date="date">
+        <div data-day [attr.today]="(date | isToday)">
+          <ng-container *ngTemplateOutlet="dayTemplate; context: {presentation: metricControl.value,
                 date: date, metric: metrics?.days.get((date | dfnsFormat : formatDate))}">
+          </ng-container>
+        </div>
+      </ng-template>
+      <ng-template #calendarMetricTemplate let-metric="metric" let-date="date">
+        <ng-template #noMetricTemplate>&ndash;</ng-template>
+        <ng-container *ngIf="metrics?.weeks.get((date | dfnsFormat: formatDate)) as weekMetric;else noMetricTemplate">
+          <ng-container [ngSwitch]="metric">
+            <ng-container *ngSwitchCase="0">
+              {{!!weekMetric.timeEstimate ? (weekMetric.timeEstimate | duration:durationFormat.short) : '&ndash;'}}
             </ng-container>
-          </div>
-        </ng-template>
-        <ng-template #calendarMetricTemplate let-metric="metric" let-date="date">
-          <ng-template #noMetricTemplate>&ndash;</ng-template>
-          <ng-container *ngIf="metrics?.weeks.get((date | dfnsFormat: formatDate)) as weekMetric;else noMetricTemplate">
-            <ng-container [ngSwitch]="metric">
-              <ng-container *ngSwitchCase="0">
-                {{!!weekMetric.timeEstimate ? (weekMetric.timeEstimate | duration:durationFormat.short) : '&ndash;'}}
-              </ng-container>
-              <ng-container *ngSwitchCase="1">
-                {{!!weekMetric.timeSpent ? (weekMetric.timeSpent | duration:durationFormat.short) : '&ndash;'}}
-              </ng-container>
-              <ng-container *ngSwitchCase="2">
-                {{!!weekMetric.efficiency ? (weekMetric.efficiency | number:'1.2-2') : '&ndash;'}}
-              </ng-container>
-              <ng-container *ngSwitchCase="3">
-                {{!!weekMetric.payroll ? (weekMetric.payroll | money) : '&ndash;'}}
-              </ng-container>
-              <ng-container *ngSwitchCase="4">
-                {{!!weekMetric.paid ? (weekMetric.paid | money) : '&ndash;'}}
-              </ng-container>
+            <ng-container *ngSwitchCase="1">
+              {{!!weekMetric.timeSpent ? (weekMetric.timeSpent | duration:durationFormat.short) : '&ndash;'}}
+            </ng-container>
+            <ng-container *ngSwitchCase="2">
+              {{!!weekMetric.efficiency ? (weekMetric.efficiency | number:'1.2-2') : '&ndash;'}}
+            </ng-container>
+            <ng-container *ngSwitchCase="3">
+              {{!!weekMetric.payroll ? (weekMetric.payroll | money) : '&ndash;'}}
+            </ng-container>
+            <ng-container *ngSwitchCase="4">
+              {{!!weekMetric.paid ? (weekMetric.paid | money) : '&ndash;'}}
             </ng-container>
           </ng-container>
-        </ng-template>
-      </jnt-calendar>
-    </jnt-stack>
-  </jnt-form>
-</jnt-block>
+        </ng-container>
+      </ng-template>
+    </jnt-calendar>
+
+  </jnt-block>
+</jnt-form>

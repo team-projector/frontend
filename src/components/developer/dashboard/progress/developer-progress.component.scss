@@ -4,63 +4,14 @@
   display: block;
 }
 
-[metrics] {
-  align-self: start;
+[data-title] {
+  color: $jnt-primary-color;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
 }
 
-[block] {
-  @include max-for-desktop() {
-    margin-bottom: $jnt-gutter-normal;
-  }
-}
-
-[presentations] {
-  div {
-    padding: $jnt-gutter-tiny $jnt-gutter-normal;
-    background-color: silver;
-    color: $jnt-primary-text-color;
-    cursor: pointer;
-    border-radius: $jnt-corner-small;
-  }
-
-  margin-bottom: $jnt-gutter-normal;
-}
-
-.user-metrics {
-  label {
-    text-transform: uppercase;
-    font-size: .8em;
-  }
-
-  p {
-    margin: 0;
-
-    .closed {
-      color: green;
-      font-size: 2em;
-    }
-
-    .opened {
-      color: orangered;
-    }
-
-    sup {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background-color: yellow;
-      border-radius: 50%;
-      padding: 3px;
-      width: 10px;
-      height: 10px;
-      border: 1px solid gray;
-      font-size: .75em;
-      margin-left: 5px;
-    }
-  }
-}
-
-.day {
+[data-day] {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,6 +52,3 @@
   }
 }
 
-[milestone] {
-  font-size: .75rem;
-}

@@ -49,7 +49,7 @@ const routes: Routes = [
       },
       {
         path: 'breaks',
-        loadChildren: () => import('./breaks/team-breaks.module').then(m => m.TeamBreaksModule)
+        loadChildren: () => import('./work-breaks/team-breaks.module').then(m => m.TeamBreaksModule)
       }
     ]
   }

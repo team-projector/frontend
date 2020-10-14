@@ -8,7 +8,6 @@ import { deserialize } from 'serialize-ts/dist';
 import { AllWorkBreaks } from 'src/components/shared/work-breaks/list/work-breaks-list.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
-import { MeManager } from 'src/managers/me.manager';
 import { ApproveStates, BreakReasons } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
 import { User } from 'src/models/user';
@@ -31,7 +30,6 @@ export class DeveloperWorkBreaksGanttComponent implements OnInit {
   loading = false;
 
   constructor(private breaksGQL: AllWorkBreaks,
-              public me: MeManager,
               private route: ActivatedRoute) {
     route.data.subscribe(({user}) => this.user = user);
   }

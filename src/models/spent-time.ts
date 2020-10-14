@@ -1,7 +1,6 @@
 import { LazyModel } from '../serializers/model';
 import { faker } from '../utils/mocks';
 import { ArraySerializer } from 'serialize-ts';
-import { DEFAULT_PAGE_SIZE } from 'src/consts';
 import { TimeExpenseState } from 'src/models/enums/time-expenses';
 import { mocks, SECONDS_IN_HOUR } from 'src/utils/mocks';
 import { DATE_FORMAT } from '../consts';

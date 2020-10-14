@@ -6,7 +6,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DateFnsModule } from 'ngx-date-fns';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
 import { imports, providers } from 'src/consts';
-import { MeManager } from '../managers/me.manager';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
@@ -28,8 +27,6 @@ import { GraphQLModule } from './graphql.module';
     ...imports
   ],
   providers: [
-    MeManager,
-    CurrencyPipe,
     ...providers
   ],
   bootstrap: [AppComponent]

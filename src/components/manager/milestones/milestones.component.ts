@@ -1,46 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TableComponent, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
-import { isEqual, TableComponent, UI } from '@junte/ui';
+import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
-import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY } from 'src/consts';
-import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
-import { MeManager } from 'src/managers/me.manager';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { IssuesType } from 'src/models/enums/issue';
 import { MilestoneProblem, MilestoneState, MilestoneType } from 'src/models/enums/milestone';
 import { MilestonesFilter, MilestonesSummary, PagingMilestones } from 'src/models/milestone';
 import { getMock } from 'src/utils/mocks';
 import { LocalUI } from '../../../enums/local-ui';
+import { equals } from '../../../utils/equals';
 import { AllMilestonesGQL, MilestonesSummaryGQL, SyncMilestoneGQL } from './milestones.graphql';
+import { MilestonesState, MilestonesStateUpdate } from './milestones.types';
 
-const DEFAULT_FIRST = 10;
-
-@model()
-export class MilestonesState {
-
-  @field()
-  q?: string;
-
-  @field()
-  first?: number;
-
-  @field()
-  offset?: number;
-
-  @field()
-  type?: IssuesType;
-
-  constructor(defs: MilestonesState = null) {
-    if (!!defs) {
-      Object.assign(this, defs);
-    }
-  }
-}
+const PAGE_SIZE = 10;
 
 @Component({
   selector: 'app-manager-dashboard',
@@ -49,36 +28,42 @@ export class MilestonesState {
 })
 export class MilestonesComponent implements OnInit {
 
-  private _filter: MilestonesFilter;
-
   ui = UI;
   localUi = LocalUI;
   durationFormat = DurationFormat;
   milestoneProblem = MilestoneProblem;
   milestoneType = MilestoneType;
   milestoneState = MilestoneState;
+
+  // will be used for reset offset
+  private reset: Object;
+
   progress = {sync: false, summary: false};
+
+  filter: MilestonesFilter;
   summary: MilestonesSummary;
 
-  tableControl = this.builder.control({
+  tableControl = this.fb.control({
     q: null,
-    sort: null,
-    first: DEFAULT_FIRST,
+    first: PAGE_SIZE,
     offset: 0
   });
-
-  form = this.builder.group({
+  form = this.fb.group({
     table: this.tableControl,
     type: [IssuesType.opened]
   });
 
-  set filter(filter: MilestonesFilter) {
-    this._filter = filter;
-    this.load();
-  }
+  set state({first, offset, q, type}: MilestonesState) {
+    this.form.patchValue({
+      table: {
+        q: q || null,
+        first: first || PAGE_SIZE,
+        offset: offset || 0
+      },
+      type: type || IssuesType.opened
+    }, {emitEvent: false});
 
-  get filter() {
-    return this._filter;
+    this.load();
   }
 
   @ViewChild('table', {static: true})
@@ -87,56 +72,78 @@ export class MilestonesComponent implements OnInit {
   constructor(private allMilestonesGQL: AllMilestonesGQL,
               private syncMilestoneGQL: SyncMilestoneGQL,
               private milestonesSummaryGQL: MilestonesSummaryGQL,
-              private builder: FormBuilder,
-              private me: MeManager,
+              private fb: FormBuilder,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private logger: NGXLogger) {
   }
 
   ngOnInit() {
     this.table.fetcher = () => {
       return environment.mocks
         ? of(getMock(PagingMilestones, this.filter)).pipe(delay(MOCKS_DELAY))
-        : this.allMilestonesGQL.fetch(this.filter as R)
-          .pipe(map(({data: {allMilestones}}) =>
-            deserialize(allMilestones, PagingMilestones)));
+        : this.allMilestonesGQL.fetch(serialize(this.filter) as R)
+          .pipe(map(({data: {milestones}}) =>
+            deserialize(milestones, PagingMilestones)));
     };
-    this.form.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(({table: {offset, first, q}, type}) => {
-        const state = new MilestonesState({
-          q: q || undefined,
-          first: first !== DEFAULT_FIRST ? first : undefined,
-          offset: offset !== 0 ? offset : undefined,
-          type: type !== MilestoneType.opened ? type : undefined
-        });
-
-        this.filter = new MilestonesFilter({
-          offset: offset,
-          first: first,
-          q: q,
-          active: type === MilestoneType.opened ? true :
-            type === MilestoneType.closed ? false : undefined
-        });
-
-        this.router.navigate([serialize(state)], {relativeTo: this.route})
-          .then(() => null);
-      });
+    this.form.valueChanges.subscribe(() => {
+      this.logger.debug('form state was changed');
+      this.load();
+    });
 
     this.route.params.subscribe(({q, first, offset, type}) => {
-      this.form.patchValue({
-        table: {
-          q: q || null,
-          first: first || DEFAULT_FIRST,
-          offset: offset || 0
-        },
+      this.logger.debug('read state from route');
+      this.state = {
+        q: q || null,
+        first: +first || PAGE_SIZE,
+        offset: +offset || 0,
         type: type || IssuesType.opened
-      });
+      };
     });
+
+    // this.table.load();
   }
 
   private load() {
+    const {table: {first, q}, type} = this.form.getRawValue();
+    const filter = new MilestonesFilter({
+      first: first,
+      q: q,
+      active: type === MilestoneType.opened ? true :
+        type === MilestoneType.closed ? false : undefined,
+      orderBy: type === MilestoneType.opened ? 'dueDate' : '-dueDate'
+    });
+    const reset = serialize(filter);
+    if (!!this.reset && !equals(reset, this.reset)) {
+      this.logger.debug('reset offset');
+      this.tableControl.setValue({q, first, offset: 0}, {emitEvent: false});
+    }
+    this.reset = reset;
+
+    const {table: {offset}} = this.form.getRawValue();
+    filter.offset = offset;
+
+    if (equals(filter, this.filter)) {
+      this.logger.debug('filter was not changed');
+      return;
+    }
+    this.filter = filter;
+
+    this.logger.debug('load milestones', this.filter);
     this.loadSummary();
-    this.table.load();
+    if (!!this.table) {
+      this.table.load();
+    }
+
+    const state = new MilestonesStateUpdate({
+      q: q || undefined,
+      first: first !== PAGE_SIZE ? first : undefined,
+      offset: offset !== 0 ? offset : undefined,
+      type: type !== MilestoneType.opened ? type : undefined
+    });
+
+    this.router.navigate([serialize(state)],
+      {relativeTo: this.route}).then(() => null);
   }
 
   loadSummary() {
@@ -156,4 +163,5 @@ export class MilestonesComponent implements OnInit {
       .pipe(finalize(() => this.progress.sync = false))
       .subscribe(() => this.table.load());
   }
+
 }

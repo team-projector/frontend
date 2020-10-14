@@ -3,7 +3,7 @@ import { UI } from '@junte/ui';
 import { IssueState } from 'src/models/enums/issue';
 import { Issue } from 'src/models/issue';
 import { LocalUI } from '../../../../enums/local-ui';
-import { StandardLabel } from '../../../../models/enums/standard-label';
+import { ViewType } from '../../../../models/enums/view-type';
 
 @Component({
   selector: 'app-issue',
@@ -15,7 +15,7 @@ export class IssueCardComponent {
   ui = UI;
   localUi = LocalUI;
   issueState = IssueState;
-  standardLabel = StandardLabel;
+  view: ViewType = ViewType.developer;
 
   @Input()
   issue: Issue;

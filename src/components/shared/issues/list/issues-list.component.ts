@@ -23,7 +23,7 @@ import { CardSize } from '../../users/card/user-card.types';
 import { IssuesGQL, IssuesSummaryGQL, ProjectsSummaryGQL, SyncIssueGQL, TeamMembersGQL } from './issues-list.graphql';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
 
-const DEFAULT_FIRST = 10;
+const PAGE_SIZE = 10;
 
 @Component({
   selector: 'app-issues',
@@ -85,10 +85,9 @@ export class IssuesListComponent implements OnInit {
 
   tableControl = this.fb.control({
     q: null,
-    first: DEFAULT_FIRST,
+    first: PAGE_SIZE,
     offset: 0
   });
-
   form = this.fb.group({
     table: this.tableControl,
     type: [IssuesType.opened],
@@ -106,7 +105,7 @@ export class IssuesListComponent implements OnInit {
     this.form.patchValue({
       table: {
         q: q || null,
-        first: first || DEFAULT_FIRST,
+        first: first || PAGE_SIZE,
         offset: offset || 0
       },
       type: type || IssuesType.opened,
@@ -216,7 +215,7 @@ export class IssuesListComponent implements OnInit {
 
     this.filtered.emit(new IssuesStateUpdate({
       q: q || undefined,
-      first: first !== DEFAULT_FIRST ? first : undefined,
+      first: first !== PAGE_SIZE ? first : undefined,
       offset: offset > 0 ? offset : undefined,
       type: type !== IssuesType.opened ? type : undefined,
       dueDate: dueDate || undefined,

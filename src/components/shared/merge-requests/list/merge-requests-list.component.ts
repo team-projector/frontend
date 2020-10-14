@@ -3,7 +3,7 @@ import { FormBuilder } from '@angular/forms';
 import { TableComponent, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
@@ -16,7 +16,7 @@ import { Team } from '../../../../models/team';
 import { User } from '../../../../models/user';
 import { equals } from '../../../../utils/equals';
 import { MergeRequestsState, MergeRequestsStateUpdate } from './merge-requests-list.types';
-import { MergeRequestsGQL, MergeRequestSummaryGQL } from './merge-requests.graphql';
+import { MergeRequestsGQL, MergeRequestSummaryGQL, SyncMergeRequestGQL } from './merge-requests.graphql';
 
 const DEFAULT_FIRST = 10;
 
@@ -38,6 +38,13 @@ export class MergeRequestsListComponent implements OnInit {
   filter: MergeRequestsFilter;
   summary: MergeRequestSummary;
 
+  progress = {
+    syncing: false
+  };
+
+  team: Team;
+  user: User;
+
   tableControl = this.builder.control({
     first: DEFAULT_FIRST,
     offset: 0
@@ -46,9 +53,6 @@ export class MergeRequestsListComponent implements OnInit {
     table: this.tableControl,
     type: [MergeRequestType.opened]
   });
-
-  team: Team;
-  user: User;
 
   @Input()
   set state({first, offset, type, team, user}: MergeRequestsState) {
@@ -76,6 +80,7 @@ export class MergeRequestsListComponent implements OnInit {
 
   constructor(private mergeRequestsGQL: MergeRequestsGQL,
               private mergeRequestsSummaryGQL: MergeRequestSummaryGQL,
+              private syncMergeRequestGQL: SyncMergeRequestGQL,
               private builder: FormBuilder) {
   }
 
@@ -137,5 +142,15 @@ export class MergeRequestsListComponent implements OnInit {
           deserialize(summary, MergeRequestSummary))))
       .subscribe(summary => this.summary = summary);
 
+  }
+
+  sync(mergeRequest: number, hide: Function) {
+    this.progress.syncing = true;
+    this.syncMergeRequestGQL.mutate({id: mergeRequest})
+      .pipe(delay(UI_DELAY), finalize(() => {
+        hide();
+        this.progress.syncing = false;
+      }))
+      .subscribe(() => this.table.load());
   }
 }

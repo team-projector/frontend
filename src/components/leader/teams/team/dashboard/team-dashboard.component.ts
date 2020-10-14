@@ -3,31 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from '@junte/ui';
 import { format } from 'date-fns';
 import { DATE_FORMAT } from 'src/consts';
-import { field, model } from 'src/decorators/model';
-import { DurationFormat } from 'src/models/enums/duration-format';
-import { MilestoneProblem } from 'src/models/enums/milestone';
-import { DateSerializer } from 'src/serializers/date';
+import { LocalUI } from '../../../../../enums/local-ui';
 import { Team } from '../../../../../models/team';
-
-@model()
-export class TeamState {
-
-  @field()
-  user?: string;
-
-  @field()
-  project?: string;
-
-  @field({serializer: new DateSerializer(DATE_FORMAT)})
-  dueDate?: Date;
-
-  constructor(defs: TeamState = null) {
-    if (!!defs) {
-      Object.assign(this, defs);
-    }
-  }
-
-}
 
 @Component({
   selector: 'app-leader-team-issues',
@@ -37,8 +14,7 @@ export class TeamState {
 export class TeamDashboardComponent {
 
   ui = UI;
-  durationFormat = DurationFormat;
-  milestoneProblem = MilestoneProblem;
+  localUi = LocalUI;
 
   team: Team;
 

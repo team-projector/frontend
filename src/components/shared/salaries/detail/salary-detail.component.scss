@@ -19,9 +19,19 @@
   ), null, true);
 }
 
+[data-tabs] {
+  @include jnt-block((body: (padding: $jnt-gutter-normal 0 0 0)), '&', true);
+
+  [data-nav] {
+    // TODO: @ui: move to mixins api
+    margin: 0 $jnt-gutter-normal;
+  }
+}
+
 [data-user] {
   padding: 0 $jnt-gutter-large;
   @include jnt-label((color: $jnt-primary-color), null, true);
+
   [data-position] {
     color: $jnt-primary-light-color;
     font-weight: $jnt-font-weight-bold;

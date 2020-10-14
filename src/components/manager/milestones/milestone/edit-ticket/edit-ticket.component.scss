@@ -2,8 +2,10 @@
 @import "~@junte/ui/lib/assets/styles/forms/select";
 
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
   min-width: 450px;
+  min-height: 400px;
 }
 
 p {

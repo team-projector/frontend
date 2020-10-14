@@ -1,5 +1,4 @@
 import { ArraySerializer } from 'serialize-ts';
-import { DEFAULT_PAGE_SIZE } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';

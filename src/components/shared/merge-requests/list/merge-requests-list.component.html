@@ -1,5 +1,6 @@
 <jnt-form [formGroup]="form">
-  <jnt-table #table (reloaded)="loadSummary()"
+  <jnt-table #table [features]="[ui.feature.reload, ui.feature.search]"
+             (reloaded)="loadSummary()"
              formControlName="table">
     <ng-template #tableFiltersTemplate>
       <jnt-stack [orientation]="ui.orientation.horizontal">
@@ -9,12 +10,14 @@
                                i18n-label="@@action.filter_type_all"
                                [value]="mergeRequestType.all">
             <jnt-badge *ngIf="summary?.count"
+                       [overflow]="9999"
                        [value]="summary?.count"></jnt-badge>
           </jnt-switcher-option>
           <jnt-switcher-option label="Closed"
                                i18n-label="@@action.filter_type_closed"
                                [value]="mergeRequestType.closed">
             <jnt-badge *ngIf="summary?.closedCount"
+                       [overflow]="9999"
                        [value]="summary?.closedCount"></jnt-badge>
           </jnt-switcher-option>
           <jnt-switcher-option label="Opened"
@@ -28,8 +31,8 @@
                                i18n-label="@@action.filter_type_merged"
                                [value]="mergeRequestType.merged">
             <jnt-badge *ngIf="summary?.mergedCount"
+                       [overflow]="9999"
                        [value]="summary?.mergedCount"
-                       [overflow]="null"
                        [color]="ui.color.yellow"></jnt-badge>
           </jnt-switcher-option>
         </jnt-switcher>
@@ -85,5 +88,16 @@
         </div>
       </ng-template>
     </jnt-table-column>
+
+    <ng-template #tableRowActionsTemplate let-row="row" let-hide="hide">
+      <jnt-menu [orientation]="ui.orientation.vertical">
+        <jnt-menu-item [icon]="ui.icons.sync"
+                       title="Sync from GitLab"
+                       i18n-title="@@action.sync_from_gitlab"
+                       [loading]="progress.syncing"
+                       (click)="sync(row.id, hide)"></jnt-menu-item>
+      </jnt-menu>
+    </ng-template>
+
   </jnt-table>
 </jnt-form>

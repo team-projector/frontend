@@ -781,7 +781,7 @@
           <context context-type="linenumber">30</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="action.sync_from_Gitlab" datatype="html">
+      <trans-unit id="action.sync_from_gitlab" datatype="html">
         <source>Sync from GitLab</source>
         <target>Синхронизация с Gitlab</target>
         <context-group purpose="location">
