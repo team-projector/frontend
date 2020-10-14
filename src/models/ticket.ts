@@ -1,18 +1,16 @@
-import { addDays, startOfMonth } from 'date-fns';
 import { SearchFilter } from '@junte/ui';
+import { addDays, startOfMonth } from 'date-fns';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
-import { IssueState } from 'src/models/enums/issue';
-import { Label } from 'src/models/label';
 import { Milestone } from 'src/models/milestone';
 import { Paging } from 'src/models/paging';
-import { Project } from 'src/models/project';
-import { User } from 'src/models/user';
 import { DateSerializer } from 'src/serializers/date';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
 import { field, model } from '../decorators/model';
 import { faker, mocks } from '../utils/mocks';
+import { ModelRef } from '../utils/types';
 import { TicketProblem, TicketStates, TicketTypes } from './enums/ticket';
+import { Issue } from './issue';
 
 @model()
 export class TicketMetrics {
@@ -56,52 +54,6 @@ export class TicketMetrics {
   @field({mock: () => faker.random.number({min: 1, max: 10})})
   issuesClosedCount: number;
 
-}
-
-@model()
-export class Issue {
-
-  @field({mock: () => faker.random.uuid()})
-  id: string;
-
-  @field({mock: User})
-  user: User;
-
-  @field({
-    mock: () => faker.helpers.randomize([
-      $localize`:@@mocks.issue_title_implement:Implement design for login feature`,
-      $localize`:@@mocks.issue_title_graphql:GraphQL API for login`,
-      $localize`:@@mocks.issue_title_fix:Fix bugs in login form`
-    ])
-  })
-  title: string;
-
-  @field({mock: {type: Label, length: 3}, serializer: new EdgesToArray(Label)})
-  labels: Label[];
-
-  @field({mock: Project})
-  project: Project;
-
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
-  dueDate: Date;
-
-  @field({mock: () => faker.random.number()})
-  timeEstimate: number;
-
-  @field({mock: () => faker.random.number()})
-  timeSpent: number;
-
-  @field({mock: () => faker.random.number()})
-  totalTimeSpent: number;
-
-  @field()
-  glUrl: string;
-
-  @field({mock: IssueState.opened})
-  state: IssueState;
-
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
-  closedAt: Date;
 }
 
 @model()
@@ -153,8 +105,14 @@ export class Ticket {
   @field({mock: () => faker.internet.url()})
   url: string;
 
-  @field({mock: {type: Issue, length: 5}, serializer: new EdgesToArray(Issue)})
-  issues: Issue[];
+  @field({
+    mock: {
+      type: () => Issue,
+      length: 5
+    },
+    serializer: new EdgesToArray(() => Issue)
+  })
+  issues: ModelRef<Issue>[];
 
   @field({mock: TicketMetrics})
   metrics: TicketMetrics;

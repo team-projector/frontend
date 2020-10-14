@@ -11,7 +11,7 @@ import { getMock, mocks } from '../utils/mocks';
 import { Paging } from './paging';
 import { User } from './user';
 import { ModelRef } from '../utils/types';
-import { ModelSerializer } from '../serializers/model';
+import { LazyModel } from '../serializers/model';
 
 @model({
   mocking: (workBreak: WorkBreak) => {
@@ -43,7 +43,7 @@ export class WorkBreak {
   @field({mock: () => faker.random.uuid()})
   id: number;
 
-  @field({serializer: new ModelSerializer(() => User)})
+  @field({serializer: new LazyModel(() => User)})
   user: ModelRef<User>;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
@@ -70,7 +70,7 @@ export class WorkBreak {
   @field({serializer: new DateSerializer()})
   approvedAt: Date;
 
-  @field({serializer: new ModelSerializer(() => User)})
+  @field({serializer: new LazyModel(() => User)})
   approvedBy: ModelRef<User>;
 
   @field({

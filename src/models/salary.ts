@@ -7,7 +7,7 @@ import { mocks, TimeAccuracy } from 'src/utils/mocks';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
-import { ModelSerializer } from '../serializers/model';
+import { LazyModel } from '../serializers/model';
 import { faker } from '../utils/mocks';
 import { ModelRef } from '../utils/types';
 import { Paging } from './paging';

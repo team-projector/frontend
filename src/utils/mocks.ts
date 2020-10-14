@@ -5,6 +5,7 @@ import { MOCK_FIELDS_METADATA_KEY, MOCKING_METADATA_KEY } from '../decorators/mo
 import { Language } from '../enums/language';
 import { detectLanguage } from './lang';
 
+const MAX_LEVELS = 5;
 export const SECONDS_IN_MINUTE = 60;
 export const SECONDS_IN_HOUR = 3600;
 
@@ -18,8 +19,19 @@ export const faker = ((): any => {
   }
 })();
 
-export function getMock<T>(model: new () => T, context: Object = null, index: number = 0): T {
-  const obj = new model() as T;
+class MaxLevelReached {
+
+}
+
+type Constructor<T> = new () => T;
+type Activator<T> = () => Constructor<T>;
+
+export function getMock<T>(model: Constructor<T> | Activator<T>, context: Object = null, index: number = 0, level: number = 0): T {
+  const obj = !!model.prototype ? new (model as Constructor<T>)() as T : new ((model as Activator<T>)())();
+  const next = level + 1;
+  if (level > MAX_LEVELS) {
+    throw new MaxLevelReached();
+  }
   const metadata = Reflect.getMetadata(MOCK_FIELDS_METADATA_KEY, obj);
   for (const property in metadata) {
     const type = Reflect.getMetadata('design:type', obj, property);
@@ -30,7 +42,7 @@ export function getMock<T>(model: new () => T, context: Object = null, index: nu
     if (type === Boolean || type === Number || type === String || type === Date) {
       if (!!mock) {
         if (typeof mock === 'function') {
-          obj[property] = (mock as Function)(context, index);
+          obj[property] = (mock as Function)(context, index, next);
         } else {
           obj[property] = mock;
         }
@@ -41,12 +53,18 @@ export function getMock<T>(model: new () => T, context: Object = null, index: nu
           const conf = mock as { type: any, length: number };
           const list = [];
           for (let i = 0; i < conf.length; i++) {
-            list.push(getMock(conf.type, context, i));
+            try {
+              list.push(getMock(conf.type, context, i, next));
+            } catch (e) {
+              if (e instanceof MaxLevelReached) {
+                return null;
+              }
+            }
           }
           obj[property] = list;
         } else {
           if (typeof mock === 'function') {
-            obj[property] = (mock as Function)(context, index);
+            obj[property] = (mock as Function)(context, index, next);
           } else {
             obj[property] = mock;
           }
@@ -54,7 +72,13 @@ export function getMock<T>(model: new () => T, context: Object = null, index: nu
       }
     } else {
       if (!!mock) {
-        obj[property] = getMock(mock, context, index);
+        try {
+          obj[property] = getMock(mock, context, index, next);
+        } catch (e) {
+          if (e instanceof MaxLevelReached) {
+            return null;
+          }
+        }
       }
     }
   }

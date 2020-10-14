@@ -3,7 +3,7 @@ import { DEFAULT_PAGE_SIZE } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
-import { ModelSerializer } from '../serializers/model';
+import { LazyModel } from '../serializers/model';
 import { faker } from '../utils/mocks';
 import { ModelRef } from '../utils/types';
 import { Paging } from './paging';
@@ -31,7 +31,7 @@ export class Bonus {
   @field()
   comment: string;
 
-  @field({serializer: new ModelSerializer(() => Salary)})
+  @field({serializer: new LazyModel(() => Salary)})
   salary: ModelRef<Salary>;
 }
 

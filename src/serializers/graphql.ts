@@ -1,8 +1,11 @@
-import { Constructor, deserialize, Serializer } from 'serialize-ts';
+import { deserialize, Serializer } from 'serialize-ts';
+
+type Constructor<T> = new () => T;
+type Activator<T> = () => Constructor<T>;
 
 export class EdgesToPaging<T> implements Serializer<T> {
 
-  constructor(private type: Constructor<T>) {
+  constructor(private type: Constructor<T> | Activator<T>) {
 
   }
 
@@ -11,13 +14,14 @@ export class EdgesToPaging<T> implements Serializer<T> {
   }
 
   deserialize({node}): T {
-    return deserialize(node, this.type);
+    const type = !!this.type.prototype ? this.type as Constructor<T> : (this.type as Activator<T>)() as Constructor<T>;
+    return deserialize(node, type);
   }
 }
 
 export class EdgesToArray<T> implements Serializer<T[]> {
 
-  constructor(private type: Constructor<T>) {
+  constructor(private type: Constructor<T> | Activator<T>) {
 
   }
 
@@ -26,7 +30,7 @@ export class EdgesToArray<T> implements Serializer<T[]> {
   }
 
   deserialize({edges}: { edges: { node }[] }): T[] {
-    return edges.map(e => deserialize(e.node, this.type));
+    const type = !!this.type.prototype ? this.type as Constructor<T> : (this.type as Activator<T>)() as Constructor<T>;
+    return edges.map(e => deserialize(e.node, type));
   }
 }
-

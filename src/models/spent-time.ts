@@ -1,4 +1,4 @@
-import { ModelSerializer } from '../serializers/model';
+import { LazyModel } from '../serializers/model';
 import { faker } from '../utils/mocks';
 import { ArraySerializer } from 'serialize-ts';
 import { DEFAULT_PAGE_SIZE } from 'src/consts';
@@ -42,7 +42,7 @@ export class SpentTime {
   @field({mock: () => mocks.money(10, 100)})
   sum: number;
 
-  @field({serializer: new ModelSerializer(() => Salary)})
+  @field({serializer: new LazyModel(() => Salary)})
   salary: ModelRef<Salary>;
 }
 

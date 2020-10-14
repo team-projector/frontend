@@ -1,6 +1,6 @@
 import { deserialize, serialize, Serializer } from 'serialize-ts';
 
-export class ModelSerializer<T> implements Serializer<T> {
+export class LazyModel<T> implements Serializer<T> {
 
     constructor(private builder: () => new () => T) {
 

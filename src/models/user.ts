@@ -1,8 +1,9 @@
 import { endOfDay, endOfMonth, endOfWeek, format, isPast, startOfDay, startOfMonth, startOfToday, startOfWeek } from 'date-fns';
 import { Paging } from 'src/models/paging';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
+import { ModelRef } from '../utils/types';
 import { WorkBreak } from './work-break';
-import { faker } from '../utils/mocks';
+import { faker, getMock } from '../utils/mocks';
 import { ArraySerializer, PrimitiveSerializer, ModelSerializer } from 'serialize-ts';
 import { UserPermission, UserProblem, UserRole } from './enums/user';
 import { DATE_FORMAT } from '../consts';
@@ -88,10 +89,10 @@ export class User {
   position: UserPosition;
 
   @field({
-    serializer: new EdgesToArray<WorkBreak>(WorkBreak),
-    mock: {type: WorkBreak, length: 10}
+    serializer: new EdgesToArray<WorkBreak>(() => WorkBreak),
+    mock: () => []
   })
-  workBreaks: WorkBreak[];
+  workBreaks: ModelRef<WorkBreak>[];
 
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),

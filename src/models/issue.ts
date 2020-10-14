@@ -1,7 +1,7 @@
-import { addDays } from 'date-fns';
-import { faker } from '../utils/mocks';
 import { SearchFilter, UI } from '@junte/ui';
-import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
+import { addDays } from 'date-fns';
+import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
+import { ModelMetadataSerializer } from 'serialize-ts/dist/serializers/model-metadata.serializer';
 import { IssueProblem, IssueState } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { Team } from 'src/models/team';
@@ -11,6 +11,7 @@ import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { faker } from '../utils/mocks';
 import { Label } from './label';
 import { Paging } from './paging';
 import { Project } from './project';
@@ -301,13 +302,13 @@ export class IssuesSummary {
 
   @field({
     mock: {type: ProjectSummary, length: 5},
-    serializer: new ArraySerializer(new ModelSerializer(ProjectSummary))
+    serializer: new ArraySerializer(new ModelMetadataSerializer(ProjectSummary))
   })
   projects: ProjectSummary[];
 
   @field({
     mock: {type: TeamSummary, length: 10},
-    serializer: new ArraySerializer(new ModelSerializer(TeamSummary))
+    serializer: new ArraySerializer(new ModelMetadataSerializer(TeamSummary))
   })
   teams: TeamSummary[];
 }
