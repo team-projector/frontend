@@ -48,7 +48,7 @@
               <jnt-select placeholder="Milestone"
                           formControlName="milestone"
                           [allowEmpty]="false"
-                          [search]="true"
+                          [features]="[ui.feature.search]"
                           [loader]="findMilestones()"
                           keyField="id"
                           labelField="title">
@@ -166,7 +166,7 @@
           <jnt-select data-issues placeholder="Issues"
                       formControlName="issues"
                       [mode]="ui.select.mode.multiple"
-                      [search]="true"
+                      [features]="[ui.feature.search]"
                       [loader]="findIssues()"
                       keyField="id"
                       labelField="title"

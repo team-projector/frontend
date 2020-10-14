@@ -28,7 +28,7 @@
                       placeholder="Project"
                       [width]="ui.width.fluid"
                       [state]="progress.projects ? ui.state.loading : null"
-                      [search]="true"
+                      [features]="[ui.feature.search]"
                       [optionTemplate]="projectOption">
             <jnt-select-option *ngIf="!!project"
                                [key]="project.id"
@@ -50,7 +50,7 @@
           <jnt-select formControlName="developer"
                       placeholder="Developer"
                       [width]="ui.width.fluid"
-                      [search]="true"
+                      [features]="[ui.feature.search]"
                       [state]="progress.developers ? ui.state.loading : null"
                       [optionTemplate]="userOption">
             <jnt-select-option *ngIf="!!developer"

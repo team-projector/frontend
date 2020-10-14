@@ -1,8 +1,7 @@
 <jnt-block *ngIf="me?.metrics as metrics"
            title="Vacations"
            i18n-title="@@label.vacations"
-           [width]="ui.width.fluid"
-           [padding]="ui.gutter.none">
+           [width]="ui.width.fluid">
   <jnt-stack data-vacations [align]="ui.align.center">
     <p>Remains <span>{{me.annualPaidWorkBreaksDays - metrics.paidWorkBreaksDays}}</span>
       {{(me.annualPaidWorkBreaksDays - metrics.paidWorkBreaksDays) | i18nPlural: daysMapping}}

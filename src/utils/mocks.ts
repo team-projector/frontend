@@ -26,12 +26,14 @@ class MaxLevelReached {
 type Constructor<T> = new () => T;
 type Activator<T> = () => Constructor<T>;
 
+let x = 0;
+
 export function getMock<T>(model: Constructor<T> | Activator<T>, context: Object = null, index: number = 0, level: number = 0): T {
-  const obj = !!model.prototype ? new (model as Constructor<T>)() as T : new ((model as Activator<T>)())();
-  const next = level + 1;
   if (level > MAX_LEVELS) {
     throw new MaxLevelReached();
   }
+  const next = level + 1;
+  const obj = !!model.prototype ? new (model as Constructor<T>)() as T : new ((model as Activator<T>)())();
   const metadata = Reflect.getMetadata(MOCK_FIELDS_METADATA_KEY, obj);
   for (const property in metadata) {
     const type = Reflect.getMetadata('design:type', obj, property);
@@ -52,6 +54,7 @@ export function getMock<T>(model: Constructor<T> | Activator<T>, context: Object
         if ('type' in mock) {
           const conf = mock as { type: any, length: number };
           const list = [];
+          console.log(conf);
           for (let i = 0; i < conf.length; i++) {
             try {
               list.push(getMock(conf.type, context, i, next));

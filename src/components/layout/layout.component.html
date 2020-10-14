@@ -4,7 +4,9 @@
   <jnt-app-busyness></jnt-app-busyness>
   <jnt-app-header>
     <ng-template #headerLogoTemplate>
-      <img [src]="'assets/images/logo-' + (theme === 'dark' ? 'dark' : 'light') + '.svg'">
+      <a routerLink="/">
+        <img width="100" height="45" [src]="'assets/images/logo-' + (theme === 'dark' ? 'dark' : 'light') + '.svg'">
+      </a>
     </ng-template>
 
     <jnt-menu menu>
