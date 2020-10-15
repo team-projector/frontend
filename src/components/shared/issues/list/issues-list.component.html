@@ -194,11 +194,8 @@
                       title="Payroll"
                       i18n-title="@@label.payroll">
       <ng-template #tableCellTemplate let-metrics="metrics">
-        <div style="text-align: right;">
-          {{!!metrics.payroll ? (metrics.payroll | money) : '&mdash;'}}
-          /
-          {{!!metrics.paid ? (metrics.paid | money) : '&mdash;'}}
-        </div>
+        <app-earn [payroll]="metrics.payroll"
+                  [paid]="metrics.paid"></app-earn>
       </ng-template>
     </jnt-table-column>
 
