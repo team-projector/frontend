@@ -6,13 +6,14 @@ import { NGXLogger } from 'ngx-logger';
 import { of, zip } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts';
-import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
+import { DATE_FORMAT, MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { Metrics, MetricType } from 'src/models/enums/metrics';
 import { Me, UserMetricsFilter, UserProgressMetrics } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
 import { METRIC_TYPE } from 'src/components/shared/metrics-type/consts';
+import { LocalUI } from '../../../../enums/local-ui';
 import { DeveloperIssuesMetricsGQL } from './developer-progress.graphql';
 
 interface DeveloperMetrics {
@@ -28,9 +29,11 @@ interface DeveloperMetrics {
 export class DeveloperProgressComponent implements OnInit {
 
   ui = UI;
+  localUi = LocalUI;
   durationFormat = DurationFormat;
   metricType = MetricType;
   formatDate = 'dd/MM/yyyy';
+  dateFormat = DATE_FORMAT;
 
   progress = {loading: false};
 
@@ -44,9 +47,6 @@ export class DeveloperProgressComponent implements OnInit {
 
   @Input()
   me: Me;
-
-  @Output()
-  selected = new EventEmitter<Date>();
 
   constructor(private metricsGQL: DeveloperIssuesMetricsGQL,
               private fb: FormBuilder,

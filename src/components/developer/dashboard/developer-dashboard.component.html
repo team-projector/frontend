@@ -7,7 +7,7 @@
   <jnt-col [desktop]="8" [tablet]="12">
     <jnt-stack [align]="ui.align.stretch"
                [gutter]="ui.gutter.large">
-      <app-developer-progress [me]="me" (selected)="issuesByDueDate($event)"></app-developer-progress>
+      <app-developer-progress [me]="me"></app-developer-progress>
       <app-projects-summary [user]="me" (selected)="issuesByProject($event)"></app-projects-summary>
     </jnt-stack>
   </jnt-col>

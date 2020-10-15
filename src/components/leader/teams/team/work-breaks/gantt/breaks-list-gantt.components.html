@@ -5,13 +5,7 @@
   <jnt-gantt-line *ngFor="let user of workbreaks"
                   [title]="user.name">
     <ng-template #title>
-      <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center">
-        <jnt-avatar avatar [image]="user?.avatar"
-                    [size]="ui.size.small"></jnt-avatar>
-        <div>
-          <jnt-link link [title]="user?.name"></jnt-link>
-        </div>
-      </jnt-stack>
+      <app-user [user]="user"></app-user>
     </ng-template>
     <jnt-gantt-line-period *ngFor="let workBreak of user.workBreaks"
                            [from]="workBreak.fromDate"

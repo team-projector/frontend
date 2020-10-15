@@ -107,8 +107,7 @@
       </jnt-stack>
     </ng-template>
 
-    <jnt-calendar (updated)="period = $event;loadMetrics()"
-                  (selected)="selected.emit($event)">
+    <jnt-calendar (updated)="period = $event;loadMetrics()">
       <jnt-week-metric title="Est"
                        i18n-title="@@label.est"></jnt-week-metric>
       <jnt-week-metric title="Spent"
@@ -120,7 +119,19 @@
       <jnt-week-metric title="Paid"
                        i18n-title="@@label.paid"></jnt-week-metric>
       <ng-template #calendarDayTemplate let-date="date">
-        <div data-day [attr.today]="(date | isToday)">
+        <ng-template #dayDetails>
+          <jnt-menu [orientation]="ui.orientation.horizontal"
+                    [spacing]="ui.gutter.small">
+            <jnt-menu-item title="Issues"
+                           [icon]="localUi.icons.issue"
+                           [link]="['issues', {dueDate: (date | dfnsFormat: dateFormat)}]"></jnt-menu-item>
+            <jnt-menu-item title="Time Expenses"
+                           [icon]="localUi.icons.spentTime"
+                           [link]="['time-expenses', {date: (date | dfnsFormat: dateFormat)}]"></jnt-menu-item>
+          </jnt-menu>
+        </ng-template>
+        <div data-day [attr.today]="(date | isToday)"
+             [jntPopover]="{contentTemplate: dayDetails, trigger: ui.trigger.click}">
           <ng-container *ngTemplateOutlet="dayTemplate; context: {presentation: metricControl.value,
                 date: date, metric: metrics?.days.get((date | dfnsFormat : formatDate))}">
           </ng-container>

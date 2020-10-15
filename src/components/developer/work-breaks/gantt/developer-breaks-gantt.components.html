@@ -5,19 +5,20 @@
   <jnt-gantt-line *ngFor="let workBreak of workbreaks"
                   [title]="workBreak.user.name">
     <ng-template #title>
-      <jnt-stack>
-        <jnt-date-period [start]="workBreak.fromDate" [end]="workBreak.toDate"></jnt-date-period>
-
+      <jnt-stack [orientation]="ui.orientation.horizontal">
         <ng-container [ngSwitch]="workBreak.reason">
-          <ng-container *ngSwitchCase="reasons.vacation"
-                        i18n="@@action.vacation">Vacation
-          </ng-container>
-          <ng-container *ngSwitchCase="reasons.disease"
-                        i18n="@@action.disease">Disease
-          </ng-container>
-          <ng-container *ngSwitchCase="reasons.dayoff"
-                        i18n="@@action.dayoff">Dayoff
-          </ng-container>
+          <jnt-label *ngSwitchCase="reasons.vacation"
+                     [color]="ui.color.green"
+                     label="Vacation">
+          </jnt-label>
+          <jnt-label *ngSwitchCase="reasons.disease"
+                     [color]="ui.color.red"
+                     label="Disease">
+          </jnt-label>
+          <jnt-label *ngSwitchCase="reasons.dayoff"
+                     [color]="ui.color.yellow"
+                     label="Dayoff">
+          </jnt-label>
         </ng-container>
 
         <div data-comment>{{workBreak.comment}}</div>

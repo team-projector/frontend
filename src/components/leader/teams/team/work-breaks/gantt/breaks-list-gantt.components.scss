@@ -7,7 +7,7 @@
   border-radius: $jnt-corner-large;
   background-color: $jnt-gray-600-color;
   color: $jnt-white-color;
-  height: 40px;
+  height: 20px;
   pointer-events: none;
   overflow: hidden;
 
@@ -53,9 +53,4 @@
     justify-content: center;
   }
 
-  [progress] {
-    background-color: $jnt-success-color;
-    transform: translateX(-50%);
-    height: 100%;
-  }
 }

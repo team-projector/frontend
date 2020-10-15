@@ -1,9 +1,11 @@
 <jnt-app-page-header [icon]="localUi.icons.workBreak"
-                     title="Work Breaks"></jnt-app-page-header>
+                     title="Work Breaks"
+                     teaser="for your team"></jnt-app-page-header>
 
-<jnt-block [padding]="ui.gutter.none"
+<jnt-block data-tabs [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
-  <jnt-menu>
+  <jnt-menu data-nav [style]="ui.menu.style.tabs"
+            [spacing]="ui.gutter.normal">
     <jnt-menu-item [link]="['.']"
                    title="Table"
                    i18n-title="@@action.table">

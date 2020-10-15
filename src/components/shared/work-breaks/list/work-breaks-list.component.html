@@ -17,7 +17,8 @@
     </jnt-table-column>
 
     <jnt-table-column title="Period"
-                      i18n-title="@@label.period">
+                      i18n-title="@@label.period"
+                      [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-fromDate="fromDate" let-toDate="toDate">
         <jnt-date-period [start]="fromDate" [end]="toDate"></jnt-date-period>
       </ng-template>
@@ -48,27 +49,31 @@
     </jnt-table-column>
 
     <jnt-table-column title="State"
-                      i18n-title="@@label.break_state">
+                      i18n-title="@@label.break_state"
+                      [align]="ui.text.align.center">
       <ng-template #tableCellTemplate
                    let-approveState="approveState">
-        <ng-container [ngSwitch]="approveState">
-          <jnt-label *ngSwitchCase="approveStates.created"
-                     i18n-label="@@label.created"
-                     [color]="ui.color.purple"
-                     label="Approving">
-          </jnt-label>
-          <jnt-label *ngSwitchCase="approveStates.approved"
-                     i18n-label="@@label.approved"
-                     [color]="ui.color.green"
-                     label="Approved">
-          </jnt-label>
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.center">
+          <ng-container [ngSwitch]="approveState">
+            <jnt-label *ngSwitchCase="approveStates.created"
+                       i18n-label="@@label.created"
+                       [color]="ui.color.purple"
+                       label="Approving">
+            </jnt-label>
+            <jnt-label *ngSwitchCase="approveStates.approved"
+                       i18n-label="@@label.approved"
+                       [color]="ui.color.green"
+                       label="Approved">
+            </jnt-label>
 
-          <jnt-label *ngSwitchCase="approveStates.declined"
-                     i18n-label="@@label.declined"
-                     [color]="ui.color.red"
-                     label="Declined">
-          </jnt-label>
-        </ng-container>
+            <jnt-label *ngSwitchCase="approveStates.declined"
+                       i18n-label="@@label.declined"
+                       [color]="ui.color.red"
+                       label="Declined">
+            </jnt-label>
+          </ng-container>
+        </jnt-stack>
       </ng-template>
     </jnt-table-column>
 

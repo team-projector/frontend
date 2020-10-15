@@ -6,6 +6,7 @@ import { DateFnsModule } from 'ngx-date-fns';
 import { WorkBreaksListModule } from 'src/components/shared/work-breaks/list/work-breaks-list.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { NumberPipesModule } from 'src/pipes/number-pipes.module';
+import { UserCardModule } from '../../shared/users/card/user-card.module';
 import { DeveloperWorkBreaksGanttComponent } from './gantt/developer-breaks-gantt.components';
 import { DeveloperBreaksRoutingModule } from './developer-breaks-routing.module';
 import { DeveloperBreaksComponent } from './developer-breaks.component';
@@ -27,7 +28,8 @@ import { DeveloperBreaksTableComponent } from './list/developer-breaks-table.com
     ReactiveFormsModule,
     DatePipesModule,
     NumberPipesModule,
-    DateFnsModule
+    DateFnsModule,
+    UserCardModule
   ]
 })
 export class DeveloperBreaksModule {

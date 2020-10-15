@@ -7,35 +7,43 @@ import gql from 'graphql-tag';
 })
 export class AllTeamWorkBreaks extends Query<{ breaks }> {
   document = gql`
-    query ($team: ID, $user: ID, $offset: Int, $first: Int) {
-      breaks: teamWorkBreaks(team: $team, user: $user, offset: $offset, first: $first) {
+query($team: ID, $user: ID, $offset: Int, $first: Int) {
+    breaks: teamWorkBreaks(
+        team: $team
+        user: $user
+        offset: $offset
+        first: $first
+    ) {
         count
         edges {
-          node {
-            id
-            name
-            glAvatar
-            workBreaks {
-              count
-              edges {
-                node {
-                  id
-                  createdAt
-                  fromDate
-                  toDate
-                  comment
-                  reason
-                  approveState
-                  approvedBy {
-                    name
-                    glAvatar
-                  }
-                  approvedAt
+            node {
+                id
+                name
+                position {
+                    title
                 }
-              }
+                glAvatar
+                workBreaks {
+                    count
+                    edges {
+                        node {
+                            id
+                            createdAt
+                            fromDate
+                            toDate
+                            comment
+                            reason
+                            approveState
+                            approvedBy {
+                                name
+                                glAvatar
+                            }
+                            approvedAt
+                        }
+                    }
+                }
             }
-          }
         }
-      }
-    }`;
+    }
+}`;
 }
