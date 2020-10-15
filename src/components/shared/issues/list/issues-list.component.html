@@ -169,16 +169,13 @@
                        [justify]="ui.justify.between"
                        [gutter]="ui.gutter.normal">
               <div></div>
-              <div metric estimate>{{timeEstimate | duration:durationFormat.short}}</div>
+              <div metric estimate>{{timeEstimate | duration}}</div>
             </jnt-stack>
           </ng-template>
         </jnt-progress-bar>
         <div efficiency>
             <span [attr.slow]="totalTimeSpent > timeEstimate">
-              {{totalTimeSpent > timeEstimate ? '-' + (totalTimeSpent - timeEstimate | duration:durationFormat.short) : (totalTimeSpent | duration:durationFormat.short)}}
-              <span collaboration *ngIf="totalTimeSpent !== timeSpent">
-                    / {{totalTimeSpent - timeSpent | duration:durationFormat.short}}
-                  </span>
+              {{timeEstimate - totalTimeSpent | duration}}
             </span>
         </div>
         <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
@@ -192,7 +189,8 @@
 
     <jnt-table-column *ngIf="view === viewType.developer"
                       title="Payroll"
-                      i18n-title="@@label.payroll">
+                      i18n-title="@@label.payroll"
+                      [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-metrics="metrics">
         <app-earn [payroll]="metrics.payroll"
                   [paid]="metrics.paid"></app-earn>

@@ -1,0 +1,15 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+
+div {
+  text-align: right;
+
+  &[data-paid=true] {
+    text-decoration: line-through;
+  }
+}
+
+small {
+  display: block;
+  color: $jnt-green-color;
+}
+

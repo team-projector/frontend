@@ -36,11 +36,7 @@
   font-size: .85em;
 
   [slow='true'] {
-    background: $jnt-fail-color;
-    color: $jnt-white-color;
-    border-radius: $jnt-gutter-tiny;
-    line-height: 1em;
-    padding: 0 $jnt-gutter-tiny;
+    color: $jnt-fail-color;
   }
 }
 
