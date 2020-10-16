@@ -13,26 +13,12 @@ import { DurationFormat } from 'src/models/enums/duration-format';
 import { PagingTeams, Team } from 'src/models/team';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
+import { LocalUI } from '../../../enums/local-ui';
 import { AllTeamsGQL } from './teams.graphql';
+import { TeamsState } from './teams.types';
 
-const DEFAULT_FIRST = 14;
+const PAGE_SIZE = 14;
 const DEFAULT_PAGE = 1;
-
-@model()
-export class TeamsState {
-
-  @field()
-  first?: number;
-
-  @field()
-  offset?: number;
-
-  constructor(defs: TeamsState = null) {
-    if (!!defs) {
-      Object.assign(this, defs);
-    }
-  }
-}
 
 @Component({
   selector: 'app-leader-teams',
@@ -42,6 +28,7 @@ export class TeamsState {
 export class TeamsComponent implements OnInit {
 
   ui = UI;
+  localUi = LocalUI;
   durationFormat = DurationFormat;
 
   private _state: TeamsState;
@@ -62,7 +49,7 @@ export class TeamsComponent implements OnInit {
   }
 
   get pagesCount() {
-    return Math.ceil(this.count / DEFAULT_FIRST);
+    return Math.ceil(this.count / PAGE_SIZE);
   }
 
   constructor(private allTeamsGQL: AllTeamsGQL,
@@ -80,8 +67,8 @@ export class TeamsComponent implements OnInit {
       const p = +page || DEFAULT_PAGE;
       this.pageControl.patchValue(p);
       this.state = new TeamsState({
-        first: DEFAULT_FIRST,
-        offset: (p - 1) * DEFAULT_FIRST
+        first: PAGE_SIZE,
+        offset: (p - 1) * PAGE_SIZE
       });
     });
   }
