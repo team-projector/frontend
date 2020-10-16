@@ -7,6 +7,8 @@ export class LocalUI {
     penalty: 'penalty:font:icons',
     salary: 'salary:font:icons',
     workBreak: 'work-break:font:icons',
+    team: 'team:font:icons',
+    milestone: 'milestone:font:icons',
 
     money: 'money:font:icons',
     developer: 'developer:svg:local',
