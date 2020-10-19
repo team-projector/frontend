@@ -20,12 +20,10 @@ import { LazyModel } from '../serializers/model';
     switch (faker.random.number({min: 1, max: 3})) {
       case 2:
         workBreak.approveState = ApproveStates.approved;
-        workBreak.approvedBy = getMock(User);
         workBreak.approvedAt = approvedAt;
         break;
       case 3:
         workBreak.approveState = ApproveStates.declined;
-        workBreak.approvedBy = getMock(User);
         workBreak.approvedAt = approvedAt;
         workBreak.declineReason = faker.helpers.randomize([
           $localize`:@@mocks.decline_urgent:Sorry we have an urgent project`,
@@ -43,7 +41,10 @@ export class WorkBreak {
   @field({mock: () => faker.random.uuid()})
   id: number;
 
-  @field({serializer: new LazyModel(() => User)})
+  @field({
+    serializer: new LazyModel(() => User),
+    mock: ()=> User
+  })
   user: ModelRef<User>;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
@@ -70,7 +71,10 @@ export class WorkBreak {
   @field({serializer: new DateSerializer()})
   approvedAt: Date;
 
-  @field({serializer: new LazyModel(() => User)})
+  @field({
+    serializer: new LazyModel(() => User),
+    mock: ()=> User
+  })
   approvedBy: ModelRef<User>;
 
   @field({

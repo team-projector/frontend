@@ -70,7 +70,7 @@ export class DeveloperProgressComponent implements OnInit {
 
       this.progress.loading = true;
       const action = environment.mocks
-        ? of(Array.apply(null, Array(20))
+        ? of(Array.apply(null, Array(120))
           .map(() => getMock(UserProgressMetrics, filter)))
           .pipe(delay(MOCKS_DELAY))
         : this.metricsGQL.fetch(serialize(filter) as R)

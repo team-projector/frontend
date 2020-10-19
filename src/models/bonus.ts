@@ -3,7 +3,7 @@ import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { LazyModel } from '../serializers/model';
-import { faker } from '../utils/mocks';
+import { faker, mocks } from '../utils/mocks';
 import { ModelRef } from '../utils/types';
 import { Paging } from './paging';
 import { Salary } from './salary';
@@ -15,7 +15,7 @@ export class Bonus {
   @field({mock: () => faker.random.number()})
   id: number;
 
-  @field({mock: faker.date.future(), serializer: new DateSerializer()})
+  @field({mock: () => faker.date.recent(200), serializer: new DateSerializer()})
   createdAt: Date;
 
   @field({mock: User})
@@ -24,10 +24,15 @@ export class Bonus {
   @field({mock: User})
   createdBy: User;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(30, 100)})
   sum: number;
 
-  @field()
+  @field({
+    mock: () => faker.helpers.randomize([
+      $localize`:@@mocks.bonus_comment_overtime:Overtime`,
+      $localize`:@@mocks.bonus_comment_great:Great code!`
+    ])
+  })
   comment: string;
 
   @field({serializer: new LazyModel(() => Salary)})
@@ -37,7 +42,7 @@ export class Bonus {
 @model()
 export class PagingBonuses implements Paging<Bonus> {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(7, 15)})
   count: number;
 
   @field({

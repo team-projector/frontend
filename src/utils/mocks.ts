@@ -54,7 +54,6 @@ export function getMock<T>(model: Constructor<T> | Activator<T>, context: Object
         if ('type' in mock) {
           const conf = mock as { type: any, length: number };
           const list = [];
-          console.log(conf);
           for (let i = 0; i < conf.length; i++) {
             try {
               list.push(getMock(conf.type, context, i, next));
@@ -124,7 +123,7 @@ export const mocks = {
   random: (min: number, max: number) => {
     return faker.random.number({min: min, max: max});
   },
-  hourlyRate: (min: number = 150, max: number = 250) => {
+  hourlyRate: (min: number = 5, max: number = 15) => {
     return faker.random.number({min: min, max: max});
   }
 };
