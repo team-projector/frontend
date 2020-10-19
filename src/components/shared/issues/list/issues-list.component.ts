@@ -22,6 +22,7 @@ import { equals } from '../../../../utils/equals';
 import { CardSize } from '../../users/card/user-card.types';
 import { IssuesGQL, IssuesSummaryGQL, ProjectsSummaryGQL, SyncIssueGQL, TeamMembersGQL } from './issues-list.graphql';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
+import {LocalUI} from '../../../../enums/local-ui';
 
 const PAGE_SIZE = 10;
 
@@ -32,6 +33,7 @@ const PAGE_SIZE = 10;
 })
 export class IssuesListComponent implements OnInit {
 
+  localUi = LocalUI;
   ui = UI;
   issueState = IssueState;
   issueProblem = IssueProblem;
