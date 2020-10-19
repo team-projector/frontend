@@ -72,7 +72,7 @@ export class Ticket {
   type: TicketTypes;
 
   @field({
-    mock: () => faker.helpers.randomize([
+    mock: context => !!context && context.state != undefined ? context.state : faker.helpers.randomize([
       TicketStates.created,
       TicketStates.planning,
       TicketStates.doing,
@@ -182,7 +182,7 @@ export class PagingTickets implements Paging<Ticket> {
 
   @field({
     name: 'edges',
-    mock: {type: Ticket, length: 15},
+    mock: {type: Ticket, length: 10},
     serializer: new ArraySerializer(new EdgesToPaging<Ticket>(Ticket))
   })
   results: Ticket[];
@@ -216,24 +216,24 @@ export class TicketsFilter implements SearchFilter {
 @model()
 export class TicketsSummary {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(90, 120)})
   count: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(20, 30)})
   createdCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(8, 15)})
   planningCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(7, 15)})
   doingCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(8, 15)})
   testingCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(7, 15)})
   acceptingCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(8, 15)})
   doneCount: number;
 }

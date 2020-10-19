@@ -3,7 +3,7 @@ import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { LazyModel } from '../serializers/model';
-import { faker } from '../utils/mocks';
+import { faker, mocks } from '../utils/mocks';
 import { ModelRef } from '../utils/types';
 import { Paging } from './paging';
 import { Salary } from './salary';
@@ -15,7 +15,7 @@ export class Penalty {
   @field({mock: () => faker.random.number()})
   id: number;
 
-  @field({mock: faker.date.future(), serializer: new DateSerializer()})
+  @field({mock: () => faker.date.recent(200), serializer: new DateSerializer()})
   createdAt: Date;
 
   @field({mock: User})
@@ -24,10 +24,15 @@ export class Penalty {
   @field({mock: User})
   createdBy: User;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(30, 100)})
   sum: number;
 
-  @field()
+  @field({
+    mock: () => faker.helpers.randomize([
+      $localize`:@@mocks.penalty_comment_overdue:Overdue`,
+      $localize`:@@mocks.penalty_comment_bug:Your code generated bug`
+    ])
+  })
   comment: string;
 
   @field({serializer: new LazyModel(() => Salary)})

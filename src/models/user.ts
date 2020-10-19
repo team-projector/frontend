@@ -16,31 +16,31 @@ import { IssuesMetrics, MergeRequestsMetrics } from './metrics';
 @model()
 export class UserMetrics {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(50, 120)})
   bonus: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(90, 120)})
   penalty: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(800, 1600)})
   payroll: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(450, 750)})
   payrollClosed: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(300, 700)})
   payrollOpened: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(100, 140)})
   taxes: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(55, 90)})
   taxesClosed: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(35, 50)})
   taxesOpened: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(2, 13)})
   paidWorkBreaksDays: number;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
@@ -64,7 +64,7 @@ export class UserPosition {
 @model()
 export class User {
 
-  @field({mock: context => !!context && !!context.id ? context.id : faker.random.uuid()})
+  @field({mock: context => !!context && !!context.id ? context.id : 'mock' + faker.random.uuid()})
   id: string;
 
   @field({mock: () => faker.internet.userName()})
@@ -76,13 +76,13 @@ export class User {
   @field({name: 'glAvatar', mock: () => faker.internet.avatar()})
   avatar: string;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.hourlyRate()})
   hourRate: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(15000, 30000)})
   taxRate: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(8, 18)})
   annualPaidWorkBreaksDays: number;
 
   @field({mock: UserPosition})
@@ -90,7 +90,7 @@ export class User {
 
   @field({
     serializer: new EdgesToArray<WorkBreak>(() => WorkBreak),
-    mock: () => []
+    mock: {type: () => WorkBreak, length: 5}
   })
   workBreaks: ModelRef<WorkBreak>[];
 
@@ -189,43 +189,43 @@ export class UserMetricsFilter {
 })
 export class UserProgressMetrics {
 
-  @field()
+  @field({mock: () => faker.date.recent(30), serializer: new DateSerializer()})
   start: Date;
 
-  @field()
+  @field({mock: () => faker.date.recent(30), serializer: new DateSerializer()})
   end: Date;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(100, 230) * 1800})
   timeEstimate: number;
 
-  @field()
+  @field({mock: () => mocks.random(4, 9)})
   timeSpent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(1, 8) * 1800})
   timeRemains: number;
 
-  @field({mock: 8})
+  @field({mock: () => mocks.random(4, 9)})
   plannedWorkHours: number;
 
   @field({mock: () => mocks.efficiency()})
   efficiency: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(1, 8) * 1800})
   loading: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(25, 43) * 10})
   payrollClosed: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(25, 43) * 10})
   payrollOpened: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(7, 30)})
   payroll: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(35, 55) * 10})
   paid: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(7, 30)})
   issuesCount: number;
 
   getKey(): string {

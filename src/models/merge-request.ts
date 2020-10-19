@@ -17,16 +17,16 @@ import { User } from './user';
 @model()
 export class MergeRequestSummary {
 
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
+  @field({mock: () => mocks.random(100, 190)})
   count: number;
 
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
-  openedCount: number;
-
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
+  @field({mock: () => mocks.random(10, 20)})
   closedCount: number;
 
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
+  @field({mock: () => mocks.random(2, 9)})
+  openedCount: number;
+
+  @field({mock: () => mocks.random(55, 130)})
   mergedCount: number;
 
 }

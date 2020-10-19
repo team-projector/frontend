@@ -285,19 +285,19 @@ export class TeamSummary {
 @model()
 export class IssuesSummary {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(100, 190)})
   count: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(55, 130)})
   closedCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(14, 30)})
   openedCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.time(400, 700)})
   timeSpent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(2, 9)})
   problemsCount: number;
 
   @field({

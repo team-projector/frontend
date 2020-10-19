@@ -13,14 +13,14 @@ import { Paging } from './paging';
 
 @model({
   mocking: (salary: Salary) => {
-    const from = faker.date.past(0);
+    const from = faker.date.past(150);
     salary.periodFrom = from;
     salary.periodTo = addDays(from, mocks.random(3, 30));
     salary.chargedTime = mocks.time(40, 80, TimeAccuracy.minutes);
-    salary.sum = mocks.money(10000, 30000);
-    salary.bonus = mocks.money(1000, 3000);
-    salary.penalty = mocks.money(100, 500);
-    salary.taxes = mocks.money(100, 500);
+    salary.sum = mocks.money(400, 1000);
+    salary.bonus = mocks.money(70, 120);
+    salary.penalty = mocks.money(70, 120);
+    salary.taxes = mocks.money(100, 200);
     salary.total = salary.sum + salary.bonus - salary.penalty;
   }
 })
@@ -29,7 +29,7 @@ export class Salary {
   @field({mock: () => faker.random.uuid()})
   id: string;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(5, 15)})
   hourRate: string;
 
   @field({mock: () => faker.random.number()})
@@ -50,19 +50,19 @@ export class Salary {
   @field({mock: () => faker.random.number()})
   chargedTime: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(50, 120)})
   bonus: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(100, 140)})
   taxes: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(90, 120)})
   penalty: number;
 
   @field({mock: () => faker.random.number()})
   sum: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(320, 720)})
   total: number;
 
   @field({mock: () => faker.helpers.randomize([true, false])})
