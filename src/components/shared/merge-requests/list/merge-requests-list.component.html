@@ -50,7 +50,8 @@
     </jnt-table-column>
 
     <jnt-table-column title="Progress"
-                      i18n-title="@@label.progress">
+                      i18n-title="@@label.progress"
+                      [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-timeEstimate="timeEstimate"
                    let-totalTimeSpent="totalTimeSpent"
                    let-metrics="metrics"
@@ -79,13 +80,11 @@
 
     <jnt-table-column *ngIf="view === viewType.developer"
                       title="Payroll"
-                      i18n-title="@@label.payroll">
+                      i18n-title="@@label.payroll"
+                      [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-metrics="metrics">
-        <div style="text-align: right;">
-          {{!!metrics.payroll ? (metrics.payroll | money) : '&mdash;'}}
-          /
-          {{!!metrics.paid ? (metrics.paid | money) : '&mdash;'}}
-        </div>
+        <app-earn [payroll]="metrics.payroll"
+                  [paid]="metrics.paid"></app-earn>
       </ng-template>
     </jnt-table-column>
 

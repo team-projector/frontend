@@ -16,4 +16,5 @@ import { JunteUiModule } from '@junte/ui';
   ]
 })
 export class AppFooterModule {
+
 }

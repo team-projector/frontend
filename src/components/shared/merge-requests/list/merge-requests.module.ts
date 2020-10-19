@@ -7,6 +7,7 @@ import { DateFnsModule } from 'ngx-date-fns';
 import { DueDateModule } from 'src/components/shared/due-date/due-date.module';
 import { DatePipesModule } from '../../../../pipes/date-pipes.module';
 import { MoneyPipesModule } from '../../../../pipes/money-pipes.module';
+import { EarnModule } from '../../earn/earn.module';
 import { MergeRequestCardModule } from '../card/merge-request-card.module';
 import { MergeRequestsListComponent } from './merge-requests-list.component';
 
@@ -25,7 +26,8 @@ import { MergeRequestsListComponent } from './merge-requests-list.component';
     DatePipesModule,
     MoneyPipesModule,
 
-    MergeRequestCardModule
+    MergeRequestCardModule,
+    EarnModule
   ],
   exports: [
     MergeRequestsListComponent

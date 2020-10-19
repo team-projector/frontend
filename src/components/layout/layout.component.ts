@@ -7,7 +7,7 @@ import { Themes } from 'src/models/enums/themes';
 import { UserRole } from 'src/models/enums/user';
 import { LocalUI } from '../../enums/local-ui';
 import { Me } from '../../models/user';
-import { GitlabStatusComponent } from '../gitlab-status/gitlab-status.component';
+import { GitlabStatusComponent } from './gitlab-status/gitlab-status.component';
 
 @Component({
   selector: 'app-layout',

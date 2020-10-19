@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { JunteUiModule } from '@junte/ui';
-import { AppFooterModule } from 'src/components/app-footer/app-footer.module';
+import { AppFooterModule } from 'src/components/layout/footer/app-footer.module';
 import { TeamsRoutingModule } from 'src/components/leader/teams/teams-routing.module';
 import { TeamsComponent } from 'src/components/leader/teams/teams.component';
 import { OutletModule } from 'src/components/outlet/outlet.module';
