@@ -19,7 +19,7 @@
 }
 
 [data-delayed] {
-  color: $jnt-orange-color;
+  @include jnt-icon((size: 20px, color: $jnt-orange-color), '&', true);
 }
 
 [data-bug] {
