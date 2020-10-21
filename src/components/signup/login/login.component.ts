@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { delay, filter, finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { AppConfig } from 'src/app-config';
-import { APPLICATION_READY, BACKEND, MOCKS_DELAY } from 'src/consts';
+import { APPLICATION_READY, BACKEND, MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { AccessToken } from 'src/models/access-token';
 import { UserRole } from 'src/models/enums/user';
@@ -26,7 +26,8 @@ enum SystemMode {
 const DEMO_USERS = {
   [UserRole.developer]: {login: 'tp.developer', password: 'LKnLPUJyGPKXAag4'},
   [UserRole.leader]: {login: 'tp.leader', password: 'LKnLPUJyGPKXAag4'},
-  [UserRole.manager]: {login: 'tp.manager', password: 'LKnLPUJyGPKXAag4'}
+  [UserRole.manager]: {login: 'tp.manager', password: 'LKnLPUJyGPKXAag4'},
+  [UserRole.shareholder]: {login: 'shareholder', password: 'LKnLPUJyGPKXAag4'}
 };
 
 enum Themes {
@@ -47,7 +48,7 @@ export class LoginComponent implements OnInit {
   systemMode = SystemMode;
   backend = BACKEND;
 
-  mode = environment.mocks ? SystemMode.mocks : (false ? SystemMode.demo : SystemMode.prod);
+  mode = environment.mocks ? SystemMode.mocks : (true ? SystemMode.demo : SystemMode.prod);
   theme = !!localStorage.theme ? Themes[localStorage.theme] : Themes.light;
 
   progress = {gitlab: false, login: false};
@@ -90,7 +91,7 @@ export class LoginComponent implements OnInit {
         .pipe(catchGQLErrors(),
           map(({data: {login: {token}}}) =>
             deserialize(token, AccessToken))))
-      .pipe(finalize(() => this.progress.login = false))
+      .pipe(delay(UI_DELAY), finalize(() => this.progress.login = false))
       .subscribe((token: AccessToken) => this.logged(token),
         (err: GqlError[]) => this.errors = err);
   }
