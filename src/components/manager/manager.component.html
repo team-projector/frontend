@@ -1,11 +1,11 @@
 <jnt-app-content>
-  <jnt-app-sub-header>
-    <jnt-breadcrumb></jnt-breadcrumb>
-  </jnt-app-sub-header>
   <jnt-app-body>
-    <jnt-container [width]="ui.width.fluid">
-      <router-outlet></router-outlet>
-    </jnt-container>
+    <jnt-stack [align]="ui.align.stretch" [gutter]="ui.gutter.small">
+      <jnt-breadcrumb></jnt-breadcrumb>
+      <jnt-container [width]="ui.width.fluid">
+        <router-outlet></router-outlet>
+      </jnt-container>
+    </jnt-stack>
   </jnt-app-body>
   <app-footer></app-footer>
 </jnt-app-content>
