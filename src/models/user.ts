@@ -98,9 +98,9 @@ export class User {
     serializer: new ArraySerializer(new PrimitiveSerializer()),
     mock: [UserRole.developer,
       UserRole.customer,
-      UserRole.projectManager,
+      UserRole.manager,
       UserRole.shareholder,
-      UserRole.teamLeader]
+      UserRole.leader]
   })
   roles: UserRole[];
 
@@ -123,14 +123,14 @@ export class User {
         case UserRole.developer:
           me.roles.push(UserRole.developer);
           break;
-        case UserRole.teamLeader:
+        case UserRole.leader:
           me.roles.push(UserRole.developer);
-          me.roles.push(UserRole.teamLeader);
+          me.roles.push(UserRole.leader);
           break;
-        case UserRole.projectManager:
+        case UserRole.manager:
           me.roles.push(UserRole.developer);
-          me.roles.push(UserRole.teamLeader);
-          me.roles.push(UserRole.projectManager);
+          me.roles.push(UserRole.leader);
+          me.roles.push(UserRole.manager);
           break;
       }
     }

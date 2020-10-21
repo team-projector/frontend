@@ -26,8 +26,13 @@
   right: $jnt-gutter-normal;
 }
 
-[form] {
-  width: 350px;
+[data-logo] {
+  text-align: center;
+  padding-bottom: $jnt-gutter-big;
+}
+
+[data-form] {
+  width: 450px;
 
   a {
     display: block;
@@ -35,10 +40,6 @@
     margin-top: $jnt-gutter-big;
   }
 
-  [logo] {
-    text-align: center;
-    padding-bottom: $jnt-gutter-big;
-  }
   [fields] {
     margin-top: $jnt-gutter-normal;
   }
@@ -47,8 +48,4 @@
     margin: 20px 0;
     width: 100%;
   }
-}
-
-[god] {
-  @include jnt-button((padding: 0 $jnt-gutter-normal), null, true);
 }

@@ -14,7 +14,20 @@ import { UserRole } from 'src/models/enums/user';
 import { GqlError } from 'src/models/gql-errors';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
+import { LocalUI } from '../../../enums/local-ui';
 import { GitlabLoginGQL, LoginGQL } from './login.graphql';
+
+enum SystemMode {
+  mocks = 'mocks',
+  demo = 'demo',
+  prod = 'prod'
+}
+
+const DEMO_USERS = {
+  [UserRole.developer]: {login: 'tp.developer', password: 'LKnLPUJyGPKXAag4'},
+  [UserRole.leader]: {login: 'tp.leader', password: 'LKnLPUJyGPKXAag4'},
+  [UserRole.manager]: {login: 'tp.manager', password: 'LKnLPUJyGPKXAag4'}
+};
 
 enum Themes {
   light = 'light',
@@ -30,13 +43,16 @@ export class LoginComponent implements OnInit {
 
   ui = UI;
   userRole = UserRole;
-  mocks = environment.mocks;
+  localUi = LocalUI;
+  systemMode = SystemMode;
+
+  mode = environment.mocks ? SystemMode.mocks : (false ? SystemMode.demo : SystemMode.prod);
 
   theme = !!localStorage.theme ? Themes[localStorage.theme] : Themes.light;
 
   progress = {gitlab: false, login: false};
   errors: GqlError[] = [];
-  loginForm = this.builder.group({
+  form = this.builder.group({
     login: [null, [Validators.required]],
     password: [null, [Validators.required]]
   });
@@ -70,7 +86,7 @@ export class LoginComponent implements OnInit {
   login() {
     this.progress.login = true;
     (environment.mocks ? of(getMock(AccessToken)).pipe(delay(MOCKS_DELAY))
-      : this.loginGQL.mutate(this.loginForm.value)
+      : this.loginGQL.mutate(this.form.value)
         .pipe(catchGQLErrors(),
           map(({data: {login: {token}}}) =>
             deserialize(token, AccessToken))))
@@ -83,6 +99,11 @@ export class LoginComponent implements OnInit {
     this.config.token = token;
     this.router.navigate(['/'])
       .then(() => null);
+  }
+
+  demo(role: UserRole) {
+    this.form.patchValue(DEMO_USERS[role]);
+    this.login();
   }
 
   god(role: UserRole) {

@@ -1,4 +1,5 @@
-<jnt-link *ngIf="!mocks" [icon]="ui.icons.settings"
+<jnt-link *ngIf="mode === systemMode.prod"
+          [icon]="ui.icons.settings"
           [outline]="ui.outline.ghost"
           source="/admin/"
           title="Administrator"
@@ -6,71 +7,98 @@
           admin>
 </jnt-link>
 
-<jnt-block [padding]="ui.gutter.large" [state]="progress.gitlab ? ui.state.loading : null">
-  <jnt-form form [formGroup]="loginForm" (submitted)="login()">
-    <jnt-stack [align]="ui.align.stretch">
-      <div logo>
-        <img [src]="'assets/images/' + (theme === 'dark' ? 'logo-dark' : 'logo') + '.svg'" height="50">
-      </div>
-      <p *ngFor="let e of errors">{{e}}</p>
-      <jnt-form-item>
-        <jnt-form-control name="login">
-          <jnt-input formControlName="login" placeholder="Login" [icon]="ui.icons.user"></jnt-input>
-          <jnt-form-message [validator]="ui.validator.required">
-            Field is required!
-          </jnt-form-message>
-        </jnt-form-control>
-      </jnt-form-item>
+<jnt-block [padding]="ui.gutter.large"
+           [state]="progress.gitlab ? ui.state.loading : null">
+  <ng-template #blockHeaderTemplate>
+    <div data-logo>
+      <img [src]="'assets/images/' + (theme === 'dark' ? 'logo-dark' : 'logo') + '.svg'" height="50">
+    </div>
+  </ng-template>
+  <jnt-form data-form
+            [formGroup]="form"
+            (submitted)="login()">
 
-      <jnt-form-item>
-        <jnt-form-control name="password">
-          <jnt-input formControlName="password" placeholder="Password" [icon]="ui.icons.lock"
-                     [type]="ui.input.type.password"></jnt-input>
-          <jnt-form-message [validator]="ui.validator.required">
-            Field is required!
-          </jnt-form-message>
-        </jnt-form-control>
-      </jnt-form-item>
-    </jnt-stack>
+    <jnt-informer *ngIf="errors.length > 0" (ok)="this.errors = []">
+      <jnt-informer-message *ngFor="let e of errors"
+                            [message]="e.toString()"></jnt-informer-message>
+    </jnt-informer>
 
-    <ng-template #formFooterTemplate>
-      <jnt-form-item>
-        <jnt-button [loading]="progress.login"
-                    [type]="ui.button.type.submit"
-                    [icon]="{icon: ui.icons.chevronRight, position: ui.position.right}"
-                    text="Login"
-                    [width]="ui.width.fluid">
-        </jnt-button>
-      </jnt-form-item>
-      <a href="/api/login/gitlab/">
-        <img src="assets/images/gitlab.svg" height="30">
-      </a>
-
-      <div *ngIf="mocks" god>
-        <p>The current version uses mocks! No real backend or database is needed. You can be a god 😎!</p>
+    <ng-container [ngSwitch]="mode">
+      <ng-container *ngSwitchCase="systemMode.mocks">
+        <p>The current version uses mocks! No real backend or database is needed. You can be a god 😎</p>
         <p><b>Select your role:</b></p>
-        <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.center">
-          <jnt-button [scheme]="ui.scheme.success"
-                      [size]="ui.size.small"
-                      [outline]="ui.outline.ghost"
-                      text="Developer"
-                      i18n-text="@@action.developer"
-                      (click)="god(userRole.developer)"></jnt-button>
-          <jnt-button [scheme]="ui.scheme.success"
-                      [size]="ui.size.small"
-                      [outline]="ui.outline.ghost"
-                      text="Team Leader"
-                      i18n-text="@@action.team_leader"
-                      (click)="god(userRole.teamLeader)"></jnt-button>
+        <jnt-menu [style]="ui.menu.style.tags">
+          <jnt-menu-item title="Developer"
+                         i18n-title="@@action.developer"
+                         [icon]="localUi.icons.developer"
+                         (click)="god(userRole.developer)"></jnt-menu-item>
+          <jnt-menu-item title="Team Leader"
+                         i18n-title="@@action.team_leader"
+                         [icon]="localUi.icons.leader"
+                         (click)="god(userRole.leader)"></jnt-menu-item>
 
-          <jnt-button [scheme]="ui.scheme.success"
-                      [size]="ui.size.small"
-                      [outline]="ui.outline.ghost"
-                      i18n-text="@@action.project_manager"
-                      text="Project Manager"
-                      (click)="god(userRole.projectManager)"></jnt-button>
+          <jnt-menu-item title="Project Manager"
+                         i18n-title="@@action.project_manager"
+                         [icon]="localUi.icons.manager"
+                         (click)="god(userRole.manager)"></jnt-menu-item>
+        </jnt-menu>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="systemMode.demo">
+        <p>The current version in demo mode!</p>
+        <p><b>Select your role:</b></p>
+        <jnt-menu [style]="ui.menu.style.tags">
+          <jnt-menu-item title="Developer"
+                         i18n-title="@@action.developer"
+                         [icon]="localUi.icons.developer"
+                         (click)="demo(userRole.developer)"></jnt-menu-item>
+          <jnt-menu-item title="Team Leader"
+                         i18n-title="@@action.team_leader"
+                         [icon]="localUi.icons.leader"
+                         (click)="demo(userRole.leader)"></jnt-menu-item>
+
+          <jnt-menu-item title="Project Manager"
+                         i18n-title="@@action.project_manager"
+                         [icon]="localUi.icons.manager"
+                         (click)="demo(userRole.manager)"></jnt-menu-item>
+        </jnt-menu>
+      </ng-container>
+
+      <ng-container *ngSwitchDefault>
+        <jnt-stack [align]="ui.align.stretch">
+          <jnt-form-item>
+            <jnt-form-control name="login">
+              <jnt-input formControlName="login" placeholder="Login" [icon]="ui.icons.user"></jnt-input>
+              <jnt-form-message [validator]="ui.validator.required">
+                Field is required!
+              </jnt-form-message>
+            </jnt-form-control>
+          </jnt-form-item>
+
+          <jnt-form-item>
+            <jnt-form-control name="password">
+              <jnt-input formControlName="password" placeholder="Password" [icon]="ui.icons.lock"
+                         [type]="ui.input.type.password"></jnt-input>
+              <jnt-form-message [validator]="ui.validator.required">
+                Field is required!
+              </jnt-form-message>
+            </jnt-form-control>
+          </jnt-form-item>
         </jnt-stack>
-      </div>
-    </ng-template>
+        <ng-template #formFooterTemplate>
+          <jnt-form-item>
+            <jnt-button [loading]="progress.login"
+                        [type]="ui.button.type.submit"
+                        [icon]="{icon: ui.icons.chevronRight, position: ui.position.right}"
+                        text="Login"
+                        [width]="ui.width.fluid">
+            </jnt-button>
+          </jnt-form-item>
+          <a href="/api/login/gitlab/">
+            <img src="assets/images/gitlab.svg" height="30">
+          </a>
+        </ng-template>
+      </ng-container>
+    </ng-container>
   </jnt-form>
 </jnt-block>

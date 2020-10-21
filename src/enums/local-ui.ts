@@ -14,8 +14,8 @@ export class LocalUI {
 
     money: 'money:font:icons',
     developer: 'developer:svg:local',
-    teamLeader: 'team-leader:svg:local',
-    projectManager: 'project-manager:svg:local',
+    leader: 'leader:svg:local',
+    manager: 'manager:svg:local',
     customer: 'customer:svg:local',
     shareholder: 'shareholder:svg:local',
 
