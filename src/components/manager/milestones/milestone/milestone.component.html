@@ -1,4 +1,10 @@
-<jnt-stack cdkDropListGroup [align]="ui.align.stretch" [gutter]="ui.gutter.big">
+<jnt-app-page-header [icon]="localUi.icons.milestone"
+                     [title]="milestone.title"
+                     [teaser]="milestone.owner?.fullTitle"></jnt-app-page-header>
+
+<jnt-stack cdkDropListGroup
+           [align]="ui.align.stretch"
+           [gutter]="ui.gutter.big">
   <jnt-form filter [formGroup]="form">
     <jnt-switcher formControlName="type">
       <jnt-switcher-option label="All"

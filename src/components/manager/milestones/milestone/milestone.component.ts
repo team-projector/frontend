@@ -16,6 +16,8 @@ import { TicketProblem, TicketStates, TicketsTypes, TicketTypes } from 'src/mode
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { PagingTickets, Ticket, TicketsFilter, TicketsSummary } from 'src/models/ticket';
 import { getMock } from 'src/utils/mocks';
+import { LocalUI } from '../../../../enums/local-ui';
+import { Milestone } from '../../../../models/milestone';
 import { EditTicketComponent } from './edit-ticket/edit-ticket.component';
 import {
   AllTicketsGQL,
@@ -50,20 +52,22 @@ class MilestoneState {
 export class MilestoneComponent implements OnInit {
 
   ui = UI;
+  localUi = LocalUI;
   durationFormat = DurationFormat;
   ticketTypes = TicketTypes;
   ticketProblem = TicketProblem;
   issueStates = IssueState;
   ticketStates = TicketStates;
   ticketsTypes = TicketsTypes;
-  popover: PopoverComponent;
 
-  milestoneControl = new FormControl(null);
-  ticketControl = new FormControl(null);
-  typeControl = new FormControl(TicketsTypes.all);
+
+  popover: PopoverComponent;
+  milestone: Milestone;
+
+  ticketControl = this.fb.control(null);
+  typeControl = this.fb.control(TicketsTypes.all);
 
   form = this.fb.group({
-    milestone: this.milestoneControl,
     type: this.typeControl
   });
 
@@ -108,9 +112,8 @@ export class MilestoneComponent implements OnInit {
       });
 
     combineLatest([this.route.data, this.route.params])
-      .pipe(debounceTime(PLATFORM_DELAY), distinctUntilChanged((a, b) => isEqual(a, b)))
       .subscribe(([{milestone, ticket}, {type}]) => {
-        this.milestoneControl.patchValue(!!milestone ? milestone.id : null);
+        this.milestone = milestone;
         this.typeControl.patchValue(type || TicketsTypes.all);
         this.ticketControl.patchValue(!!ticket ? ticket.id : null);
       });
@@ -137,7 +140,7 @@ export class MilestoneComponent implements OnInit {
 
   loadTickets() {
     this.loading.tickets = true;
-    const filter = new TicketsFilter({milestone: this.milestoneControl.value, state: this.getState()});
+    const filter = new TicketsFilter({milestone: this.milestone.id, state: this.getState()});
     (environment.mocks
       ? of(getMock(PagingTickets, filter)).pipe(delay(MOCKS_DELAY))
       : this.allTicketsGQL.fetch(serialize(filter) as R).pipe(
@@ -148,7 +151,7 @@ export class MilestoneComponent implements OnInit {
 
   loadSummary() {
     this.loading.summary = true;
-    const filter = new TicketsFilter({milestone: this.milestoneControl.value, state: this.getState()});
+    const filter = new TicketsFilter({milestone: this.milestone.id, state: this.getState()});
     return (environment.mocks
       ? of(getMock(TicketsSummary)).pipe(delay(MOCKS_DELAY))
       : this.ticketsSummaryGQL.fetch(serialize(filter) as R)
@@ -181,7 +184,7 @@ export class MilestoneComponent implements OnInit {
 
   edit(ticket: Ticket = null) {
     const component = this.cfr.resolveComponentFactory(EditTicketComponent).create(this.injector);
-    component.instance.milestone = this.milestoneControl.value;
+    component.instance.milestone = this.milestone.id;
     component.instance.canceled.subscribe(() => this.modal.close());
     component.instance.saved.subscribe(() => {
       this.modal.close();

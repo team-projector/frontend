@@ -11,6 +11,9 @@ export class MilestoneGQL extends Query<{ milestone }> {
       milestone(id: $milestone) {
         id
         title
+        owner {
+          fullTitle
+        }
       }
     }`;
 }
