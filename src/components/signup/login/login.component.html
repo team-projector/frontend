@@ -94,7 +94,7 @@
                         [width]="ui.width.fluid">
             </jnt-button>
           </jnt-form-item>
-          <a href="/api/login/gitlab/">
+          <a *ngIf="!!backend.config.gitlabLoginEnabled" href="/api/login/gitlab/">
             <img src="assets/images/gitlab.svg" height="30">
           </a>
         </ng-template>

@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { delay, filter, finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { AppConfig } from 'src/app-config';
-import { APPLICATION_READY, MOCKS_DELAY } from 'src/consts';
+import { APPLICATION_READY, BACKEND, MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { AccessToken } from 'src/models/access-token';
 import { UserRole } from 'src/models/enums/user';
@@ -45,9 +45,9 @@ export class LoginComponent implements OnInit {
   userRole = UserRole;
   localUi = LocalUI;
   systemMode = SystemMode;
+  backend = BACKEND;
 
   mode = environment.mocks ? SystemMode.mocks : (false ? SystemMode.demo : SystemMode.prod);
-
   theme = !!localStorage.theme ? Themes[localStorage.theme] : Themes.light;
 
   progress = {gitlab: false, login: false};

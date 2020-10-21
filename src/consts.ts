@@ -14,15 +14,17 @@ enum CurrencyCode {
   rur = 'rur'
 }
 
-const backend: {
+export const BACKEND: {
   config: {
     currencyCode: CurrencyCode,
-    firstWeekDay: 0 | 1
+    firstWeekDay: 0 | 1,
+    gitlabLoginEnabled: true
   }
 } = window['backend'] || {
   config: {
     currencyCode: CurrencyCode.usd,
-    firstWeekDay: 0
+    firstWeekDay: 0,
+    gitlabLoginEnabled: true
   }
 };
 
@@ -34,8 +36,8 @@ export const DATE_TIME_FORMAT = 'yyyy-MM-dd\'T\'HH:mm:ss';
 export const APPLICATION_READY = 'application_ready';
 export const CURRENT_LANGUAGE = 'current_language';
 
-const CURRENCY_CODE: CurrencyCode = backend.config.currencyCode;
-const FIRST_DAY_OF_WEEK: 0 | 1 = backend.config.firstWeekDay;
+const CURRENCY_CODE: CurrencyCode = BACKEND.config.currencyCode;
+const FIRST_DAY_OF_WEEK: 0 | 1 = BACKEND.config.firstWeekDay;
 
 const fnsConfig = new DateFnsConfigurationService();
 
