@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { delay, filter, finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { AppConfig } from 'src/app-config';
-import { APPLICATION_READY, MOCKS_DELAY } from 'src/consts';
+import { APPLICATION_READY, MOCKS_DELAY, backend } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { AccessToken } from 'src/models/access-token';
 import { UserRole } from 'src/models/enums/user';
@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit {
   ui = UI;
   userRole = UserRole;
   mocks = environment.mocks;
+  backend = backend;
 
   theme = !!localStorage.theme ? Themes[localStorage.theme] : Themes.light;
 
