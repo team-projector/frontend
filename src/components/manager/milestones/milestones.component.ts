@@ -10,7 +10,6 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
-import { IssuesType } from 'src/models/enums/issue';
 import { MilestoneProblem, MilestoneState, MilestoneType } from 'src/models/enums/milestone';
 import { MilestonesFilter, MilestonesSummary, PagingMilestones } from 'src/models/milestone';
 import { getMock } from 'src/utils/mocks';
@@ -50,7 +49,7 @@ export class MilestonesComponent implements OnInit {
   });
   form = this.fb.group({
     table: this.tableControl,
-    type: [IssuesType.opened]
+    type: [MilestoneType.active]
   });
 
   set state({first, offset, q, type}: MilestonesState) {
@@ -60,7 +59,7 @@ export class MilestonesComponent implements OnInit {
         first: first || PAGE_SIZE,
         offset: offset || 0
       },
-      type: type || IssuesType.opened
+      type: type || MilestoneType.active
     }, {emitEvent: false});
 
     this.load();
@@ -97,7 +96,7 @@ export class MilestonesComponent implements OnInit {
         q: q || null,
         first: +first || PAGE_SIZE,
         offset: +offset || 0,
-        type: type || IssuesType.opened
+        type: type || MilestoneType.active
       };
     });
 
@@ -109,9 +108,9 @@ export class MilestonesComponent implements OnInit {
     const filter = new MilestonesFilter({
       first: first,
       q: q,
-      active: type === MilestoneType.opened ? true :
-        type === MilestoneType.closed ? false : undefined,
-      orderBy: type === MilestoneType.opened ? 'dueDate' : '-dueDate'
+      state: type === MilestoneType.active ? MilestoneState.active :
+        type === MilestoneType.closed ? MilestoneState.closed : undefined,
+      orderBy: type === MilestoneType.active ? 'dueDate' : '-dueDate'
     });
     const reset = serialize(filter);
     if (!!this.reset && !equals(reset, this.reset)) {
@@ -139,7 +138,7 @@ export class MilestonesComponent implements OnInit {
       q: q || undefined,
       first: first !== PAGE_SIZE ? first : undefined,
       offset: offset !== 0 ? offset : undefined,
-      type: type !== MilestoneType.opened ? type : undefined
+      type: type !== MilestoneType.active ? type : undefined
     });
 
     this.router.navigate([serialize(state)],

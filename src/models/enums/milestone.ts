@@ -1,12 +1,12 @@
 export enum MilestoneState {
-  opened = 'OPENED',
+  active = 'ACTIVE',
   closed = 'CLOSED'
 }
 
 export enum MilestoneType {
   all = 'all',
   closed = 'closed',
-  opened = 'opened'
+  active = 'active'
 }
 
 export enum MilestoneProblem {

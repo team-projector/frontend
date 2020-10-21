@@ -26,9 +26,9 @@
                          [overflow]="999"
                          [value]="summary?.closedCount"></jnt-badge>
             </jnt-switcher-option>
-            <jnt-switcher-option i18n-label="@@action.filter_type_opened"
-                                 label="Opened"
-                                 [value]="milestoneType.opened">
+            <jnt-switcher-option i18n-label="@@action.filter_type_active"
+                                 label="Active"
+                                 [value]="milestoneType.active">
               <jnt-badge *ngIf="summary?.activeCount"
                          [color]="ui.color.green"
                          [value]="summary?.activeCount"></jnt-badge>

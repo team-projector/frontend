@@ -35,11 +35,17 @@ query {
 })
 export class AllMilestonesGQL extends Query<{ milestones }> {
   document = gql`
-query($offset: Int, $first: Int, $active: Boolean, $q: String, $orderBy: String) {
+query(
+    $offset: Int
+    $first: Int
+    $state: MilestoneState
+    $q: String
+    $orderBy: String
+) {
     milestones: allMilestones(
         offset: $offset
         first: $first
-        active: $active
+        state: $state
         orderBy: $orderBy
         q: $q
     ) {

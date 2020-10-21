@@ -69,12 +69,15 @@ export class MilestoneMetrics {
     milestone.metrics.budgetSpent = mocks.money(5000, 25000);
     milestone.metrics.budgetRemains = milestone.budget - milestone.metrics.budgetSpent;
     if (!!context) {
-      if (context.active) {
-        milestone.state = MilestoneState.opened;
-      } else if (context.active === false) {
-        milestone.state = MilestoneState.closed;
-      } else if (context.active === undefined) {
-        milestone.state = faker.helpers.randomize([MilestoneState.opened, MilestoneState.closed]);
+      switch (context.state) {
+        case MilestoneState.active:
+          milestone.state = MilestoneState.active;
+          break;
+        case MilestoneState.closed:
+          milestone.state = MilestoneState.closed;
+          break;
+        default:
+          milestone.state = faker.helpers.randomize([MilestoneState.active, MilestoneState.closed]);
       }
     }
   }
@@ -96,7 +99,7 @@ export class Milestone {
   @field({mock: ProjectGroup, serializer: new ProjectSerializer()})
   owner: Project | ProjectGroup;
 
-  @field({mock: () => faker.helpers.randomize([MilestoneState.opened, MilestoneState.closed])})
+  @field({mock: () => faker.helpers.randomize([MilestoneState.active, MilestoneState.closed])})
   state: MilestoneState;
 
   @field({mock: () => faker.random.number()})
@@ -148,7 +151,7 @@ export class MilestonesFilter implements SearchFilter {
   q: string;
 
   @field()
-  active: boolean;
+  state: MilestoneState;
 
   @field()
   orderBy: string;
