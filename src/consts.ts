@@ -14,15 +14,17 @@ enum CurrencyCode {
   rur = 'rur'
 }
 
-const backend: {
+export const backend: {
   config: {
     currencyCode: CurrencyCode,
-    firstWeekDay: 0 | 1
+    firstWeekDay: 0 | 1,
+    gitlabLoginEnabled: true
   }
 } = window['backend'] || {
   config: {
     currencyCode: CurrencyCode.usd,
-    firstWeekDay: 0
+    firstWeekDay: 0,
+    gitlabLoginEnabled: true
   }
 };
 
