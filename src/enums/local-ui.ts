@@ -1,5 +1,6 @@
 export class LocalUI {
   static icons = {
+    dashboard: 'dashboard:font:icons',
     issue: 'issue:font:icons',
     mergeRequest: 'merge-request:font:icons',
     spentTime: 'spent-time:font:icons',
