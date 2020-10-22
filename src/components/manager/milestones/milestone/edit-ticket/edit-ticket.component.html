@@ -47,7 +47,6 @@
             <jnt-form-control name="milestone">
               <jnt-select placeholder="Milestone"
                           formControlName="milestone"
-                          [allowEmpty]="false"
                           [features]="[ui.feature.search]"
                           [loader]="findMilestones()"
                           keyField="id"
@@ -112,8 +111,7 @@
               </ng-template>
 
               <jnt-select formControlName="state"
-                          [optionTemplate]="stateTemplate"
-                          [allowEmpty]="false">
+                          [optionTemplate]="stateTemplate">
                 <jnt-select-option label="Created"
                                    i18n-label="@@label.created"
                                    [key]="milestoneTicketStates.created"

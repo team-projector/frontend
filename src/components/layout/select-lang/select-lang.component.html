@@ -1,5 +1,6 @@
 <jnt-form [formGroup]="form">
-  <jnt-switcher formControlName="lang" [allowEmpty]="false" (selected)="change($event)">
+  <jnt-switcher formControlName="lang"
+                (selected)="change($event)">
     <jnt-switcher-option [icon]="ui.icons.unitedStatesOfAmerica"
                          label="English"
                          i18n-label="@@label.english"

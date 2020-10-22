@@ -70,8 +70,7 @@
         </jnt-col>
         <jnt-col [tablet]="view === viewType.leader ? 8 : 4">
           <jnt-switcher formControlName="type"
-                        [width]="ui.width.fluid"
-                        [allowEmpty]="false">
+                        [width]="ui.width.fluid">
             <jnt-switcher-option label="All"
                                  i18n-label="@@action.filter_issues_all"
                                  [disabled]="summary?.count <= 0"
