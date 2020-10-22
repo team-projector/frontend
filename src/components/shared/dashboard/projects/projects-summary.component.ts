@@ -11,7 +11,7 @@ import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { Project } from 'src/models/project';
 import { User } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
-import { Team } from '../../../../models/team';
+import { Team } from 'src/models/team';
 import { ProjectsSummaryGQL } from './projects-summary.graphql';
 
 @Component({
