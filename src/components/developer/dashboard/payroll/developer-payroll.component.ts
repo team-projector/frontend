@@ -10,7 +10,7 @@ import { PagingPenalties, Penalty } from 'src/models/penalty';
 import { Me } from 'src/models/user';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
-import { LocalUI } from '../../../../enums/local-ui';
+import { LocalUI } from 'src/enums/local-ui';
 import { AllBonusesGQL, AllPenaltiesGQL } from './developer-payroll.graphql';
 
 @Component({

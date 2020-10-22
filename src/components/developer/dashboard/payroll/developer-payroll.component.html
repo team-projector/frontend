@@ -41,9 +41,8 @@
             </jnt-stack>
             <span>
               <span *ngIf="metrics.payrollClosed + metrics.taxesClosed > 0">+</span>
-              {{(metrics.payrollClosed + metrics.taxesClosed)
-              | currency:undefined:'symbol':'1.0-0'}}
-          </span>
+              {{(metrics.payrollClosed + metrics.taxesClosed) | money}}
+            </span>
           </jnt-stack>
 
           <jnt-stack data-line data-success
@@ -51,21 +50,32 @@
                      [justify]="ui.justify.between"
                      [align]="ui.align.center">
             <div data-title>Bonuses</div>
-            <span><span *ngIf="metrics.bonus > 0">+</span>{{metrics.bonus | money}}</span>
+            <span>
+              <span *ngIf="metrics.bonus > 0">+</span>
+              {{metrics.bonus | money}}
+            </span>
           </jnt-stack>
 
-          <jnt-stack data-line data-fail [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between"
+          <jnt-stack data-line data-fail
+                     [orientation]="ui.orientation.horizontal"
+                     [justify]="ui.justify.between"
                      [align]="ui.align.center">
             <div data-title>Penalties</div>
-            <span><span
-              *ngIf="metrics.penalty > 0">-</span>{{metrics.penalty | money}}</span>
+            <span>
+              <span *ngIf="metrics.penalty > 0">-</span>
+              {{metrics.penalty | money}}
+            </span>
           </jnt-stack>
 
-          <jnt-stack data-line data-fail [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between"
+          <jnt-stack data-line data-fail
+                     [orientation]="ui.orientation.horizontal"
+                     [justify]="ui.justify.between"
                      [align]="ui.align.center">
             <div data-title>Taxes</div>
-            <span><span
-              *ngIf="metrics.taxesClosed > 0">-</span>{{metrics.taxesClosed | money}}</span>
+            <span>
+              <span *ngIf="metrics.taxesClosed > 0">-</span>
+              {{metrics.taxesClosed | money}}
+            </span>
           </jnt-stack>
 
           <hr>
