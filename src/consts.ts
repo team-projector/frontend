@@ -18,13 +18,15 @@ export const BACKEND: {
   config: {
     currencyCode: CurrencyCode,
     firstWeekDay: 0 | 1,
-    gitlabLoginEnabled: true
+    gitlabLoginEnabled: boolean,
+    demoMode: boolean
   }
 } = window['backend'] || {
   config: {
     currencyCode: CurrencyCode.usd,
     firstWeekDay: 0,
-    gitlabLoginEnabled: true
+    gitlabLoginEnabled: true,
+    demoMode: false
   }
 };
 

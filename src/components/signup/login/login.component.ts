@@ -48,7 +48,7 @@ export class LoginComponent implements OnInit {
   systemMode = SystemMode;
   backend = BACKEND;
 
-  mode = environment.mocks ? SystemMode.mocks : (false ? SystemMode.demo : SystemMode.prod);
+  mode = environment.mocks ? SystemMode.mocks : (BACKEND.config.demoMode ? SystemMode.demo : SystemMode.prod);
   theme = !!localStorage.theme ? Themes[localStorage.theme] : Themes.light;
 
   progress = {gitlab: false, login: false};
