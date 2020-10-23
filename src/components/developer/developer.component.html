@@ -39,8 +39,8 @@
   </jnt-menu>
 </jnt-app-aside>
 <jnt-app-content [aside]="aside">
+  <jnt-breadcrumb [aside]="aside"></jnt-breadcrumb>
   <jnt-app-body>
-    <jnt-breadcrumb [aside]="aside"></jnt-breadcrumb>
     <jnt-container [width]="ui.width.fluid">
       <router-outlet></router-outlet>
     </jnt-container>
