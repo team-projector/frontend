@@ -12,6 +12,7 @@ import { ViewType } from 'src/models/enums/view-type';
 import { Team } from 'src/models/team';
 import { PagingUsers } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
+import { CardSize } from '../../../../../shared/users/card/user-card.types';
 import { AllTeamWorkBreaks } from './breaks-gantt.graphql';
 
 
@@ -26,6 +27,7 @@ export class TeamBreaksListGanttComponent implements OnInit {
   ui = UI;
   viewType = ViewType;
   approveStates = ApproveStates;
+  userCardSize = CardSize;
   workbreaks = [];
   loading = false;
 

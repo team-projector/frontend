@@ -1,6 +1,10 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/navigation/link";
 
+:host {
+  display: block;
+}
+
 [period] {
   position: relative;
   margin: $jnt-gutter-tiny;
@@ -12,31 +16,31 @@
   overflow: hidden;
 
   &[over-from='true'] {
-     border-top-left-radius: 0;
-     border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 
   &[over-to='true'] {
-     border-top-right-radius: 0;
-     border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
   }
 
   &[over-due='true'] {
-     border-right: 10px solid $jnt-fail-color;
+    border-right: 10px solid $jnt-fail-color;
   }
 
   &[accepting='true'] {
-     cursor: pointer;
-     pointer-events: all;
-     background-color: $jnt-primary-color;
+    cursor: pointer;
+    pointer-events: all;
+    background-color: $jnt-primary-color;
   }
 
   &[accepted='true'] {
-     background-color: $jnt-success-color;
+    background-color: $jnt-success-color;
   }
 
   &[declined='true'] {
-     background-color: $jnt-fail-color;
+    background-color: $jnt-fail-color;
   }
 
   [label] {

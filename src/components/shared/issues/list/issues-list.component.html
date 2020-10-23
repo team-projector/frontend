@@ -78,6 +78,9 @@
               <jnt-badge *ngIf="summary?.timeSpent > 0"
                          [color]="ui.color.yellow"
                          [text]="summary?.timeSpent | duration:durationFormat.short"></jnt-badge>
+              <jnt-badge *ngIf="summary?.count > 0"
+                         [overflow]="9999"
+                         [value]="summary?.count"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Closed"
                                  i18n-label="@@action.filter_type_closed"
@@ -162,6 +165,8 @@
                    let-problems="problems">
         <jnt-progress-bar progress *ngIf="!!timeEstimate"
                           [value]="totalTimeSpent / timeEstimate * 100">
+          <jnt-progress-line [from]="75" [color]="ui.color.yellow"></jnt-progress-line>
+          <jnt-progress-line [from]="101" [color]="ui.color.red"></jnt-progress-line>
           <ng-template #progressBarLegendTemplate>
             <jnt-stack [orientation]="ui.orientation.horizontal"
                        [align]="ui.align.center"

@@ -1,4 +1,4 @@
-<jnt-gantt data-gantt [type]="ui.gantt.type.year"
+<jnt-gantt data-breaks [type]="ui.gantt.type.year"
            [loading]="loading">
   <ng-template #titleTemplate>
     <strong>Developer</strong>
@@ -6,7 +6,7 @@
   <jnt-gantt-line *ngFor="let user of workbreaks"
                   [title]="user.name">
     <ng-template #title>
-      <app-user [user]="user"></app-user>
+      <app-user [user]="user" [size]="userCardSize.small"></app-user>
     </ng-template>
     <jnt-gantt-line-period *ngFor="let workBreak of user.workBreaks"
                            [from]="workBreak.fromDate"
@@ -28,4 +28,3 @@
     </jnt-gantt-line-period>
   </jnt-gantt-line>
 </jnt-gantt>
-
