@@ -4,7 +4,7 @@
              formControlName="table">
     <ng-template #tableFiltersTemplate>
       <jnt-row>
-        <jnt-col [tablet]="4">
+        <jnt-col [wide]="2" [tablet]="4">
           <ng-template #projectOption let-project="value"
                        let-selected="selected">
             <jnt-stack [orientation]="ui.orientation.horizontal"
@@ -28,7 +28,7 @@
                       placeholder="Project"
                       [width]="ui.width.fluid"
                       [state]="progress.projects ? ui.state.loading : null"
-                      [features]="[ui.feature.search]"
+                      [features]="[ui.feature.search, ui.feature.allowEmpty]"
                       [optionTemplate]="projectOption">
             <jnt-select-option *ngIf="!!project"
                                [key]="project.id"
@@ -40,7 +40,7 @@
                                [value]="p"></jnt-select-option>
           </jnt-select>
         </jnt-col>
-        <jnt-col *ngIf="!!team" [tablet]="4">
+        <jnt-col *ngIf="!!team" [wide]="2" [tablet]="4">
           <ng-template #userOption let-member="value"
                        let-selected="selected">
             <app-user [user]="member.user"
@@ -50,7 +50,7 @@
           <jnt-select formControlName="developer"
                       placeholder="Developer"
                       [width]="ui.width.fluid"
-                      [features]="[ui.feature.search]"
+                      [features]="[ui.feature.search, ui.feature.allowEmpty]"
                       [state]="progress.developers ? ui.state.loading : null"
                       [optionTemplate]="userOption">
             <jnt-select-option *ngIf="!!developer"
@@ -63,12 +63,12 @@
                                [value]="m"></jnt-select-option>
           </jnt-select>
         </jnt-col>
-        <jnt-col [tablet]="4">
+        <jnt-col [wide]="2" [desktop]="4" [tablet]="4">
           <jnt-date-picker data-due-date formControlName="dueDate"
                            [width]="ui.width.fluid"
-                           [features]="[ui.feature.clear]"></jnt-date-picker>
+                           [features]="[ui.feature.allowEmpty]"></jnt-date-picker>
         </jnt-col>
-        <jnt-col [tablet]="view === viewType.leader ? 8 : 4">
+        <jnt-col [wide]="6" [tablet]="12">
           <jnt-switcher formControlName="type"
                         [width]="ui.width.fluid">
             <jnt-switcher-option label="All"

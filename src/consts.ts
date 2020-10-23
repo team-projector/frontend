@@ -36,10 +36,9 @@ export const MOCKS_DELAY = 1000;
 export const DATE_FORMAT = 'yyyy-MM-dd';
 export const DATE_TIME_FORMAT = 'yyyy-MM-dd\'T\'HH:mm:ss';
 export const APPLICATION_READY = 'application_ready';
-export const CURRENT_LANGUAGE = 'current_language';
 
-const CURRENCY_CODE: CurrencyCode = BACKEND.config.currencyCode;
-const FIRST_DAY_OF_WEEK: 0 | 1 = BACKEND.config.firstWeekDay;
+const CURRENCY_CODE = BACKEND.config.currencyCode;
+export const FIRST_DAY_OF_WEEK: 0 | 1 = BACKEND.config.firstWeekDay;
 
 const fnsConfig = new DateFnsConfigurationService();
 
@@ -123,6 +122,8 @@ switch (language) {
       useValue: 'en'
     });
 }
+
+export const DFNS_LOCALE = dfnsLocale;
 
 providers.push({
   provide: DEFAULT_CURRENCY_CODE,

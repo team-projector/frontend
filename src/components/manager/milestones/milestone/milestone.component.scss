@@ -1,5 +1,10 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/navigation/link";
+@import "~@junte/ui/lib/assets/styles/collections/gantt";
+
+[data-tickets] {
+  @include jnt-gantt((title:(width: 50%), period: (width:50%)), '&', true);
+}
 
 [period] {
   position: relative;
@@ -78,10 +83,12 @@
       padding: $jnt-gutter-tiny;
       background-color: $jnt-primary-background;
     }
+
     &placeholder {
       display: none;
     }
   }
+
   &drop- {
     &list-dragging {
       display: flex;

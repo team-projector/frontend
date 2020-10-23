@@ -6,7 +6,7 @@ import { WorkBreak } from './work-break';
 import { faker, getMock } from '../utils/mocks';
 import { ArraySerializer, PrimitiveSerializer, ModelSerializer } from 'serialize-ts';
 import { UserPermission, UserProblem, UserRole } from './enums/user';
-import { DATE_FORMAT } from '../consts';
+import { DATE_FORMAT, DFNS_LOCALE, FIRST_DAY_OF_WEEK } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { mocks } from '../utils/mocks';
@@ -229,7 +229,10 @@ export class UserProgressMetrics {
   issuesCount: number;
 
   getKey(): string {
-    return format(this.start, 'dd/MM/yyyy');
+    return format(this.start, DATE_FORMAT, {
+      locale: DFNS_LOCALE,
+      weekStartsOn: FIRST_DAY_OF_WEEK
+    });
   }
 
 }

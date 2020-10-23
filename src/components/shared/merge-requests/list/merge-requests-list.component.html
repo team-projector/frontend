@@ -4,8 +4,7 @@
              formControlName="table">
     <ng-template #tableFiltersTemplate>
       <jnt-stack [orientation]="ui.orientation.horizontal">
-        <jnt-switcher formControlName="type"
-                      [features]="ui.feature.allowEmpty">
+        <jnt-switcher formControlName="type">
           <jnt-switcher-option label="All"
                                i18n-label="@@action.filter_type_all"
                                [value]="mergeRequestType.all">

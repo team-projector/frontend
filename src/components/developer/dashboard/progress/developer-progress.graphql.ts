@@ -7,8 +7,8 @@ import gql from 'graphql-tag';
 })
 export class DeveloperIssuesMetricsGQL extends Query<{ userProgressMetrics }> {
   document = gql`
-    query ($user: ID!, $start: Date!, $end: Date!, $group: String!) {
-      userProgressMetrics(user: $user, start: $start, end: $end, group: $group) {
+query($user: ID!, $start: Date!, $end: Date!, $group: String!) {
+    userProgressMetrics(user: $user, start: $start, end: $end, group: $group) {
         start
         end
         timeEstimate
@@ -19,6 +19,6 @@ export class DeveloperIssuesMetricsGQL extends Query<{ userProgressMetrics }> {
         payroll
         paid
         issuesCount
-      }
-    }`;
+    }
+}`;
 }

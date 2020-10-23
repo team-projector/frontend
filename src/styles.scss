@@ -1,8 +1,12 @@
 @import "~@junte/ui/lib/assets/styles/jnt-common";
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
-  font-family: "Open Sans";
+  font-family: 'Open Sans';
 }
 
 fieldset {
