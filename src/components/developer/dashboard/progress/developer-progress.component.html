@@ -77,6 +77,7 @@
 
 <jnt-form [formGroup]="form">
   <jnt-block [state]="progress.loading && !!metrics ? ui.state.loading: null"
+             [padding]="ui.gutter.small"
              [width]="ui.width.fluid">
     <ng-template #blockHeaderTemplate>
       <jnt-stack [orientation]="ui.orientation.horizontal"

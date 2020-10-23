@@ -6,7 +6,7 @@ import { addDays, addWeeks, endOfWeek, getDate, startOfDay, startOfWeek, subWeek
 import { of, zip } from 'rxjs';
 import { delay, filter as filtering, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
+import { DATE_FORMAT, MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { Metrics, MetricType } from 'src/models/enums/metrics';
@@ -20,7 +20,6 @@ import { TeamMembersGQL, TeamMetricsGQL } from './team-progress.graphql';
 
 const DAYS_IN_WEEK = 7;
 const DAYS_WEEK = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
-const L = 'dd/MM/yyyy';
 
 interface TeamMetrics {
   days: Map<string, Map<string, UserProgressMetrics>>;
@@ -40,7 +39,7 @@ export class TeamProgressComponent implements OnInit {
   subWeeks = subWeeks;
   addWeeks = addWeeks;
   getDate = getDate;
-  formatDate = L;
+  formatDate = DATE_FORMAT;
   durationFormat = DurationFormat;
   metricType = MetricType;
   today = startOfDay(new Date());
