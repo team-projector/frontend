@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 import { getMock } from 'src/utils/mocks';
 import { SalaryGQL } from './salary.graphql';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class SalaryResolver implements Resolve<Observable<Salary>> {
 
   constructor(private salaryGQL: SalaryGQL) {

@@ -1,0 +1,34 @@
+@import "../../../../../node_modules/@junte/ui/lib/assets/styles/jnt-variables";
+@import "../../../../../node_modules/@junte/ui/lib/assets/styles/navigation/link";
+
+:host {
+  display: block;
+}
+
+[ticket] {
+  font-size: 12px;
+}
+
+[state] {
+  color: $jnt-success-color;
+  &[doing] {
+    min-width: 18px;
+    width: 18px;
+    min-height: 18px;
+    height: 18px;
+    border-radius: 50%;
+    fill: $jnt-success-color;
+    padding: 1px;
+    border: 1px solid $jnt-success-color;
+  }
+  &[delayed] {
+    color: $jnt-orange-color;
+  }
+  &[bug] {
+    color: $jnt-fail-color;
+  }
+}
+
+[closed='true'] {
+  @include jnt-link((text-decoration: line-through), '&', true);
+}

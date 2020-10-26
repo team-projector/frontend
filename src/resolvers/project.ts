@@ -8,8 +8,8 @@ import { getMock } from 'src/utils/mocks';
 import { Project } from '../models/project';
 import { ProjectGQL } from './project.graphql';
 
-@Injectable()
-export class ProjectResolver implements Resolve<Observable<Project>> {
+@Injectable({providedIn: 'root'})
+export class ProjectResolver implements Resolve<Project> {
 
   constructor(private projectGQL: ProjectGQL) {
   }
@@ -20,7 +20,7 @@ export class ProjectResolver implements Resolve<Observable<Project>> {
     const action = environment.mocks
       ? of(getMock(Project))
       : this.projectGQL.fetch({project: id})
-      .pipe(map(({data: {project}}) => deserialize(project, Project)));
+        .pipe(map(({data: {project}}) => deserialize(project, Project)));
 
     return !!id ? action : of(null);
   }

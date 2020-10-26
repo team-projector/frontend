@@ -2,7 +2,7 @@ import { BehaviorSubject } from 'rxjs';
 import { AccessToken } from './models/access-token';
 import { Injectable } from '@angular/core';
 
-const GRAPHQL_URL = 'https://teamprojector.com/api/graphql';
+const GRAPHQL_URL = 'https://junte.teamprojector.com/api/graphql';
 const AUTHORIZATION_KEY = 'Authorization';
 const LOCALHOST_REGEX = /(localhost|127.\0\.0\.1)/ig;
 

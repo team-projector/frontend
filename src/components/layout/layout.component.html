@@ -1,0 +1,87 @@
+<jnt-modal #modal [backdrop]="backdrop"></jnt-modal>
+<jnt-popover #popover></jnt-popover>
+<jnt-app-layout #layout [position]="ui.placement.fixed">
+  <jnt-app-busyness></jnt-app-busyness>
+  <jnt-app-header>
+    <ng-template #headerLogoTemplate>
+      <a routerLink="/">
+        <img width="100" height="45" [src]="'assets/images/logo-' + (theme === 'dark' ? 'dark' : 'light') + '.svg'">
+      </a>
+    </ng-template>
+
+    <jnt-menu menu>
+      <jnt-menu-item *ngIf="me.roles?.includes(userRole.developer)"
+                     title="Developer"
+                     i18n-title="@@action.developer" [link]="['/developer']"
+                     [icon]="localUi.icons.developer"
+                     [matching]="ui.matching.wildcard"></jnt-menu-item>
+      <jnt-menu-item *ngIf="me.roles?.includes(userRole.leader)"
+                     title="Team Leader"
+                     i18n-title="@@action.team_leader"
+                     [link]="['/leader']"
+                     [icon]="localUi.icons.leader"
+                     [matching]="ui.matching.wildcard"></jnt-menu-item>
+      <jnt-menu-item *ngIf="me.roles?.includes(userRole.manager)"
+                     title="Project Manager"
+                     i18n-title="@@action.project_manager"
+                     [link]="['/manager']"
+                     [icon]="localUi.icons.manager"
+                     [matching]="ui.matching.wildcard"></jnt-menu-item>
+      <jnt-menu-item *ngIf="me.roles?.includes(userRole.shareholder)"
+                     title="Shareholder"
+                     i18n-title="@@action.shareholder"
+                     [link]="['/shareholder']"
+                     [icon]="localUi.icons.shareholder"
+                     [matching]="ui.matching.wildcard"></jnt-menu-item>
+    </jnt-menu>
+
+    <ng-template #contentTemplate>
+      <jnt-stack [orientation]="ui.orientation.horizontal"
+                 [align]="ui.align.center">
+        <app-theme-switcher (changed)="theme = $event"></app-theme-switcher>
+      </jnt-stack>
+    </ng-template>
+
+    <ng-template #headerActionsTemplate>
+      <jnt-app-header-actions>
+        <jnt-app-header-action>
+          <ng-template #actionLabelTemplate>
+            <jnt-icon data-gitlab [icon]="ui.icons.gitlab" (mouseenter)="gitlabStatus.load()"></jnt-icon>
+          </ng-template>
+          <ng-template #actionContentTemplate>
+            <app-gitlab-status #gitlabStatus></app-gitlab-status>
+          </ng-template>
+        </jnt-app-header-action>
+      </jnt-app-header-actions>
+    </ng-template>
+
+    <ng-template #headerUserbarTemplate>
+      <jnt-app-header-userbar>
+        <ng-template #userbarAvatarTemplate>
+          <jnt-avatar [size]="ui.size.small"
+                      [image]="me.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
+        </ng-template>
+        <ng-template #userbarMenuTemplate>
+          <jnt-stack>
+            <jnt-stack [orientation]="ui.orientation.horizontal"
+                       [gutter]="ui.gutter.small">
+              <jnt-avatar [size]="ui.size.small"
+                          [image]="me.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
+              <jnt-stack [gutter]="ui.gutter.none">
+                <div>{{me.name}}</div>
+                <small>{{me.position?.title}}</small>
+              </jnt-stack>
+            </jnt-stack>
+            <app-select-lang></app-select-lang>
+            <jnt-button *ngIf="config.token"
+                        text="Logout"
+                        [icon]="{icon: ui.icons.chevronRight, position: ui.position.right}"
+                        (click)="logout()"
+                        [width]="ui.width.fluid"></jnt-button>
+          </jnt-stack>
+        </ng-template>
+      </jnt-app-header-userbar>
+    </ng-template>
+  </jnt-app-header>
+  <router-outlet></router-outlet>
+</jnt-app-layout>

@@ -1,4 +1,7 @@
 export enum ViewType {
-  default,
-  extended
+  default = 'default',
+  developer = 'developer',
+  leader = 'leader',
+  shareholder = 'shareholder',
+  salary = 'salary'
 }

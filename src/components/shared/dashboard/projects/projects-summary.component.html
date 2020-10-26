@@ -1,0 +1,30 @@
+<jnt-block title="Projects in work"
+           [padding]="ui.gutter.none"
+           [spacing]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <jnt-chart title="Opened project"
+             metric="Hours"
+             i18n-title="@@label.opened_project"
+             i18n-metric="@@label.hours"
+             keyField="id"
+             [widthMark]="50"
+             (selected)="selected.emit($event.id)">
+    <jnt-chart-indicator *ngFor="let p of summary?.projects;let i = index"
+                         [titleTemplate]="titleTemplate"
+                         [data]="p.project"
+                         [value]="p.issues.percentage * 100"
+                         [label]="p.issues.remains  | duration:durationFormat.short"
+                         [color]="colors[i % colors.length]">
+      <ng-template #titleTemplate>
+        <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
+        {{p.project.title}}
+        <jnt-stack *ngIf="p.project.milestones?.length > 0"
+                   [orientation]="ui.orientation.horizontal"
+                   [gutter]="ui.gutter.tiny"
+                   [align]="ui.align.center">
+          <small>{{p.project.milestones[0].title}} <ng-container *ngIf="p.project.milestones[0].dueDate as dueDate">| {{dueDate | dueDate}}</ng-container></small>
+        </jnt-stack>
+      </ng-template>
+    </jnt-chart-indicator>
+  </jnt-chart>
+</jnt-block>

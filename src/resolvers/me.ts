@@ -9,7 +9,7 @@ import { catchGQLErrors } from '../operators/catch-gql-error';
 import { getMock } from '../utils/mocks';
 import { MeGQL } from './me.graphql';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class MeUserResolver implements Resolve<Observable<Me>> {
 
   constructor(private meGQL: MeGQL) {

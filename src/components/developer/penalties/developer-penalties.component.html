@@ -1,0 +1,10 @@
+<jnt-app-page-header [icon]="localUi.icons.penalty"
+                     title="Penalties"
+                     teaser="for your fails"></jnt-app-page-header>
+
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <app-penalties [view]="viewType.developer"
+                 [state]="state"
+                 (filtered)="save($event)"></app-penalties>
+</jnt-block>

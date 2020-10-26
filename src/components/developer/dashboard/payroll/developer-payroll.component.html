@@ -1,0 +1,120 @@
+<jnt-block *ngIf="me?.metrics as metrics" title="Current payroll"
+           i18n-title="@@label.current_payroll"
+           [width]="ui.width.fluid"
+           [padding]="ui.gutter.none">
+  <jnt-stack [align]="ui.align.stretch">
+    <jnt-stack data-user [gutter]="ui.gutter.small">
+      <jnt-stack [orientation]="ui.orientation.horizontal"
+                 [align]="ui.align.center">
+        <jnt-avatar [size]="ui.size.small"
+                    [image]="me.avatar"></jnt-avatar>
+        <jnt-stack [gutter]="ui.gutter.tiny">
+          <span data-position *ngIf="!!me.position">{{me.position.title}}</span>
+          <jnt-label i18n-label="@@label.hour"
+                     [label]="(me.hourRate | money) + ' / ' + 'hour'"
+                     [color]="ui.color.gray100">
+          </jnt-label>
+        </jnt-stack>
+
+      </jnt-stack>
+    </jnt-stack>
+
+    <jnt-stack data-salary
+               [gutter]="ui.gutter.tiny"
+               [align]="ui.align.stretch">
+
+      <ng-container *ngIf="opened">
+        <jnt-stack [gutter]="ui.gutter.none" [align]="ui.align.stretch">
+          <jnt-stack data-line data-success
+                     [orientation]="ui.orientation.horizontal"
+                     [justify]="ui.justify.between"
+                     [align]="ui.align.center">
+            <jnt-stack [orientation]="ui.orientation.horizontal">
+              <div data-title>Closed</div>
+              <jnt-stack data-time [orientation]="ui.orientation.horizontal"
+                         [gutter]="ui.gutter.small"
+                         [align]="ui.align.center">
+                <jnt-icon *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) > 0"
+                          [icon]="ui.icons.time"></jnt-icon>
+                <span>{{(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) | duration}}</span>
+              </jnt-stack>
+            </jnt-stack>
+            <span>
+              <span *ngIf="metrics.payrollClosed + metrics.taxesClosed > 0">+</span>
+              {{(metrics.payrollClosed + metrics.taxesClosed) | money}}
+            </span>
+          </jnt-stack>
+
+          <jnt-stack data-line data-success
+                     [orientation]="ui.orientation.horizontal"
+                     [justify]="ui.justify.between"
+                     [align]="ui.align.center">
+            <div data-title>Bonuses</div>
+            <span>
+              <span *ngIf="metrics.bonus > 0">+</span>
+              {{metrics.bonus | money}}
+            </span>
+          </jnt-stack>
+
+          <jnt-stack data-line data-fail
+                     [orientation]="ui.orientation.horizontal"
+                     [justify]="ui.justify.between"
+                     [align]="ui.align.center">
+            <div data-title>Penalties</div>
+            <span>
+              <span *ngIf="metrics.penalty > 0">-</span>
+              {{metrics.penalty | money}}
+            </span>
+          </jnt-stack>
+
+          <jnt-stack data-line data-fail
+                     [orientation]="ui.orientation.horizontal"
+                     [justify]="ui.justify.between"
+                     [align]="ui.align.center">
+            <div data-title>Taxes</div>
+            <span>
+              <span *ngIf="metrics.taxesClosed > 0">-</span>
+              {{metrics.taxesClosed | money}}
+            </span>
+          </jnt-stack>
+
+          <hr>
+        </jnt-stack>
+      </ng-container>
+
+      <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.end">
+        <span data-label>You've earned:</span>
+
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end"
+                   [align]="ui.align.center">
+          <jnt-icon data-money [icon]="localUi.icons.money"></jnt-icon>
+          <span data-digit>
+            {{metrics.payrollClosed + metrics.bonus - metrics.penalty | money}}
+          </span>
+        </jnt-stack>
+
+        <jnt-stack data-opened [gutter]="ui.gutter.none" [align]="ui.align.end">
+          <span data-label>Opened tasks:</span>
+          <span data-digit>
+            {{metrics.payrollOpened | money}}</span>
+        </jnt-stack>
+      </jnt-stack>
+
+      <svg [attr.data-opened]="opened" width="19" height="8" viewBox="0 0 19 8" xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M0.500001 -1.43099e-07C4.91827 2.43159e-07 7.49999 8.00002 9.5 8C11.5 7.99998 14.0817 1.04425e-06 18.5 1.43051e-06L0.500001 -1.43099e-07Z"/>
+      </svg>
+
+    </jnt-stack>
+
+    <jnt-stack [orientation]="ui.orientation.horizontal"
+               [justify]="ui.justify.center">
+      <jnt-button [text]="opened ? 'Hide details' : 'More details'"
+                  [outline]="ui.outline.transparent"
+                  [size]="ui.size.small"
+                  (click)="opened = !opened"></jnt-button>
+    </jnt-stack>
+
+  </jnt-stack>
+</jnt-block>

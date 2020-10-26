@@ -1,0 +1,10 @@
+<jnt-app-page-header [icon]="localUi.icons.salary"
+                     title="Salaries"
+                     teaser="of developers in your company"></jnt-app-page-header>
+
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <app-salaries [view]="viewType.shareholder"
+                [state]="state"
+                (filtered)="save($event)"></app-salaries>
+</jnt-block>

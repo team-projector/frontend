@@ -1,23 +1,21 @@
-@import "variables";
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/forms/select";
 
 :host {
-  display: block;
-  min-width: 400px;
+  display: flex;
+  flex-direction: column;
+  min-width: 450px;
+  min-height: 400px;
 }
 
-[issue] {
+p {
+  font-size: $jnt-font-size-small;
+}
+
+[data-issue] {
   pointer-events: none;
 }
 
-[issues] ::ng-deep {
-  [select][child-of=#{$jnt-select-host}] {
-    ul {
-      max-height: 200px;
-      overflow-y: scroll;
-      li {
-        width: 100%;
-        box-sizing: border-box;
-      }
-    }
-  }
+[data-issues] {
+  @include jnt-select((chips: (width: 'fluid')), '&', true);
 }

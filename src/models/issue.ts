@@ -1,7 +1,7 @@
+import { SearchFilter, UI } from '@junte/ui';
 import { addDays } from 'date-fns';
-import * as faker from 'faker';
-import { SearchFilter, UI } from 'junte-ui';
-import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
+import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
+import { ModelMetadataSerializer } from 'serialize-ts/dist/serializers/model-metadata.serializer';
 import { IssueProblem, IssueState } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { Team } from 'src/models/team';
@@ -11,6 +11,7 @@ import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { faker } from '../utils/mocks';
 import { Label } from './label';
 import { Paging } from './paging';
 import { Project } from './project';
@@ -45,28 +46,28 @@ export class IssueMetrics {
       case 1: // issue for to do
         issue.labels.push(new Label({
           title: StandardLabel.toDo,
-          color: UI.colors.green
+          color: UI.color.green
         }));
         issue.state = IssueState.opened;
         break;
       case 2: // issue for to doing
         issue.labels.push(new Label({
           title: StandardLabel.doing,
-          color: UI.colors.green
+          color: UI.color.green
         }));
         issue.state = IssueState.opened;
         break;
       case 3: // issue for to done
         issue.labels.push(new Label({
           title: StandardLabel.done,
-          color: UI.colors.green
+          color: UI.color.green
         }));
         issue.state = IssueState.closed;
         break;
       default: // issue for to delayed
         issue.labels.push(new Label({
           title: StandardLabel.delayed,
-          color: UI.colors.green
+          color: UI.color.green
         }));
         issue.state = IssueState.opened;
     }
@@ -95,20 +96,16 @@ export class IssueMetrics {
 
     issue.labels.push(faker.helpers.randomize([
       new Label({
-        title: StandardLabel.bug,
-        color: UI.colors.red
-      }),
-      new Label({
         title: 'Discuss',
-        color: UI.colors.blue
+        color: UI.color.blue
       }),
       new Label({
         title: 'Urgent',
-        color: UI.colors.red
+        color: UI.color.red
       }),
       new Label({
         title: 'Refactor',
-        color: UI.colors.green
+        color: UI.color.green
       })
     ]));
   }
@@ -129,9 +126,9 @@ export class Issue {
 
   @field({
     mock: () => faker.helpers.randomize([
-      'Implement design for login feature',
-      'GraphQL API for login',
-      'Fix bugs in login form'
+      $localize`:@@mocks.issue_title_implement:Implement design for login feature`,
+      $localize`:@@mocks.issue_title_graphql:GraphQL API for login`,
+      $localize`:@@mocks.issue_title_fix:Fix bugs in login form`
     ])
   })
   title: string;
@@ -198,42 +195,39 @@ export class PagingIssues implements Paging<Issue> {
 export class IssuesFilter implements SearchFilter {
 
   @field()
-  team?: string;
+  team: string;
 
   @field()
-  user?: string;
+  user: string;
 
   @field()
-  project?: string;
+  project: string;
 
   @field()
-  milestone?: string;
-
-  @field()
-  ticket?: string;
+  ticket: string;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
-  dueDate?: Date;
+  dueDate: Date;
 
   @field()
-  state?: IssueState | null;
+  state: IssueState | null;
 
   @field()
-  problems?: boolean | null;
+  problems: boolean | null;
 
   @field()
-  first?: number;
+  first: number;
 
   @field()
-  offset?: number;
+  offset: number;
 
   @field()
-  q?: string;
+  q: string;
 
   @field()
-  orderBy?: string;
+  orderBy: string;
 
-  constructor(defs: IssuesFilter = null) {
+  constructor(defs: Partial<IssuesFilter> = null) {
     if (!!defs) {
       Object.assign(this, defs);
     }
@@ -291,31 +285,30 @@ export class TeamSummary {
 @model()
 export class IssuesSummary {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(100, 190)})
   count: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(55, 130)})
   closedCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(14, 30)})
   openedCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.time(400, 700)})
   timeSpent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(2, 9)})
   problemsCount: number;
 
   @field({
     mock: {type: ProjectSummary, length: 5},
-    serializer: new ArraySerializer(new ModelSerializer(ProjectSummary))
+    serializer: new ArraySerializer(new ModelMetadataSerializer(ProjectSummary))
   })
   projects: ProjectSummary[];
 
   @field({
     mock: {type: TeamSummary, length: 10},
-    serializer: new ArraySerializer(new ModelSerializer(TeamSummary))
+    serializer: new ArraySerializer(new ModelMetadataSerializer(TeamSummary))
   })
   teams: TeamSummary[];
-
 }

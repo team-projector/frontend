@@ -1,0 +1,13 @@
+<jnt-app-page-header [icon]="localUi.icons.dashboard"
+                     title="Dashboard"
+                     teaser="for {{team.title}} team"></jnt-app-page-header>
+
+<jnt-row>
+  <jnt-col [tablet]="12" [desktop]="7">
+    <app-team-progress [team]="team"
+                       (selected)="issuesByDeveloper($event)"></app-team-progress>
+  </jnt-col>
+  <jnt-col [tablet]="12" [desktop]="5">
+    <app-projects-summary [team]="team" (selected)="issuesByProject($event)"></app-projects-summary>
+  </jnt-col>
+</jnt-row>

@@ -1,6 +1,6 @@
-import * as faker from 'faker';
+import { faker } from '../utils/mocks';
 import { helpers } from 'faker';
-import { SearchFilter } from 'junte-ui';
+import { SearchFilter } from '@junte/ui';
 import { ArraySerializer } from 'serialize-ts';
 import { DATE_FORMAT } from 'src/consts';
 import { MergeRequestState } from 'src/models/enums/merge-requests';
@@ -17,16 +17,16 @@ import { User } from './user';
 @model()
 export class MergeRequestSummary {
 
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
+  @field({mock: () => mocks.random(100, 190)})
   count: number;
 
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
-  openedCount: number;
-
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
+  @field({mock: () => mocks.random(10, 20)})
   closedCount: number;
 
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
+  @field({mock: () => mocks.random(2, 9)})
+  openedCount: number;
+
+  @field({mock: () => mocks.random(55, 130)})
   mergedCount: number;
 
 }
@@ -68,9 +68,9 @@ export class MergeRequest {
 
   @field({
     mock: () => helpers.randomize([
-      'New features added',
-      'Bug fixed',
-      'Refactored'
+      $localize`:@@mocks.merge_title_features:New features added`,
+      $localize`:@@mocks.merge_title_bug:Bug fixed`,
+      $localize`:@@mocks.merge_title_refactored:Refactored`
     ])
   })
   title: string;

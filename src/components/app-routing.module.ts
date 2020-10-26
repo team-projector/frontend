@@ -12,14 +12,20 @@ const routes: Routes = [
   },
   {
     matcher: dashboardMatcher,
-    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)
+    loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule)
+  },
+  {
+    path: '**',
+    redirectTo: '/'
   }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes,
     {
+      anchorScrolling: 'enabled',
       paramsInheritanceStrategy: 'always',
+      scrollPositionRestoration: 'top',
       relativeLinkResolution: 'corrected'
     })],
   exports: [RouterModule]

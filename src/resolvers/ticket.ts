@@ -8,7 +8,7 @@ import { Ticket } from 'src/models/ticket';
 import { TicketGQL } from 'src/resolvers/ticket.graphql';
 import { getMock } from 'src/utils/mocks';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TicketResolver implements Resolve<Observable<Ticket>> {
 
   constructor(private ticketGQL: TicketGQL) {

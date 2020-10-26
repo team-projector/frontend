@@ -1,11 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MilestoneIssuesComponent } from 'src/components/manager/milestones/milestone/issues/milestone-issues.component';
 import { MilestoneComponent } from 'src/components/manager/milestones/milestone/milestone.component';
 import { OutletComponent } from 'src/components/outlet/outlet.component';
 import { MilestoneResolver } from 'src/resolvers/milestone';
 import { TicketResolver } from 'src/resolvers/ticket';
 import { MilestonesComponent } from './milestones.component';
+
+export const MILESTONES_BREADCRUMB = $localize`:@@label.milestones:Milestones`;
 
 export function getMilestone(data: any) {
   return data.milestone.title;
@@ -19,7 +20,7 @@ const routes: Routes = [
   {
     path: '',
     component: OutletComponent,
-    data: {breadcrumb: 'Milestones'},
+    data: {breadcrumb: MILESTONES_BREADCRUMB},
     children: [
       {
         path: '',
@@ -40,14 +41,6 @@ const routes: Routes = [
               milestone: MilestoneResolver,
               ticket: TicketResolver,
             }
-          },
-          {
-            path: ':ticket',
-            component: MilestoneIssuesComponent,
-            resolve: {
-              ticket: TicketResolver,
-            },
-            data: {breadcrumb: getTicket},
           }
         ]
       }

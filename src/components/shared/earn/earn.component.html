@@ -1,0 +1,4 @@
+<ng-container *ngIf="payroll > 0">
+  <div [attr.data-paid]="payroll >= paid">{{payroll | money}}</div>
+  <small *ngIf="paid > 0 && payroll > paid">+{{payroll - paid | money}}</small>
+</ng-container>

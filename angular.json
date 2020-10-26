@@ -22,8 +22,8 @@
       "prefix": "app",
       "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss",
-          "spec": false
+          "style": "scss",
+          "skipTests": true
         }
       },
       "architect": {
@@ -43,27 +43,22 @@
               "src/assets/themes",
               {
                 "glob": "**/*",
-                "input": "node_modules/junte-ui/lib/assets/icons/animated/",
+                "input": "node_modules/@junte/ui/lib/assets/icons/animated/",
                 "output": "./assets/icons/animated/"
               },
               {
                 "glob": "**/*",
-                "input": "node_modules/junte-ui/lib/assets/icons/svg/",
+                "input": "node_modules/@junte/ui/lib/assets/icons/svg/",
                 "output": "./assets/icons/svg/"
               }
             ],
             "styles": [
-              "node_modules/junte-ui/lib/assets/fonts/junte-ui-icons-default/junte-ui-icons-default-font.scss",
-              "node_modules/junte-ui/lib/assets/fonts/open-sans/import.scss",
-              "src/styles.scss"
-            ],
-            "stylePreprocessorOptions": {
-              "includePaths": [
-                "src/style"
-              ]
-            },
-            "scripts": [
-              "src/assets/themes/themes.js"
+              "node_modules/@junte/ui/lib/assets/fonts/junte-ui-icons-default/junte-ui-icons-default-font.scss",
+              "node_modules/@openfonts/open-sans_cyrillic/index.css",
+              "src/assets/fonts/icons/icons-font.scss",
+              "src/styles.scss",
+              "src/assets/themes/light.scss",
+              "src/assets/themes/dark.scss"
             ],
             "es5BrowserSupport": true
           },
@@ -101,6 +96,14 @@
                 }
               ]
             },
+            "ru": {
+              "aot": true,
+              "outputPath": "dist/ru/",
+              "baseHref": "/",
+              "i18nFile": "src/locale/messages.ru.xlf",
+              "i18nFormat": "xlf",
+              "i18nLocale": "ru"
+            },
             "mocks": {
               "localize": [
                 "ru"
@@ -125,6 +128,9 @@
             },
             "mocks": {
               "browserTarget": "team-projector:build:mocks"
+            },
+            "ru": {
+              "browserTarget": "team-projector:build:ru"
             }
           }
         },
@@ -174,7 +180,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "team-projector:serve"
+            "devServerTarget": "team-projector:serve:mocks"
           },
           "configurations": {
             "production": {

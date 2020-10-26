@@ -1,0 +1,19 @@
+<jnt-app-page-header [icon]="localUi.icons.workBreak"
+                     title="Work Breaks"
+                     teaser="for your team"></jnt-app-page-header>
+
+<jnt-block data-tabs [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <jnt-menu data-nav [style]="ui.menu.style.tabs"
+            [spacing]="ui.gutter.normal">
+    <jnt-menu-item [link]="['.']"
+                   title="Table"
+                   i18n-title="@@action.table">
+    </jnt-menu-item>
+    <jnt-menu-item [link]="['gantt']"
+                   title="Gantt"
+                   i18n-title="@@action.gantt">
+    </jnt-menu-item>
+  </jnt-menu>
+  <router-outlet></router-outlet>
+</jnt-block>

@@ -1,0 +1,47 @@
+<jnt-gantt [type]="ui.gantt.type.year"
+           [loading]="loading">
+  <ng-template #titleTemplate>
+    <strong>Developer</strong>
+  </ng-template>
+  <jnt-gantt-line *ngFor="let workBreak of workbreaks"
+                  [title]="workBreak.user.name">
+    <ng-template #title>
+      <jnt-stack [orientation]="ui.orientation.horizontal">
+        <ng-container [ngSwitch]="workBreak.reason">
+          <jnt-label *ngSwitchCase="reasons.vacation"
+                     [color]="ui.color.green"
+                     label="Vacation">
+          </jnt-label>
+          <jnt-label *ngSwitchCase="reasons.disease"
+                     [color]="ui.color.red"
+                     label="Disease">
+          </jnt-label>
+          <jnt-label *ngSwitchCase="reasons.dayoff"
+                     [color]="ui.color.yellow"
+                     label="Dayoff">
+          </jnt-label>
+        </ng-container>
+
+        <div data-comment>{{workBreak.comment}}</div>
+      </jnt-stack>
+    </ng-template>
+    <jnt-gantt-line-period [from]="workBreak.fromDate"
+                           [to]="workBreak.toDate">
+
+      <ng-template #indicatorYear let-current="current" let-today="today">
+        <div [attr.accepting]="workBreak['approveState'] === approveStates.created"
+             [attr.accepted]="workBreak['approveState'] === approveStates.approved"
+             [attr.declined]="workBreak['approveState'] === approveStates.declined"
+             [attr.short]="workBreak['toDate'] | dfnsDifferenceInMonths:workBreak['fromDate'] < 2"
+             [attr.over-from]="(workBreak['fromDate'] | dfnsGetYear) < (current | dfnsGetYear)"
+             [attr.over-to]="(workBreak['toDate'] | dfnsGetYear) > (current | dfnsGetYear)" period>
+                            <span label>
+                              {{(workBreak['toDate'] | dfnsDifferenceInDays:workBreak['fromDate']) + 1 }} days
+                            </span>
+        </div>
+      </ng-template>
+
+    </jnt-gantt-line-period>
+  </jnt-gantt-line>
+</jnt-gantt>
+

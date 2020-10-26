@@ -1,17 +1,16 @@
+import { SearchFilter } from '@junte/ui';
 import { addDays } from 'date-fns';
-import * as faker from 'faker';
-import { SearchFilter } from 'junte-ui';
 import { ArraySerializer } from 'serialize-ts';
 import { PrimitiveSerializer } from 'serialize-ts/dist';
-import { MilestoneProblem } from 'src/models/enums/milestone';
+import { MilestoneProblem, MilestoneState } from 'src/models/enums/milestone';
 import { DateSerializer } from 'src/serializers/date';
 import { mocks } from 'src/utils/mocks';
 import { field, model } from '../decorators/model';
 import { EdgesToPaging } from '../serializers/graphql';
 import { ProjectSerializer } from '../serializers/project';
+import { faker } from '../utils/mocks';
 import { Paging } from './paging';
 import { Project, ProjectGroup } from './project';
-
 
 @model()
 export class MilestoneMetrics {
@@ -43,20 +42,20 @@ export class MilestoneMetrics {
   @field({mock: () => faker.random.number()})
   efficiency: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(30, 100)})
   issuesCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(30, 100)})
   issuesOpenedCount: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(30, 100)})
   issuesClosedCount: number;
 
 }
 
 @model({
-  mocking: (milestone: Milestone) => {
-    milestone.budget = mocks.money(60000, 300000);
+  mocking: (milestone: Milestone, context: MilestonesFilter) => {
+    milestone.budget = mocks.money(6000, 30000);
     const startDate = faker.date.past();
     milestone.startDate = startDate;
     milestone.dueDate = addDays(startDate, mocks.random(5, 14));
@@ -64,11 +63,23 @@ export class MilestoneMetrics {
     milestone.metrics.timeEstimate = mocks.time(300, 600);
     milestone.metrics.timeSpent = mocks.time(300, 600);
     milestone.metrics.timeRemains = milestone.metrics.timeEstimate - milestone.metrics.timeSpent;
-    milestone.metrics.payroll = mocks.money(30000, 150000);
+    milestone.metrics.payroll = mocks.money(3000, 15000);
     milestone.metrics.profit = milestone.budget - milestone.metrics.payroll;
-    milestone.metrics.customerPayroll = mocks.money(60000, 300000);
-    milestone.metrics.budgetSpent = mocks.money(30000, 150000);
+    milestone.metrics.customerPayroll = mocks.money(4000, 20000);
+    milestone.metrics.budgetSpent = mocks.money(5000, 25000);
     milestone.metrics.budgetRemains = milestone.budget - milestone.metrics.budgetSpent;
+    if (!!context) {
+      switch (context.state) {
+        case MilestoneState.active:
+          milestone.state = MilestoneState.active;
+          break;
+        case MilestoneState.closed:
+          milestone.state = MilestoneState.closed;
+          break;
+        default:
+          milestone.state = faker.helpers.randomize([MilestoneState.active, MilestoneState.closed]);
+      }
+    }
   }
 })
 export class Milestone {
@@ -78,15 +89,18 @@ export class Milestone {
 
   @field({
     mock: () => faker.helpers.randomize([
-      'MVP',
-      'Sprint 1',
-      'Version 1.0'
+      $localize`:@@mocks.milestone_mvp:MVP`,
+      $localize`:@@mocks.milestone_sprint:Sprint 1`,
+      $localize`:@@mocks.milestone_version:Version 1.0`
     ])
   })
   title: string;
 
   @field({mock: ProjectGroup, serializer: new ProjectSerializer()})
   owner: Project | ProjectGroup;
+
+  @field({mock: () => faker.helpers.randomize([MilestoneState.active, MilestoneState.closed])})
+  state: MilestoneState;
 
   @field({mock: () => faker.random.number()})
   budget: number;
@@ -119,7 +133,7 @@ export class PagingMilestones implements Paging<Milestone> {
   @field({
     name: 'edges',
     serializer: new ArraySerializer(new EdgesToPaging<Milestone>(Milestone)),
-    mock: {type: Milestone, length: 5},
+    mock: {type: Milestone, length: 10},
   })
   results: Milestone[];
 }
@@ -128,17 +142,42 @@ export class PagingMilestones implements Paging<Milestone> {
 export class MilestonesFilter implements SearchFilter {
 
   @field()
-  first?: number;
+  first: number;
 
   @field()
-  offset?: number;
+  offset: number;
 
   @field()
-  q?: string;
+  q: string;
 
-  constructor(defs: MilestonesFilter = null) {
+  @field()
+  state: MilestoneState;
+
+  @field()
+  orderBy: string;
+
+  constructor(defs: Partial<MilestonesFilter> = null) {
     if (!!defs) {
       Object.assign(this, defs);
     }
   }
+}
+
+@model({
+  mocking: (summary: MilestonesSummary) => {
+    summary.count = mocks.random(15, 25);
+    summary.closedCount = mocks.random(10, 20);
+    summary.activeCount = summary.count - summary.closedCount;
+  }
+})
+export class MilestonesSummary {
+
+  @field({mock: () => mocks.random(30, 100)})
+  count: number;
+
+  @field({mock: () => mocks.random(30, 100)})
+  closedCount: number;
+
+  @field({mock: () => mocks.random(30, 100)})
+  activeCount: number;
 }

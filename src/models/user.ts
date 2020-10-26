@@ -1,8 +1,12 @@
 import { endOfDay, endOfMonth, endOfWeek, format, isPast, startOfDay, startOfMonth, startOfToday, startOfWeek } from 'date-fns';
-import * as faker from 'faker';
-import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
-import { UserPermission, UserProblem, UserRole } from 'src/models/enums/user';
-import { DATE_FORMAT } from '../consts';
+import { Paging } from 'src/models/paging';
+import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
+import { ModelRef } from '../utils/types';
+import { WorkBreak } from './work-break';
+import { faker, getMock } from '../utils/mocks';
+import { ArraySerializer, PrimitiveSerializer, ModelSerializer } from 'serialize-ts';
+import { UserPermission, UserProblem, UserRole } from './enums/user';
+import { DATE_FORMAT, DFNS_LOCALE, FIRST_DAY_OF_WEEK } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { mocks } from '../utils/mocks';
@@ -12,17 +16,35 @@ import { IssuesMetrics, MergeRequestsMetrics } from './metrics';
 @model()
 export class UserMetrics {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(50, 120)})
   bonus: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(90, 120)})
   penalty: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(800, 1600)})
+  payroll: number;
+
+  @field({mock: () => mocks.random(450, 750)})
   payrollClosed: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(300, 700)})
   payrollOpened: number;
+
+  @field({mock: () => mocks.random(100, 140)})
+  taxes: number;
+
+  @field({mock: () => mocks.random(55, 90)})
+  taxesClosed: number;
+
+  @field({mock: () => mocks.random(35, 50)})
+  taxesOpened: number;
+
+  @field({mock: () => mocks.random(2, 13)})
+  paidWorkBreaksDays: number;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  lastSalaryDate: Date;
 
   @field({mock: IssuesMetrics})
   issues: IssuesMetrics;
@@ -33,9 +55,16 @@ export class UserMetrics {
 }
 
 @model()
+export class UserPosition {
+
+  @field({mock: () => faker.name.findName()})
+  title: string;
+}
+
+@model()
 export class User {
 
-  @field({mock: () => faker.random.uuid()})
+  @field({mock: context => !!context && !!context.id ? context.id : 'mock' + faker.random.uuid()})
   id: string;
 
   @field({mock: () => faker.internet.userName()})
@@ -47,13 +76,31 @@ export class User {
   @field({name: 'glAvatar', mock: () => faker.internet.avatar()})
   avatar: string;
 
+  @field({mock: () => mocks.hourlyRate()})
+  hourRate: number;
+
+  @field({mock: () => mocks.random(15000, 30000)})
+  taxRate: number;
+
+  @field({mock: () => mocks.random(8, 18)})
+  annualPaidWorkBreaksDays: number;
+
+  @field({mock: UserPosition})
+  position: UserPosition;
+
+  @field({
+    serializer: new EdgesToArray<WorkBreak>(() => WorkBreak),
+    mock: {type: () => WorkBreak, length: 5}
+  })
+  workBreaks: ModelRef<WorkBreak>[];
+
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
     mock: [UserRole.developer,
       UserRole.customer,
-      UserRole.projectManager,
+      UserRole.manager,
       UserRole.shareholder,
-      UserRole.teamLeader]
+      UserRole.leader]
   })
   roles: UserRole[];
 
@@ -76,14 +123,14 @@ export class User {
         case UserRole.developer:
           me.roles.push(UserRole.developer);
           break;
-        case UserRole.teamLeader:
+        case UserRole.leader:
           me.roles.push(UserRole.developer);
-          me.roles.push(UserRole.teamLeader);
+          me.roles.push(UserRole.leader);
           break;
-        case UserRole.projectManager:
+        case UserRole.manager:
           me.roles.push(UserRole.developer);
-          me.roles.push(UserRole.teamLeader);
-          me.roles.push(UserRole.projectManager);
+          me.roles.push(UserRole.leader);
+          me.roles.push(UserRole.manager);
           break;
       }
     }
@@ -96,7 +143,6 @@ export class Me extends User {
     mock: [UserPermission.inviteUser]
   })
   permissions: UserPermission[];
-
 }
 
 @model()
@@ -143,47 +189,66 @@ export class UserMetricsFilter {
 })
 export class UserProgressMetrics {
 
-  @field()
+  @field({mock: () => faker.date.recent(30), serializer: new DateSerializer()})
   start: Date;
 
-  @field()
+  @field({mock: () => faker.date.recent(30), serializer: new DateSerializer()})
   end: Date;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(100, 230) * 1800})
   timeEstimate: number;
 
-  @field()
+  @field({mock: () => mocks.random(4, 9)})
   timeSpent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(1, 8) * 1800})
   timeRemains: number;
 
-  @field({mock: 8})
+  @field({mock: () => mocks.random(4, 9)})
   plannedWorkHours: number;
 
   @field({mock: () => mocks.efficiency()})
   efficiency: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(1, 8) * 1800})
   loading: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(25, 43) * 10})
   payrollClosed: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(25, 43) * 10})
   payrollOpened: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(7, 30)})
   payroll: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(35, 55) * 10})
   paid: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(7, 30)})
   issuesCount: number;
 
   getKey(): string {
-    return format(this.start, 'DD/MM/YYYY');
+    return format(this.start, DATE_FORMAT, {
+      locale: DFNS_LOCALE,
+      weekStartsOn: FIRST_DAY_OF_WEEK
+    });
   }
+
+}
+
+
+@model()
+export class PagingUsers implements Paging<User> {
+
+  @field({mock: () => faker.random.number()})
+  count: number;
+
+  @field({
+    name: 'edges',
+    serializer: new ArraySerializer(new EdgesToPaging<User>(User)),
+    mock: {type: User, length: 10}
+  })
+  results: User[];
 
 }

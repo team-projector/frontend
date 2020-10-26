@@ -1,200 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { R } from 'apollo-angular/types';
-import { UI } from 'junte-ui';
-import { Period } from 'junte-ui/lib/components/forms/calendar/models';
-import { BehaviorSubject, combineLatest, of, zip } from 'rxjs';
-import { delay, distinctUntilChanged, filter as filtering, map } from 'rxjs/operators';
-import { deserialize, serialize } from 'serialize-ts/dist';
-import { METRIC_TYPE } from 'src/components/metrics-type/consts';
-import { field, model } from 'src/decorators/model';
-import { DurationFormat } from 'src/models/enums/duration-format';
-import { Metrics, MetricType } from 'src/models/enums/metrics';
-import { MilestoneProblem } from 'src/models/enums/milestone';
-import { IssuesFilter, IssuesSummary } from 'src/models/issue';
-import { MergeRequestSummary } from 'src/models/merge-request';
-import { SpentTimesSummary } from 'src/models/spent-time';
-import { User, UserMetricsFilter, UserProgressMetrics } from 'src/models/user';
-import { DATE_FORMAT, MOCKS_DELAY } from 'src/consts';
-import { environment } from 'src/environments/environment';
-import { DateSerializer } from 'src/serializers/date';
-import { getMock } from 'src/utils/mocks';
-import { TeamState } from '../../leader/teams/team/issues/team-issues.component';
-import { IssuesMetricsGQL, IssuesSummaryGQL } from './issues-metrics.graphql';
-
-class Metric {
-  constructor(public days: Map<string, UserProgressMetrics>,
-              public weeks: Map<string, UserProgressMetrics>) {
-  }
-}
-
-@model()
-export class DeveloperState {
-
-  @field()
-  project?: string;
-
-  @field({serializer: new DateSerializer(DATE_FORMAT)})
-  dueDate?: Date;
-
-  constructor(defs: TeamState = null) {
-    if (!!defs) {
-      Object.assign(this, defs);
-    }
-  }
-
-}
+import { UI } from '@junte/ui';
+import { NGXLogger } from 'ngx-logger';
+import { IssuesComponent } from 'src/components/shared/issues/list/issues';
+import { LocalUI } from '../../../enums/local-ui';
+import { ViewType } from '../../../models/enums/view-type';
 
 @Component({
   selector: 'app-developer-issues',
   templateUrl: './developer-issues.component.html',
   styleUrls: ['./developer-issues.component.scss']
 })
-export class DeveloperIssuesComponent implements OnInit {
+export class DeveloperIssuesComponent extends IssuesComponent {
 
-  private user$ = new BehaviorSubject<User>(null);
-  private period$ = new BehaviorSubject<Period>(null);
   ui = UI;
-  durationFormat = DurationFormat;
-  milestoneProblem = MilestoneProblem;
-  metricType = MetricType;
-  colors = [
-    UI.colors.purple,
-    UI.colors.red,
-    UI.colors.green,
-    UI.colors.yellow,
-    UI.colors.teal,
-    UI.colors.orange,
-    UI.colors.purpleLight
-  ];
+  localUi = LocalUI;
+  viewType = ViewType;
 
-  formatDate = 'DD/MM/YYYY';
-  filter: IssuesFilter;
-
-  summary: {
-    issues?: IssuesSummary,
-    mergeRequests?: MergeRequestSummary
-    spentTimes?: SpentTimesSummary
-  } = {};
-
-  set user(user: User) {
-    this.user$.next(user);
+  constructor(route: ActivatedRoute,
+              router: Router,
+              logger: NGXLogger) {
+    super(route, router, logger);
   }
 
-  get user() {
-    return this.user$.getValue();
-  }
-
-  set period(period: Period) {
-    this.period$.next(period);
-  }
-
-  get period() {
-    return this.period$.getValue();
-  }
-
-  metrics = new Metric(
-    new Map<string, UserProgressMetrics>(),
-    new Map<string, UserProgressMetrics>()
-  );
-  dueDate = new FormControl();
-  project = new FormControl();
-  metric = new FormControl(localStorage.getItem(METRIC_TYPE) || MetricType.all);
-  form = this.formBuilder.group({
-    dueDate: this.dueDate,
-    project: this.project,
-    metric: this.metric
-  });
-
-  constructor(private formBuilder: FormBuilder,
-              private route: ActivatedRoute,
-              private router: Router,
-              private issuesSummary: IssuesSummaryGQL,
-              private issuesMetricsGQL: IssuesMetricsGQL) {
-  }
-
-  ngOnInit() {
-    this.form.valueChanges.pipe(distinctUntilChanged())
-      .subscribe(({dueDate, project}) => {
-        const state = new DeveloperState({
-          project: !!project ? project.id : undefined,
-          dueDate: dueDate || undefined
-        });
-        const path = [];
-        this.route.snapshot.children.forEach(child =>
-          child.url.forEach(segment => path.push(segment.path)));
-        this.router.navigate([serialize(state), ...path],
-          {relativeTo: this.route}).then(() => null);
-      });
-
-    this.route.data.subscribe(({user, dueDate, project}) => {
-      this.user = user;
-      this.form.patchValue({dueDate: dueDate, project: project}, {emitEvent: false});
-
-      this.filter = new IssuesFilter({
-        user: user.id,
-        dueDate: dueDate,
-        project: !!project ? project.id : null
-      });
-
-      this.loadSummary();
-    });
-
-    combineLatest([this.user$, this.period$])
-      .pipe(filtering(([user, period]) => !!user && !!period))
-      .subscribe(() => this.loadMetrics());
-  }
-
-  private loadSummary() {
-    (environment.mocks
-        ? of({
-          issues: getMock(IssuesSummary),
-          mergeRequests: getMock(MergeRequestSummary),
-          spentTimes: getMock(SpentTimesSummary)
-        }).pipe(delay(MOCKS_DELAY))
-        : this.issuesSummary.fetch(serialize(this.filter) as R)
-          .pipe(map(({data: {issues, mergeRequests, spentTimes}}) => ({
-            issues: deserialize(issues, IssuesSummary),
-            mergeRequests: deserialize(mergeRequests, MergeRequestSummary),
-            spentTimes: deserialize(spentTimes, SpentTimesSummary),
-          })))
-    ).subscribe(summary => this.summary = summary);
-  }
-
-  private loadMetrics() {
-    const getMetric = (group: Metrics) => {
-      const filter = new UserMetricsFilter({
-        user: this.user.id,
-        start: this.period.start,
-        end: this.period.end,
-        group: group
-      });
-
-      return (environment.mocks
-        ? of(Array.apply(null, Array(20))
-          .map(() => getMock(UserProgressMetrics, filter)))
-          .pipe(delay(MOCKS_DELAY))
-        : this.issuesMetricsGQL.fetch(serialize(filter) as R)
-          .pipe(map(({data: {userProgressMetrics}}) =>
-            userProgressMetrics.map(el => deserialize(el, UserProgressMetrics)))))
-        .pipe(map(metrics => {
-          const dic = new Map<string, UserProgressMetrics>();
-          metrics.forEach(m => dic.set(m.getKey(), m));
-          return dic;
-        }));
-    };
-
-    zip(getMetric(Metrics.day), getMetric(Metrics.week))
-      .subscribe(([days, weeks]) => this.metrics = new Metric(days, weeks));
-  }
-
-  onActivate(component) {
-    if (!!component.reloaded) {
-      component.reloaded.subscribe(() => {
-        this.loadSummary();
-        this.loadMetrics();
-      });
-    }
-  }
 }

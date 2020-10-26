@@ -1,0 +1,97 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/layout/block";
+@import "~@junte/ui/lib/assets/styles/elements/label";
+
+:host {
+  display: block;
+
+  @include jnt-block((body: (padding: 0 0 $jnt-gutter-normal 0)), null, true);
+}
+
+[data-user] {
+  padding: 0 $jnt-gutter-large;
+  @include jnt-label((color: $jnt-primary-color), null, true);
+  [data-position] {
+    color: $jnt-primary-light-color;
+    font-weight: $jnt-font-weight-bold;
+    font-size: $jnt-font-size-base;
+  }
+}
+
+[data-salary] {
+  position: relative;
+  padding: $jnt-gutter-normal $jnt-gutter-large;
+  font-size: 26px;
+  background: $jnt-primary-color;
+  color: $jnt-white-color;
+  [data-label] {
+    font-size: 12px;
+  }
+  [data-money] {
+    color: $jnt-primary-light-color;
+    font-size: 30px;
+  }
+  [data-opened] {
+    color: rgba($jnt-white-color, .5);
+    font-size: 18px;
+    [data-label] {
+      font-size: 12px;
+      color: $jnt-primary-light-color;
+    }
+  }
+  [data-digit] {
+    font-weight: $jnt-font-weight-bold;
+  }
+  [data-line] {
+    font-size: $jnt-font-size-base;
+    padding: $jnt-gutter-small 0;
+    &:not(:last-of-type) {
+      border-bottom: 1px dashed $jnt-primary-light-color;
+    }
+    [data-title] {
+      font-weight: $jnt-font-weight-bold;
+    }
+    [data-time] {
+      color: $jnt-secondary-dark-color;
+      font-size: $jnt-font-size-normal;
+      span {
+        font-size: 12px;
+      }
+    }
+    > span {
+      font-size: 18px;
+      font-weight: $jnt-font-weight-bold;
+    }
+    &[data-success] {
+      > span {
+        color: $jnt-success-color;
+      }
+    }
+    &[data-fail] {
+      > span {
+        color: $jnt-fail-color;
+      }
+    }
+  }
+  hr {
+    border: 0;
+    height: 1px;
+    background: $jnt-primary-light-color;
+    width: 80px;
+    align-self: flex-end;
+    margin-right: 0;
+  }
+  svg {
+    fill: $jnt-primary-color;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    &[data-opened='true'] {
+      transform: translateX(-50%) rotate(180deg);
+      fill: $jnt-white-color;
+      top: auto;
+      bottom: 0;
+    }
+  }
+}

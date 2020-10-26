@@ -1,5 +1,4 @@
-import * as faker from 'faker';
-import { helpers } from 'faker';
+import { faker } from '../utils/mocks';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToArray } from '../serializers/graphql';
@@ -11,10 +10,10 @@ export class ProjectMilestone {
   id: string;
 
   @field({
-    mock: () => helpers.randomize([
-      'MVP',
-      'Sprint 1',
-      'Version 1.0'
+    mock: () => faker.helpers.randomize([
+      $localize`:@@mocks.milestone_mvp:MVP`,
+      $localize`:@@mocks.milestone_sprint:Sprint 1`,
+      $localize`:@@mocks.milestone_version:Version 1.0`
     ])
   })
   title: string;
@@ -30,7 +29,7 @@ export class ProjectGroup {
   id: string;
 
   @field({
-    mock: () => helpers.randomize([
+    mock: () => faker.helpers.randomize([
       'Microsoft',
       'Tesla',
       'Amazon'
@@ -38,7 +37,13 @@ export class ProjectGroup {
   })
   title: string;
 
-  @field()
+  @field({
+    mock: () => faker.helpers.randomize([
+      'Software / Microsoft',
+      'Producers / Tesla',
+      'Trading / Amazon'
+    ])
+  })
   fullTitle: string;
 
   @field({mock: () => faker.image.business()})
@@ -52,7 +57,7 @@ export class Project {
   id: string;
 
   @field({
-    mock: () => helpers.randomize([
+    mock: () => faker.helpers.randomize([
       'Azure',
       'Customers Billing',
       'CRM'

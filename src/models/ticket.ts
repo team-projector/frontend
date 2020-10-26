@@ -1,18 +1,16 @@
+import { SearchFilter } from '@junte/ui';
 import { addDays, startOfMonth } from 'date-fns';
-import * as faker from 'faker';
-import { SearchFilter } from 'junte-ui';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
 import { DATE_FORMAT } from 'src/consts';
-import { IssueState } from 'src/models/enums/issue';
-import { Label } from 'src/models/label';
+import { Milestone } from 'src/models/milestone';
 import { Paging } from 'src/models/paging';
-import { Project } from 'src/models/project';
-import { User } from 'src/models/user';
 import { DateSerializer } from 'src/serializers/date';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
 import { field, model } from '../decorators/model';
-import { mocks } from '../utils/mocks';
-import { TicketProblem, TicketTypes } from './enums/ticket';
+import { faker, mocks } from '../utils/mocks';
+import { ModelRef } from '../utils/types';
+import { TicketProblem, TicketStates, TicketTypes } from './enums/ticket';
+import { Issue } from './issue';
 
 @model()
 export class TicketMetrics {
@@ -59,59 +57,13 @@ export class TicketMetrics {
 }
 
 @model()
-export class Issue {
-
-  @field({mock: () => faker.random.uuid()})
-  id: string;
-
-  @field()
-  user: User;
-
-  @field({
-    mock: () => faker.helpers.randomize([
-      'Implement design for login feature',
-      'GraphQL API for login',
-      'Fix bugs in login form'
-    ])
-  })
-  title: string;
-
-  @field({mock: {type: Label, length: 3}, serializer: new EdgesToArray(Label)})
-  labels: Label[];
-
-  @field({mock: Project})
-  project: Project;
-
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
-  dueDate: Date;
-
-  @field({mock: () => faker.random.number()})
-  timeEstimate: number;
-
-  @field({mock: () => faker.random.number()})
-  timeSpent: number;
-
-  @field({mock: () => faker.random.number()})
-  totalTimeSpent: number;
-
-  @field()
-  glUrl: string;
-
-  @field({mock: IssueState.opened})
-  state: IssueState;
-
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
-  closedAt: Date;
-}
-
-@model()
 export class Ticket {
 
   @field({mock: context => !!context && !!context.id ? context.id : faker.random.uuid()})
   id: string;
 
   @field({
-    mock: faker.helpers.randomize([
+    mock: () => faker.helpers.randomize([
       TicketTypes.feature,
       TicketTypes.improvement,
       TicketTypes.bugFixing
@@ -120,11 +72,23 @@ export class Ticket {
   type: TicketTypes;
 
   @field({
+    mock: context => !!context && context.state != undefined ? context.state : faker.helpers.randomize([
+      TicketStates.created,
+      TicketStates.planning,
+      TicketStates.doing,
+      TicketStates.done,
+      TicketStates.accepting,
+      TicketStates.testing,
+    ])
+  })
+  state: TicketStates;
+
+  @field({
     mock: () => faker.helpers.randomize([
-      'Login feature',
-      'Sending emails',
-      'Design improvements',
-      'Bug fixes'
+      $localize`:@@mocks.ticket_title_login:Login feature`,
+      $localize`:@@mocks.ticket_title_emails:Sending emails`,
+      $localize`:@@mocks.ticket_title_design:Design improvements`,
+      $localize`:@@mocks.ticket_title_bug:Bug fixes`
     ])
   })
   title: string;
@@ -141,11 +105,20 @@ export class Ticket {
   @field({mock: () => faker.internet.url()})
   url: string;
 
-  @field({mock: {type: Issue, length: 5}, serializer: new EdgesToArray(Issue)})
-  issues: Issue[];
+  @field({
+    mock: {
+      type: () => Issue,
+      length: 5
+    },
+    serializer: new EdgesToArray(() => Issue)
+  })
+  issues: ModelRef<Issue>[];
 
   @field({mock: TicketMetrics})
   metrics: TicketMetrics;
+
+  @field({mock: Milestone})
+  milestone: Milestone;
 
   @field({
     mock: [],
@@ -166,6 +139,9 @@ export class TicketUpdate {
 
   @field()
   type: TicketTypes;
+
+  @field()
+  state: TicketStates;
 
   @field()
   title: string;
@@ -206,7 +182,7 @@ export class PagingTickets implements Paging<Ticket> {
 
   @field({
     name: 'edges',
-    mock: {type: Ticket, length: 15},
+    mock: {type: Ticket, length: 10},
     serializer: new ArraySerializer(new EdgesToPaging<Ticket>(Ticket))
   })
   results: Ticket[];
@@ -217,6 +193,9 @@ export class TicketsFilter implements SearchFilter {
 
   @field()
   milestone: string;
+
+  @field()
+  state: string;
 
   @field()
   orderBy?: string;
@@ -232,4 +211,29 @@ export class TicketsFilter implements SearchFilter {
       Object.assign(this, defs);
     }
   }
+}
+
+@model()
+export class TicketsSummary {
+
+  @field({mock: () => mocks.random(90, 120)})
+  count: number;
+
+  @field({mock: () => mocks.random(20, 30)})
+  createdCount: number;
+
+  @field({mock: () => mocks.random(8, 15)})
+  planningCount: number;
+
+  @field({mock: () => mocks.random(7, 15)})
+  doingCount: number;
+
+  @field({mock: () => mocks.random(8, 15)})
+  testingCount: number;
+
+  @field({mock: () => mocks.random(7, 15)})
+  acceptingCount: number;
+
+  @field({mock: () => mocks.random(8, 15)})
+  doneCount: number;
 }

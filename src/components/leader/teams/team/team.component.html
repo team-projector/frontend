@@ -1,20 +1,49 @@
 <jnt-app-aside #aside>
-  <ng-template #contentTemplate>
-    <jnt-menu [type]="ui.orientation.vertical" [spacer]="ui.sizes.small">
-      <jnt-menu-item [link]="['issues']" [matching]="ui.url.matching.wildcard" title="Issues"
-                     [icon]="ui.icons.dashboard"></jnt-menu-item>
-      <jnt-menu-item [link]="['breaks']" [matching]="ui.url.matching.wildcard" title="Work breaks"
-                     [icon]="ui.icons.cup"></jnt-menu-item>
-    </jnt-menu>
-  </ng-template>
+  <jnt-menu>
+    <jnt-menu-item title="Dashboard"
+                   i18n-title="@@action.dashboard"
+                   [link]="['./']"
+                   [icon]="localUi.icons.dashboard"></jnt-menu-item>
+    <jnt-menu-item title="Issues"
+                   i18n-title="@@action.issues"
+                   [link]="['issues']"
+                   [icon]="localUi.icons.issue"></jnt-menu-item>
+    <jnt-menu-item title="Merge requests"
+                   i18n-title="@@action.merge_requests"
+                   [link]="['merge-requests']"
+                   [icon]="localUi.icons.mergeRequest"></jnt-menu-item>
+    <jnt-menu-item title="Time expenses"
+                   i18n-title="@@action.time_expenses"
+                   [link]="['time-expenses']"
+                   [icon]="localUi.icons.spentTime"></jnt-menu-item>
+    <jnt-menu-item title="Bonuses"
+                   i18n-title="@@action.bonuses"
+                   [link]="['bonuses']"
+                   [matching]="ui.matching.wildcard"
+                   [icon]="localUi.icons.bonus"></jnt-menu-item>
+    <jnt-menu-item title="Penalties"
+                   i18n-title="@@action.penalties"
+                   [link]="['penalties']"
+                   [matching]="ui.matching.wildcard"
+                   [icon]="localUi.icons.penalty"></jnt-menu-item>
+    <jnt-menu-item title="Salaries"
+                   i18n-title="@@action.salaries"
+                   [link]="['salaries']"
+                   [matching]="ui.matching.wildcard"
+                   [icon]="localUi.icons.salary"></jnt-menu-item>
+    <jnt-menu-item [link]="['breaks']"
+                   [matching]="ui.matching.wildcard"
+                   [icon]="localUi.icons.workBreak"
+                   title="Work breaks"
+                   i18n-title="@@action.work_breaks"></jnt-menu-item>
+  </jnt-menu>
 </jnt-app-aside>
 <jnt-app-content [aside]="aside">
-  <jnt-app-sub-header (burger)="aside.toggle()">
-    <jnt-breadcrumb></jnt-breadcrumb>
-  </jnt-app-sub-header>
+  <jnt-breadcrumb [aside]="aside"></jnt-breadcrumb>
   <jnt-app-body>
     <jnt-container [width]="ui.width.fluid">
       <router-outlet></router-outlet>
     </jnt-container>
   </jnt-app-body>
+  <app-footer></app-footer>
 </jnt-app-content>

@@ -1,52 +1,31 @@
-@import 'variables';
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/layout/card";
 
 :host {
   display: block;
 }
 
-[manage] {
-  margin-bottom: $gutter-normal;
+@include jnt-card((
+  shadow: $jnt-shadow-normal,
+  title: (
+    text-align: center,
+    font-weight: $jnt-font-weight-semi-bold,
+    color: $jnt-primary-color,
+    font-size: $jnt-font-size-base
+  )), null, true);
+
+[footer] {
+  padding-top: $jnt-gutter-normal;
+  border-top: 1px solid $jnt-muted-color;
+  font-size: 12px;
 }
 
-:host-context([theme="dark"]) {
-  [team] [block] [footer] {
-    color: $gray-200-color;
-    background-color: $gray-800-color;
-  }
-}
-
-[team] {
-  margin-bottom: $gutter-normal;
-  text-decoration: none;
-  [block] {
-    height: 100%;
-    max-width: 170px;
-    width: 170px;
-    text-align: center;
-    [avatars] {
-      margin: $gutter-big $gutter-normal;
-    }
-    [footer] {
-      padding: $gutter-normal $gutter-small;
-      background-color: $secondary-background;
-      color: $primary-text-color;
-      border-bottom-left-radius: $corner-normal;
-      border-bottom-right-radius: $corner-normal;
-      font-size: 12px;
-      font-weight: $font-weight-light;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex: 1;
-      span {
-        font-weight: $font-weight-bold;
-      }
-    }
-  }
+[avatars] {
+  margin: $jnt-gutter-big auto $jnt-gutter-small auto;
 }
 
 [problems] {
   position: absolute;
-  top: -$gutter-small;
-  right: -$gutter-small;
+  top: -$jnt-gutter-small;
+  right: -$jnt-gutter-small;
 }

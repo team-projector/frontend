@@ -1,0 +1,24 @@
+<jnt-stack [orientation]="ui.orientation.horizontal"
+           [gutter]="ui.gutter.small">
+  <jnt-avatar *ngIf="!!issue.user" [text]="issue.user.name" [image]="issue.user.avatar"
+              [size]="ui.size.tiny"></jnt-avatar>
+  <jnt-stack [gutter]="ui.gutter.none">
+    <jnt-stack [orientation]="ui.orientation.horizontal"
+               [gutter]="ui.gutter.small"
+               [justify]="ui.justify.start"
+               [wrap]="ui.wrap.wrap">
+      <jnt-link [attr.data-closed]="issue.state == issueState.closed"
+                [source]="issue.glUrl" target="_blank"
+                [attr.closed]="issue.state == issueState.closed"
+                [title]="issue.title">
+      </jnt-link>
+      <jnt-label *ngFor="let l of (issue.labels | labels)"
+                 [size]="ui.size.small"
+                 [color]="l.color" [label]="l.title"></jnt-label>
+      <small *ngIf="issue.state == issueState.closed && !!issue.closedAt">
+        {{issue.closedAt | dfnsFormatDistanceToNow}}
+      </small>
+    </jnt-stack>
+    <small>{{issue.project?.group?.title}} / {{issue.project?.title}}</small>
+  </jnt-stack>
+</jnt-stack>

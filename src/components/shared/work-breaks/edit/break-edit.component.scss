@@ -1,0 +1,8 @@
+@import "~@junte/ui/lib/assets/styles/layout/responsive";
+
+:host {
+  display: block;
+  @include min-for-desktop() {
+    min-width: 400px;
+  }
+}

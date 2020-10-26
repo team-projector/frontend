@@ -1,0 +1,10 @@
+<jnt-app-page-header [icon]="localUi.icons.bonus"
+                     title="Bonuses"
+                     teaser="for your team"></jnt-app-page-header>
+
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <app-bonuses [view]="viewType.leader"
+               [state]="state"
+               (filtered)="save($event)"></app-bonuses>
+</jnt-block>

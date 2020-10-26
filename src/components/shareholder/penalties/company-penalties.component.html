@@ -1,0 +1,18 @@
+<jnt-app-page-header [icon]="localUi.icons.penalty"
+                     title="Penalties"></jnt-app-page-header>
+
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <app-penalties [view]="viewType.shareholder"
+                 [state]="state"
+                 (filtered)="save($event)">
+    <ng-template #actionsTemplate>
+      <jnt-link [icon]="ui.icons.settings"
+                source="/admin/payroll/penalty/"
+                target="_blank"
+                title="Manage"
+                i18n-title="@@action.manage"></jnt-link>
+    </ng-template>
+  </app-penalties>
+</jnt-block>
+

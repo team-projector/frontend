@@ -3,3 +3,10 @@ export enum MergeRequestState {
   merged = 'MERGED',
   closed = 'CLOSED'
 }
+
+export enum MergeRequestType {
+  all = 'all',
+  closed = 'closed',
+  opened = 'opened',
+  merged = 'merged'
+}

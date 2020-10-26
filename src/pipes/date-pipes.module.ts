@@ -1,29 +1,22 @@
 import { NgModule } from '@angular/core';
-import { DurationPipe, EndOfDayPipe, FormatPipe, FromNowPipe, GetDatePipe, IsFuturePipe, IsPastPipe, IsTodayPipe, PeriodPipe } from './date';
+import { DurationPipe, IsFuturePipe, IsPastPipe, IsTodayPipe, PeriodPipe } from './date';
 
 @NgModule({
   declarations: [
     DurationPipe,
     PeriodPipe,
     IsPastPipe,
-    EndOfDayPipe,
-    GetDatePipe,
     IsFuturePipe,
-    IsTodayPipe,
-    FormatPipe,
-    FromNowPipe
+    IsTodayPipe
   ],
   exports: [
     DurationPipe,
     PeriodPipe,
     IsPastPipe,
-    EndOfDayPipe,
-    GetDatePipe,
     IsFuturePipe,
-    IsTodayPipe,
-    FormatPipe,
-    FromNowPipe
+    IsTodayPipe
   ]
 })
 export class DatePipesModule {
+
 }

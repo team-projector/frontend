@@ -8,7 +8,7 @@ import { Team } from '../models/team';
 import { getMock } from '../utils/mocks';
 import { TeamGQL } from './team.graphql';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class TeamResolver implements Resolve<Observable<Team>> {
 
   constructor(private teamGQL: TeamGQL) {

@@ -1,5 +1,13 @@
-@import "../node_modules/junte-ui/lib/assets/styles/common";
-@import "../node_modules/junte-ui/lib/assets/styles/components";
+@import "~@junte/ui/lib/assets/styles/jnt-common";
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Open Sans';
+}
 
 fieldset {
   width: 100%;
@@ -21,4 +29,3 @@ fieldset {
     }
   }
 }
-

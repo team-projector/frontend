@@ -1,7 +1,0 @@
-{{dueDate | dueDate }}
-<div week>
-  <div weekday *ngFor="let day of 7 | mockArray"
-       [style.background-color]="(getDay(dueDate) === day + 1) ? ui.colors.purple
-        : (isThisWeek(dueDate) && getDay(today) === day + 1 ? ui.colors.green : ui.colors.gray)">
-  </div>
-</div>

@@ -1,20 +1,39 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Themes, UI, validate } from 'junte-ui';
+import { UI } from '@junte/ui';
 import 'reflect-metadata';
 import { of } from 'rxjs';
 import { delay, filter, finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { AppConfig } from 'src/app-config';
-import { APPLICATION_READY, MOCKS_DELAY } from 'src/consts';
+import { APPLICATION_READY, BACKEND, MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { AccessToken } from 'src/models/access-token';
 import { UserRole } from 'src/models/enums/user';
 import { GqlError } from 'src/models/gql-errors';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
+import { LocalUI } from '../../../enums/local-ui';
 import { GitlabLoginGQL, LoginGQL } from './login.graphql';
+
+enum SystemMode {
+  mocks = 'mocks',
+  demo = 'demo',
+  prod = 'prod'
+}
+
+const DEMO_USERS = {
+  [UserRole.developer]: {login: 'tp.developer', password: 'LKnLPUJyGPKXAag4'},
+  [UserRole.leader]: {login: 'tp.leader', password: 'LKnLPUJyGPKXAag4'},
+  [UserRole.manager]: {login: 'tp.manager', password: 'LKnLPUJyGPKXAag4'},
+  [UserRole.shareholder]: {login: 'shareholder', password: 'LKnLPUJyGPKXAag4'}
+};
+
+enum Themes {
+  light = 'light',
+  dark = 'dark'
+}
 
 @Component({
   selector: 'app-login',
@@ -25,13 +44,16 @@ export class LoginComponent implements OnInit {
 
   ui = UI;
   userRole = UserRole;
-  mocks = environment.mocks;
+  localUi = LocalUI;
+  systemMode = SystemMode;
+  backend = BACKEND;
 
+  mode = environment.mocks ? SystemMode.mocks : (BACKEND.config.demoMode ? SystemMode.demo : SystemMode.prod);
   theme = !!localStorage.theme ? Themes[localStorage.theme] : Themes.light;
 
   progress = {gitlab: false, login: false};
   errors: GqlError[] = [];
-  loginForm = this.builder.group({
+  form = this.builder.group({
     login: [null, [Validators.required]],
     password: [null, [Validators.required]]
   });
@@ -63,23 +85,26 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    if (validate(this.loginForm)) {
-      this.progress.login = true;
-      (environment.mocks ? of(getMock(AccessToken)).pipe(delay(MOCKS_DELAY))
-        : this.loginGQL.mutate(this.loginForm.value)
-          .pipe(catchGQLErrors(),
-            map(({data: {login: {token}}}) =>
-              deserialize(token, AccessToken))))
-        .pipe(finalize(() => this.progress.login = false))
-        .subscribe((token: AccessToken) => this.logged(token),
-          (err: GqlError[]) => this.errors = err);
-    }
+    this.progress.login = true;
+    (environment.mocks ? of(getMock(AccessToken)).pipe(delay(MOCKS_DELAY))
+      : this.loginGQL.mutate(this.form.value)
+        .pipe(catchGQLErrors(),
+          map(({data: {login: {token}}}) =>
+            deserialize(token, AccessToken))))
+      .pipe(delay(UI_DELAY), finalize(() => this.progress.login = false))
+      .subscribe((token: AccessToken) => this.logged(token),
+        (err: GqlError[]) => this.errors = err);
   }
 
   private logged(token: AccessToken) {
     this.config.token = token;
     this.router.navigate(['/'])
       .then(() => null);
+  }
+
+  demo(role: UserRole) {
+    this.form.patchValue(DEMO_USERS[role]);
+    this.login();
   }
 
   god(role: UserRole) {

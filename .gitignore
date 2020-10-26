@@ -48,3 +48,6 @@ Thumbs.db
 /src/mocks/objects/*.json
 /src/assets/mocks
 /src/assets/themes/*.css
+
+/src/locale/messages.xlf
+/src/assets/fonts/icons/

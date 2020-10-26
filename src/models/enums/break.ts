@@ -1,6 +1,6 @@
 export enum ApproveStates {
   created = 'CREATED',
-  decline = 'DECLINED',
+  declined = 'DECLINED',
   approved = 'APPROVED'
 }
 

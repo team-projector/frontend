@@ -1,0 +1,86 @@
+<jnt-form [formGroup]="form">
+  <jnt-table #table formControlName="table">
+
+    <jnt-table-column title="Created"
+                      i18n-title="@@label.charged_time">
+      <ng-template #tableCellTemplate let-id="id" let-createdAt="createdAt">
+        <jnt-link [source]="[id]"
+                  [title]="createdAt | dfnsFormat: 'PPp'"></jnt-link>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column *ngIf="view === viewType.leader || view === viewType.shareholder"
+                      title="Developer"
+                      i18n-title="@@label.user">
+      <ng-template #tableCellTemplate
+                   let-user="user">
+        <app-user [user]="user"></app-user>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Charged Time"
+                      i18n-title="@@label.charged_time"
+                      [align]="ui.text.align.center">
+      <ng-template #tableCellTemplate let-id="id" let-chargedTime="chargedTime">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end">
+          <jnt-label [label]="chargedTime | duration"
+                     [color]="ui.color.paleNavy"></jnt-label>
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Period"
+                      i18n-title="@@label.period"
+                      [align]="ui.text.align.center">
+      <ng-template #tableCellTemplate let-periodTo="periodTo"
+                   let-periodFrom="periodFrom">
+        <jnt-date-period [start]="periodFrom" [end]="periodTo"></jnt-date-period>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Bonus"
+                      i18n-title="@@label.bonus"
+                      [align]="ui.text.align.center">
+      <ng-template #tableCellTemplate let-bonus="bonus">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end">
+          {{bonus | money}}
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Penalty"
+                      i18n-title="@@label.penalty"
+                      [align]="ui.text.align.center">
+      <ng-template #tableCellTemplate let-penalty="penalty">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end">
+          {{penalty | money}}
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Total"
+                      i18n-title="@@label.total"
+                      [align]="ui.text.align.center">
+      <ng-template #tableCellTemplate let-total="total">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end">
+          {{total | money}}
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Payed"
+                      i18n-title="@@label.payed"
+                      [align]="ui.text.align.center">
+      <ng-template #tableCellTemplate let-payed="payed">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.center">
+          <jnt-icon *ngIf="payed" [icon]="ui.icons.checked"></jnt-icon>
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+  </jnt-table>
+</jnt-form>

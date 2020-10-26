@@ -1,6 +1,6 @@
-import * as faker from 'faker';
+import { LazyModel } from '../serializers/model';
+import { faker } from '../utils/mocks';
 import { ArraySerializer } from 'serialize-ts';
-import { DEFAULT_PAGE_SIZE } from 'src/consts';
 import { TimeExpenseState } from 'src/models/enums/time-expenses';
 import { mocks, SECONDS_IN_HOUR } from 'src/utils/mocks';
 import { DATE_FORMAT } from '../consts';
@@ -8,9 +8,11 @@ import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
 import { OwnerSerializer } from '../serializers/owner';
+import { ModelRef } from '../utils/types';
 import { Issue } from './issue';
 import { MergeRequest } from './merge-request';
 import { Paging } from './paging';
+import { Salary } from './salary';
 
 @model()
 export class SpentTime {
@@ -38,6 +40,9 @@ export class SpentTime {
 
   @field({mock: () => mocks.money(10, 100)})
   sum: number;
+
+  @field({serializer: new LazyModel(() => Salary)})
+  salary: ModelRef<Salary>;
 }
 
 @model()
@@ -89,33 +94,35 @@ export class TimeExpensesSummary {
 export class TimeExpensesFilter {
 
   @field()
-  team?: number;
+  team: string;
 
   @field()
-  user?: number;
+  user: string;
 
   @field()
-  project?: number;
+  project: string;
 
   @field()
-  salary?: number;
+  salary: string;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
-  date?: Date;
+  date: Date;
 
-  orderBy?: string;
-
-  @field()
-  first?: number;
+  orderBy: string;
 
   @field()
-  offset?: number;
+  first: number;
 
   @field()
-  state?: TimeExpenseState | null;
+  offset: number;
 
-  constructor(defs: TimeExpensesFilter = null) {
-    Object.assign(this, defs || {offset: 0, first: DEFAULT_PAGE_SIZE});
+  @field()
+  state: TimeExpenseState | null;
+
+  constructor(defs: Partial<TimeExpensesFilter> = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
   }
 
 }

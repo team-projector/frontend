@@ -1,4 +1,3 @@
-import * as faker from 'faker';
 import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
 import { TeamMemberRole } from 'src/models/enums/team';
 import { IssuesMetrics } from 'src/models/metrics';
@@ -7,6 +6,7 @@ import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { faker } from '../utils/mocks';
 import { Metrics } from './enums/metrics';
 import { Paging } from './paging';
 import { User, UserProgressMetrics } from './user';
@@ -95,6 +95,20 @@ export class PagingTeamMembers implements Paging<TeamMember> {
     mock: {type: TeamMember, length: 5}
   })
   results: TeamMember[];
+}
+
+@model()
+export class TeamMembersFilter {
+
+  @field()
+  team: string;
+
+  constructor(defs: Partial<TeamMembersFilter> = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+
 }
 
 @model()

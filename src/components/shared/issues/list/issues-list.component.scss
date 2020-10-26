@@ -1,0 +1,61 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/forms/date-picker";
+@import "~@junte/ui/lib/assets/styles/elements/icon";
+
+:host {
+  display: block;
+}
+
+[data-group] {
+  color: $jnt-muted-color;
+}
+
+[data-due-date] {
+  @include jnt-date-picker((width: 150px), '&', true);
+}
+
+[data-doing], [data-done] {
+  @include jnt-icon((size: 20px, color: $jnt-green-color), '&', true);
+}
+
+[data-delayed] {
+  @include jnt-icon((size: 20px, color: $jnt-orange-color), '&', true);
+}
+
+[data-bug] {
+  color: $jnt-fail-color;
+}
+
+[progress] {
+  min-width: 100px;
+}
+
+[efficiency] {
+  margin-top: $jnt-gutter-tiny;
+  text-align: center;
+  font-size: .85em;
+
+  [slow='true'] {
+    color: $jnt-fail-color;
+  }
+}
+
+[metric] {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: .85em;
+
+  &:first-of-type {
+    flex: 1;
+    text-align: left;
+  }
+
+  &[estimate] {
+    color: $jnt-primary-text-light-color;
+  }
+
+  [collaboration] {
+    color: $jnt-fail-color;
+  }
+}

@@ -1,0 +1,133 @@
+<jnt-app-page-header [icon]="localUi.icons.salary"
+                     title="Salary details"
+                     [teaser]="salary.createdAt | dfnsFormat: 'PPp'"></jnt-app-page-header>
+
+<jnt-row>
+  <jnt-col [desktop]="4" [mobile]="12">
+    <jnt-block title="Summary"
+               i18n-title="@@label.salary_summary"
+               [width]="ui.width.fluid"
+               [padding]="ui.gutter.none">
+      <jnt-stack [align]="ui.align.stretch">
+        <jnt-stack data-user [gutter]="ui.gutter.small">
+          <jnt-stack [orientation]="ui.orientation.horizontal"
+                     [align]="ui.align.center">
+            <jnt-avatar [size]="ui.size.small"
+                        [image]="salary.user.avatar"></jnt-avatar>
+            <jnt-stack [gutter]="ui.gutter.tiny">
+              <span data-position *ngIf="!!salary.user.position">{{salary.user.position.title}}</span>
+              <jnt-label i18n-label="@@label.hour"
+                         [label]="(salary.hourRate | money) + ' / ' + 'hour'"
+                         [color]="ui.color.gray100">
+              </jnt-label>
+            </jnt-stack>
+
+          </jnt-stack>
+        </jnt-stack>
+
+        <jnt-stack data-salary
+                   [gutter]="ui.gutter.tiny"
+                   [align]="ui.align.stretch">
+
+          <jnt-stack [gutter]="ui.gutter.none" [align]="ui.align.stretch">
+            <jnt-date-period [start]="salary.periodFrom" [end]="salary.periodTo"></jnt-date-period>
+
+            <jnt-stack data-line data-success
+                       [orientation]="ui.orientation.horizontal"
+                       [justify]="ui.justify.between"
+                       [align]="ui.align.center">
+              <jnt-stack [orientation]="ui.orientation.horizontal">
+                <div data-title>Closed</div>
+                <jnt-stack data-time [orientation]="ui.orientation.horizontal"
+                           [gutter]="ui.gutter.small"
+                           [align]="ui.align.center">
+
+                  <jnt-icon *ngIf="salary.chargedTime > 0"
+                            [icon]="ui.icons.time"></jnt-icon>
+                  <span>{{salary.chargedTime | duration}}</span>
+                </jnt-stack>
+              </jnt-stack>
+              <span>
+              <span *ngIf="salary.sum + salary.taxes > 0">+</span>
+                {{(salary.sum + salary.taxes)
+                | currency:undefined:'symbol':'1.0-0'}}
+          </span>
+            </jnt-stack>
+
+            <jnt-stack data-line data-success
+                       [orientation]="ui.orientation.horizontal"
+                       [justify]="ui.justify.between"
+                       [align]="ui.align.center">
+              <div data-title>Bonuses</div>
+              <span><span *ngIf="salary.bonus > 0">+</span>{{salary.bonus | money}}</span>
+            </jnt-stack>
+
+            <jnt-stack data-line data-fail [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between"
+                       [align]="ui.align.center">
+              <div data-title>Penalties</div>
+              <span><span
+                *ngIf="salary.penalty > 0">-</span>{{salary.penalty | money}}</span>
+            </jnt-stack>
+
+            <jnt-stack data-line data-fail [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between"
+                       [align]="ui.align.center">
+              <div data-title>Taxes</div>
+              <span><span
+                *ngIf="salary.taxes > 0">-</span>{{salary.taxes | money}}</span>
+            </jnt-stack>
+
+            <hr>
+          </jnt-stack>
+
+          <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.end">
+            <span data-label>You've earned:</span>
+
+            <jnt-stack [orientation]="ui.orientation.horizontal"
+                       [justify]="ui.justify.end"
+                       [align]="ui.align.center">
+              <jnt-icon data-money [icon]="localUi.icons.money"></jnt-icon>
+              <span data-digit>
+            {{salary.sum + salary.bonus - salary.penalty | money}}
+          </span>
+            </jnt-stack>
+          </jnt-stack>
+
+        </jnt-stack>
+      </jnt-stack>
+    </jnt-block>
+  </jnt-col>
+
+  <jnt-col [desktop]="8" [mobile]="12">
+    <jnt-block data-tabs [padding]="ui.gutter.none"
+               [width]="ui.width.fluid">
+      <jnt-menu data-nav [style]="ui.menu.style.tabs"
+                [spacing]="ui.gutter.normal">
+        <jnt-menu-item [link]="['.']"
+                       title="Time Expenses"
+                       i18n-title="@@action.time_expenses">
+          <jnt-badge *ngIf="salary.chargedTime > 0"
+                     [text]="salary.chargedTime | duration">
+          </jnt-badge>
+        </jnt-menu-item>
+        <jnt-menu-item [link]="['bonuses']"
+                       title="Bonuses"
+                       i18n-title="@@action.bonuses">
+          <jnt-badge *ngIf="salary.bonus > 0"
+                     [color]="ui.color.green"
+                     [text]="salary.bonus | money">
+          </jnt-badge>
+        </jnt-menu-item>
+        <jnt-menu-item [link]="['penalties']"
+                       title="Penalties"
+                       i18n-title="@@action.penalties">
+          <jnt-badge *ngIf="salary.penalty > 0"
+                     [color]="ui.color.red"
+                     [text]="salary.penalty | money">
+          </jnt-badge>
+        </jnt-menu-item>
+      </jnt-menu>
+      <router-outlet></router-outlet>
+    </jnt-block>
+  </jnt-col>
+</jnt-row>
+

@@ -1,0 +1,9 @@
+<jnt-app-page-header [icon]="localUi.icons.mergeRequest"
+                     title="Merge Requests"
+                     teaser="assigned to you for code review"></jnt-app-page-header>
+
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <app-merge-requests [state]="state"
+                      (filtered)="save($event)"></app-merge-requests>
+</jnt-block>

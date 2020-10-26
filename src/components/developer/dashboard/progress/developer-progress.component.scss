@@ -1,0 +1,54 @@
+@import '~@junte/ui/lib/assets/styles/layout/responsive';
+
+:host {
+  display: block;
+}
+
+[data-title] {
+  color: $jnt-primary-color;
+  font-weight: bold;
+  text-align: center;
+  flex: 1;
+}
+
+[data-day] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+  height: 45px;
+  width: 45px;
+  border: 2px solid transparent;
+
+  &[today='true'] {
+    border-radius: $jnt-corner-normal;
+    border: 2px solid $jnt-warning-color;
+  }
+
+  [issues] {
+    position: absolute;
+    top: 2px;
+    right: 3px;
+    background-color: blue;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    z-index: 1;
+  }
+
+  [metric] {
+    position: relative;
+    display: inline-block;
+
+    [circle] {
+      width: 40px;
+      height: 40px;
+
+      &[time] {
+        color: $jnt-primary-text-light-color
+      }
+    }
+  }
+}
+

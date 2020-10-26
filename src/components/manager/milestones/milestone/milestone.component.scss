@@ -1,16 +1,17 @@
-@import "variables";
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/navigation/link";
+@import "~@junte/ui/lib/assets/styles/collections/gantt";
 
-[title] {
-  flex: 1;
-  text-align: center;
+[data-tickets] {
+  @include jnt-gantt((title:(width: 50%), period: (width:50%)), '&', true);
 }
 
 [period] {
   position: relative;
-  margin: $gutter-tiny;
-  border-radius: $corner-large;
-  background-color: $gray-600-color;
-  color: $white-color;
+  margin: $jnt-gutter-tiny;
+  border-radius: $jnt-corner-large;
+  background-color: $jnt-gray-600-color;
+  color: $jnt-white-color;
   height: 40px;
   pointer-events: none;
   overflow: hidden;
@@ -26,12 +27,12 @@
   }
 
   &[over-due='true'] {
-    border-right: 10px solid $fail-color;
+    border-right: 10px solid $jnt-fail-color;
   }
 
   [label] {
     position: absolute;
-    font-size: $font-size-small;
+    font-size: $jnt-font-size-small;
     white-space: nowrap;
     top: 0;
     right: 0;
@@ -44,17 +45,17 @@
   }
 
   [progress] {
-    background-color: $success-color;
+    background-color: $jnt-success-color;
     transform: translateX(-50%);
     height: 100%;
   }
 }
 
 [issue] {
-  margin-left: $gutter-tiny;
+  margin-left: $jnt-gutter-tiny;
 
   [state] {
-    color: $success-color;
+    color: $jnt-success-color;
 
     &[doing] {
       min-width: 18px;
@@ -62,14 +63,14 @@
       min-height: 18px;
       height: 18px;
       border-radius: 50%;
-      fill: $success-color;
+      fill: $jnt-success-color;
       padding: 1px;
-      border: 1px solid $success-color;
+      border: 1px solid $jnt-success-color;
     }
   }
 
-  [closed='true'] ::ng-deep a[child-of=#{$jnt-link-host}] {
-    text-decoration: line-through;
+  [closed='true'] {
+    @include jnt-link((text-decoration: line-through), '&', true);
   }
 
 }
@@ -77,19 +78,21 @@
 .cdk- {
   &drag- {
     &preview {
-      border-radius: $corner-normal;
-      box-shadow: $shadow-normal;
-      padding: $gutter-normal;
-      background-color: $primary-background;
+      border-radius: $jnt-corner-normal;
+      box-shadow: $jnt-shadow-normal;
+      padding: $jnt-gutter-tiny;
+      background-color: $jnt-primary-background;
     }
+
     &placeholder {
       display: none;
     }
   }
+
   &drop- {
     &list-dragging {
       display: flex;
-      outline: 1px solid $secondary-color;
+      outline: 1px solid $jnt-secondary-color;
     }
   }
 }

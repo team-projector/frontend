@@ -1,0 +1,14 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+
+:host {
+  display: block;
+  line-height: 1.2em;
+}
+
+[data-role]:not(:first-child):before {
+ content: ', ';
+}
+
+small {
+  color: $jnt-primary-text-light-color;
+}

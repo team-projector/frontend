@@ -8,7 +8,7 @@ import { getMock } from 'src/utils/mocks';
 import { User } from '../models/user';
 import { UserGQL } from './user.graphql';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class UserResolver implements Resolve<Observable<User>> {
 
   constructor(private userGQL: UserGQL) {
@@ -16,9 +16,9 @@ export class UserResolver implements Resolve<Observable<User>> {
 
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<User> {
-    const id = route.params['user'];
+    const id = route.params['developer'];
     const action = environment.mocks
-      ? of(getMock(User))
+      ? of(getMock(User, {id: id}))
       : this.userGQL.fetch({user: id})
       .pipe(map(({data: {user}}) => deserialize(user, User)));
 

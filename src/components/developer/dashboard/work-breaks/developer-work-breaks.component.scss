@@ -1,0 +1,51 @@
+@import '~@junte/ui/lib/assets/styles/jnt-variables';
+@import '~@junte/ui/lib/assets/styles/dynamic/circle-bar';
+
+:host-context([theme='dark']) {
+  [data-vacations] [data-circle] [data-days] {
+    background-color: $jnt-gray-dark-color;
+
+    [data-label] {
+      color: $jnt-gray-600-color;
+    }
+  }
+}
+
+[data-vacations] {
+  padding-bottom: $jnt-gutter-normal;
+
+  p {
+    color: $jnt-primary-text-light-color;
+    span {
+      font-weight: $jnt-font-weight-semi-bold;
+      color: $jnt-primary-color;
+    }
+  }
+
+  [data-circle] {
+    @include jnt-circle-bar((width: 100px, height: 100px), '&', true);
+    @include jnt-circle-bar-indicator((fill: $jnt-secondary-dark-color), null, true);
+
+    [data-days] {
+      width: 80%;
+      height: 80%;
+      background-color: $jnt-primary-background;
+      position: relative;
+      border-radius: 50%;
+      font-weight: $jnt-font-weight-bold;
+      font-size: 20px;
+      line-height: 1.2;
+      color: $jnt-secondary-dark-color;
+
+      [data-paid] {
+        color: $jnt-primary-color;
+      }
+
+      [data-label] {
+        font-size: $jnt-font-size-base;
+        font-weight: $jnt-font-weight-base;
+        color: $jnt-primary-color;
+      }
+    }
+  }
+}

@@ -1,0 +1,236 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+
+:host {
+  display: block;
+}
+
+:host-context([theme='dark']) {
+  table {
+    background-color: #1A1A1A;
+    box-shadow: 0 2px 8px rgba(255, 255, 255, 0.25);
+
+    thead {
+      tr {
+        &[data-rewind] {
+          th {
+            [date] {
+              color: $jnt-gray-100-color;
+            }
+          }
+        }
+
+        &[data-week] {
+          background-color: $jnt-gray-800-color;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        td {
+          &[data-day] {
+            &:hover {
+              background-color: $jnt-gray-700-color;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+table {
+  width: 100%;
+  table-layout: auto;
+  border: 0;
+  border-spacing: 0;
+  background-color: $jnt-white-color;
+  border-radius: $jnt-corner-normal;
+  box-shadow: $jnt-shadow-normal;
+  font-size: $jnt-font-size-small;
+
+  td, th {
+    text-align: center;
+    vertical-align: middle;
+    line-height: 1;
+    box-sizing: border-box;
+  }
+
+  th:not([data-gutter]), td:not([data-gutter]) {
+    min-width: 48px;
+  }
+
+  td {
+    min-height: 62px;
+  }
+
+  th:nth-child(2),
+  tbody tr td:nth-child(2) {
+    padding: $jnt-gutter-tiny 0;
+    min-width: 120px;
+  }
+
+  tr[data-week] {
+    th:nth-child(2),
+    th:nth-child(9) {
+      border-right: 1px solid $jnt-muted-color;
+    }
+  }
+
+  thead {
+    tr {
+      [data-tools] {
+        padding: $jnt-gutter-normal $jnt-gutter-normal 0 $jnt-gutter-normal;
+      }
+      &[data-rewind] {
+        th {
+          [data-date] {
+            display: flex;
+            color: $jnt-primary-text-dark-color;
+            font-weight: $jnt-font-weight-bold;
+
+            span {
+              margin: auto;
+            }
+          }
+        }
+      }
+
+      &[data-week] {
+        background-color: $jnt-secondary-background;
+
+        th {
+          &[data-day] {
+            cursor: pointer;
+            user-select: none;
+
+            &:hover
+            &[today='true'] {
+              background-color: $jnt-success-color;
+              color: $jnt-white-color;
+            }
+          }
+
+          &[data-metric-name] {
+            color: $jnt-primary-dark-color;
+          }
+        }
+      }
+
+      th {
+        padding: $jnt-gutter-normal $jnt-gutter-tiny;
+
+        &[data-gutter] {
+          width: $jnt-gutter-tiny;
+        }
+      }
+    }
+  }
+
+  tbody {
+    tr {
+      td[data-spent] {
+        min-width: 76px;
+        width: 76px;
+      }
+      &:not(:first-child),
+      &:not(:nth-child(2)) {
+        td {
+          height: 61px;
+        }
+      }
+
+      td {
+        border-top: 1px solid $jnt-muted-color;
+
+        [data-developer] {
+          min-width: 120px;
+        }
+      }
+
+      &[data-nodata] {
+        height: 300px;
+        pointer-events: none;
+        border-bottom: 0;
+
+        td {
+          vertical-align: middle;
+          text-align: center;
+          font-size: 80px;
+          color: $jnt-muted-color;
+        }
+      }
+
+      &[data-loading] {
+        td {
+          padding: $jnt-gutter-normal;
+        }
+      }
+
+      td {
+        padding: $jnt-gutter-tiny;
+
+        &[slow='true'] span {
+          border-bottom: 2px solid $jnt-fail-color;
+        }
+
+        &[data-day] {
+          cursor: pointer;
+          width: 50px;
+
+          &:hover {
+            background-color: $jnt-secondary-dark-color;
+          }
+
+          [data-metric] {
+            position: relative;
+            display: inline-block;
+
+            [data-issues] {
+              position: absolute;
+              top: 2px;
+              right: 2px;
+              background-color: blue;
+              width: 5px;
+              height: 5px;
+              border-radius: 50%;
+              z-index: 1;
+            }
+
+            [data-circle] {
+              width: 35px;
+              height: 35px;
+            }
+          }
+        }
+
+        [data-developer] {
+          cursor: pointer;
+          padding: $jnt-gutter-small;
+
+          &:focus {
+            outline: 0;
+            border-radius: $jnt-corner-small;
+            box-shadow: $jnt-outline-shadow-small $jnt-secondary-dark-color;
+          }
+        }
+      }
+
+      &[active='true'] {
+        td {
+          background-color: $jnt-secondary-background;
+        }
+
+        &:last-child {
+          td:first-child {
+            border-bottom-left-radius: $jnt-corner-normal;
+          }
+
+          td:last-child {
+            border-bottom-right-radius: $jnt-corner-normal;
+          }
+        }
+      }
+    }
+  }
+}

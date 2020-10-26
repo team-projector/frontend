@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { parse } from 'date-fns';
+import { parseISO } from 'date-fns';
 import { IssuesType } from 'src/models/enums/issue';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class DueDateResolver implements Resolve<Date> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Date {
-    const dueDate = route.params['dueDate'];
-    return !!dueDate ? parse(dueDate) : null;
+    const date = route.params['dueDate'] || route.params['date'];
+    return !!date ? parseISO(date) : null;
   }
 }
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class IssuesTypeResolver implements Resolve<IssuesType> {
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): IssuesType {

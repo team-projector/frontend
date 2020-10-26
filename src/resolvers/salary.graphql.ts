@@ -5,11 +5,22 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class SalaryGQL extends Query<{salary}> {
+export class SalaryGQL extends Query<{ salary }> {
   document = gql`
-    query ($salary: ID!){
-      salary (id: $salary) {
+query($salary: ID!) {
+    salary(id: $salary) {
         id
+        hourRate
+        taxRate
+        position {
+            title
+        }
+        user {
+            glAvatar
+            position {
+                title
+            }
+        }
         createdAt
         periodFrom
         periodTo
@@ -20,6 +31,6 @@ export class SalaryGQL extends Query<{salary}> {
         sum
         total
         payed
-      }
-    }`;
+    }
+}`;
 }

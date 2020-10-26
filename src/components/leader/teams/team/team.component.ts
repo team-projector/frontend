@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { UI } from 'junte-ui';
+import { UI } from '@junte/ui';
+import { LocalUI } from '../../../../enums/local-ui';
 
 @Component({
   selector: 'app-leader-team',
@@ -9,5 +10,6 @@ import { UI } from 'junte-ui';
 export class TeamComponent {
 
   ui = UI;
+  localUi = LocalUI;
 
 }

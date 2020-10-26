@@ -1,0 +1,68 @@
+import { Injectable } from '@angular/core';
+import { Query } from 'apollo-angular';
+import gql from 'graphql-tag';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TeamMembersGQL extends Query<{ team: { members } }> {
+  document = gql`
+query ($team: ID!) {
+  team(id: $team) {
+    members(roles: "DEVELOPER", orderBy: "user__name") {
+      count
+      edges {
+        node {
+          roles
+          user {
+            id
+            glAvatar
+            name
+            problems
+            metrics {
+              issues {
+                closedSpent
+                openedSpent
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class TeamMetricsGQL extends Query<{ metrics }> {
+  document = gql`
+query($team: ID!, $start: Date!, $end: Date!, $group: String!) {
+    metrics: teamProgressMetrics(
+        team: $team
+        start: $start
+        end: $end
+        group: $group
+    ) {
+        user {
+            id
+            name
+        }
+        metrics {
+            start
+            end
+            timeEstimate
+            timeSpent
+            timeRemains
+            plannedWorkHours
+            loading
+            payroll
+            paid
+            issuesCount
+            efficiency
+        }
+    }
+}`;
+}
+

@@ -1,4 +1,5 @@
-@import 'variables';
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/forms/button";
 
 :host {
   display: flex;
@@ -21,34 +22,30 @@
 
 [admin] {
   position: absolute;
-  top: $gutter-normal;
-  right: $gutter-normal;
+  top: $jnt-gutter-normal;
+  right: $jnt-gutter-normal;
 }
 
-[form] {
+[data-logo] {
+  text-align: center;
+  padding-bottom: $jnt-gutter-big;
+}
+
+[data-form] {
   width: 350px;
 
   a {
     display: block;
     text-align: center;
-    margin-top: $gutter-big;
+    margin-top: $jnt-gutter-big;
   }
 
-  [logo] {
-    text-align: center;
-    padding-bottom: $gutter-big;
-  }
   [fields] {
-    margin-top: $gutter-normal;
+    margin-top: $jnt-gutter-normal;
   }
   button {
     display: block;
     margin: 20px 0;
     width: 100%;
   }
-}
-
-[god] ::ng-deep [host=#{$jnt-button-host}] button {
-  padding-left: $gutter-normal !important;
-  padding-right: $gutter-normal !important;
 }
