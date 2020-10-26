@@ -237,6 +237,7 @@ export class IssuesFilter implements SearchFilter {
 
 @model()
 export class ProjectIssuesSummary {
+
   @field({mock: () => faker.random.number()})
   remains: number;
 

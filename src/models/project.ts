@@ -1,7 +1,11 @@
-import { faker } from '../utils/mocks';
+import { SearchFilter } from '@junte/ui';
+import { ArraySerializer } from 'serialize-ts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
-import { EdgesToArray } from '../serializers/graphql';
+import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { faker } from '../utils/mocks';
+import { ProjectState } from './enums/project';
+import { Paging } from './paging';
 
 @model()
 export class ProjectMilestone {
@@ -79,4 +83,36 @@ export class Project {
     mock: {type: ProjectMilestone, length: 5}
   })
   milestones: ProjectMilestone[];
+}
+
+@model()
+export class ProjectsPaging implements Paging<Project> {
+
+  @field({mock: () => faker.random.number()})
+  count: number;
+
+  @field({
+    name: 'edges',
+    serializer: new ArraySerializer(new EdgesToPaging<Project>(Project)),
+    mock: {type: Project, length: 10}
+  })
+  results: Project[];
+}
+
+@model()
+export class ProjectsFilter implements SearchFilter {
+
+  @field()
+  first: number;
+
+  @field()
+  offset: number;
+
+  @field()
+  state: ProjectState | null;
+
+  constructor(defs: Partial<ProjectsFilter> = null) {
+    Object.assign(this, defs);
+  }
+
 }
