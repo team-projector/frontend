@@ -1,0 +1,12 @@
+<jnt-form [formGroup]="form">
+  <jnt-table #table formControlName="table">
+
+    <jnt-table-column title="Name"
+                      i18n-title="@@label.name">
+      <ng-template #tableCellTemplate let-name="name">
+        {{name}}
+      </ng-template>
+    </jnt-table-column>
+
+  </jnt-table>
+</jnt-form>

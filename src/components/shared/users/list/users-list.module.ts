@@ -3,14 +3,14 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { MoneyPipesModule } from '../../../../pipes/money-pipes.module';
-import { ProjectsListComponent } from './projects-list.component';
+import { UsersListComponent } from './users-list.component';
 
 @NgModule({
   declarations: [
-    ProjectsListComponent
+    UsersListComponent
   ],
   exports: [
-    ProjectsListComponent
+    UsersListComponent
   ],
   imports: [
     CommonModule,
@@ -19,6 +19,6 @@ import { ProjectsListComponent } from './projects-list.component';
     MoneyPipesModule
   ]
 })
-export class ProjectsListModule {
+export class UsersListModule {
 
 }

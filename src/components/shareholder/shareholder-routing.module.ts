@@ -13,6 +13,10 @@ const routes: Routes = [
         redirectTo: 'salaries'
       },
       {
+        path: 'users',
+        loadChildren: () => import('./users/company-users.module').then(m => m.CompanyUsersModule)
+      },
+      {
         path: 'projects',
         loadChildren: () => import('./projects/company-projects.module').then(m => m.CompanyProjectsModule)
       },
