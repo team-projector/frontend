@@ -10,7 +10,6 @@ import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
-import { BonusesFilter } from '../../../models/bonus';
 import { ViewType } from '../../../models/enums/view-type';
 import { PagingPenalties, PenaltiesFilter } from '../../../models/penalty';
 import { Salary } from '../../../models/salary';
@@ -59,6 +58,8 @@ export class PenaltiesListComponent implements OnInit {
         offset: offset || 0
       }
     }, {emitEvent: false});
+
+    this.load();
   }
 
   @Input()
@@ -93,9 +94,8 @@ export class PenaltiesListComponent implements OnInit {
 
   private load() {
     const {table: {first}} = this.form.getRawValue();
-    const filter = new BonusesFilter({
+    const filter = new PenaltiesFilter({
       first: first,
-      orderBy: 'dueDate',
       user: this.user?.id,
       salary: this.salary?.id
     });

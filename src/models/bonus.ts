@@ -62,8 +62,6 @@ export class BonusesFilter {
   @field()
   salary: string;
 
-  orderBy: string;
-
   @field()
   first: number;
 

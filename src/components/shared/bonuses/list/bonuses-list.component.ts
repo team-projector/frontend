@@ -101,7 +101,6 @@ export class BonusesListComponent implements OnInit {
     const {table: {first}} = this.form.getRawValue();
     const filter = new BonusesFilter({
       first: first,
-      orderBy: 'dueDate',
       user: this.user?.id,
       salary: this.salary?.id
     });
