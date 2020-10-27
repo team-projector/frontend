@@ -4,6 +4,8 @@
              formControlName="table">
     <ng-template #tableActionsTemplate>
       <jnt-button text="Today"
+                  [icon]="ui.icons.calendar"
+                  [scheme]="ui.scheme.secondary"
                   [outline]="ui.outline.transparent"
                   (click)="dueDateControl.setValue(today)"></jnt-button>
     </ng-template>
@@ -116,7 +118,7 @@
       </jnt-row>
     </ng-template>
 
-    <jnt-table-column>
+    <jnt-table-column width="55px" [align]="ui.align.center">
       <ng-template #tableCellTemplate let-state="state" let-labels="labels">
         <jnt-icon data-doing *ngIf="state == issueState.opened && (labels | hasLabel:standardLabel.doing)"
                   [icon]="localUi.icons.doing"></jnt-icon>
@@ -143,13 +145,15 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Labels"
+    <jnt-table-column width="20%"
+                      title="Labels"
                       i18n-title="@@label.labels">
       <ng-template #tableCellTemplate let-labels="labels">
         <jnt-stack [orientation]="ui.orientation.horizontal"
                    [gutter]="ui.gutter.small"
                    [justify]="ui.justify.start"
-                   [wrap]="ui.wrap.wrap">
+                   [wrap]="ui.wrap.wrap"
+                   [spacing]="ui.gutter.small">
           <jnt-label *ngFor="let l of (labels | labels)"
                      [size]="ui.size.small"
                      [color]="l.color" [label]="l.title"></jnt-label>
@@ -157,7 +161,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Ticket"
+    <jnt-table-column width="75px"
+                      title="Ticket"
                       i18n-ticket="@@label.ticket"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-ticket="ticket">
@@ -169,7 +174,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Due date"
+    <jnt-table-column width="125px"
+                      title="Due date"
                       i18n-title="@@label.due_date"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-dueDate="dueDate" let-problems="problems">
@@ -179,7 +185,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Progress"
+    <jnt-table-column width="20%"
+                      title="Progress"
                       i18n-title="@@label.progress"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-timeEstimate="timeEstimate"
@@ -215,6 +222,7 @@
     </jnt-table-column>
 
     <jnt-table-column *ngIf="view === viewType.developer"
+                      width="100px"
                       title="Payroll"
                       i18n-title="@@label.payroll"
                       [align]="ui.text.align.center">

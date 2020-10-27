@@ -10,12 +10,11 @@
              [widthMark]="50"
              (selected)="selected.emit($event.id)">
     <jnt-chart-indicator *ngFor="let p of summary?.projects;let i = index"
-                         [titleTemplate]="titleTemplate"
                          [data]="p.project"
                          [value]="p.issues.percentage * 100"
                          [label]="p.issues.remains  | duration:durationFormat.short"
                          [color]="colors[i % colors.length]">
-      <ng-template #titleTemplate>
+      <ng-template #chartIndicatorTitleTemplate>
         <jnt-stack [orientation]="ui.orientation.horizontal"
                    [align]="ui.align.center"
                    [gutter]="ui.gutter.small">
