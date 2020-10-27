@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { TeamBreaksListGanttComponent } from 'src/components/leader/teams/team/work-breaks/gantt/breaks-list-gantt.component';
@@ -21,7 +22,8 @@ import { TeamBreaksListTableComponent } from './list/breaks-list-table.component
     JunteUiModule,
     DateFnsModule,
     WorkBreaksListModule,
-    UserCardModule
+    UserCardModule,
+    ReactiveFormsModule
   ]
 })
 export class TeamBreaksModule {
