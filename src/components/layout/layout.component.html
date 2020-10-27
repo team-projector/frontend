@@ -58,11 +58,23 @@
     <ng-template #headerUserbarTemplate>
       <jnt-app-header-userbar>
         <ng-template #userbarAvatarTemplate>
-          <jnt-avatar [size]="ui.size.small"
+          <jnt-avatar *jntMinFor="ui.breakpoint.desktop" [size]="ui.size.small"
                       [image]="me.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
+
+          <jnt-stack *jntMaxFor="ui.breakpoint.tablet"
+                     [orientation]="ui.orientation.horizontal"
+                     [gutter]="ui.gutter.small">
+            <jnt-avatar [size]="ui.size.small"
+                        [image]="me.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
+            <jnt-stack [gutter]="ui.gutter.none">
+              <div>{{me.name}}</div>
+              <small>{{me.position?.title}}</small>
+            </jnt-stack>
+          </jnt-stack>
+
         </ng-template>
         <ng-template #userbarMenuTemplate>
-          <jnt-stack>
+          <jnt-stack *jntMinFor="ui.breakpoint.desktop">
             <jnt-stack [orientation]="ui.orientation.horizontal"
                        [gutter]="ui.gutter.small">
               <jnt-avatar [size]="ui.size.small"
