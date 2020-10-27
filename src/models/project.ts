@@ -1,30 +1,12 @@
 import { SearchFilter } from '@junte/ui';
 import { ArraySerializer } from 'serialize-ts';
 import { field, model } from '../decorators/model';
-import { DateSerializer } from '../serializers/date';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
 import { faker } from '../utils/mocks';
+import { ModelRef } from '../utils/types';
 import { ProjectState } from './enums/project';
+import { Milestone } from './milestone';
 import { Paging } from './paging';
-
-@model()
-export class ProjectMilestone {
-
-  @field({mock: () => faker.random.uuid()})
-  id: string;
-
-  @field({
-    mock: () => faker.helpers.randomize([
-      $localize`:@@mocks.milestone_mvp:MVP`,
-      $localize`:@@mocks.milestone_sprint:Sprint 1`,
-      $localize`:@@mocks.milestone_version:Version 1.0`
-    ])
-  })
-  title: string;
-
-  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
-  dueDate: Date;
-}
 
 @model()
 export class ProjectGroup {
@@ -55,6 +37,26 @@ export class ProjectGroup {
 }
 
 @model()
+export class ProjectsMetrics {
+
+  @field({mock: () => faker.random.number()})
+  budget: number;
+
+  @field({mock: () => faker.random.number()})
+  budgetSpent: number;
+
+  @field({mock: () => faker.random.number()})
+  budgetRemains: number;
+
+  @field({mock: () => faker.random.number()})
+  payroll: number;
+
+  @field({mock: () => faker.random.number()})
+  profit: number;
+
+}
+
+@model()
 export class Project {
 
   @field({mock: () => faker.random.uuid()})
@@ -79,10 +81,13 @@ export class Project {
   glUrl: string;
 
   @field({
-    serializer: new EdgesToArray(ProjectMilestone),
-    mock: {type: ProjectMilestone, length: 5}
+    serializer: new EdgesToArray(() => Milestone),
+    mock: {type: () => Milestone, length: 5}
   })
-  milestones: ProjectMilestone[];
+  milestones: ModelRef<Milestone>[];
+
+  @field({mock: ProjectsMetrics})
+  metrics: ProjectsMetrics;
 }
 
 @model()

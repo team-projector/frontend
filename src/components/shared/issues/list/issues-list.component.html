@@ -2,9 +2,15 @@
   <jnt-table #table [features]="[ui.feature.reload, ui.feature.search]"
              (reloaded)="loadSummary()"
              formControlName="table">
+    <ng-template #tableActionsTemplate>
+      <jnt-button text="Today"
+                  [outline]="ui.outline.transparent"
+                  (click)="dueDateControl.setValue(today)"></jnt-button>
+    </ng-template>
+
     <ng-template #tableFiltersTemplate>
       <jnt-row>
-        <jnt-col [wide]="2" [tablet]="4">
+        <jnt-col [wide]="2" [desktop]="4" [tablet]="4">
           <ng-template #projectOption let-project="value"
                        let-selected="selected">
             <jnt-stack [orientation]="ui.orientation.horizontal"
@@ -40,7 +46,7 @@
                                [value]="p"></jnt-select-option>
           </jnt-select>
         </jnt-col>
-        <jnt-col *ngIf="!!team" [wide]="2" [tablet]="4">
+        <jnt-col *ngIf="!!team" [wide]="2" [desktop]="4" [tablet]="4">
           <ng-template #userOption let-member="value"
                        let-selected="selected">
             <app-user [user]="member.user"
@@ -63,14 +69,13 @@
                                [value]="m"></jnt-select-option>
           </jnt-select>
         </jnt-col>
-        <jnt-col [wide]="2" [desktop]="4" [tablet]="4">
+        <jnt-col [wide]="2" [desktop]="3" [tablet]="3">
           <jnt-date-picker data-due-date formControlName="dueDate"
                            [width]="ui.width.fluid"
                            [features]="[ui.feature.allowEmpty]"></jnt-date-picker>
         </jnt-col>
-        <jnt-col [wide]="6" [tablet]="12">
-          <jnt-switcher formControlName="type"
-                        [width]="ui.width.fluid">
+        <jnt-col [wide]="6" [tablet]="6">
+          <jnt-switcher formControlName="type">
             <jnt-switcher-option label="All"
                                  i18n-label="@@action.filter_issues_all"
                                  [disabled]="summary?.count <= 0"
@@ -163,8 +168,7 @@
                    let-totalTimeSpent="totalTimeSpent"
                    let-metrics="metrics"
                    let-problems="problems">
-        <jnt-progress-bar progress *ngIf="!!timeEstimate"
-                          [value]="totalTimeSpent / timeEstimate * 100">
+        <jnt-progress-bar progress [value]="totalTimeSpent / timeEstimate * 100">
           <jnt-progress-line [from]="75" [color]="ui.color.yellow"></jnt-progress-line>
           <jnt-progress-line [from]="101" [color]="ui.color.red"></jnt-progress-line>
           <ng-template #progressBarLegendTemplate>
@@ -179,7 +183,7 @@
         </jnt-progress-bar>
         <div efficiency>
             <span [attr.slow]="totalTimeSpent > timeEstimate">
-              {{timeEstimate - totalTimeSpent | duration}}
+              {{(totalTimeSpent > timeEstimate ? timeEstimate - totalTimeSpent : totalTimeSpent) | duration}}
             </span>
         </div>
         <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"

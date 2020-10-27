@@ -43,9 +43,11 @@
                      let-owner="owner"
                      let-state="state">
           <jnt-stack [orientation]="ui.orientation.horizontal">
-            <jnt-avatar [size]="ui.size.small" [image]="owner.glAvatar"></jnt-avatar>
+            <jnt-avatar [size]="ui.size.small"
+                        [image]="owner.glAvatar"></jnt-avatar>
             <jnt-stack [gutter]="ui.gutter.tiny">
-              <jnt-link [source]="[id]" target="_blank" [title]="title"
+              <jnt-link [source]="[id]" [target]="ui.target.blank"
+                        [title]="title"
                         [attr.closed]="state == milestoneState.closed">
               </jnt-link>
               <small>{{owner?.fullTitle}}</small>
@@ -65,6 +67,7 @@
           </jnt-stack>
         </ng-template>
       </jnt-table-column>
+
       <jnt-table-column title="Budget"
                         i18n-title="@@label.budget"
                         [align]="ui.text.align.center">
@@ -87,6 +90,7 @@
           </ng-container>
         </ng-template>
       </jnt-table-column>
+
       <jnt-table-column title="Profit"
                         i18n-title="@@label.profit"
                         [align]="ui.text.align.center">
@@ -109,6 +113,7 @@
           </div>
         </ng-template>
       </jnt-table-column>
+
       <jnt-table-column title="Progress"
                         i18n-title="@@label.progress"
                         [align]="ui.text.align.center">
@@ -146,11 +151,12 @@
           </jnt-stack>
         </ng-template>
       </jnt-table-column>
+
       <ng-template #tableRowActionsTemplate let-row="row">
         <jnt-menu [orientation]="ui.orientation.vertical" [spacing]="ui.gutter.small">
           <jnt-menu-item [icon]="ui.icons.link"
                          title="View on GitLab"
-                         i18n-title="@@action.view_on_Gitlab"
+                         i18n-title="@@action.view_on_gitlab"
                          target="_blank"
                          [link]="row.glUrl"></jnt-menu-item>
           <jnt-menu-item [icon]="ui.icons.edit"
@@ -164,6 +170,7 @@
                          (click)="sync(row.id)"></jnt-menu-item>
         </jnt-menu>
       </ng-template>
+
     </jnt-table>
   </jnt-form>
 </jnt-block>

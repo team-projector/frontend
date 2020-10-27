@@ -3,13 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { OutletComponent } from '../../outlet/outlet.component';
 import { CompanyUsersComponent } from './company-users.component';
 
-export const PROJECTS_BREADCRUMB = $localize`:@@label.salaries:Salaries`;
+export const USERS_BREADCRUMB = $localize`:@@label.developers:Developers`;
 
 const routes: Routes = [
   {
     path: '',
     component: OutletComponent,
-    data: {breadcrumb: PROJECTS_BREADCRUMB},
+    data: {breadcrumb: USERS_BREADCRUMB},
     children: [
       {
         path: '',

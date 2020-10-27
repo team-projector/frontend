@@ -18,7 +18,15 @@ query ($state: ProjectState, $offset: Int, $first: Int) {
         group {
           title
         }
+        glAvatar
         glUrl
+        metrics {
+            budget
+            budgetSpent
+            budgetRemains
+            payroll
+            profit
+        }
         state
       }
     }

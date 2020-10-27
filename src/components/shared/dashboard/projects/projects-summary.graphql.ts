@@ -24,6 +24,7 @@ query($user: ID, $team: ID, $dueDate: Date) {
                 id
                 title
                 fullTitle
+                glAvatar
                 glUrl
                 milestones(state: ACTIVE) {
                     edges {
@@ -38,6 +39,7 @@ query($user: ID, $team: ID, $dueDate: Date) {
                 group {
                     title
                     fullTitle
+                    glAvatar
                 }
             }
         }

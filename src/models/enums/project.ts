@@ -1,10 +1,12 @@
 export enum ProjectState {
-  active = 'ACTIVE',
-  archived = 'ARCHIVED'
+  archived = 'ARCHIVED',
+  supporting = 'SUPPORTING',
+  developing = 'DEVELOPING'
 }
 
 export enum ProjectType {
   all = 'all',
-  active = 'active',
-  archived = 'archived'
+  archived = 'archived',
+  supporting = 'supporting',
+  developing = 'developing'
 }

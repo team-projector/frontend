@@ -1,20 +1,17 @@
 import { SearchFilter } from '@junte/ui';
 import { endOfDay, endOfMonth, endOfWeek, format, isPast, startOfDay, startOfMonth, startOfToday, startOfWeek } from 'date-fns';
+import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
 import { Paging } from 'src/models/paging';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
-import { ModelRef } from '../utils/types';
-import { ProjectState } from './enums/project';
-import { Project } from './project';
-import { WorkBreak } from './work-break';
-import { faker, getMock } from '../utils/mocks';
-import { ArraySerializer, PrimitiveSerializer, ModelSerializer } from 'serialize-ts';
-import { UserPermission, UserProblem, UserRole } from './enums/user';
 import { DATE_FORMAT, DFNS_LOCALE, FIRST_DAY_OF_WEEK } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
-import { mocks } from '../utils/mocks';
+import { faker, mocks } from '../utils/mocks';
+import { ModelRef } from '../utils/types';
 import { Metrics } from './enums/metrics';
+import { UserPermission, UserProblem, UserRole } from './enums/user';
 import { IssuesMetrics, MergeRequestsMetrics } from './metrics';
+import { WorkBreak } from './work-break';
 
 @model()
 export class UserMetrics {
@@ -82,8 +79,14 @@ export class User {
   @field({mock: () => mocks.hourlyRate()})
   hourRate: number;
 
+  @field({mock: () => mocks.hourlyRate()})
+  customerHourRate: number;
+
   @field({mock: () => mocks.random(15000, 30000)})
   taxRate: number;
+
+  @field({mock: () => mocks.random(2, 8)})
+  dailyWorkHours: number;
 
   @field({mock: () => mocks.random(8, 18)})
   annualPaidWorkBreaksDays: number;

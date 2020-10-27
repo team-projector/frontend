@@ -22,7 +22,7 @@ import { equals } from '../../../../utils/equals';
 import { CardSize } from '../../users/card/user-card.types';
 import { IssuesGQL, IssuesSummaryGQL, ProjectsSummaryGQL, SyncIssueGQL, TeamMembersGQL } from './issues-list.graphql';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
-import {LocalUI} from '../../../../enums/local-ui';
+import { LocalUI } from '../../../../enums/local-ui';
 
 const PAGE_SIZE = 10;
 
@@ -42,6 +42,7 @@ export class IssuesListComponent implements OnInit {
   standardLabel = StandardLabel;
   durationFormat = DurationFormat;
   userCardSize = CardSize;
+  today = new Date();
 
   private _team: Team;
   private _user: User;
@@ -90,10 +91,11 @@ export class IssuesListComponent implements OnInit {
     first: PAGE_SIZE,
     offset: 0
   });
+  dueDateControl = this.fb.control(null);
   form = this.fb.group({
     table: this.tableControl,
     type: [IssuesType.opened],
-    dueDate: [null],
+    dueDate: this.dueDateControl,
     project: [null],
     developer: [null]
   });

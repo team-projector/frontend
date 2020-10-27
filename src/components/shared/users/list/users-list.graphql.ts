@@ -7,59 +7,31 @@ import gql from 'graphql-tag';
 })
 export class AllUsersGQL extends Query<{ users }> {
   document = gql`
-{
-  users: allUsers {
-    count
-    edges {
-      node {
-        id
-        name
-        glAvatar
-        roles
-        hourRate
-        taxRate
-        annualPaidWorkBreaksDays
-        position {
-          title
+query($offset: Int, $first: Int) {
+    users: allUsers(offset: $offset, first: $first) {
+        count
+        edges {
+            node {
+                id
+                name
+                glAvatar
+                roles
+                hourRate
+                customerHourRate
+                taxRate
+                dailyWorkHours
+                annualPaidWorkBreaksDays
+                position {
+                    title
+                }
+                metrics {
+                    lastSalaryDate
+                    paidWorkBreaksDays
+                    payroll
+                    taxes
+                }
+            }
         }
-        metrics {
-          lastSalaryDate
-          paidWorkBreaksDays
-          bonus
-          penalty
-          issues {
-            openedCount
-            openedSpent
-            closedSpent
-            payrollClosed
-            payrollOpened
-            payroll
-            taxesClosed
-            taxesOpened
-            taxes
-          }
-          mergeRequests {
-            openedCount
-            openedSpent
-            closedSpent
-            payrollClosed
-            payrollOpened
-            payroll
-            taxesClosed
-            taxesOpened
-            taxes
-          }
-          openedSpent
-          closedSpent
-          payrollClosed
-          payrollOpened
-          payroll
-          taxesClosed
-          taxesOpened
-          taxes
-        }
-      }
     }
-  }
 }`;
 }

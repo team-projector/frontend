@@ -1,3 +1,15 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+
 :host {
   display: block;
+}
+
+[data-annual-paid-work-breaks] {
+  font-size: .85em;
+}
+
+[data-paid-work-breaks-days] {
+  margin-top: $jnt-gutter-tiny;
+  text-align: center;
+  font-size: .85em;
 }

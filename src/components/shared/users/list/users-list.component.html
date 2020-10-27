@@ -1,12 +1,112 @@
 <jnt-form [formGroup]="form">
-  <jnt-table #table formControlName="table">
+  <jnt-table #table formControlName="table"
+             [features]="[ui.feature.reload]">
 
     <jnt-table-column title="Name"
                       i18n-title="@@label.name">
-      <ng-template #tableCellTemplate let-name="name">
-        {{name}}
+      <ng-template #tableCellTemplate let-name="name"
+                   let-avatar="avatar"
+                   let-position="position">
+        <app-user [user]="{name: name, avatar: avatar, position: position}"></app-user>
       </ng-template>
     </jnt-table-column>
+
+    <jnt-table-column title="Hour rate"
+                      i18n-title="@@label.hour_rate"
+                      [align]="ui.text.align.right">
+      <ng-template #tableCellTemplate let-rate="hourRate">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end">
+          {{rate | money}}
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Customer hour rate"
+                      i18n-title="@@label.customer_hour_rate"
+                      [align]="ui.text.align.right">
+      <ng-template #tableCellTemplate let-rate="customerHourRate">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end">
+          {{rate | money}}
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Tax rate"
+                      i18n-title="@@label.tax_rate"
+                      [align]="ui.text.align.right">
+      <ng-template #tableCellTemplate let-rate="taxRate">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end">
+          {{rate | number}}
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Daily work hours"
+                      i18n-title="@@label.daily_work_hours"
+                      [align]="ui.text.align.right">
+      <ng-template #tableCellTemplate let-hours="dailyWorkHours">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end">
+          {{hours | number}}h
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Paid work breaks"
+                      i18n-title="@@label.annual_paid_work_breaks"
+                      [align]="ui.text.align.center">
+      <ng-template #tableCellTemplate let-days="annualPaidWorkBreaksDays"
+                   let-metrics="metrics">
+        <jnt-progress-bar [value]="metrics.paidWorkBreaksDays / days * 100">
+          <ng-template #progressBarLegendTemplate>
+            <jnt-stack [orientation]="ui.orientation.horizontal"
+                       [align]="ui.align.center"
+                       [justify]="ui.justify.between"
+                       [gutter]="ui.gutter.normal">
+              <div></div>
+              <div data-annual-paid-work-breaks>{{days > 0 ? (days | number) : '&nbsp;'}}</div>
+            </jnt-stack>
+          </ng-template>
+        </jnt-progress-bar>
+        <div
+          data-paid-work-breaks-days>{{metrics.paidWorkBreaksDays > 0 ? (metrics.paidWorkBreaksDays | number) : '&nbsp;'}}</div>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Payroll"
+                      i18n-title="@@label.payroll"
+                      [align]="ui.text.align.right">
+      <ng-template #tableCellTemplate let-metrics="metrics">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end">
+          {{metrics.payroll | money}}
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Taxes"
+                      i18n-title="@@label.taxes"
+                      [align]="ui.text.align.right">
+      <ng-template #tableCellTemplate let-metrics="metrics">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end">
+          {{metrics.taxes | money}}
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <ng-template #tableRowActionsTemplate let-user="row" let-hide="hide">
+      <jnt-menu [orientation]="ui.orientation.vertical">
+        <jnt-menu-item title="Edit"
+                       i18n-title="@@action.edit"
+                       [icon]="ui.icons.link"
+                       (click)="hide()"
+                       [link]="{source: '/admin/users/user/' + user.id + '/change/', target: ui.target.blank}"></jnt-menu-item>
+      </jnt-menu>
+    </ng-template>
 
   </jnt-table>
 </jnt-form>

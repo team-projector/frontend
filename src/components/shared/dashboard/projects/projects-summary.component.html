@@ -16,13 +16,25 @@
                          [label]="p.issues.remains  | duration:durationFormat.short"
                          [color]="colors[i % colors.length]">
       <ng-template #titleTemplate>
-        <ng-container *ngIf="p.project.group">{{p.project.group.title}} /</ng-container>
-        {{p.project.title}}
-        <jnt-stack *ngIf="p.project.milestones?.length > 0"
-                   [orientation]="ui.orientation.horizontal"
-                   [gutter]="ui.gutter.tiny"
-                   [align]="ui.align.center">
-          <small>{{p.project.milestones[0].title}} <ng-container *ngIf="p.project.milestones[0].dueDate as dueDate">| {{dueDate | dueDate}}</ng-container></small>
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [align]="ui.align.center"
+                   [gutter]="ui.gutter.small">
+          <jnt-avatar [size]="ui.size.small"
+                      [image]="p.project.group?.glAvatar"></jnt-avatar>
+          <jnt-stack [gutter]="ui.gutter.none">
+            <jnt-stack [orientation]="ui.orientation.horizontal"
+                       [gutter]="ui.gutter.tiny">
+              <div *ngIf="!!p.project.group">{{p.project.group.title}}</div>
+              <jnt-label [label]="p.project.title"
+                         [color]="ui.color.paleNavy"
+                         [size]="ui.size.small"></jnt-label>
+            </jnt-stack>
+            <ng-container *ngIf="p.project.milestones?.length > 0">
+              <small>{{p.project.milestones[0].title}}
+                <ng-container *ngIf="p.project.milestones[0].dueDate as dueDate">| {{dueDate | dueDate}}</ng-container>
+              </small>
+            </ng-container>
+          </jnt-stack>
         </jnt-stack>
       </ng-template>
     </jnt-chart-indicator>

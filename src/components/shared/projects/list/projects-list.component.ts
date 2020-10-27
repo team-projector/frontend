@@ -41,7 +41,7 @@ export class ProjectsListComponent implements OnInit {
   });
   form = this.fb.group({
     table: this.tableControl,
-    type: [ProjectType.active]
+    type: [ProjectType.developing]
   });
 
   @Input()
@@ -52,7 +52,7 @@ export class ProjectsListComponent implements OnInit {
         first: first || PAGE_SIZE,
         offset: offset || 0
       },
-      type: type || ProjectType.active,
+      type: type || ProjectType.developing,
     }, {emitEvent: false});
 
     this.load();
@@ -94,7 +94,7 @@ export class ProjectsListComponent implements OnInit {
     const {table: {first}, type} = this.form.getRawValue();
     const filter = new ProjectsFilter({
       first: first,
-      state: type === ProjectType.active ? ProjectState.active :
+      state: type === ProjectType.developing ? ProjectState.developing :
         (type === ProjectType.archived ? ProjectState.archived : null),
     });
     const reset = serialize(filter);
@@ -119,7 +119,7 @@ export class ProjectsListComponent implements OnInit {
     this.filtered.emit(new ProjectsStateUpdate({
       first: first !== PAGE_SIZE ? first : undefined,
       offset: offset !== 0 ? offset : undefined,
-      type: type !== ProjectState.active ? type : undefined
+      type: type !== ProjectType.developing ? type : undefined
     }));
   }
 
