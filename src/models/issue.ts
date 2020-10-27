@@ -116,6 +116,9 @@ export class Issue {
   id: string;
 
   @field({mock: User})
+  author: User;
+
+  @field({mock: User})
   user: User;
 
   @field({

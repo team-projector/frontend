@@ -2,6 +2,10 @@
            i18n-title="@@label.current_payroll"
            [width]="ui.width.fluid"
            [padding]="ui.gutter.none">
+  <ng-template #blockHelpTemplate>
+    <p>Your earning for the work.</p>
+  </ng-template>
+
   <jnt-stack [align]="ui.align.stretch">
     <jnt-stack data-user [gutter]="ui.gutter.small">
       <jnt-stack [orientation]="ui.orientation.horizontal"

@@ -83,6 +83,11 @@ query(
                     title
                     url
                 }
+                author {
+                    id
+                    name
+                    glAvatar
+                }
                 user {
                     id
                     name

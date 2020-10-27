@@ -129,12 +129,31 @@
 
     <jnt-table-column title="Title"
                       i18n-title="@@label.title">
-      <ng-template #tableCellTemplate let-title="title" let-labels="labels" let-glUrl="glUrl" let-state="state"
-                   let-user="user" let-project="project"
-                   let-closedAt="closedAt" let-id="id">
-        <app-issue [issue]="{id: id, title: title, labels: labels, glUrl: glUrl, state: state,
-            user: user, project: project, closedAt: closedAt}">
+      <ng-template #tableCellTemplate let-id="id"
+                   let-title="title"
+                   let-glUrl="glUrl"
+                   let-state="state"
+                   let-user="user"
+                   let-author="author"
+                   let-project="project"
+                   let-closedAt="closedAt">
+        <app-issue [issue]="{id: id, title: title, glUrl: glUrl, state: state,
+            user: user, author: (view === viewType.developer ? author : null), project: project, closedAt: closedAt}">
         </app-issue>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Labels"
+                      i18n-title="@@label.labels">
+      <ng-template #tableCellTemplate let-labels="labels">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [gutter]="ui.gutter.small"
+                   [justify]="ui.justify.start"
+                   [wrap]="ui.wrap.wrap">
+          <jnt-label *ngFor="let l of (labels | labels)"
+                     [size]="ui.size.small"
+                     [color]="l.color" [label]="l.title"></jnt-label>
+        </jnt-stack>
       </ng-template>
     </jnt-table-column>
 

@@ -79,6 +79,10 @@
   <jnt-block [state]="progress.loading && !!metrics ? ui.state.loading: null"
              [padding]="ui.gutter.small"
              [width]="ui.width.fluid">
+    <ng-template #blockHelpTemplate>
+      <p>Here you can find your work progress.</p>
+    </ng-template>
+
     <ng-template #blockHeaderTemplate>
       <jnt-stack [orientation]="ui.orientation.horizontal"
                  [align]="ui.align.center">
