@@ -1,0 +1,9 @@
+<jnt-app-page-header [icon]="ui.icons.question"
+                     title="Developers"
+                     teaser="in your company"></jnt-app-page-header>
+
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <app-users [state]="state"
+             (filtered)="save($event)"></app-users>
+</jnt-block>

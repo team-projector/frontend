@@ -1,5 +1,15 @@
 <jnt-app-aside #aside>
   <jnt-menu>
+    <jnt-menu-item title="Users"
+                   i18n-title="@@action.users"
+                   [link]="['users']"
+                   [matching]="ui.matching.wildcard"
+                   [icon]="ui.icons.question"></jnt-menu-item>
+    <jnt-menu-item title="Projects"
+                   i18n-title="@@action.projects"
+                   [link]="['projects']"
+                   [matching]="ui.matching.wildcard"
+                   [icon]="ui.icons.question"></jnt-menu-item>
     <jnt-menu-item title="Salaries"
                    i18n-title="@@action.salaries"
                    [link]="['salaries']"

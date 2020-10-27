@@ -1,0 +1,29 @@
+<jnt-form [formGroup]="form">
+  <jnt-table #table formControlName="table">
+
+    <ng-template #tableFiltersTemplate>
+      <jnt-switcher formControlName="type">
+        <jnt-switcher-option label="All"
+                             i18n-label="@@action.filter_projects_all"
+                             [value]="projectType.all">
+        </jnt-switcher-option>
+        <jnt-switcher-option label="Active"
+                             i18n-label="@@action.filter_type_active"
+                             [value]="projectType.active">
+        </jnt-switcher-option>
+        <jnt-switcher-option label="Archived"
+                             i18n-label="@@action.filter_type_archived"
+                             [value]="projectType.archived">
+        </jnt-switcher-option>
+      </jnt-switcher>
+    </ng-template>
+
+    <jnt-table-column title="Title"
+                      i18n-title="@@label.title">
+      <ng-template #tableCellTemplate let-title="title">
+        {{title}}
+      </ng-template>
+    </jnt-table-column>
+
+  </jnt-table>
+</jnt-form>

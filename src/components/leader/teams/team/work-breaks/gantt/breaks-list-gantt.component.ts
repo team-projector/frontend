@@ -10,7 +10,7 @@ import { environment } from 'src/environments/environment';
 import { ApproveStates } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
 import { Team } from 'src/models/team';
-import { PagingUsers } from 'src/models/user';
+import { UsersPaging } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
 import { CardSize } from '../../../../../shared/users/card/user-card.types';
 import { AllTeamWorkBreaks } from './breaks-gantt.graphql';
@@ -44,9 +44,9 @@ export class TeamBreaksListGanttComponent implements OnInit {
   loadBreaks() {
     this.loading = true;
     (environment.mocks
-      ? of(getMock(PagingUsers, {team: this.team.id})).pipe(delay(MOCKS_DELAY))
+      ? of(getMock(UsersPaging, {team: this.team.id})).pipe(delay(MOCKS_DELAY))
       : this.teamBreaksGQL.fetch({team: this.team.id} as R).pipe(
-        map(({data: {breaks}}) => deserialize(breaks, PagingUsers))))
+        map(({data: {breaks}}) => deserialize(breaks, UsersPaging))))
       .pipe(finalize(() => this.loading = false))
       .subscribe(ganttBreaks => {
         this.workbreaks = ganttBreaks.results;

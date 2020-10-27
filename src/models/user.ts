@@ -1,7 +1,10 @@
+import { SearchFilter } from '@junte/ui';
 import { endOfDay, endOfMonth, endOfWeek, format, isPast, startOfDay, startOfMonth, startOfToday, startOfWeek } from 'date-fns';
 import { Paging } from 'src/models/paging';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
 import { ModelRef } from '../utils/types';
+import { ProjectState } from './enums/project';
+import { Project } from './project';
 import { WorkBreak } from './work-break';
 import { faker, getMock } from '../utils/mocks';
 import { ArraySerializer, PrimitiveSerializer, ModelSerializer } from 'serialize-ts';
@@ -237,9 +240,8 @@ export class UserProgressMetrics {
 
 }
 
-
 @model()
-export class PagingUsers implements Paging<User> {
+export class UsersPaging implements Paging<User> {
 
   @field({mock: () => faker.random.number()})
   count: number;
@@ -250,5 +252,20 @@ export class PagingUsers implements Paging<User> {
     mock: {type: User, length: 10}
   })
   results: User[];
+
+}
+
+@model()
+export class UsersFilter implements SearchFilter {
+
+  @field()
+  first: number;
+
+  @field()
+  offset: number;
+
+  constructor(defs: Partial<UsersFilter> = null) {
+    Object.assign(this, defs);
+  }
 
 }

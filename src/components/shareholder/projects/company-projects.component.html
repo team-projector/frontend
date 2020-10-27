@@ -1,0 +1,9 @@
+<jnt-app-page-header [icon]="ui.icons.question"
+                     title="Projects"
+                     teaser="of your company"></jnt-app-page-header>
+
+<jnt-block [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <app-projects [state]="state"
+                (filtered)="save($event)"></app-projects>
+</jnt-block>
