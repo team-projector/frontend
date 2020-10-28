@@ -1,6 +1,12 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/elements/icon";
 
+:host-context([theme='dark']) {
+  [data-gitlab] {
+    @include jnt-icon((size: 30px), '&', true);
+  }
+}
+
 [data-content] {
   margin: $jnt-gutter-normal
 }
