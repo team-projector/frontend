@@ -1,7 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UI } from '@junte/ui';
+import { FormComponent, UI } from '@junte/ui';
 import 'reflect-metadata';
 import { of } from 'rxjs';
 import { delay, filter, finalize, map } from 'rxjs/operators';
@@ -58,6 +58,12 @@ export class LoginComponent implements OnInit {
     password: [null, [Validators.required]]
   });
 
+  @ViewChild(FormComponent)
+  formComponent: FormComponent;
+
+  @ViewChild('content', {read: ElementRef})
+  backdrop: ElementRef<HTMLElement>;
+
   constructor(@Inject(AppConfig) private config: AppConfig,
               private loginGQL: LoginGQL,
               private loginGitlabGQL: GitlabLoginGQL,
@@ -94,6 +100,11 @@ export class LoginComponent implements OnInit {
       .pipe(delay(UI_DELAY), finalize(() => this.progress.login = false))
       .subscribe((token: AccessToken) => this.logged(token),
         (err: GqlError[]) => this.errors = err);
+  }
+
+  submit() {
+    // TODO: rename to submit
+    this.formComponent.onSubmit();
   }
 
   private logged(token: AccessToken) {

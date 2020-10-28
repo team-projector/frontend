@@ -7,7 +7,14 @@
           admin>
 </jnt-link>
 
-<jnt-block [padding]="ui.gutter.large"
+<jnt-informer *ngIf="errors.length > 0"
+              [backdrop]="backdrop"
+              (ok)="this.errors = []">
+  <jnt-informer-message *ngFor="let e of errors"
+                        [message]="e.toString()"></jnt-informer-message>
+</jnt-informer>
+
+<jnt-block #content [padding]="ui.gutter.large"
            [state]="progress.gitlab ? ui.state.loading : null">
   <ng-template #blockHeaderTemplate>
     <div data-logo>
@@ -15,14 +22,10 @@
     </div>
   </ng-template>
   <jnt-form data-form
+            #formComponent
             [formGroup]="form"
             [state]="progress.login ? ui.state.loading : null"
             (submitted)="login()">
-
-    <jnt-informer *ngIf="errors.length > 0" (ok)="this.errors = []">
-      <jnt-informer-message *ngFor="let e of errors"
-                            [message]="e.toString()"></jnt-informer-message>
-    </jnt-informer>
 
     <ng-container [ngSwitch]="mode">
       <ng-container *ngSwitchCase="systemMode.mocks">
@@ -54,8 +57,8 @@
       <ng-container *ngSwitchCase="systemMode.demo">
         <p>The current version in demo mode!</p>
         <p><b>Select your role:</b></p>
-        <jnt-menu  [orientation]="ui.orientation.vertical"
-                   [spacing]="ui.gutter.small">
+        <jnt-menu [orientation]="ui.orientation.vertical"
+                  [spacing]="ui.gutter.small">
           <jnt-menu-item title="Developer"
                          i18n-title="@@action.developer"
                          [icon]="localUi.icons.developer"
@@ -81,7 +84,9 @@
         <jnt-stack [align]="ui.align.stretch">
           <jnt-form-item>
             <jnt-form-control name="login">
-              <jnt-input formControlName="login" placeholder="Login" [icon]="ui.icons.user"></jnt-input>
+              <jnt-input formControlName="login"
+                         placeholder="Login"
+                         [icon]="ui.icons.user"></jnt-input>
               <jnt-form-message [validator]="ui.validator.required">
                 Field is required!
               </jnt-form-message>
@@ -90,7 +95,10 @@
 
           <jnt-form-item>
             <jnt-form-control name="password">
-              <jnt-input formControlName="password" placeholder="Password" [icon]="ui.icons.lock"
+              <jnt-input formControlName="password"
+                         placeholder="Password"
+                         [jntShortcuts]="[{key: ui.keyboard.key.enter, action: submit.bind(this)}]"
+                         [icon]="ui.icons.lock"
                          [type]="ui.input.type.password"></jnt-input>
               <jnt-form-message [validator]="ui.validator.required">
                 Field is required!
@@ -100,8 +108,7 @@
         </jnt-stack>
         <ng-template #formFooterTemplate>
           <jnt-form-item>
-            <jnt-button [loading]="progress.login"
-                        [type]="ui.button.type.submit"
+            <jnt-button [type]="ui.button.type.submit"
                         [icon]="{icon: ui.icons.chevronRight, position: ui.position.right}"
                         text="Login"
                         [width]="ui.width.fluid">
