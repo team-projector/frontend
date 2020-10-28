@@ -13,25 +13,25 @@
       <jnt-menu-item *ngIf="me.roles?.includes(userRole.developer)"
                      title="Developer"
                      i18n-title="@@action.developer" [link]="['/developer']"
-                     [icon]="localUi.icons.developer"
+                     [icon]="localUi.icons.top.developer"
                      [matching]="ui.matching.wildcard"></jnt-menu-item>
       <jnt-menu-item *ngIf="me.roles?.includes(userRole.leader)"
                      title="Team Leader"
                      i18n-title="@@action.team_leader"
                      [link]="['/leader']"
-                     [icon]="localUi.icons.leader"
+                     [icon]="localUi.icons.top.leader"
                      [matching]="ui.matching.wildcard"></jnt-menu-item>
       <jnt-menu-item *ngIf="me.roles?.includes(userRole.manager)"
                      title="Project Manager"
                      i18n-title="@@action.project_manager"
                      [link]="['/manager']"
-                     [icon]="localUi.icons.manager"
+                     [icon]="localUi.icons.top.manager"
                      [matching]="ui.matching.wildcard"></jnt-menu-item>
       <jnt-menu-item *ngIf="me.roles?.includes(userRole.shareholder)"
                      title="Shareholder"
                      i18n-title="@@action.shareholder"
                      [link]="['/shareholder']"
-                     [icon]="localUi.icons.shareholder"
+                     [icon]="localUi.icons.top.shareholder"
                      [matching]="ui.matching.wildcard"></jnt-menu-item>
     </jnt-menu>
 
