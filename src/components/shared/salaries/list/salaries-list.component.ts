@@ -13,6 +13,7 @@ import { getMock } from 'src/utils/mocks';
 import { ViewType } from '../../../../models/enums/view-type';
 import { User } from '../../../../models/user';
 import { equals } from '../../../../utils/equals';
+import { CardSize } from '../../users/card/user-card.types';
 import { SalariesState, SalariesStateUpdate } from './salaries-list.types';
 
 const PAGE_SIZE = 10;
@@ -26,6 +27,7 @@ export class SalariesListComponent implements OnInit {
 
   ui = UI;
   viewType = ViewType;
+  userCardSize = CardSize;
 
   // will be used for reset offset
   private reset: Object;
@@ -43,8 +45,7 @@ export class SalariesListComponent implements OnInit {
   });
 
   @Input()
-  set
-  state({first, offset, user}: SalariesState) {
+  set state({first, offset, user}: SalariesState) {
     this.user = user;
     this.form.patchValue({
       table: {

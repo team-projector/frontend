@@ -14,7 +14,8 @@
                       i18n-title="@@label.user">
       <ng-template #tableCellTemplate
                    let-user="user">
-        <app-user [user]="user"></app-user>
+        <app-user [user]="user"
+                  [size]="userCardSize.small"></app-user>
       </ng-template>
     </jnt-table-column>
 

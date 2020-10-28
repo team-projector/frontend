@@ -139,9 +139,19 @@
                    let-author="author"
                    let-project="project"
                    let-closedAt="closedAt">
-        <app-issue [issue]="{id: id, title: title, glUrl: glUrl, state: state,
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [gutter]="ui.gutter.small">
+          <ng-container *ngIf="view === viewType.leader">
+            <jnt-avatar *ngIf="!!author"
+                        [name]="author.name"
+                        [image]="author.avatar"
+                        [size]="ui.size.tiny"></jnt-avatar>
+            <jnt-icon [icon]="ui.icons.chevronRight"></jnt-icon>
+          </ng-container>
+          <app-issue [issue]="{id: id, title: title, glUrl: glUrl, state: state,
             user: user, author: (view === viewType.developer ? author : null), project: project, closedAt: closedAt}">
-        </app-issue>
+          </app-issue>
+        </jnt-stack>
       </ng-template>
     </jnt-table-column>
 
