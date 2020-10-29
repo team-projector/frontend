@@ -1,5 +1,13 @@
 export class LocalUI {
   static icons = {
+    top: {
+      developer: 'developer:svg:local',
+      leader: 'leader:svg:local',
+      manager: 'manager:svg:local',
+      customer: 'customer:svg:local',
+      shareholder: 'shareholder:svg:local',
+    },
+
     dashboard: 'dashboard:font:icons',
     issue: 'issue:font:icons',
     mergeRequest: 'merge-request:font:icons',
@@ -12,15 +20,11 @@ export class LocalUI {
     milestone: 'milestone:font:icons',
     done: 'done:font:icons',
     delayed: 'delayed:font:icons',
+    developer: 'developer:font:icons',
+    project: 'project:font:icons',
 
     money: 'money:font:icons',
-    developer: 'developer:svg:local',
-    leader: 'leader:svg:local',
-    manager: 'manager:svg:local',
-    customer: 'customer:svg:local',
-    shareholder: 'shareholder:svg:local',
-
     // animated
-    doing: 'doing:animated:default'
+    doing: 'doing:animated:default',
   };
 }
