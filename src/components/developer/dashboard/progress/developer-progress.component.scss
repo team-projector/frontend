@@ -1,7 +1,10 @@
 @import '~@junte/ui/lib/assets/styles/layout/responsive';
+@import '~@junte/ui/lib/assets/styles/forms/calendar';
 
 :host {
   display: block;
+
+  @include jnt-calendar((metrics: (width: 50%)), null, true);
 }
 
 [data-title] {
