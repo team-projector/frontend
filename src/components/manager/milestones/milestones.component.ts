@@ -11,6 +11,7 @@ import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { MilestoneProblem, MilestoneState, MilestoneType } from 'src/models/enums/milestone';
+import { GqlError } from 'src/models/gql-errors';
 import { MilestonesFilter, MilestonesSummary, PagingMilestones } from 'src/models/milestone';
 import { getMock } from 'src/utils/mocks';
 import { LocalUI } from '../../../enums/local-ui';
@@ -33,6 +34,7 @@ export class MilestonesComponent implements OnInit {
   milestoneProblem = MilestoneProblem;
   milestoneType = MilestoneType;
   milestoneState = MilestoneState;
+  errors: GqlError[] = [];
 
   // will be used for reset offset
   private reset: Object;
@@ -153,14 +155,16 @@ export class MilestonesComponent implements OnInit {
         .pipe(map(({data: {summary}}) =>
           deserialize(summary, MilestonesSummary))))
       .pipe(finalize(() => this.progress.summary = false))
-      .subscribe(summary => this.summary = summary);
+      .subscribe(summary => this.summary = summary,
+        err => this.errors = err);
   }
 
   sync(issue: number) {
     this.progress.sync = true;
     this.syncMilestoneGQL.mutate({id: issue})
       .pipe(finalize(() => this.progress.sync = false))
-      .subscribe(() => this.table.load());
+      .subscribe(() => this.table.load(),
+        err => this.errors = err);
   }
 
 }

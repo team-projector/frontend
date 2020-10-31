@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { OwnerType, TimeExpenseState, TimeExpenseType } from 'src/models/enums/time-expenses';
 import { ViewType } from 'src/models/enums/view-type';
+import { GqlError } from 'src/models/gql-errors';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter } from 'src/models/spent-time';
 import { getMock } from 'src/utils/mocks';
 import { Salary } from '../../../../models/salary';
@@ -34,6 +35,7 @@ export class TimeExpensesListComponent implements OnInit {
   viewType = ViewType;
   ownerType = OwnerType;
   durationFormat = DurationFormat;
+  errors: GqlError[] = [];
 
   // will be used for reset offset
   private reset: Object;
@@ -145,6 +147,7 @@ export class TimeExpensesListComponent implements OnInit {
       ? of(getMock(SpentTimesSummary)).pipe(delay(MOCKS_DELAY))
       : this.timeExpensesSummaryGQL.fetch(serialize(this.filter) as R)
         .pipe(map(({data: {summary}}) => deserialize(summary, SpentTimesSummary))))
-      .subscribe(summary => this.summary = summary);
+      .subscribe(summary => this.summary = summary,
+        err => this.errors = err);
   }
 }

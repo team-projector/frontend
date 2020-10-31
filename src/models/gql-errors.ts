@@ -1,5 +1,5 @@
 import { GraphQLError } from 'graphql';
-import { Model, Serializer } from 'serialize-ts/dist';
+import { Model, Serializer } from '@junte/serialize-ts';
 
 export class GqlErrorSerializer implements Serializer<GqlError> {
 

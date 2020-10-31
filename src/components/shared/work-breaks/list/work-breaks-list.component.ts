@@ -13,6 +13,7 @@ import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { ApproveStates, BreakReasons } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
+import { GqlError } from 'src/models/gql-errors';
 import { BreaksFilter, PagingBreaks, WorkBreak } from 'src/models/work-break';
 import { getMock } from 'src/utils/mocks';
 import { LocalUI } from '../../../../enums/local-ui';
@@ -43,6 +44,7 @@ export class WorkBreaksListComponent implements OnInit {
   team: Team;
   user: User;
   breaks: WorkBreak[] = [];
+  errors: GqlError[] = [];
   filter: BreaksFilter;
 
   tableControl = this.fb.control({
@@ -153,12 +155,14 @@ export class WorkBreaksListComponent implements OnInit {
 
   delete(id: string) {
     (environment.mocks ? of(null) : this.deleteBreakGQL.fetch({id}))
-      .subscribe(() => this.table.load());
+      .subscribe(() => this.table.load(),
+        err => this.errors = err);
   }
 
   approve(id: string) {
     (environment.mocks ? of(null) : this.approveBreakGQL.fetch({id}))
-      .subscribe(() => this.table.load());
+      .subscribe(() => this.table.load(),
+        err => this.errors = err);
   }
 
   openDecline(workBreak: WorkBreak = null) {

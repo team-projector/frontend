@@ -86,7 +86,7 @@ export class LoginComponent implements OnInit {
               deserialize(token, AccessToken))
           )
           .subscribe((token: AccessToken) => this.logged(token),
-            (err: GqlError[]) => this.errors = err);
+            err => this.errors = err);
       });
   }
 
@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
             deserialize(token, AccessToken))))
       .pipe(delay(UI_DELAY), finalize(() => this.progress.login = false))
       .subscribe((token: AccessToken) => this.logged(token),
-        (err: GqlError[]) => this.errors = err);
+        err => this.errors = err);
   }
 
   submit() {

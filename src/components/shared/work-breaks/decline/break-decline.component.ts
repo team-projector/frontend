@@ -4,6 +4,7 @@ import { UI } from '@junte/ui';
 import { of } from 'rxjs';
 import { DeclineWorkBreakGQL } from 'src/components/shared/work-breaks/list/work-breaks-list.graphql';
 import { environment } from 'src/environments/environment';
+import { GqlError } from 'src/models/gql-errors';
 import { WorkBreak, BreakDecline } from 'src/models/work-break';
 
 @Component({
@@ -16,6 +17,7 @@ export class BreakDeclineComponent {
   private _break: WorkBreak;
   ui = UI;
   saving = false;
+  errors: GqlError[] = [];
 
   form = this.builder.group({
     id: [null],
@@ -42,7 +44,8 @@ export class BreakDeclineComponent {
     this.saving = true;
     (environment.mocks ? of(null)
       : this.declineBreakGQL.fetch(this.form.getRawValue()))
-      .subscribe(() => this.saved.emit());
+      .subscribe(() => this.saved.emit(),
+        err => this.errors = err);
 
   }
 
