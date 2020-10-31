@@ -13,6 +13,7 @@ import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { IssueState } from 'src/models/enums/issue';
 import { TicketProblem, TicketStates, TicketsTypes, TicketTypes } from 'src/models/enums/ticket';
+import { GqlError } from 'src/models/gql-errors';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { PagingTickets, Ticket, TicketsFilter, TicketsSummary } from 'src/models/ticket';
 import { getMock } from 'src/utils/mocks';
@@ -75,6 +76,7 @@ export class MilestoneComponent implements OnInit {
   tickets: Ticket[] = [];
   summary: TicketsSummary;
   issues: Issue[] = [];
+  errors: GqlError[] = [];
 
   constructor(private milestoneIssuesSummaryGQL: MilestoneIssuesSummaryGQL,
               private allTicketsGQL: AllTicketsGQL,
@@ -146,7 +148,8 @@ export class MilestoneComponent implements OnInit {
       : this.allTicketsGQL.fetch(serialize(filter) as R).pipe(
         map(({data: {allTickets}}) => deserialize(allTickets, PagingTickets))))
       .pipe(finalize(() => this.loading.tickets = false))
-      .subscribe(tickets => this.tickets = tickets.results);
+      .subscribe(tickets => this.tickets = tickets.results,
+        err => this.errors = err);
   }
 
   loadSummary() {
@@ -157,7 +160,8 @@ export class MilestoneComponent implements OnInit {
       : this.ticketsSummaryGQL.fetch(serialize(filter) as R)
         .pipe(map(({data: {summary}}) => deserialize(summary, TicketsSummary))))
       .pipe(finalize(() => this.loading.summary = false))
-      .subscribe(summary => this.summary = summary);
+      .subscribe(summary => this.summary = summary,
+        err => this.errors = err);
   }
 
   private load() {
@@ -174,7 +178,8 @@ export class MilestoneComponent implements OnInit {
         : this.ticketIssuesGQL.fetch(serialize(filter) as R)
           .pipe(map(({data: {ticket: {issues}}}) => deserialize(issues, PagingIssues).results)))
         .pipe(finalize(() => this.loading.issues = false))
-        .subscribe(issues => this.issues = issues);
+        .subscribe(issues => this.issues = issues,
+            err => this.errors = err);
     }
   }
 
@@ -233,7 +238,8 @@ export class MilestoneComponent implements OnInit {
     }).subscribe(() => {
       this.loadTickets();
       this.ticketControl.patchValue(ticket);
-    });
+    },
+      err => this.errors = err);
   }
 
 }

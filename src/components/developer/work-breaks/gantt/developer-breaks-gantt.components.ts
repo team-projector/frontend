@@ -10,6 +10,7 @@ import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { ApproveStates, BreakReasons } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
+import { GqlError } from 'src/models/gql-errors';
 import { User } from 'src/models/user';
 import { PagingBreaks } from 'src/models/work-break';
 import { getMock } from 'src/utils/mocks';
@@ -27,6 +28,7 @@ export class DeveloperWorkBreaksGanttComponent implements OnInit {
   reasons = BreakReasons;
   approveStates = ApproveStates;
   workbreaks = [];
+  errors: GqlError[] = [];
   loading = false;
 
   constructor(private breaksGQL: AllWorkBreaks,
@@ -45,8 +47,7 @@ export class DeveloperWorkBreaksGanttComponent implements OnInit {
       : this.breaksGQL.fetch({user: this.user.id} as R).pipe(
         map(({data: {breaks}}) => deserialize(breaks, PagingBreaks))))
       .pipe(finalize(() => this.loading = false))
-      .subscribe(ganttBreaks => {
-        this.workbreaks = ganttBreaks.results;
-      });
+      .subscribe(ganttBreaks => this.workbreaks = ganttBreaks.results,
+        err => this.errors = err);
   }
 }

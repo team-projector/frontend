@@ -7,6 +7,7 @@ import { deserialize, serialize } from 'serialize-ts';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
+import { GqlError } from 'src/models/gql-errors';
 import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { Project } from 'src/models/project';
 import { User } from 'src/models/user';
@@ -23,6 +24,7 @@ export class ProjectsSummaryComponent implements OnInit {
 
   ui = UI;
   durationFormat = DurationFormat;
+  errors: GqlError[] = [];
 
   project: Project;
   colors = [
@@ -59,7 +61,7 @@ export class ProjectsSummaryComponent implements OnInit {
         ? of(getMock(IssuesSummary)).pipe(delay(MOCKS_DELAY))
         : this.summaryGQL.fetch(serialize(filter) as R)
           .pipe(map(({data: {issues}}) => deserialize(issues, IssuesSummary)))
-    ).subscribe(summary => this.summary = summary);
+    ).subscribe(summary => this.summary = summary, err => this.errors = err);
   }
 
 }

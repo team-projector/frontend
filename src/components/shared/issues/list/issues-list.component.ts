@@ -13,6 +13,7 @@ import { DurationFormat } from 'src/models/enums/duration-format';
 import { IssueProblem, IssueState, IssuesType } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { ViewType } from 'src/models/enums/view-type';
+import { GqlError } from 'src/models/gql-errors';
 import { IssuesFilter, IssuesSummary, PagingIssues, ProjectSummary } from 'src/models/issue';
 import { getMock } from 'src/utils/mocks';
 import { Project } from '../../../../models/project';
@@ -62,6 +63,7 @@ export class IssuesListComponent implements OnInit {
   projects: ProjectSummary[] = [];
   developers: TeamMember[] = [];
   summary: IssuesSummary;
+  errors: GqlError[] = [];
 
   set team(team: Team) {
     if (!!team && team.id !== this._team?.id) {
@@ -168,7 +170,8 @@ export class IssuesListComponent implements OnInit {
         .pipe(map(({data: {summary}}) =>
           deserialize(summary, IssuesSummary))))
       .pipe(finalize(() => this.progress.projects = false))
-      .subscribe(({projects}) => this.projects = projects);
+      .subscribe(({projects}) => this.projects = projects,
+        err => this.errors = err);
   }
 
   private loadDevelopers() {
@@ -178,7 +181,8 @@ export class IssuesListComponent implements OnInit {
       : this.teamMembersGQL.fetch({team: this.team.id} as R)
         .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
       .pipe(finalize(() => this.progress.developers = false))
-      .subscribe(members => this.developers = members.results);
+      .subscribe(members => this.developers = members.results,
+        err => this.errors = err);
   }
 
   private load() {
@@ -237,7 +241,8 @@ export class IssuesListComponent implements OnInit {
         .pipe(map(({data: {summary}}) =>
           deserialize(summary, IssuesSummary))))
       .pipe(finalize(() => this.progress.summary = false))
-      .subscribe(summary => this.summary = summary);
+      .subscribe(summary => this.summary = summary,
+        err => this.errors = err);
   }
 
   sync(issue: number, hide: Function) {
@@ -247,6 +252,7 @@ export class IssuesListComponent implements OnInit {
         hide();
         this.progress.syncing = false;
       }))
-      .subscribe(() => this.table.load());
+      .subscribe(() => this.table.load(),
+        err => this.errors = err);
   }
 }

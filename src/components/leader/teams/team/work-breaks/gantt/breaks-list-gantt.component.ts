@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UI } from '@junte/ui';
@@ -7,10 +7,12 @@ import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY } from 'src/consts';
+import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { ApproveStates } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
+import { GqlError } from 'src/models/gql-errors';
 import { UsersPaging } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
 import { CardSize } from '../../../../../shared/users/card/user-card.types';
@@ -50,6 +52,7 @@ export class TeamBreaksListGanttComponent implements OnInit {
   approveStates = ApproveStates;
   userCardSize = CardSize;
   workbreaks = [];
+  errors: GqlError[] = [];
   loading = false;
   pageSize = PAGE_SIZE;
   count: number;
@@ -77,11 +80,10 @@ export class TeamBreaksListGanttComponent implements OnInit {
     this.loading = true;
     (environment.mocks
       ? of(getMock(UsersPaging, serialize(filter) as R)).pipe(delay(MOCKS_DELAY))
-      : this.teamBreaksGQL.fetch(serialize(filter) as R).pipe(
+      : this.teamBreaksGQL.fetch(serialize(filter) as R).pipe(catchGQLErrors(),
         map(({data: {breaks}}) => deserialize(breaks, UsersPaging))))
       .pipe(finalize(() => this.loading = false))
-      .subscribe(ganttBreaks => [this.workbreaks, this.count] =
-        [ganttBreaks.results, ganttBreaks.count]
-      );
+      .subscribe(ganttBreaks => [this.workbreaks, this.count] = [ganttBreaks.results, ganttBreaks.count],
+          err => this.errors = err);
   }
 }

@@ -11,6 +11,7 @@ import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { Metrics, MetricType } from 'src/models/enums/metrics';
 import { UserProblem } from 'src/models/enums/user';
+import { GqlError } from 'src/models/gql-errors';
 import { PagingTeamMembers, Team, TeamMember, TeamMemberProgressMetrics, TeamMetricsFilter } from 'src/models/team';
 import { UserProgressMetrics } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
@@ -53,6 +54,7 @@ export class TeamProgressComponent implements OnInit {
 
   days: Date[] = [];
   developers: TeamMember[] = [];
+  errors: GqlError[] = [];
   metrics: TeamMetrics;
 
   metricControl = this.fb.control(localStorage.getItem(METRIC_TYPE) || MetricType.all);
@@ -99,7 +101,8 @@ export class TeamProgressComponent implements OnInit {
       : this.teamMembersGQL.fetch({team: this.team.id} as R)
         .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
       .pipe(delay(UI_DELAY), finalize(() => this.progress.developers = false))
-      .subscribe(members => this.developers = members.results);
+      .subscribe(members => this.developers = members.results,
+          err => this.errors = err);
   }
 
   loadMetrics() {

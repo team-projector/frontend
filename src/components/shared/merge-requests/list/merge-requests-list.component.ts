@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { IssueProblem } from 'src/models/enums/issue';
 import { MergeRequestState, MergeRequestType } from 'src/models/enums/merge-requests';
 import { ViewType } from 'src/models/enums/view-type';
+import { GqlError } from 'src/models/gql-errors';
 import { MergeRequestsFilter, MergeRequestSummary, PagingMergeRequest } from 'src/models/merge-request';
 import { getMock } from 'src/utils/mocks';
 import { Team } from '../../../../models/team';
@@ -31,6 +32,7 @@ export class MergeRequestsListComponent implements OnInit {
   mergeRequestType = MergeRequestType;
   issueProblem = IssueProblem;
   viewType = ViewType;
+  errors: GqlError[] = [];
 
   // will be used for reset offset
   private reset: Object;
@@ -140,7 +142,8 @@ export class MergeRequestsListComponent implements OnInit {
       : this.mergeRequestsSummaryGQL.fetch(serialize(this.filter) as R)
         .pipe(map(({data: {summary}}) =>
           deserialize(summary, MergeRequestSummary))))
-      .subscribe(summary => this.summary = summary);
+      .subscribe(summary => this.summary = summary,
+        err => this.errors = err);
 
   }
 
@@ -151,6 +154,7 @@ export class MergeRequestsListComponent implements OnInit {
         hide();
         this.progress.syncing = false;
       }))
-      .subscribe(() => this.table.load());
+      .subscribe(() => this.table.load(),
+        err => this.errors = err);
   }
 }

@@ -9,6 +9,7 @@ import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { BreakReasons } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
+import { GqlError } from 'src/models/gql-errors';
 import { PagingTeamMembers, Team, TeamMember, TeamMembersFilter } from 'src/models/team';
 import { BreakUpdate, WorkBreak } from 'src/models/work-break';
 import { getMock } from 'src/utils/mocks';
@@ -32,6 +33,7 @@ export class BreakEditComponent {
 
   progress = {saving: false};
   members: TeamMember[] = [];
+  errors: GqlError[] = [];
 
   form = this.fb.group({
     id: [null],
@@ -105,7 +107,8 @@ export class BreakEditComponent {
         ? of(getMock(PagingTeamMembers)).pipe(delay(MOCKS_DELAY))
         : this.getTeamMembersGQL.fetch(serialize(request) as R)
           .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers)))
-    ).subscribe(teams => this.members = teams.results);
+    ).subscribe(teams => this.members = teams.results,
+      err => this.errors = err);
   }
 
   save() {
@@ -117,7 +120,8 @@ export class BreakEditComponent {
 
     (environment.mocks ? of(getMock(WorkBreak)) : action)
       .pipe(finalize(() => this.progress.saving = false))
-      .subscribe(() => this.saved.emit());
+      .subscribe(() => this.saved.emit(),
+        err => this.errors = err);
   }
 
 }

@@ -35,11 +35,11 @@ export class EditTicketComponent {
   private _ticket: Ticket;
   private _id: string;
 
-  errors: GqlError[] = [];
   progress = {loading: false, saving: false};
   selected = {issues: []};
 
   milestones: Milestone[] = [];
+  errors: GqlError[] = [];
 
   milestoneControl = this.fb.control(null);
   form = this.fb.group({
@@ -109,7 +109,8 @@ export class EditTicketComponent {
 
     (environment.mocks ? of(getMock(Ticket)).pipe(delay(MOCKS_DELAY)) : action)
       .pipe(finalize(() => this.progress.loading = false))
-      .subscribe(ticket => this.ticket = ticket);
+      .subscribe(ticket => this.ticket = ticket,
+          err => this.errors = err);
   }
 
   save() {
@@ -118,7 +119,7 @@ export class EditTicketComponent {
     const action = mutation.mutate(serialize(new TicketUpdate(this.form.getRawValue())) as R);
     action.pipe(catchGQLErrors(), finalize(() => this.progress.saving = false))
       .subscribe(() => this.saved.emit(),
-        (err: GqlError[]) => this.errors = err);
+        err => this.errors = err);
   }
 
   findMilestones() {
@@ -135,7 +136,7 @@ export class EditTicketComponent {
       ).subscribe(({results: allMilestones}) => {
         o.next(allMilestones);
         o.complete();
-      }, (err: GqlError[]) => this.errors = err);
+      }, err => this.errors = err);
     });
   }
 
@@ -153,7 +154,7 @@ export class EditTicketComponent {
             o.next(issues);
             o.complete();
           },
-          (err: GqlError[]) => this.errors = err);
+          err => this.errors = err);
     });
   }
 }

@@ -1,3 +1,9 @@
+<jnt-informer *ngIf="errors.length > 0"
+              (ok)="errors = []">
+  <jnt-informer-message *ngFor="let error of errors"
+                        [message]="error.toString()"></jnt-informer-message>
+</jnt-informer>
+
 <ng-template #weekMetricTemplate let-metric="metric">
   <td>
     {{!!metric?.timeEstimate ? (metric?.timeEstimate | duration:durationFormat.short) : '&ndash;'}}
@@ -9,6 +15,7 @@
     <span>{{!!metric?.efficiency ? (metric?.efficiency | number:'1.2-2') : '&ndash;'}}</span>
   </td>
 </ng-template>
+
 <ng-template #dayMetricTemplate let-metric="metric" let-date="date">
   <div *ngIf="!!metric" data-metric [ngSwitch]="metricControl.value">
     <div data-issues *ngIf="!!metric?.issuesCount"></div>
