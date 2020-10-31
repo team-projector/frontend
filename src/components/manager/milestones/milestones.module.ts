@@ -10,29 +10,33 @@ import { OutletModule } from 'src/components/outlet/outlet.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { MoneyPipesModule } from '../../../pipes/money-pipes.module';
 import { IssueCardModule } from '../../shared/issues/card/issue-card.module';
+import { MilestonesListModule } from '../../shared/milestones/list/milestones-list.module';
 import { MilestoneComponent } from './milestone/milestone.component';
 import { MilestonesRoutingModule } from './milestones-routing.module';
-import { MilestonesComponent } from './milestones.component';
+import { ManagerMilestonesComponent } from './milestones.component';
 
 @NgModule({
   declarations: [
-    MilestonesComponent,
+    ManagerMilestonesComponent,
     MilestoneComponent,
     EditTicketComponent,
     TicketStateColorPipe
   ],
   imports: [
+    MilestonesRoutingModule,
+
     CommonModule,
     ReactiveFormsModule,
     JunteUiModule,
     DragDropModule,
 
     IssueCardModule,
-    MilestonesRoutingModule,
     DatePipesModule,
     OutletModule,
     DateFnsModule,
-    MoneyPipesModule
+    MoneyPipesModule,
+
+    MilestonesListModule
   ],
   entryComponents: [EditTicketComponent]
 })

@@ -126,10 +126,10 @@
     <tr data-week>
       <th data-gutter></th>
       <th colspan="2" i18n="@@label.developer">Developer</th>
-      <th data-day *ngFor="let day of daysOfWeek; let i = index"
-          (click)="selected.emit({developer: null, dueDate: days[i]})"
-          [attr.today]="(today | dfnsIsEqual: days[i])">
-        <span>{{day}}</span> {{days[i] | dfnsGetDate}}
+      <th data-day *ngFor="let weekDay of [0,1,2,3,4,5,6]"
+          (click)="selected.emit({developer: null, dueDate: days[weekDay]})"
+          [attr.today]="(today | dfnsIsEqual: days[weekDay])">
+        <span>{{days[weekDay] | dfnsFormat: 'd'}}</span> {{weekDay | dfnsWeekdayName:'x2'}}
       </th>
       <th data-metric-name
           i18n="@@label.est">Est

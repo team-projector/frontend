@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { IssueState } from 'src/models/enums/issue';
 import { TicketProblem, TicketStates, TicketsTypes, TicketTypes } from 'src/models/enums/ticket';
-import { GqlError } from 'src/models/gql-errors';
+import { BackendError } from 'src/types/gql-errors';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { PagingTickets, Ticket, TicketsFilter, TicketsSummary } from 'src/models/ticket';
 import { getMock } from 'src/utils/mocks';
@@ -76,7 +76,7 @@ export class MilestoneComponent implements OnInit {
   tickets: Ticket[] = [];
   summary: TicketsSummary;
   issues: Issue[] = [];
-  errors: GqlError[] = [];
+  errors: BackendError[] = [];
 
   constructor(private milestoneIssuesSummaryGQL: MilestoneIssuesSummaryGQL,
               private allTicketsGQL: AllTicketsGQL,

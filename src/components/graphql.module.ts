@@ -6,7 +6,7 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { ApolloLink } from 'apollo-link';
 import { ErrorResponse, onError } from 'apollo-link-error';
 import { AppConfig } from '../app-config';
-import { AuthorisationError } from '../models/gql-errors';
+import { AuthorisationError } from '../types/gql-errors';
 import { convertGQLErrors } from '../utils/gql-errors';
 
 @NgModule({

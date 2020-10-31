@@ -10,7 +10,7 @@ import { MOCKS_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
-import { GqlError } from 'src/models/gql-errors';
+import { BackendError } from 'src/types/gql-errors';
 import { PagingTeams, Team } from 'src/models/team';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
@@ -34,7 +34,7 @@ export class TeamsComponent implements OnInit {
 
   private _state: TeamsState;
   teams: Team[] = [];
-  errors: GqlError[] = [];
+  errors: BackendError[] = [];
   loading: boolean;
   count: number;
 

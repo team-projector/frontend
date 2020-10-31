@@ -12,7 +12,7 @@ import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { ApproveStates } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
-import { GqlError } from 'src/models/gql-errors';
+import { BackendError } from 'src/types/gql-errors';
 import { UsersPaging } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
 import { CardSize } from '../../../../../shared/users/card/user-card.types';
@@ -52,7 +52,7 @@ export class TeamBreaksListGanttComponent implements OnInit {
   approveStates = ApproveStates;
   userCardSize = CardSize;
   workbreaks = [];
-  errors: GqlError[] = [];
+  errors: BackendError[] = [];
   loading = false;
   pageSize = PAGE_SIZE;
   count: number;

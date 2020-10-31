@@ -1,37 +1,3 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import "~@junte/ui/lib/assets/styles/navigation/link";
-
 :host {
   display: block;
-}
-
-[remains] {
-  margin-top: $jnt-gutter-tiny;
-  text-align: center;
-  font-size: .85em;
-  [overflow='true'] {
-    background: $jnt-fail-color;
-    color: $jnt-white-color;
-    border-radius: $jnt-gutter-tiny;
-    line-height: 1em;
-    padding: 0 $jnt-gutter-tiny;
-  }
-}
-
-[metric] {
-  overflow: hidden;
-  jnt-white-space: nowrap;
-  text-overflow: ellipsis;
-  font-size: .85em;
-  &:first-of-type {
-    flex: 1;
-    text-align: left;
-  }
-  &[budget] {
-    color: $jnt-primary-text-light-color;
-  }
-}
-
-[closed='true'] {
-  @include jnt-link((text-decoration: line-through), '&', true);
 }

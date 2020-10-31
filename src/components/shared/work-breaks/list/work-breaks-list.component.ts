@@ -13,7 +13,7 @@ import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { ApproveStates, BreakReasons } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
-import { GqlError } from 'src/models/gql-errors';
+import { BackendError } from 'src/types/gql-errors';
 import { BreaksFilter, PagingBreaks, WorkBreak } from 'src/models/work-break';
 import { getMock } from 'src/utils/mocks';
 import { LocalUI } from '../../../../enums/local-ui';
@@ -44,7 +44,7 @@ export class WorkBreaksListComponent implements OnInit {
   team: Team;
   user: User;
   breaks: WorkBreak[] = [];
-  errors: GqlError[] = [];
+  errors: BackendError[] = [];
   filter: BreaksFilter;
 
   tableControl = this.fb.control({

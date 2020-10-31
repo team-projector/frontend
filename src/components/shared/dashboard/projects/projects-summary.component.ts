@@ -7,7 +7,7 @@ import { deserialize, serialize } from 'serialize-ts';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
-import { GqlError } from 'src/models/gql-errors';
+import { BackendError } from 'src/types/gql-errors';
 import { IssuesFilter, IssuesSummary } from 'src/models/issue';
 import { Project } from 'src/models/project';
 import { User } from 'src/models/user';
@@ -24,7 +24,7 @@ export class ProjectsSummaryComponent implements OnInit {
 
   ui = UI;
   durationFormat = DurationFormat;
-  errors: GqlError[] = [];
+  errors: BackendError[] = [];
 
   project: Project;
   colors = [

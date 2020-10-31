@@ -4,7 +4,7 @@ import { MilestoneComponent } from 'src/components/manager/milestones/milestone/
 import { OutletComponent } from 'src/components/outlet/outlet.component';
 import { MilestoneResolver } from 'src/resolvers/milestone';
 import { TicketResolver } from 'src/resolvers/ticket';
-import { MilestonesComponent } from './milestones.component';
+import { ManagerMilestonesComponent } from './milestones.component';
 
 export const MILESTONES_BREADCRUMB = $localize`:@@label.milestones:Milestones`;
 
@@ -24,7 +24,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: MilestonesComponent
+        component: ManagerMilestonesComponent
       },
       {
         path: ':milestone',
@@ -53,4 +53,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class MilestonesRoutingModule {
+
 }

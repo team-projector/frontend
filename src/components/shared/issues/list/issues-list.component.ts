@@ -13,7 +13,7 @@ import { DurationFormat } from 'src/models/enums/duration-format';
 import { IssueProblem, IssueState, IssuesType } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { ViewType } from 'src/models/enums/view-type';
-import { GqlError } from 'src/models/gql-errors';
+import { BackendError } from 'src/types/gql-errors';
 import { IssuesFilter, IssuesSummary, PagingIssues, ProjectSummary } from 'src/models/issue';
 import { getMock } from 'src/utils/mocks';
 import { Project } from '../../../../models/project';
@@ -63,7 +63,7 @@ export class IssuesListComponent implements OnInit {
   projects: ProjectSummary[] = [];
   developers: TeamMember[] = [];
   summary: IssuesSummary;
-  errors: GqlError[] = [];
+  errors: BackendError[] = [];
 
   set team(team: Team) {
     if (!!team && team.id !== this._team?.id) {

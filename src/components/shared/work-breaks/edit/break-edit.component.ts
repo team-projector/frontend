@@ -9,7 +9,7 @@ import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { BreakReasons } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
-import { GqlError } from 'src/models/gql-errors';
+import { BackendError } from 'src/types/gql-errors';
 import { PagingTeamMembers, Team, TeamMember, TeamMembersFilter } from 'src/models/team';
 import { BreakUpdate, WorkBreak } from 'src/models/work-break';
 import { getMock } from 'src/utils/mocks';
@@ -33,7 +33,7 @@ export class BreakEditComponent {
 
   progress = {saving: false};
   members: TeamMember[] = [];
-  errors: GqlError[] = [];
+  errors: BackendError[] = [];
 
   form = this.fb.group({
     id: [null],

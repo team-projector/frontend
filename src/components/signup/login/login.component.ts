@@ -11,7 +11,7 @@ import { APPLICATION_READY, BACKEND, MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { AccessToken } from 'src/models/access-token';
 import { UserRole } from 'src/models/enums/user';
-import { GqlError } from 'src/models/gql-errors';
+import { BackendError } from 'src/types/gql-errors';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
 import { LocalUI } from '../../../enums/local-ui';
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
   theme = !!localStorage.theme ? Themes[localStorage.theme] : Themes.light;
 
   progress = {gitlab: false, login: false};
-  errors: GqlError[] = [];
+  errors: BackendError[] = [];
   form = this.builder.group({
     login: [null, [Validators.required]],
     password: [null, [Validators.required]]

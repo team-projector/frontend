@@ -6,12 +6,12 @@ import { addDays, addWeeks, endOfWeek, getDate, startOfDay, startOfWeek, subWeek
 import { of, zip } from 'rxjs';
 import { delay, filter as filtering, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { DATE_FORMAT, MOCKS_DELAY, UI_DELAY } from 'src/consts';
+import { DATE_FORMAT, DFNS_LOCALE, MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { Metrics, MetricType } from 'src/models/enums/metrics';
 import { UserProblem } from 'src/models/enums/user';
-import { GqlError } from 'src/models/gql-errors';
+import { BackendError } from 'src/types/gql-errors';
 import { PagingTeamMembers, Team, TeamMember, TeamMemberProgressMetrics, TeamMetricsFilter } from 'src/models/team';
 import { UserProgressMetrics } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
@@ -20,7 +20,6 @@ import { CardSize } from '../../../../../shared/users/card/user-card.types';
 import { TeamMembersGQL, TeamMetricsGQL } from './team-progress.graphql';
 
 const DAYS_IN_WEEK = 7;
-const DAYS_WEEK = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
 
 interface TeamMetrics {
   days: Map<string, Map<string, UserProgressMetrics>>;
@@ -44,7 +43,6 @@ export class TeamProgressComponent implements OnInit {
   durationFormat = DurationFormat;
   metricType = MetricType;
   today = startOfDay(new Date());
-  daysOfWeek = DAYS_WEEK;
   userCardSize = CardSize;
 
   private _team: Team;
@@ -54,7 +52,7 @@ export class TeamProgressComponent implements OnInit {
 
   days: Date[] = [];
   developers: TeamMember[] = [];
-  errors: GqlError[] = [];
+  errors: BackendError[] = [];
   metrics: TeamMetrics;
 
   metricControl = this.fb.control(localStorage.getItem(METRIC_TYPE) || MetricType.all);
@@ -102,7 +100,7 @@ export class TeamProgressComponent implements OnInit {
         .pipe(map(({data: {team: {members}}}) => deserialize(members, PagingTeamMembers))))
       .pipe(delay(UI_DELAY), finalize(() => this.progress.developers = false))
       .subscribe(members => this.developers = members.results,
-          err => this.errors = err);
+        err => this.errors = err);
   }
 
   loadMetrics() {
@@ -138,7 +136,7 @@ export class TeamProgressComponent implements OnInit {
   }
 
   private render() {
-    const start = startOfWeek(this.current, {weekStartsOn: 1});
+    const start = startOfWeek(this.current, {locale: DFNS_LOCALE});
     this.days = [];
     for (let i = 0; i < DAYS_IN_WEEK; i++) {
       this.days[i] = addDays(start, i);

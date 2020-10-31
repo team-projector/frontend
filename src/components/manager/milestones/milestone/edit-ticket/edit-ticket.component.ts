@@ -10,7 +10,7 @@ import { AllMilestonesGQL } from 'src/components/manager/milestones/milestones.g
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { TicketStates, TicketTypes } from 'src/models/enums/ticket';
-import { GqlError } from 'src/models/gql-errors';
+import { BackendError } from 'src/types/gql-errors';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Milestone, MilestonesFilter, PagingMilestones } from 'src/models/milestone';
 import { Ticket, TicketUpdate } from 'src/models/ticket';
@@ -39,7 +39,7 @@ export class EditTicketComponent {
   selected = {issues: []};
 
   milestones: Milestone[] = [];
-  errors: GqlError[] = [];
+  errors: BackendError[] = [];
 
   milestoneControl = this.fb.control(null);
   form = this.fb.group({

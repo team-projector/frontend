@@ -24,7 +24,7 @@ export const BACKEND: {
 } = window['backend'] || {
   config: {
     currencyCode: CurrencyCode.usd,
-    firstWeekDay: 0,
+    firstWeekDay: 1,
     gitlabLoginEnabled: true,
     demoMode: false
   }
@@ -47,7 +47,7 @@ enum LocaleData {
   CurrencyCode = 16
 }
 
-function getLocaleData(locale: any) {
+function getLocaleData(locale: Object) {
   let changes;
   switch (CURRENCY_CODE) {
     case CurrencyCode.rur:
@@ -94,6 +94,7 @@ switch (language) {
     fnsConfig.setLocale(dfnsLocale);
     config = {
       i18n: i18nRu,
+      weekStartsOn: FIRST_DAY_OF_WEEK,
       locale: {
         ui: jntRu,
         dfns: dfnsLocale
@@ -112,6 +113,7 @@ switch (language) {
     fnsConfig.setLocale(dfnsLocale);
     config = {
       i18n: i18nEn,
+      weekStartsOn: FIRST_DAY_OF_WEEK,
       locale: {
         ui: jntEnUs,
         dfns: dfnsLocale
@@ -130,4 +132,4 @@ providers.push({
   useValue: data[LocaleData.CurrencyCode]
 });
 
-export const imports = [JunteUiModule.forRoot(config)];
+export const APP_MODULE_IMPORTS = [JunteUiModule.forRoot(config)];
