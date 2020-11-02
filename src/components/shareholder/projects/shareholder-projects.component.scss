@@ -1,0 +1,11 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/layout/block";
+
+[data-tabs] {
+  @include jnt-block((body: (padding: $jnt-gutter-normal 0 0 0)), '&', true);
+
+  [data-nav] {
+    // TODO: @ui: move to mixins api
+    margin: 0 $jnt-gutter-normal;
+  }
+}

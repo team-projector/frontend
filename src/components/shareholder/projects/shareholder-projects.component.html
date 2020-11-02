@@ -1,0 +1,19 @@
+<jnt-app-page-header [icon]="localUi.icons.project"
+                     title="Projects"
+                     teaser="when you can't work"></jnt-app-page-header>
+
+<jnt-block data-tabs [padding]="ui.gutter.none"
+           [width]="ui.width.fluid">
+  <jnt-menu data-nav [style]="ui.menu.style.tabs"
+            [spacing]="ui.gutter.normal">
+    <jnt-menu-item [link]="['groups']"
+                   title="Groups"
+                   i18n-title="@@action.groups">
+    </jnt-menu-item>
+    <jnt-menu-item [link]="['.']"
+                   title="Projects"
+                   i18n-title="@@action.projects">
+    </jnt-menu-item>s
+  </jnt-menu>
+  <router-outlet></router-outlet>
+</jnt-block>

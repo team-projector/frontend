@@ -59,7 +59,7 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Budget"
+    <!--<jnt-table-column title="Budget"
                       i18n-title="@@label.budget"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-budget="budget" let-metrics="metrics">
@@ -68,12 +68,12 @@
             <ng-template #progressBarLegendTemplate>
               <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
                          [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
-                <small>{{budget - metrics.budgetRemains | money}}</small>
-                <small>{{budget | money}}</small>
+                <div metric>{{budget - metrics.budgetRemains | money}}</div>
+                <div metric budget>{{budget | money}}</div>
               </jnt-stack>
             </ng-template>
           </jnt-progress-bar>
-          <div data-remains>
+          <div remains>
             <span [attr.overflow]="metrics.budgetRemains < 0">
               {{metrics.budgetRemains | money}}
             </span>
@@ -92,18 +92,18 @@
                        [align]="ui.align.center"
                        [justify]="ui.justify.between"
                        [gutter]="ui.gutter.normal">
-              <small>{{metrics.payroll | money}}</small>
-              <small>{{budget | money}}</small>
+              <div metric>{{metrics.payroll | money}}</div>
+              <div metric budget>{{budget | money}}</div>
             </jnt-stack>
           </ng-template>
         </jnt-progress-bar>
-        <div data-remains>
+        <div remains>
             <span [attr.overflow]="metrics.profit < 0">
               {{metrics.profit | money}}
             </span>
         </div>
       </ng-template>
-    </jnt-table-column>
+    </jnt-table-column>-->
 
     <ng-template #tableRowActionsTemplate let-row="row">
       <jnt-menu [orientation]="ui.orientation.vertical">

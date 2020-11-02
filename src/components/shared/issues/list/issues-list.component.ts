@@ -56,6 +56,7 @@ export class IssuesListComponent implements OnInit {
     summary: false,
     syncing: false
   };
+  errors: BackendError[] = [];
 
   project: Project;
   developer: User;
@@ -63,7 +64,6 @@ export class IssuesListComponent implements OnInit {
   projects: ProjectSummary[] = [];
   developers: TeamMember[] = [];
   summary: IssuesSummary;
-  errors: BackendError[] = [];
 
   set team(team: Team) {
     if (!!team && team.id !== this._team?.id) {
@@ -240,7 +240,7 @@ export class IssuesListComponent implements OnInit {
       : this.issuesSummaryGQL.fetch(serialize(this.filter) as R)
         .pipe(map(({data: {summary}}) =>
           deserialize(summary, IssuesSummary))))
-      .pipe(finalize(() => this.progress.summary = false))
+      .pipe(delay(UI_DELAY), finalize(() => this.progress.summary = false))
       .subscribe(summary => this.summary = summary,
         err => this.errors = err);
   }

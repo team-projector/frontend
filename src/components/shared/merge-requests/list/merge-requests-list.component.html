@@ -43,6 +43,7 @@
         </jnt-switcher>
       </jnt-stack>
     </ng-template>
+
     <jnt-table-column sort="title"
                       title="Title"
                       i18n-title="@@label.title">
@@ -54,7 +55,24 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Progress"
+    <jnt-table-column width="20%"
+                      title="Labels"
+                      i18n-title="@@label.labels">
+      <ng-template #tableCellTemplate let-labels="labels">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [gutter]="ui.gutter.small"
+                   [justify]="ui.justify.start"
+                   [wrap]="ui.wrap.wrap"
+                   [spacing]="ui.gutter.small">
+          <jnt-label *ngFor="let l of (labels | labels)"
+                     [size]="ui.size.small"
+                     [color]="l.color" [label]="l.title"></jnt-label>
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column width="20%"
+                      title="Progress"
                       i18n-title="@@label.progress"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-timeEstimate="timeEstimate"
@@ -84,6 +102,7 @@
     </jnt-table-column>
 
     <jnt-table-column *ngIf="view === viewType.developer"
+                      width="100px"
                       title="Payroll"
                       i18n-title="@@label.payroll"
                       [align]="ui.text.align.center">

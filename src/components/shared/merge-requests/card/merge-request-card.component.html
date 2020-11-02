@@ -22,10 +22,6 @@
                 [icon]="localUi.icons.mergeRequest"
                 [title]="mergeRequest.title">
       </jnt-link>
-      <jnt-label *ngFor="let l of mergeRequest.labels"
-                 [color]="l.color"
-                 [label]="l.title"
-                 [size]="ui.size.small"></jnt-label>
     </jnt-stack>
     <small>{{mergeRequest.project?.fullTitle}}</small>
   </jnt-stack>

@@ -9,6 +9,23 @@ import { Milestone } from './milestone';
 import { Paging } from './paging';
 
 @model()
+export class ProjectsSummary {
+
+  @field()
+  count: number;
+
+  @field()
+  archivedCount: number;
+
+  @field()
+  supportingCount: number;
+
+  @field()
+  developingCount: number;
+
+}
+
+@model()
 export class ProjectGroup {
 
   @field({mock: () => faker.random.uuid()})

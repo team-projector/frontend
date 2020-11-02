@@ -59,7 +59,7 @@
                        let-selected="selected">
             <app-user [user]="member.user"
                       [roles]="member.roles"
-                      [size]="selected ? userCardSize.small : userCardSize.base"></app-user>
+                      [size]="userCardSize.small"></app-user>
           </ng-template>
           <jnt-select formControlName="developer"
                       placeholder="Developer"
@@ -190,7 +190,7 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column width="125px"
+    <jnt-table-column width="175px"
                       title="Due date"
                       i18n-title="@@label.due_date"
                       [align]="ui.text.align.center">

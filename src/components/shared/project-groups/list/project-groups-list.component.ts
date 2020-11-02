@@ -18,17 +18,17 @@ import { IssuesSummary } from '../../../../models/issue';
 import { ProjectsFilter, ProjectsPaging, ProjectsSummary } from '../../../../models/project';
 import { BackendError } from '../../../../types/gql-errors';
 import { equals } from '../../../../utils/equals';
-import { AllProjectsGQL, ProjectsSummaryGQL } from './projects-list.graphql';
-import { ProjectsState, ProjectsStateUpdate } from './projects-list.types';
+import { AllProjectGroupsGQL, ProjectGroupsSummaryGQL } from './project-groups-list.graphql';
+import { ProjectGroupsState, ProjectGroupsStateUpdate } from './project-groups-list.types';
 
 const PAGE_SIZE = 10;
 
 @Component({
-  selector: 'app-projects',
-  templateUrl: './projects-list.component.html',
-  styleUrls: ['./projects-list.component.scss']
+  selector: 'app-project-groups',
+  templateUrl: './project-groups-list.component.html',
+  styleUrls: ['./project-groups-list.component.scss']
 })
-export class ProjectsListComponent implements OnInit {
+export class ProjectGroupsListComponent implements OnInit {
 
   ui = UI;
   localUi = LocalUI;
@@ -56,7 +56,7 @@ export class ProjectsListComponent implements OnInit {
   });
 
   @Input()
-  set state({type, first, offset}: ProjectsState) {
+  set state({type, first, offset}: ProjectGroupsState) {
     this.logger.debug('set state');
     this.form.patchValue({
       table: {
@@ -70,13 +70,13 @@ export class ProjectsListComponent implements OnInit {
   }
 
   @Output()
-  filtered = new EventEmitter<ProjectsStateUpdate>();
+  filtered = new EventEmitter<ProjectGroupsStateUpdate>();
 
   @ViewChild('table', {static: true})
   table: TableComponent;
 
-  constructor(private allProjectsGQL: AllProjectsGQL,
-              private projectsSummaryGQL: ProjectsSummaryGQL,
+  constructor(private allProjectsGQL: AllProjectGroupsGQL,
+              private projectsSummaryGQL: ProjectGroupsSummaryGQL,
               private fb: FormBuilder,
               private logger: NGXLogger) {
 
@@ -130,7 +130,7 @@ export class ProjectsListComponent implements OnInit {
       this.table.load();
     }
 
-    this.filtered.emit(new ProjectsStateUpdate({
+    this.filtered.emit(new ProjectGroupsStateUpdate({
       first: first !== PAGE_SIZE ? first : undefined,
       offset: offset !== 0 ? offset : undefined,
       type: type !== ProjectType.developing ? type : undefined

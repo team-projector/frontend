@@ -48,7 +48,7 @@
           <jnt-stack [gutter]="ui.gutter.tiny">
             <jnt-link [source]="[id]" [target]="ui.target.blank"
                       [title]="title"
-                      [attr.closed]="state == milestoneState.closed">
+                      [attr.data-closed]="state == milestoneState.closed">
             </jnt-link>
             <small>{{owner?.fullTitle}}</small>
           </jnt-stack>
@@ -73,17 +73,17 @@
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-budget="budget" let-metrics="metrics">
         <ng-container *ngIf="budget">
-          <jnt-progress-bar progress [value]="metrics.budgetSpent / budget * 100">
+          <jnt-progress-bar [value]="metrics.budgetSpent / budget * 100">
             <ng-template #progressBarLegendTemplate>
               <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
                          [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
-                <div metric>{{budget - metrics.budgetRemains | money}}</div>
-                <div metric budget>{{budget | money}}</div>
+                <small>{{budget - metrics.budgetRemains | money}}</small>
+                <small>{{budget | money}}</small>
               </jnt-stack>
             </ng-template>
           </jnt-progress-bar>
-          <div remains>
-            <span [attr.overflow]="metrics.budgetRemains < 0">
+          <div data-remains>
+            <span [attr.data-overflow]="metrics.budgetRemains < 0">
               {{metrics.budgetRemains | money}}
             </span>
           </div>
@@ -95,19 +95,19 @@
                       i18n-title="@@label.profit"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-budget="budget" let-metrics="metrics">
-        <jnt-progress-bar progress [value]="metrics.payroll / budget * 100">
+        <jnt-progress-bar [value]="metrics.payroll / budget * 100">
           <ng-template #progressBarLegendTemplate>
             <jnt-stack [orientation]="ui.orientation.horizontal"
                        [align]="ui.align.center"
                        [justify]="ui.justify.between"
                        [gutter]="ui.gutter.normal">
-              <div metric>{{metrics.payroll | money}}</div>
-              <div metric budget>{{budget | money}}</div>
+              <small>{{metrics.payroll | money}}</small>
+              <small>{{budget | money}}</small>
             </jnt-stack>
           </ng-template>
         </jnt-progress-bar>
-        <div remains>
-            <span [attr.overflow]="metrics.profit < 0">
+        <div data-remains>
+            <span [attr.data-overflow]="metrics.profit < 0">
               {{metrics.profit | money}}
             </span>
         </div>
@@ -118,20 +118,20 @@
                       i18n-title="@@label.progress"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-metrics="metrics">
-        <jnt-progress-bar progress *ngIf="!!metrics.timeEstimate"
+        <jnt-progress-bar *ngIf="!!metrics.timeEstimate"
                           [value]="metrics.timeSpent / metrics.timeEstimate * 100">
           <ng-template #progressBarLegendTemplate>
             <jnt-stack [orientation]="ui.orientation.horizontal"
                        [align]="ui.align.center"
                        [justify]="ui.justify.between"
                        [gutter]="ui.gutter.normal">
-              <div metric>{{metrics.timeSpent | duration:durationFormat.short}}</div>
-              <div metric estimate>{{metrics.timeEstimate | duration:durationFormat.short}}</div>
+              <small>{{metrics.timeSpent | duration:durationFormat.short}}</small>
+              <small>{{metrics.timeEstimate | duration:durationFormat.short}}</small>
             </jnt-stack>
           </ng-template>
         </jnt-progress-bar>
-        <div remains>
-            <span [attr.overflow]="metrics.timeRemains < 0">
+        <div data-remains>
+            <span [attr.data-overflow]="metrics.timeRemains < 0">
               {{metrics.timeRemains | duration:durationFormat.short}}
             </span>
         </div>

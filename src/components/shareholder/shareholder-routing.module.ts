@@ -18,7 +18,7 @@ const routes: Routes = [
       },
       {
         path: 'projects',
-        loadChildren: () => import('./projects/company-projects.module').then(m => m.CompanyProjectsModule)
+        loadChildren: () => import('./projects/shareholder-projects.module').then(m => m.ShareholderProjectsModule)
       },
       {
         path: 'bonuses',

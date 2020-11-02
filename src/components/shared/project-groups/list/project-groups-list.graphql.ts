@@ -5,28 +5,18 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class AllProjectsGQL extends Query<{ projects }> {
+export class AllProjectGroupsGQL extends Query<{ groups }> {
   document = gql`
 query ($state: ProjectState, $offset: Int, $first: Int) {
-  projects: allProjects(state: $state, offset: $offset, first: $first) {
+  projects: allProjectGroups(state: $state, offset: $offset, first: $first) {
     count
     edges {
       node {
         id
         title
         fullTitle
-        group {
-          title
-        }
         glAvatar
         glUrl
-        metrics {
-            budget
-            budgetSpent
-            budgetRemains
-            payroll
-            profit
-        }
         state
       }
     }
@@ -37,10 +27,10 @@ query ($state: ProjectState, $offset: Int, $first: Int) {
 @Injectable({
   providedIn: 'root'
 })
-export class ProjectsSummaryGQL extends Query<{ summary }> {
+export class ProjectGroupsSummaryGQL extends Query<{ summary }> {
   document = gql`
 {
-  summary: projectsSummary {
+  summary: projectGroupsSummary {
     count
     archivedCount
     supportingCount

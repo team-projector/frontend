@@ -41,7 +41,8 @@ export class MergeRequestsListComponent implements OnInit {
   summary: MergeRequestSummary;
 
   progress = {
-    syncing: false
+    syncing: false,
+    summary: false
   };
 
   team: Team;
@@ -137,11 +138,13 @@ export class MergeRequestsListComponent implements OnInit {
   }
 
   loadSummary() {
+    this.progress.summary = true;
     (environment.mocks
       ? of(getMock(MergeRequestSummary)).pipe(delay(MOCKS_DELAY))
       : this.mergeRequestsSummaryGQL.fetch(serialize(this.filter) as R)
         .pipe(map(({data: {summary}}) =>
           deserialize(summary, MergeRequestSummary))))
+      .pipe(delay(UI_DELAY), finalize(() => this.progress.summary = false))
       .subscribe(summary => this.summary = summary,
         err => this.errors = err);
 
