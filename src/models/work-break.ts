@@ -3,7 +3,7 @@ import { faker } from '../utils/mocks';
 import { SearchFilter } from '@junte/ui';
 import { ArraySerializer } from 'serialize-ts';
 import { BreakReasons, ApproveStates } from 'src/models/enums/break';
-import { DATE_TIME_FORMAT } from '../consts';
+import { DATE_FORMAT, DATE_TIME_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToPaging } from '../serializers/graphql';
@@ -43,17 +43,17 @@ export class WorkBreak {
 
   @field({
     serializer: new LazyModel(() => User),
-    mock: ()=> User
+    mock: () => User
   })
   user: ModelRef<User>;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
 
-  @field({mock: () => faker.date.recent(-90), serializer: new DateSerializer()})
+  @field({mock: () => faker.date.recent(-90), serializer: new DateSerializer(DATE_FORMAT)})
   toDate: Date;
 
-  @field({mock: () => faker.date.recent(90), serializer: new DateSerializer()})
+  @field({mock: () => faker.date.recent(90), serializer: new DateSerializer(DATE_FORMAT)})
   fromDate: Date;
 
   @field({
@@ -68,12 +68,18 @@ export class WorkBreak {
   @field()
   approveState: ApproveStates;
 
+  @field()
+  paidDays: number;
+
+  @field()
+  paid: boolean;
+
   @field({serializer: new DateSerializer()})
   approvedAt: Date;
 
   @field({
     serializer: new LazyModel(() => User),
-    mock: ()=> User
+    mock: () => User
   })
   approvedBy: ModelRef<User>;
 
@@ -99,17 +105,20 @@ export class BreakUpdate {
   @field()
   user: string;
 
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  fromDate: Date;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  toDate: Date;
+
   @field()
   reason: BreakReasons;
 
   @field()
   comment: string;
 
-  @field({serializer: new DateSerializer(DATE_TIME_FORMAT)})
-  fromDate: Date;
-
-  @field({serializer: new DateSerializer(DATE_TIME_FORMAT)})
-  toDate: Date;
+  @field()
+  paidDays: number;
 
   constructor(update: BreakUpdate) {
     Object.assign(this, update);

@@ -38,14 +38,12 @@ export class BreakEditComponent {
   form = this.fb.group({
     id: [null],
     user: [null],
-    comment: [null, Validators.required],
-    reason: [null, Validators.required],
+    toDate: [null, Validators.required],
     fromDate: [null, Validators.required],
-    toDate: [null, Validators.required]
+    reason: [null, Validators.required],
+    comment: [null, Validators.required],
+    paidDays: [null]
   });
-
-  teamControl = this.fb.control(null);
-  teamForm = this.fb.group({team: this.teamControl});
 
   @Input()
   view = ViewType.developer;
@@ -56,10 +54,11 @@ export class BreakEditComponent {
     this.form.patchValue({
       id: workBreak.id,
       user: workBreak.user?.id,
-      comment: workBreak.comment,
-      reason: workBreak.reason,
       fromDate: workBreak.fromDate,
-      toDate: workBreak.toDate
+      toDate: workBreak.toDate,
+      reason: workBreak.reason,
+      comment: workBreak.comment,
+      paidDays: workBreak.paidDays
     });
   }
 

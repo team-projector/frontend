@@ -9,10 +9,11 @@ export class CreateBreakGQL extends Mutation<{ response: { workBreak } }> {
   document = gql`
 mutation(
     $user: ID!
-    $fromDate: DateTime!
-    $toDate: DateTime!
-    $reason: String!
+    $fromDate: Date!
+    $toDate: Date!
+    $reason: WorkBreakReason!
     $comment: String!
+    $paidDays: Int
 ) {
     response: createWorkBreak(
         user: $user
@@ -20,6 +21,7 @@ mutation(
         toDate: $toDate
         reason: $reason
         comment: $comment
+        paidDays: $paidDays
     ) {
         workBreak {
             createdAt
@@ -31,6 +33,7 @@ mutation(
             toDate
             reason
             comment
+            paidDays
         }
     }
 }`;
@@ -43,11 +46,12 @@ export class UpdateWorkBreakGQL extends Mutation<{ response: { workBreak } }> {
   document = gql`
 mutation(
     $id: ID!
-    $user: Int!
-    $fromDate: DateTime!
-    $toDate: DateTime!
-    $reason: String!
+    $user: ID!
+    $fromDate: Date!
+    $toDate: Date!
+    $reason: WorkBreakReason!
     $comment: String!
+    $paidDays: Int
 ) {
     response: updateWorkBreak(
         id: $id
@@ -56,6 +60,7 @@ mutation(
         toDate: $toDate
         reason: $reason
         comment: $comment
+        paidDays: $paidDays
     ) {
         workBreak {
             user {
@@ -67,6 +72,7 @@ mutation(
             toDate
             reason
             comment
+            paidDays
         }
     }
 }`;

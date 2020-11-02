@@ -24,19 +24,21 @@ query($team: ID, $user: ID, $offset: Int, $first: Int) {
                     name
                     glAvatar
                     position {
-                      title
+                        title
                     }
                 }
                 fromDate
                 toDate
                 comment
+                paidDays
+                paid
                 reason
                 approveState
                 approvedBy {
                     name
                     glAvatar
                     position {
-                      title
+                        title
                     }
                 }
                 approvedAt

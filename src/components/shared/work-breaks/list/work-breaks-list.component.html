@@ -25,14 +25,29 @@
 
     <jnt-table-column title="Period"
                       i18n-title="@@label.period"
+                      width="250px"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-fromDate="fromDate" let-toDate="toDate">
         <jnt-date-period [start]="fromDate" [end]="toDate"></jnt-date-period>
       </ng-template>
     </jnt-table-column>
 
+    <jnt-table-column width="75px"
+                      title="Paid"
+                      i18n-title="@@label.paid"
+                      [align]="ui.text.align.right">
+      <ng-template #tableCellTemplate let-paidDays="paidDays" let-paid="paid">
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.end">
+          <jnt-label [label]="paidDays"
+                     [color]="paid ? ui.color.green : ui.color.paleNavy"></jnt-label>
+        </jnt-stack>
+      </ng-template>
+    </jnt-table-column>
+
     <jnt-table-column title="Reason"
-                      i18n-title="@@label.reason">
+                      i18n-title="@@label.reason"
+                      width="10%">
       <ng-template #tableCellTemplate let-reason="reason">
         <ng-container [ngSwitch]="reason">
           <ng-container *ngSwitchCase="reasons.vacation"
@@ -49,9 +64,10 @@
     </jnt-table-column>
 
     <jnt-table-column title="Comment"
-                      i18n-title="@@label.comment">
+                      i18n-title="@@label.comment"
+                      width="20%">
       <ng-template #tableCellTemplate let-comment="comment">
-        <div data-comment>{{comment}}</div>
+        {{comment}}
       </ng-template>
     </jnt-table-column>
 
