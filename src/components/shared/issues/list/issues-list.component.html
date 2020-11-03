@@ -83,7 +83,7 @@
                            [features]="[ui.feature.allowEmpty]"></jnt-date-picker>
         </jnt-col>
         <jnt-col [wide]="6" [tablet]="6">
-          <jnt-switcher formControlName="type">
+          <jnt-switcher data-summary formControlName="type">
             <jnt-switcher-option label="All"
                                  i18n-label="@@action.filter_issues_all"
                                  [disabled]="summary?.count <= 0"
@@ -195,7 +195,7 @@
                       i18n-title="@@label.due_date"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-dueDate="dueDate" let-problems="problems">
-        <jnt-stack [align]="ui.align.center">
+        <jnt-stack [align]="tablet ? ui.align.start : ui.align.center">
           <app-due-date [dueDate]="dueDate" [problems]="problems"></app-due-date>
         </jnt-stack>
       </ng-template>
