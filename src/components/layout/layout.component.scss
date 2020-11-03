@@ -7,12 +7,12 @@
   }
 }
 
-[data-content] {
-  margin: $jnt-gutter-normal
+:host {
+  display: block;
 }
 
-:host {
-  display: block
+[data-content] {
+  padding: $jnt-gutter-small;
 }
 
 small {
