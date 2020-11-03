@@ -22,6 +22,7 @@ export class LocalUI {
     delayed: 'delayed:font:icons',
     developer: 'developer:font:icons',
     project: 'project:font:icons',
+    today: 'today:font:icons',
 
     money: 'money:font:icons',
     // animated
