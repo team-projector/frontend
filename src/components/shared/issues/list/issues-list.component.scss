@@ -10,6 +10,12 @@
   color: $jnt-muted-color;
 }
 
+[data-summary] {
+  @include max-for-tablet() {
+    width: 100%;
+  }
+}
+
 [data-due-date] {
   @include jnt-date-picker((width: 150px), '&', true);
 }

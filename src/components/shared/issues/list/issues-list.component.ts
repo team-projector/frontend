@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { TableComponent, UI } from '@junte/ui';
+import { BreakpointService, TableComponent, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
@@ -44,6 +44,8 @@ export class IssuesListComponent implements OnInit {
   durationFormat = DurationFormat;
   userCardSize = CardSize;
   today = new Date();
+
+  tablet = (this.breakpoint.current === UI.breakpoint.tablet) || (this.breakpoint.current === UI.breakpoint.mobile);
 
   private _team: Team;
   private _user: User;
@@ -138,7 +140,8 @@ export class IssuesListComponent implements OnInit {
               private issuesSummaryGQL: IssuesSummaryGQL,
               private syncIssueGQL: SyncIssueGQL,
               private fb: FormBuilder,
-              private logger: NGXLogger) {
+              private logger: NGXLogger,
+              public breakpoint: BreakpointService) {
   }
 
   ngOnInit() {
