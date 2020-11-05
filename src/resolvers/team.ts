@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { environment } from '../environments/environment';
+import { Project } from '../models/project';
 import { Team } from '../models/team';
 import { getMock } from '../utils/mocks';
 import { TeamGQL } from './team.graphql';
@@ -18,7 +19,7 @@ export class TeamResolver implements Resolve<Observable<Team>> {
           state: RouterStateSnapshot): Observable<Team> {
     const id = route.params['team'];
     const action = environment.mocks
-      ? of(getMock(Team))
+      ? of(getMock(Team, {id: id}))
       : this.teamGQL.fetch({team: id})
         .pipe(map(({data: {team}}) => deserialize(team, Team)));
 

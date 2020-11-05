@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { TableComponent, UI } from '@junte/ui';
-import { R } from 'apollo-angular/types';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
@@ -14,8 +13,7 @@ import { getMock } from 'src/utils/mocks';
 import { LocalUI } from '../../../../enums/local-ui';
 import { ProjectState, ProjectType } from '../../../../models/enums/project';
 import { ViewType } from '../../../../models/enums/view-type';
-import { IssuesSummary } from '../../../../models/issue';
-import { ProjectsFilter, ProjectsPaging, ProjectsSummary } from '../../../../models/project';
+import { ProjectGroupsPaging, ProjectsFilter, ProjectsSummary } from '../../../../models/project';
 import { BackendError } from '../../../../types/gql-errors';
 import { equals } from '../../../../utils/equals';
 import { AllProjectGroupsGQL, ProjectGroupsSummaryGQL } from './project-groups-list.graphql';
@@ -75,7 +73,7 @@ export class ProjectGroupsListComponent implements OnInit {
   @ViewChild('table', {static: true})
   table: TableComponent;
 
-  constructor(private allProjectsGQL: AllProjectGroupsGQL,
+  constructor(private allProjectGroupsGQL: AllProjectGroupsGQL,
               private projectsSummaryGQL: ProjectGroupsSummaryGQL,
               private fb: FormBuilder,
               private logger: NGXLogger) {
@@ -88,10 +86,10 @@ export class ProjectGroupsListComponent implements OnInit {
 
     this.table.fetcher = () => {
       return environment.mocks
-        ? of(getMock(ProjectsPaging)).pipe(delay(MOCKS_DELAY))
-        : this.allProjectsGQL.fetch(this.filter)
-          .pipe(delay(UI_DELAY), catchGQLErrors(), map(({data: {projects}}) =>
-            deserialize(projects, ProjectsPaging)));
+        ? of(getMock(ProjectGroupsPaging)).pipe(delay(MOCKS_DELAY))
+        : this.allProjectGroupsGQL.fetch(this.filter)
+          .pipe(delay(UI_DELAY), catchGQLErrors(), map(({data: {groups}}) =>
+            deserialize(groups, ProjectGroupsPaging)));
     };
 
     this.form.valueChanges.subscribe(() => {
@@ -106,7 +104,8 @@ export class ProjectGroupsListComponent implements OnInit {
     const filter = new ProjectsFilter({
       first: first,
       state: type === ProjectType.developing ? ProjectState.developing :
-        (type === ProjectType.archived ? ProjectState.archived : null),
+        (type === ProjectType.supporting ? ProjectState.supporting
+          : (type === ProjectType.archived ? ProjectState.archived : null)),
     });
     const reset = serialize(filter);
     if (!!this.reset && !equals(reset, this.reset)) {

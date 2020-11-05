@@ -38,7 +38,7 @@ import { LazyModel } from '../serializers/model';
 })
 export class WorkBreak {
 
-  @field({mock: () => faker.random.uuid()})
+  @field({mock: context => context?.id || faker.random.uuid()})
   id: number;
 
   @field({

@@ -23,7 +23,7 @@ export class TeamMember {
 
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
-    mock: () => [faker.helpers.randomize([TeamMemberRole.developer, TeamMemberRole.leader])]
+    mock: () => [TeamMemberRole.developer]
   })
   roles: TeamMemberRole[];
 
@@ -47,7 +47,7 @@ export class TeamMetrics {
 })
 export class Team {
 
-  @field({mock: () => faker.random.uuid()})
+  @field({mock: context => context?.id || faker.random.uuid()})
   id: string;
 
   @field({

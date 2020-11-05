@@ -26,7 +26,7 @@ import { Paging } from './paging';
 })
 export class Salary {
 
-  @field({mock: () => faker.random.uuid()})
+  @field({mock: context => context?.id || faker.random.uuid()})
   id: string;
 
   @field({mock: () => mocks.random(5, 15)})

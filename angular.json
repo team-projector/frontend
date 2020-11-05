@@ -51,6 +51,11 @@
                 "glob": "**/*",
                 "input": "node_modules/@junte/ui/lib/assets/icons/svg/",
                 "output": "./assets/icons/svg/"
+              },
+              {
+                "glob": "**/*",
+                "input": "src/assets/mocks/",
+                "output": "./backend/"
               }
             ],
             "styles": [
@@ -97,6 +102,14 @@
                 }
               ]
             },
+            "mocks": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.mocks.ts"
+                }
+              ]
+            },
             "ru": {
               "aot": true,
               "outputPath": "dist/ru/",
@@ -104,17 +117,6 @@
               "i18nFile": "src/locale/messages.ru.xlf",
               "i18nFormat": "xlf",
               "i18nLocale": "ru"
-            },
-            "mocks": {
-              "localize": [
-                "ru"
-              ],
-              "fileReplacements": [
-                {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.mocks.ts"
-                }
-              ]
             }
           }
         },

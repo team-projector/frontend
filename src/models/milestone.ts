@@ -84,7 +84,7 @@ export class MilestoneMetrics {
 })
 export class Milestone {
 
-  @field({mock: context => !!context && !!context.id ? context.id : faker.random.uuid()})
+  @field({mock: context => context?.id || faker.random.uuid()})
   id: string;
 
   @field({

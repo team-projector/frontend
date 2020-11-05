@@ -6,7 +6,7 @@ import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
 import { DATE_FORMAT, DFNS_LOCALE, FIRST_DAY_OF_WEEK } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
-import { faker, mocks } from '../utils/mocks';
+import { faker, mocks, TimeAccuracy } from '../utils/mocks';
 import { ModelRef } from '../utils/types';
 import { Metrics } from './enums/metrics';
 import { UserPermission, UserProblem, UserRole } from './enums/user';
@@ -57,14 +57,20 @@ export class UserMetrics {
 @model()
 export class UserPosition {
 
-  @field({mock: () => faker.name.findName()})
+  @field({
+    mock: () => faker.helpers.randomize([
+      'Junior Backend',
+      'Senior Frontend',
+      'iOS Developer'
+    ])
+  })
   title: string;
 }
 
 @model()
 export class User {
 
-  @field({mock: context => !!context && !!context.id ? context.id : 'mock' + faker.random.uuid()})
+  @field({mock: context => context?.id || faker.random.uuid()})
   id: string;
 
   @field({mock: () => faker.internet.userName()})
@@ -103,10 +109,10 @@ export class User {
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
     mock: [UserRole.developer,
-      UserRole.customer,
+      UserRole.leader,
       UserRole.manager,
       UserRole.shareholder,
-      UserRole.leader]
+      UserRole.customer]
   })
   roles: UserRole[];
 
@@ -123,22 +129,27 @@ export class User {
 
 @model({
   mocking: (me: Me) => {
-    if (!!localStorage.role) {
-      me.roles = [];
-      switch (localStorage.role) {
-        case UserRole.developer:
-          me.roles.push(UserRole.developer);
-          break;
-        case UserRole.leader:
-          me.roles.push(UserRole.developer);
-          me.roles.push(UserRole.leader);
-          break;
-        case UserRole.manager:
-          me.roles.push(UserRole.developer);
-          me.roles.push(UserRole.leader);
-          me.roles.push(UserRole.manager);
-          break;
-      }
+    me.roles = [];
+    switch (localStorage.role) {
+      case UserRole.developer:
+        me.roles.push(UserRole.developer);
+        break;
+      case UserRole.leader:
+        me.roles.push(UserRole.developer);
+        me.roles.push(UserRole.leader);
+        break;
+      case UserRole.manager:
+        me.roles.push(UserRole.developer);
+        me.roles.push(UserRole.leader);
+        me.roles.push(UserRole.manager);
+        break;
+      case UserRole.shareholder:
+      default:
+        me.roles.push(UserRole.developer);
+        me.roles.push(UserRole.leader);
+        me.roles.push(UserRole.manager);
+        me.roles.push(UserRole.shareholder);
+        break;
     }
   }
 })
@@ -175,13 +186,13 @@ export class UserMetricsFilter {
 }
 
 @model({
-  mocking: (metrics: UserProgressMetrics, filter: UserMetricsFilter) => {
-    const today = startOfToday();
-    const day = faker.date.between(startOfMonth(today), endOfMonth(today));
-    switch (filter.group) {
+  mocking: (metrics: UserProgressMetrics, {group, start, end}: UserMetricsFilter) => {
+    const day = faker.date.between(start, end);
+    switch (group) {
       case Metrics.week:
         metrics.start = startOfWeek(day, {weekStartsOn: 1});
         metrics.end = endOfWeek(day, {weekStartsOn: 1});
+        metrics.timeSpent = mocks.time(50, 60, TimeAccuracy.hours);
         break;
       case Metrics.day:
       default:
@@ -204,7 +215,7 @@ export class UserProgressMetrics {
   @field({mock: () => mocks.random(100, 230) * 1800})
   timeEstimate: number;
 
-  @field({mock: () => mocks.random(4, 9)})
+  @field({mock: () => mocks.time(5, 10, TimeAccuracy.hours)})
   timeSpent: number;
 
   @field({mock: () => mocks.random(1, 8) * 1800})

@@ -6,6 +6,7 @@ import { Salary } from 'src/models/salary';
 import { deserialize } from 'serialize-ts/dist';
 import { map } from 'rxjs/operators';
 import { getMock } from 'src/utils/mocks';
+import { Project } from '../models/project';
 import { SalaryGQL } from './salary.graphql';
 
 @Injectable({providedIn: 'root'})
@@ -16,9 +17,9 @@ export class SalaryResolver implements Resolve<Observable<Salary>> {
 
   resolve(route: ActivatedRouteSnapshot,
           state: RouterStateSnapshot): Observable<Salary> {
-    const id = +route.params['salary'];
+    const id = route.params['salary'];
     return environment.mocks
-      ? of(getMock(Salary))
+      ? of(getMock(Salary, {id: id}))
       : this.salaryGQL.fetch({salary: id})
       .pipe(map(({data: {salary}}) =>
         deserialize(salary, Salary)));

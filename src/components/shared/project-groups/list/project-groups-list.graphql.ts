@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 export class AllProjectGroupsGQL extends Query<{ groups }> {
   document = gql`
 query ($state: ProjectState, $offset: Int, $first: Int) {
-  projects: allProjectGroups(state: $state, offset: $offset, first: $first) {
+  groups: allProjectGroups(state: $state, offset: $offset, first: $first) {
     count
     edges {
       node {
@@ -17,6 +17,13 @@ query ($state: ProjectState, $offset: Int, $first: Int) {
         fullTitle
         glAvatar
         glUrl
+        metrics {
+          budget
+          budgetSpent
+          budgetRemains
+          payroll
+          profit
+        }
         state
       }
     }

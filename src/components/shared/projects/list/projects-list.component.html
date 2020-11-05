@@ -61,15 +61,16 @@
 
     <jnt-table-column title="Budget"
                       i18n-title="@@label.budget"
+                      width="25%"
                       [align]="ui.text.align.center">
-      <ng-template #tableCellTemplate let-budget="budget" let-metrics="metrics">
-        <ng-container *ngIf="budget">
-          <jnt-progress-bar progress [value]="metrics.budgetSpent / budget * 100">
+      <ng-template #tableCellTemplate let-metrics="metrics">
+        <ng-container>
+          <jnt-progress-bar [value]="metrics.budgetSpent / metrics.budget * 100">
             <ng-template #progressBarLegendTemplate>
               <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
                          [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
-                <small>{{budget - metrics.budgetRemains | money}}</small>
-                <small>{{budget | money}}</small>
+                <small>{{metrics.budget - metrics.budgetRemains | money}}</small>
+                <small>{{metrics.budget | money}}</small>
               </jnt-stack>
             </ng-template>
           </jnt-progress-bar>
@@ -84,16 +85,17 @@
 
     <jnt-table-column title="Profit"
                       i18n-title="@@label.profit"
+                      width="25%"
                       [align]="ui.text.align.center">
-      <ng-template #tableCellTemplate let-budget="budget" let-metrics="metrics">
-        <jnt-progress-bar progress [value]="metrics.payroll / budget * 100">
+      <ng-template #tableCellTemplate let-metrics="metrics">
+        <jnt-progress-bar [value]="metrics.payroll / metrics.budget * 100">
           <ng-template #progressBarLegendTemplate>
             <jnt-stack [orientation]="ui.orientation.horizontal"
                        [align]="ui.align.center"
                        [justify]="ui.justify.between"
                        [gutter]="ui.gutter.normal">
               <small>{{metrics.payroll | money}}</small>
-              <small>{{budget | money}}</small>
+              <small>{{metrics.budget | money}}</small>
             </jnt-stack>
           </ng-template>
         </jnt-progress-bar>

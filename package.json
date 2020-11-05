@@ -7,7 +7,7 @@
     "start": "npm run iconfont && ng serve",
     "start:mocks": "npm run iconfont && ng serve --configuration=mocks",
     "build": "npm run iconfont && ng build --prod --localize",
-    "build:mocks": "npm run iconfont && ng build --configuration=mocks --localize && ng build --configuration=ru",
+    "build:mocks": "npm run iconfont && ng build --configuration=mocks --localize",
     "test": "ng test",
     "lint": "ng lint",
     "clean": "npm cache clean --force && rm -rf -- node_modules doc coverage dist dll package-lock.json",

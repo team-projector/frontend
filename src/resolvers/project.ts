@@ -18,7 +18,7 @@ export class ProjectResolver implements Resolve<Project> {
           state: RouterStateSnapshot): Observable<Project> {
     const id = route.params['project'];
     const action = environment.mocks
-      ? of(getMock(Project))
+      ? of(getMock(Project, {id: id}))
       : this.projectGQL.fetch({project: id})
         .pipe(map(({data: {project}}) => deserialize(project, Project)));
 
