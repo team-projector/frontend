@@ -10,8 +10,8 @@
   <link rel="icon" type="image/png" href="assets/images/favicon-16x16.png" sizes="16x16">
   <script src="/backend/config.js" type="text/javascript"></script>
   <script>
-    if (!!window['backend']) {
-      //document.write(window['backend']['config']['staticHead']);
+    if (!!window['backend'] && document.location.hostname !== 'localhost') {
+      document.write(window['backend']['config']['staticHead']);
     }
   </script>
   <style>
