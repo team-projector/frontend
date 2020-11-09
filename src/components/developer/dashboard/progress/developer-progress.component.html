@@ -88,28 +88,7 @@
       <jnt-stack [orientation]="ui.orientation.horizontal"
                  [align]="ui.align.center">
         <div data-title>Work progress</div>
-        <jnt-switcher formControlName="metric">
-          <jnt-switcher-option label="Spent"
-                               i18n-label="@@label.spent"
-                               [value]="metricType.spent">
-            <jnt-dot [color]="ui.color.green"></jnt-dot>
-          </jnt-switcher-option>
-          <jnt-switcher-option label="Estimated"
-                               i18n-label="@@label.estimated"
-                               [value]="metricType.estimate">
-            <jnt-dot [color]="ui.color.red"></jnt-dot>
-          </jnt-switcher-option>
-          <jnt-switcher-option label="Remains"
-                               i18n-label="@@label.remains"
-                               [value]="metricType.remains">
-            <jnt-dot [color]="ui.color.yellow"></jnt-dot>
-          </jnt-switcher-option>
-          <jnt-switcher-option label="Loading"
-                               i18n-label="@@label.loading"
-                               [value]="metricType.loading">
-            <jnt-dot [color]="ui.color.purpleDark"></jnt-dot>
-          </jnt-switcher-option>
-        </jnt-switcher>
+        <app-metrics-type formControlName="metric"></app-metrics-type>
       </jnt-stack>
     </ng-template>
 

@@ -9,6 +9,7 @@ import { DatePipesModule } from '../../../pipes/date-pipes.module';
 import { NumberPipesModule } from '../../../pipes/number-pipes.module';
 import { ProjectsSummaryModule } from '../../shared/dashboard/projects/projects-summary.module';
 import { DueDateModule } from '../../shared/due-date/due-date.module';
+import { MetricsTypeModule } from '../../shared/metrics-type/metrics-type.module';
 import { DeveloperDashboardRoutingModule } from './developer-dashboard-routing.module';
 import { DeveloperDashboardComponent } from './developer-dashboard.component';
 import { DeveloperPayrollComponent } from './payroll/developer-payroll.component';
@@ -34,7 +35,8 @@ import { DeveloperWorkBreaksComponent } from './work-breaks/developer-work-break
     NumberPipesModule,
     MoneyPipesModule,
     DueDateModule,
-    ProjectsSummaryModule
+    ProjectsSummaryModule,
+    MetricsTypeModule
   ]
 })
 export class DeveloperDashboardModule {

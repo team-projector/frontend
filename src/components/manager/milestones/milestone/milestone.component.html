@@ -12,7 +12,7 @@
   <jnt-form [formGroup]="form">
     <jnt-gantt cdkDropListGroup data-tickets i18n-title="@@label.tickets"
                title="Tickets"
-               [loading]="loading.tickets">
+               [loading]="progress.tickets">
       <ng-template #toolsTemplate>
         <jnt-stack [orientation]="ui.orientation.horizontal"
                    [gutter]="ui.gutter.small"
@@ -23,9 +23,9 @@
                       (click)="add()">
           </jnt-button>
           <jnt-button [outline]="ui.outline.transparent"
-                      [icon]="loading.tickets ? ui.icons.animated.reload : ui.icons.reload"
+                      [icon]="progress.tickets ? ui.icons.animated.reload : ui.icons.reload"
                       [size]="ui.size.small"
-                      [disabled]="loading.tickets"
+                      [disabled]="progress.tickets"
                       (click)="loadTickets()">
           </jnt-button>
           <jnt-switcher formControlName="type"
@@ -100,12 +100,12 @@
               </div>
             </ng-template>
             <ng-template #title>
-              <jnt-stack [orientation]="ui.orientation.horizontal"
+              <jnt-stack cdkDropList [id]="ticket.id"
+                         [orientation]="ui.orientation.horizontal"
                          [justify]="ui.justify.between"
                          [align]="ui.align.center"
                          [attr.ticket]="ticket.id"
                          [attr.current]="ticket.id === ticketControl.value"
-                         cdkDropList
                          [cdkDropListEnterPredicate]="predicate"
                          (cdkDropListDropped)="drop($event, ticket.id)">
                 <jnt-stack [orientation]="ui.orientation.horizontal"
@@ -212,7 +212,7 @@
               </jnt-gantt-line-period>
             </jnt-gantt-line>
           </ng-template>
-          <ng-container *ngIf="!loading.issues; else loadingIssuesTemplate">
+          <ng-container *ngIf="!progress.issues; else loadingIssuesTemplate">
             <jnt-gantt-line>
               <jnt-gantt-line-period>
                 <ng-template #title>

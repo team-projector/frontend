@@ -16,7 +16,7 @@
       <ng-template #noDataTemplate>
         <ng-container *ngIf="loading;else emptyDataTemplate">
           <jnt-row>
-            <jnt-col [wide]="3" [desktop]="3" *ngFor="let i of 6 | mockArray">
+            <jnt-col [wide]="2" [desktop]="3" *ngFor="let i of 6 | mockArray">
               <jnt-card [width]="ui.width.fluid">
                 <jnt-stack [align]="ui.align.center">
                   <jnt-skeleton [lines]="1"></jnt-skeleton>
@@ -37,7 +37,7 @@
         <jnt-form [formGroup]="form">
           <jnt-stack [align]="ui.align.stretch">
             <jnt-row>
-              <jnt-col [wide]="3" [desktop]="3" *ngFor="let team of teams">
+              <jnt-col [wide]="2" [desktop]="3" *ngFor="let team of teams">
                 <jnt-card [title]="team.title"
                           [width]="ui.width.fluid"
                           [features]="[ui.feature.clickable]"

@@ -126,12 +126,16 @@
 
     <jnt-table-column width="55px" [align]="ui.align.center">
       <ng-template #tableCellTemplate let-state="state" let-labels="labels">
-        <jnt-icon data-doing *ngIf="state == issueState.opened && (labels | hasLabel:standardLabel.doing)"
+        <jnt-icon data-doing *ngIf="state == issueState.opened && (labels | hasLabel:standardLabel.doing);else delayedTemplate"
                   [icon]="localUi.icons.doing"></jnt-icon>
-        <jnt-icon data-delayed *ngIf="labels | hasLabel:standardLabel.delayed"
-                  [icon]="localUi.icons.delayed"></jnt-icon>
-        <jnt-icon data-done *ngIf="labels | hasLabel:standardLabel.done"
-                  [icon]="localUi.icons.done"></jnt-icon>
+        <ng-template #delayedTemplate>
+          <jnt-icon data-delayed *ngIf="labels | hasLabel:standardLabel.delayed;else doneTemplate"
+                    [icon]="localUi.icons.delayed"></jnt-icon>
+        </ng-template>
+        <ng-template #doneTemplate>
+          <jnt-icon data-done *ngIf="labels | hasLabel:standardLabel.done"
+                    [icon]="localUi.icons.done"></jnt-icon>
+        </ng-template>
       </ng-template>
     </jnt-table-column>
 
