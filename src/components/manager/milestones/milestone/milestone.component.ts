@@ -43,7 +43,7 @@ export class MilestoneComponent implements OnInit {
   progress = {
     tickets: false,
     summary: false,
-    deleting: false,
+    deleting: {},
     issues: false
   };
   errors: BackendError[] = [];
@@ -220,9 +220,9 @@ export class MilestoneComponent implements OnInit {
 
   delete(id: string) {
     this.instance.popover?.hide();
-    this.progress.deleting = true;
+    this.progress.deleting[id] = true;
     this.deleteTicketGQL.mutate({id})
-      .pipe(delay(UI_DELAY), finalize(() => this.progress.deleting = false))
+      .pipe(delay(UI_DELAY), finalize(() => this.progress.deleting[id] = false))
       .subscribe(() => this.loadTickets(), err => this.errors = err);
   }
 

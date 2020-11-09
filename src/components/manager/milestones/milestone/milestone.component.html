@@ -178,6 +178,7 @@
                   </ng-container>
                   <jnt-button [outline]="ui.outline.transparent"
                               [icon]="ui.icons.actions"
+                              [loading]="progress.deleting[ticket.id]"
                               (attached)="instance.popover = $event"
                               [jntPopover]="{
                               contentTemplate: dropdownTemplate,
