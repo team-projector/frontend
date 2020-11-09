@@ -1,5 +1,6 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/forms/select";
+$jnt-ng-deep: true;
 
 :host {
   display: flex;
@@ -17,5 +18,5 @@ p {
 }
 
 [data-issues] {
-  @include jnt-select((chips: (width: 'fluid')), '&', true);
+  @include jnt-select((chips: (width: 'fluid')), '&');
 }

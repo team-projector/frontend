@@ -123,7 +123,7 @@ export class ProjectsSummaryGQL extends Query<{ summary }> {
   document = gql`
 query ($team: ID, $user: ID, $project: ID, $dueDate: Date) {
   summary: issuesSummary(team: $team, user: $user, project: $project, dueDate: $dueDate) {
-    projects(orderBy: "-issues__remains", state: DEVELOPING) {
+    projects(orderBy: "-issues__remains") {
       project {
         id
         title

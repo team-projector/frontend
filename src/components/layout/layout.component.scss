@@ -1,9 +1,10 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/elements/icon";
+$jnt-ng-deep: true;
 
 :host-context([theme='dark']) {
   [data-gitlab] {
-    @include jnt-icon((size: 30px), '&', true);
+    @include jnt-icon((size: 30px), '&');
   }
 }
 
@@ -20,5 +21,5 @@ small {
 }
 
 [data-gitlab] {
-  @include jnt-icon((size: 30px), '&', true);
+  @include jnt-icon((size: 30px), '&');
 }

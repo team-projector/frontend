@@ -1,8 +1,9 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/layout/block";
+$jnt-ng-deep: true;
 
 [data-tabs] {
-  @include jnt-block((body: (padding: $jnt-gutter-normal 0 0 0)), '&', true);
+  @include jnt-block((body: (padding: $jnt-gutter-normal 0 0 0)), '&');
 
   [data-nav] {
     // TODO: @ui: move to mixins api

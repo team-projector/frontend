@@ -1,16 +1,17 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/layout/block";
 @import "~@junte/ui/lib/assets/styles/elements/label";
+$jnt-ng-deep: true;
 
 :host {
   display: block;
 
-  @include jnt-block((body: (padding: 0 0 $jnt-gutter-normal 0)), null, true);
+  @include jnt-block((body: (padding: 0 0 $jnt-gutter-normal 0)));
 }
 
 [data-user] {
   padding: 0 $jnt-gutter-large;
-  @include jnt-label((color: $jnt-primary-color), null, true);
+  @include jnt-label((color: $jnt-primary-color));
   [data-position] {
     color: $jnt-primary-light-color;
     font-weight: $jnt-font-weight-bold;

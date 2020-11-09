@@ -1,9 +1,10 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/navigation/link";
 @import "~@junte/ui/lib/assets/styles/collections/gantt";
+$jnt-ng-deep: true;
 
 [data-tickets] {
-  @include jnt-gantt((title:(width: 50%), period: (width:50%)), '&', true);
+  @include jnt-gantt((title:(width: 50%), period: (width:50%)), '&');
 }
 
 [period] {
@@ -70,7 +71,7 @@
   }
 
   [closed='true'] {
-    @include jnt-link((text-decoration: line-through), '&', true);
+    @include jnt-link((text-decoration: line-through), '&');
   }
 
 }

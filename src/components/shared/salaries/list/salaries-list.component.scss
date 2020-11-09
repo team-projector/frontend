@@ -1,9 +1,10 @@
 @import '~@junte/ui/lib/assets/styles/layout/block';
+$jnt-ng-deep: true;
 
 :host {
   display: block;
 }
 
 [data-tabs] {
-  @include jnt-block((body: (padding: $jnt-gutter-normal 0 0 0)), '&', true);
+  @include jnt-block((body: (padding: $jnt-gutter-normal 0 0 0)), '&');
 }
