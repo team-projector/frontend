@@ -2,7 +2,7 @@ import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ComponentFactoryResolver, Injector, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalOptions, ModalService, PopoverComponent, UI } from '@junte/ui';
+import { ModalOptions, ModalService, PopoverComponent, PopoverInstance, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { NGXLogger } from 'ngx-logger';
 import { combineLatest, of } from 'rxjs';
@@ -43,16 +43,20 @@ export class MilestoneComponent implements OnInit {
   progress = {
     tickets: false,
     summary: false,
+    deleting: false,
     issues: false
   };
   errors: BackendError[] = [];
 
   milestone: Milestone;
-  filters: { tickets: TicketsFilter, issues: IssuesFilter } = {tickets: null, issues: null};
+  filters: {
+    tickets: TicketsFilter,
+    issues: IssuesFilter
+  } = {tickets: null, issues: null};
   tickets: Ticket[] = [];
   summary: TicketsSummary;
   issues: Issue[] = [];
-  popover: PopoverComponent;
+  instance: { popover: PopoverInstance } = {popover: null};
 
   typeControl = this.fb.control(TicketsTypes.all);
   ticketControl = this.fb.control(null);
@@ -168,13 +172,13 @@ export class MilestoneComponent implements OnInit {
   private loadIssues() {
     this.logger.debug('load issues');
     const {ticket} = this.form.getRawValue();
-    this.progress.issues = true;
     const filter = new IssuesFilter({ticket});
     if (equals(filter, this.filters.issues)) {
       this.logger.debug('filter was not changed');
       return;
     }
     this.filters.issues = filter;
+    this.progress.issues = true;
     (environment.mocks
       ? of(getMock(PagingIssues)).pipe(delay(MOCKS_DELAY))
       : this.ticketIssuesGQL.fetch(serialize(this.filters.issues) as R)
@@ -189,6 +193,7 @@ export class MilestoneComponent implements OnInit {
   }
 
   edit(ticket: Ticket = null) {
+    this.instance.popover?.hide();
     const component = this.cfr.resolveComponentFactory(EditTicketComponent)
       .create(this.injector);
     component.instance.milestone = this.milestone.id;
@@ -214,13 +219,17 @@ export class MilestoneComponent implements OnInit {
   }
 
   delete(id: string) {
+    this.instance.popover?.hide();
+    this.progress.deleting = true;
     this.deleteTicketGQL.mutate({id})
-      .subscribe(() => this.loadTickets());
+      .pipe(delay(UI_DELAY), finalize(() => this.progress.deleting = false))
+      .subscribe(() => this.loadTickets(), err => this.errors = err);
   }
 
   toggleIssues(ticket: string) {
     this.issues = [];
-    this.ticketControl.setValue(this.ticketControl.value === ticket ? null : ticket);
+    this.ticketControl.setValue(this.ticketControl.value === ticket
+      ? null : ticket);
   }
 
   predicate(item: CdkDrag<number>) {
