@@ -69,7 +69,7 @@
             <ng-template #progressBarLegendTemplate>
               <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
                          [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
-                <small>{{metrics.budget - metrics.budgetRemains | money}}</small>
+                <small>{{(metrics.budget - metrics.budgetRemains) | money}}</small>
                 <small>{{metrics.budget | money}}</small>
               </jnt-stack>
             </ng-template>

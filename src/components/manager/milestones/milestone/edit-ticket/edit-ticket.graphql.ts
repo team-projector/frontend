@@ -5,7 +5,7 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class GetTicketGQL extends Query<{ ticket }> {
+export class TicketGQL extends Query<{ ticket }> {
   document = gql`
     query($ticket: ID!) {
       ticket(id: $ticket) {
@@ -71,6 +71,24 @@ export class GetTicketGQL extends Query<{ ticket }> {
         }
       }
     }`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FindMilestonesGQL extends Query<{ milestones }> {
+  document = gql`
+query($q: String) {
+    milestones: allMilestones(q: $q) {
+        count
+        edges {
+            node {
+                id
+                title
+            }
+        }
+    }
+}`;
 }
 
 @Injectable({

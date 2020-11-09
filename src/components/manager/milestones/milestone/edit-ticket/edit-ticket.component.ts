@@ -6,7 +6,6 @@ import { Observable, of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { IssuesGQL } from 'src/components/shared/issues/list/issues-list.graphql';
-import { AllMilestonesGQL } from 'src/components/manager/milestones/milestones.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { TicketStates, TicketTypes } from 'src/models/enums/ticket';
@@ -16,7 +15,7 @@ import { Milestone, MilestonesFilter, PagingMilestones } from 'src/models/milest
 import { Ticket, TicketUpdate } from 'src/models/ticket';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
-import { CreateTicketGQL, EditTicketGQL, GetTicketGQL } from './edit-ticket.graphql';
+import { FindMilestonesGQL, CreateTicketGQL, EditTicketGQL, TicketGQL } from './edit-ticket.graphql';
 
 const FOUND_ISSUES_COUNT = 10;
 const FOUND_MILESTONES_COUNT = 10;
@@ -95,10 +94,10 @@ export class EditTicketComponent {
   @Output() canceled = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder,
-              private getTicketGQL: GetTicketGQL,
+              private getTicketGQL: TicketGQL,
               private createTicketGQL: CreateTicketGQL,
               private editTicketGQL: EditTicketGQL,
-              private allMilestonesGQL: AllMilestonesGQL,
+              private findMilestonesGQL: FindMilestonesGQL,
               private issuesGQL: IssuesGQL) {
   }
 
@@ -130,11 +129,11 @@ export class EditTicketComponent {
       });
       (environment.mocks
           ? of(getMock(PagingMilestones)).pipe(delay(MOCKS_DELAY))
-          : this.allMilestonesGQL.fetch(serialize(filter) as R).pipe(
+          : this.findMilestonesGQL.fetch(serialize(filter) as R).pipe(
             catchGQLErrors(),
-            map(({data: {allMilestones}}) => deserialize(allMilestones, PagingMilestones)))
-      ).subscribe(({results: allMilestones}) => {
-        o.next(allMilestones);
+            map(({data: {milestones}}) => deserialize(milestones, PagingMilestones)))
+      ).subscribe(({results: milestones}) => {
+        o.next(milestones);
         o.complete();
       }, err => this.errors = err);
     });
