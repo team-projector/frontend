@@ -226,7 +226,7 @@
           </ng-container>
         </ng-template>
         <ng-container *ngIf="ticketControl.value === ticket.id">
-          <ng-container *ngIf="!!issues.length; else noIssuesTemplate">
+          <ng-container *ngIf="issues.length > 0; else noIssuesTemplate">
 
             <div *ngFor="let i of issues">{{i.title}}</div>
 

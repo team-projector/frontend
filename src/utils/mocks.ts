@@ -1,26 +1,33 @@
 import { addDays } from 'date-fns';
 import * as fakerEn from 'faker/locale/en';
 import * as fakerRu from 'faker/locale/ru';
-import { MOCK_FIELDS_METADATA_KEY, MOCKING_METADATA_KEY } from '../decorators/model';
 import { Language } from '../enums/language';
 import { detectLanguage } from './lang';
 
 const MAX_LEVELS = 4;
-export const SECONDS_IN_MINUTE = 60;
-export const SECONDS_IN_HOUR = 3600;
-
-export const faker = ((): any => {
-  switch (detectLanguage()) {
-    case Language.ru:
-      return fakerRu;
-    case Language.en:
-    default:
-      return fakerEn;
-  }
-})();
 
 class MaxLevelReached {
 
+}
+
+export const MOCK_MODEL_METADATA_KEY = 'mock_model_metadata';
+export const MOCK_FIELD_METADATA_KEY = 'mock_field_metadata';
+
+export type MockFieldConfig = boolean | boolean[] | number | number[]
+  | string | string[] | Function | { type: any, length: number };
+
+export function MockField(config: MockFieldConfig) {
+  return function (obj: Object, property: string | symbol) {
+    const metadata = Reflect.getMetadata(MOCK_FIELD_METADATA_KEY, obj) || {};
+    metadata[property] = config;
+    Reflect.defineMetadata(MOCK_FIELD_METADATA_KEY, metadata, obj);
+  };
+}
+
+export function MockModel(callback: (obj: Object, context?: Object, index?: number) => void) {
+  return function (constructor: any) {
+    Reflect.defineMetadata(MOCK_MODEL_METADATA_KEY, callback, constructor.prototype);
+  };
 }
 
 type Constructor<T> = new () => T;
@@ -33,7 +40,7 @@ export function getMock<T>(model: Constructor<T> | Activator<T>,
   }
   const next = level + 1;
   const obj = !!model.prototype ? new (model as Constructor<T>)() as T : new ((model as Activator<T>)())();
-  const metadata = Reflect.getMetadata(MOCK_FIELDS_METADATA_KEY, obj);
+  const metadata = Reflect.getMetadata(MOCK_FIELD_METADATA_KEY, obj);
   for (const property in metadata) {
     const type = Reflect.getMetadata('design:type', obj, property);
     if (!type) {
@@ -83,9 +90,9 @@ export function getMock<T>(model: Constructor<T> | Activator<T>,
       }
     }
   }
-  const mocking = Reflect.getMetadata(MOCKING_METADATA_KEY, obj);
-  if (!!mocking) {
-    mocking(obj, context, index);
+  const callback = Reflect.getMetadata(MOCK_MODEL_METADATA_KEY, obj);
+  if (!!callback) {
+    callback(obj, context, index);
   }
 
   return obj;
@@ -95,6 +102,19 @@ export enum TimeAccuracy {
   hours,
   minutes
 }
+
+export const SECONDS_IN_MINUTE = 60;
+export const SECONDS_IN_HOUR = 3600;
+
+export const faker = ((): any => {
+  switch (detectLanguage()) {
+    case Language.ru:
+      return fakerRu;
+    case Language.en:
+    default:
+      return fakerEn;
+  }
+})();
 
 export const mocks = {
   date: {

@@ -23,11 +23,13 @@ enum SystemMode {
   prod = 'prod'
 }
 
+const COMMON_DEMO_PASS = 'LKnLPUJyGPKXAag4';
+
 const DEMO_USERS = {
-  [UserRole.developer]: {login: 'tp.developer', password: 'LKnLPUJyGPKXAag4'},
-  [UserRole.leader]: {login: 'tp.leader', password: 'LKnLPUJyGPKXAag4'},
-  [UserRole.manager]: {login: 'tp.manager', password: 'LKnLPUJyGPKXAag4'},
-  [UserRole.shareholder]: {login: 'shareholder', password: 'LKnLPUJyGPKXAag4'}
+  [UserRole.developer]: {login: 'tp.developer', password: COMMON_DEMO_PASS},
+  [UserRole.leader]: {login: 'tp.leader', password: COMMON_DEMO_PASS},
+  [UserRole.manager]: {login: 'tp.manager', password: COMMON_DEMO_PASS},
+  [UserRole.shareholder]: {login: 'shareholder', password: COMMON_DEMO_PASS}
 };
 
 enum Themes {
@@ -103,8 +105,7 @@ export class LoginComponent implements OnInit {
   }
 
   submit() {
-    // TODO: rename to submit
-    this.formComponent.onSubmit();
+    this.formComponent.submit();
   }
 
   private logged(token: AccessToken) {

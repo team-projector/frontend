@@ -2,7 +2,7 @@ import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ComponentFactoryResolver, Injector, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalOptions, ModalService, PopoverComponent, PopoverInstance, UI } from '@junte/ui';
+import { ModalOptions, ModalService, PopoverInstance, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { NGXLogger } from 'ngx-logger';
 import { combineLatest, of } from 'rxjs';
@@ -92,10 +92,7 @@ export class MilestoneComponent implements OnInit {
         this.form.patchValue(state, {emitEvent: false});
 
         this.load();
-
-        if (!!ticket) {
-          this.loadIssues();
-        }
+        this.loadIssues();
       });
 
     this.form.valueChanges
@@ -178,14 +175,16 @@ export class MilestoneComponent implements OnInit {
       return;
     }
     this.filters.issues = filter;
-    this.progress.issues = true;
-    (environment.mocks
-      ? of(getMock(PagingIssues)).pipe(delay(MOCKS_DELAY))
-      : this.ticketIssuesGQL.fetch(serialize(this.filters.issues) as R)
-        .pipe(map(({data: {ticket: {issues}}}) => deserialize(issues, PagingIssues))))
-      .pipe(delay(UI_DELAY), finalize(() => this.progress.issues = false))
-      .subscribe(issues => this.issues = issues.results,
-        err => this.errors = err);
+    if (!!ticket) {
+      this.progress.issues = true;
+      (environment.mocks
+        ? of(getMock(PagingIssues)).pipe(delay(MOCKS_DELAY))
+        : this.ticketIssuesGQL.fetch(serialize(this.filters.issues) as R)
+          .pipe(map(({data: {ticket: {issues}}}) => deserialize(issues, PagingIssues))))
+        .pipe(delay(UI_DELAY), finalize(() => this.progress.issues = false))
+        .subscribe(issues => this.issues = issues.results,
+          err => this.errors = err);
+    }
   }
 
   add() {
