@@ -8,11 +8,15 @@ $jnt-ng-deep: true;
   @include jnt-calendar((metrics: (width: 50%)));
 }
 
-[data-title] {
-  color: $jnt-primary-color;
-  font-weight: bold;
-  text-align: center;
-  flex: 1;
+[data-header] {
+  padding-top: $jnt-gutter-normal;
+
+  [data-title] {
+    color: $jnt-primary-color;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+  }
 }
 
 [data-day] {
