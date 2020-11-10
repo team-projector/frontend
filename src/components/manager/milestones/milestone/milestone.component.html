@@ -181,11 +181,13 @@
                               [loading]="progress.deleting[ticket.id]"
                               (attached)="instance.popover = $event"
                               [jntPopover]="{
-                              contentTemplate: dropdownTemplate,
-                              trigger: ui.trigger.click
-                            }">
+                                contentTemplate: menuTemplate,
+                                trigger: ui.trigger.click,
+                                behaviour: ui.behaviour.dropdown,
+                                padding: ui.gutter.small
+                              }">
                   </jnt-button>
-                  <ng-template #dropdownTemplate>
+                  <ng-template #menuTemplate>
                     <jnt-menu [orientation]="ui.orientation.vertical"
                               [spacing]="ui.gutter.small">
                       <jnt-menu-item title="Edit"
