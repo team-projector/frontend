@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DueDateModule } from 'src/components/shared/due-date/due-date.module';
+import { WorkProgressModule } from '../../work-progress/work-progress.module';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { IssuePipesModule } from '../../../../pipes/issue-pipes.module';
@@ -31,7 +32,8 @@ import { IssuesListComponent } from './issues-list.component';
     IssueCardModule,
     IssuePipesModule,
     UserCardModule,
-    EarnModule
+    EarnModule,
+    WorkProgressModule
   ],
   exports: [
     IssuesListComponent

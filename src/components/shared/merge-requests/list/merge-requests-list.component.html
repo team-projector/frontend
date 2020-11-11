@@ -79,25 +79,9 @@
                    let-totalTimeSpent="totalTimeSpent"
                    let-metrics="metrics"
                    let-problems="problems">
-        <jnt-progress-bar progress *ngIf="!!timeEstimate" [value]="totalTimeSpent / timeEstimate * 100">
-          <ng-template #progressBarLegendTemplate>
-            <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
-                       [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
-              <div metric>{{totalTimeSpent | duration}}</div>
-              <div metric estimate>{{timeEstimate | duration}}</div>
-            </jnt-stack>
-          </ng-template>
-        </jnt-progress-bar>
-        <div style="text-align: center;">
-            <span [attr.slow]="metrics.efficiency > 0 && metrics.efficiency < 0.8">
-              {{!!metrics.efficiency ? (metrics.efficiency | number:'1.2-2') : ''}}
-            </span>
-        </div>
-        <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
-                   [color]="ui.color.red"
-                   label="estimate"
-                   i18n-label="@@label.estimate">
-        </jnt-label>
+        <app-work-progress [estimate]="timeEstimate"
+                           [spent]="totalTimeSpent"
+                           [problems]="problems"></app-work-progress>
       </ng-template>
     </jnt-table-column>
 
