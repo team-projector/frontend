@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DueDateModule } from 'src/components/shared/due-date/due-date.module';
+import { WorkProgressModule } from '../../work-progress/work-progress.module';
 import { DatePipesModule } from '../../../../pipes/date-pipes.module';
 import { IssuePipesModule } from '../../../../pipes/issue-pipes.module';
 import { MoneyPipesModule } from '../../../../pipes/money-pipes.module';
@@ -29,7 +30,8 @@ import { MergeRequestsListComponent } from './merge-requests-list.component';
 
     MergeRequestCardModule,
     EarnModule,
-    IssuePipesModule
+    IssuePipesModule,
+    WorkProgressModule
   ],
   exports: [
     MergeRequestsListComponent

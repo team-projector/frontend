@@ -1,0 +1,37 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+
+[progress] {
+  min-width: 100px;
+}
+
+
+[efficiency] {
+  margin-top: $jnt-gutter-tiny;
+  text-align: center;
+  font-size: .85em;
+
+  [slow='true'] {
+    color: $jnt-fail-color;
+  }
+}
+
+[metric] {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: .85em;
+
+  &:first-of-type {
+    flex: 1;
+    text-align: left;
+  }
+
+  &[estimate] {
+    color: $jnt-primary-text-light-color;
+  }
+
+  [collaboration] {
+    color: $jnt-fail-color;
+  }
+}
+
