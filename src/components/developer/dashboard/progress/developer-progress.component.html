@@ -88,7 +88,12 @@
       <jnt-stack [orientation]="ui.orientation.horizontal"
                  [align]="ui.align.center">
         <div data-title>Work progress</div>
-        <app-metrics-type formControlName="metric"></app-metrics-type>
+        <jnt-stack [orientation]="ui.orientation.horizontal">
+          <jnt-button [icon]="ui.icons.reload"
+                      [outline]="ui.outline.transparent"
+                      (click)="loadMetrics()"></jnt-button>
+          <app-metrics-type formControlName="metric"></app-metrics-type>
+        </jnt-stack>
       </jnt-stack>
     </ng-template>
 
