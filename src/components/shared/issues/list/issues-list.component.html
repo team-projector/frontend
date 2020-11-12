@@ -92,7 +92,7 @@
                          [color]="ui.color.yellow"
                          [text]="summary?.timeSpent | duration:durationFormat.short"></jnt-badge>
               <jnt-badge *ngIf="summary?.count > 0"
-                         [overflow]="9999"
+                         [overflow]="null"
                          [value]="summary?.count"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Closed"
@@ -100,7 +100,7 @@
                                  [disabled]="summary?.closedCount <= 0"
                                  [value]="issuesType.closed">
               <jnt-badge *ngIf="summary?.closedCount > 0"
-                         [overflow]="9999"
+                         [overflow]="null"
                          [value]="summary?.closedCount"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Opened"

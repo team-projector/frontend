@@ -32,12 +32,14 @@
                         [width]="ui.width.fluid">
             <jnt-switcher-option label="All"
                                  i18n-label="@@action.filter_issues_all"
+                                 [disabled]="summary?.count <= 0"
                                  [value]="ticketsTypes.all">
               <jnt-badge *ngIf="summary?.count"
                          [value]="summary?.count"></jnt-badge>
             </jnt-switcher-option>
             <jnt-switcher-option label="Created"
                                  i18n-label="@@label.created"
+                                 [disabled]="summary?.createdCount <= 0"
                                  [value]="ticketsTypes.created">
               <jnt-badge *ngIf="summary?.createdCount"
                          [value]="summary?.createdCount"
@@ -53,6 +55,7 @@
             </jnt-switcher-option>
             <jnt-switcher-option label="Doing"
                                  i18n-label="@@label.doing"
+                                 [disabled]="summary?.doingCount <= 0"
                                  [value]="ticketsTypes.doing">
               <jnt-badge *ngIf="summary?.doingCount"
                          [value]="summary?.doingCount"
@@ -60,6 +63,7 @@
             </jnt-switcher-option>
             <jnt-switcher-option label="Testing"
                                  i18n-label="@@label.testing"
+                                 [disabled]="summary?.testingCount <= 0"
                                  [value]="ticketsTypes.testing">
               <jnt-badge *ngIf="summary?.testingCount"
                          [value]="summary?.testingCount"
@@ -67,6 +71,7 @@
             </jnt-switcher-option>
             <jnt-switcher-option label="Accepting"
                                  i18n-label="@@label.accepting"
+                                 [disabled]="summary?.acceptingCount <= 0"
                                  [value]="ticketsTypes.accepting">
               <jnt-badge *ngIf="summary?.acceptingCount"
                          [value]="summary?.acceptingCount"
@@ -74,6 +79,7 @@
             </jnt-switcher-option>
             <jnt-switcher-option label="Done"
                                  i18n-label="@@label.done"
+                                 [disabled]="summary?.doneCount <= 0"
                                  [value]="ticketsTypes.done">
               <jnt-badge *ngIf="summary?.doneCount"
                          [value]="summary?.doneCount"

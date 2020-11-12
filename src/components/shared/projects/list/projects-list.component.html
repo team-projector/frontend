@@ -8,7 +8,7 @@
                              [disabled]="summary?.count <= 0"
                              [value]="projectType.all">
           <jnt-badge *ngIf="summary?.count > 0"
-                     [overflow]="9999"
+                     [overflow]="null"
                      [value]="summary?.count"></jnt-badge>
         </jnt-switcher-option>
         <jnt-switcher-option label="Archived"

@@ -25,7 +25,7 @@ $jnt-ng-deep: true;
 
   [data-nav] {
     // TODO: Move to mixins api
-    margin: 0 $jnt-gutter-normal;
+    margin: 0 $jnt-gutter-normal $jnt-gutter-normal;
   }
 }
 

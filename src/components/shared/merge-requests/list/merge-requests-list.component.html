@@ -13,20 +13,23 @@
         <jnt-switcher formControlName="type">
           <jnt-switcher-option label="All"
                                i18n-label="@@action.filter_type_all"
+                               [disabled]="summary?.count <= 0"
                                [value]="mergeRequestType.all">
             <jnt-badge *ngIf="summary?.count"
-                       [overflow]="9999"
+                       [overflow]="null"
                        [value]="summary?.count"></jnt-badge>
           </jnt-switcher-option>
           <jnt-switcher-option label="Closed"
                                i18n-label="@@action.filter_type_closed"
+                               [disabled]="summary?.closedCount <= 0"
                                [value]="mergeRequestType.closed">
             <jnt-badge *ngIf="summary?.closedCount"
-                       [overflow]="9999"
+                       [overflow]="null"
                        [value]="summary?.closedCount"></jnt-badge>
           </jnt-switcher-option>
           <jnt-switcher-option label="Opened"
                                i18n-label="@@action.filter_type_opened"
+                               [disabled]="summary?.openedCount <= 0"
                                [value]="mergeRequestType.opened">
             <jnt-badge *ngIf="summary?.openedCount"
                        [value]="summary?.openedCount"
@@ -34,9 +37,10 @@
           </jnt-switcher-option>
           <jnt-switcher-option label="Merged"
                                i18n-label="@@action.filter_type_merged"
+                               [disabled]="summary?.mergedCount <= 0"
                                [value]="mergeRequestType.merged">
             <jnt-badge *ngIf="summary?.mergedCount"
-                       [overflow]="9999"
+                       [overflow]="null"
                        [value]="summary?.mergedCount"
                        [color]="ui.color.yellow"></jnt-badge>
           </jnt-switcher-option>
