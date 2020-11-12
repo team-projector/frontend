@@ -6,7 +6,7 @@ $jnt-ng-deep: true;
   @include jnt-block((body: (padding: $jnt-gutter-normal 0 0 0)), '&');
 
   [data-nav] {
-    // TODO: @ui: move to mixins api
+    // TODO: Move to mixins api
     margin: 0 $jnt-gutter-normal;
   }
 }
