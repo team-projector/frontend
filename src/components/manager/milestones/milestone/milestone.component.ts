@@ -166,11 +166,11 @@ export class MilestoneComponent implements OnInit {
         err => this.errors = err);
   }
 
-  private loadIssues() {
+  private loadIssues(force = false) {
     this.logger.debug('load issues');
     const {ticket} = this.form.getRawValue();
     const filter = new IssuesFilter({ticket});
-    if (equals(filter, this.filters.issues)) {
+    if (equals(filter, this.filters.issues) && !force) {
       this.logger.debug('filter was not changed');
       return;
     }
@@ -202,7 +202,7 @@ export class MilestoneComponent implements OnInit {
     component.instance.canceled.subscribe(() => this.modal.close());
     component.instance.saved.subscribe(() => {
       this.modal.close();
-      this.loadTickets();
+      this.loadIssues(true);
       if (!!ticket && ticket.id !== this.ticketControl.value) {
         this.ticketControl.patchValue(ticket.id);
       }

@@ -3,9 +3,9 @@
   <jnt-stack [orientation]="ui.orientation.horizontal"
              [gutter]="ui.gutter.small"
              [align]="ui.align.center">
-    <ng-container *ngIf="mergeRequest.issues as issues">
-      <jnt-avatar [name]="issues[0]?.user.name"
-                  [image]="issues[0]?.user.avatar"
+    <ng-container *ngIf="mergeRequest.issues.length > 0 && mergeRequest.issues[0]?.user as user">
+      <jnt-avatar [name]="user.name"
+                  [image]="user.avatar"
                   [size]="ui.size.tiny"></jnt-avatar>
       <jnt-icon [icon]="ui.icons.chevronRight"></jnt-icon>
     </ng-container>

@@ -80,7 +80,7 @@ export class TicketsSummaryGQL extends Query<{ summary }> {
       acceptingCount
       doneCount
     }
-  }`
+  }`;
 }
 
 @Injectable({

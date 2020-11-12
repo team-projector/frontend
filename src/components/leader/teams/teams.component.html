@@ -16,7 +16,7 @@
       <ng-template #noDataTemplate>
         <ng-container *ngIf="loading;else emptyDataTemplate">
           <jnt-row>
-            <jnt-col [wide]="2" [desktop]="3" *ngFor="let i of 6 | mockArray">
+            <jnt-col [wide]="2" [desktop]="3" *ngFor="let i of 3 | mockArray">
               <jnt-card [width]="ui.width.fluid">
                 <jnt-stack [align]="ui.align.center">
                   <jnt-skeleton [lines]="1"></jnt-skeleton>

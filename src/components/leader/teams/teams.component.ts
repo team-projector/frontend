@@ -6,7 +6,7 @@ import { isEqual, UI } from '@junte/ui';
 import { of } from 'rxjs';
 import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { MOCKS_DELAY } from 'src/consts';
+import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
@@ -61,13 +61,12 @@ export class TeamsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.pageControl.valueChanges.pipe(distinctUntilChanged((val1, val2) => isEqual(val1, val2)))
-      .subscribe(page => this.router.navigate([page !== DEFAULT_PAGE ? {page} : {}], {relativeTo: this.route}));
-    this.route.params.pipe(
-      distinctUntilChanged((val1, val2) => isEqual(val1, val2))
-    ).subscribe(({page}) => {
+    this.pageControl.valueChanges.subscribe(page =>
+      this.router.navigate([page !== DEFAULT_PAGE ? {page} : {}], {relativeTo: this.route}));
+
+    this.route.params.subscribe(({page}) => {
       const p = +page || DEFAULT_PAGE;
-      this.pageControl.patchValue(p);
+      this.pageControl.patchValue(p, {emitEvent: false});
       this.state = new TeamsState({
         first: PAGE_SIZE,
         offset: (p - 1) * PAGE_SIZE
@@ -82,7 +81,7 @@ export class TeamsComponent implements OnInit {
       : this.allTeamsGQL.fetch(serialize(this.state) as R).pipe(
         catchGQLErrors(),
         map(({data: {teams}}) => deserialize(teams, PagingTeams))))
-      .pipe(finalize(() => this.loading = false))
+      .pipe(delay(UI_DELAY), finalize(() => this.loading = false))
       .subscribe(teams => {
         this.teams = teams.results;
         this.count = teams.count;
