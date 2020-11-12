@@ -126,7 +126,7 @@
     <tr data-week>
       <th data-gutter></th>
       <th colspan="2" i18n="@@label.developer">Developer</th>
-      <th data-day *ngFor="let weekDay of [0,1,2,3,4,5,6]"
+      <th data-day *ngFor="let weekDay of [0, 1, 2, 3, 4, 5, 6]"
           (click)="selected.emit({developer: null, dueDate: days[weekDay]})"
           [attr.today]="(today | dfnsIsEqual: days[weekDay])">
         <span>{{days[weekDay] | dfnsFormat: 'd'}}</span> {{weekDay | dfnsWeekdayName:'x2'}}
@@ -154,12 +154,12 @@
                     [size]="userCardSize.small"
                     [roles]="member.roles"></app-user>
         </td>
-        <td data-spent>
-          <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.stretch">
-            <jnt-label *ngIf="member.user.metrics.issues.closedSpent"
+        <td>
+          <jnt-stack [gutter]="ui.gutter.tiny">
+            <jnt-label data-spent *ngIf="member.user.metrics.issues.closedSpent"
                        [label]="member.user.metrics.issues.closedSpent | duration:durationFormat.short"
                        [color]="ui.color.green"></jnt-label>
-            <jnt-label *ngIf="member.user.metrics.issues.openedSpent"
+            <jnt-label data-spent *ngIf="member.user.metrics.issues.openedSpent"
                        [label]="member.user.metrics.issues.openedSpent | duration:durationFormat.short"
                        [color]="member.user.problems?.includes(userProblem.payrollOpenedOverflow) ? ui.color.red : ui.color.paleNavy"></jnt-label>
           </jnt-stack>

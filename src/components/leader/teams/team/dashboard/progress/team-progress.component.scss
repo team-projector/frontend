@@ -82,6 +82,7 @@ table {
       [data-tools] {
         padding: $jnt-gutter-normal $jnt-gutter-normal 0 $jnt-gutter-normal;
       }
+
       &[data-rewind] {
         th {
           [data-date] {
@@ -129,10 +130,6 @@ table {
 
   tbody {
     tr {
-      td[data-spent] {
-        min-width: 76px;
-        width: 76px;
-      }
       &:not(:first-child),
       &:not(:nth-child(2)) {
         td {
@@ -145,6 +142,11 @@ table {
 
         [data-developer] {
           min-width: 120px;
+        }
+
+        [data-spent] {
+          min-width: 50px;
+          width: 50px;
         }
       }
 
