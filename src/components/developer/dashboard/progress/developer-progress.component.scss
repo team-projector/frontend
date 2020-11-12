@@ -1,5 +1,6 @@
 @import '~@junte/ui/lib/assets/styles/layout/responsive';
 @import '~@junte/ui/lib/assets/styles/forms/calendar';
+@import '~@junte/ui/lib/assets/styles/dynamic/circle-bar';
 $jnt-ng-deep: true;
 
 :host {
@@ -31,8 +32,7 @@ $jnt-ng-deep: true;
   border: 2px solid transparent;
 
   &[today='true'] {
-    border-radius: $jnt-corner-normal;
-    border: 2px solid $jnt-warning-color;
+    @include jnt-circle-bar((content: (color: $jnt-white-color)), '&');
   }
 
   [issues] {
