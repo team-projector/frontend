@@ -1,4 +1,4 @@
-<jnt-progress-bar progress [value]="spent / estimate * 100">
+<jnt-progress-bar data-progress [value]="spent / estimate * 100">
   <jnt-progress-line [from]="75" [color]="ui.color.yellow"></jnt-progress-line>
   <jnt-progress-line [from]="101" [color]="ui.color.red"></jnt-progress-line>
   <ng-template #progressBarLegendTemplate>
@@ -7,14 +7,15 @@
                [justify]="ui.justify.between"
                [gutter]="ui.gutter.normal">
       <div></div>
-      <div metric estimate>{{estimate | duration}}</div>
+      <div data-estimate>{{estimate | duration}}</div>
     </jnt-stack>
   </ng-template>
 </jnt-progress-bar>
-<div efficiency>
-            <span [attr.slow]="spent > estimate">
-              {{(spent > estimate ? estimate - spent : spent) | duration}}
-            </span>
+<div data-efficiency *ngIf="spent > 0">
+  <span [attr.data-slow]="spent > estimate">
+    {{(spent > estimate ? estimate - spent : spent) | duration}}
+    <ng-container *ngIf="estimate !== spent">/ {{ (estimate / spent) | number:'0.0-2'}}</ng-container>
+  </span>
 </div>
 <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
            [size]="ui.size.small"

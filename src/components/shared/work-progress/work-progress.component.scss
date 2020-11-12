@@ -1,37 +1,29 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 
-[progress] {
+// TODO: use mixin API
+[data-progress] {
   min-width: 100px;
 }
 
-
-[efficiency] {
+[data-efficiency] {
   margin-top: $jnt-gutter-tiny;
   text-align: center;
   font-size: .85em;
 
-  [slow='true'] {
+  [data-slow='true'] {
     color: $jnt-fail-color;
   }
 }
 
-[metric] {
+[data-estimate] {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: .85em;
+  color: $jnt-primary-text-light-color;
 
   &:first-of-type {
     flex: 1;
     text-align: left;
   }
-
-  &[estimate] {
-    color: $jnt-primary-text-light-color;
-  }
-
-  [collaboration] {
-    color: $jnt-fail-color;
-  }
 }
-
