@@ -25,6 +25,9 @@ export class TicketMetrics {
   budgetSpent: number;
 
   @field({mock: () => mocks.money(5000, 10000)})
+  budgetEstimate: number;
+
+  @field({mock: () => mocks.money(5000, 10000)})
   budgetRemains: number;
 
   @field({mock: () => mocks.money(5000, 10000)})

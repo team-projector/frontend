@@ -145,11 +145,11 @@ export class MilestoneComponent implements OnInit {
   loadTickets() {
     this.logger.debug('load tickets');
     this.progress.tickets = true;
-    (environment.mocks
+    const action = environment.mocks
       ? of(getMock(PagingTickets, this.filters.tickets)).pipe(delay(MOCKS_DELAY))
-      : this.allTicketsGQL.fetch(serialize(this.filters.tickets) as R).pipe(
-        map(({data: {allTickets}}) => deserialize(allTickets, PagingTickets))))
-      .pipe(finalize(() => this.progress.tickets = false))
+      : this.allTicketsGQL.fetch(serialize(this.filters.tickets) as R)
+        .pipe(map(({data: {tickets}}) => deserialize(tickets, PagingTickets)));
+    action.pipe(finalize(() => this.progress.tickets = false))
       .subscribe(tickets => this.tickets = tickets.results,
         err => this.errors = err);
   }
@@ -202,6 +202,7 @@ export class MilestoneComponent implements OnInit {
     component.instance.canceled.subscribe(() => this.modal.close());
     component.instance.saved.subscribe(() => {
       this.modal.close();
+      this.loadTickets();
       this.loadIssues(true);
       if (!!ticket && ticket.id !== this.ticketControl.value) {
         this.ticketControl.patchValue(ticket.id);

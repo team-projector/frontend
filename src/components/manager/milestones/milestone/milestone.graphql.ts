@@ -27,42 +27,49 @@ export class MilestoneIssuesSummaryGQL extends Query<{ summary }> {
 @Injectable({
   providedIn: 'root'
 })
-export class AllTicketsGQL extends Query<{ allTickets }> {
+export class AllTicketsGQL extends Query<{ tickets }> {
   document = gql`
-    query ($milestone: ID!, $state: String, $offset: Int, $first: Int) {
-      allTickets(milestone: $milestone, state: $state, orderBy: "dueDate,startDate,title", offset: $offset, first: $first) {
+query($milestone: ID!, $state: String, $offset: Int, $first: Int) {
+    tickets: allTickets(
+        milestone: $milestone
+        state: $state
+        orderBy: "dueDate,startDate,title"
+        offset: $offset
+        first: $first
+    ) {
         count
         edges {
-          node {
-            id
-            type
-            state
-            title
-            role
-            startDate
-            dueDate
-            url
-            problems
-            milestone {
-              id
+            node {
+                id
+                type
+                state
+                title
+                role
+                startDate
+                dueDate
+                url
+                problems
+                milestone {
+                    id
+                }
+                metrics {
+                    budgetEstimate
+                    budgetSpent
+                    budgetRemains
+                    payroll
+                    profit
+                    timeEstimate
+                    timeSpent
+                    timeRemains
+                    openedTimeRemains
+                    issuesCount
+                    issuesOpenedCount
+                    issuesClosedCount
+                }
             }
-            metrics {
-              budgetEstimate
-              budgetRemains
-              payroll
-              profit
-              timeEstimate
-              timeSpent
-              timeRemains
-              openedTimeRemains
-              issuesCount
-              issuesOpenedCount
-              issuesClosedCount
-            }
-          }
         }
-      }
-    }`;
+    }
+}`;
 }
 
 @Injectable({

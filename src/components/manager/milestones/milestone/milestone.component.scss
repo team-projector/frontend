@@ -1,6 +1,7 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/navigation/link";
 @import "~@junte/ui/lib/assets/styles/collections/gantt";
+
 $jnt-ng-deep: true;
 
 [data-tickets] {
@@ -49,6 +50,20 @@ $jnt-ng-deep: true;
     background-color: $jnt-success-color;
     transform: translateX(-50%);
     height: 100%;
+  }
+}
+
+[data-ticket-metrics] {
+  border-collapse: collapse;
+  font-size: $jnt-font-size-small;
+
+  td {
+    border: 1px solid $jnt-secondary-color;
+    padding: $jnt-gutter-small;
+  }
+
+  tr td:nth-child(2) {
+    text-align: right;
   }
 }
 
