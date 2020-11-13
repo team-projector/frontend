@@ -2,10 +2,11 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
+import { addWeeks, endOfWeek, startOfWeek } from 'date-fns';
 import { Observable, of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { MOCKS_DELAY } from 'src/consts';
+import { DFNS_OPTIONS, MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { TicketStates, TicketTypes } from 'src/models/enums/ticket';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
@@ -15,6 +16,8 @@ import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { BackendError } from 'src/types/gql-errors';
 import { getMock } from 'src/utils/mocks';
 import { CreateTicketGQL, EditTicketGQL, FindIssuesGQL, FindMilestonesGQL, TicketGQL } from './edit-ticket.graphql';
+
+const today = new Date();
 
 const FOUND_ISSUES_COUNT = 10;
 const FOUND_MILESTONES_COUNT = 10;
@@ -109,6 +112,21 @@ export class EditTicketComponent {
       .pipe(finalize(() => this.progress.loading = false))
       .subscribe(ticket => this.ticket = ticket,
         err => this.errors = err);
+  }
+
+  thisWeek() {
+    this.form.patchValue({
+      startDate: startOfWeek(today, DFNS_OPTIONS),
+      dueDate: endOfWeek(today, DFNS_OPTIONS)
+    });
+  }
+
+  nextWeek() {
+    const next = addWeeks(today, 1);
+    this.form.patchValue({
+      startDate: startOfWeek(next, DFNS_OPTIONS),
+      dueDate: endOfWeek(next, DFNS_OPTIONS)
+    });
   }
 
   save() {
