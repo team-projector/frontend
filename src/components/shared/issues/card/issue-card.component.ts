@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { UI } from '@junte/ui';
-import { DFNS_LOCALE } from 'src/consts';
 import { LocalUI } from 'src/enums/local-ui';
 import { IssueState } from 'src/models/enums/issue';
 import { ViewType } from 'src/models/enums/view-type';

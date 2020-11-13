@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Mutation, Query } from 'apollo-angular';
 import gql from 'graphql-tag';
-import { Issue } from '../../../../models/issue';
+import { Issue } from 'src/models/issue';
 
 @Injectable({
   providedIn: 'root'

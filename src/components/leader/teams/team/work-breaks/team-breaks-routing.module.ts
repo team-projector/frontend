@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { TeamBreaksComponent } from 'src/components/leader/teams/team/work-breaks/team-breaks.component';
 import { TeamResolver } from 'src/resolvers/team';
 import { UserResolver } from 'src/resolvers/user';
-import { MeUserResolver } from '../../../../../resolvers/me';
+import { MeUserResolver } from 'src/resolvers/me';
 import { TeamBreaksListTableComponent } from './list/breaks-list-table.component';
 import { TeamBreaksListGanttComponent } from './gantt/breaks-list-gantt.component';
 

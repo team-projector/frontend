@@ -6,7 +6,7 @@ import { DateFnsModule } from 'ngx-date-fns';
 import { BonusesListModule } from 'src/components/shared/bonuses/list/bonuses-list.module';
 import { PenaltiesModule } from 'src/components/shared/penalties/penalties.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
-import { MoneyPipesModule } from '../../../../pipes/money-pipes.module';
+import { MoneyPipesModule } from 'src/pipes/money-pipes.module';
 import { IssuesListModule } from '../../issues/list/issues-list.module';
 import { TimeExpensesListModule } from '../../time-expenses/list/time-expenses-list.module';
 import { SalaryBonusesListComponent } from './bonuses/bonuses-list.component';

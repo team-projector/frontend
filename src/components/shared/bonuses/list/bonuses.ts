@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
-import { ViewType } from '../../../../models/enums/view-type';
+import { ViewType } from 'src/models/enums/view-type';
 import { BonusesState, BonusesStateUpdate } from './bonuses-list.types';
 
 export abstract class BonusesComponent implements OnInit {

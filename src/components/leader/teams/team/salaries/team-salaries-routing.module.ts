@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TeamResolver } from '../../../../../resolvers/team';
+import { TeamResolver } from 'src/resolvers/team';
 import { OutletComponent } from '../../../../outlet/outlet.component';
 import { TeamSalariesComponent } from './team-salaries.component';
 

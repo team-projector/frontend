@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UI } from '@junte/ui';
@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 import { ApproveStates } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
 import { BackendError } from 'src/types/gql-errors';
-import { UsersPaging } from 'src/models/user';
+import { User, UsersPaging } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
 import { CardSize } from '../../../../../shared/users/card/user-card.types';
 import { AllTeamWorkBreaks } from './breaks-gantt.graphql';
@@ -51,7 +51,7 @@ export class TeamBreaksListGanttComponent implements OnInit {
   viewType = ViewType;
   approveStates = ApproveStates;
   userCardSize = CardSize;
-  workbreaks = [];
+  users: User[] = [];
   errors: BackendError[] = [];
   loading = false;
   pageSize = PAGE_SIZE;
@@ -83,7 +83,7 @@ export class TeamBreaksListGanttComponent implements OnInit {
       : this.teamBreaksGQL.fetch(serialize(filter) as R).pipe(catchGQLErrors(),
         map(({data: {breaks}}) => deserialize(breaks, UsersPaging))))
       .pipe(finalize(() => this.loading = false))
-      .subscribe(ganttBreaks => [this.workbreaks, this.count] = [ganttBreaks.results, ganttBreaks.count],
+      .subscribe(ganttBreaks => [this.users, this.count] = [ganttBreaks.results, ganttBreaks.count],
           err => this.errors = err);
   }
 }

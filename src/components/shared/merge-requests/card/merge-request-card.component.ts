@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { UI } from '@junte/ui';
 import { StandardLabel } from 'src/models/enums/standard-label';
-import { LocalUI } from '../../../../enums/local-ui';
-import { MergeRequestState } from '../../../../models/enums/merge-requests';
-import { MergeRequest } from '../../../../models/merge-request';
+import { LocalUI } from 'src/enums/local-ui';
+import { MergeRequestState } from 'src/models/enums/merge-requests';
+import { MergeRequest } from 'src/models/merge-request';
 
 @Component({
   selector: 'app-merge-request',

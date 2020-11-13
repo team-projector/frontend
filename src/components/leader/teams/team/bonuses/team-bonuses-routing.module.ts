@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TeamResolver } from '../../../../../resolvers/team';
+import { TeamResolver } from 'src/resolvers/team';
 import { TeamBonusesComponent } from './team-bonuses.component';
 
 export const BONUSES_BREADCRUMB = $localize`:@@label.bonuses:Bonuses`;

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from '@junte/ui';
 import { NGXLogger } from 'ngx-logger';
-import { LocalUI } from '../../../enums/local-ui';
+import { LocalUI } from 'src/enums/local-ui';
 import { Users } from '../../shared/users/list/users';
 
 @Component({

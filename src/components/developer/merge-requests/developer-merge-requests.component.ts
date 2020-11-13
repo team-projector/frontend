@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from '@junte/ui';
 import { MergeRequestsComponent } from 'src/components/shared/merge-requests/list/merge-requests';
-import { LocalUI } from '../../../enums/local-ui';
-import { ViewType } from '../../../models/enums/view-type';
+import { LocalUI } from 'src/enums/local-ui';
+import { ViewType } from 'src/models/enums/view-type';
 
 @Component({
   selector: 'app-developer-merge-requests',

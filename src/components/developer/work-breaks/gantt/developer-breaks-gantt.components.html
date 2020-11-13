@@ -9,7 +9,7 @@
   <ng-template #titleTemplate>
     <strong>Developer</strong>
   </ng-template>
-  <jnt-gantt-line *ngFor="let workBreak of workbreaks"
+  <jnt-gantt-line *ngFor="let workBreak of workBreaks"
                   [title]="workBreak.user.name">
     <ng-template #title>
       <jnt-stack [orientation]="ui.orientation.horizontal">

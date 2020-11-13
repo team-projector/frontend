@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from '@junte/ui';
 import { NGXLogger } from 'ngx-logger';
 import { IssuesComponent } from 'src/components/shared/issues/list/issues';
-import { LocalUI } from '../../../../../enums/local-ui';
-import { ViewType } from '../../../../../models/enums/view-type';
+import { LocalUI } from 'src/enums/local-ui';
+import { ViewType } from 'src/models/enums/view-type';
 
 @Component({
   selector: 'app-team-issues-component',

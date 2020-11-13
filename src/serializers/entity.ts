@@ -1,4 +1,4 @@
-import { deserialize, Serializer } from 'serialize-ts';
+import { Serializer } from 'serialize-ts';
 import { Project, ProjectGroup } from '../models/project';
 
 interface Entity {
