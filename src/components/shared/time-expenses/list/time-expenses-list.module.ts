@@ -7,6 +7,7 @@ import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { MoneyPipesModule } from 'src/pipes/money-pipes.module';
 import { IssueCardModule } from '../../issues/card/issue-card.module';
 import { MergeRequestCardModule } from '../../merge-requests/card/merge-request-card.module';
+import { UserCardModule } from '../../users/card/user-card.module';
 import { TimeExpensesListComponent } from './time-expenses-list.component';
 import { GetOwnerTypePipe } from './time-expenses-list.pipes';
 
@@ -25,6 +26,7 @@ import { GetOwnerTypePipe } from './time-expenses-list.pipes';
     MoneyPipesModule,
 
     IssueCardModule,
+    UserCardModule,
     MergeRequestCardModule
   ],
   exports: [

@@ -52,9 +52,8 @@
       </jnt-stack>
     </ng-template>
 
-    <jnt-table-column sort="title"
-                      title="Title"
-                      i18n-title="@@label.title">
+    <jnt-table-column title="Spent where"
+                      i18n-title="@@label.spent_where">
       <ng-template #tableCellTemplate let-owner="owner">
         <ng-container [ngSwitch]="owner | getOwnerType">
           <app-issue *ngSwitchCase="ownerType.issue"
@@ -62,6 +61,16 @@
           <app-merge-request *ngSwitchCase="ownerType.mergeRequest"
                              [mergeRequest]="owner"></app-merge-request>
         </ng-container>
+      </ng-template>
+    </jnt-table-column>
+
+    <jnt-table-column title="Developer"
+                      i18n-title="@@label.developer"
+                      width="15%">
+      <ng-template #tableCellTemplate
+                   let-user="user">
+        <app-user [user]="user"
+                  [size]="userCardSize.small"></app-user>
       </ng-template>
     </jnt-table-column>
 

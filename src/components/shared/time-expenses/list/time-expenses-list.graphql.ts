@@ -32,6 +32,13 @@ query(
                 id
                 createdAt
                 date
+                user {
+                  name
+                  glAvatar
+                  position {
+                    title
+                  }
+                }
                 owner {
                     __typename
                     title

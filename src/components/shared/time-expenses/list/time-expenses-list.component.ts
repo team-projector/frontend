@@ -19,6 +19,7 @@ import { BackendError } from 'src/types/gql-errors';
 import { equals } from 'src/utils/equals';
 import { getMock } from 'src/utils/mocks';
 import { LocalUI } from '../../../../enums/local-ui';
+import { CardSize } from '../../users/card/user-card.types';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses-list.graphql';
 import { TimeExpensesState, TimeExpensesStateUpdate } from './time-expenses-list.types';
 
@@ -37,6 +38,7 @@ export class TimeExpensesListComponent implements OnInit {
   viewType = ViewType;
   ownerType = OwnerType;
   durationFormat = DurationFormat;
+  userCardSize = CardSize;
   today = new Date();
 
   // will be used for reset offset

@@ -13,6 +13,7 @@ import { Issue } from './issue';
 import { MergeRequest } from './merge-request';
 import { Paging } from './paging';
 import { Salary } from './salary';
+import { User } from './user';
 
 @model()
 export class SpentTime {
@@ -28,6 +29,9 @@ export class SpentTime {
     mock: faker.date.past()
   })
   date: Date;
+
+  @field({mock: User})
+  user: User;
 
   @field({
     serializer: new OwnerSerializer(),
