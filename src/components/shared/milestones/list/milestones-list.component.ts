@@ -7,7 +7,7 @@ import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { MOCKS_DELAY } from 'src/consts';
+import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { MilestoneProblem, MilestoneState, MilestoneType } from 'src/models/enums/milestone';
@@ -39,7 +39,10 @@ export class MilestonesListComponent implements OnInit {
   // will be used for reset offset
   private reset: Object;
 
-  progress = {sync: false, summary: false};
+  progress = {
+    syncing: false,
+    summary: false
+  };
 
   filter: MilestonesFilter;
   summary: MilestonesSummary;
@@ -149,10 +152,13 @@ export class MilestonesListComponent implements OnInit {
         err => this.errors = err);
   }
 
-  sync(issue: number) {
-    this.progress.sync = true;
+  sync(issue: number, hide: Function) {
+    this.progress.syncing = true;
     this.syncMilestoneGQL.mutate({id: issue})
-      .pipe(finalize(() => this.progress.sync = false))
+      .pipe(delay(UI_DELAY), finalize(() => {
+        hide();
+        this.progress.syncing = false;
+      }))
       .subscribe(() => this.table.load(),
         err => this.errors = err);
   }

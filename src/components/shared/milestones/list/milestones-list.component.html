@@ -152,10 +152,11 @@
       </ng-template>
     </jnt-table-column>
 
-    <ng-template #tableRowActionsTemplate let-row="row">
-      <jnt-menu [orientation]="ui.orientation.vertical" [spacing]="ui.gutter.small">
+    <ng-template #tableRowActionsTemplate let-row="row" let-hide="hide">
+      <jnt-menu [orientation]="ui.orientation.vertical"
+                [spacing]="ui.gutter.small">
         <jnt-menu-item [icon]="ui.icons.link"
-                       title="View on GitLab"
+                       title="GitLab"
                        i18n-title="@@action.view_on_gitlab"
                        target="_blank"
                        [link]="row.glUrl"></jnt-menu-item>
@@ -165,9 +166,10 @@
                        target="_blank"
                        [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
         <jnt-menu-item [icon]="ui.icons.sync"
-                       title="Sync from GitLab"
+                       title="Sync"
                        i18n-title="@@action.sync_from_gitlab"
-                       (click)="sync(row.id)"></jnt-menu-item>
+                       [loading]="progress.syncing"
+                       (click)="sync(row.id, hide)"></jnt-menu-item>
       </jnt-menu>
     </ng-template>
 

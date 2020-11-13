@@ -234,7 +234,7 @@
     <ng-template #tableRowActionsTemplate let-row="row" let-hide="hide">
       <jnt-menu [orientation]="ui.orientation.vertical">
         <jnt-menu-item [icon]="ui.icons.sync"
-                       title="Sync from GitLab"
+                       title="Sync"
                        i18n-title="@@action.sync_from_gitlab"
                        [loading]="progress.syncing"
                        (click)="sync(row.id, hide)"></jnt-menu-item>

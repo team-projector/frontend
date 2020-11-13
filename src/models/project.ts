@@ -78,6 +78,9 @@ export class ProjectGroup {
   @field({mock: () => faker.image.business()})
   glAvatar: string;
 
+  @field({mock: () => faker.internet.url()})
+  glUrl: string;
+
   @field({mock: ProjectsMetrics})
   metrics: ProjectsMetrics;
 }
