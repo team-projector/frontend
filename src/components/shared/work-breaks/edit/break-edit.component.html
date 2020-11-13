@@ -10,8 +10,7 @@
   <jnt-stack [orientation]="ui.orientation.vertical" [align]="ui.align.stretch">
     <jnt-form-item *ngIf="view === viewType.leader">
       <jnt-form-label i18n="@@label.developer">Developer</jnt-form-label>
-      <jnt-select developers
-                  placeholder="Developer"
+      <jnt-select placeholder="Developer"
                   i18n-placeholder="@@label.developer"
                   formControlName="user">
         <jnt-select-option *ngIf="!!user"

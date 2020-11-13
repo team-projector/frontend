@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from '@junte/ui';
 import { Me } from 'src/models/user';
-import { LocalUI } from '../../../enums/local-ui';
+import { LocalUI } from 'src/enums/local-ui';
 
 @Component({
   selector: 'app-developer-dashboard',

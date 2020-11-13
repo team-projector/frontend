@@ -10,7 +10,7 @@
     <ng-template #titleTemplate>
       <strong>Developer</strong>
     </ng-template>
-    <jnt-gantt-line *ngFor="let user of workbreaks"
+    <jnt-gantt-line *ngFor="let user of users"
                     [title]="user.name">
       <ng-template #title>
         <app-user [user]="user"></app-user>

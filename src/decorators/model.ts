@@ -1,6 +1,6 @@
 import 'reflect-metadata';
-import { Field, Model, Name, serialize, Serializer, Type } from 'serialize-ts/dist';
-import { MockField, MOCK_FIELD_METADATA_KEY, MockFieldConfig, MockModel } from '../utils/mocks';
+import { Field, Model, Serializer} from 'serialize-ts/dist';
+import { MockField, MockFieldConfig, MockModel } from '../utils/mocks';
 
 export interface ModelConfig {
   mocking?: (obj: Object, context?: Object, index?: number) => void;

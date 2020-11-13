@@ -1,9 +1,9 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { UI } from '@junte/ui';
-import { LocalUI } from '../../../../enums/local-ui';
-import { TeamMemberRole } from '../../../../models/enums/team';
-import { UserRole } from '../../../../models/enums/user';
-import { User } from '../../../../models/user';
+import { LocalUI } from 'src/enums/local-ui';
+import { TeamMemberRole } from 'src/models/enums/team';
+import { UserRole } from 'src/models/enums/user';
+import { User } from 'src/models/user';
 import { CardSize } from './user-card.types';
 
 @Component({

@@ -2,7 +2,7 @@ import { OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { serialize } from 'serialize-ts/dist';
-import { ViewType } from '../../../../models/enums/view-type';
+import { ViewType } from 'src/models/enums/view-type';
 import { MilestonesState, MilestonesStateUpdate } from './milestones-list.types';
 
 export abstract class MilestonesComponent implements OnInit {

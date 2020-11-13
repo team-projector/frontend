@@ -1,5 +1,5 @@
-import { field, model } from '../../../../decorators/model';
-import { ProjectType } from '../../../../models/enums/project';
+import { field, model } from 'src/decorators/model';
+import { ProjectType } from 'src/models/enums/project';
 
 export interface ProjectsState {
   first: number;

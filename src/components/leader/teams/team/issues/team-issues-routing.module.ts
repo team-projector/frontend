@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DueDateResolver } from 'src/resolvers/issue';
 import { ProjectResolver } from 'src/resolvers/project';
-import { TeamResolver } from '../../../../../resolvers/team';
-import { UserResolver } from '../../../../../resolvers/user';
+import { TeamResolver } from 'src/resolvers/team';
+import { UserResolver } from 'src/resolvers/user';
 import { TeamIssuesComponent } from './team-issues.component';
 
 export const ISSUES_BREADCRUMB = $localize`:@@label.issues:Issues`;

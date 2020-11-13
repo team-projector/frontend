@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { TableComponent, UI } from '@junte/ui';
-import { R } from 'apollo-angular/types';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
@@ -11,13 +10,12 @@ import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
-import { LocalUI } from '../../../../enums/local-ui';
-import { ProjectState, ProjectType } from '../../../../models/enums/project';
-import { ViewType } from '../../../../models/enums/view-type';
-import { IssuesSummary } from '../../../../models/issue';
-import { ProjectsFilter, ProjectsPaging, ProjectsSummary } from '../../../../models/project';
-import { BackendError } from '../../../../types/gql-errors';
-import { equals } from '../../../../utils/equals';
+import { LocalUI } from 'src/enums/local-ui';
+import { ProjectState, ProjectType } from 'src/models/enums/project';
+import { ViewType } from 'src/models/enums/view-type';
+import { ProjectsFilter, ProjectsPaging, ProjectsSummary } from 'src/models/project';
+import { BackendError } from 'src/types/gql-errors';
+import { equals } from 'src/utils/equals';
 import { AllProjectsGQL, ProjectsSummaryGQL } from './projects-list.graphql';
 import { ProjectsState, ProjectsStateUpdate } from './projects-list.types';
 

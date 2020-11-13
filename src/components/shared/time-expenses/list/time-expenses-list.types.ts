@@ -1,10 +1,10 @@
-import { DATE_FORMAT } from '../../../../consts';
-import { field, model } from '../../../../decorators/model';
-import { TimeExpenseType } from '../../../../models/enums/time-expenses';
-import { Salary } from '../../../../models/salary';
-import { Team } from '../../../../models/team';
-import { User } from '../../../../models/user';
-import { DateSerializer } from '../../../../serializers/date';
+import { DATE_FORMAT } from 'src/consts';
+import { field, model } from 'src/decorators/model';
+import { TimeExpenseType } from 'src/models/enums/time-expenses';
+import { Salary } from 'src/models/salary';
+import { Team } from 'src/models/team';
+import { User } from 'src/models/user';
+import { DateSerializer } from 'src/serializers/date';
 
 export interface TimeExpensesState {
   first: number;

@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ProjectResolver } from 'src/resolvers/project';
 import { TeamResolver } from 'src/resolvers/team';
-import { UserResolver } from 'src/resolvers/user';
-import { Team } from '../../../../models/team';
+import { Team } from 'src/models/team';
 import { TeamComponent } from './team.component';
 
 export function getTeam({team}: { team: Team }) {

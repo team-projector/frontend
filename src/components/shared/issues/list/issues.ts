@@ -4,8 +4,8 @@ import { NGXLogger } from 'ngx-logger';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
 import { ViewType } from 'src/models/enums/view-type';
-import { IssueState } from '../../../../models/enums/issue';
-import { StandardLabel } from '../../../../models/enums/standard-label';
+import { IssueState } from 'src/models/enums/issue';
+import { StandardLabel } from 'src/models/enums/standard-label';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
 
 export abstract class IssuesComponent implements OnInit {

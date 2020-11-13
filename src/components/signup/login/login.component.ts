@@ -14,7 +14,7 @@ import { UserRole } from 'src/models/enums/user';
 import { BackendError } from 'src/types/gql-errors';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
-import { LocalUI } from '../../../enums/local-ui';
+import { LocalUI } from 'src/enums/local-ui';
 import { GitlabLoginGQL, LoginGQL } from './login.graphql';
 
 enum SystemMode {

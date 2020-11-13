@@ -1,5 +1,5 @@
-import { field, model } from '../../../../decorators/model';
-import { User } from '../../../../models/user';
+import { field, model } from 'src/decorators/model';
+import { User } from 'src/models/user';
 
 export interface SalariesState {
   first: number;

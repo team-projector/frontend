@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MeUserResolver } from '../../../resolvers/me';
+import { MeUserResolver } from 'src/resolvers/me';
 import { DeveloperDashboardComponent } from './developer-dashboard.component';
 
 export const DASHBOARD = $localize`:@@label.dashboard:Dashboard`;

@@ -1,5 +1,5 @@
-import { field, model } from '../../../../decorators/model';
-import { MilestoneType } from '../../../../models/enums/milestone';
+import { field, model } from 'src/decorators/model';
+import { MilestoneType } from 'src/models/enums/milestone';
 
 
 export interface MilestonesState {

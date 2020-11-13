@@ -10,12 +10,12 @@ import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
-import { LocalUI } from '../../../../enums/local-ui';
-import { ProjectState, ProjectType } from '../../../../models/enums/project';
-import { ViewType } from '../../../../models/enums/view-type';
-import { ProjectGroupsPaging, ProjectsFilter, ProjectsSummary } from '../../../../models/project';
-import { BackendError } from '../../../../types/gql-errors';
-import { equals } from '../../../../utils/equals';
+import { LocalUI } from 'src/enums/local-ui';
+import { ProjectState, ProjectType } from 'src/models/enums/project';
+import { ViewType } from 'src/models/enums/view-type';
+import { ProjectGroupsPaging, ProjectsFilter, ProjectsSummary } from 'src/models/project';
+import { BackendError } from 'src/types/gql-errors';
+import { equals } from 'src/utils/equals';
 import { AllProjectGroupsGQL, ProjectGroupsSummaryGQL } from './project-groups-list.graphql';
 import { ProjectGroupsState, ProjectGroupsStateUpdate } from './project-groups-list.types';
 

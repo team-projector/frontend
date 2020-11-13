@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Mutation, Query } from 'apollo-angular';
 import gql from 'graphql-tag';
-import { MergeRequest } from '../../../../models/merge-request';
+import { MergeRequest } from 'src/models/merge-request';
 
 @Injectable({
   providedIn: 'root'
