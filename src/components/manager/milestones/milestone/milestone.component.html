@@ -29,8 +29,7 @@
                       [disabled]="progress.tickets"
                       (click)="loadTickets()">
           </jnt-button>
-          <jnt-switcher formControlName="type"
-                        [width]="ui.width.fluid">
+          <jnt-switcher formControlName="type">
             <jnt-switcher-option label="All"
                                  i18n-label="@@action.filter_issues_all"
                                  [disabled]="summary?.count <= 0"

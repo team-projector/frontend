@@ -27,7 +27,7 @@ export class MilestoneIssuesSummaryGQL extends Query<{ summary }> {
 @Injectable({
   providedIn: 'root'
 })
-export class AllTicketsGQL extends Query<{ tickets }> {
+export class MilestoneTicketsGQL extends Query<{ tickets }> {
   document = gql`
 query($milestone: ID!, $state: String, $offset: Int, $first: Int) {
     tickets: allTickets(

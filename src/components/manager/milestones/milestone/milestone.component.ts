@@ -21,8 +21,13 @@ import { LocalUI } from '../../../../enums/local-ui';
 import { Milestone } from '../../../../models/milestone';
 import { equals } from '../../../../utils/equals';
 import { EditTicketComponent } from './edit-ticket/edit-ticket.component';
-import { AllTicketsGQL, AttachIssueGQL, DeleteTicketGQL, MilestoneIssuesSummaryGQL, TicketIssuesGQL, TicketsSummaryGQL } from './milestone.graphql';
+import { MilestoneTicketsGQL, AttachIssueGQL, DeleteTicketGQL, MilestoneIssuesSummaryGQL, TicketIssuesGQL, TicketsSummaryGQL } from './milestone.graphql';
 import { MilestoneState, MilestoneUpdateState } from './milestone.types';
+
+enum LoadMode {
+  changes,
+  force
+}
 
 @Component({
   selector: 'app-milestone',
@@ -66,7 +71,7 @@ export class MilestoneComponent implements OnInit {
   });
 
   constructor(private milestoneIssuesSummaryGQL: MilestoneIssuesSummaryGQL,
-              private allTicketsGQL: AllTicketsGQL,
+              private milestoneTicketsGQL: MilestoneTicketsGQL,
               private ticketsSummaryGQL: TicketsSummaryGQL,
               private deleteTicketGQL: DeleteTicketGQL,
               private attachIssueGQL: AttachIssueGQL,
@@ -107,10 +112,11 @@ export class MilestoneComponent implements OnInit {
           .then(() => null);
       });
 
+    // TODO: think about it
     // this.load();
   }
 
-  private load(force = false) {
+  private load(mode = LoadMode.changes) {
     const filter = new TicketsFilter(
       {
         milestone: this.milestone.id,
@@ -133,7 +139,7 @@ export class MilestoneComponent implements OnInit {
           }
         })()
       });
-    if (equals(filter, this.filters.tickets) && !force) {
+    if (equals(filter, this.filters.tickets) && mode === LoadMode.changes) {
       this.logger.debug('filter was not changed');
       return;
     }
@@ -147,7 +153,7 @@ export class MilestoneComponent implements OnInit {
     this.progress.tickets = true;
     const action = environment.mocks
       ? of(getMock(PagingTickets, this.filters.tickets)).pipe(delay(MOCKS_DELAY))
-      : this.allTicketsGQL.fetch(serialize(this.filters.tickets) as R)
+      : this.milestoneTicketsGQL.fetch(serialize(this.filters.tickets) as R)
         .pipe(map(({data: {tickets}}) => deserialize(tickets, PagingTickets)));
     action.pipe(finalize(() => this.progress.tickets = false))
       .subscribe(tickets => this.tickets = tickets.results,
@@ -166,11 +172,11 @@ export class MilestoneComponent implements OnInit {
         err => this.errors = err);
   }
 
-  private loadIssues(force = false) {
+  private loadIssues(mode = LoadMode.changes) {
     this.logger.debug('load issues');
     const {ticket} = this.form.getRawValue();
     const filter = new IssuesFilter({ticket});
-    if (equals(filter, this.filters.issues) && !force) {
+    if (equals(filter, this.filters.issues) && mode === LoadMode.changes) {
       this.logger.debug('filter was not changed');
       return;
     }
@@ -202,8 +208,8 @@ export class MilestoneComponent implements OnInit {
     component.instance.canceled.subscribe(() => this.modal.close());
     component.instance.saved.subscribe(() => {
       this.modal.close();
-      this.load(true);
-      this.loadIssues(true);
+      this.load(LoadMode.force);
+      this.loadIssues(LoadMode.force);
       if (!!ticket && ticket.id !== this.ticketControl.value) {
         this.ticketControl.patchValue(ticket.id);
       }
@@ -223,7 +229,7 @@ export class MilestoneComponent implements OnInit {
     this.progress.deleting[id] = true;
     this.deleteTicketGQL.mutate({id})
       .pipe(delay(UI_DELAY), finalize(() => this.progress.deleting[id] = false))
-      .subscribe(() => this.load(true), err => this.errors = err);
+      .subscribe(() => this.load(LoadMode.force), err => this.errors = err);
   }
 
   toggleIssues(ticket: string) {
@@ -244,7 +250,7 @@ export class MilestoneComponent implements OnInit {
     const issue = event.item.data['issue'];
     this.attachIssueGQL.mutate({issue: issue, ticket: ticket})
       .subscribe(() => {
-          this.load(true);
+          this.load(LoadMode.force);
           this.ticketControl.patchValue(ticket);
         },
         err => this.errors = err);
