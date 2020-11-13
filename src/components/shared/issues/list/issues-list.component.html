@@ -8,6 +8,7 @@
   <jnt-table #table [features]="[ui.feature.reload, ui.feature.search]"
              (reloaded)="loadSummary()"
              formControlName="table">
+
     <ng-template #tableActionsTemplate>
       <jnt-button text="Today"
                   [icon]="localUi.icons.today"

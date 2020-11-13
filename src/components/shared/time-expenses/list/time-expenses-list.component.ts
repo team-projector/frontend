@@ -18,6 +18,7 @@ import { User } from 'src/models/user';
 import { BackendError } from 'src/types/gql-errors';
 import { equals } from 'src/utils/equals';
 import { getMock } from 'src/utils/mocks';
+import { LocalUI } from '../../../../enums/local-ui';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses-list.graphql';
 import { TimeExpensesState, TimeExpensesStateUpdate } from './time-expenses-list.types';
 
@@ -31,17 +32,19 @@ const PAGE_SIZE = 10;
 export class TimeExpensesListComponent implements OnInit {
 
   ui = UI;
+  localUi = LocalUI;
   timeExpensesType = TimeExpenseType;
   viewType = ViewType;
   ownerType = OwnerType;
   durationFormat = DurationFormat;
-  errors: BackendError[] = [];
+  today = new Date();
 
   // will be used for reset offset
   private reset: Object;
 
   summary: SpentTimesSummary;
   filter: TimeExpensesFilter;
+  errors: BackendError[] = [];
 
   team: Team;
   user: User;
