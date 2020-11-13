@@ -95,53 +95,53 @@ export class TicketsSummaryGQL extends Query<{ summary }> {
 })
 export class TicketIssuesGQL extends Query<{ ticket: { issues } }> {
   document = gql`
-    query ($ticket: ID!) {
-      ticket(id: $ticket) {
-        issues {
-          count
-          edges {
-            node {
-              id
-              title
-              dueDate
-              closedAt
-              labels {
-                count
-                edges {
-                  node {
-                    title
-                    color
-                  }
-                }
-              }
-              project {
+query ($ticket: ID!) {
+  ticket(id: $ticket) {
+    issues(orderBy: "user,-state") {
+      count
+      edges {
+        node {
+          id
+          title
+          dueDate
+          closedAt
+          labels {
+            count
+            edges {
+              node {
                 title
-                group {
-                  title
-                }
-              }
-              state
-              createdAt
-              timeEstimate
-              totalTimeSpent
-              timeEstimate
-              glUrl
-              user {
-                id
-                name
-                glAvatar
-              }
-              metrics {
-                remains
-                efficiency
-                payroll
-                paid
+                color
               }
             }
           }
+          project {
+            title
+            group {
+              title
+            }
+          }
+          state
+          createdAt
+          timeEstimate
+          totalTimeSpent
+          timeEstimate
+          glUrl
+          user {
+            id
+            name
+            glAvatar
+          }
+          metrics {
+            remains
+            efficiency
+            payroll
+            paid
+          }
         }
       }
-    }`;
+    }
+  }
+}`;
 }
 
 @Injectable({
