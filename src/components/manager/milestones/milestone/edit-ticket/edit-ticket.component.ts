@@ -1,21 +1,20 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { R } from 'apollo-angular/types';
 import { UI } from '@junte/ui';
+import { R } from 'apollo-angular/types';
 import { Observable, of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
-import { IssuesGQL } from 'src/components/shared/issues/list/issues-list.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { TicketStates, TicketTypes } from 'src/models/enums/ticket';
-import { BackendError } from 'src/types/gql-errors';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Milestone, MilestonesFilter, PagingMilestones } from 'src/models/milestone';
 import { Ticket, TicketUpdate } from 'src/models/ticket';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
+import { BackendError } from 'src/types/gql-errors';
 import { getMock } from 'src/utils/mocks';
-import { FindMilestonesGQL, CreateTicketGQL, EditTicketGQL, TicketGQL } from './edit-ticket.graphql';
+import { CreateTicketGQL, EditTicketGQL, FindIssuesGQL, FindMilestonesGQL, TicketGQL } from './edit-ticket.graphql';
 
 const FOUND_ISSUES_COUNT = 10;
 const FOUND_MILESTONES_COUNT = 10;
@@ -90,7 +89,7 @@ export class EditTicketComponent {
     return this._ticket;
   }
 
-  @Output() saved = new EventEmitter<TicketUpdate>();
+  @Output() saved = new EventEmitter<Ticket>();
   @Output() canceled = new EventEmitter<any>();
 
   constructor(private fb: FormBuilder,
@@ -98,7 +97,7 @@ export class EditTicketComponent {
               private createTicketGQL: CreateTicketGQL,
               private editTicketGQL: EditTicketGQL,
               private findMilestonesGQL: FindMilestonesGQL,
-              private issuesGQL: IssuesGQL) {
+              private findIssuesGQL: FindIssuesGQL) {
   }
 
   private load() {
@@ -109,15 +108,16 @@ export class EditTicketComponent {
     (environment.mocks ? of(getMock(Ticket)).pipe(delay(MOCKS_DELAY)) : action)
       .pipe(finalize(() => this.progress.loading = false))
       .subscribe(ticket => this.ticket = ticket,
-          err => this.errors = err);
+        err => this.errors = err);
   }
 
   save() {
     this.progress.saving = true;
     const mutation = !!this.ticket ? this.editTicketGQL : this.createTicketGQL;
     const action = mutation.mutate(serialize(new TicketUpdate(this.form.getRawValue())) as R);
-    action.pipe(catchGQLErrors(), finalize(() => this.progress.saving = false))
-      .subscribe(() => this.saved.emit(),
+    action.pipe(catchGQLErrors(), finalize(() => this.progress.saving = false),
+      map(({data: {response: {ticket}}}) => deserialize(ticket, Ticket)))
+      .subscribe(ticket => this.saved.emit(ticket),
         err => this.errors = err);
   }
 
@@ -146,7 +146,7 @@ export class EditTicketComponent {
         orderBy: '-createdAt',
         first: FOUND_ISSUES_COUNT
       });
-      this.issuesGQL.fetch(serialize(filter) as R)
+      this.findIssuesGQL.fetch(serialize(filter) as R)
         .pipe(catchGQLErrors(),
           map(({data: {issues}}) => deserialize(issues, PagingIssues)))
         .subscribe(({results: issues}) => {

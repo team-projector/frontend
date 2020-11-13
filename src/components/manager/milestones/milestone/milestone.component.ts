@@ -187,6 +187,7 @@ export class MilestoneComponent implements OnInit {
       return;
     }
     this.filters.issues = filter;
+    this.issues = [];
     if (!!ticket) {
       this.progress.issues = true;
       (environment.mocks
@@ -212,12 +213,15 @@ export class MilestoneComponent implements OnInit {
       component.instance.id = ticket.id;
     }
     component.instance.canceled.subscribe(() => this.modal.close());
-    component.instance.saved.subscribe(() => {
+    component.instance.saved.subscribe(t => {
       this.modal.close();
       this.load(LoadMode.force);
-      this.loadIssues(LoadMode.force);
-      if (!!ticket && ticket.id !== this.ticketControl.value) {
-        this.ticketControl.patchValue(ticket.id);
+      if (!!this.ticketControl.value) {
+        if (this.ticketControl.value !== t.id) {
+          this.ticketControl.patchValue(t.id);
+        } else {
+          this.loadIssues(LoadMode.force);
+        }
       }
     });
 
@@ -239,9 +243,7 @@ export class MilestoneComponent implements OnInit {
   }
 
   toggleIssues(ticket: string) {
-    this.issues = [];
-    this.ticketControl.setValue(this.ticketControl.value === ticket
-      ? null : ticket);
+    this.ticketControl.setValue(this.ticketControl.value === ticket ? null : ticket);
   }
 
   getLink(ticket: string) {

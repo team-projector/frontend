@@ -7,8 +7,8 @@ import gql from 'graphql-tag';
 })
 export class TicketGQL extends Query<{ ticket }> {
   document = gql`
-    query($ticket: ID!) {
-      ticket(id: $ticket) {
+query($ticket: ID!) {
+    ticket(id: $ticket) {
         id
         type
         title
@@ -18,59 +18,59 @@ export class TicketGQL extends Query<{ ticket }> {
         state
         url
         milestone {
-          id
-          title
+            id
+            title
         }
         issues {
-          count
-          edges {
-            node {
-              title
-              id
-              dueDate
-              closedAt
-              labels {
-                count
-                edges {
-                  node {
+            count
+            edges {
+                node {
                     title
-                    color
-                  }
+                    id
+                    dueDate
+                    closedAt
+                    labels {
+                        count
+                        edges {
+                            node {
+                                title
+                                color
+                            }
+                        }
+                    }
+                    project {
+                        title
+                        group {
+                            title
+                        }
+                    }
+                    state
+                    createdAt
+                    timeEstimate
+                    totalTimeSpent
+                    timeEstimate
+                    glUrl
+                    ticket {
+                        id
+                        title
+                        url
+                    }
+                    user {
+                        id
+                        name
+                        glAvatar
+                    }
+                    metrics {
+                        remains
+                        efficiency
+                        payroll
+                        paid
+                    }
                 }
-              }
-              project {
-                title
-                group {
-                  title
-                }
-              }
-              state
-              createdAt
-              timeEstimate
-              totalTimeSpent
-              timeEstimate
-              glUrl
-              ticket {
-                id
-                title
-                url
-              }
-              user {
-                id
-                name
-                glAvatar
-              }
-              metrics {
-                remains
-                efficiency
-                payroll
-                paid
-              }
             }
-          }
         }
-      }
-    }`;
+    }
+}`;
 }
 
 @Injectable({
@@ -94,45 +94,118 @@ query($q: String) {
 @Injectable({
   providedIn: 'root'
 })
-export class CreateTicketGQL extends Mutation<{ ticket }> {
+export class CreateTicketGQL extends Mutation<{ response }> {
   document = gql`
-    mutation($milestone: ID!, $type: String!, $state: String!, $title: String!, $role: String, $startDate: Date!, $dueDate: Date!, $url: String, $issues: [ID]!) {
-      createTicket(milestone: $milestone, type: $type, state: $state, title: $title, role: $role, startDate: $startDate, dueDate: $dueDate, url: $url, issues: $issues) {
+mutation(
+    $milestone: ID!
+    $type: String!
+    $state: String!
+    $title: String!
+    $role: String
+    $startDate: Date!
+    $dueDate: Date!
+    $url: String
+    $issues: [ID]!
+) {
+    response: createTicket(
+        milestone: $milestone
+        type: $type
+        state: $state
+        title: $title
+        role: $role
+        startDate: $startDate
+        dueDate: $dueDate
+        url: $url
+        issues: $issues
+    ) {
         ticket {
-          milestone {
-            id
-          }
-          type
-          title
-          role
-          startDate
-          dueDate
-          url
+            milestone {
+                id
+            }
+            type
+            title
+            role
+            startDate
+            dueDate
+            url
         }
-      }
-    }`;
+    }
+}`;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class EditTicketGQL extends Mutation<{ ticket }> {
+export class EditTicketGQL extends Mutation<{ response }> {
   document = gql`
-    mutation($id: ID!, $type: String!, $state: String!, $milestone: ID, $title: String!, $role: String, $startDate: Date!, $dueDate: Date!, $url: String, $issues: [ID]!) {
-      updateTicket(id: $id, type: $type, state: $state, milestone: $milestone, title: $title, role: $role, startDate: $startDate, dueDate: $dueDate, url: $url, issues: $issues) {
+mutation(
+    $id: ID!
+    $type: String!
+    $state: String!
+    $milestone: ID
+    $title: String!
+    $role: String
+    $startDate: Date!
+    $dueDate: Date!
+    $url: String
+    $issues: [ID]!
+) {
+    response: updateTicket (
+        id: $id
+        type: $type
+        state: $state
+        milestone: $milestone
+        title: $title
+        role: $role
+        startDate: $startDate
+        dueDate: $dueDate
+        url: $url
+        issues: $issues
+    ) {
         ticket {
-          id
-          milestone {
             id
-          }
-          type
-          state
-          title
-          role
-          startDate
-          dueDate
-          url
+            milestone {
+                id
+            }
+            type
+            state
+            title
+            role
+            startDate
+            dueDate
+            url
         }
-      }
-    }`;
+    }
+}`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class FindIssuesGQL extends Query<{ issues }> {
+  document = gql`
+query($q: String) {
+    issues: allIssues(q: $q) {
+        count
+        edges {
+            node {
+                title
+                id
+                project {
+                    title
+                    group {
+                      title
+                    }
+                }
+                state
+                user {
+                    id
+                    name
+                    glAvatar
+                }
+                closedAt
+            }
+        }
+    }
+}`;
 }
