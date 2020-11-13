@@ -8,7 +8,7 @@
   <jnt-table #table [features]="[view !== viewType.salary ? ui.feature.reload : null]"
              formControlName="table">
 
-    <ng-template #tableActionsTemplate>
+    <ng-template *ngIf="view !== viewType.salary" #tableActionsTemplate>
       <jnt-button text="Today"
                   [icon]="localUi.icons.today"
                   [scheme]="ui.scheme.secondary"

@@ -48,15 +48,6 @@ query(
                         name
                         glAvatar
                     }
-                    labels {
-                        count
-                        edges {
-                            node {
-                                title
-                                color
-                            }
-                        }
-                    }
                     glUrl
                     project {
                         title
