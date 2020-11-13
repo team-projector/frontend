@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-export function dashboardMatcher() {
+export function layoutMatcher() {
   return {consumed: []};
 }
 
@@ -11,7 +11,7 @@ const routes: Routes = [
     loadChildren: () => import('./signup/signup.module').then(m => m.SignupModule)
   },
   {
-    matcher: dashboardMatcher,
+    matcher: layoutMatcher,
     loadChildren: () => import('./layout/layout.module').then(m => m.LayoutModule)
   },
   {

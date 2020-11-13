@@ -1,3 +1,4 @@
+import { Clipboard } from '@angular/cdk/clipboard';
 import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ComponentFactoryResolver, Injector, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
@@ -52,6 +53,9 @@ export class MilestoneComponent implements OnInit {
     issues: false
   };
   errors: BackendError[] = [];
+  state = {
+    copied: false
+  };
 
   milestone: Milestone;
   filters: {
@@ -80,6 +84,7 @@ export class MilestoneComponent implements OnInit {
               private injector: Injector,
               private modal: ModalService,
               private fb: FormBuilder,
+              private clipboard: Clipboard,
               private route: ActivatedRoute,
               private router: Router,
               private logger: NGXLogger) {
@@ -236,6 +241,18 @@ export class MilestoneComponent implements OnInit {
     this.issues = [];
     this.ticketControl.setValue(this.ticketControl.value === ticket
       ? null : ticket);
+  }
+
+  getLink(ticket: string) {
+    this.state.copied = true;
+    this.clipboard.copy(`${document.location.origin}/tickets/${ticket}`);
+    setTimeout(() => {
+      this.state.copied = false;
+      if (this.instance.popover) {
+        this.instance.popover.hide();
+        this.instance.popover = null;
+      }
+    }, 2000);
   }
 
   predicate(item: CdkDrag<number>) {

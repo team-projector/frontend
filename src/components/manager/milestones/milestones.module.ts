@@ -1,3 +1,4 @@
+import { ClipboardModule } from '@angular/cdk/clipboard';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
@@ -29,6 +30,7 @@ import { ManagerMilestonesComponent } from './milestones.component';
     ReactiveFormsModule,
     JunteUiModule,
     DragDropModule,
+    ClipboardModule,
 
     IssueCardModule,
     DatePipesModule,

@@ -35,6 +35,10 @@ const routes: Routes = [
         loadChildren: () => import('../shareholder/shareholder.module').then(m => m.ShareholderModule),
       },
       {
+        path: 'tickets',
+        loadChildren: () => import('../tickets/tickets.module').then(m => m.TicketsModule),
+      },
+      {
         path: '**',
         redirectTo: 'developer'
       },

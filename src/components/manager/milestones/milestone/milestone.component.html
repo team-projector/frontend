@@ -145,7 +145,7 @@
                          [orientation]="ui.orientation.horizontal"
                          [justify]="ui.align.stretch">
                 <jnt-row data-ticket [align]="ui.align.center">
-                  <jnt-col [span]="6">
+                  <jnt-col [span]="7">
                     <jnt-stack [orientation]="ui.orientation.horizontal"
                                [align]="ui.align.center"
                                [gutter]="ui.gutter.small">
@@ -166,13 +166,6 @@
                                [color]="ui.color.paleNavy"
                                [label]="role">
                     </jnt-label>
-                  </jnt-col>
-                  <jnt-col [span]="1">
-                    <jnt-link *ngIf="ticket.url"
-                              [icon]="ui.icons.link"
-                              [source]="ticket.url"
-                              [target]="ui.target.blank">
-                    </jnt-link>
                   </jnt-col>
                   <jnt-col [span]="2">
                     <jnt-stack [orientation]="ui.orientation.horizontal"
@@ -242,6 +235,17 @@
                                    i18n-title="@@action.edit"
                                    [icon]="ui.icons.edit"
                                    (click)="edit(ticket)"></jnt-menu-item>
+                    <jnt-menu-item title="Get link"
+                                   [icon]="ui.icons.anchor"
+                                   [icon]="state.copied ? ui.icons.animated.success : ui.icons.anchor"
+                                   (click)="getLink(ticket.id)">
+                    </jnt-menu-item>
+                    <jnt-menu-item *ngIf="ticket.url"
+                                   title="Go to source"
+                                   [icon]="ui.icons.link"
+                                   [link]="ticket.url"
+                                   [target]="ui.target.blank">
+                    </jnt-menu-item>
                     <jnt-menu-item title="Delete"
                                    i18n-title="@@action.delete"
                                    [icon]="ui.icons.delete"
