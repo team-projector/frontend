@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { format } from 'date-fns';
+import { DFNS_OPTIONS } from 'src/consts';
+import { Salary } from 'src/models/salary';
 import { SalaryResolver } from 'src/resolvers/salary';
-import { Salary } from '../../../../models/salary';
 import { SalaryBonusesListComponent } from './bonuses/bonuses-list.component';
 import { SalaryPenaltiesComponent } from './penalties/penalties.component';
 import { SalaryDetailComponent } from './salary-detail.component';
 import { SalaryTimeExpensesListComponent } from './time-expenses/time-expenses-list.component';
 
 export function getSalary({salary}: { salary: Salary }) {
-  return format(salary.createdAt, 'PPp');
+  return format(salary.createdAt, 'PPp', DFNS_OPTIONS);
 }
 
 export const TIME_EXPENSES_BREADCRUMB = $localize`:@@label.expenses:Time expenses`;

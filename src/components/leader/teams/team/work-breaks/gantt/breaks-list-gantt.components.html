@@ -23,12 +23,12 @@
           <div [attr.accepting]="workBreak['approveState'] === approveStates.created"
                [attr.accepted]="workBreak['approveState'] === approveStates.approved"
                [attr.declined]="workBreak['approveState'] === approveStates.declined"
-               [attr.short]="workBreak['toDate'] | dfnsDifferenceInMonths:workBreak['fromDate'] < 2"
+               [attr.short]="(workBreak['toDate'] | dfnsDifferenceInMonths:workBreak['fromDate']) < 2"
                [attr.over-from]="(workBreak['fromDate'] | dfnsGetYear) < (current | dfnsGetYear)"
                [attr.over-to]="(workBreak['toDate'] | dfnsGetYear) > (current | dfnsGetYear)" period>
-                            <span label>
-                              {{(workBreak['toDate'] | dfnsDifferenceInDays:workBreak['fromDate']) + 1 }} days
-                            </span>
+            <span label>
+              {{(workBreak['toDate'] | dfnsDifferenceInDays:workBreak['fromDate']) + 1 }} days
+            </span>
           </div>
         </ng-template>
 

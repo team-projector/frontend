@@ -126,6 +126,7 @@ switch (language) {
 }
 
 export const DFNS_LOCALE = dfnsLocale;
+export const DFNS_OPTIONS = {locale: DFNS_LOCALE, weekStartsOn: FIRST_DAY_OF_WEEK};
 
 providers.push({
   provide: DEFAULT_CURRENCY_CODE,

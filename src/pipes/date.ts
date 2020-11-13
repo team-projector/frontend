@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { format as fnsFormat, getDate, isFuture, isPast, isSameMonth, isToday } from 'date-fns';
+import { DFNS_OPTIONS } from 'src/consts';
 import { DurationFormat } from 'src/models/enums/duration-format';
 
 @Pipe({name: 'duration'})
@@ -34,8 +35,9 @@ export class DurationPipe implements PipeTransform {
 @Pipe({name: 'period'})
 export class PeriodPipe implements PipeTransform {
   transform(start: Date, end: Date): string {
-    const from = !!start ? (isSameMonth(start, end) ? getDate(start) : `${getDate(start)} ${fnsFormat(start, 'MMMM')}`) : '*';
-    const to = !!end ? `${getDate(end)} ${fnsFormat(end, 'MMMM')}` : '*';
+    const from = !!start ? (isSameMonth(start, end) ? getDate(start)
+      : `${getDate(start)} ${fnsFormat(start, 'MMMM', DFNS_OPTIONS)}`) : '*';
+    const to = !!end ? `${getDate(end)} ${fnsFormat(end, 'MMMM', DFNS_OPTIONS)}` : '*';
     return `${from} &mdash; ${to}`;
   }
 }

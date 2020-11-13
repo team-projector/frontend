@@ -114,22 +114,22 @@
                     [spacing]="ui.gutter.small">
             <jnt-menu-item title="Issues"
                            [icon]="localUi.icons.issue"
-                           [link]="['issues', {dueDate: (date | dfnsFormat: dateFormat)}]"></jnt-menu-item>
+                           [link]="['issues', {dueDate: (date | dfnsFormat:dateFormat)}]"></jnt-menu-item>
             <jnt-menu-item title="Time Expenses"
                            [icon]="localUi.icons.spentTime"
-                           [link]="['time-expenses', {date: (date | dfnsFormat: dateFormat)}]"></jnt-menu-item>
+                           [link]="['time-expenses', {date: (date | dfnsFormat:dateFormat)}]"></jnt-menu-item>
           </jnt-menu>
         </ng-template>
         <div data-day [attr.today]="(date | isToday)"
              [jntPopover]="{contentTemplate: dayDetails, trigger: ui.trigger.click}">
           <ng-container *ngTemplateOutlet="dayTemplate; context: {presentation: metricControl.value,
-                date: date, metric: metrics?.days.get((date | dfnsFormat : dateFormat))}">
+                date: date, metric: metrics?.days.get((date | dfnsFormat:dateFormat))}">
           </ng-container>
         </div>
       </ng-template>
       <ng-template #calendarMetricTemplate let-metric="metric" let-date="date">
         <ng-template #noMetricTemplate>&ndash;</ng-template>
-        <ng-container *ngIf="metrics?.weeks.get((date | dfnsFormat: dateFormat)) as weekMetric;else noMetricTemplate">
+        <ng-container *ngIf="metrics?.weeks.get((date | dfnsFormat:dateFormat)) as weekMetric;else noMetricTemplate">
           <ng-container [ngSwitch]="metric">
             <ng-container *ngSwitchCase="0">
               {{!!weekMetric.timeEstimate ? (weekMetric.timeEstimate | duration:durationFormat.short) : '&ndash;'}}

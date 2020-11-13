@@ -95,7 +95,7 @@
                       [align]="ui.align.center"
                       width="15%">
       <ng-template #tableCellTemplate let-salary="salary">
-        <jnt-link *ngIf="!!salary" [title]="salary.createdAt | dfnsFormat: 'PPp'"
+        <jnt-link *ngIf="!!salary" [title]="salary.createdAt | dfnsFormat:'PPp'"
                   [source]="['../salaries', salary.id]"></jnt-link>
       </ng-template>
     </jnt-table-column>

@@ -3,6 +3,7 @@ import { UI } from '@junte/ui';
 import { interval, of } from 'rxjs';
 import { finalize, map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
+import { DFNS_LOCALE, FIRST_DAY_OF_WEEK } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { GitLabStatus } from 'src/models/gitlab';
 import { getMock } from 'src/utils/mocks';
