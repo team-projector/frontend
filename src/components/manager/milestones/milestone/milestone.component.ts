@@ -45,12 +45,13 @@ export class MilestoneComponent implements OnInit {
   issueStates = IssueState;
   ticketStates = TicketStates;
   ticketsTypes = TicketsTypes;
+  loadMode = LoadMode;
 
   progress = {
     tickets: false,
     summary: false,
-    deleting: {},
-    issues: false
+    issues: false,
+    deleting: {}
   };
   errors: BackendError[] = [];
   state = {

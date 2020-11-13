@@ -24,10 +24,10 @@
                       (click)="add()">
           </jnt-button>
           <jnt-button [outline]="ui.outline.transparent"
-                      [icon]="progress.tickets ? ui.icons.animated.reload : ui.icons.reload"
+                      [icon]="progress.tickets || progress.issues ? ui.icons.animated.reload : ui.icons.reload"
                       [size]="ui.size.small"
-                      [disabled]="progress.tickets"
-                      (click)="loadTickets()">
+                      [disabled]="progress.tickets || progress.issues"
+                      (click)="load(loadMode.force);loadIssues(loadMode.force)">
           </jnt-button>
           <jnt-switcher formControlName="type">
             <jnt-switcher-option label="All"
