@@ -9,7 +9,7 @@
   <ng-template #titleTemplate>
     <strong>Developer</strong>
   </ng-template>
-  <jnt-gantt-line *ngFor="let workBreak of workbreaks"
+  <jnt-gantt-line *ngFor="let workBreak of workBreaks"
                   [title]="workBreak.user.name">
     <ng-template #title>
       <jnt-stack [orientation]="ui.orientation.horizontal">
@@ -38,12 +38,12 @@
         <div [attr.accepting]="workBreak['approveState'] === approveStates.created"
              [attr.accepted]="workBreak['approveState'] === approveStates.approved"
              [attr.declined]="workBreak['approveState'] === approveStates.declined"
-             [attr.short]="workBreak['toDate'] | dfnsDifferenceInMonths:workBreak['fromDate'] < 2"
+             [attr.short]="(workBreak['toDate'] | dfnsDifferenceInMonths:workBreak['fromDate']) < 2"
              [attr.over-from]="(workBreak['fromDate'] | dfnsGetYear) < (current | dfnsGetYear)"
              [attr.over-to]="(workBreak['toDate'] | dfnsGetYear) > (current | dfnsGetYear)" period>
-                            <span label>
-                              {{(workBreak['toDate'] | dfnsDifferenceInDays:workBreak['fromDate']) + 1 }} days
-                            </span>
+          <span label>
+            {{(workBreak['toDate'] | dfnsDifferenceInDays:workBreak['fromDate']) + 1 }} days
+          </span>
         </div>
       </ng-template>
 

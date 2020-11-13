@@ -1,6 +1,6 @@
-import { field, model } from '../../../../decorators/model';
-import { Team } from '../../../../models/team';
-import { User } from '../../../../models/user';
+import { field, model } from 'src/decorators/model';
+import { Team } from 'src/models/team';
+import { User } from 'src/models/user';
 
 export interface BreaksState {
   first: number;

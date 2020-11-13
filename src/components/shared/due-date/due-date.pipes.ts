@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { differenceInDays, format, isThisWeek, isThisYear, isToday, isTomorrow, isYesterday, startOfDay } from 'date-fns';
+import { DFNS_OPTIONS } from 'src/consts';
 
 @Pipe({
   name: 'dueDate'
@@ -12,18 +13,18 @@ export class DueDatePipe implements PipeTransform {
       : isToday(d) ? $localize`:@@label.today:Today` :
         (isYesterday(d)
           ? $localize`:@@label.yesterday:Yesterday`
-          : format(d, 'd MMMM yyyy'));
+          : format(d, 'd MMMM yyyy', DFNS_OPTIONS));
 
     const today = startOfDay(new Date());
     const difference = differenceInDays(dueDate, today);
     if (difference < 2) {
       return comingDay(dueDate);
-    } else if (isThisWeek(dueDate, {weekStartsOn: 1})) {
-      return format(dueDate, 'EEEE');
+    } else if (isThisWeek(dueDate, DFNS_OPTIONS)) {
+      return format(dueDate, 'EEEE', DFNS_OPTIONS);
     } else if (isThisYear(dueDate)) {
-      return format(dueDate, 'd MMMM');
+      return format(dueDate, 'd MMMM', DFNS_OPTIONS);
     }
 
-    return format(dueDate, 'd MMMM yyyy');
+    return format(dueDate, 'd MMMM yyyy', DFNS_OPTIONS);
   }
 }

@@ -2,7 +2,7 @@ import { LazyModel } from '../serializers/model';
 import { faker } from '../utils/mocks';
 import { ArraySerializer } from 'serialize-ts';
 import { TimeExpenseState } from 'src/models/enums/time-expenses';
-import { mocks, SECONDS_IN_HOUR } from 'src/utils/mocks';
+import { mocks} from 'src/utils/mocks';
 import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';

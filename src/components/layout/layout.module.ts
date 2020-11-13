@@ -7,13 +7,13 @@ import { DateFnsModule } from 'ngx-date-fns';
 import { AuthorizationGuard } from 'src/guards/authorization.guard';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
-import { AppThemeSwitcherModule } from './theme-switcher/app-theme-switcher.module';
-import { GitlabStatusComponent } from './gitlab-status/gitlab-status.component';
 import { IssueCardModule } from '../shared/issues/card/issue-card.module';
+import { GitlabStatusComponent } from './gitlab-status/gitlab-status.component';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
 import { DifferencePipe } from './layout.pipes';
 import { SelectLangComponent } from './select-lang/select-lang.component';
+import { AppThemeSwitcherModule } from './theme-switcher/app-theme-switcher.module';
 
 @NgModule({
   declarations: [

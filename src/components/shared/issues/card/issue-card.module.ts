@@ -6,7 +6,7 @@ import { DueDateModule } from 'src/components/shared/due-date/due-date.module';
 import { IssueCardComponent } from 'src/components/shared/issues/card/issue-card.component';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
-import { IssuePipesModule } from '../../../../pipes/issue-pipes.module';
+import { IssuePipesModule } from 'src/pipes/issue-pipes.module';
 
 @NgModule({
   declarations: [

@@ -5,8 +5,8 @@ import { AppConfig } from 'src/app-config';
 import { APPLICATION_READY } from 'src/consts';
 import { Themes } from 'src/models/enums/themes';
 import { UserRole } from 'src/models/enums/user';
-import { LocalUI } from '../../enums/local-ui';
-import { Me } from '../../models/user';
+import { LocalUI } from 'src/enums/local-ui';
+import { Me } from 'src/models/user';
 import { GitlabStatusComponent } from './gitlab-status/gitlab-status.component';
 
 @Component({

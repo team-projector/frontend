@@ -3,8 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from '@junte/ui';
 import { format } from 'date-fns';
 import { DATE_FORMAT } from 'src/consts';
-import { LocalUI } from '../../../../../enums/local-ui';
-import { Team } from '../../../../../models/team';
+import { LocalUI } from 'src/enums/local-ui';
+import { Team } from 'src/models/team';
 
 @Component({
   selector: 'app-leader-team-issues',

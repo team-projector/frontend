@@ -1,5 +1,5 @@
-import { field, model } from '../../../../decorators/model';
-import { TicketsTypes } from '../../../../models/enums/ticket';
+import { field, model } from 'src/decorators/model';
+import { TicketsTypes } from 'src/models/enums/ticket';
 
 @model()
 export class MilestoneState {

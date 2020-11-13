@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
@@ -12,7 +12,7 @@ import { ApproveStates, BreakReasons } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
 import { BackendError } from 'src/types/gql-errors';
 import { User } from 'src/models/user';
-import { PagingBreaks } from 'src/models/work-break';
+import { PagingBreaks, WorkBreak } from 'src/models/work-break';
 import { getMock } from 'src/utils/mocks';
 
 @Component({
@@ -27,7 +27,7 @@ export class DeveloperWorkBreaksGanttComponent implements OnInit {
   viewType = ViewType;
   reasons = BreakReasons;
   approveStates = ApproveStates;
-  workbreaks = [];
+  workBreaks: WorkBreak[] = [];
   errors: BackendError[] = [];
   loading = false;
 
@@ -47,7 +47,7 @@ export class DeveloperWorkBreaksGanttComponent implements OnInit {
       : this.breaksGQL.fetch({user: this.user.id} as R).pipe(
         map(({data: {breaks}}) => deserialize(breaks, PagingBreaks))))
       .pipe(finalize(() => this.loading = false))
-      .subscribe(ganttBreaks => this.workbreaks = ganttBreaks.results,
+      .subscribe(ganttBreaks => this.workBreaks = ganttBreaks.results,
         err => this.errors = err);
   }
 }

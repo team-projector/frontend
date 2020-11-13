@@ -1,7 +1,6 @@
 import { OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UI } from '@junte/ui';
-import { NGXLogger } from 'ngx-logger';
 import { combineLatest } from 'rxjs';
 import { serialize } from 'serialize-ts/dist';
 import { SalariesState, SalariesStateUpdate } from './salaries-list.types';
@@ -13,8 +12,7 @@ export abstract class Salaries implements OnInit {
   state: SalariesState;
 
   protected constructor(private route: ActivatedRoute,
-                        private router: Router,
-                        private logger: NGXLogger) {
+                        private router: Router) {
   }
 
   ngOnInit() {

@@ -8,12 +8,12 @@ import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts';
 import { METRIC_TYPE } from 'src/components/shared/metrics-type/consts';
 import { DATE_FORMAT, MOCKS_DELAY, UI_DELAY } from 'src/consts';
+import { LocalUI } from 'src/enums/local-ui';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { Metrics, MetricType } from 'src/models/enums/metrics';
 import { Me, UserMetricsFilter, UserProgressMetrics } from 'src/models/user';
 import { getMock } from 'src/utils/mocks';
-import { LocalUI } from '../../../../enums/local-ui';
 import { DeveloperIssuesMetricsGQL } from './developer-progress.graphql';
 
 interface DeveloperMetrics {

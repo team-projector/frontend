@@ -112,7 +112,7 @@
                     [user]="approvedBy"
                     [size]="userCardSize.small"></app-user>
           <small *ngIf="approvedAt">
-            {{ approvedAt | dfnsFormat: 'PPp'}}
+            {{ approvedAt | dfnsFormat:'PPp'}}
           </small>
           <small *ngIf="declineReason">
             {{ declineReason }}

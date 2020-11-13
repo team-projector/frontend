@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { TableComponent, UI, untilJSONChanged } from '@junte/ui';
+import { TableComponent, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
@@ -8,11 +8,11 @@ import { deserialize, serialize } from 'serialize-ts/dist';
 import { AllSalariesGQL } from 'src/components/shared/salaries/list/salaries-list.graphql';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
+import { ViewType } from 'src/models/enums/view-type';
 import { PagingSalaries, SalariesFilter } from 'src/models/salary';
+import { User } from 'src/models/user';
+import { equals } from 'src/utils/equals';
 import { getMock } from 'src/utils/mocks';
-import { ViewType } from '../../../../models/enums/view-type';
-import { User } from '../../../../models/user';
-import { equals } from '../../../../utils/equals';
 import { CardSize } from '../../users/card/user-card.types';
 import { SalariesState, SalariesStateUpdate } from './salaries-list.types';
 

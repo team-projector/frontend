@@ -9,7 +9,7 @@ import { EditTicketComponent } from 'src/components/manager/milestones/milestone
 import { TicketStateColorPipe } from 'src/components/manager/milestones/milestone/milestone.pipes';
 import { OutletModule } from 'src/components/outlet/outlet.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
-import { MoneyPipesModule } from '../../../pipes/money-pipes.module';
+import { MoneyPipesModule } from 'src/pipes/money-pipes.module';
 import { IssueCardModule } from '../../shared/issues/card/issue-card.module';
 import { MilestonesListModule } from '../../shared/milestones/list/milestones-list.module';
 import { MilestoneComponent } from './milestone/milestone.component';

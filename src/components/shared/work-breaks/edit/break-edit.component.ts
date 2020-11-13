@@ -13,7 +13,7 @@ import { BackendError } from 'src/types/gql-errors';
 import { PagingTeamMembers, Team, TeamMember, TeamMembersFilter } from 'src/models/team';
 import { BreakUpdate, WorkBreak } from 'src/models/work-break';
 import { getMock } from 'src/utils/mocks';
-import { User } from '../../../../models/user';
+import { User } from 'src/models/user';
 import { CreateBreakGQL, GetTeamMembersGQL, UpdateWorkBreakGQL } from './break-edit.graphql';
 
 @Component({

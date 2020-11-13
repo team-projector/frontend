@@ -12,7 +12,9 @@
                 [attr.closed]="issue.state == issueState.closed"
                 [title]="issue.title">
       </jnt-link>
-      <small *ngIf="issue.state == issueState.closed && !!issue.closedAt">&nbsp;{{issue.closedAt | dfnsFormatDistanceToNow}}</small>
+      <small *ngIf="issue.state == issueState.closed && !!issue.closedAt">
+        &nbsp;{{issue.closedAt | dfnsFormatDistanceToNow}}
+      </small>
     </div>
     <small>{{issue.project?.group?.title}} / {{issue.project?.title}}</small>
   </jnt-stack>

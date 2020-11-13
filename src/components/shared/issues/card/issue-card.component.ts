@@ -1,9 +1,9 @@
 import { Component, Input } from '@angular/core';
 import { UI } from '@junte/ui';
+import { LocalUI } from 'src/enums/local-ui';
 import { IssueState } from 'src/models/enums/issue';
+import { ViewType } from 'src/models/enums/view-type';
 import { Issue } from 'src/models/issue';
-import { LocalUI } from '../../../../enums/local-ui';
-import { ViewType } from '../../../../models/enums/view-type';
 
 @Component({
   selector: 'app-issue',

@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { JunteUiModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
-import { WorkBreaksListModule } from 'src/components/shared/work-breaks/list/work-breaks-list.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { NumberPipesModule } from 'src/pipes/number-pipes.module';
 import { ProjectGroupsListModule } from '../../shared/project-groups/list/project-groups-list.module';

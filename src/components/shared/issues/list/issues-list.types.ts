@@ -1,10 +1,10 @@
-import { DATE_FORMAT } from '../../../../consts';
-import { field, model } from '../../../../decorators/model';
-import { IssuesType } from '../../../../models/enums/issue';
-import { Project } from '../../../../models/project';
-import { Team } from '../../../../models/team';
-import { User } from '../../../../models/user';
-import { DateSerializer } from '../../../../serializers/date';
+import { DATE_FORMAT } from 'src/consts';
+import { field, model } from 'src/decorators/model';
+import { IssuesType } from 'src/models/enums/issue';
+import { Project } from 'src/models/project';
+import { Team } from 'src/models/team';
+import { User } from 'src/models/user';
+import { DateSerializer } from 'src/serializers/date';
 
 export interface IssuesState {
   first: number;

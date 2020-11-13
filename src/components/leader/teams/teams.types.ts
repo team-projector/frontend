@@ -1,4 +1,4 @@
-import { field, model } from '../../../decorators/model';
+import { field, model } from 'src/decorators/model';
 
 @model()
 export class TeamsState {

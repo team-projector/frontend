@@ -8,14 +8,14 @@ import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
+import { LocalUI } from 'src/enums/local-ui';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { PagingTeams, Team, TeamsFilter } from 'src/models/team';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { BackendError } from 'src/types/gql-errors';
+import { equals } from 'src/utils/equals';
 import { getMock } from 'src/utils/mocks';
-import { LocalUI } from '../../../enums/local-ui';
-import { equals } from '../../../utils/equals';
 import { AllTeamsGQL } from './teams.graphql';
 import { TeamsState, TeamsStateUpdate } from './teams.types';
 

@@ -11,13 +11,13 @@ import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { OwnerType, TimeExpenseState, TimeExpenseType } from 'src/models/enums/time-expenses';
 import { ViewType } from 'src/models/enums/view-type';
-import { BackendError } from 'src/types/gql-errors';
+import { Salary } from 'src/models/salary';
 import { PagingTimeExpenses, SpentTimesSummary, TimeExpensesFilter } from 'src/models/spent-time';
+import { Team } from 'src/models/team';
+import { User } from 'src/models/user';
+import { BackendError } from 'src/types/gql-errors';
+import { equals } from 'src/utils/equals';
 import { getMock } from 'src/utils/mocks';
-import { Salary } from '../../../../models/salary';
-import { Team } from '../../../../models/team';
-import { User } from '../../../../models/user';
-import { equals } from '../../../../utils/equals';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses-list.graphql';
 import { TimeExpensesState, TimeExpensesStateUpdate } from './time-expenses-list.types';
 

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MeUserResolver } from 'src/resolvers/me';
-import { TeamResolver } from '../../../resolvers/team';
+import { TeamResolver } from 'src/resolvers/team';
 import { DeveloperMergeRequestsComponent } from './developer-merge-requests.component';
 
 export const MERGE_REQUESTS_BREADCRUMB = $localize`:@@label.merge_requests:Merge requests`;

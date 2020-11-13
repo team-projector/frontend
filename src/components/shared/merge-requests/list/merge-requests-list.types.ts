@@ -1,7 +1,7 @@
-import { field, model } from '../../../../decorators/model';
-import { MergeRequestType } from '../../../../models/enums/merge-requests';
-import { Team } from '../../../../models/team';
-import { User } from '../../../../models/user';
+import { field, model } from 'src/decorators/model';
+import { MergeRequestType } from 'src/models/enums/merge-requests';
+import { Team } from 'src/models/team';
+import { User } from 'src/models/user';
 
 export interface MergeRequestsState {
   first: number;

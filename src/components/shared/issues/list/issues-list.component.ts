@@ -5,7 +5,7 @@ import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
-import { delay, finalize, map, tap } from 'rxjs/operators';
+import { delay, finalize, map} from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
@@ -16,14 +16,14 @@ import { ViewType } from 'src/models/enums/view-type';
 import { BackendError } from 'src/types/gql-errors';
 import { IssuesFilter, IssuesSummary, PagingIssues, ProjectSummary } from 'src/models/issue';
 import { getMock } from 'src/utils/mocks';
-import { Project } from '../../../../models/project';
-import { PagingTeamMembers, Team, TeamMember } from '../../../../models/team';
-import { User } from '../../../../models/user';
-import { equals } from '../../../../utils/equals';
+import { Project } from 'src/models/project';
+import { PagingTeamMembers, Team, TeamMember } from 'src/models/team';
+import { User } from 'src/models/user';
+import { equals } from 'src/utils/equals';
 import { CardSize } from '../../users/card/user-card.types';
 import { IssuesGQL, IssuesSummaryGQL, ProjectsSummaryGQL, SyncIssueGQL, TeamMembersGQL } from './issues-list.graphql';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
-import { LocalUI } from '../../../../enums/local-ui';
+import { LocalUI } from 'src/enums/local-ui';
 
 const PAGE_SIZE = 10;
 

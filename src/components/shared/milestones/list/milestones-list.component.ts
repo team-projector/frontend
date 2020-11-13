@@ -14,8 +14,8 @@ import { MilestoneProblem, MilestoneState, MilestoneType } from 'src/models/enum
 import { MilestonesFilter, MilestonesSummary, PagingMilestones } from 'src/models/milestone';
 import { BackendError } from 'src/types/gql-errors';
 import { getMock } from 'src/utils/mocks';
-import { LocalUI } from '../../../../enums/local-ui';
-import { equals } from '../../../../utils/equals';
+import { LocalUI } from 'src/enums/local-ui';
+import { equals } from 'src/utils/equals';
 import { AllMilestonesGQL, MilestonesSummaryGQL, SyncMilestoneGQL } from './milestones-list.graphql';
 import { MilestonesState, MilestonesStateUpdate } from './milestones-list.types';
 

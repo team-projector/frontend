@@ -1,9 +1,9 @@
 import { SearchFilter } from '@junte/ui';
-import { endOfDay, endOfMonth, endOfWeek, format, isPast, startOfDay, startOfMonth, startOfToday, startOfWeek } from 'date-fns';
+import { endOfDay, endOfWeek, format, isPast, startOfDay, startOfWeek } from 'date-fns';
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
 import { Paging } from 'src/models/paging';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
-import { DATE_FORMAT, DFNS_LOCALE, FIRST_DAY_OF_WEEK } from '../consts';
+import { DATE_FORMAT, DFNS_LOCALE, DFNS_OPTIONS, FIRST_DAY_OF_WEEK } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { faker, mocks, TimeAccuracy } from '../utils/mocks';
@@ -190,8 +190,8 @@ export class UserMetricsFilter {
     const day = faker.date.between(start, end);
     switch (group) {
       case Metrics.week:
-        metrics.start = startOfWeek(day, {weekStartsOn: 1});
-        metrics.end = endOfWeek(day, {weekStartsOn: 1});
+        metrics.start = startOfWeek(day, DFNS_OPTIONS);
+        metrics.end = endOfWeek(day, DFNS_OPTIONS);
         metrics.timeSpent = mocks.time(50, 60, TimeAccuracy.hours);
         break;
       case Metrics.day:
@@ -246,10 +246,7 @@ export class UserProgressMetrics {
   issuesCount: number;
 
   getKey(): string {
-    return format(this.start, DATE_FORMAT, {
-      locale: DFNS_LOCALE,
-      weekStartsOn: FIRST_DAY_OF_WEEK
-    });
+    return format(this.start, DATE_FORMAT, DFNS_OPTIONS);
   }
 
 }
