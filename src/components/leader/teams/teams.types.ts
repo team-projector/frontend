@@ -15,3 +15,19 @@ export class TeamsState {
     }
   }
 }
+
+@model()
+export class TeamsStateUpdate {
+
+  @field()
+  first?: number;
+
+  @field()
+  offset?: number;
+
+  constructor(defs: TeamsStateUpdate = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+}

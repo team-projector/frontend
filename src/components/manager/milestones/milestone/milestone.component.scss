@@ -67,6 +67,10 @@ $jnt-ng-deep: true;
   }
 }
 
+[data-ticket] {
+  flex: 1;
+}
+
 [data-issue] {
   margin-left: $jnt-gutter-tiny;
 }

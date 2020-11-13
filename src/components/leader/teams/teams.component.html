@@ -61,7 +61,9 @@
                 </jnt-card>
               </jnt-col>
             </jnt-row>
-            <jnt-pager [count]="count" formControlName="page"></jnt-pager>
+            <jnt-pager formControlName="offset"
+                       pageSize="10"
+                       [count]="count"></jnt-pager>
           </jnt-stack>
         </jnt-form>
       </ng-container>

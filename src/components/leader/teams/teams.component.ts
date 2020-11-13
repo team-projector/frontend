@@ -1,28 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
-import { isEqual, UI } from '@junte/ui';
+import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
-import { delay, distinctUntilChanged, finalize, map } from 'rxjs/operators';
+import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
-import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
-import { BackendError } from 'src/types/gql-errors';
-import { PagingTeams, Team } from 'src/models/team';
+import { PagingTeams, Team, TeamsFilter } from 'src/models/team';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
+import { BackendError } from 'src/types/gql-errors';
 import { getMock } from 'src/utils/mocks';
 import { LocalUI } from '../../../enums/local-ui';
+import { equals } from '../../../utils/equals';
 import { AllTeamsGQL } from './teams.graphql';
-import { TeamsState } from './teams.types';
-
-const PAGE_SIZE = 14;
-const DEFAULT_PAGE = 1;
+import { TeamsState, TeamsStateUpdate } from './teams.types';
 
 @Component({
-  selector: 'app-leader-teams',
+  selector: 'app-teams',
   templateUrl: './teams.component.html',
   styleUrls: ['./teams.component.scss']
 })
@@ -32,60 +30,67 @@ export class TeamsComponent implements OnInit {
   localUi = LocalUI;
   durationFormat = DurationFormat;
 
-  private _state: TeamsState;
+  filter: TeamsFilter;
   teams: Team[] = [];
   errors: BackendError[] = [];
   loading: boolean;
   count: number;
 
-  pageControl = this.fb.control(DEFAULT_PAGE);
-  form = this.fb.group({page: this.pageControl});
-
-  set state(state: TeamsState) {
-    this._state = state;
-    this.load();
-  }
-
-  get state() {
-    return this._state;
-  }
-
-  get pagesCount() {
-    return Math.ceil(this.count / PAGE_SIZE);
-  }
+  offsetControl = this.fb.control(0);
+  form = this.fb.group(
+    {
+      first: 10,
+      offset: this.offsetControl
+    }
+  );
 
   constructor(private allTeamsGQL: AllTeamsGQL,
               private fb: FormBuilder,
               public router: Router,
-              public route: ActivatedRoute) {
+              public route: ActivatedRoute,
+              private logger: NGXLogger) {
   }
 
   ngOnInit() {
-    this.pageControl.valueChanges.subscribe(page =>
-      this.router.navigate([page !== DEFAULT_PAGE ? {page} : {}], {relativeTo: this.route}));
-
-    this.route.params.subscribe(({page}) => {
-      const p = +page || DEFAULT_PAGE;
-      this.pageControl.patchValue(p, {emitEvent: false});
-      this.state = new TeamsState({
-        first: PAGE_SIZE,
-        offset: (p - 1) * PAGE_SIZE
+    this.route.params.subscribe(({offset}) => {
+      const state = new TeamsState({
+        offset: +offset || 0
       });
+      this.logger.debug('state was changed', state);
+      this.form.patchValue(state, {emitEvent: false});
+
+      this.load();
     });
+
+    this.form.valueChanges
+      .subscribe(({offset}) => {
+        const state = new TeamsStateUpdate({
+          offset: offset
+        });
+        this.logger.debug('updating state', state);
+        this.router.navigate([serialize(state)],
+          {relativeTo: this.route}).then(() => null);
+      });
   }
 
   private load() {
+    const {first, offset} = this.form.getRawValue();
+    const filter = new TeamsFilter({first, offset});
+    if (equals(filter, this.filter)) {
+      this.logger.debug('filter was not changed');
+      return;
+    }
+    this.filter = filter;
+
     this.loading = true;
-    (environment.mocks
+    const action = environment.mocks
       ? of(getMock(PagingTeams)).pipe(delay(MOCKS_DELAY))
-      : this.allTeamsGQL.fetch(serialize(this.state) as R).pipe(
-        catchGQLErrors(),
-        map(({data: {teams}}) => deserialize(teams, PagingTeams))))
-      .pipe(delay(UI_DELAY), finalize(() => this.loading = false))
-      .subscribe(teams => {
-        this.teams = teams.results;
-        this.count = teams.count;
-      }, err => this.errors = err);
+      : this.allTeamsGQL.fetch(serialize(this.filter) as R).pipe(catchGQLErrors(),
+        map(({data: {teams}}) => deserialize(teams, PagingTeams)));
+
+    action.pipe(delay(UI_DELAY), finalize(() => this.loading = false))
+      .subscribe(teams => [this.teams, this.count] = [teams.results, teams.count],
+        err => this.errors = err);
   }
 
 }
