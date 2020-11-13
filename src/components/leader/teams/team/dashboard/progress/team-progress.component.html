@@ -139,8 +139,8 @@
       <th colspan="2" i18n="@@label.developer">Developer</th>
       <th data-day *ngFor="let weekDay of [0, 1, 2, 3, 4, 5, 6]"
           (click)="selected.emit({developer: null, dueDate: days[weekDay]})"
-          [attr.today]="(today | dfnsIsEqual: days[weekDay])">
-        <span>{{days[weekDay] | dfnsFormat: 'd'}}</span> {{weekDay | dfnsWeekdayName:'x2'}}
+          [attr.today]="(today | dfnsIsEqual:days[weekDay])">
+        <span>{{days[weekDay] | dfnsFormat:'d'}}</span> {{weekDay | dfnsWeekdayName:'x2'}}
       </th>
       <th data-metric-name
           i18n="@@label.est">Est
@@ -179,12 +179,13 @@
         <td data-day *ngFor="let day of days"
             (click)="selected.emit({developer: member.user.id, dueDate: day})">
           <ng-container *ngTemplateOutlet="dayMetricTemplate; context: {date: (day | dfnsEndOfDay),
-              metric: metrics?.days?.get(member.user.id)?.get((day | dfnsFormat: formatDate))}">
+              metric: metrics?.days?.get(member.user.id)?.get((day | dfnsFormat:formatDate))}">
           </ng-container>
         </td>
 
         <ng-container
-          *ngTemplateOutlet="weekMetricTemplate; context: {metric: metrics?.weeks?.get(member.user.id)?.get((current | dfnsStartOfWeek | dfnsFormat: formatDate))}">
+          *ngTemplateOutlet="weekMetricTemplate; context: {metric: metrics?.weeks?.get(member.user.id)?.get(
+            (current | dfnsStartOfWeek | dfnsFormat:formatDate))}">
         </ng-container>
         <td data-gutter></td>
       </tr>

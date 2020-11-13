@@ -10,16 +10,16 @@ import { BreakDeclineComponent } from 'src/components/shared/work-breaks/decline
 import { BreakEditComponent } from 'src/components/shared/work-breaks/edit/break-edit.component';
 import { AllWorkBreaks, ApproveWorkBreakGQL, DeleteWorkBreakGQL } from 'src/components/shared/work-breaks/list/work-breaks-list.graphql';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
+import { LocalUI } from 'src/enums/local-ui';
 import { environment } from 'src/environments/environment';
 import { ApproveStates, BreakReasons } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
-import { BackendError } from 'src/types/gql-errors';
+import { Team } from 'src/models/team';
+import { Me, User } from 'src/models/user';
 import { BreaksFilter, PagingBreaks, WorkBreak } from 'src/models/work-break';
+import { BackendError } from 'src/types/gql-errors';
+import { equals } from 'src/utils/equals';
 import { getMock } from 'src/utils/mocks';
-import { LocalUI } from '../../../../enums/local-ui';
-import { Team } from '../../../../models/team';
-import { Me, User } from '../../../../models/user';
-import { equals } from '../../../../utils/equals';
 import { CardSize } from '../../users/card/user-card.types';
 import { BreaksState, BreaksStateUpdate } from './work-breaks-list-types';
 

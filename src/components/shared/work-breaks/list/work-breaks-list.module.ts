@@ -16,15 +16,15 @@ import { WorkBreaksListComponent } from './work-breaks-list.component';
     BreakDeclineComponent,
     WorkBreaksListComponent
   ],
-    imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        RouterModule,
-        JunteUiModule,
-        DateFnsModule,
-        GanttPipesModule,
-        UserCardModule
-    ],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterModule,
+    JunteUiModule,
+    DateFnsModule,
+    GanttPipesModule,
+    UserCardModule
+  ],
   entryComponents: [
     BreakEditComponent,
     BreakDeclineComponent
