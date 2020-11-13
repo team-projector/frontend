@@ -110,7 +110,7 @@ export class MilestoneComponent implements OnInit {
     // this.load();
   }
 
-  private load() {
+  private load(force = false) {
     const filter = new TicketsFilter(
       {
         milestone: this.milestone.id,
@@ -133,7 +133,7 @@ export class MilestoneComponent implements OnInit {
           }
         })()
       });
-    if (equals(filter, this.filters.tickets)) {
+    if (equals(filter, this.filters.tickets) && !force) {
       this.logger.debug('filter was not changed');
       return;
     }
@@ -202,7 +202,7 @@ export class MilestoneComponent implements OnInit {
     component.instance.canceled.subscribe(() => this.modal.close());
     component.instance.saved.subscribe(() => {
       this.modal.close();
-      this.loadTickets();
+      this.load(true);
       this.loadIssues(true);
       if (!!ticket && ticket.id !== this.ticketControl.value) {
         this.ticketControl.patchValue(ticket.id);
@@ -223,7 +223,7 @@ export class MilestoneComponent implements OnInit {
     this.progress.deleting[id] = true;
     this.deleteTicketGQL.mutate({id})
       .pipe(delay(UI_DELAY), finalize(() => this.progress.deleting[id] = false))
-      .subscribe(() => this.loadTickets(), err => this.errors = err);
+      .subscribe(() => this.load(true), err => this.errors = err);
   }
 
   toggleIssues(ticket: string) {
@@ -242,14 +242,12 @@ export class MilestoneComponent implements OnInit {
 
   drop(event: CdkDragDrop<string[]>, ticket) {
     const issue = event.item.data['issue'];
-    this.attachIssueGQL.mutate({
-      issue: issue,
-      ticket: ticket
-    }).subscribe(() => {
-        this.loadTickets();
-        this.ticketControl.patchValue(ticket);
-      },
-      err => this.errors = err);
+    this.attachIssueGQL.mutate({issue: issue, ticket: ticket})
+      .subscribe(() => {
+          this.load(true);
+          this.ticketControl.patchValue(ticket);
+        },
+        err => this.errors = err);
   }
 
 }

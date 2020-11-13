@@ -4,18 +4,18 @@
 
 $jnt-ng-deep: true;
 
-[data-tickets] {
-  @include jnt-gantt((title:(width: 50%), period: (width:50%)), '&');
+:host {
+  @include jnt-gantt((title:(width: 50%), period: (width:50%)));
 }
 
-[period] {
+[data-period] {
   position: relative;
+  cursor: pointer;
   margin: $jnt-gutter-tiny;
   border-radius: $jnt-corner-large;
   background-color: $jnt-gray-600-color;
   color: $jnt-white-color;
   height: 40px;
-  pointer-events: none;
   overflow: hidden;
 
   &[over-from='true'] {
@@ -32,7 +32,7 @@ $jnt-ng-deep: true;
     border-right: 10px solid $jnt-fail-color;
   }
 
-  [label] {
+  [data-label] {
     position: absolute;
     font-size: $jnt-font-size-small;
     white-space: nowrap;
@@ -46,7 +46,7 @@ $jnt-ng-deep: true;
     justify-content: center;
   }
 
-  [progress] {
+  [data-progress] {
     background-color: $jnt-success-color;
     transform: translateX(-50%);
     height: 100%;
@@ -67,28 +67,8 @@ $jnt-ng-deep: true;
   }
 }
 
-[issue] {
+[data-issue] {
   margin-left: $jnt-gutter-tiny;
-
-  [state] {
-    color: $jnt-success-color;
-
-    &[doing] {
-      min-width: 18px;
-      width: 18px;
-      min-height: 18px;
-      height: 18px;
-      border-radius: 50%;
-      fill: $jnt-success-color;
-      padding: 1px;
-      border: 1px solid $jnt-success-color;
-    }
-  }
-
-  [closed='true'] {
-    @include jnt-link((text-decoration: line-through), '&');
-  }
-
 }
 
 .cdk- {

@@ -1,6 +1,7 @@
 @import '~@junte/ui/lib/assets/styles/layout/responsive';
 @import '~@junte/ui/lib/assets/styles/forms/calendar';
 @import '~@junte/ui/lib/assets/styles/dynamic/circle-bar';
+
 $jnt-ng-deep: true;
 
 :host {
@@ -15,10 +16,11 @@ $jnt-ng-deep: true;
   [data-title] {
     color: $jnt-primary-color;
     // TODO: Do we need to use $jnt-font-size-big?
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  flex: 1;}
+    font-size: 18px;
+    font-weight: bold;
+    text-align: center;
+    flex: 1;
+  }
 }
 
 [data-day] {

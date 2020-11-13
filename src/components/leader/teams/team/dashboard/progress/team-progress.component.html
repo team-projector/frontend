@@ -100,13 +100,23 @@
     <thead>
     <tr>
       <th colspan="14" data-tools>
-        <app-metrics-type formControlName="metric"></app-metrics-type>
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [align]="ui.align.center">
+          <div data-title>Work progress</div>
+          <jnt-stack [orientation]="ui.orientation.horizontal">
+            <jnt-button [icon]="progress.metrics ? ui.icons.animated.reload : ui.icons.reload"
+                        [disabled]="progress.metrics"
+                        [outline]="ui.outline.transparent"
+                        (click)="loadMetrics()"></jnt-button>
+            <app-metrics-type formControlName="metric"></app-metrics-type>
+          </jnt-stack>
+        </jnt-stack>
       </th>
     </tr>
     <tr data-rewind>
       <th data-gutter></th>
       <th colspan="2"></th>
-      <th colspan="10">
+      <th data-week colspan="7">
         <div data-date>
           <jnt-button [icon]="ui.icons.chevronLeft"
                       [size]="ui.size.small"
@@ -121,6 +131,7 @@
                       (click)="current = addWeeks(current, 1);loadMetrics()"></jnt-button>
         </div>
       </th>
+      <th data-metrics colspan="3"></th>
       <th data-gutter></th>
     </tr>
     <tr data-week>
@@ -155,7 +166,8 @@
                     [roles]="member.roles"></app-user>
         </td>
         <td>
-          <jnt-stack [gutter]="ui.gutter.tiny">
+          <jnt-stack [gutter]="ui.gutter.tiny"
+                     [align]="ui.justify.end">
             <jnt-label data-spent *ngIf="member.user.metrics.issues.closedSpent"
                        [label]="member.user.metrics.issues.closedSpent | duration:durationFormat.short"
                        [color]="ui.color.green"></jnt-label>

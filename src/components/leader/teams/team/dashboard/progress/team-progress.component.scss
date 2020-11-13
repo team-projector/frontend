@@ -49,11 +49,19 @@ table {
   box-shadow: $jnt-shadow-normal;
   font-size: $jnt-font-size-small;
 
-  td, th {
+  td, th:not([data-tools]) {
     text-align: center;
     vertical-align: middle;
     line-height: 1;
     box-sizing: border-box;
+  }
+
+  th[data-week] {
+    width: 40%;
+  }
+
+  th[data-metrics] {
+    width: 20%;
   }
 
   th:not([data-gutter]), td:not([data-gutter]) {
@@ -81,6 +89,14 @@ table {
     tr {
       [data-tools] {
         padding: $jnt-gutter-normal $jnt-gutter-normal 0 $jnt-gutter-normal;
+        [data-title] {
+          color: $jnt-primary-color;
+          // TODO: Do we need to use $jnt-font-size-big?
+          font-size: 18px;
+          font-weight: bold;
+          text-align: center;
+          flex: 1;
+        }
       }
 
       &[data-rewind] {

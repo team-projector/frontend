@@ -1,7 +1,6 @@
 <jnt-form [formGroup]="form">
   <jnt-switcher formControlName="metric"
-                [features]="[ui.feature.allowEmpty]"
-                [width]="ui.width.fluid">
+                [features]="[ui.feature.allowEmpty]">
     <jnt-switcher-option label="Spent"
                          i18n-label="@@label.spent"
                          [value]="metricType.spent">
