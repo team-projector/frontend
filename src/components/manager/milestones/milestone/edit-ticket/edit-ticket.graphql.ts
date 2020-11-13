@@ -25,18 +25,12 @@ query($ticket: ID!) {
             count
             edges {
                 node {
-                    title
                     id
-                    dueDate
-                    closedAt
-                    labels {
-                        count
-                        edges {
-                            node {
-                                title
-                                color
-                            }
-                        }
+                    title
+                    user {
+                        id
+                        name
+                        glAvatar
                     }
                     project {
                         title
@@ -45,27 +39,7 @@ query($ticket: ID!) {
                         }
                     }
                     state
-                    createdAt
-                    timeEstimate
-                    totalTimeSpent
-                    timeEstimate
-                    glUrl
-                    ticket {
-                        id
-                        title
-                        url
-                    }
-                    user {
-                        id
-                        name
-                        glAvatar
-                    }
-                    metrics {
-                        remains
-                        efficiency
-                        payroll
-                        paid
-                    }
+                    closedAt
                 }
             }
         }
@@ -189,8 +163,13 @@ query($q: String) {
         count
         edges {
             node {
-                title
                 id
+                title
+                user {
+                    id
+                    name
+                    glAvatar
+                }
                 project {
                     title
                     group {
@@ -198,11 +177,6 @@ query($q: String) {
                     }
                 }
                 state
-                user {
-                    id
-                    name
-                    glAvatar
-                }
                 closedAt
             }
         }
