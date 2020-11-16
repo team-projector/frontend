@@ -39,28 +39,28 @@ export class Salary {
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   createdAt: Date;
 
-  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   periodTo: Date;
 
-  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   periodFrom: Date;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   chargedTime: number;
 
-  @field({mock: () => mocks.random(50, 120)})
+  @field()
   bonus: number;
 
-  @field({mock: () => mocks.random(100, 140)})
+  @field()
   taxes: number;
 
-  @field({mock: () => mocks.random(90, 120)})
+  @field()
   penalty: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   sum: number;
 
-  @field({mock: () => mocks.random(320, 720)})
+  @field()
   total: number;
 
   @field({mock: () => faker.helpers.randomize([true, false])})

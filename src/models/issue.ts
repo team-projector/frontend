@@ -136,7 +136,7 @@ export class Issue {
   })
   title: string;
 
-  @field({mock: {type: Label, length: 3}, serializer: new EdgesToArray(Label)})
+  @field({serializer: new EdgesToArray(Label)})
   labels: Label[];
 
   @field({mock: Project})
@@ -145,7 +145,7 @@ export class Issue {
   @field({mock: Ticket})
   ticket: Ticket;
 
-  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   dueDate: Date;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
@@ -163,16 +163,13 @@ export class Issue {
   @field({mock: () => faker.internet.url()})
   glUrl: string;
 
-  @field({mock: () => faker.helpers.randomize([IssueState.opened, IssueState.closed])})
+  @field()
   state: IssueState;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
   closedAt: Date;
 
-  @field({
-    mock: [],
-    serializer: new ArraySerializer(new PrimitiveSerializer())
-  })
+  @field({serializer: new ArraySerializer(new PrimitiveSerializer())})
   problems: IssueProblem[];
 
   @field({mock: IssueMetrics})

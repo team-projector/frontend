@@ -47,13 +47,13 @@ export class WorkBreak {
   })
   user: ModelRef<User>;
 
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   createdAt: Date;
 
-  @field({mock: () => faker.date.recent(-90), serializer: new DateSerializer(DATE_FORMAT)})
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
   toDate: Date;
 
-  @field({mock: () => faker.date.recent(90), serializer: new DateSerializer(DATE_FORMAT)})
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
   fromDate: Date;
 
   @field({
