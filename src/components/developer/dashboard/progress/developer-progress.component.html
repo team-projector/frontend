@@ -80,14 +80,14 @@
              [padding]="ui.gutter.small"
              [width]="ui.width.fluid">
     <ng-template #blockHelpTemplate>
-      <p>Here you can find your work progress.</p>
+      <p i18n="@@message.here_find_progress">Here you can find your work progress.</p>
       <iframe src="https://giphy.com/embed/27Y1W0GCKQtDq" width="480" height="480" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/hard-work-27Y1W0GCKQtDq">via GIPHY</a></p>
     </ng-template>
 
     <ng-template #blockHeaderTemplate>
       <jnt-stack data-header [orientation]="ui.orientation.horizontal"
                  [align]="ui.align.center">
-        <div data-title>Work progress</div>
+        <div data-title i18n="@@label.work_progress">Work progress</div>
         <jnt-stack [orientation]="ui.orientation.horizontal">
           <jnt-button [icon]="ui.icons.reload"
                       [outline]="ui.outline.transparent"
@@ -113,9 +113,11 @@
           <jnt-menu [orientation]="ui.orientation.horizontal"
                     [spacing]="ui.gutter.small">
             <jnt-menu-item title="Issues"
+                           i18n-title="@@action.issues"
                            [icon]="localUi.icons.issue"
                            [link]="['issues', {dueDate: (date | dfnsFormat:dateFormat)}]"></jnt-menu-item>
             <jnt-menu-item title="Time Expenses"
+                           i18n-title="@@action.time_expenses"
                            [icon]="localUi.icons.spentTime"
                            [link]="['time-expenses', {date: (date | dfnsFormat:dateFormat)}]"></jnt-menu-item>
           </jnt-menu>
