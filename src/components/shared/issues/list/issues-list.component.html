@@ -11,6 +11,7 @@
 
     <ng-template #tableActionsTemplate>
       <jnt-button text="Today"
+                  i18n-title="@@action.today"
                   [icon]="localUi.icons.today"
                   [scheme]="ui.scheme.secondary"
                   [outline]="ui.outline.transparent"
@@ -41,6 +42,7 @@
           </ng-template>
           <jnt-select formControlName="project"
                       placeholder="Project"
+                      i18n-placeholder="@@label.project"
                       [width]="ui.width.fluid"
                       [state]="progress.projects ? ui.state.loading : null"
                       [features]="[ui.feature.search, ui.feature.allowEmpty]"
@@ -64,6 +66,7 @@
           </ng-template>
           <jnt-select formControlName="developer"
                       placeholder="Developer"
+                      i18n-placeholder="@@label.developer"
                       [width]="ui.width.fluid"
                       [features]="[ui.feature.search, ui.feature.allowEmpty]"
                       [state]="progress.developers ? ui.state.loading : null"
@@ -184,7 +187,7 @@
 
     <jnt-table-column width="75px"
                       title="Ticket"
-                      i18n-ticket="@@label.ticket"
+                      i18n-title="@@label.ticket"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-ticket="ticket">
         <jnt-link *ngIf="!!ticket && !!ticket.url"
