@@ -101,28 +101,28 @@
                 <ng-template #ticketMetricsTemplate>
                   <table data-ticket-metrics>
                     <tr>
-                      <td>Payroll</td>
+                      <td i18n="@@label.payroll">Payroll</td>
                       <td>{{ticket.metrics.payroll | money}}</td>
                     </tr>
                     <tr>
-                      <td>Profit</td>
+                      <td i18n="@@label.profit">Profit</td>
                       <td>{{ticket.metrics.profit | money}}</td>
                     </tr>
                     <tr>
                       <td colspan="2">
-                        <b>Budget</b>
+                        <b i18n="@@label.budget">Budget</b>
                       </td>
                     </tr>
                     <tr>
-                      <td>Estimate</td>
+                      <td i18n="@@label.estimate">Estimate</td>
                       <td>{{ticket.metrics.budgetEstimate | money}}</td>
                     </tr>
                     <tr>
-                      <td>Spend</td>
+                      <td i18n="@@label.spend">Spend</td>
                       <td>{{ticket.metrics.budgetSpent | money}}</td>
                     </tr>
                     <tr>
-                      <td>Remains</td>
+                      <td i18n="@@label.remains">Remains</td>
                       <td>{{ticket.metrics.budgetRemains | money}}</td>
                     </tr>
                   </table>
@@ -236,12 +236,14 @@
                                    [icon]="ui.icons.edit"
                                    (click)="edit(ticket)"></jnt-menu-item>
                     <jnt-menu-item title="Get link"
+                                   i18n-title="@@action.get_link"
                                    [icon]="ui.icons.anchor"
                                    [icon]="state.copied ? ui.icons.animated.success : ui.icons.anchor"
                                    (click)="getLink(ticket.id)">
                     </jnt-menu-item>
                     <jnt-menu-item *ngIf="ticket.url"
                                    title="Go to source"
+                                   i18n-title="@@action.go_source"
                                    [icon]="ui.icons.link"
                                    [link]="ticket.url"
                                    [target]="ui.target.blank">
@@ -272,7 +274,7 @@
             <jnt-gantt-line>
               <jnt-gantt-line-period>
                 <ng-template #title>
-                  <p>No one issue has been attached to ticket.</p>
+                  <p i18n="@@message.no_issue_ticket">No one issue has been attached to ticket.</p>
                 </ng-template>
               </jnt-gantt-line-period>
             </jnt-gantt-line>

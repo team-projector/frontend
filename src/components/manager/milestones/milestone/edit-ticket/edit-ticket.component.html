@@ -13,7 +13,7 @@
         <jnt-stack
           [gutter]="ui.gutter.small"
           [align]="ui.align.stretch">
-          <p *ngIf="!!ticket">
+          <p *ngIf="!!ticket" i18n="@@message.ticket_in_dashboard">
             <jnt-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
                       [icon]="ui.icons.link"
                       target="_blank"
@@ -41,16 +41,17 @@
                   <jnt-dot [color]="ui.color.red"></jnt-dot>
                 </jnt-switcher-option>
               </jnt-switcher>
-              <jnt-form-message [validator]="ui.validator.required">
-                This field is required
-              </jnt-form-message>
+              <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+              This field is required
+            </jnt-form-message>
             </jnt-form-control>
           </jnt-form-item>
 
           <jnt-form-item *ngIf="!!ticket">
-            <jnt-form-label for="milestone">Milestone</jnt-form-label>
+            <jnt-form-label for="milestone" i18n="@@label.milestone">Milestone</jnt-form-label>
             <jnt-form-control name="milestone">
               <jnt-select placeholder="Milestone"
+                          i18n-placeholder="@@label.milestone"
                           formControlName="milestone"
                           [features]="[ui.feature.search]"
                           [loader]="findMilestones()"
@@ -65,19 +66,23 @@
           </jnt-form-item>
 
           <jnt-form-item>
-            <jnt-form-label for="title">Title</jnt-form-label>
+            <jnt-form-label for="title" i18n="@@label.title">Title</jnt-form-label>
             <jnt-form-control name="title">
-              <jnt-input placeholder="Title" formControlName="title"></jnt-input>
-              <jnt-form-message [validator]="ui.validator.required">
-                This field is required
-              </jnt-form-message>
+              <jnt-input placeholder="Title"
+                         i18n-placeholder="@@label.title"
+                         formControlName="title"></jnt-input>
+              <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+              This field is required
+            </jnt-form-message>
             </jnt-form-control>
           </jnt-form-item>
 
           <jnt-form-item>
-            <jnt-form-label for="role">Role</jnt-form-label>
+            <jnt-form-label for="role" i18n="@@label.role">Role</jnt-form-label>
             <jnt-form-control name="role">
-              <jnt-input placeholder="Target role" formControlName="role"></jnt-input>
+              <jnt-input placeholder="Target role"
+                         i18n-placeholder="@@label.target_role"
+                         formControlName="role"></jnt-input>
             </jnt-form-control>
           </jnt-form-item>
 
@@ -86,10 +91,11 @@
             <jnt-row>
               <jnt-col [desktop]="6">
                 <jnt-form-item>
-                  <jnt-form-label for="startDate">Start date</jnt-form-label>
+                  <jnt-form-label for="startDate" i18n="@@label.start_date">Start date</jnt-form-label>
                   <jnt-form-control name="startDate">
-                    <jnt-date-picker placeholder="Start date" formControlName="startDate"></jnt-date-picker>
-                    <jnt-form-message [validator]="ui.validator.required">
+                    <jnt-date-picker placeholder="Start date"
+                                     i18n-placeholder="@@label.start_date" formControlName="startDate"></jnt-date-picker>
+                    <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
                       This field is required
                     </jnt-form-message>
                   </jnt-form-control>
@@ -100,7 +106,7 @@
                   <jnt-form-label for="dueDate">Due date</jnt-form-label>
                   <jnt-form-control name="dueDate">
                     <jnt-date-picker placeholder="Due date" formControlName="dueDate"></jnt-date-picker>
-                    <jnt-form-message [validator]="ui.validator.required">
+                    <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
                       This field is required
                     </jnt-form-message>
                   </jnt-form-control>
@@ -109,13 +115,17 @@
             </jnt-row>
             <jnt-button-group [scheme]="ui.scheme.secondary"
                               [size]="ui.size.small">
-              <jnt-button text="This week" (click)="thisWeek()"></jnt-button>
-              <jnt-button text="Next week" (click)="nextWeek()"></jnt-button>
+              <jnt-button text="This week"
+                          i18n-text="@@action.this_week"
+                          (click)="thisWeek()"></jnt-button>
+              <jnt-button text="Next week"
+                          i18n-text="@@action.next_week"
+                          (click)="nextWeek()"></jnt-button>
             </jnt-button-group>
           </jnt-stack>
 
           <jnt-form-item>
-            <jnt-form-label for="state">State</jnt-form-label>
+            <jnt-form-label for="state" i18n="@@label.state">State</jnt-form-label>
             <jnt-form-control name="state">
               <ng-template #stateTemplate let-label="label" let-state="value">
                 <jnt-stack [orientation]="ui.orientation.horizontal"
@@ -157,12 +167,15 @@
           </jnt-form-item>
 
           <jnt-form-item>
-            <jnt-form-label for="url">Url</jnt-form-label>
+            <jnt-form-label for="url"
+                            i18n="@@label.url">Url</jnt-form-label>
             <jnt-form-control name="url">
-              <jnt-input placeholder="Url" formControlName="url"></jnt-input>
-              <jnt-form-message [validator]="ui.validator.required">
-                This field is required
-              </jnt-form-message>
+              <jnt-input placeholder="Url"
+                         i18n-placeholder="@@label.url"
+                         formControlName="url"></jnt-input>
+              <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+              This field is required
+            </jnt-form-message>
             </jnt-form-control>
           </jnt-form-item>
         </jnt-stack>
@@ -178,6 +191,7 @@
             <app-issue data-issue [issue]="issue"></app-issue>
           </ng-template>
           <jnt-select data-issues placeholder="Issues"
+                      i18n-placeholder="@@label.issues"
                       formControlName="issues"
                       [mode]="ui.select.mode.multiple"
                       [features]="[ui.feature.search]"

@@ -3,7 +3,7 @@
            [width]="ui.width.fluid"
            [padding]="ui.gutter.none">
   <ng-template #blockHelpTemplate>
-    <p>Your earning for the work.</p>
+    <p i18n="@@message.earning_for_work">Your earning for the work.</p>
     <iframe src="https://giphy.com/embed/5fBH6z8aMV1RbA4FaSc" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/BillionBackRecords-get-your-billion-back-records-hr-block-5fBH6z8aMV1RbA4FaSc">via GIPHY</a></p>
   </ng-template>
 
@@ -35,7 +35,7 @@
                      [justify]="ui.justify.between"
                      [align]="ui.align.center">
             <jnt-stack [orientation]="ui.orientation.horizontal">
-              <div data-title>Closed</div>
+              <div data-title i18n="@@label.closed">Closed</div>
               <jnt-stack data-time [orientation]="ui.orientation.horizontal"
                          [gutter]="ui.gutter.small"
                          [align]="ui.align.center">
@@ -54,7 +54,7 @@
                      [orientation]="ui.orientation.horizontal"
                      [justify]="ui.justify.between"
                      [align]="ui.align.center">
-            <div data-title>Bonuses</div>
+            <div data-title i18n="@@label.bonuses">Bonuses</div>
             <span>
               <span *ngIf="metrics.bonus > 0">+</span>
               {{metrics.bonus | money}}
@@ -65,7 +65,7 @@
                      [orientation]="ui.orientation.horizontal"
                      [justify]="ui.justify.between"
                      [align]="ui.align.center">
-            <div data-title>Penalties</div>
+            <div data-title i18n="@@label.penalties">Penalties</div>
             <span>
               <span *ngIf="metrics.penalty > 0">-</span>
               {{metrics.penalty | money}}
@@ -76,7 +76,7 @@
                      [orientation]="ui.orientation.horizontal"
                      [justify]="ui.justify.between"
                      [align]="ui.align.center">
-            <div data-title>Taxes</div>
+            <div data-title i18n="@@label.taxes">Taxes</div>
             <span>
               <span *ngIf="metrics.taxesClosed > 0">-</span>
               {{metrics.taxesClosed | money}}
@@ -88,7 +88,7 @@
       </ng-container>
 
       <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.end">
-        <span data-label>You've earned:</span>
+        <span data-label i18n="@@label.you_have_earned">You've earned:</span>
 
         <jnt-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end"
@@ -100,7 +100,7 @@
         </jnt-stack>
 
         <jnt-stack data-opened [gutter]="ui.gutter.none" [align]="ui.align.end">
-          <span data-label>Opened tasks:</span>
+          <span data-label i18n="@@label.opened_tasks">Opened tasks:</span>
           <span data-digit>
             {{metrics.payrollOpened | money}}</span>
         </jnt-stack>

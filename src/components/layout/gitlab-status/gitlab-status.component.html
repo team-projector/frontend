@@ -5,7 +5,7 @@
 <ng-template #dataTemplate>
   <jnt-stack [align]="ui.align.stretch" *ngIf="status; else noDataTemplate">
     <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between">
-      <div>Last Sync Time</div>
+      <div i18n="@@message.last_sync_time">Last Sync Time</div>
       <jnt-label [label]="status.lastSync | dfnsFormat:'HH:mm:ss'"></jnt-label>
     </jnt-stack>
     <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between">

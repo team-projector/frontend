@@ -7,7 +7,7 @@
 <jnt-gantt [type]="ui.gantt.type.year"
            [loading]="loading">
   <ng-template #titleTemplate>
-    <strong>Developer</strong>
+    <strong i18n="@@label.developer">Developer</strong>
   </ng-template>
   <jnt-gantt-line *ngFor="let workBreak of workBreaks"
                   [title]="workBreak.user.name">
@@ -16,15 +16,18 @@
         <ng-container [ngSwitch]="workBreak.reason">
           <jnt-label *ngSwitchCase="reasons.vacation"
                      [color]="ui.color.green"
-                     label="Vacation">
+                     label="Vacation"
+                     i18n-label="@@label.vacation">
           </jnt-label>
           <jnt-label *ngSwitchCase="reasons.disease"
                      [color]="ui.color.red"
-                     label="Disease">
+                     label="Disease"
+                     i18n-label="@@label.disease">
           </jnt-label>
           <jnt-label *ngSwitchCase="reasons.dayoff"
                      [color]="ui.color.yellow"
-                     label="Dayoff">
+                     label="Dayoff"
+                     i18n-label="@@label.dayoff">
           </jnt-label>
         </ng-container>
 
@@ -41,7 +44,7 @@
              [attr.short]="(workBreak['toDate'] | dfnsDifferenceInMonths:workBreak['fromDate']) < 2"
              [attr.over-from]="(workBreak['fromDate'] | dfnsGetYear) < (current | dfnsGetYear)"
              [attr.over-to]="(workBreak['toDate'] | dfnsGetYear) > (current | dfnsGetYear)" period>
-          <span label>
+          <span label i18n="@@label.days">
             {{(workBreak['toDate'] | dfnsDifferenceInDays:workBreak['fromDate']) + 1 }} days
           </span>
         </div>

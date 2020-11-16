@@ -11,6 +11,8 @@
 
       <jnt-app-page-header [icon]="localUi.icons.team"
                            title="Teams"
+                           i18n-title="@@label.teams"
+                           i18n-teaser="@@message.teams_teaser"
                            teaser="where you leader"></jnt-app-page-header>
 
       <ng-template #noDataTemplate>
@@ -30,7 +32,7 @@
       </ng-template>
 
       <ng-template #emptyDataTemplate>
-        <p>No teams!</p>
+        <p i18n="@@message.no_teams">No teams!</p>
       </ng-template>
 
       <ng-container *ngIf="teams.length > 0;else noDataTemplate">
