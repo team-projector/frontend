@@ -15,31 +15,31 @@ import { Project, ProjectGroup } from './project';
 @model()
 export class MilestoneMetrics {
 
-  @field({mock: () => faker.random.number()})
+  @field()
   customerPayroll: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   payroll: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   budgetSpent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   budgetRemains: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   profit: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   timeEstimate: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   timeSpent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   timeRemains: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.efficiency()})
   efficiency: number;
 
   @field({mock: () => mocks.random(30, 100)})
@@ -99,16 +99,16 @@ export class Milestone {
   @field({mock: ProjectGroup, serializer: new ProjectSerializer()})
   owner: Project | ProjectGroup;
 
-  @field({mock: () => faker.helpers.randomize([MilestoneState.active, MilestoneState.closed])})
+  @field()
   state: MilestoneState;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   budget: number;
 
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   startDate: Date;
 
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   dueDate: Date;
 
   @field({mock: MilestoneMetrics})
@@ -127,7 +127,7 @@ export class Milestone {
 @model()
 export class PagingMilestones implements Paging<Milestone> {
 
-  @field({mock: faker.random.number()})
+  @field({mock: mocks.random(20, 50)})
   count: number;
 
   @field({
