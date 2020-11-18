@@ -12,11 +12,37 @@ import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { getMock } from 'src/utils/mocks';
 import { LocalUI } from 'src/enums/local-ui';
 import { AllBonusesGQL, AllPenaltiesGQL } from './developer-payroll.graphql';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component({
   selector: 'app-developer-payroll',
   templateUrl: './developer-payroll.component.html',
-  styleUrls: ['./developer-payroll.component.scss']
+  styleUrls: ['./developer-payroll.component.scss'],
+  animations: [
+    trigger('appear', [
+        state(
+          'void',
+          style({
+            opacity: 0,
+            height: 0
+          })
+        ),
+        state(
+          '*',
+          style({
+            height: '*',
+            opacity: 1,
+          })
+        ),
+        transition(
+          'void <=> *',
+          [
+            animate('.5s ease')
+          ]
+        ),
+      ]
+    ),
+  ]
 })
 
 export class DeveloperPayrollComponent implements OnInit {
