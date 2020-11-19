@@ -14,19 +14,26 @@ import { Paging } from './paging';
 import { Project } from './project';
 import { User } from './user';
 
-@model()
+@model({
+  mocking: (summary: MergeRequestSummary) => {
+    summary.count = mocks.random(75, 125);
+    summary.closedCount = mocks.random(10, 20);
+    summary.openedCount = mocks.random(10, 20);
+    summary.mergedCount = summary.count - summary.closedCount - summary.openedCount;
+  }
+})
 export class MergeRequestSummary {
 
-  @field({mock: () => mocks.random(100, 190)})
+  @field()
   count: number;
 
-  @field({mock: () => mocks.random(10, 20)})
+  @field()
   closedCount: number;
 
-  @field({mock: () => mocks.random(2, 9)})
+  @field()
   openedCount: number;
 
-  @field({mock: () => mocks.random(55, 130)})
+  @field()
   mergedCount: number;
 
 }
@@ -103,7 +110,7 @@ export class MergeRequest {
 @model()
 export class PagingMergeRequest implements Paging<MergeRequest> {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(15, 40)})
   count: number;
 
   @field({

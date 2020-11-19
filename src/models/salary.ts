@@ -30,7 +30,7 @@ export class Salary {
   @field({mock: () => mocks.random(5, 15)})
   hourRate: string;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.percents(10, 40)})
   taxRate: string;
 
   @field({mock: UserPosition})

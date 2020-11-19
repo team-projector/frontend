@@ -85,8 +85,8 @@ export class DeveloperProgressComponent implements OnInit {
     };
 
     zip(getMetric(Metrics.day), getMetric(Metrics.week))
-      .subscribe(([days, weeks]) =>
-        this.metrics = {days, weeks});
+      .subscribe(([days, weeks]) => {
+        this.metrics = {days, weeks}; console.log(this.metrics)});
   }
 
 }

@@ -122,7 +122,7 @@ export class Project {
 @model()
 export class ProjectsPaging implements Paging<Project> {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(10, 20)})
   count: number;
 
   @field({
