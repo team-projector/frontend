@@ -47,7 +47,7 @@ export class TeamMetrics {
 })
 export class Team {
 
-  @field({mock: context => context?.id || faker.random.uuid()})
+  @field({mock: context => context?.id || mocks.id()})
   id: string;
 
   @field({
@@ -72,7 +72,7 @@ export class Team {
 @model()
 export class PagingTeams implements Paging<Team> {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(3, 10)})
   count: number;
 
   @field({

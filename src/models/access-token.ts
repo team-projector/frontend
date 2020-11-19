@@ -1,6 +1,7 @@
 import { field, model } from '../decorators/model';
 import { faker } from '../utils/mocks';
 import { DateSerializer } from '../serializers/date';
+import { mocks } from '../utils/mocks';
 
 @model()
 export class AccessToken {

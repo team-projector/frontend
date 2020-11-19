@@ -12,7 +12,7 @@ import { User } from './user';
 @model()
 export class Bonus {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.id()})
   id: number;
 
   @field({mock: () => faker.date.recent(200), serializer: new DateSerializer()})
