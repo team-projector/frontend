@@ -18,7 +18,7 @@ import { User } from './user';
 @model()
 export class SpentTime {
 
-  @field({mock: () => faker.random.uuid()})
+  @field({mock: () => mocks.id()})
   id: string;
 
   @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
@@ -52,7 +52,7 @@ export class SpentTime {
 @model()
 export class PagingTimeExpenses implements Paging<SpentTime> {
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(15, 40)})
   count: number;
 
   @field({
@@ -64,32 +64,44 @@ export class PagingTimeExpenses implements Paging<SpentTime> {
 
 }
 
-@model()
+@model({
+  mocking: (summary: SpentTimesSummary) => {
+    summary.spent = mocks.time(55, 80);
+    summary.openedSpent = mocks.time(8, 15);
+    summary.closedSpent = summary.spent - summary.openedSpent;
+  }
+})
 export class SpentTimesSummary {
 
-  @field({mock: () => mocks.time()})
+  @field()
   spent: number;
 
-  @field({mock: () => mocks.time()})
+  @field()
   openedSpent: number;
 
-  @field({mock: () => mocks.time()})
+  @field()
   closedSpent: number;
 }
 
-@model()
+@model({
+  mocking: (summary: TimeExpensesSummary) => {
+    summary.count = mocks.random(15, 25);
+    summary.closedCount = mocks.random(10, 20);
+    summary.openedCount = summary.count - summary.closedCount;
+  }
+})
 export class TimeExpensesSummary {
 
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
+  @field({mock: () => mocks.random(1, 10)})
   count: number;
 
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
+  @field({mock: () => mocks.random(1, 10)})
   openedCount: number;
 
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
+  @field({mock: () => mocks.random(1, 10)})
   closedCount: number;
 
-  @field({mock: () => faker.random.number({min: 1, max: 10})})
+  @field({mock: () => mocks.random(1, 10)})
   mergedCount: number;
 
 }

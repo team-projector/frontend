@@ -144,5 +144,9 @@ export const mocks = {
   },
   hourlyRate: (min: number = 15, max: number = 30) => {
     return faker.random.number({min: min, max: max});
+  },
+  id: () => {
+    return faker.random.uuid();
   }
+
 };

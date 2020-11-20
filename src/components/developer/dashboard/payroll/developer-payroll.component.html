@@ -28,64 +28,62 @@
                [gutter]="ui.gutter.tiny"
                [align]="ui.align.stretch">
 
-      <ng-container *ngIf="opened">
-        <jnt-stack [gutter]="ui.gutter.none" [align]="ui.align.stretch">
-          <jnt-stack data-line data-success
-                     [orientation]="ui.orientation.horizontal"
-                     [justify]="ui.justify.between"
-                     [align]="ui.align.center">
-            <jnt-stack [orientation]="ui.orientation.horizontal">
-              <div data-title i18n="@@label.closed">Closed</div>
-              <jnt-stack data-time [orientation]="ui.orientation.horizontal"
-                         [gutter]="ui.gutter.small"
-                         [align]="ui.align.center">
-                <jnt-icon *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) > 0"
-                          [icon]="ui.icons.time"></jnt-icon>
-                <span>{{(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) | duration}}</span>
-              </jnt-stack>
+      <jnt-stack *ngIf="opened" [@appear]="opened" [gutter]="ui.gutter.none" [align]="ui.align.stretch">
+        <jnt-stack data-line data-success
+                   [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.between"
+                   [align]="ui.align.center">
+          <jnt-stack [orientation]="ui.orientation.horizontal">
+            <div data-title i18n="@@label.closed">Closed</div>
+            <jnt-stack data-time [orientation]="ui.orientation.horizontal"
+                       [gutter]="ui.gutter.small"
+                       [align]="ui.align.center">
+              <jnt-icon *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) > 0"
+                        [icon]="ui.icons.time"></jnt-icon>
+              <span>{{(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) | duration}}</span>
             </jnt-stack>
-            <span>
+          </jnt-stack>
+          <span>
               <span *ngIf="metrics.payrollClosed + metrics.taxesClosed > 0">+</span>
-              {{(metrics.payrollClosed + metrics.taxesClosed) | money}}
+            {{(metrics.payrollClosed + metrics.taxesClosed) | money}}
             </span>
-          </jnt-stack>
-
-          <jnt-stack data-line data-success
-                     [orientation]="ui.orientation.horizontal"
-                     [justify]="ui.justify.between"
-                     [align]="ui.align.center">
-            <div data-title i18n="@@label.bonuses">Bonuses</div>
-            <span>
-              <span *ngIf="metrics.bonus > 0">+</span>
-              {{metrics.bonus | money}}
-            </span>
-          </jnt-stack>
-
-          <jnt-stack data-line data-fail
-                     [orientation]="ui.orientation.horizontal"
-                     [justify]="ui.justify.between"
-                     [align]="ui.align.center">
-            <div data-title i18n="@@label.penalties">Penalties</div>
-            <span>
-              <span *ngIf="metrics.penalty > 0">-</span>
-              {{metrics.penalty | money}}
-            </span>
-          </jnt-stack>
-
-          <jnt-stack data-line data-fail
-                     [orientation]="ui.orientation.horizontal"
-                     [justify]="ui.justify.between"
-                     [align]="ui.align.center">
-            <div data-title i18n="@@label.taxes">Taxes</div>
-            <span>
-              <span *ngIf="metrics.taxesClosed > 0">-</span>
-              {{metrics.taxesClosed | money}}
-            </span>
-          </jnt-stack>
-
-          <hr>
         </jnt-stack>
-      </ng-container>
+
+        <jnt-stack data-line data-success
+                   [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.between"
+                   [align]="ui.align.center">
+          <div data-title i18n="@@label.bonuses">Bonuses</div>
+          <span>
+              <span *ngIf="metrics.bonus > 0">+</span>
+            {{metrics.bonus | money}}
+            </span>
+        </jnt-stack>
+
+        <jnt-stack data-line data-fail
+                   [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.between"
+                   [align]="ui.align.center">
+          <div data-title i18n="@@label.penalties">Penalties</div>
+          <span>
+              <span *ngIf="metrics.penalty > 0">-</span>
+            {{metrics.penalty | money}}
+            </span>
+        </jnt-stack>
+
+        <jnt-stack data-line data-fail
+                   [orientation]="ui.orientation.horizontal"
+                   [justify]="ui.justify.between"
+                   [align]="ui.align.center">
+          <div data-title i18n="@@label.taxes">Taxes</div>
+          <span>
+              <span *ngIf="metrics.taxesClosed > 0">-</span>
+            {{metrics.taxesClosed | money}}
+            </span>
+        </jnt-stack>
+
+        <hr>
+      </jnt-stack>
 
       <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.end">
         <span data-label i18n="@@label.you_have_earned">You've earned:</span>

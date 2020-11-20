@@ -15,40 +15,40 @@ import { Project, ProjectGroup } from './project';
 @model()
 export class MilestoneMetrics {
 
-  @field({mock: () => faker.random.number()})
+  @field()
   customerPayroll: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   payroll: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   budgetSpent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   budgetRemains: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   profit: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   timeEstimate: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   timeSpent: number;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   timeRemains: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.efficiency()})
   efficiency: number;
 
-  @field({mock: () => mocks.random(30, 100)})
+  @field()
   issuesCount: number;
 
-  @field({mock: () => mocks.random(30, 100)})
+  @field()
   issuesOpenedCount: number;
 
-  @field({mock: () => mocks.random(30, 100)})
+  @field()
   issuesClosedCount: number;
 
 }
@@ -68,6 +68,10 @@ export class MilestoneMetrics {
     milestone.metrics.customerPayroll = mocks.money(4000, 20000);
     milestone.metrics.budgetSpent = mocks.money(5000, 25000);
     milestone.metrics.budgetRemains = milestone.budget - milestone.metrics.budgetSpent;
+
+    milestone.metrics.issuesCount = mocks.random(70, 120);
+    milestone.metrics.issuesOpenedCount = mocks.random(30, 60);
+    milestone.metrics.issuesClosedCount = milestone.metrics.issuesCount - milestone.metrics.issuesOpenedCount;
     if (!!context) {
       switch (context.state) {
         case MilestoneState.active:
@@ -102,13 +106,13 @@ export class Milestone {
   @field({mock: () => faker.helpers.randomize([MilestoneState.active, MilestoneState.closed])})
   state: MilestoneState;
 
-  @field({mock: () => faker.random.number()})
+  @field()
   budget: number;
 
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   startDate: Date;
 
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   dueDate: Date;
 
   @field({mock: MilestoneMetrics})
@@ -127,7 +131,7 @@ export class Milestone {
 @model()
 export class PagingMilestones implements Paging<Milestone> {
 
-  @field({mock: faker.random.number()})
+  @field({mock: mocks.random(20, 50)})
   count: number;
 
   @field({
@@ -172,12 +176,12 @@ export class MilestonesFilter implements SearchFilter {
 })
 export class MilestonesSummary {
 
-  @field({mock: () => mocks.random(30, 100)})
+  @field()
   count: number;
 
-  @field({mock: () => mocks.random(30, 100)})
+  @field()
   closedCount: number;
 
-  @field({mock: () => mocks.random(30, 100)})
+  @field()
   activeCount: number;
 }

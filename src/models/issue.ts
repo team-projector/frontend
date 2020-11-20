@@ -4,8 +4,8 @@ import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
 import { ModelMetadataSerializer } from 'serialize-ts/dist/serializers/model-metadata.serializer';
 import { IssueProblem, IssueState } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
-import { Team } from 'src/models/team';
-import { Ticket } from 'src/models/ticket';
+import { Team } from './team';
+import { Ticket } from './ticket';
 import { mocks, TimeAccuracy } from 'src/utils/mocks';
 import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
@@ -41,6 +41,7 @@ export class IssueMetrics {
     issue.timeEstimate = mocks.time(1, 10, TimeAccuracy.minutes);
     issue.totalTimeSpent = mocks.time(1, 15, TimeAccuracy.minutes);
     issue.timeSpent = issue.totalTimeSpent;
+    issue.labels = [];
 
     switch (mocks.random(1, 4)) {
       case 1: // issue for to do
@@ -136,7 +137,7 @@ export class Issue {
   })
   title: string;
 
-  @field({mock: {type: Label, length: 3}, serializer: new EdgesToArray(Label)})
+  @field({serializer: new EdgesToArray(Label)})
   labels: Label[];
 
   @field({mock: Project})
@@ -145,10 +146,10 @@ export class Issue {
   @field({mock: Ticket})
   ticket: Ticket;
 
-  @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   dueDate: Date;
 
-  @field({mock: () => faker.date.past(), serializer: new DateSerializer()})
+  @field({serializer: new DateSerializer()})
   createdAt: Date;
 
   @field()
@@ -270,7 +271,7 @@ export class TeamIssuesSummary {
   @field({mock: () => mocks.percents()})
   percentage: number;
 
-  @field({mock: () => faker.random.number()})
+  @field({mock: () => mocks.random(15, 30)})
   openedCount: number;
 }
 

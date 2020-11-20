@@ -3,7 +3,7 @@ import { endOfDay, endOfWeek, format, isPast, startOfDay, startOfWeek } from 'da
 import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
 import { Paging } from 'src/models/paging';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
-import { DATE_FORMAT, DFNS_LOCALE, DFNS_OPTIONS, FIRST_DAY_OF_WEEK } from '../consts';
+import { DATE_FORMAT, DFNS_OPTIONS } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { faker, mocks, TimeAccuracy } from '../utils/mocks';
@@ -16,28 +16,28 @@ import { WorkBreak } from './work-break';
 @model()
 export class UserMetrics {
 
-  @field({mock: () => mocks.random(50, 120)})
+  @field()
   bonus: number;
 
-  @field({mock: () => mocks.random(90, 120)})
+  @field()
   penalty: number;
 
-  @field({mock: () => mocks.random(800, 1600)})
+  @field()
   payroll: number;
 
-  @field({mock: () => mocks.random(450, 750)})
+  @field()
   payrollClosed: number;
 
-  @field({mock: () => mocks.random(300, 700)})
+  @field()
   payrollOpened: number;
 
-  @field({mock: () => mocks.random(100, 140)})
+  @field()
   taxes: number;
 
-  @field({mock: () => mocks.random(55, 90)})
+  @field()
   taxesClosed: number;
 
-  @field({mock: () => mocks.random(35, 50)})
+  @field()
   taxesOpened: number;
 
   @field({mock: () => mocks.random(2, 13)})
@@ -67,10 +67,26 @@ export class UserPosition {
   title: string;
 }
 
-@model()
+@model({
+  mocking: (user: User) => {
+    user.hourRate = mocks.hourlyRate(10, 20);
+    user.dailyWorkHours = mocks.random(6, 8);
+    const payroll = user.hourRate * user.dailyWorkHours * 10;
+    user.metrics.payroll = payroll;
+    user.metrics.payrollOpened = payroll * mocks.percents(30, 60);
+    user.metrics.payrollClosed = payroll - user.metrics.payrollOpened;
+    user.metrics.penalty = payroll * mocks.percents(5, 15);
+    user.metrics.bonus = payroll * mocks.percents(5, 15);
+    const taxRate = mocks.percents(20, 40);
+    user.taxRate = taxRate;
+    user.metrics.taxes = payroll * taxRate;
+    user.metrics.taxesOpened = user.metrics.payrollOpened * taxRate;
+    user.metrics.taxesClosed = user.metrics.payrollClosed * taxRate;
+  }
+})
 export class User {
 
-  @field({mock: context => context?.id || faker.random.uuid()})
+  @field({mock: context => context?.id || mocks.id()})
   id: string;
 
   @field({mock: () => faker.internet.userName()})
@@ -82,16 +98,16 @@ export class User {
   @field({name: 'glAvatar', mock: () => faker.internet.avatar()})
   avatar: string;
 
-  @field({mock: () => mocks.hourlyRate()})
+  @field()
   hourRate: number;
 
-  @field({mock: () => mocks.hourlyRate()})
+  @field()
   customerHourRate: number;
 
-  @field({mock: () => mocks.random(15000, 30000)})
+  @field()
   taxRate: number;
 
-  @field({mock: () => mocks.random(2, 8)})
+  @field()
   dailyWorkHours: number;
 
   @field({mock: () => mocks.random(8, 18)})
@@ -192,15 +208,19 @@ export class UserMetricsFilter {
       case Metrics.week:
         metrics.start = startOfWeek(day, DFNS_OPTIONS);
         metrics.end = endOfWeek(day, DFNS_OPTIONS);
-        metrics.timeSpent = mocks.time(50, 60, TimeAccuracy.hours);
+        metrics.timeSpent = mocks.time(35, 48, TimeAccuracy.hours);
+        metrics.timeEstimate = mocks.time(38, 42);
+        metrics.efficiency = metrics.timeEstimate / metrics.timeSpent;
+        metrics.payroll = metrics.timeSpent / 3600 * mocks.hourlyRate();
+        metrics.paid = metrics.payroll * mocks.percents(70, 100);
         break;
       case Metrics.day:
       default:
         metrics.start = startOfDay(day);
         metrics.end = endOfDay(day);
-    }
-    if (isPast(metrics.end)) {
-      metrics.timeSpent = mocks.time(0, 9);
+        if (isPast(metrics.end)) {
+          metrics.timeSpent = mocks.time(4, 9);
+        }
     }
   }
 })
@@ -212,13 +232,13 @@ export class UserProgressMetrics {
   @field({mock: () => faker.date.recent(30), serializer: new DateSerializer()})
   end: Date;
 
-  @field({mock: () => mocks.random(100, 230) * 1800})
+  @field({mock: () => mocks.time(15, 18) / 2})
   timeEstimate: number;
 
-  @field({mock: () => mocks.time(5, 10, TimeAccuracy.hours)})
+  @field()
   timeSpent: number;
 
-  @field({mock: () => mocks.random(1, 8) * 1800})
+  @field({mock: () => mocks.time(10, 16) / 2})
   timeRemains: number;
 
   @field({mock: () => mocks.random(4, 9)})
@@ -227,7 +247,7 @@ export class UserProgressMetrics {
   @field({mock: () => mocks.efficiency()})
   efficiency: number;
 
-  @field({mock: () => mocks.random(1, 8) * 1800})
+  @field({mock: () => mocks.time(10, 16) / 2})
   loading: number;
 
   @field({mock: () => mocks.random(25, 43) * 10})
