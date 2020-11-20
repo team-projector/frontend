@@ -25,7 +25,6 @@ export function field(config: FieldConfig = {}) {
       jsonPropertyName: config.name,
       serializer: config.serializer
     })(obj, property);
-
     MockField(config.mock)(obj, property);
   };
 }

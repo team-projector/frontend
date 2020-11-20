@@ -143,6 +143,7 @@
                          [cdkDropListEnterPredicate]="predicate"
                          (cdkDropListDropped)="drop($event, ticket.id)"
                          [orientation]="ui.orientation.horizontal"
+                         [align]="ui.align.center"
                          [justify]="ui.align.stretch">
                 <jnt-row data-ticket [align]="ui.align.center">
                   <jnt-col [span]="7">
@@ -161,60 +162,16 @@
                                 (click)="toggleIssues(ticket.id)"></jnt-link>
                     </jnt-stack>
                   </jnt-col>
-                  <jnt-col [span]="2">
+                  <jnt-col [span]="3">
                     <jnt-label *ngIf="ticket.role as role"
                                [color]="ui.color.paleNavy"
                                [label]="role">
                     </jnt-label>
                   </jnt-col>
                   <jnt-col [span]="2">
-                    <jnt-stack [orientation]="ui.orientation.horizontal"
-                               [align]="ui.align.center"
-                               [gutter]="ui.gutter.small">
-
-                      <jnt-label *ngIf="ticket.metrics.issuesClosedCount as issuesClosedCount"
-                                 [color]="ui.color.green"
-                                 [label]="issuesClosedCount.toString()">
-                      </jnt-label>
-                      <jnt-label *ngIf="ticket.metrics.issuesOpenedCount as issuesOpenedCount"
-                                 [color]="ui.color.paleNavy"
-                                 [label]="issuesOpenedCount.toString()">
-                      </jnt-label>
-                    </jnt-stack>
-                  </jnt-col>
-                  <jnt-col [span]="1">
-                    <ng-container [ngSwitch]="ticket.state">
-                      <jnt-label *ngSwitchCase="ticketStates.created"
-                                 [color]="ticketStates.created | ticketStateColor"
-                                 label="Created"
-                                 i18n-label="@@label.created">
-                      </jnt-label>
-                      <jnt-label *ngSwitchCase="ticketStates.planning"
-                                 [color]="ticketStates.planning | ticketStateColor"
-                                 label="Planning"
-                                 i18n-label="@@label.planning">
-                      </jnt-label>
-                      <jnt-label *ngSwitchCase="ticketStates.doing"
-                                 [color]="ticketStates.doing | ticketStateColor"
-                                 label="Doing"
-                                 i18n-label="@@label.doing">
-                      </jnt-label>
-                      <jnt-label *ngSwitchCase="ticketStates.testing"
-                                 [color]="ticketStates.testing | ticketStateColor"
-                                 label="Testing"
-                                 i18n-label="@@label.testing">
-                      </jnt-label>
-                      <jnt-label *ngSwitchCase="ticketStates.accepting"
-                                 [color]="ticketStates.accepting | ticketStateColor"
-                                 label="Accepting"
-                                 i18n-label="@@label.accepting">
-                      </jnt-label>
-                      <jnt-label *ngSwitchCase="ticketStates.done"
-                                 [color]="ticketStates.done | ticketStateColor"
-                                 label="Done"
-                                 i18n-label="@@label.done">
-                      </jnt-label>
-                    </ng-container>
+                    <jnt-label [color]="ticket.state | ticketStateColor"
+                               label="{{ticket.metrics.issuesClosedCount}} / {{ticket.metrics.issuesOpenedCount}}">
+                    </jnt-label>
                   </jnt-col>
                 </jnt-row>
                 <jnt-button [outline]="ui.outline.transparent"

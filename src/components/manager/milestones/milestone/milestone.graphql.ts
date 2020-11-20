@@ -97,7 +97,7 @@ export class TicketIssuesGQL extends Query<{ ticket: { issues } }> {
   document = gql`
 query ($ticket: ID!) {
   ticket(id: $ticket) {
-    issues(orderBy: "user,-state") {
+    issues(orderBy: "-state,user") {
       count
       edges {
         node {
