@@ -19,6 +19,9 @@ export class WorkProgressComponent {
   estimate: number;
 
   @Input()
+  efficiency: number;
+
+  @Input()
   problems: IssueProblem[] = [];
 
 }

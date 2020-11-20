@@ -30,7 +30,7 @@ export class MergeRequestsListComponent implements OnInit {
 
   ui = UI;
   mergeRequestType = MergeRequestType;
-  issueProblem = IssueProblem;
+  mergeRequestState = MergeRequestState;
   viewType = ViewType;
   errors: BackendError[] = [];
 

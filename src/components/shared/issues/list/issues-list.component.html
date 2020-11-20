@@ -214,12 +214,12 @@
                       i18n-title="@@label.progress"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-timeEstimate="timeEstimate"
-                   let-timeSpent="timeSpent"
                    let-totalTimeSpent="totalTimeSpent"
-                   let-metrics="metrics"
+                   let-state="state"
                    let-problems="problems">
         <app-work-progress [estimate]="timeEstimate"
                            [spent]="totalTimeSpent"
+                           [efficiency]="state == issueState.closed ? timeEstimate / totalTimeSpent : null"
                            [problems]="problems"></app-work-progress>
       </ng-template>
     </jnt-table-column>

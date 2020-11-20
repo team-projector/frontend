@@ -81,10 +81,11 @@
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-timeEstimate="timeEstimate"
                    let-totalTimeSpent="totalTimeSpent"
-                   let-metrics="metrics"
+                   let-state="state"
                    let-problems="problems">
         <app-work-progress [estimate]="timeEstimate"
                            [spent]="totalTimeSpent"
+                           [efficiency]="state == mergeRequestState.merged ? timeEstimate / totalTimeSpent : null"
                            [problems]="problems"></app-work-progress>
       </ng-template>
     </jnt-table-column>
