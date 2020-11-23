@@ -1,6 +1,6 @@
 import { ErrorResponse } from 'apollo-link-error';
 import { Observable } from 'rxjs';
-import { deserialize } from 'serialize-ts/dist';
+import { deserialize } from '@junte/serialize-ts';
 import { AuthorisationError, BackendError, NetworkError, NotFoundError } from '../types/gql-errors';
 
 export function convertGQLErrors({graphQLErrors, networkError}: ErrorResponse): BackendError[] {

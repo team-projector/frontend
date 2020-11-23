@@ -5,7 +5,7 @@ import { UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
-import { deserialize, serialize } from 'serialize-ts/dist';
+import { deserialize, serialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY } from 'src/consts';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { field, model } from 'src/decorators/model';

@@ -1,4 +1,4 @@
-import { deserialize, Serializer } from 'serialize-ts';
+import { deserialize, Serializer } from '@junte/serialize-ts';
 
 type Constructor<T> = new () => T;
 type Activator<T> = () => Constructor<T>;

@@ -1,4 +1,4 @@
-import { Serializer } from 'serialize-ts';
+import { Serializer } from '@junte/serialize-ts';
 import { Project, ProjectGroup } from '../models/project';
 
 interface Entity {

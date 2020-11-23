@@ -1,7 +1,7 @@
 import { OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
-import { serialize } from 'serialize-ts/dist';
+import { serialize } from '@junte/serialize-ts';
 import { ViewType } from 'src/models/enums/view-type';
 import { ProjectGroupsState, ProjectGroupsStateUpdate } from './project-groups-list.types';
 

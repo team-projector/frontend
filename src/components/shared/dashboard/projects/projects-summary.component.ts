@@ -3,7 +3,7 @@ import { UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
-import { deserialize, serialize } from 'serialize-ts';
+import { deserialize, serialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';

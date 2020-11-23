@@ -1,5 +1,5 @@
 import { format } from 'date-fns';
-import { Serializer } from 'serialize-ts';
+import { Serializer } from '@junte/serialize-ts';
 import { DFNS_OPTIONS } from 'src/consts';
 
 export class DateSerializer implements Serializer<Date> {

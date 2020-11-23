@@ -5,7 +5,7 @@ import { FormComponent, UI } from '@junte/ui';
 import 'reflect-metadata';
 import { of } from 'rxjs';
 import { delay, filter, finalize, map } from 'rxjs/operators';
-import { deserialize } from 'serialize-ts/dist';
+import { deserialize } from '@junte/serialize-ts';
 import { AppConfig } from 'src/app-config';
 import { APPLICATION_READY, BACKEND, MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';

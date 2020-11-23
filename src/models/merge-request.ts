@@ -1,7 +1,7 @@
 import { faker } from '../utils/mocks';
 import { helpers } from 'faker';
 import { SearchFilter } from '@junte/ui';
-import { ArraySerializer } from 'serialize-ts';
+import { ArraySerializer } from '@junte/serialize-ts';
 import { DATE_FORMAT } from 'src/consts';
 import { MergeRequestState } from 'src/models/enums/merge-requests';
 import { DateSerializer } from 'src/serializers/date';

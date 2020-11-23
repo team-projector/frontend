@@ -3,7 +3,7 @@ import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/r
 import { Observable, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Salary } from 'src/models/salary';
-import { deserialize } from 'serialize-ts/dist';
+import { deserialize } from '@junte/serialize-ts';
 import { map } from 'rxjs/operators';
 import { getMock } from '@junte/mocker';
 import { SalaryGQL } from './salary.graphql';

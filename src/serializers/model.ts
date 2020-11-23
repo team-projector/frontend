@@ -1,4 +1,4 @@
-import { deserialize, serialize, Serializer } from 'serialize-ts';
+import { deserialize, serialize, Serializer } from '@junte/serialize-ts';
 
 export class LazyModel<T> implements Serializer<T> {
 

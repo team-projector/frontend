@@ -1,7 +1,7 @@
 import { SearchFilter } from '@junte/ui';
 import { addDays } from 'date-fns';
-import { ArraySerializer } from 'serialize-ts';
-import { PrimitiveSerializer } from 'serialize-ts/dist';
+import { ArraySerializer } from '@junte/serialize-ts';
+import { PrimitiveSerializer } from '@junte/serialize-ts';
 import { MilestoneProblem, MilestoneState } from 'src/models/enums/milestone';
 import { DateSerializer } from 'src/serializers/date';
 import { mocks } from 'src/utils/mocks';

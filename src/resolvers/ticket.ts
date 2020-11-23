@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { deserialize } from 'serialize-ts/dist';
+import { deserialize } from '@junte/serialize-ts';
 import { environment } from 'src/environments/environment';
 import { Ticket } from 'src/models/ticket';
 import { TicketGQL } from 'src/resolvers/ticket.graphql';

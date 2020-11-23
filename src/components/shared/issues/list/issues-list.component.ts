@@ -6,7 +6,7 @@ import { startOfDay } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, finalize, map} from 'rxjs/operators';
-import { deserialize, serialize } from 'serialize-ts/dist';
+import { deserialize, serialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';

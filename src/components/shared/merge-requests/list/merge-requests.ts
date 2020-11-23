@@ -1,7 +1,7 @@
 import { OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
-import { serialize } from 'serialize-ts/dist';
+import { serialize } from '@junte/serialize-ts';
 import { MergeRequestsStateUpdate } from './merge-requests-list.types';
 
 export abstract class MergeRequestsComponent implements OnInit {

@@ -4,7 +4,7 @@ import { UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
-import { deserialize } from 'serialize-ts/dist';
+import { deserialize } from '@junte/serialize-ts';
 import { AllWorkBreaks } from 'src/components/shared/work-breaks/list/work-breaks-list.graphql';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';

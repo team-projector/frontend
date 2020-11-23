@@ -1,4 +1,4 @@
-import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from 'serialize-ts';
+import { ArraySerializer, ModelSerializer, PrimitiveSerializer } from '@junte/serialize-ts';
 import { TeamMemberRole } from 'src/models/enums/team';
 import { IssuesMetrics } from 'src/models/metrics';
 import { mocks } from 'src/utils/mocks';

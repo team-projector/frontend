@@ -1,6 +1,6 @@
 import { SearchFilter } from '@junte/ui';
 import { endOfDay, endOfWeek, format, isPast, startOfDay, startOfWeek } from 'date-fns';
-import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts';
+import { ArraySerializer, PrimitiveSerializer } from '@junte/serialize-ts';
 import { Paging } from 'src/models/paging';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
 import { DATE_FORMAT, DFNS_OPTIONS } from '../consts';

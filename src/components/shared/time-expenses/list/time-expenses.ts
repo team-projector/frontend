@@ -1,7 +1,7 @@
 import { OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest } from 'rxjs';
-import { serialize } from 'serialize-ts/dist';
+import { serialize } from '@junte/serialize-ts';
 import { TimeExpensesState, TimeExpensesStateUpdate } from './time-expenses-list.types';
 
 export abstract class TimeExpensesComponent implements OnInit {

@@ -1,6 +1,6 @@
 import { LazyModel } from '../serializers/model';
 import { faker } from '../utils/mocks';
-import { ArraySerializer } from 'serialize-ts';
+import { ArraySerializer } from '@junte/serialize-ts';
 import { TimeExpenseState } from 'src/models/enums/time-expenses';
 import { mocks} from 'src/utils/mocks';
 import { DATE_FORMAT } from '../consts';

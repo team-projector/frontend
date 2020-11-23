@@ -1,4 +1,4 @@
-import { deserialize, Serializer } from 'serialize-ts';
+import { deserialize, Serializer } from '@junte/serialize-ts';
 import { Issue } from '../models/issue';
 import { MergeRequest } from '../models/merge-request';
 

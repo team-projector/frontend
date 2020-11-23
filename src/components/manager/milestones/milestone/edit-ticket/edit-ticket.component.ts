@@ -5,7 +5,7 @@ import { R } from 'apollo-angular/types';
 import { addWeeks, endOfWeek, startOfWeek } from 'date-fns';
 import { Observable, of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
-import { deserialize, serialize } from 'serialize-ts/dist';
+import { deserialize, serialize } from '@junte/serialize-ts';
 import { DFNS_OPTIONS, MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { TicketStates, TicketTypes } from 'src/models/enums/ticket';

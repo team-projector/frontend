@@ -5,7 +5,7 @@ import { R } from 'apollo-angular/types';
 import { addDays, addWeeks, endOfWeek, getDate, startOfDay, startOfWeek, subWeeks } from 'date-fns';
 import { of, zip } from 'rxjs';
 import { delay, filter as filtering, finalize, map } from 'rxjs/operators';
-import { deserialize, serialize } from 'serialize-ts/dist';
+import { deserialize, serialize } from '@junte/serialize-ts';
 import { DATE_FORMAT, DFNS_OPTIONS, MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';

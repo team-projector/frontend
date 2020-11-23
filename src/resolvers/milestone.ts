@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
-import { deserialize } from 'serialize-ts/dist';
+import { deserialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { Milestone } from 'src/models/milestone';

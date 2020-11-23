@@ -1,6 +1,6 @@
 import { SearchFilter } from '@junte/ui';
 import { addDays, startOfMonth } from 'date-fns';
-import { ArraySerializer, PrimitiveSerializer } from 'serialize-ts/dist';
+import { ArraySerializer, PrimitiveSerializer } from '@junte/serialize-ts';
 import { DATE_FORMAT } from 'src/consts';
 import { Milestone } from 'src/models/milestone';
 import { Paging } from 'src/models/paging';

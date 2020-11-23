@@ -5,7 +5,7 @@ import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
-import { deserialize, serialize } from 'serialize-ts/dist';
+import { deserialize, serialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';

@@ -1,5 +1,5 @@
 import { SearchFilter } from '@junte/ui';
-import { ArraySerializer } from 'serialize-ts';
+import { ArraySerializer } from '@junte/serialize-ts';
 import { field, model } from '../decorators/model';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
 import { faker, mocks } from '../utils/mocks';
