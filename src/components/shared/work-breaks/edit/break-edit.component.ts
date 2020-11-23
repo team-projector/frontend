@@ -12,7 +12,7 @@ import { ViewType } from 'src/models/enums/view-type';
 import { BackendError } from 'src/types/gql-errors';
 import { PagingTeamMembers, Team, TeamMember, TeamMembersFilter } from 'src/models/team';
 import { BreakUpdate, WorkBreak } from 'src/models/work-break';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { User } from 'src/models/user';
 import { CreateBreakGQL, GetTeamMembersGQL, UpdateWorkBreakGQL } from './break-edit.graphql';
 

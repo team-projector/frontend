@@ -4,7 +4,7 @@ import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { environment } from 'src/environments/environment';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { User } from '../models/user';
 import { UserGQL } from './user.graphql';
 

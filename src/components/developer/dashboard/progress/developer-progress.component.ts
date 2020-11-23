@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { Metrics, MetricType } from 'src/models/enums/metrics';
 import { Me, UserMetricsFilter, UserProgressMetrics } from 'src/models/user';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { DeveloperIssuesMetricsGQL } from './developer-progress.graphql';
 
 interface DeveloperMetrics {

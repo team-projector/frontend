@@ -19,7 +19,7 @@ import { Me, User } from 'src/models/user';
 import { BreaksFilter, PagingBreaks, WorkBreak } from 'src/models/work-break';
 import { BackendError } from 'src/types/gql-errors';
 import { equals } from 'src/utils/equals';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { CardSize } from '../../users/card/user-card.types';
 import { BreaksState, BreaksStateUpdate } from './work-breaks-list-types';
 

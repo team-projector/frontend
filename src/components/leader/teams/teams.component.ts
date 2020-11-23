@@ -15,7 +15,7 @@ import { PagingTeams, Team, TeamsFilter } from 'src/models/team';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { BackendError } from 'src/types/gql-errors';
 import { equals } from 'src/utils/equals';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { AllTeamsGQL } from './teams.graphql';
 import { TeamsState, TeamsStateUpdate } from './teams.types';
 

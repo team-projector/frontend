@@ -13,7 +13,7 @@ import { DurationFormat } from 'src/models/enums/duration-format';
 import { MilestoneProblem, MilestoneState, MilestoneType } from 'src/models/enums/milestone';
 import { MilestonesFilter, MilestonesSummary, PagingMilestones } from 'src/models/milestone';
 import { BackendError } from 'src/types/gql-errors';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { LocalUI } from 'src/enums/local-ui';
 import { equals } from 'src/utils/equals';
 import { AllMilestonesGQL, MilestonesSummaryGQL, SyncMilestoneGQL } from './milestones-list.graphql';

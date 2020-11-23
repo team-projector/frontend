@@ -6,7 +6,7 @@ import { deserialize } from 'serialize-ts/dist';
 import { environment } from '../environments/environment';
 import { Me } from '../models/user';
 import { catchGQLErrors } from '../operators/catch-gql-error';
-import { getMock } from '../utils/mocks';
+import { getMock } from '@junte/mocker';
 import { MeGQL } from './me.graphql';
 
 @Injectable({providedIn: 'root'})

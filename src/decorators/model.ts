@@ -1,6 +1,6 @@
 import 'reflect-metadata';
+import { MockField, MockFieldConfig, MockModel } from '@junte/mocker';
 import { Field, Model, Serializer} from 'serialize-ts/dist';
-import { MockField, MockFieldConfig, MockModel } from '../utils/mocks';
 
 export interface ModelConfig {
   mocking?: (obj: Object, context?: Object, index?: number) => void;

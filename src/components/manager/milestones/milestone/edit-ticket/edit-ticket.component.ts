@@ -14,7 +14,7 @@ import { Milestone, MilestonesFilter, PagingMilestones } from 'src/models/milest
 import { Ticket, TicketUpdate } from 'src/models/ticket';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { BackendError } from 'src/types/gql-errors';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { CreateTicketGQL, EditTicketGQL, FindIssuesGQL, FindMilestonesGQL, TicketGQL } from './edit-ticket.graphql';
 
 const today = new Date();

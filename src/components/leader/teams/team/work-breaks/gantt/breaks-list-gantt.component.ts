@@ -14,7 +14,7 @@ import { ApproveStates } from 'src/models/enums/break';
 import { ViewType } from 'src/models/enums/view-type';
 import { BackendError } from 'src/types/gql-errors';
 import { User, UsersPaging } from 'src/models/user';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { CardSize } from '../../../../../shared/users/card/user-card.types';
 import { AllTeamWorkBreaks } from './breaks-gantt.graphql';
 

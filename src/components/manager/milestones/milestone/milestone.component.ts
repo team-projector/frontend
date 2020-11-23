@@ -17,7 +17,7 @@ import { TicketProblem, TicketStates, TicketsTypes, TicketTypes } from 'src/mode
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { PagingTickets, Ticket, TicketsFilter, TicketsSummary } from 'src/models/ticket';
 import { BackendError } from 'src/types/gql-errors';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { LocalUI } from 'src/enums/local-ui';
 import { Milestone } from 'src/models/milestone';
 import { equals } from 'src/utils/equals';

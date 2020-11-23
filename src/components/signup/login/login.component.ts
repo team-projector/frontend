@@ -13,7 +13,7 @@ import { AccessToken } from 'src/models/access-token';
 import { UserRole } from 'src/models/enums/user';
 import { BackendError } from 'src/types/gql-errors';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { LocalUI } from 'src/enums/local-ui';
 import { GitlabLoginGQL, LoginGQL } from './login.graphql';
 

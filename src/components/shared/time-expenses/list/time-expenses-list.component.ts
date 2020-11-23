@@ -17,7 +17,7 @@ import { Team } from 'src/models/team';
 import { User } from 'src/models/user';
 import { BackendError } from 'src/types/gql-errors';
 import { equals } from 'src/utils/equals';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { LocalUI } from '../../../../enums/local-ui';
 import { CardSize } from '../../users/card/user-card.types';
 import { TimeExpensesGQL, TimeExpensesSummaryGQL } from './time-expenses-list.graphql';

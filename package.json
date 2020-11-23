@@ -29,6 +29,7 @@
     "@angular/platform-browser": "^9.0.0-rc.11",
     "@angular/platform-browser-dynamic": "^9.0.0-rc.11",
     "@angular/router": "^9.0.0-rc.11",
+    "@junte/mocker": "0.0.3",
     "@junte/serialize-ts": "2.6.6",
     "@junte/ui": "1.0.311",
     "@ngx-translate/core": "^12.1.1",

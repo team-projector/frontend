@@ -6,7 +6,7 @@ import { deserialize } from 'serialize-ts/dist';
 import { DFNS_LOCALE, FIRST_DAY_OF_WEEK } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { GitLabStatus } from 'src/models/gitlab';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { GitlabStatusGQL } from './gitlab-status.graphql';
 
 const STATUS_TIMEOUT = 60000;

@@ -13,7 +13,7 @@ import { ViewType } from 'src/models/enums/view-type';
 import { BackendError } from 'src/types/gql-errors';
 import { User } from 'src/models/user';
 import { PagingBreaks, WorkBreak } from 'src/models/work-break';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 
 @Component({
   selector: 'app-breaks-gantt',
