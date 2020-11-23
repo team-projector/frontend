@@ -6,7 +6,7 @@ import { deserialize } from 'serialize-ts/dist';
 import { environment } from 'src/environments/environment';
 import { Ticket } from 'src/models/ticket';
 import { TicketGQL } from 'src/resolvers/ticket.graphql';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 
 @Injectable({providedIn: 'root'})
 export class TicketResolver implements Resolve<Observable<Ticket>> {

@@ -9,7 +9,7 @@ import { deserialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { LocalUI } from 'src/enums/local-ui';
 import { ProjectState, ProjectType } from 'src/models/enums/project';
 import { ViewType } from 'src/models/enums/view-type';

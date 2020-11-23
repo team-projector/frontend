@@ -14,7 +14,7 @@ import { UserProblem } from 'src/models/enums/user';
 import { PagingTeamMembers, Team, TeamMember, TeamMemberProgressMetrics, TeamMetricsFilter } from 'src/models/team';
 import { UserProgressMetrics } from 'src/models/user';
 import { BackendError } from 'src/types/gql-errors';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { METRIC_TYPE } from '../../../../../shared/metrics-type/consts';
 import { CardSize } from '../../../../../shared/users/card/user-card.types';
 import { TeamMembersGQL, TeamMetricsGQL } from './team-progress.graphql';

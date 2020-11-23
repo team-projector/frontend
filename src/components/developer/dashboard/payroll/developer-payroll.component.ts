@@ -9,7 +9,7 @@ import { Bonus, PagingBonuses } from 'src/models/bonus';
 import { PagingPenalties, Penalty } from 'src/models/penalty';
 import { Me } from 'src/models/user';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { LocalUI } from 'src/enums/local-ui';
 import { AllBonusesGQL, AllPenaltiesGQL } from './developer-payroll.graphql';
 import { animate, state, style, transition, trigger } from '@angular/animations';

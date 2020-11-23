@@ -7,7 +7,7 @@ import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { Milestone } from 'src/models/milestone';
 import { MilestoneGQL } from 'src/resolvers/milestone.graphql';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 
 @Injectable({providedIn: 'root'})
 export class MilestoneResolver implements Resolve<Observable<Milestone>> {

@@ -14,7 +14,7 @@ import { Salary } from 'src/models/salary';
 import { User } from 'src/models/user';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
 import { equals } from 'src/utils/equals';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { BonusesStateUpdate } from '../bonuses/list/bonuses-list.types';
 import { CardSize } from '../users/card/user-card.types';
 import { AllPenaltiesGQL } from './penalties.graphql';

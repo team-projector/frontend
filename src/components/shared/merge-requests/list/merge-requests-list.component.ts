@@ -12,7 +12,7 @@ import { MergeRequestState, MergeRequestType } from 'src/models/enums/merge-requ
 import { ViewType } from 'src/models/enums/view-type';
 import { BackendError } from 'src/types/gql-errors';
 import { MergeRequestsFilter, MergeRequestSummary, PagingMergeRequest } from 'src/models/merge-request';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { Team } from 'src/models/team';
 import { User } from 'src/models/user';
 import { equals } from 'src/utils/equals';

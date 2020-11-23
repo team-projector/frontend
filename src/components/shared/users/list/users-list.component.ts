@@ -9,7 +9,7 @@ import { deserialize } from 'serialize-ts/dist';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { catchGQLErrors } from 'src/operators/catch-gql-error';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { UsersFilter, UsersPaging } from 'src/models/user';
 import { equals } from 'src/utils/equals';
 import { AllUsersGQL } from './users-list.graphql';

@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { deserialize } from 'serialize-ts/dist';
 import { environment } from '../environments/environment';
 import { Team } from '../models/team';
-import { getMock } from '../utils/mocks';
+import { getMock } from '@junte/mocker';
 import { TeamGQL } from './team.graphql';
 
 @Injectable({providedIn: 'root'})

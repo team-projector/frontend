@@ -12,7 +12,7 @@ import { ViewType } from 'src/models/enums/view-type';
 import { PagingSalaries, SalariesFilter } from 'src/models/salary';
 import { User } from 'src/models/user';
 import { equals } from 'src/utils/equals';
-import { getMock } from 'src/utils/mocks';
+import { getMock } from '@junte/mocker';
 import { CardSize } from '../../users/card/user-card.types';
 import { SalariesState, SalariesStateUpdate } from './salaries-list.types';
 
