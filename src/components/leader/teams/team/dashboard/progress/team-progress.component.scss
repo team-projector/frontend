@@ -54,44 +54,15 @@ table {
     box-sizing: border-box;
   }
 
-  th[data-week] {
-    width: 40%;
-  }
-
-  th[data-metrics] {
-    width: 20%;
-  }
-
-  th:not([data-gutter]), td:not([data-gutter]) {
-    min-width: 48px;
-  }
-
-  td {
-    min-height: 62px;
-  }
-
-  th:nth-child(2),
-  tbody tr td:nth-child(2) {
-    padding: $jnt-gutter-tiny 0;
-    min-width: 120px;
-  }
-
-  tr[data-week] {
-    th:nth-child(2),
-    th:nth-child(9) {
-      border-right: 1px solid $jnt-muted-color;
-    }
-  }
-
   thead {
     tr {
       [data-tools] {
         padding: $jnt-gutter-normal $jnt-gutter-normal 0 $jnt-gutter-normal;
+
         [data-title] {
           color: $jnt-primary-color;
-          // TODO: Do we need to use $jnt-font-size-big?
           font-size: 18px;
-          font-weight: bold;
+          font-weight: $jnt-font-weight-bold;
           text-align: center;
           flex: 1;
         }
@@ -115,11 +86,16 @@ table {
         background-color: $jnt-secondary-background;
 
         th {
+          &:nth-child(2),
+          &:nth-child(9) {
+            border-right: 1px solid $jnt-muted-color;
+          }
+
           &[data-day] {
             cursor: pointer;
             user-select: none;
 
-            &:hover
+            &:hover,
             &[today='true'] {
               background-color: $jnt-success-color;
               color: $jnt-white-color;
@@ -134,9 +110,23 @@ table {
 
       th {
         padding: $jnt-gutter-normal $jnt-gutter-tiny;
+        min-width: 48px;
 
         &[data-gutter] {
           width: $jnt-gutter-tiny;
+          min-width: $jnt-gutter-tiny;
+        }
+
+        &:nth-child(2) {
+          min-width: 120px;
+        }
+
+        &[data-week] {
+          width: 40%;
+        }
+
+        &[data-metrics] {
+          width: 20%;
         }
       }
     }
@@ -144,47 +134,9 @@ table {
 
   tbody {
     tr {
-      &:not(:first-child),
-      &:not(:nth-child(2)) {
-        td {
-          height: 61px;
-        }
-      }
-
       td {
         border-top: 1px solid $jnt-muted-color;
-
-        [data-developer] {
-          min-width: 120px;
-        }
-
-        [data-spent] {
-          min-width: 50px;
-          width: 50px;
-        }
-      }
-
-      &[data-nodata] {
-        height: 300px;
-        pointer-events: none;
-        border-bottom: 0;
-
-        td {
-          vertical-align: middle;
-          text-align: center;
-          font-size: 80px;
-          color: $jnt-muted-color;
-        }
-      }
-
-      &[data-loading] {
-        td {
-          padding: $jnt-gutter-normal;
-        }
-      }
-
-      td {
-        padding: $jnt-gutter-tiny;
+        padding: 10px $jnt-gutter-tiny;
 
         &[slow='true'] span {
           border-bottom: 2px solid $jnt-fail-color;
@@ -192,7 +144,6 @@ table {
 
         &[data-day] {
           cursor: pointer;
-          width: 50px;
 
           &:hover {
             background-color: $jnt-secondary-dark-color;
@@ -222,13 +173,35 @@ table {
 
         [data-developer] {
           cursor: pointer;
-          padding: $jnt-gutter-small;
+          padding: $jnt-gutter-tiny;
 
           &:focus {
             outline: 0;
             border-radius: $jnt-corner-small;
             box-shadow: $jnt-outline-shadow-small $jnt-secondary-dark-color;
           }
+        }
+
+        [data-spent] {
+          min-width: 50px;
+          width: 50px;
+        }
+      }
+
+      &[data-nodata] {
+        height: 300px;
+        pointer-events: none;
+        border-bottom: 0;
+
+        td {
+          font-size: 80px;
+          color: $jnt-muted-color;
+        }
+      }
+
+      &[data-loading] {
+        td {
+          padding: $jnt-gutter-normal;
         }
       }
 
