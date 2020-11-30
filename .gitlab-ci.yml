@@ -1,4 +1,4 @@
-image: docker:18
+image: registry.gitlab.com/junte/docker-hub/docker:19
 variables:
   DOCKER_CACHE_IMAGE: $CI_REGISTRY_IMAGE/cache
   DOCKER_IMAGE: $CI_REGISTRY_IMAGE/tmp:${CI_PIPELINE_IID}_${CI_COMMIT_SHA}
@@ -13,7 +13,7 @@ stages:
 
 lint_dockerfile:
   stage: lint_dockerfile
-  image: hadolint/hadolint:v1.18.0-6-ga0d655d-debian
+  image: registry.gitlab.com/junte/docker-hub/hadolint/hadolint:v1.19.0-44-gf364c91-debian
   script:
     - hadolint deploy/Dockerfile
 
@@ -103,7 +103,7 @@ publish_stable:
     TARGET_IMAGE: $CI_REGISTRY_IMAGE/stable:${CI_COMMIT_TAG}
 
 .base_deploy:
-  image: curlimages/curl:7.72.0
+  image: registry.gitlab.com/junte/docker-hub/curl:7.72.0
   stage: deploy
   dependencies: []
   script:
