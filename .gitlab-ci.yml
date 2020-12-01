@@ -19,6 +19,8 @@ lint_dockerfile:
 
 .base_build:
   stage: build
+  services:
+    - registry.gitlab.com/junte/docker-hub/docker:19-dind
   before_script:
     - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
     - docker pull $DOCKER_CACHE_IMAGE || true
@@ -72,6 +74,8 @@ e2e:
 .base_publish:
   stage: publish
   dependencies: []
+  services:
+    - registry.gitlab.com/junte/docker-hub/docker:19-dind
   variables:
     GIT_STRATEGY: none
   before_script:
