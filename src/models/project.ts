@@ -1,5 +1,5 @@
 import { SearchFilter } from '@junte/ui';
-import { ArraySerializer } from '@junte/serialize-ts';
+import { ArraySerializer, PrimitiveSerializer } from '@junte/serialize-ts';
 import { field, model } from '../decorators/model';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
 import { LazyModel } from '../serializers/model';
@@ -161,8 +161,8 @@ export class ProjectsFilter implements SearchFilter {
   @field()
   offset: number;
 
-  @field()
-  state: ProjectState | null;
+  @field({serializer: new ArraySerializer(new PrimitiveSerializer())})
+  state: ProjectState[];
 
   constructor(defs: Partial<ProjectsFilter> = null) {
     Object.assign(this, defs);

@@ -103,8 +103,8 @@ export class ProjectsListComponent implements OnInit {
     const {table: {first}, type} = this.form.getRawValue();
     const filter = new ProjectsFilter({
       first: first,
-      state: type === ProjectType.developing ? ProjectState.developing :
-        (type === ProjectType.archived ? ProjectState.archived : null),
+      state: [type === ProjectType.developing ? ProjectState.developing :
+        (type === ProjectType.archived ? ProjectState.archived : null)],
     });
     const reset = serialize(filter);
     if (!!this.reset && !equals(reset, this.reset)) {

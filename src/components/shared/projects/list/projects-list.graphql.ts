@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class AllProjectsGQL extends Query<{ projects }> {
   document = gql`
-query ($state: ProjectState, $offset: Int, $first: Int) {
+query ($state: [ProjectState], $offset: Int, $first: Int) {
   projects: allProjects(state: $state, offset: $offset, first: $first) {
     count
     edges {
@@ -20,6 +20,9 @@ query ($state: ProjectState, $offset: Int, $first: Int) {
         }
         glAvatar
         glUrl
+        team {
+          title
+        }
         metrics {
             budget
             budgetSpent

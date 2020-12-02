@@ -103,9 +103,9 @@ export class ProjectGroupsListComponent implements OnInit {
     const {table: {first}, type} = this.form.getRawValue();
     const filter = new ProjectsFilter({
       first: first,
-      state: type === ProjectType.developing ? ProjectState.developing :
+      state: [type === ProjectType.developing ? ProjectState.developing :
         (type === ProjectType.supporting ? ProjectState.supporting
-          : (type === ProjectType.archived ? ProjectState.archived : null)),
+          : (type === ProjectType.archived ? ProjectState.archived : null))],
     });
     const reset = serialize(filter);
     if (!!this.reset && !equals(reset, this.reset)) {

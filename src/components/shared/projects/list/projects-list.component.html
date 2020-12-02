@@ -59,6 +59,15 @@
       </ng-template>
     </jnt-table-column>
 
+    <jnt-table-column title="Team"
+                      i18n-title="@@label.team"
+                      width="10%"
+                      [align]="ui.text.align.center">
+      <ng-template #tableCellTemplate let-team="team">
+        <jnt-label *ngIf="!!team" [label]="team?.title"></jnt-label>
+      </ng-template>
+    </jnt-table-column>
+
     <jnt-table-column title="Budget"
                       i18n-title="@@label.budget"
                       width="25%"

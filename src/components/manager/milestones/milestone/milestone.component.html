@@ -128,11 +128,10 @@
                   </table>
                 </ng-template>
                 <div data-label>
-                  {{(ticket.metrics.issuesOpenedCount ? ticket.metrics.openedTimeRemains : ticket.metrics.timeRemains) |
-                  duration:durationFormat.short}}
+                  {{ticket.metrics.timeSpent | duration:durationFormat.short}}
                 </div>
-                <div data-progress [style.transform]="'translateX(-' + (100 - (ticket.metrics.timeEstimate > 0
-                  ? ticket.metrics.timeSpent / ticket.metrics.timeEstimate * 100 : 0)) + '%)'">
+                <div data-progress [style.transform]="'translateX(-' + (100 - (ticket.metrics.issuesOpenedCount > 0
+                ? (ticket.metrics.timeEstimate > 0 ? ticket.metrics.timeSpent / ticket.metrics.timeEstimate * 100 : 0) : 100)) + '%)'">
                 </div>
               </div>
             </ng-template>
@@ -251,12 +250,10 @@
                              let-current="current">
                   <div data-period [attr.over-from]="(period['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
                        [attr.over-to]="(period['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)">
-                    <ng-container *ngIf="issue.timeEstimate">
-                      <div data-label>{{issue.metrics.remains | duration:durationFormat.short}}</div>
-                      <div data-progress [style.transform]="'translateX(-' + 100 - (issue.state === issueStates.opened && issue.timeEstimate > 0
-                        ? issue.totalTimeSpent / issue.timeEstimate * 100 : 0) + '%)'">
-                      </div>
-                    </ng-container>
+                    <div data-label>{{issue.totalTimeSpent | duration:durationFormat.short}}</div>
+                    <div data-progress [style.transform]="'translateX(-' + (100 - (issue.state === issueStates.opened
+                      ? (issue.timeEstimate > 0 ? issue.totalTimeSpent / issue.timeEstimate * 100 : 0) : 100)) + '%)'">
+                    </div>
                   </div>
                 </ng-template>
                 <ng-template #title>
