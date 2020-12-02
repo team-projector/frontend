@@ -8,8 +8,10 @@ import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, filter as filtering, finalize, map } from 'rxjs/operators';
 import { MOCKS_DELAY } from '../../../consts';
+import { LocalUI } from '../../../enums/local-ui';
 import { environment } from '../../../environments/environment';
 import { StandardLabel } from '../../../models/enums/standard-label';
+import { TeamMemberRole } from '../../../models/enums/team';
 import { Issue, IssueUpdate } from '../../../models/issue';
 import { Milestone, MilestonesFilter, PagingMilestones } from '../../../models/milestone';
 import { Project, ProjectsFilter, ProjectsPaging } from '../../../models/project';
@@ -28,8 +30,10 @@ import { CreateIssueGQL, ProjectMilestonesGQL, ProjectsGQL, ProjectTeamMembersGQ
 export class CreateIssueComponent implements OnInit {
 
   ui = UI;
+  localUi = LocalUI;
   userCardSize = CardSize;
   standardLabel = StandardLabel;
+  teamMemberRole = TeamMemberRole;
 
   progress = {
     projects: false,

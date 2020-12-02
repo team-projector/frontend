@@ -11,13 +11,6 @@ export class MockArrayPipe implements PipeTransform {
   }
 }
 
-@Pipe({name: 'includes'})
-export class IncludesPipe implements PipeTransform {
-  transform(el: string, arr: string[]): boolean {
-    return !!arr && arr.includes(el);
-  }
-}
-
 @Pipe({name: 'join'})
 export class JoinPipe implements PipeTransform {
   transform(arr: string[], separator: string = ' '): string {

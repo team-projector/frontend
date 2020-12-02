@@ -25,6 +25,8 @@ export class LocalUI {
     project: 'project:font:icons',
     today: 'today:font:icons',
 
+    leader: 'leader:svg:local',
+
     money: 'money:font:icons',
     // animated
     doing: 'doing:animated:default',

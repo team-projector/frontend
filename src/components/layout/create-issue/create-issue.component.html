@@ -101,9 +101,15 @@
       <jnt-form-control name="developer">
         <ng-template #userOption let-member="value"
                      let-selected="selected">
-          <app-user [user]="member.user"
-                    [roles]="member.roles"
-                    [size]="userCardSize.small"></app-user>
+          <jnt-stack [orientation]="ui.orientation.horizontal"
+                     [align]="ui.align.center"
+                     [justify]="ui.justify.between">
+            <app-user [user]="member.user"
+                      [roles]="member.roles"
+                      [size]="userCardSize.small"></app-user>
+            <jnt-icon *ngIf="!selected && (member.roles | includes: teamMemberRole.leader)"
+                      [icon]="localUi.icons.leader"></jnt-icon>
+          </jnt-stack>
         </ng-template>
         <jnt-select formControlName="developer"
                     placeholder="Select from list"
@@ -135,6 +141,10 @@
           </jnt-switcher-option>
           <jnt-switcher-option label="Urgent"
                                [value]="standardLabel.urgent">
+            <jnt-dot [color]="ui.color.orange"></jnt-dot>
+          </jnt-switcher-option>
+          <jnt-switcher-option label="Hotfix"
+                               [value]="standardLabel.hotfix">
             <jnt-dot [color]="ui.color.yellow"></jnt-dot>
           </jnt-switcher-option>
         </jnt-switcher>
