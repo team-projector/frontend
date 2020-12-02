@@ -1,6 +1,7 @@
 import { addDays } from 'date-fns';
 import * as fakerEn from 'faker/locale/en';
 import * as fakerRu from 'faker/locale/ru';
+import { SECONDS_IN_HOUR, SECONDS_IN_MINUTE } from '../consts';
 import { Language } from '../enums/language';
 import { detectLanguage } from './lang';
 
@@ -8,9 +9,6 @@ export enum TimeAccuracy {
   hours,
   minutes
 }
-
-export const SECONDS_IN_MINUTE = 60;
-export const SECONDS_IN_HOUR = 3600;
 
 export const faker = ((): any => {
   switch (detectLanguage()) {

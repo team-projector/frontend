@@ -45,10 +45,11 @@ export class CreateIssueComponent implements OnInit {
   issue: Issue;
 
   projectControl = this.fb.control(null, [Validators.required]);
+  milestoneControl = this.fb.control(null);
 
   form = this.fb.group({
     project: this.projectControl,
-    milestone: this.fb.control(null),
+    milestone: this.milestoneControl,
     title: this.fb.control(null, [Validators.required]),
     developer: this.fb.control(null, [Validators.required]),
     labels: this.fb.control([]),
@@ -104,7 +105,12 @@ export class CreateIssueComponent implements OnInit {
         .pipe(catchGQLErrors(), map(({data: {milestones}}) =>
           deserialize(milestones, PagingMilestones))))
       .pipe(finalize(() => this.progress.milestones = false))
-      .subscribe(milestones => this.milestones = milestones.results,
+      .subscribe(milestones => {
+          this.milestones = milestones.results;
+          if (this.milestones.length > 0) {
+            this.milestoneControl.setValue(this.milestones[0].id);
+          }
+        },
         err => this.errors = err);
   }
 

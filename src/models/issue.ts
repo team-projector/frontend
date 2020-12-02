@@ -9,6 +9,7 @@ import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { HourToSecondsSerializer } from '../serializers/time';
 import { faker } from '../utils/mocks';
 import { Label } from './label';
 import { Paging } from './paging';
@@ -339,7 +340,7 @@ export class IssueUpdate {
   @field({serializer: new ArraySerializer(new PrimitiveSerializer())})
   labels: string[];
 
-  @field()
+  @field({serializer: new HourToSecondsSerializer()})
   estimate: number;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})

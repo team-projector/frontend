@@ -42,53 +42,59 @@
       </jnt-form-control>
     </jnt-form-item>
 
-    <jnt-form-item>
-      <jnt-form-label for="project">Project</jnt-form-label>
-      <jnt-form-control name="project">
-        <ng-template #projectOption let-project="value"
-                     let-selected="selected">
-          <jnt-stack [orientation]="ui.orientation.horizontal"
-                     [gutter]="ui.gutter.small">
-            <jnt-avatar [size]="ui.size.tiny"
-                        [image]="project.group?.glAvatar"></jnt-avatar>
-            <div><span *ngIf="!selected">{{project.group?.title}} &bull; </span>{{project.title}}
-            </div>
-          </jnt-stack>
-        </ng-template>
-        <jnt-select formControlName="project"
-                    placeholder="Select from list"
-                    i18n-placeholder="@@label.project"
-                    [state]="progress.projects ? ui.state.loading : null"
-                    [features]="[ui.feature.search]"
-                    [optionTemplate]="projectOption">
-          <jnt-select-option *ngFor="let p of projects"
-                             [key]="p.id"
-                             [label]="p.fullTitle"
-                             [value]="p"></jnt-select-option>
-        </jnt-select>
-        <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
-          This field is required
-        </jnt-form-message>
-      </jnt-form-control>
-    </jnt-form-item>
+    <jnt-row>
+      <jnt-col [tablet]="6">
+        <jnt-form-item>
+          <jnt-form-label for="project">Project</jnt-form-label>
+          <jnt-form-control name="project">
+            <ng-template #projectOption let-project="value"
+                         let-selected="selected">
+              <jnt-stack [orientation]="ui.orientation.horizontal"
+                         [gutter]="ui.gutter.small">
+                <jnt-avatar [size]="ui.size.tiny"
+                            [image]="project.group?.glAvatar"></jnt-avatar>
+                <div><span *ngIf="!selected">{{project.group?.title}} &bull; </span>{{project.title}}
+                </div>
+              </jnt-stack>
+            </ng-template>
+            <jnt-select formControlName="project"
+                        placeholder="Select from list"
+                        i18n-placeholder="@@label.project"
+                        [state]="progress.projects ? ui.state.loading : null"
+                        [features]="[ui.feature.search]"
+                        [optionTemplate]="projectOption">
+              <jnt-select-option *ngFor="let p of projects"
+                                 [key]="p.id"
+                                 [label]="p.fullTitle"
+                                 [value]="p"></jnt-select-option>
+            </jnt-select>
+            <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+              This field is required
+            </jnt-form-message>
+          </jnt-form-control>
+        </jnt-form-item>
+      </jnt-col>
 
-    <jnt-form-item>
-      <jnt-form-label for="milestone">Milestone</jnt-form-label>
-      <jnt-form-control name="milestone">
-        <jnt-select formControlName="milestone"
-                    placeholder="Select from list"
-                    i18n-placeholder="@@label.milestone"
-                    [state]="progress.milestones ? ui.state.loading : null"
-                    [features]="[ui.feature.search, ui.feature.allowEmpty]">
-          <jnt-select-option *ngFor="let m of milestones"
-                             [key]="m.id"
-                             [label]="m.title"></jnt-select-option>
-        </jnt-select>
-        <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
-          This field is required
-        </jnt-form-message>
-      </jnt-form-control>
-    </jnt-form-item>
+      <jnt-col [tablet]="6">
+        <jnt-form-item>
+          <jnt-form-label for="milestone">Milestone</jnt-form-label>
+          <jnt-form-control name="milestone">
+            <jnt-select formControlName="milestone"
+                        placeholder="Select from list"
+                        i18n-placeholder="@@label.milestone"
+                        [state]="progress.milestones ? ui.state.loading : null"
+                        [features]="[ui.feature.search, ui.feature.allowEmpty]">
+              <jnt-select-option *ngFor="let m of milestones"
+                                 [key]="m.id"
+                                 [label]="m.title"></jnt-select-option>
+            </jnt-select>
+            <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+              This field is required
+            </jnt-form-message>
+          </jnt-form-control>
+        </jnt-form-item>
+      </jnt-col>
+    </jnt-row>
 
     <jnt-form-item>
       <jnt-form-label for="developer">Developer</jnt-form-label>
