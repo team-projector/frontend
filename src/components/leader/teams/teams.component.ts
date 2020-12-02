@@ -12,7 +12,7 @@ import { LocalUI } from 'src/enums/local-ui';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { PagingTeams, Team, TeamsFilter } from 'src/models/team';
-import { catchGQLErrors } from 'src/operators/catch-gql-error';
+import { catchGQLErrors } from 'src/utils/gql-errors';
 import { BackendError } from 'src/types/gql-errors';
 import { equals } from 'src/utils/equals';
 import { getMock } from '@junte/mocker';

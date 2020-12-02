@@ -12,7 +12,7 @@ import { ViewType } from 'src/models/enums/view-type';
 import { PagingPenalties, PenaltiesFilter } from 'src/models/penalty';
 import { Salary } from 'src/models/salary';
 import { User } from 'src/models/user';
-import { catchGQLErrors } from 'src/operators/catch-gql-error';
+import { catchGQLErrors } from 'src/utils/gql-errors';
 import { equals } from 'src/utils/equals';
 import { getMock } from '@junte/mocker';
 import { BonusesStateUpdate } from '../bonuses/list/bonuses-list.types';

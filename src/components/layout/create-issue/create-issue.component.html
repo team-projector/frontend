@@ -1,0 +1,175 @@
+<jnt-informer *ngIf="!!issue"
+              [backdrop]="backdrop"
+              [placement]="ui.placement.absolute">
+  <ng-template #informerContentTemplate>
+    <jnt-stack data-issue [align]="ui.align.center">
+      <p>Awesome! The task was created
+        <jnt-link title="on GitLab"
+                  [target]="ui.target.blank"
+                  [icon]="{icon: ui.icons.link, position: ui.position.right}"
+                  [outline]="ui.outline.fill"
+                  [source]="issue.glUrl"></jnt-link>
+      </p>
+
+      <jnt-button text="Ok" (click)="issue = null"></jnt-button>
+    </jnt-stack>
+  </ng-template>
+</jnt-informer>
+
+<jnt-informer *ngIf="errors.length > 0"
+              [backdrop]="backdrop"
+              [placement]="ui.placement.absolute"
+              (ok)="this.errors = []">
+  <jnt-informer-message *ngFor="let e of errors"
+                        [message]="e.toString()"></jnt-informer-message>
+</jnt-informer>
+
+<jnt-form #content [formGroup]="form"
+          [state]="progress.creating ? ui.state.loading : null"
+          (submitted)="createIssue()">
+  <jnt-stack [align]="ui.align.stretch">
+
+    <jnt-form-item>
+      <jnt-form-label for="title">Title</jnt-form-label>
+      <jnt-form-control name="title">
+        <jnt-input formControlName="title"
+                   placeholder="Some nice task"
+                   i18n-placeholder="@@label.title">
+        </jnt-input>
+        <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+
+    <jnt-form-item>
+      <jnt-form-label for="project">Project</jnt-form-label>
+      <jnt-form-control name="project">
+        <ng-template #projectOption let-project="value"
+                     let-selected="selected">
+          <jnt-stack [orientation]="ui.orientation.horizontal"
+                     [gutter]="ui.gutter.small">
+            <jnt-avatar [size]="ui.size.tiny"
+                        [image]="project.group?.glAvatar"></jnt-avatar>
+            <div><span *ngIf="!selected">{{project.group?.title}} &bull; </span>{{project.title}}
+            </div>
+          </jnt-stack>
+        </ng-template>
+        <jnt-select formControlName="project"
+                    placeholder="Select from list"
+                    i18n-placeholder="@@label.project"
+                    [state]="progress.projects ? ui.state.loading : null"
+                    [features]="[ui.feature.search]"
+                    [optionTemplate]="projectOption">
+          <jnt-select-option *ngFor="let p of projects"
+                             [key]="p.id"
+                             [label]="p.fullTitle"
+                             [value]="p"></jnt-select-option>
+        </jnt-select>
+        <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+
+    <jnt-form-item>
+      <jnt-form-label for="milestone">Milestone</jnt-form-label>
+      <jnt-form-control name="milestone">
+        <jnt-select formControlName="milestone"
+                    placeholder="Select from list"
+                    i18n-placeholder="@@label.milestone"
+                    [state]="progress.milestones ? ui.state.loading : null"
+                    [features]="[ui.feature.search, ui.feature.allowEmpty]">
+          <jnt-select-option *ngFor="let m of milestones"
+                             [key]="m.id"
+                             [label]="m.title"></jnt-select-option>
+        </jnt-select>
+        <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+
+    <jnt-form-item>
+      <jnt-form-label for="developer">Developer</jnt-form-label>
+      <jnt-form-control name="developer">
+        <ng-template #userOption let-member="value"
+                     let-selected="selected">
+          <app-user [user]="member.user"
+                    [roles]="member.roles"
+                    [size]="userCardSize.small"></app-user>
+        </ng-template>
+        <jnt-select formControlName="developer"
+                    placeholder="Select from list"
+                    i18n-placeholder="@@label.developer"
+                    [state]="progress.developers ? ui.state.loading : null"
+                    [features]="[ui.feature.search, ui.feature.allowEmpty]"
+                    [optionTemplate]="userOption">
+          <jnt-select-option *ngFor="let d of developers"
+                             [key]="d.user.id"
+                             [label]="d.user.name"
+                             [value]="d"></jnt-select-option>
+        </jnt-select>
+        <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+
+    <jnt-form-item>
+      <jnt-form-label for="labels">Labels</jnt-form-label>
+      <jnt-form-control name="labels">
+        <jnt-switcher formControlName="labels"
+                      [mode]="ui.select.mode.multiple"
+                      [marks]="true"
+                      [features]="[ui.feature.allowEmpty]">
+          <jnt-switcher-option label="Bug"
+                               [value]="standardLabel.bug">
+            <jnt-dot [color]="ui.color.red"></jnt-dot>
+          </jnt-switcher-option>
+          <jnt-switcher-option label="Urgent"
+                               [value]="standardLabel.urgent">
+            <jnt-dot [color]="ui.color.yellow"></jnt-dot>
+          </jnt-switcher-option>
+        </jnt-switcher>
+      </jnt-form-control>
+    </jnt-form-item>
+
+    <jnt-row>
+      <jnt-col [tablet]="4">
+        <jnt-form-item>
+          <jnt-form-label for="estimate">Estimate</jnt-form-label>
+          <jnt-form-control name="estimate">
+            <jnt-input formControlName="estimate"
+                       [type]="ui.input.type.number"
+                       placeholder="Hours"></jnt-input>
+          </jnt-form-control>
+        </jnt-form-item>
+      </jnt-col>
+
+      <jnt-col [tablet]="8">
+        <jnt-form-item>
+          <jnt-form-label for="dueDate">Due Date</jnt-form-label>
+          <jnt-form-control name="dueDate">
+            <jnt-date-picker formControlName="dueDate"
+                             [features]="[ui.feature.allowEmpty]"></jnt-date-picker>
+            <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+              This field is required
+            </jnt-form-message>
+          </jnt-form-control>
+        </jnt-form-item>
+      </jnt-col>
+    </jnt-row>
+
+  </jnt-stack>
+
+  <ng-template #formFooterTemplate>
+    <jnt-stack [orientation]="ui.orientation.horizontal"
+               [justify]="ui.justify.end">
+      <jnt-button [type]="ui.button.type.submit"
+                  [icon]="ui.icons.add"
+                  text="Create"></jnt-button>
+    </jnt-stack>
+  </ng-template>
+
+</jnt-form>

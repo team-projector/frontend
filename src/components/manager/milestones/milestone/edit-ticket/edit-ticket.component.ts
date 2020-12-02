@@ -12,7 +12,7 @@ import { TicketStates, TicketTypes } from 'src/models/enums/ticket';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Milestone, MilestonesFilter, PagingMilestones } from 'src/models/milestone';
 import { Ticket, TicketUpdate } from 'src/models/ticket';
-import { catchGQLErrors } from 'src/operators/catch-gql-error';
+import { catchGQLErrors } from 'src/utils/gql-errors';
 import { BackendError } from 'src/types/gql-errors';
 import { getMock } from '@junte/mocker';
 import { CreateTicketGQL, EditTicketGQL, FindIssuesGQL, FindMilestonesGQL, TicketGQL } from './edit-ticket.graphql';

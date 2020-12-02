@@ -7,7 +7,7 @@ import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY } from 'src/consts';
-import { catchGQLErrors } from 'src/operators/catch-gql-error';
+import { catchGQLErrors } from 'src/utils/gql-errors';
 import { field, model } from 'src/decorators/model';
 import { environment } from 'src/environments/environment';
 import { ApproveStates } from 'src/models/enums/break';

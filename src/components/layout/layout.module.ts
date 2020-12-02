@@ -8,6 +8,8 @@ import { AuthorizationGuard } from 'src/guards/authorization.guard';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { IssueCardModule } from '../shared/issues/card/issue-card.module';
+import { UserCardModule } from '../shared/users/card/user-card.module';
+import { CreateIssueComponent } from './create-issue/create-issue.component';
 import { GitlabStatusComponent } from './gitlab-status/gitlab-status.component';
 import { LayoutRoutingModule } from './layout-routing.module';
 import { LayoutComponent } from './layout.component';
@@ -20,7 +22,8 @@ import { AppThemeSwitcherModule } from './theme-switcher/app-theme-switcher.modu
     LayoutComponent,
     GitlabStatusComponent,
     DifferencePipe,
-    SelectLangComponent
+    SelectLangComponent,
+    CreateIssueComponent
   ],
   imports: [
     CommonModule,
@@ -31,7 +34,9 @@ import { AppThemeSwitcherModule } from './theme-switcher/app-theme-switcher.modu
     DatePipesModule,
     IssueCardModule,
     AppThemeSwitcherModule,
-    DateFnsModule
+    DateFnsModule,
+
+    UserCardModule
   ],
   providers: [
     AuthorizationGuard,

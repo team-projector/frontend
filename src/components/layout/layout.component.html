@@ -9,7 +9,7 @@
       </a>
     </ng-template>
 
-    <jnt-menu menu>
+    <jnt-menu>
       <jnt-menu-item *ngIf="me.roles?.includes(userRole.developer)"
                      title="Developer"
                      i18n-title="@@action.developer" [link]="['/developer']"
@@ -35,9 +35,16 @@
                      [matching]="ui.matching.wildcard"></jnt-menu-item>
     </jnt-menu>
 
-    <ng-template #contentTemplate>
+    <ng-template #headerContentTemplate let-hide="hide">
       <jnt-stack [orientation]="ui.orientation.horizontal"
                  [align]="ui.align.center">
+        <ng-template #createIssueTemplate>
+          <app-create-issue></app-create-issue>
+        </ng-template>
+        <jnt-button data-create-issue text="Create issue"
+                    [icon]="localUi.icons.wizard"
+                    [jntModal]="{title: {icon: localUi.icons.wizard, text: 'Create issue'}, content: createIssueTemplate}"
+                    (click)="hide?.call()"></jnt-button>
         <app-theme-switcher (changed)="theme = $event"></app-theme-switcher>
       </jnt-stack>
     </ng-template>

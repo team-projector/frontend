@@ -30,7 +30,6 @@ export function catchGQLErrors() {
       return source.subscribe({
         next(x) {
           if (x.errors?.length > 0) {
-            console.log('yes');
             observer.error(x.errors.map(err => deserialize(err, BackendError)));
           } else {
             observer.next(x);

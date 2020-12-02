@@ -1,5 +1,7 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/elements/icon";
+@import "~@junte/ui/lib/assets/styles/forms/button";
+
 $jnt-ng-deep: true;
 
 :host-context([theme='dark']) {
@@ -22,4 +24,8 @@ small {
 
 [data-gitlab] {
   @include jnt-icon((size: 30px), '&');
+}
+
+[data-create-issue] {
+  @include jnt-button((schemes: (primary: (color: #FF512F))), '&');
 }

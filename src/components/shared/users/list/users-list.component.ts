@@ -8,7 +8,7 @@ import { serialize } from '@junte/serialize-ts';
 import { deserialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
-import { catchGQLErrors } from 'src/operators/catch-gql-error';
+import { catchGQLErrors } from 'src/utils/gql-errors';
 import { getMock } from '@junte/mocker';
 import { UsersFilter, UsersPaging } from 'src/models/user';
 import { equals } from 'src/utils/equals';

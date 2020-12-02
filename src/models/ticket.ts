@@ -75,7 +75,7 @@ export class Ticket {
   type: TicketTypes;
 
   @field({
-    mock: context => !!context && context.state != undefined ? context.state : faker.helpers.randomize([
+    mock: context => !!context && context.state !== undefined ? context.state : faker.helpers.randomize([
       TicketStates.created,
       TicketStates.planning,
       TicketStates.doing,

@@ -1,11 +1,9 @@
+import { ArraySerializer, PrimitiveSerializer } from '@junte/serialize-ts';
 import { ModelMetadataSerializer } from '@junte/serialize-ts/dist/serializers/model-metadata.serializer';
 import { SearchFilter, UI } from '@junte/ui';
 import { addDays } from 'date-fns';
-import { ArraySerializer, PrimitiveSerializer } from '@junte/serialize-ts';
 import { IssueProblem, IssueState } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
-import { Team } from './team';
-import { Ticket } from './ticket';
 import { mocks, TimeAccuracy } from 'src/utils/mocks';
 import { DATE_FORMAT } from '../consts';
 import { field, model } from '../decorators/model';
@@ -15,6 +13,8 @@ import { faker } from '../utils/mocks';
 import { Label } from './label';
 import { Paging } from './paging';
 import { Project } from './project';
+import { Team } from './team';
+import { Ticket } from './ticket';
 import { User } from './user';
 
 @model()
@@ -316,4 +316,36 @@ export class IssuesSummary {
     serializer: new ArraySerializer(new ModelMetadataSerializer(TeamSummary))
   })
   teams: TeamSummary[];
+}
+
+@model()
+export class IssueUpdate {
+
+  @field()
+  id: string;
+
+  @field()
+  title: string;
+
+  @field()
+  project: string;
+
+  @field()
+  milestone: string;
+
+  @field()
+  developer: string;
+
+  @field({serializer: new ArraySerializer(new PrimitiveSerializer())})
+  labels: string[];
+
+  @field()
+  estimate: number;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  dueDate: Date;
+
+  constructor(defs: Partial<IssueUpdate>) {
+    Object.assign(this, defs);
+  }
 }

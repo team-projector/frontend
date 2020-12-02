@@ -2,11 +2,13 @@ import { SearchFilter } from '@junte/ui';
 import { ArraySerializer } from '@junte/serialize-ts';
 import { field, model } from '../decorators/model';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
+import { LazyModel } from '../serializers/model';
 import { faker, mocks } from '../utils/mocks';
 import { ModelRef } from '../utils/types';
 import { ProjectState } from './enums/project';
 import { Milestone } from './milestone';
 import { Paging } from './paging';
+import { Team } from './team';
 
 @model()
 export class ProjectsSummary {
@@ -105,6 +107,9 @@ export class Project {
 
   @field({mock: ProjectGroup})
   group: ProjectGroup;
+
+  @field({mock: () => Team, serializer: new LazyModel(() => Team)})
+  team: ModelRef<Team>;
 
   @field({mock: () => faker.internet.url()})
   glUrl: string;

@@ -100,7 +100,7 @@ export class Milestone {
   })
   title: string;
 
-  @field({mock: ProjectGroup, serializer: new ProjectSerializer()})
+  @field({mock: () => ProjectGroup, serializer: new ProjectSerializer()})
   owner: Project | ProjectGroup;
 
   @field({mock: () => faker.helpers.randomize([MilestoneState.active, MilestoneState.closed])})
@@ -153,6 +153,9 @@ export class MilestonesFilter implements SearchFilter {
 
   @field()
   q: string;
+
+  @field()
+  project: string;
 
   @field()
   state: MilestoneState;

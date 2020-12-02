@@ -1,0 +1,22 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@junte/ui/lib/assets/styles/layout/responsive";
+@import "~@junte/ui/lib/assets/styles/navigation/link";
+
+$jnt-ng-deep: true;
+
+:host {
+  display: block;
+
+  @include min-for-desktop() {
+    min-width: 400px;
+  }
+}
+
+[data-issue] {
+  p {
+    color: $jnt-white-color;
+  }
+
+  // TODO: I want to use jnt-link(color: $jnt-white-color));
+  @include jnt-link((schemes: (primary: (color: $jnt-orange-color))));
+}
