@@ -42,8 +42,8 @@
                 </jnt-switcher-option>
               </jnt-switcher>
               <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
-              This field is required
-            </jnt-form-message>
+                This field is required
+              </jnt-form-message>
             </jnt-form-control>
           </jnt-form-item>
 
@@ -72,8 +72,8 @@
                          i18n-placeholder="@@label.title"
                          formControlName="title"></jnt-input>
               <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
-              This field is required
-            </jnt-form-message>
+                This field is required
+              </jnt-form-message>
             </jnt-form-control>
           </jnt-form-item>
 
@@ -86,22 +86,24 @@
             </jnt-form-control>
           </jnt-form-item>
 
-          <jnt-stack [gutter]="ui.gutter.small"
-                     [align]="ui.align.stretch">
-            <jnt-row>
-              <jnt-col [desktop]="6">
-                <jnt-form-item>
-                  <jnt-form-label for="startDate" i18n="@@label.start_date">Start date</jnt-form-label>
-                  <jnt-form-control name="startDate">
-                    <jnt-date-picker placeholder="Start date"
-                                     i18n-placeholder="@@label.start_date" formControlName="startDate"></jnt-date-picker>
-                    <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
-                      This field is required
-                    </jnt-form-message>
-                  </jnt-form-control>
-                </jnt-form-item>
-              </jnt-col>
-              <jnt-col [desktop]="6">
+
+          <jnt-row>
+            <jnt-col [desktop]="6">
+              <jnt-form-item>
+                <jnt-form-label for="startDate" i18n="@@label.start_date">Start date</jnt-form-label>
+                <jnt-form-control name="startDate">
+                  <jnt-date-picker placeholder="Start date"
+                                   i18n-placeholder="@@label.start_date"
+                                   formControlName="startDate"></jnt-date-picker>
+                  <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+                    This field is required
+                  </jnt-form-message>
+                </jnt-form-control>
+              </jnt-form-item>
+            </jnt-col>
+            <jnt-col [desktop]="6">
+              <jnt-stack [gutter]="ui.gutter.small"
+                         [align]="ui.align.stretch">
                 <jnt-form-item>
                   <jnt-form-label for="dueDate">Due date</jnt-form-label>
                   <jnt-form-control name="dueDate">
@@ -111,18 +113,21 @@
                     </jnt-form-message>
                   </jnt-form-control>
                 </jnt-form-item>
-              </jnt-col>
-            </jnt-row>
-            <jnt-button-group [scheme]="ui.scheme.secondary"
-                              [size]="ui.size.small">
-              <jnt-button text="This week"
-                          i18n-text="@@action.this_week"
-                          (click)="thisWeek()"></jnt-button>
-              <jnt-button text="Next week"
-                          i18n-text="@@action.next_week"
-                          (click)="nextWeek()"></jnt-button>
-            </jnt-button-group>
-          </jnt-stack>
+                <jnt-stack [orientation]="ui.orientation.horizontal"
+                           [justify]="ui.justify.center">
+                  <jnt-button-group [scheme]="ui.scheme.secondary"
+                                    [size]="ui.size.tiny">
+                    <jnt-button text="This week"
+                                i18n-text="@@action.this_week"
+                                (click)="thisWeek()"></jnt-button>
+                    <jnt-button text="Next week"
+                                i18n-text="@@action.next_week"
+                                (click)="nextWeek()"></jnt-button>
+                  </jnt-button-group>
+                </jnt-stack>
+              </jnt-stack>
+            </jnt-col>
+          </jnt-row>
 
           <jnt-form-item>
             <jnt-form-label for="state" i18n="@@label.state">State</jnt-form-label>
@@ -168,14 +173,15 @@
 
           <jnt-form-item>
             <jnt-form-label for="url"
-                            i18n="@@label.url">Url</jnt-form-label>
+                            i18n="@@label.url">Url
+            </jnt-form-label>
             <jnt-form-control name="url">
               <jnt-input placeholder="Url"
                          i18n-placeholder="@@label.url"
                          formControlName="url"></jnt-input>
               <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
-              This field is required
-            </jnt-form-message>
+                This field is required
+              </jnt-form-message>
             </jnt-form-control>
           </jnt-form-item>
         </jnt-stack>

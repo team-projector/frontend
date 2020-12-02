@@ -134,7 +134,7 @@
         <jnt-switcher formControlName="labels"
                       [mode]="ui.select.mode.multiple"
                       [marks]="true"
-                      [features]="[ui.feature.allowEmpty]">
+                      [features]="[ui.feature.allowEmpty, ui.feature.adapted]">
           <jnt-switcher-option label="Bug"
                                [value]="standardLabel.bug">
             <jnt-dot [color]="ui.color.red"></jnt-dot>
@@ -151,39 +151,71 @@
       </jnt-form-control>
     </jnt-form-item>
 
+
     <jnt-row>
       <jnt-col [tablet]="4">
-        <jnt-form-item>
-          <jnt-form-label for="estimate">Estimate</jnt-form-label>
-          <jnt-form-control name="estimate">
-            <jnt-input formControlName="estimate"
-                       [type]="ui.input.type.number"
-                       placeholder="Hours"></jnt-input>
-          </jnt-form-control>
-        </jnt-form-item>
+        <jnt-stack [gutter]="ui.gutter.small"
+                   [align]="ui.align.stretch">
+          <jnt-form-item>
+            <jnt-form-label for="estimate">Estimate</jnt-form-label>
+            <jnt-form-control name="estimate">
+              <jnt-input formControlName="estimate"
+                         [type]="ui.input.type.number"
+                         placeholder="Hours"></jnt-input>
+            </jnt-form-control>
+          </jnt-form-item>
+
+          <jnt-stack [orientation]="ui.orientation.horizontal"
+                     [justify]="ui.justify.center">
+            <jnt-button-group [scheme]="ui.scheme.secondary"
+                              [size]="ui.size.tiny">
+              <jnt-button text="1h"
+                          (click)="estimateControl.setValue(1)"></jnt-button>
+              <jnt-button text="2h"
+                          (click)="estimateControl.setValue(2)"></jnt-button>
+              <jnt-button text="6h"
+                          (click)="estimateControl.setValue(6)"></jnt-button>
+            </jnt-button-group>
+          </jnt-stack>
+        </jnt-stack>
       </jnt-col>
 
       <jnt-col [tablet]="8">
-        <jnt-form-item>
-          <jnt-form-label for="dueDate">Due Date</jnt-form-label>
-          <jnt-form-control name="dueDate">
-            <jnt-date-picker formControlName="dueDate"
-                             [features]="[ui.feature.allowEmpty]"></jnt-date-picker>
-            <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
-              This field is required
-            </jnt-form-message>
-          </jnt-form-control>
-        </jnt-form-item>
+        <jnt-stack [gutter]="ui.gutter.small"
+                   [align]="ui.align.stretch">
+          <jnt-form-item>
+            <jnt-form-label for="dueDate">Due Date</jnt-form-label>
+            <jnt-form-control name="dueDate">
+              <jnt-date-picker formControlName="dueDate"
+                               [features]="[ui.feature.allowEmpty]"></jnt-date-picker>
+            </jnt-form-control>
+          </jnt-form-item>
+
+          <jnt-stack [orientation]="ui.orientation.horizontal"
+                     [justify]="ui.justify.center">
+            <jnt-button-group [scheme]="ui.scheme.secondary"
+                              [size]="ui.size.tiny">
+              <jnt-button text="Today"
+                          i18n-text="@@action.today"
+                          (click)="today()"></jnt-button>
+              <jnt-button text="This week"
+                          i18n-text="@@action.this_week"
+                          (click)="thisWeek()"></jnt-button>
+              <jnt-button text="Next week"
+                          i18n-text="@@action.next_week"
+                          (click)="nextWeek()"></jnt-button>
+            </jnt-button-group>
+          </jnt-stack>
+        </jnt-stack>
       </jnt-col>
     </jnt-row>
-
   </jnt-stack>
 
   <ng-template #formFooterTemplate>
     <jnt-stack [orientation]="ui.orientation.horizontal"
                [justify]="ui.justify.end">
       <jnt-button [type]="ui.button.type.submit"
-                  [icon]="ui.icons.add"
+                  [icon]="{icon: ui.icons.chevronRight, position: ui.position.right}"
                   text="Create"></jnt-button>
     </jnt-stack>
   </ng-template>

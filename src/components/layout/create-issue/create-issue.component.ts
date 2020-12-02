@@ -4,10 +4,11 @@ import { getMock } from '@junte/mocker';
 import { deserialize, serialize } from '@junte/serialize-ts';
 import { UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
+import { addWeeks, endOfWeek, startOfWeek } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, filter as filtering, finalize, map } from 'rxjs/operators';
-import { MOCKS_DELAY } from '../../../consts';
+import { DFNS_OPTIONS, MOCKS_DELAY, TODAY } from '../../../consts';
 import { LocalUI } from '../../../enums/local-ui';
 import { environment } from '../../../environments/environment';
 import { StandardLabel } from '../../../models/enums/standard-label';
@@ -50,6 +51,8 @@ export class CreateIssueComponent implements OnInit {
 
   projectControl = this.fb.control(null, [Validators.required]);
   milestoneControl = this.fb.control(null);
+  estimateControl = this.fb.control(null);
+  dueDateControl = this.fb.control(null, [Validators.required]);
 
   form = this.fb.group({
     project: this.projectControl,
@@ -57,8 +60,8 @@ export class CreateIssueComponent implements OnInit {
     title: this.fb.control(null, [Validators.required]),
     developer: this.fb.control(null, [Validators.required]),
     labels: this.fb.control([]),
-    estimate: this.fb.control(null),
-    dueDate: this.fb.control(null, [Validators.required])
+    estimate: this.estimateControl,
+    dueDate: this.dueDateControl
   });
 
   @ViewChild('content', {read: ElementRef})
@@ -130,6 +133,19 @@ export class CreateIssueComponent implements OnInit {
       .pipe(finalize(() => this.progress.developers = false))
       .subscribe(project => this.developers = project.team?.members || [],
         err => this.errors = err);
+  }
+
+  today() {
+    this.dueDateControl.setValue(endOfWeek(TODAY, DFNS_OPTIONS));
+  }
+
+  thisWeek() {
+    this.dueDateControl.setValue(endOfWeek(TODAY, DFNS_OPTIONS));
+  }
+
+  nextWeek() {
+    const next = addWeeks(TODAY, 1);
+    this.dueDateControl.setValue(endOfWeek(next, DFNS_OPTIONS));
   }
 
   createIssue() {

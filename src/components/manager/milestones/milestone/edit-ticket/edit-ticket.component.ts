@@ -6,7 +6,7 @@ import { addWeeks, endOfWeek, startOfWeek } from 'date-fns';
 import { Observable, of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from '@junte/serialize-ts';
-import { DFNS_OPTIONS, MOCKS_DELAY } from 'src/consts';
+import { DFNS_OPTIONS, MOCKS_DELAY, TODAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { TicketStates, TicketTypes } from 'src/models/enums/ticket';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
@@ -16,8 +16,6 @@ import { catchGQLErrors } from 'src/utils/gql-errors';
 import { BackendError } from 'src/types/gql-errors';
 import { getMock } from '@junte/mocker';
 import { CreateTicketGQL, EditTicketGQL, FindIssuesGQL, FindMilestonesGQL, TicketGQL } from './edit-ticket.graphql';
-
-const today = new Date();
 
 const FOUND_ISSUES_COUNT = 10;
 const FOUND_MILESTONES_COUNT = 10;
@@ -116,13 +114,13 @@ export class EditTicketComponent {
 
   thisWeek() {
     this.form.patchValue({
-      startDate: startOfWeek(today, DFNS_OPTIONS),
-      dueDate: endOfWeek(today, DFNS_OPTIONS)
+      startDate: startOfWeek(TODAY, DFNS_OPTIONS),
+      dueDate: endOfWeek(TODAY, DFNS_OPTIONS)
     });
   }
 
   nextWeek() {
-    const next = addWeeks(today, 1);
+    const next = addWeeks(TODAY, 1);
     this.form.patchValue({
       startDate: startOfWeek(next, DFNS_OPTIONS),
       dueDate: endOfWeek(next, DFNS_OPTIONS)
