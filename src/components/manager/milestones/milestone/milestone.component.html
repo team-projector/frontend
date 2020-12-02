@@ -152,6 +152,7 @@
                                [gutter]="ui.gutter.small">
                       <jnt-button [outline]="ui.outline.transparent"
                                   [size]="ui.size.small"
+                                  [shape]="ui.shape.circle"
                                   [icon]="ticketControl.value === ticket.id ? ui.icons.chevronDown : ui.icons.chevronRight"
                                   (click)="toggleIssues(ticket.id)">
                       </jnt-button>
@@ -170,7 +171,7 @@
                   </jnt-col>
                   <jnt-col [span]="2">
                     <jnt-label [color]="ticket.state | ticketStateColor"
-                               label="{{ticket.metrics.issuesClosedCount}} / {{ticket.metrics.issuesOpenedCount}}">
+                               label="{{ticket.metrics.issuesClosedCount}} / {{ticket.metrics.issuesCount}}">
                     </jnt-label>
                   </jnt-col>
                 </jnt-row>
