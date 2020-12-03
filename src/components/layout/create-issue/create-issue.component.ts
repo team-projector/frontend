@@ -79,6 +79,7 @@ export class CreateIssueComponent implements OnInit {
     this.projectControl.valueChanges
       .pipe(filtering(p => !!p))
       .subscribe(() => {
+        this.form.patchValue({milestone: null, developer: null});
         this.loadMilestones();
         this.loadDevelopers();
       });
