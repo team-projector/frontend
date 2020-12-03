@@ -1,6 +1,6 @@
 export class LocalUI {
   static icons = {
-    wizard: 'wizard:svg:local:filled',
+    wizard: 'wizard:svg:local:stroked',
     top: {
       developer: 'developer:svg:local',
       leader: 'leader:svg:local',
