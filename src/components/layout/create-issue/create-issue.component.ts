@@ -59,7 +59,7 @@ export class CreateIssueComponent implements OnInit {
     milestone: this.milestoneControl,
     title: this.fb.control(null, [Validators.required]),
     developer: this.fb.control(null, [Validators.required]),
-    labels: this.fb.control([]),
+    labels: this.fb.control([StandardLabel.toDo]),
     estimate: this.estimateControl,
     dueDate: this.dueDateControl
   });
