@@ -81,7 +81,7 @@ mutation(
     $title: String!
     $project: ID!
     $milestone: ID
-    $developer: ID!
+    $user: ID!
     $labels: [String]
     $estimate: Int!
     $dueDate: Date!
@@ -90,7 +90,7 @@ mutation(
         title: $title
         project: $project
         milestone: $milestone
-        developer: $developer
+        user: $user
         labels: $labels
         estimate: $estimate
         dueDate: $dueDate

@@ -4,11 +4,11 @@ import { getMock } from '@junte/mocker';
 import { deserialize, serialize } from '@junte/serialize-ts';
 import { UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
-import { addDays, addWeeks, endOfWeek, startOfWeek } from 'date-fns';
+import { addDays, addWeeks, endOfWeek } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
-import { delay, filter as filtering, finalize, map } from 'rxjs/operators';
-import { DFNS_OPTIONS, MOCKS_DELAY, TODAY } from '../../../consts';
+import { delay, filter as filtering, finalize, map, tap } from 'rxjs/operators';
+import { DFNS_OPTIONS, MOCKS_DELAY, TODAY, UI_DELAY } from '../../../consts';
 import { LocalUI } from '../../../enums/local-ui';
 import { environment } from '../../../environments/environment';
 import { StandardLabel } from '../../../models/enums/standard-label';
@@ -17,8 +17,8 @@ import { Issue, IssueUpdate } from '../../../models/issue';
 import { Milestone, MilestonesFilter, PagingMilestones } from '../../../models/milestone';
 import { Project, ProjectsFilter, ProjectsPaging } from '../../../models/project';
 import { TeamMember } from '../../../models/team';
-import { catchGQLErrors } from '../../../utils/gql-errors';
 import { BackendError } from '../../../types/gql-errors';
+import { catchGQLErrors } from '../../../utils/gql-errors';
 import { CardSize } from '../../shared/users/card/user-card.types';
 import { CreateIssueGQL, ProjectMilestonesGQL, ProjectsGQL, ProjectTeamMembersGQL } from './create-issue.graphql';
 
@@ -50,7 +50,8 @@ export class CreateIssueComponent implements OnInit {
   issue: Issue;
 
   projectControl = this.fb.control(null, [Validators.required]);
-  milestoneControl = this.fb.control(null);
+  milestoneControl = this.fb.control({value: null, disabled: true});
+  developerControl = this.fb.control({value: null, disabled: true}, [Validators.required]);
   estimateControl = this.fb.control(null);
   dueDateControl = this.fb.control(null, [Validators.required]);
 
@@ -58,7 +59,7 @@ export class CreateIssueComponent implements OnInit {
     project: this.projectControl,
     milestone: this.milestoneControl,
     title: this.fb.control(null, [Validators.required]),
-    developer: this.fb.control(null, [Validators.required]),
+    user: this.developerControl,
     labels: this.fb.control([StandardLabel.toDo]),
     estimate: this.estimateControl,
     dueDate: this.dueDateControl
@@ -77,15 +78,23 @@ export class CreateIssueComponent implements OnInit {
 
   ngOnInit() {
     this.projectControl.valueChanges
-      .pipe(filtering(p => !!p))
+      .pipe(tap(p => {
+        if (!!p) {
+          this.milestoneControl.enable();
+          this.developerControl.enable();
+        } else {
+          this.milestoneControl.disable();
+          this.developerControl.disable();
+        }
+      }), filtering(p => !!p))
       .subscribe(() => {
-        this.form.patchValue({milestone: null, developer: null});
+        this.form.patchValue({milestone: null, user: null});
         this.loadMilestones();
         this.loadDevelopers();
       });
 
-
     this.loadProjects();
+    console.log(this.form.getRawValue());
   }
 
   private loadProjects() {
@@ -97,7 +106,7 @@ export class CreateIssueComponent implements OnInit {
       : this.projectsGQL.fetch(serialize(filter) as R)
         .pipe(catchGQLErrors(), map(({data: {projects}}) =>
           deserialize(projects, ProjectsPaging))))
-      .pipe(finalize(() => this.progress.projects = false))
+      .pipe(delay(UI_DELAY), finalize(() => this.progress.projects = false))
       .subscribe(projects => this.projects = projects.results,
         err => this.errors = err);
   }
@@ -112,7 +121,7 @@ export class CreateIssueComponent implements OnInit {
       : this.projectMilestonesGQL.fetch(serialize(filter) as R)
         .pipe(catchGQLErrors(), map(({data: {milestones}}) =>
           deserialize(milestones, PagingMilestones))))
-      .pipe(finalize(() => this.progress.milestones = false))
+      .pipe(delay(UI_DELAY), finalize(() => this.progress.milestones = false))
       .subscribe(milestones => {
           this.milestones = milestones.results;
           if (this.milestones.length > 0) {
@@ -125,13 +134,13 @@ export class CreateIssueComponent implements OnInit {
   private loadDevelopers() {
     const {project: id} = this.form.getRawValue();
     this.logger.debug('load developers');
-    this.progress.milestones = true;
+    this.progress.developers = true;
     return (environment.mocks
       ? of(getMock(Project)).pipe(delay(MOCKS_DELAY))
       : this.projectTeamMembersGQL.fetch({id: id} as R)
         .pipe(catchGQLErrors(), map(({data: {project}}) =>
           deserialize(project, Project))))
-      .pipe(finalize(() => this.progress.developers = false))
+      .pipe(delay(UI_DELAY), finalize(() => this.progress.developers = false))
       .subscribe(project => this.developers = project.team?.members || [],
         err => this.errors = err);
   }

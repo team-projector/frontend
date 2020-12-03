@@ -335,7 +335,7 @@ export class IssueUpdate {
   milestone: string;
 
   @field()
-  developer: string;
+  user: string;
 
   @field({serializer: new ArraySerializer(new PrimitiveSerializer())})
   labels: string[];

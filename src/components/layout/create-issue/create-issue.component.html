@@ -97,8 +97,8 @@
     </jnt-row>
 
     <jnt-form-item>
-      <jnt-form-label for="developer">Developer</jnt-form-label>
-      <jnt-form-control name="developer">
+      <jnt-form-label for="user">Developer</jnt-form-label>
+      <jnt-form-control name="user">
         <ng-template #userOption let-member="value"
                      let-selected="selected">
           <jnt-stack [orientation]="ui.orientation.horizontal"
@@ -111,7 +111,7 @@
                       [icon]="localUi.icons.leader"></jnt-icon>
           </jnt-stack>
         </ng-template>
-        <jnt-select formControlName="developer"
+        <jnt-select formControlName="user"
                     placeholder="Select from list"
                     i18n-placeholder="@@label.developer"
                     [state]="progress.developers ? ui.state.loading : null"
