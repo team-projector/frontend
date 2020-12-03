@@ -27,5 +27,5 @@ small {
 }
 
 [data-create-issue] {
-  @include jnt-button((schemes: (primary: (color: #FF512F))), '&');
+  @include jnt-button((schemes: (primary: (color: #FF512F, hover-color: darken(#FF512F, 5%)))), '&');
 }

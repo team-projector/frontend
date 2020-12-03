@@ -17,7 +17,7 @@
     "iconfont": "gulp build --gulpfile node_modules/@junte/ui/iconfont.js --cwd .",
     "todos": "gulp todos",
     "junte:set": "npm config set @junte:registry https://gitlab.com/api/v4/projects/804650/packages/npm",
-    "junte:install": "npm install https://gitlab.com/api/v4/projects/9560752/packages/npm/@junte/ui/-/@junte/ui-1.0.314.tgz --save",
+    "junte:install": "npm install https://gitlab.com/api/v4/projects/9560752/packages/npm/@junte/ui/-/@junte/ui-1.0.317.tgz --save",
     "junte": "npm run junte:set && npm run junte:install"
   },
   "private": true,
