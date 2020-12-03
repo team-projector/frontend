@@ -4,7 +4,7 @@ import { getMock } from '@junte/mocker';
 import { deserialize, serialize } from '@junte/serialize-ts';
 import { UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
-import { addWeeks, endOfWeek, startOfWeek } from 'date-fns';
+import { addDays, addWeeks, endOfWeek, startOfWeek } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, filter as filtering, finalize, map } from 'rxjs/operators';
@@ -135,8 +135,8 @@ export class CreateIssueComponent implements OnInit {
         err => this.errors = err);
   }
 
-  today() {
-    this.dueDateControl.setValue(endOfWeek(TODAY, DFNS_OPTIONS));
+  tomorrow() {
+    this.dueDateControl.setValue(addDays(TODAY, 1));
   }
 
   thisWeek() {
