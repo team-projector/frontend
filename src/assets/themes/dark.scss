@@ -1,3 +1,6 @@
+$jnt-theme-type: 'dark';
+
+$jnt-white-color: white;
 $jnt-gray-100: #F5F5F5;
 $jnt-gray-200: #F7F7F7;
 $jnt-gray-300: #F0F0F0;
@@ -26,6 +29,7 @@ $jnt-highlight-background: #292929;
 
 $jnt-primary-color: $jnt-purple-light-color;
 $jnt-primary-light-color: lighten($jnt-purple-light-color, 10%);
+$jnt-secondary-color: #343434;
 $jnt-secondary-dark-color: $jnt-gray-800;
 //$jnt-primary-dark-color: $jnt-purple-color;
 
@@ -39,7 +43,7 @@ $jnt-control-disabled-border-color: $jnt-highlight-background;
 $jnt-control-disabled-background: $jnt-highlight-background;
 
 $jnt-shadow-light: 0px 4px 10px rgba(255, 255, 255, 0.15);
-$jnt-shadow-normal: 2px 1px 10px rgba(0, 67, 167, 0.07);
+$jnt-shadow-normal: 0px 2px 8px rgba(255, 255, 255, 0.25);
 
 $jnt-body-color: $jnt-primary-text-color;
 
