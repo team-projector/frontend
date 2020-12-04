@@ -5,6 +5,7 @@
 </jnt-informer>
 
 <jnt-form [formGroup]="form" (submitted)="save()"
+          [height]="ui.height.fluid"
           [state]="progress.loading ? ui.state.loading : null">
   <jnt-tabs>
     <jnt-tab title="Common"
