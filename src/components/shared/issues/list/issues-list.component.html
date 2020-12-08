@@ -130,7 +130,8 @@
 
     <jnt-table-column width="55px" [align]="ui.align.center">
       <ng-template #tableCellTemplate let-state="state" let-labels="labels">
-        <jnt-icon data-doing *ngIf="state == issueState.opened && (labels | hasLabel:standardLabel.doing);else delayedTemplate"
+        <jnt-icon data-doing
+                  *ngIf="state == issueState.opened && (labels | hasLabel:standardLabel.doing);else delayedTemplate"
                   [icon]="localUi.icons.doing"></jnt-icon>
         <ng-template #delayedTemplate>
           <jnt-icon data-delayed *ngIf="labels | hasLabel:standardLabel.delayed;else doneTemplate"
@@ -160,7 +161,8 @@
                         [name]="author.name"
                         [image]="author.avatar"
                         [size]="ui.size.tiny"></jnt-avatar>
-            <jnt-icon [icon]="ui.icons.chevronRight"></jnt-icon>
+            <jnt-icon [icon]="ui.icons.chevronRight"
+                      [size]="ui.size.small"></jnt-icon>
           </ng-container>
           <app-issue [issue]="{id: id, title: title, glUrl: glUrl, state: state,
             user: user, author: (view === viewType.developer ? author : null), project: project, closedAt: closedAt}">

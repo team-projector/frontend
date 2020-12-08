@@ -9,7 +9,7 @@
       </a>
     </ng-template>
 
-    <jnt-menu #topMenu>
+    <jnt-menu #headerTopMenu>
       <jnt-menu-item *ngIf="me.roles | includes : userRole.developer"
                      title="Developer"
                      i18n-title="@@action.developer" [link]="['/developer']"

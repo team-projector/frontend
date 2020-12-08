@@ -8,7 +8,7 @@ import gql from 'graphql-tag';
 export class ProjectsGQL extends Query<{ projects }> {
   document = gql`
 {
-  projects: allProjects(state: DEVELOPING, orderBy: "title") {
+  projects: allProjects(state: [DEVELOPING, SUPPORTING], orderBy: "title") {
     count
     edges {
       node {

@@ -224,14 +224,14 @@
   <ng-template #formFooterTemplate>
     <jnt-stack [orientation]="ui.orientation.horizontal"
                [justify]="ui.justify.between">
-      <jnt-button text="Save"
-                  i18n-text="@@action.save"
-                  [type]="ui.button.type.submit"
-                  [loading]="progress.saving"></jnt-button>
       <jnt-button text="Cancel"
                   i18n-text="@@action.cancel"
                   (click)="canceled.emit()"
                   [scheme]="ui.scheme.secondary"></jnt-button>
+      <jnt-button text="Save"
+                  i18n-text="@@action.save"
+                  [type]="ui.button.type.submit"
+                  [loading]="progress.saving"></jnt-button>
     </jnt-stack>
   </ng-template>
 </jnt-form>

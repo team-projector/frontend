@@ -7,7 +7,7 @@ import gql from 'graphql-tag';
 })
 export class AllProjectGroupsGQL extends Query<{ groups }> {
   document = gql`
-query ($state: ProjectState, $offset: Int, $first: Int) {
+query ($state: [ProjectState], $offset: Int, $first: Int) {
   groups: allProjectGroups(state: $state, offset: $offset, first: $first) {
     count
     edges {

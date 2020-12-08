@@ -1,5 +1,6 @@
 <jnt-informer *ngIf="!!issue"
               [backdrop]="backdrop"
+              [context]="ui.context.block"
               [placement]="ui.placement.absolute">
   <ng-template #informerContentTemplate>
     <jnt-stack data-issue [align]="ui.align.center">
@@ -83,7 +84,7 @@
                         placeholder="Select from list"
                         i18n-placeholder="@@label.milestone"
                         [state]="progress.milestones ? ui.state.loading : null"
-                        [features]="[ui.feature.search, ui.feature.allowEmpty]">
+                        [features]="[ui.feature.allowEmpty]">
               <jnt-select-option *ngFor="let m of milestones"
                                  [key]="m.id"
                                  [label]="m.title"></jnt-select-option>
