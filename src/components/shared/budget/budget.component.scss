@@ -1,0 +1,15 @@
+@import "~@junte/ui/lib/assets/styles/jnt-variables";
+
+[data-remains] {
+  margin-top: $jnt-gutter-tiny;
+  text-align: center;
+  font-size: .85em;
+
+  [data-overflow='true'] {
+    background: $jnt-fail-color;
+    color: $jnt-white-color;
+    border-radius: $jnt-gutter-tiny;
+    line-height: 1em;
+    padding: 0 $jnt-gutter-tiny;
+  }
+}
