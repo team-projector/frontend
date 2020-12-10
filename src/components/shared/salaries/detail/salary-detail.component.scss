@@ -2,6 +2,7 @@
 @import "~@junte/ui/lib/assets/styles/layout/block";
 @import "~@junte/ui/lib/assets/styles/elements/label";
 @import "~@junte/ui/lib/assets/styles/dynamic/date-period";
+@import "~@junte/ui/lib/assets/styles/elements/icon";
 $jnt-ng-deep: true;
 
 :host {
@@ -52,8 +53,7 @@ $jnt-ng-deep: true;
   }
 
   [data-money] {
-    color: $jnt-primary-light-color;
-    font-size: 30px;
+    @include jnt-icon((color: $jnt-primary-light-color, size: 30px), '&');
   }
 
   [data-opened] {
