@@ -6,12 +6,12 @@
 
 <jnt-gantt [type]="ui.gantt.type.year"
            [loading]="loading">
-  <ng-template #titleTemplate>
+  <ng-template #ganttTitleTemplate>
     <strong i18n="@@label.developer">Developer</strong>
   </ng-template>
   <jnt-gantt-line *ngFor="let workBreak of workBreaks"
                   [title]="workBreak.user.name">
-    <ng-template #title>
+    <ng-template #ganttLineTitleTemplate>
       <jnt-stack [orientation]="ui.orientation.horizontal">
         <ng-container [ngSwitch]="workBreak.reason">
           <jnt-label *ngSwitchCase="reasons.vacation"

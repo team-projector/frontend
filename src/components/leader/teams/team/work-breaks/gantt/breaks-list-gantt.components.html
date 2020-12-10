@@ -7,12 +7,12 @@
 <jnt-form [formGroup]="form">
   <jnt-gantt data-gantt [type]="ui.gantt.type.year"
              [loading]="loading">
-    <ng-template #titleTemplate>
+    <ng-template #ganttTitleTemplate>
       <strong i18n="@@label.developer">Developer</strong>
     </ng-template>
     <jnt-gantt-line *ngFor="let user of users"
                     [title]="user.name">
-      <ng-template #title>
+      <ng-template #ganttLineTitleTemplate>
         <app-user [user]="user"></app-user>
       </ng-template>
       <jnt-gantt-line-period *ngFor="let workBreak of user.workBreaks"
