@@ -73,20 +73,9 @@
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-budget="budget" let-metrics="metrics">
         <ng-container *ngIf="budget">
-          <jnt-progress-bar [value]="metrics.budgetSpent / budget * 100">
-            <ng-template #progressBarLegendTemplate>
-              <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
-                         [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
-                <small>{{budget - metrics.budgetRemains | money}}</small>
-                <small>{{budget | money}}</small>
-              </jnt-stack>
-            </ng-template>
-          </jnt-progress-bar>
-          <div data-remains>
-            <span [attr.data-overflow]="metrics.budgetRemains < 0">
-              {{metrics.budgetRemains | money}}
-            </span>
-          </div>
+          <app-budget [budgetSpent]="metrics.budgetSpent"
+                      [budget]="budget"
+                      [budgetRemains]="metrics.budgetRemains"></app-budget>
         </ng-container>
       </ng-template>
     </jnt-table-column>
@@ -95,22 +84,9 @@
                       i18n-title="@@label.profit"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-budget="budget" let-metrics="metrics">
-        <jnt-progress-bar [value]="metrics.payroll / budget * 100">
-          <ng-template #progressBarLegendTemplate>
-            <jnt-stack [orientation]="ui.orientation.horizontal"
-                       [align]="ui.align.center"
-                       [justify]="ui.justify.between"
-                       [gutter]="ui.gutter.normal">
-              <small>{{metrics.payroll | money}}</small>
-              <small>{{budget | money}}</small>
-            </jnt-stack>
-          </ng-template>
-        </jnt-progress-bar>
-        <div data-remains>
-            <span [attr.data-overflow]="metrics.profit < 0">
-              {{metrics.profit | money}}
-            </span>
-        </div>
+        <app-profit [payroll]="metrics.payroll"
+                    [budget]="budget"
+                    [profit]="metrics.profit"></app-profit>
       </ng-template>
     </jnt-table-column>
 

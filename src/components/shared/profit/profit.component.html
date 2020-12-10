@@ -1,0 +1,16 @@
+<jnt-progress-bar [value]="payroll / budget * 100">
+  <ng-template #progressBarLegendTemplate>
+    <jnt-stack [orientation]="ui.orientation.horizontal"
+               [align]="ui.align.center"
+               [justify]="ui.justify.between"
+               [gutter]="ui.gutter.normal">
+      <small>{{payroll | money}}</small>
+      <small>{{budget | money}}</small>
+    </jnt-stack>
+  </ng-template>
+</jnt-progress-bar>
+<div data-remains>
+  <span [attr.overflow]="profit < 0">
+    {{profit | money}}
+  </span>
+</div>
