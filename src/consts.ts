@@ -113,7 +113,7 @@ switch (language) {
     fnsConfig.setLocale(dfnsLocale);
     config = {
       i18n: i18nEn,
-      hash: 'v2',
+      hash: 'v3',
       weekStartsOn: FIRST_DAY_OF_WEEK,
       locale: {
         ui: jntEnUs,

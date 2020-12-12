@@ -1,4 +1,5 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
+$jnt-ng-deep: true;
 
 [data-remains] {
   margin-top: $jnt-gutter-tiny;

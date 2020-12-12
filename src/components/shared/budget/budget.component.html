@@ -1,14 +1,14 @@
-<jnt-progress-bar [value]="budgetSpent / budget * 100">
+<jnt-progress-bar [value]="spent / budget * 100">
   <ng-template #progressBarLegendTemplate>
     <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center"
                [justify]="ui.justify.between" [gutter]="ui.gutter.normal">
-      <small>{{budget - budgetRemains | money}}</small>
+      <small>{{budget - remains | money}}</small>
       <small>{{budget | money}}</small>
     </jnt-stack>
   </ng-template>
 </jnt-progress-bar>
 <div data-remains>
-  <span [attr.data-overflow]="budgetRemains < 0">
-    {{budgetRemains | money}}
+  <span [attr.data-overflow]="remains < 0">
+    {{remains | money}}
   </span>
 </div>

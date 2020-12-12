@@ -2,11 +2,11 @@ export class LocalUI {
   static icons = {
     wizard: 'wizard:svg:local:stroked',
     top: {
-      developer: 'developer:svg:local',
-      leader: 'leader:svg:local',
-      manager: 'manager:svg:local',
-      customer: 'customer:svg:local',
-      shareholder: 'shareholder:svg:local',
+      developer: 'developer_role:svg:local',
+      leader: 'leader_role:svg:local',
+      manager: 'manager_role:svg:local',
+      customer: 'customer_role:svg:local',
+      shareholder: 'shareholder_role:svg:local',
     },
 
     dashboard: 'dashboard:svg:local:filled',

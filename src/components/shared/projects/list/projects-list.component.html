@@ -74,9 +74,9 @@
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-metrics="metrics">
         <ng-container>
-          <app-budget [budgetSpent]="metrics.budgetSpent"
+          <app-budget [spent]="metrics.budgetSpent"
                       [budget]="budget"
-                      [budgetRemains]="metrics.budgetRemains"></app-budget>
+                      [remains]="metrics.budgetRemains"></app-budget>
         </ng-container>
       </ng-template>
     </jnt-table-column>

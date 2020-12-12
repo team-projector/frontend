@@ -9,17 +9,3 @@ $jnt-ng-deep: true;
 [data-closed='true'] {
   @include jnt-link((text-decoration: line-through), '&');
 }
-
-[data-remains] {
-  margin-top: $jnt-gutter-tiny;
-  text-align: center;
-  font-size: .85em;
-
-  [data-overflow='true'] {
-    background: $jnt-fail-color;
-    color: $jnt-white-color;
-    border-radius: $jnt-gutter-tiny;
-    line-height: 1em;
-    padding: 0 $jnt-gutter-tiny;
-  }
-}

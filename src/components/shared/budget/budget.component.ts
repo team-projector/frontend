@@ -11,12 +11,12 @@ export class BudgetComponent {
   ui = UI;
 
   @Input()
-  budgetSpent: number;
+  spent: number;
 
   @Input()
   budget: number;
 
   @Input()
-  budgetRemains: number;
+  remains: number;
 
 }

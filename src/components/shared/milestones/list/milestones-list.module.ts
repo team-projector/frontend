@@ -7,6 +7,7 @@ import { BudgetModule } from 'src/components/shared/budget/budget.module';
 import { ProfitModule } from 'src/components/shared/profit/profit.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { MoneyPipesModule } from 'src/pipes/money-pipes.module';
+import { WorkProgressModule } from '../../work-progress/work-progress.module';
 import { MilestonesListComponent } from './milestones-list.component';
 
 @NgModule({
@@ -24,7 +25,8 @@ import { MilestonesListComponent } from './milestones-list.component';
     MoneyPipesModule,
     DatePipesModule,
     ProfitModule,
-    BudgetModule
+    BudgetModule,
+    WorkProgressModule
   ]
 })
 export class MilestonesListModule {
