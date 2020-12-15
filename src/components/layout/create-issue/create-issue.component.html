@@ -148,6 +148,10 @@
                                [value]="standardLabel.hotfix">
             <jnt-dot [color]="ui.color.yellow"></jnt-dot>
           </jnt-switcher-option>
+          <jnt-switcher-option label="Discuss"
+                               [value]="standardLabel.discuss">
+            <jnt-dot [color]="ui.color.green"></jnt-dot>
+          </jnt-switcher-option>
         </jnt-switcher>
       </jnt-form-control>
     </jnt-form-item>
@@ -187,8 +191,11 @@
           <jnt-form-item>
             <jnt-form-label for="dueDate">Due Date</jnt-form-label>
             <jnt-form-control name="dueDate">
-              <jnt-date-picker formControlName="dueDate"
-                               [features]="[ui.feature.allowEmpty]"></jnt-date-picker>
+              <jnt-date-picker formControlName="dueDate"></jnt-date-picker>
+              <jnt-form-message i18n="@@message.field_required"
+                                [validator]="ui.validator.required">
+                This field is required
+              </jnt-form-message>
             </jnt-form-control>
           </jnt-form-item>
 

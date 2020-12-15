@@ -18,7 +18,11 @@ export class FieldError {
   }
 }
 
-type GqlFieldError = { fieldName: string, index?: number, messages: (string | GqlFieldError)[] };
+interface GqlFieldError {
+  fieldName: string;
+  index?: number;
+  messages: (string | GqlFieldError)[];
+}
 
 export class GqlErrorSerializer implements Serializer<BackendError> {
 

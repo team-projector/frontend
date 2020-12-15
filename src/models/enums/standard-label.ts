@@ -5,5 +5,6 @@ export enum StandardLabel {
   delayed = 'Delayed',
   bug = 'Bug',
   urgent = 'Urgent',
-  hotfix = 'Hotfix'
+  hotfix = 'Hotfix',
+  discuss = 'Discuss'
 }
