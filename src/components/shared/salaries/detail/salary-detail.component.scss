@@ -85,6 +85,7 @@ $jnt-ng-deep: true;
     [data-time] {
       color: $jnt-secondary-dark-color;
       font-size: $jnt-font-size-normal;
+      @include jnt-icon((color: $jnt-secondary-dark-color));
 
       span {
         font-size: 12px;
