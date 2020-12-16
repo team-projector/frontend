@@ -29,7 +29,7 @@ export class MilestoneIssuesSummaryGQL extends Query<{ summary }> {
 })
 export class MilestoneTicketsGQL extends Query<{ tickets }> {
   document = gql`
-query($milestone: ID!, $state: String, $offset: Int, $first: Int) {
+query($milestone: ID!, $state: TicketState, $offset: Int, $first: Int) {
     tickets: allTickets(
         milestone: $milestone
         state: $state

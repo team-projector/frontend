@@ -29,7 +29,7 @@ query(
     $user: ID
     $project: ID
     $dueDate: Date
-    $state: String
+    $state: IssueState
     $problems: Boolean
     $orderBy: String
     $offset: Int
