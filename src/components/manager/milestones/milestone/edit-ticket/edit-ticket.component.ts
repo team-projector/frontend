@@ -46,6 +46,7 @@ export class EditTicketComponent {
     milestone: this.milestoneControl,
     type: [TicketTypes.feature, Validators.required],
     title: [null, Validators.required],
+    estimate: [null],
     role: [null],
     startDate: [new Date(), Validators.required],
     dueDate: [new Date(), Validators.required],
@@ -79,6 +80,7 @@ export class EditTicketComponent {
         role: ticket.role,
         startDate: ticket.startDate,
         dueDate: ticket.dueDate,
+        estimate: ticket.estimate,
         state: ticket.state,
         url: ticket.url,
         issues: ticket.issues.map(i => i.id)

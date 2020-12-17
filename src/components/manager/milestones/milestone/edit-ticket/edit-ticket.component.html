@@ -130,47 +130,62 @@
             </jnt-col>
           </jnt-row>
 
-          <jnt-form-item>
-            <jnt-form-label for="state" i18n="@@label.state">State</jnt-form-label>
-            <jnt-form-control name="state">
-              <ng-template #stateTemplate let-label="label" let-state="value">
-                <jnt-stack [orientation]="ui.orientation.horizontal"
-                           [gutter]="ui.gutter.small"
-                           [align]="ui.align.center">
-                  <jnt-dot [color]="state | ticketStateColor"></jnt-dot>
-                  <div>{{label}}</div>
-                </jnt-stack>
-              </ng-template>
+          <jnt-row>
+            <jnt-col [desktop]="6">
+              <jnt-form-item>
+                <jnt-form-label for="estimate" i18n="@@label.estimate">Estimate</jnt-form-label>
+                <jnt-form-control name="estimate">
+                  <jnt-input placeholder="Estimate"
+                             i18n-placeholder="@@label.estimate"
+                             formControlName="estimate"
+                             [type]="ui.input.type.number"></jnt-input>
+                </jnt-form-control>
+              </jnt-form-item>
+            </jnt-col>
+            <jnt-col [desktop]="6">
+              <jnt-form-item>
+                <jnt-form-label for="state" i18n="@@label.state">State</jnt-form-label>
+                <jnt-form-control name="state">
+                  <ng-template #stateTemplate let-label="label" let-state="value">
+                    <jnt-stack [orientation]="ui.orientation.horizontal"
+                               [gutter]="ui.gutter.small"
+                               [align]="ui.align.center">
+                      <jnt-dot [color]="state | ticketStateColor"></jnt-dot>
+                      <div>{{label}}</div>
+                    </jnt-stack>
+                  </ng-template>
 
-              <jnt-select formControlName="state"
-                          [optionTemplate]="stateTemplate">
-                <jnt-select-option label="Created"
-                                   i18n-label="@@label.created"
-                                   [key]="milestoneTicketStates.created"
-                                   [value]="milestoneTicketStates.created"></jnt-select-option>
-                <jnt-select-option label="Planning"
-                                   i18n-label="@@label.planning"
-                                   [key]="milestoneTicketStates.planning"
-                                   [value]="milestoneTicketStates.planning"></jnt-select-option>
-                <jnt-select-option label="Doing"
-                                   i18n-label="@@label.doing"
-                                   [key]="milestoneTicketStates.doing"
-                                   [value]="milestoneTicketStates.doing"></jnt-select-option>
-                <jnt-select-option label="Testing"
-                                   i18n-label="@@label.testing"
-                                   [key]="milestoneTicketStates.testing"
-                                   [value]="milestoneTicketStates.testing"></jnt-select-option>
-                <jnt-select-option label="Accepting"
-                                   i18n-label="@@label.accepting"
-                                   [key]="milestoneTicketStates.accepting"
-                                   [value]="milestoneTicketStates.accepting"></jnt-select-option>
-                <jnt-select-option label="Done"
-                                   i18n-label="@@label.done"
-                                   [key]="milestoneTicketStates.done"
-                                   [value]="milestoneTicketStates.done"></jnt-select-option>
-              </jnt-select>
-            </jnt-form-control>
-          </jnt-form-item>
+                  <jnt-select formControlName="state"
+                              [optionTemplate]="stateTemplate">
+                    <jnt-select-option label="Created"
+                                       i18n-label="@@label.created"
+                                       [key]="milestoneTicketStates.created"
+                                       [value]="milestoneTicketStates.created"></jnt-select-option>
+                    <jnt-select-option label="Planning"
+                                       i18n-label="@@label.planning"
+                                       [key]="milestoneTicketStates.planning"
+                                       [value]="milestoneTicketStates.planning"></jnt-select-option>
+                    <jnt-select-option label="Doing"
+                                       i18n-label="@@label.doing"
+                                       [key]="milestoneTicketStates.doing"
+                                       [value]="milestoneTicketStates.doing"></jnt-select-option>
+                    <jnt-select-option label="Testing"
+                                       i18n-label="@@label.testing"
+                                       [key]="milestoneTicketStates.testing"
+                                       [value]="milestoneTicketStates.testing"></jnt-select-option>
+                    <jnt-select-option label="Accepting"
+                                       i18n-label="@@label.accepting"
+                                       [key]="milestoneTicketStates.accepting"
+                                       [value]="milestoneTicketStates.accepting"></jnt-select-option>
+                    <jnt-select-option label="Done"
+                                       i18n-label="@@label.done"
+                                       [key]="milestoneTicketStates.done"
+                                       [value]="milestoneTicketStates.done"></jnt-select-option>
+                  </jnt-select>
+                </jnt-form-control>
+              </jnt-form-item>
+            </jnt-col>
+          </jnt-row>
 
           <jnt-form-item>
             <jnt-form-label for="url"

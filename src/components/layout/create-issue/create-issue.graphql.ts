@@ -83,7 +83,7 @@ mutation(
     $milestone: ID
     $user: ID!
     $labels: [String]
-    $estimate: Int!
+    $estimate: Int
     $dueDate: Date!
 ) {
     response: createIssue(

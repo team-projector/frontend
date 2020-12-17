@@ -64,7 +64,7 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Developer"
+    <jnt-table-column *ngIf="view !== viewType.salary" title="Developer"
                       i18n-title="@@label.developer"
                       width="15%">
       <ng-template #tableCellTemplate
@@ -78,7 +78,7 @@
                       title="Created at"
                       i18n-title="@@label.created_at"
                       [align]="ui.align.center"
-                      width="20%">
+                      width="25%">
       <ng-template #tableCellTemplate let-createdAt="createdAt">
         {{createdAt | dfnsFormat:'PPp'}}
       </ng-template>

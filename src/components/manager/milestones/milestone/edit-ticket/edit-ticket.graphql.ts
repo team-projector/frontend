@@ -15,6 +15,7 @@ query($ticket: ID!) {
         role
         startDate
         dueDate
+        estimate
         state
         url
         milestone {
@@ -121,10 +122,11 @@ mutation(
     $role: String
     $startDate: Date!
     $dueDate: Date!
+    $estimate: Int
     $url: String
     $issues: [ID]!
 ) {
-    response: updateTicket (
+    response: updateTicket(
         id: $id
         type: $type
         state: $state
@@ -133,6 +135,7 @@ mutation(
         role: $role
         startDate: $startDate
         dueDate: $dueDate
+        estimate: $estimate
         url: $url
         issues: $issues
     ) {

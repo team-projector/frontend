@@ -1,12 +1,16 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import "~@junte/ui/lib/assets/styles/forms/select";
+@import "~@junte/ui/lib/assets/styles/layout/responsive";
+
 $jnt-ng-deep: true;
 
 :host {
   display: flex;
   flex-direction: column;
-  width: 450px;
-  min-height: 550px;
+  @include min-for-desktop() {
+    width: 450px;
+    min-height: 550px;
+  }
 }
 
 p {

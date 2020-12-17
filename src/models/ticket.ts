@@ -105,6 +105,9 @@ export class Ticket {
   @field({mock: () => faker.date.future(), serializer: new DateSerializer()})
   dueDate: Date;
 
+  @field()
+  estimate: number;
+
   @field({mock: () => faker.internet.url()})
   url: string;
 
@@ -157,6 +160,9 @@ export class TicketUpdate {
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
   dueDate: Date;
+
+  @field()
+  estimate: number;
 
   @field()
   url: string;

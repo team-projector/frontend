@@ -116,7 +116,7 @@
                     placeholder="Select from list"
                     i18n-placeholder="@@label.developer"
                     [state]="progress.developers ? ui.state.loading : null"
-                    [features]="[ui.feature.search, ui.feature.allowEmpty]"
+                    [features]="[ui.feature.search]"
                     [optionTemplate]="userOption">
           <jnt-select-option *ngFor="let d of developers"
                              [key]="d.user.id"
