@@ -95,7 +95,7 @@
       <jnt-form-control name="comment">
         <jnt-input formControlName="comment"
                    placeholder="Comment"
-                   [multiline]="true"
+                   [features]="[ui.feature.multiline]"
                    i18n-placeholder="@@label.comment"></jnt-input>
         <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
           This field is required
