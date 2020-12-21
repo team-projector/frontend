@@ -134,8 +134,7 @@
       <jnt-form-control name="labels">
         <jnt-switcher formControlName="labels"
                       [mode]="ui.select.mode.multiple"
-                      [marks]="true"
-                      [features]="[ui.feature.allowEmpty, ui.feature.adapted]">
+                      [features]="[ui.feature.allowEmpty, ui.feature.adapted, ui.feature.marks]">
           <jnt-switcher-option label="Bug"
                                [value]="standardLabel.bug">
             <jnt-dot [color]="ui.color.red"></jnt-dot>
