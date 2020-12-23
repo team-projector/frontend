@@ -227,8 +227,8 @@ export class MilestoneComponent implements OnInit {
 
     const options = new ModalOptions({
       title: !!ticket
-        ? {text: $localize`:@@action.edit:Edit`, icon: UI.icons.edit}
-        : {text: $localize`:@@action.add:Add`, icon: UI.icons.add},
+        ? {text: $localize`:@@action.edit_ticket:Edit ticket`, icon: UI.icons.edit}
+        : {text: $localize`:@@action.add_ticket:Add ticket`, icon: UI.icons.add},
       maxWidth: '400px'
     });
     this.modal.open(component, options);

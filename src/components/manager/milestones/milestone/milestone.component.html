@@ -20,12 +20,10 @@
                    [align]="ui.align.center">
           <jnt-button [outline]="ui.outline.transparent"
                       [icon]="ui.icons.add"
-                      [size]="ui.size.small"
                       (click)="add()">
           </jnt-button>
           <jnt-button [outline]="ui.outline.transparent"
                       [icon]="progress.tickets || progress.issues ? ui.icons.animated.reload : ui.icons.reload"
-                      [size]="ui.size.small"
                       [disabled]="progress.tickets || progress.issues"
                       (click)="load(loadMode.force);loadIssues(loadMode.force)">
           </jnt-button>
@@ -178,7 +176,7 @@
               <div data-period [attr.over-from]="(ticket['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
                    [attr.over-to]="(ticket['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)"
                    [attr.over-due]="ticket.problems | includes:ticketProblem.overDueDate"
-                   [jntPopover]="{contentTemplate: ticketMetricsTemplate, trigger: ui.trigger.click}">
+                   [jntPopover]="{contentTemplate: ticketMetricsTemplate, trigger: ui.trigger.click, position: ui.position.right}">
                 <ng-template #ticketMetricsTemplate>
                   <table data-ticket-metrics>
                     <tr>
