@@ -1,5 +1,6 @@
 export enum TicketProblem {
-  overDueDate = 'OVER_DUE_DATE'
+  overDueDate = 'OVER_DUE_DATE',
+  unassignedIssues = 'UNASSIGNED_ISSUES'
 }
 
 export enum TicketTypes {

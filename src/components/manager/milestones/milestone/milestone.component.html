@@ -116,6 +116,10 @@
                     </jnt-dot>
                     <jnt-link [title]="ticket.title"
                               (click)="toggleIssues(ticket.id)"></jnt-link>
+                    <jnt-label *ngIf="ticket.problems | includes: ticketProblem.unassignedIssues"
+                               [color]="ui.color.red"
+                               [size]="ui.size.small"
+                               label="Unassigned"></jnt-label>
                   </jnt-stack>
                 </jnt-col>
                 <jnt-col [span]="3">
@@ -150,7 +154,6 @@
                                  (click)="edit(ticket)"></jnt-menu-item>
                   <jnt-menu-item title="Get link"
                                  i18n-title="@@action.get_link"
-                                 [icon]="ui.icons.anchor"
                                  [icon]="state.copied ? ui.icons.animated.success : ui.icons.anchor"
                                  (click)="getLink(ticket.id)">
                   </jnt-menu-item>

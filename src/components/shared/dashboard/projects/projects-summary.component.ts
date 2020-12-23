@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
-import { delay, map } from 'rxjs/operators';
+import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
@@ -24,6 +24,8 @@ export class ProjectsSummaryComponent implements OnInit {
 
   ui = UI;
   durationFormat = DurationFormat;
+
+  progress = {projects: false};
   errors: BackendError[] = [];
 
   project: Project;
@@ -57,11 +59,13 @@ export class ProjectsSummaryComponent implements OnInit {
 
   private load() {
     const filter = new IssuesFilter({user: this.user?.id, team: this.team?.id});
+    this.progress.projects = true;
     (environment.mocks
         ? of(getMock(IssuesSummary)).pipe(delay(MOCKS_DELAY))
         : this.summaryGQL.fetch(serialize(filter) as R)
           .pipe(map(({data: {issues}}) => deserialize(issues, IssuesSummary)))
-    ).subscribe(summary => this.summary = summary, err => this.errors = err);
+    ).pipe(finalize(() => this.progress.projects = false))
+      .subscribe(summary => this.summary = summary, err => this.errors = err);
   }
 
 }

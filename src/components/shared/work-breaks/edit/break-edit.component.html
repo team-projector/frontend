@@ -82,7 +82,8 @@
 
     <jnt-form-item>
       <jnt-form-label for="paidDays"
-                      i18n="@@label.paid_days">Paid Days</jnt-form-label>
+                      i18n="@@label.paid_days">Paid Days
+      </jnt-form-label>
       <jnt-form-control name="paidDays">
         <jnt-input formControlName="paidDays"
                    [type]="ui.input.type.number"></jnt-input>
@@ -91,7 +92,8 @@
 
     <jnt-form-item>
       <jnt-form-label for="comment"
-                      i18n="@@label.comment">Comment</jnt-form-label>
+                      i18n="@@label.comment">Comment
+      </jnt-form-label>
       <jnt-form-control name="comment">
         <jnt-input formControlName="comment"
                    placeholder="Comment"
@@ -105,11 +107,13 @@
   </jnt-stack>
 
   <ng-template #formFooterTemplate>
-    <jnt-button text="Save"
-                i18n-text="@@action.save"
-                [icon]="ui.icons.save"
-                [width]="ui.width.fluid"
-                [type]="ui.button.type.submit"
-                [loading]="progress.saving"></jnt-button>
+    <jnt-stack [orientation]="ui.orientation.horizontal"
+               [justify]="ui.justify.end">
+      <jnt-button text="Save"
+                  i18n-text="@@action.save"
+                  [icon]="ui.icons.save"
+                  [type]="ui.button.type.submit"
+                  [loading]="progress.saving"></jnt-button>
+    </jnt-stack>
   </ng-template>
 </jnt-form>
