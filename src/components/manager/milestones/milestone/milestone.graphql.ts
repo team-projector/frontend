@@ -33,7 +33,7 @@ query($milestone: ID!, $state: TicketState, $offset: Int, $first: Int) {
     tickets: allTickets(
         milestone: $milestone
         state: $state
-        orderBy: "dueDate,startDate,title"
+        orderBy: "due_date,start_date,title"
         offset: $offset
         first: $first
     ) {
