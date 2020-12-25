@@ -108,7 +108,7 @@ export class MilestonesListComponent implements OnInit {
       q: q,
       state: type === MilestoneType.active ? MilestoneState.active :
         type === MilestoneType.closed ? MilestoneState.closed : undefined,
-      orderBy: type === MilestoneType.active ? 'dueDate' : '-dueDate'
+      orderBy: type === MilestoneType.active ? 'due_date' : '-due_date'
     });
     const reset = serialize(filter);
     if (!!this.reset && !equals(reset, this.reset)) {

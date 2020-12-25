@@ -193,7 +193,7 @@ export class IssuesListComponent implements OnInit {
     const filter = new IssuesFilter({
       first: first,
       q: q,
-      orderBy: type === IssuesType.opened ? 'dueDate' : '-closedAt',
+      orderBy: type === IssuesType.opened ? 'due_date' : '-closed_at',
       dueDate: !!dueDate ? startOfDay(dueDate) : null,
       team: this.team?.id,
       project: project,
