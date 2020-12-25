@@ -24,7 +24,7 @@ query(
         offset: $offset
         first: $first
         state: $state
-        orderBy: "-createdAt"
+        orderBy: "-created_at"
     ) {
         count
         edges {
