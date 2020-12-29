@@ -4,15 +4,18 @@
               [placement]="ui.placement.absolute">
   <ng-template #informerContentTemplate>
     <jnt-stack data-issue [align]="ui.align.center">
-      <p>Awesome! The task was created
+      <p i18n="@@message.awesome_task_created">Awesome! The task was created
         <jnt-link title="on GitLab"
+                  i18n-title="@@label.on_gitlab"
                   [target]="ui.target.blank"
                   [icon]="{icon: ui.icons.link, position: ui.position.right}"
                   [outline]="ui.outline.fill"
                   [source]="issue.glUrl"></jnt-link>
       </p>
 
-      <jnt-button text="Ok" (click)="issue = null"></jnt-button>
+      <jnt-button text="Ok"
+                  i18n-text="@@action.ok"
+                  (click)="issue = null"></jnt-button>
     </jnt-stack>
   </ng-template>
 </jnt-informer>
@@ -31,11 +34,12 @@
   <jnt-stack [align]="ui.align.stretch">
 
     <jnt-form-item>
-      <jnt-form-label for="title">Title</jnt-form-label>
+      <jnt-form-label for="title"
+                      i18n="@@label.title">Title</jnt-form-label>
       <jnt-form-control name="title">
         <jnt-input formControlName="title"
                    placeholder="Some nice task"
-                   i18n-placeholder="@@label.title">
+                   i18n-placeholder="@@label.some_nice_task">
         </jnt-input>
         <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
           This field is required
@@ -46,7 +50,8 @@
     <jnt-row>
       <jnt-col [tablet]="6">
         <jnt-form-item>
-          <jnt-form-label for="project">Project</jnt-form-label>
+          <jnt-form-label for="project"
+                          i18n="@@label.project">Project</jnt-form-label>
           <jnt-form-control name="project">
             <ng-template #projectOption let-project="value"
                          let-selected="selected">
@@ -60,7 +65,7 @@
             </ng-template>
             <jnt-select formControlName="project"
                         placeholder="Select from list"
-                        i18n-placeholder="@@label.project"
+                        i18n-placeholder="@@label.select_from_list"
                         [state]="progress.projects ? ui.state.loading : null"
                         [features]="[ui.feature.search]"
                         [optionTemplate]="projectOption">
@@ -78,11 +83,12 @@
 
       <jnt-col [tablet]="6">
         <jnt-form-item>
-          <jnt-form-label for="milestone">Milestone</jnt-form-label>
+          <jnt-form-label for="milestone"
+                          i18n="@@label.milestone">Milestone</jnt-form-label>
           <jnt-form-control name="milestone">
             <jnt-select formControlName="milestone"
                         placeholder="Select from list"
-                        i18n-placeholder="@@label.milestone"
+                        i18n-placeholder="@@label.select_from_list"
                         [state]="progress.milestones ? ui.state.loading : null"
                         [features]="[ui.feature.allowEmpty]">
               <jnt-select-option *ngFor="let m of milestones"
@@ -98,7 +104,7 @@
     </jnt-row>
 
     <jnt-form-item>
-      <jnt-form-label for="user">Developer</jnt-form-label>
+      <jnt-form-label for="user" i18n="@@label.developer">Developer</jnt-form-label>
       <jnt-form-control name="user">
         <ng-template #userOption let-member="value"
                      let-selected="selected">
@@ -114,7 +120,7 @@
         </ng-template>
         <jnt-select formControlName="user"
                     placeholder="Select from list"
-                    i18n-placeholder="@@label.developer"
+                    i18n-placeholder="@@label.select_from_list"
                     [state]="progress.developers ? ui.state.loading : null"
                     [features]="[ui.feature.search]"
                     [optionTemplate]="userOption">
@@ -130,24 +136,28 @@
     </jnt-form-item>
 
     <jnt-form-item>
-      <jnt-form-label for="labels">Labels</jnt-form-label>
+      <jnt-form-label for="labels" i18n="@@label.labels">Labels</jnt-form-label>
       <jnt-form-control name="labels">
         <jnt-switcher formControlName="labels"
                       [mode]="ui.select.mode.multiple"
                       [features]="[ui.feature.allowEmpty, ui.feature.adapted, ui.feature.marks]">
           <jnt-switcher-option label="Bug"
+                               i18n-label="@@label.bug"
                                [value]="standardLabel.bug">
             <jnt-dot [color]="ui.color.red"></jnt-dot>
           </jnt-switcher-option>
           <jnt-switcher-option label="Urgent"
+                               i18n-label="@@label.urgent"
                                [value]="standardLabel.urgent">
             <jnt-dot [color]="ui.color.orange"></jnt-dot>
           </jnt-switcher-option>
           <jnt-switcher-option label="Hotfix"
+                               i18n-label="@@label.hotfix"
                                [value]="standardLabel.hotfix">
             <jnt-dot [color]="ui.color.yellow"></jnt-dot>
           </jnt-switcher-option>
           <jnt-switcher-option label="Discuss"
+                               i18n-label="@@label.discuss"
                                [value]="standardLabel.discuss">
             <jnt-dot [color]="ui.color.green"></jnt-dot>
           </jnt-switcher-option>
@@ -161,11 +171,12 @@
         <jnt-stack [gutter]="ui.gutter.small"
                    [align]="ui.align.stretch">
           <jnt-form-item>
-            <jnt-form-label for="estimate">Estimate</jnt-form-label>
+            <jnt-form-label for="estimate" i18n="@@label.estimate">Estimate</jnt-form-label>
             <jnt-form-control name="estimate">
               <jnt-input formControlName="estimate"
                          [type]="ui.input.type.number"
-                         placeholder="Hours"></jnt-input>
+                         placeholder="Hours"
+                         i18n-placeholder="@@label.hours"></jnt-input>
             </jnt-form-control>
           </jnt-form-item>
 
@@ -174,10 +185,13 @@
             <jnt-button-group [scheme]="ui.scheme.secondary"
                               [size]="ui.size.tiny">
               <jnt-button text="1h"
+                          i18n-text="@@label.1h"
                           (click)="estimateControl.setValue(1)"></jnt-button>
               <jnt-button text="2h"
+                          i18n-text="@@label.2h"
                           (click)="estimateControl.setValue(2)"></jnt-button>
               <jnt-button text="6h"
+                          i18n-text="@@label.6h"
                           (click)="estimateControl.setValue(6)"></jnt-button>
             </jnt-button-group>
           </jnt-stack>
@@ -188,7 +202,7 @@
         <jnt-stack [gutter]="ui.gutter.small"
                    [align]="ui.align.stretch">
           <jnt-form-item>
-            <jnt-form-label for="dueDate">Due Date</jnt-form-label>
+            <jnt-form-label for="dueDate" i18n="@@label.due_date">Due Date</jnt-form-label>
             <jnt-form-control name="dueDate">
               <jnt-date-picker formControlName="dueDate"></jnt-date-picker>
               <jnt-form-message i18n="@@message.field_required"
@@ -223,7 +237,8 @@
                [justify]="ui.justify.end">
       <jnt-button [type]="ui.button.type.submit"
                   [icon]="ui.icons.add"
-                  text="Create"></jnt-button>
+                  text="Create"
+                  i18n-text="@@action.create"></jnt-button>
     </jnt-stack>
   </ng-template>
 
