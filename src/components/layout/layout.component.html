@@ -42,6 +42,7 @@
           <app-create-issue></app-create-issue>
         </ng-template>
         <jnt-button data-create-issue text="Create issue"
+                    i18n-text="@@action.create_issue"
                     [icon]="localUi.icons.wizard"
                     [jntModal]="{title: {icon: localUi.icons.wizard, text: 'Create issue'}, content: createIssueTemplate}"
                     (click)="hide?.call()"></jnt-button>

@@ -85,7 +85,7 @@ export const providers: any[] = [
 
 let data;
 let dfnsLocale;
-let config;
+export let config = {};
 switch (language) {
   case Language.ru:
     data = getLocaleData(localeRu);
