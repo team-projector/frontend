@@ -31,7 +31,7 @@
     </jnt-table-column>
 
     <jnt-table-column sort="comment"
-                      width="10%"
+                      width="20%"
                       title="Comment"
                       i18n-title="@@label.comment">
       <ng-template #tableCellTemplate let-comment="comment">
@@ -48,7 +48,7 @@
     </jnt-table-column>
 
     <jnt-table-column *ngIf="view !== viewType.salary" title="Salary"
-                      width="55px"
+                      width="20%"
                       i18n-title="@@label.salary">
       <ng-template #tableCellTemplate let-salary="salary">
         <jnt-link *ngIf="!!salary" [title]="salary.createdAt | dfnsFormat:'PPp'"

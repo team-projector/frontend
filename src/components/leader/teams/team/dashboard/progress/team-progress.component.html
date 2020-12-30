@@ -17,11 +17,13 @@
 </ng-template>
 
 <ng-template #dayMetricTemplate let-metric="metric" let-date="date">
+  <jnt-dot data-issues-count *ngIf="!!metric?.issuesCount"></jnt-dot>
   <div *ngIf="!!metric" data-metric [ngSwitch]="metricControl.value">
-    <div data-issues *ngIf="!!metric?.issuesCount"></div>
     <ng-container *ngSwitchCase="metricType.spent">
       <jnt-circle-bar data-circle>
-        <ng-template #content>{{metric.timeSpent | duration:durationFormat.short}}</ng-template>
+        <ng-template #content>
+          <div data-day-text>{{metric.timeSpent | duration:durationFormat.short}}</div>
+        </ng-template>
         <jnt-bar-indicator-group>
           <jnt-bar-indicator [color]="ui.color.green"
                              [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
@@ -96,8 +98,7 @@
 </ng-template>
 
 <jnt-block [padding]="ui.gutter.none"
-           [width]="ui.width.fluid"
-           [state]="progress.developers ? ui.state.loading : null">
+           [width]="ui.width.fluid">
   <jnt-form [formGroup]="form">
     <table>
       <thead>

@@ -5,7 +5,7 @@
   display: block;
 }
 
-[period] {
+[data-period] {
   position: relative;
   margin: $jnt-gutter-tiny;
   border-radius: $jnt-corner-large;
@@ -43,7 +43,7 @@
     background-color: $jnt-fail-color;
   }
 
-  [label] {
+  [data-label] {
     position: absolute;
     font-size: $jnt-font-size-small;
     text-align: center;

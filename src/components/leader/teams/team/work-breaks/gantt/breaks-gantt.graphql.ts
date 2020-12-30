@@ -5,45 +5,44 @@ import gql from 'graphql-tag';
 @Injectable({
   providedIn: 'root'
 })
-export class AllTeamWorkBreaks extends Query<{ breaks }> {
+export class TeamBreaksGQL extends Query<{ team }> {
   document = gql`
-query($team: ID, $user: ID, $offset: Int, $first: Int) {
-    breaks: teamWorkBreaks(
-        team: $team
-        user: $user
-        offset: $offset
-        first: $first
-    ) {
-        count
-        edges {
-            node {
-                id
-                name
-                position {
-                    title
-                }
-                glAvatar
-                workBreaks {
-                    count
-                    edges {
-                        node {
-                            id
-                            createdAt
-                            fromDate
-                            toDate
-                            comment
-                            reason
-                            approveState
-                            approvedBy {
-                                name
-                                glAvatar
-                            }
-                            approvedAt
-                        }
-                    }
-                }
+query ($id: ID!) {
+  team(id: $id) {
+    members {
+      count
+      edges {
+        node {
+          id
+          user {
+            name
+            position {
+              title
             }
+            glAvatar
+            workBreaks {
+              count
+              edges {
+                node {
+                  id
+                  createdAt
+                  fromDate
+                  toDate
+                  comment
+                  reason
+                  approveState
+                  approvedBy {
+                    name
+                    glAvatar
+                  }
+                  approvedAt
+                }
+              }
+            }
+          }
         }
+      }
     }
+  }
 }`;
 }

@@ -21,7 +21,7 @@
   background-size: cover;
 }
 
-[admin] {
+[data-admin] {
   position: absolute;
   top: $jnt-gutter-normal;
   right: $jnt-gutter-normal;
@@ -39,14 +39,5 @@
     display: block;
     text-align: center;
     margin-top: $jnt-gutter-big;
-  }
-
-  [fields] {
-    margin-top: $jnt-gutter-normal;
-  }
-  button {
-    display: block;
-    margin: 20px 0;
-    width: 100%;
   }
 }

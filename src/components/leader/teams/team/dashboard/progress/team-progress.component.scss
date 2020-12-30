@@ -1,4 +1,5 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import '~@junte/ui/lib/assets/styles/elements/dot';
 
 :host {
   display: block;
@@ -144,25 +145,26 @@ table {
 
         &[data-day] {
           cursor: pointer;
+          position: relative;
+
+          [data-day-text] {
+            font-size: $jnt-font-size-small;
+          }
 
           &:hover {
             background-color: $jnt-secondary-dark-color;
           }
 
-          [data-metric] {
-            position: relative;
-            display: inline-block;
+          [data-issues-count] {
+            @include jnt-dot((size: 5px), '&');
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            z-index: 1;
+          }
 
-            [data-issues] {
-              position: absolute;
-              top: 2px;
-              right: 2px;
-              background-color: blue;
-              width: 5px;
-              height: 5px;
-              border-radius: 50%;
-              z-index: 1;
-            }
+          [data-metric] {
+            display: inline-block;
 
             [data-circle] {
               width: 35px;

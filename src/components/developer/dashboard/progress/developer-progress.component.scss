@@ -1,6 +1,7 @@
 @import '~@junte/ui/lib/assets/styles/layout/responsive';
 @import '~@junte/ui/lib/assets/styles/forms/calendar';
 @import '~@junte/ui/lib/assets/styles/dynamic/circle-bar';
+@import '~@junte/ui/lib/assets/styles/elements/dot';
 
 $jnt-ng-deep: true;
 
@@ -32,31 +33,32 @@ $jnt-ng-deep: true;
   height: 45px;
   width: 45px;
   border: 2px solid transparent;
+  position: relative;
+
+  [data-day-text] {
+    font-size: $jnt-font-size-small;
+  }
 
   &[today='true'] {
     @include jnt-circle-bar((content: (color: $jnt-white-color)), '&');
   }
 
-  [issues] {
+  [data-issues-count] {
+    @include jnt-dot((size: 5px), '&');
     position: absolute;
-    top: 2px;
-    right: 3px;
-    background-color: blue;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
+    top: 4px;
+    right: 4px;
     z-index: 1;
   }
 
-  [metric] {
-    position: relative;
+  [data-metric] {
     display: inline-block;
 
-    [circle] {
+    [data-circle] {
       width: 40px;
       height: 40px;
 
-      &[time] {
+      &[data-time] {
         color: $jnt-primary-text-light-color
       }
     }

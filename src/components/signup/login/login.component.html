@@ -1,10 +1,9 @@
-<jnt-link *ngIf="mode === systemMode.prod"
+<jnt-link data-admin *ngIf="mode === systemMode.prod"
           [icon]="ui.icons.settings"
           [outline]="ui.outline.ghost"
           source="/admin/"
           title="Administrator"
-          i18n-title="@@action.administrator"
-          admin>
+          i18n-title="@@action.administrator">
 </jnt-link>
 
 <jnt-informer *ngIf="errors.length > 0"

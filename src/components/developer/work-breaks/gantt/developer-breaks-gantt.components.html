@@ -7,7 +7,7 @@
 <jnt-gantt [type]="ui.gantt.type.year"
            [loading]="loading">
   <ng-template #ganttTitleTemplate>
-    <strong i18n="@@label.developer">Developer</strong>
+    <strong i18n="@@label.developer">Work break</strong>
   </ng-template>
   <jnt-gantt-line *ngFor="let workBreak of workBreaks"
                   [title]="workBreak.user.name">

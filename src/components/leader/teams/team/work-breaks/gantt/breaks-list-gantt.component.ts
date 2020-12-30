@@ -1,4 +1,4 @@
-import { Component, OnInit} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UI } from '@junte/ui';
@@ -15,30 +15,9 @@ import { ViewType } from 'src/models/enums/view-type';
 import { BackendError } from 'src/types/gql-errors';
 import { User, UsersPaging } from 'src/models/user';
 import { getMock } from '@junte/mocker';
+import { Team, TeamMember } from '../../../../../../models/team';
 import { CardSize } from '../../../../../shared/users/card/user-card.types';
-import { AllTeamWorkBreaks } from './breaks-gantt.graphql';
-
-const PAGE_SIZE = 10;
-
-@model()
-export class TeamGanttFilter {
-
-  @field()
-  first: number;
-
-  @field()
-  offset: number;
-
-  @field()
-  team: string;
-
-  constructor(defs: Partial<TeamGanttFilter> = null) {
-    if (!!defs) {
-      Object.assign(this, defs);
-    }
-  }
-
-}
+import { TeamBreaksGQL } from './breaks-gantt.graphql';
 
 @Component({
   selector: 'app-team-breaks-list-gantt',
@@ -51,39 +30,33 @@ export class TeamBreaksListGanttComponent implements OnInit {
   viewType = ViewType;
   approveStates = ApproveStates;
   userCardSize = CardSize;
-  users: User[] = [];
+
+
   errors: BackendError[] = [];
-  loading = false;
-  pageSize = PAGE_SIZE;
-  count: number;
+  progress = {loading: false};
 
-  form = this.fb.group(
-    {
-      first: PAGE_SIZE,
-      offset: [0],
-      team: null
-    });
+  team: Team;
+  member: TeamMember[] = [];
 
-
-  constructor(private teamBreaksGQL: AllTeamWorkBreaks,
-              private route: ActivatedRoute,
-              private fb: FormBuilder) {
+  constructor(private teamBreaksGQL: TeamBreaksGQL,
+              private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.form.valueChanges.subscribe(() => this.loadBreaks());
-    this.route.data.subscribe(({team}) => this.form.get('team').setValue(team.id));
+    this.route.data.subscribe(({team}) => {
+      this.team = team;
+      this.loadBreaks();
+    });
   }
 
   loadBreaks() {
-    const filter = new TeamGanttFilter(this.form.getRawValue());
-    this.loading = true;
+    this.progress.loading = true;
     (environment.mocks
-      ? of(getMock(UsersPaging, serialize(filter) as R)).pipe(delay(MOCKS_DELAY))
-      : this.teamBreaksGQL.fetch(serialize(filter) as R).pipe(catchGQLErrors(),
-        map(({data: {breaks}}) => deserialize(breaks, UsersPaging))))
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(ganttBreaks => [this.users, this.count] = [ganttBreaks.results, ganttBreaks.count],
-          err => this.errors = err);
+      ? of(getMock(Team, {id: this.team.id})).pipe(delay(MOCKS_DELAY))
+      : this.teamBreaksGQL.fetch({id: this.team.id} as R).pipe(catchGQLErrors(),
+        map(({data: {team}}) => deserialize(team, Team))))
+      .pipe(finalize(() => this.progress.loading = false))
+      .subscribe(team => this.member = team.members,
+        err => this.errors = err);
   }
 }
