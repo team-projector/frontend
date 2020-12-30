@@ -55,7 +55,8 @@
         </jnt-stack>
       </ng-template>
     </jnt-table-column>
-    <jnt-table-column title="Period"
+    <jnt-table-column width="120px"
+                      title="Period"
                       i18n-title="@@label.period"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-startDate="startDate" let-problems="problems" let-dueDate="dueDate">
@@ -68,7 +69,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Budget"
+    <jnt-table-column width="20%"
+                      title="Budget"
                       i18n-title="@@label.budget"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-budget="budget" let-metrics="metrics">
@@ -80,7 +82,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Profit"
+    <jnt-table-column width="20%"
+                      title="Profit"
                       i18n-title="@@label.profit"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-budget="budget" let-metrics="metrics">
@@ -90,7 +93,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Progress"
+    <jnt-table-column width="20%"
+                      title="Progress"
                       i18n-title="@@label.progress"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-metrics="metrics">
@@ -98,7 +102,8 @@
                            [spent]="metrics.timeSpent"></app-work-progress>
       </ng-template>
     </jnt-table-column>
-    <jnt-table-column title="Issues"
+    <jnt-table-column width="150px"
+                      title="Issues"
                       i18n-title="@@label.issues"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-metrics="metrics">
