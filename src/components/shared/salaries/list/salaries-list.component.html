@@ -1,7 +1,8 @@
 <jnt-form [formGroup]="form">
   <jnt-table #table formControlName="table">
 
-    <jnt-table-column title="Created"
+    <jnt-table-column width="20%"
+                      title="Created"
                       i18n-title="@@label.charged_time">
       <ng-template #tableCellTemplate let-id="id" let-createdAt="createdAt">
         <jnt-link [source]="[id]"
@@ -19,7 +20,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Charged Time"
+    <jnt-table-column width="150px"
+                      title="Charged Time"
                       i18n-title="@@label.charged_time"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-id="id" let-chargedTime="chargedTime">
@@ -31,7 +33,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Period"
+    <jnt-table-column width="150px"
+                      title="Period"
                       i18n-title="@@label.period"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-periodTo="periodTo"
@@ -40,7 +43,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Bonus"
+    <jnt-table-column width="100px"
+                      title="Bonus"
                       i18n-title="@@label.bonus"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-bonus="bonus">
@@ -51,7 +55,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Penalty"
+    <jnt-table-column width="100px"
+                      title="Penalty"
                       i18n-title="@@label.penalty"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-penalty="penalty">
@@ -62,7 +67,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Total"
+    <jnt-table-column width="10%"
+                      title="Total"
                       i18n-title="@@label.total"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-total="total">
@@ -73,7 +79,8 @@
       </ng-template>
     </jnt-table-column>
 
-    <jnt-table-column title="Payed"
+    <jnt-table-column width="55px"
+                      title="Payed"
                       i18n-title="@@label.payed"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-payed="payed">
