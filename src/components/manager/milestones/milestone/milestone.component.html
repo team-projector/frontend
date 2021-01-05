@@ -172,7 +172,7 @@
           </ng-template>
           <jnt-gantt-line-period [from]="ticket.startDate"
                                  [to]="ticket.dueDate">
-            <ng-template #indicatorMonth let-current="current">
+            <ng-template #indicatorMonthTemplate let-current="current">
               <div data-period [attr.over-from]="(ticket['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
                    [attr.over-to]="(ticket['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)"
                    [attr.over-due]="ticket.problems | includes:ticketProblem.overDueDate"
@@ -255,7 +255,7 @@
 
               <jnt-gantt-line-period [from]="[ticket.startDate, issue.dueDate] | dfnsMin"
                                      [to]="issue.dueDate">
-                <ng-template #indicatorMonth let-period="period"
+                <ng-template #indicatorMonthTemplate let-period="period"
                              let-current="current">
                   <div data-period [attr.over-from]="(period['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
                        [attr.over-to]="(period['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)">

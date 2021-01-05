@@ -18,7 +18,7 @@
                            [from]="workBreak.fromDate"
                            [to]="workBreak.toDate">
 
-      <ng-template #indicatorYear let-current="current" let-today="today">
+      <ng-template #indicatorYearTemplate let-current="current" let-today="today">
         <div data-period [attr.accepting]="workBreak['approveState'] === approveStates.created"
              [attr.accepted]="workBreak['approveState'] === approveStates.approved"
              [attr.declined]="workBreak['approveState'] === approveStates.declined"
