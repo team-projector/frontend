@@ -13,3 +13,21 @@
   text-align: center;
   font-size: .85em;
 }
+
+[data-payroll] {
+  cursor: pointer;
+}
+
+[data-metrics] {
+  border-collapse: collapse;
+  font-size: $jnt-font-size-small;
+
+  td {
+    border: 1px solid $jnt-secondary-color;
+    padding: $jnt-gutter-small;
+  }
+
+  tr td:nth-child(2) {
+    text-align: right;
+  }
+}

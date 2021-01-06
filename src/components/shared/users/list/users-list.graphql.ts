@@ -7,31 +7,33 @@ import gql from 'graphql-tag';
 })
 export class AllUsersGQL extends Query<{ users }> {
   document = gql`
-query($offset: Int, $first: Int) {
-    users: allUsers(offset: $offset, first: $first) {
-        count
-        edges {
-            node {
-                id
-                name
-                glAvatar
-                roles
-                hourRate
-                customerHourRate
-                taxRate
-                dailyWorkHours
-                annualPaidWorkBreaksDays
-                position {
-                    title
-                }
-                metrics {
-                    lastSalaryDate
-                    paidWorkBreaksDays
-                    payroll
-                    taxes
-                }
-            }
+query ($offset: Int, $first: Int) {
+  users: allUsers(offset: $offset, first: $first) {
+    count
+    edges {
+      node {
+        id
+        name
+        glAvatar
+        roles
+        hourRate
+        customerHourRate
+        taxRate
+        dailyWorkHours
+        annualPaidWorkBreaksDays
+        position {
+          title
         }
+        metrics {
+          lastSalaryDate
+          paidWorkBreaksDays
+          payroll
+          payrollClosed
+          payrollOpened
+          taxes
+        }
+      }
     }
+  }
 }`;
 }

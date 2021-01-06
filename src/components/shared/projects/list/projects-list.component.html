@@ -75,7 +75,7 @@
       <ng-template #tableCellTemplate let-metrics="metrics">
         <ng-container>
           <app-budget [spent]="metrics.budgetSpent"
-                      [budget]="budget"
+                      [budget]="metrics.budget"
                       [remains]="metrics.budgetRemains"></app-budget>
         </ng-container>
       </ng-template>
