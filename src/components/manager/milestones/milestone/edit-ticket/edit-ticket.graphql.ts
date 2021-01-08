@@ -115,8 +115,8 @@ export class EditTicketGQL extends Mutation<{ response }> {
   document = gql`
 mutation(
     $id: ID!
-    $type: String!
-    $state: String!
+    $type: TicketType!
+    $state: TicketState!
     $milestone: ID
     $title: String!
     $role: String
