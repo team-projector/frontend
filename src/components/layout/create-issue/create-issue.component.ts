@@ -94,7 +94,6 @@ export class CreateIssueComponent implements OnInit {
       });
 
     this.loadProjects();
-    console.log(this.form.getRawValue());
   }
 
   private loadProjects() {

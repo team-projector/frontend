@@ -53,16 +53,19 @@ query($ticket: ID!) {
 })
 export class FindMilestonesGQL extends Query<{ milestones }> {
   document = gql`
-query($q: String) {
-    milestones: allMilestones(q: $q) {
-        count
-        edges {
-            node {
-                id
-                title
-            }
+query ($q: String) {
+  milestones: allMilestones(q: $q) {
+    count
+    edges {
+      node {
+        id
+        title
+        owner {
+          title
         }
+      }
     }
+  }
 }`;
 }
 

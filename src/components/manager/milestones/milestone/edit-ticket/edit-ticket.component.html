@@ -51,11 +51,23 @@
           <jnt-form-item *ngIf="!!ticket">
             <jnt-form-label for="milestone" i18n="@@label.milestone">Milestone</jnt-form-label>
             <jnt-form-control name="milestone">
+              <ng-template #milestoneOptionTemplate let-milestone="value"
+                           let-selected="selected">
+                <jnt-stack [orientation]="ui.orientation.horizontal"
+                           [align]="ui.align.center"
+                           [justify]="ui.justify.between">
+                  <div>{{milestone.title}}</div>
+                  <jnt-label *ngIf="!selected && !!milestone.owner"
+                             [label]="milestone.owner?.title"
+                             [outline]="ui.outline.ghost"></jnt-label>
+                </jnt-stack>
+              </ng-template>
               <jnt-select placeholder="Milestone"
                           i18n-placeholder="@@label.milestone"
                           formControlName="milestone"
                           [features]="[ui.feature.search]"
                           [loader]="findMilestones()"
+                          [optionTemplate]="milestoneOptionTemplate"
                           keyField="id"
                           labelField="title">
                 <jnt-select-option [key]="ticket.milestone.id"
