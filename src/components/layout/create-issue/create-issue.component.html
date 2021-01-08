@@ -56,6 +56,7 @@
             <ng-template #projectOption let-project="value"
                          let-selected="selected">
               <jnt-stack [orientation]="ui.orientation.horizontal"
+                         [align]="ui.align.center"
                          [gutter]="ui.gutter.small">
                 <jnt-avatar [size]="ui.size.tiny"
                             [image]="project.group?.glAvatar"></jnt-avatar>
