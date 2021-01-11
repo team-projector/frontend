@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Mutation, Query } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { IssueSort } from 'src/models/enums/issue';
+import { TicketSort } from 'src/models/enums/ticket';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +35,7 @@ query($milestone: ID!, $state: TicketState, $offset: Int, $first: Int) {
     tickets: allTickets(
         milestone: $milestone
         state: $state
-        orderBy: "due_date,start_date,title"
+        orderBy: [${TicketSort.dueDateAsc},${TicketSort.startDateAsc},${TicketSort.titleAsc}]
         offset: $offset
         first: $first
     ) {
@@ -97,7 +99,7 @@ export class TicketIssuesGQL extends Query<{ ticket: { issues } }> {
   document = gql`
 query ($ticket: ID!) {
   ticket(id: $ticket) {
-    issues(orderBy: "-state,user") {
+    issues(orderBy: [${IssueSort.stateDesc},${IssueSort.userAsc}]) {
       count
       edges {
         node {

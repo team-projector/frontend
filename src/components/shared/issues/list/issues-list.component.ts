@@ -5,12 +5,12 @@ import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
-import { delay, finalize, map} from 'rxjs/operators';
+import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
-import { IssueProblem, IssueState, IssuesType } from 'src/models/enums/issue';
+import { IssueProblem, IssueSort, IssueState, IssuesType } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { ViewType } from 'src/models/enums/view-type';
 import { BackendError } from 'src/types/gql-errors';
@@ -21,7 +21,13 @@ import { PagingTeamMembers, Team, TeamMember } from 'src/models/team';
 import { User } from 'src/models/user';
 import { equals } from 'src/utils/equals';
 import { CardSize } from '../../users/card/user-card.types';
-import { IssuesGQL, IssuesSummaryGQL, ProjectsSummaryGQL, SyncIssueGQL, TeamMembersGQL } from './issues-list.graphql';
+import {
+  IssuesGQL,
+  IssuesSummaryGQL,
+  ProjectsSummaryGQL,
+  SyncIssueGQL,
+  TeamMembersGQL
+} from './issues-list.graphql';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
 import { LocalUI } from 'src/enums/local-ui';
 
@@ -193,7 +199,7 @@ export class IssuesListComponent implements OnInit {
     const filter = new IssuesFilter({
       first: first,
       q: q,
-      orderBy: type === IssuesType.opened ? 'due_date' : '-closed_at',
+      orderBy: type === IssuesType.opened ? IssueSort.dueDateAsc : IssueSort.closedAtDesc,
       dueDate: !!dueDate ? startOfDay(dueDate) : null,
       team: this.team?.id,
       project: project,

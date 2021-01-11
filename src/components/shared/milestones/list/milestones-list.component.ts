@@ -10,7 +10,7 @@ import { deserialize, serialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
-import { MilestoneProblem, MilestoneState, MilestoneType } from 'src/models/enums/milestone';
+import { MilestoneProblem, MilestoneSort, MilestoneState, MilestoneType } from 'src/models/enums/milestone';
 import { MilestonesFilter, MilestonesSummary, PagingMilestones } from 'src/models/milestone';
 import { BackendError } from 'src/types/gql-errors';
 import { getMock } from '@junte/mocker';
@@ -108,7 +108,7 @@ export class MilestonesListComponent implements OnInit {
       q: q,
       state: type === MilestoneType.active ? MilestoneState.active :
         type === MilestoneType.closed ? MilestoneState.closed : undefined,
-      orderBy: type === MilestoneType.active ? 'due_date' : '-due_date'
+      orderBy: type === MilestoneType.active ? MilestoneSort.dueDateAsc : MilestoneSort.dueDateDesc
     });
     const reset = serialize(filter);
     if (!!this.reset && !equals(reset, this.reset)) {

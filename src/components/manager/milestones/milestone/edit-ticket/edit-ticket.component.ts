@@ -8,6 +8,7 @@ import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from '@junte/serialize-ts';
 import { DFNS_OPTIONS, MOCKS_DELAY, TODAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
+import { IssueSort } from 'src/models/enums/issue';
 import { TicketStates, TicketTypes } from 'src/models/enums/ticket';
 import { Issue, IssuesFilter, PagingIssues } from 'src/models/issue';
 import { Milestone, MilestonesFilter, PagingMilestones } from 'src/models/milestone';
@@ -161,7 +162,7 @@ export class EditTicketComponent {
     return (query: string) => new Observable<Issue[]>(o => {
       const filter = new IssuesFilter({
         q: query,
-        orderBy: '-createdAt',
+        orderBy: IssueSort.createdAtDesc,
         first: FOUND_ISSUES_COUNT
       });
       this.findIssuesGQL.fetch(serialize(filter) as R)

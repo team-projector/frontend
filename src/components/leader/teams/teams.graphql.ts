@@ -14,7 +14,7 @@ export class AllTeamsGQL extends Query<{ teams }> {
           node {
             id
             title
-            members(first: 4, roles: "developer") {
+            members(first: 4, roles: "DEVELOPER") {
               count
               edges {
                 node {

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Mutation, Query } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { IssueSummaryProjectSort } from 'src/models/enums/issues-summary';
+import { TeamMemberSort } from 'src/models/enums/team-member';
 import { Issue } from 'src/models/issue';
 
 @Injectable({
@@ -31,7 +33,7 @@ query(
     $dueDate: Date
     $state: IssueState
     $problems: Boolean
-    $orderBy: String
+    $orderBy: [IssueSort]
     $offset: Int
     $first: Int
     $q: String
@@ -123,7 +125,7 @@ export class ProjectsSummaryGQL extends Query<{ summary }> {
   document = gql`
 query ($team: ID, $user: ID, $project: ID, $dueDate: Date) {
   summary: issuesSummary(team: $team, user: $user, project: $project, dueDate: $dueDate) {
-    projects(orderBy: "-issues__remains") {
+    projects(orderBy: ${IssueSummaryProjectSort.issuesRemainsDesc}) {
       project {
         id
         title
@@ -176,7 +178,7 @@ export class TeamMembersGQL extends Query<{ team: { members } }> {
   document = gql`
 query ($team: ID!) {
   team(id: $team) {
-    members(roles: "DEVELOPER", orderBy: "user__name") {
+    members(roles: "DEVELOPER", orderBy: ${TeamMemberSort.userNameAsc}) {
       count
       edges {
         node {

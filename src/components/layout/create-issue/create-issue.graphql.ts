@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Query } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { ProjectSort } from 'src/models/enums/project';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import gql from 'graphql-tag';
 export class ProjectsGQL extends Query<{ projects }> {
   document = gql`
 {
-  projects: allProjects(state: [DEVELOPING, SUPPORTING], orderBy: "title") {
+  projects: allProjects(state: [DEVELOPING, SUPPORTING], orderBy: ${ProjectSort.titleAsc}) {
     count
     edges {
       node {

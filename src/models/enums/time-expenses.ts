@@ -14,3 +14,10 @@ export enum TimeExpenseState {
   closed = 'CLOSED',
   all = 'ALL'
 }
+
+export enum SpentTimeSort {
+  dateAsc = 'DATE_ASC',
+  dateDesc = 'DATE_DESC',
+  createdAtAsc = 'CREATED_AT_ASC',
+  createdAtDesc = 'CREATED_AT_DESC'
+}

@@ -2,7 +2,7 @@ import { ArraySerializer, PrimitiveSerializer } from '@junte/serialize-ts';
 import { ModelMetadataSerializer } from '@junte/serialize-ts/dist/serializers/model-metadata.serializer';
 import { SearchFilter, UI } from '@junte/ui';
 import { addDays } from 'date-fns';
-import { IssueProblem, IssueState } from 'src/models/enums/issue';
+import { IssueProblem, IssueSort, IssueState } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { mocks, TimeAccuracy } from 'src/utils/mocks';
 import { DATE_FORMAT } from '../consts';
@@ -230,7 +230,7 @@ export class IssuesFilter implements SearchFilter {
   q: string;
 
   @field()
-  orderBy: string;
+  orderBy: IssueSort;
 
   constructor(defs: Partial<IssuesFilter> = null) {
     if (!!defs) {
