@@ -13,3 +13,10 @@ export enum UserRole {
 export enum UserProblem {
   payrollOpenedOverflow = 'PAYROLL_OPENED_OVERFLOW'
 }
+
+export enum UserSort {
+  loginAsc = 'LOGIN_ASC',
+  loginDesc = 'LOGIN_DESC',
+  nameAsc = 'NAME_ASC',
+  nameDesc = 'NAME_DESC'
+}

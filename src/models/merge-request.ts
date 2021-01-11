@@ -3,7 +3,7 @@ import { helpers } from 'faker';
 import { SearchFilter } from '@junte/ui';
 import { ArraySerializer } from '@junte/serialize-ts';
 import { DATE_FORMAT } from 'src/consts';
-import { MergeRequestState } from 'src/models/enums/merge-requests';
+import { MergeRequestSort, MergeRequestState } from 'src/models/enums/merge-requests';
 import { DateSerializer } from 'src/serializers/date';
 import { field, model } from '../decorators/model';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';
@@ -138,7 +138,7 @@ export class MergeRequestsFilter implements SearchFilter {
   state?: MergeRequestState | null;
 
   @field()
-  orderBy?: string;
+  orderBy?: MergeRequestSort;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
   dueDate?: string;

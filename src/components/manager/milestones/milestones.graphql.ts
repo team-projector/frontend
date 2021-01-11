@@ -40,7 +40,7 @@ query(
     $first: Int
     $state: MilestoneState
     $q: String
-    $orderBy: String
+    $orderBy: [MilestoneSort]
 ) {
     milestones: allMilestones(
         offset: $offset

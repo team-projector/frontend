@@ -26,8 +26,8 @@ query(
     $team: ID
     $user: ID
     $project: ID
-    $state: String
-    $orderBy: String
+    $state: MergeRequestState
+    $orderBy: [MergeRequestSort]
     $offset: Int
     $first: Int
 ) {
@@ -67,17 +67,6 @@ query(
                     id
                     name
                     glAvatar
-                }
-                issues {
-                    count
-                    edges {
-                        node {
-                            user {
-                                name
-                                glAvatar
-                            }
-                        }
-                    }
                 }
                 metrics {
                     remains

@@ -15,3 +15,18 @@ export enum IssuesType {
   opened = 'opened',
   problems = 'problems'
 }
+
+export enum IssueSort {
+  dueDateAsc = 'DUE_DATE_ASC',
+  dueDateDesc = 'DUE_DATE_DESC',
+  titleAsc = 'TITLE_ASC',
+  titleDesc = 'TITLE_DESC',
+  createdAtAsc = 'CREATED_AT_ASC',
+  createdAtDesc = 'CREATED_AT_DESC',
+  closedAtAsc = 'CLOSED_AT_ASC',
+  closedAtDesc = 'CLOSED_AT_DESC',
+  userAsc = 'USER_ASC',
+  userDesc = 'USER_DESC',
+  stateAsc = 'STATE_ASC',
+  stateDesc = 'STATE_DESC'
+}

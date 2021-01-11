@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Query } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { TeamMemberSort } from 'src/models/enums/team-member';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class TeamMembersGQL extends Query<{ team: { members } }> {
   document = gql`
 query ($team: ID!) {
   team(id: $team) {
-    members(roles: "DEVELOPER", orderBy: "user__name") {
+    members(roles: "DEVELOPER", orderBy: ${TeamMemberSort.userNameAsc}) {
       count
       edges {
         node {

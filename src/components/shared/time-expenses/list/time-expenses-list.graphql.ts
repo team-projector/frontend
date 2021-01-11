@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Query } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { SpentTimeSort } from 'src/models/enums/time-expenses';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,6 @@ query(
     $team: ID
     $user: ID
     $salary: ID
-    $date: Date
     $offset: Int
     $first: Int
     $state: String
@@ -20,11 +20,10 @@ query(
         team: $team
         user: $user
         salary: $salary
-        date: $date
         offset: $offset
         first: $first
         state: $state
-        orderBy: "-created_at"
+        orderBy: ${SpentTimeSort.createdAtDesc}
     ) {
         count
         edges {
@@ -42,7 +41,6 @@ query(
                 owner {
                     __typename
                     title
-                    state
                     user {
                         id
                         name

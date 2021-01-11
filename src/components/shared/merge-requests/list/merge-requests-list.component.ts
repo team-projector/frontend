@@ -7,7 +7,6 @@ import { delay, finalize, map } from 'rxjs/operators';
 import { deserialize, serialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
-import { IssueProblem } from 'src/models/enums/issue';
 import { MergeRequestState, MergeRequestType } from 'src/models/enums/merge-requests';
 import { ViewType } from 'src/models/enums/view-type';
 import { BackendError } from 'src/types/gql-errors';

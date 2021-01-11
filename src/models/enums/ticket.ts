@@ -27,3 +27,14 @@ export enum TicketsTypes {
   accepting = 'accepting',
   done = 'done'
 }
+
+export enum TicketSort {
+  dueDateAsc = 'DUE_DATE_ASC',
+  dueDateDesc = 'DUE_DATE_DESC',
+  startDateAsc = 'START_DATE_ASC',
+  startDateDesc = 'START_DATE_DESC',
+  titleAsc = 'TITLE_ASC',
+  titleDesc = 'TITLE_DESC',
+  stateAsc = 'STATE_ASC',
+  stateDesc = 'STATE_DESC'
+}

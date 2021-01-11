@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Query } from 'apollo-angular';
 import gql from 'graphql-tag';
+import { IssueSummaryProjectSort } from 'src/models/enums/issues-summary';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ query($user: ID, $team: ID, $dueDate: Date) {
         dueDate: $dueDate
         state: "OPENED"
     ) {
-        projects(orderBy: "-issues__remains") {
+        projects(orderBy: ${IssueSummaryProjectSort.issuesRemainsDesc}) {
             issues {
                 openedCount
                 percentage
