@@ -20,7 +20,7 @@
 
     <ng-template #tableFiltersTemplate>
       <jnt-row>
-        <jnt-col [wide]="2" [desktop]="4" [tablet]="4">
+        <jnt-col [wide]="2" [desktop]="4" [tablet]="12">
           <ng-template #projectOption let-project="value"
                        let-selected="selected">
             <jnt-stack [orientation]="ui.orientation.horizontal"
@@ -58,7 +58,7 @@
                                [value]="p"></jnt-select-option>
           </jnt-select>
         </jnt-col>
-        <jnt-col *ngIf="!!team" [wide]="2" [desktop]="4" [tablet]="4">
+        <jnt-col *ngIf="!!team" [wide]="2" [desktop]="4" [tablet]="12">
           <ng-template #userOption let-member="value"
                        let-selected="selected">
             <app-user [user]="member.user"
@@ -82,13 +82,13 @@
                                [value]="m"></jnt-select-option>
           </jnt-select>
         </jnt-col>
-        <jnt-col [wide]="2" [desktop]="2" [tablet]="2">
+        <jnt-col [wide]="2" [desktop]="2" [tablet]="12">
           <jnt-date-picker data-due-date formControlName="dueDate"
                            [width]="ui.width.fluid"
                            [features]="[ui.feature.allowEmpty]"></jnt-date-picker>
         </jnt-col>
-        <jnt-col [wide]="6" [tablet]="6">
-          <jnt-switcher data-summary formControlName="type">
+        <jnt-col [wide]="6" [desktop]="6" [tablet]="12">
+          <jnt-switcher data-summary formControlName="type" [features]="[ui.feature.adapted]">
             <jnt-switcher-option label="All"
                                  i18n-label="@@action.filter_issues_all"
                                  [disabled]="summary?.count <= 0"
