@@ -6,7 +6,7 @@
   <ng-template #noMetricTemplate>{{date | dfnsGetDate}}</ng-template>
   <ng-template #metricTemplate let-metric="metric" let-color="color" let-planned="planned">
     <jnt-circle-bar data-circle data-time>
-      <ng-template #content>
+      <ng-template #circleBarContentTemplate>
         <div data-day-text>{{metric | duration:durationFormat.short}}</div>
       </ng-template>
       <jnt-bar-indicator-group>
@@ -52,7 +52,7 @@
     <ng-container *ngSwitchDefault>
       <ng-container>
         <jnt-circle-bar data-circle>
-          <ng-template #content>
+          <ng-template #circleBarContentTemplate>
             <div data-day-text>{{date | dfnsGetDate}}</div>
           </ng-template>
           <jnt-bar-indicator-group>

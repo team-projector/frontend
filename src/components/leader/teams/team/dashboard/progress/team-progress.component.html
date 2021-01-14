@@ -21,7 +21,7 @@
   <div *ngIf="!!metric" data-metric [ngSwitch]="metricControl.value">
     <ng-container *ngSwitchCase="metricType.spent">
       <jnt-circle-bar data-circle>
-        <ng-template #content>
+        <ng-template #circleBarContentTemplate>
           <div data-day-text>{{metric.timeSpent | duration:durationFormat.short}}</div>
         </ng-template>
         <jnt-bar-indicator-group>
@@ -33,7 +33,7 @@
     </ng-container>
     <ng-container *ngSwitchCase="metricType.estimate">
       <jnt-circle-bar *ngIf="(date | isFuture)" data-circle>
-        <ng-template #content>{{metric.timeEstimate | duration:durationFormat.short}}</ng-template>
+        <ng-template #circleBarContentTemplate>{{metric.timeEstimate | duration:durationFormat.short}}</ng-template>
         <jnt-bar-indicator-group>
           <jnt-bar-indicator [color]="ui.color.red"
                              [value]="metric.timeEstimate | percentage:(metric.plannedWorkHours * 3600)">
@@ -43,7 +43,7 @@
     </ng-container>
     <ng-container *ngSwitchCase="metricType.remains">
       <jnt-circle-bar *ngIf="(date | isFuture)" data-circle>
-        <ng-template #content>{{metric.timeRemains | duration:durationFormat.short}}</ng-template>
+        <ng-template #circleBarContentTemplate>{{metric.timeRemains | duration:durationFormat.short}}</ng-template>
         <jnt-bar-indicator-group>
           <jnt-bar-indicator [color]="ui.color.yellow"
                              [value]="metric.timeRemains | percentage:(metric.plannedWorkHours * 3600)">
@@ -53,7 +53,7 @@
     </ng-container>
     <ng-container *ngSwitchCase="metricType.loading">
       <jnt-circle-bar data-circle>
-        <ng-template #content>{{metric.loading | duration:durationFormat.short}}</ng-template>
+        <ng-template #circleBarContentTemplate>{{metric.loading | duration:durationFormat.short}}</ng-template>
         <jnt-bar-indicator-group>
           <jnt-bar-indicator [color]="ui.color.purpleDark"
                              [value]="metric.loading | percentage:(metric.plannedWorkHours * 3600)">
