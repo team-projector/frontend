@@ -15,6 +15,7 @@ query(
     $offset: Int
     $first: Int
     $state: String
+    $date: Date
 ) {
     timeExpenses: allSpentTimes(
         team: $team
@@ -23,6 +24,7 @@ query(
         offset: $offset
         first: $first
         state: $state
+        date: $date
         sort: ${SpentTimeSort.createdAtDesc}
     ) {
         count
