@@ -1,19 +1,8 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import "~@junte/ui/lib/assets/styles/layout/card";
-$jnt-ng-deep: true;
 
 :host {
   display: block;
 }
-
-@include jnt-card((
-  shadow: $jnt-shadow-normal,
-  title: (
-    text-align: center,
-    font-weight: $jnt-font-weight-semi-bold,
-    color: $jnt-primary-color,
-    font-size: $jnt-font-size-base
-  )));
 
 [footer] {
   padding-top: $jnt-gutter-normal;
