@@ -40,13 +40,13 @@ query(
     $first: Int
     $state: MilestoneState
     $q: String
-    $orderBy: [MilestoneSort]
+    $sort: [MilestoneSort]
 ) {
     milestones: allMilestones(
         offset: $offset
         first: $first
         state: $state
-        orderBy: $orderBy
+        sort: $sort
         q: $q
     ) {
         count

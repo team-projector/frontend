@@ -33,7 +33,7 @@ query(
     $dueDate: Date
     $state: IssueState
     $problems: Boolean
-    $orderBy: [IssueSort]
+    $sort: [IssueSort]
     $offset: Int
     $first: Int
     $q: String
@@ -47,7 +47,7 @@ query(
         dueDate: $dueDate
         state: $state
         problems: $problems
-        orderBy: $orderBy
+        sort: $sort
         offset: $offset
         first: $first
         q: $q
@@ -125,7 +125,7 @@ export class ProjectsSummaryGQL extends Query<{ summary }> {
   document = gql`
 query ($team: ID, $user: ID, $project: ID, $dueDate: Date) {
   summary: issuesSummary(team: $team, user: $user, project: $project, dueDate: $dueDate) {
-    projects(orderBy: ${IssueSummaryProjectSort.issuesRemainsDesc}) {
+    projects(sort: ${IssueSummaryProjectSort.issuesRemainsDesc}) {
       project {
         id
         title
@@ -178,7 +178,7 @@ export class TeamMembersGQL extends Query<{ team: { members } }> {
   document = gql`
 query ($team: ID!) {
   team(id: $team) {
-    members(roles: "DEVELOPER", orderBy: ${TeamMemberSort.userNameAsc}) {
+    members(roles: "DEVELOPER", sort: ${TeamMemberSort.userNameAsc}) {
       count
       edges {
         node {

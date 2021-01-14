@@ -199,7 +199,7 @@ export class IssuesListComponent implements OnInit {
     const filter = new IssuesFilter({
       first: first,
       q: q,
-      orderBy: type === IssuesType.opened ? IssueSort.dueDateAsc : IssueSort.closedAtDesc,
+      sort: type === IssuesType.opened ? IssueSort.dueDateAsc : IssueSort.closedAtDesc,
       dueDate: !!dueDate ? startOfDay(dueDate) : null,
       team: this.team?.id,
       project: project,

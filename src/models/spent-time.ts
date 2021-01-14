@@ -124,7 +124,7 @@ export class TimeExpensesFilter {
   @field({serializer: new DateSerializer(DATE_FORMAT)})
   date: Date;
 
-  orderBy: string;
+  sort: string;
 
   @field()
   first: number;

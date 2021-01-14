@@ -230,7 +230,7 @@ export class IssuesFilter implements SearchFilter {
   q: string;
 
   @field()
-  orderBy: IssueSort;
+  sort: IssueSort;
 
   constructor(defs: Partial<IssuesFilter> = null) {
     if (!!defs) {

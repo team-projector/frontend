@@ -138,7 +138,7 @@ export class MergeRequestsFilter implements SearchFilter {
   state?: MergeRequestState | null;
 
   @field()
-  orderBy?: MergeRequestSort;
+  sort?: MergeRequestSort;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
   dueDate?: string;

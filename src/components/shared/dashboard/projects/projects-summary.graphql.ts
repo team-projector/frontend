@@ -15,7 +15,7 @@ query($user: ID, $team: ID, $dueDate: Date) {
         dueDate: $dueDate
         state: "OPENED"
     ) {
-        projects(orderBy: ${IssueSummaryProjectSort.issuesRemainsDesc}) {
+        projects(sort: ${IssueSummaryProjectSort.issuesRemainsDesc}) {
             issues {
                 openedCount
                 percentage

@@ -10,7 +10,7 @@ export class TeamMembersGQL extends Query<{ team: { members } }> {
   document = gql`
 query ($team: ID!) {
   team(id: $team) {
-    members(roles: "DEVELOPER", orderBy: ${TeamMemberSort.userNameAsc}) {
+    members(roles: "DEVELOPER", sort: ${TeamMemberSort.userNameAsc}) {
       count
       edges {
         node {

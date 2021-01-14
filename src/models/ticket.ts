@@ -207,7 +207,7 @@ export class TicketsFilter implements SearchFilter {
   state: string;
 
   @field()
-  orderBy?: string;
+  sort?: string;
 
   @field()
   first?: number;

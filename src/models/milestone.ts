@@ -161,7 +161,7 @@ export class MilestonesFilter implements SearchFilter {
   state: MilestoneState;
 
   @field()
-  orderBy: string;
+  sort: string;
 
   constructor(defs: Partial<MilestonesFilter> = null) {
     if (!!defs) {

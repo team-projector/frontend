@@ -35,7 +35,7 @@ query($milestone: ID!, $state: TicketState, $offset: Int, $first: Int) {
     tickets: allTickets(
         milestone: $milestone
         state: $state
-        orderBy: [${TicketSort.dueDateAsc},${TicketSort.startDateAsc},${TicketSort.titleAsc}]
+        sort: [${TicketSort.dueDateAsc},${TicketSort.startDateAsc},${TicketSort.titleAsc}]
         offset: $offset
         first: $first
     ) {
@@ -99,7 +99,7 @@ export class TicketIssuesGQL extends Query<{ ticket: { issues } }> {
   document = gql`
 query ($ticket: ID!) {
   ticket(id: $ticket) {
-    issues(orderBy: [${IssueSort.stateDesc},${IssueSort.userAsc}]) {
+    issues(sort: [${IssueSort.stateDesc},${IssueSort.userAsc}]) {
       count
       edges {
         node {

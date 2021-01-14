@@ -27,7 +27,7 @@ query(
     $user: ID
     $project: ID
     $state: MergeRequestState
-    $orderBy: [MergeRequestSort]
+    $sort: [MergeRequestSort]
     $offset: Int
     $first: Int
 ) {
@@ -36,7 +36,7 @@ query(
         user: $user
         project: $project
         state: $state
-        orderBy: $orderBy
+        sort: $sort
         offset: $offset
         first: $first
     ) {

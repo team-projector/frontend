@@ -113,7 +113,7 @@ export class TimeExpensesListComponent implements OnInit {
       first: first,
       state: type === TimeExpenseType.opened ? TimeExpenseState.opened :
         type === TimeExpenseType.closed ? TimeExpenseState.closed : undefined,
-      orderBy: type === TimeExpenseType.opened ? 'due_date' : '-closed_at',
+      sort: type === TimeExpenseType.opened ? 'due_date' : '-closed_at',
       date: !!date ? startOfDay(date) : null,
       team: this.team?.id,
       user: this.user?.id,

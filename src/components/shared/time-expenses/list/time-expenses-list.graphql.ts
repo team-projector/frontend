@@ -23,7 +23,7 @@ query(
         offset: $offset
         first: $first
         state: $state
-        orderBy: ${SpentTimeSort.createdAtDesc}
+        sort: ${SpentTimeSort.createdAtDesc}
     ) {
         count
         edges {

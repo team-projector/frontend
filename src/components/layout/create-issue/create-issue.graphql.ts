@@ -9,7 +9,7 @@ import { ProjectSort } from 'src/models/enums/project';
 export class ProjectsGQL extends Query<{ projects }> {
   document = gql`
 {
-  projects: allProjects(state: [DEVELOPING, SUPPORTING], orderBy: ${ProjectSort.titleAsc}) {
+  projects: allProjects(state: [DEVELOPING, SUPPORTING], sort: ${ProjectSort.titleAsc}) {
     count
     edges {
       node {
