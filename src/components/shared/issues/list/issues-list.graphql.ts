@@ -42,7 +42,7 @@ query(
         milestone: $milestone
         ticket: $ticket
         team: $team
-        user: $user
+        assignedTo: $user
         project: $project
         dueDate: $dueDate
         state: $state
