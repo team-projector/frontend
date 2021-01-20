@@ -1,7 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from '@junte/ui';
+import {
+  BadgeModule,
+  ButtonModule,
+  DatePickerModule,
+  FormModule,
+  InformerModule,
+  LinkModule,
+  StackModule,
+  SwitcherModule,
+  TableModule
+} from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { MoneyPipesModule } from 'src/pipes/money-pipes.module';
@@ -20,7 +30,15 @@ import { GetOwnerTypePipe } from './time-expenses-list.pipes';
     CommonModule,
     ReactiveFormsModule,
 
-    JunteUiModule,
+    InformerModule,
+    FormModule,
+    StackModule,
+    TableModule,
+    DatePickerModule,
+    ButtonModule,
+    SwitcherModule,
+    BadgeModule,
+    LinkModule,
     DateFnsModule,
     DatePipesModule,
     MoneyPipesModule,

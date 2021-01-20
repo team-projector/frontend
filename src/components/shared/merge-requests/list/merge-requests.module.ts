@@ -2,7 +2,15 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { JunteUiModule } from '@junte/ui';
+import {
+  BadgeModule,
+  FormModule,
+  InformerModule,
+  MenuModule,
+  StackModule,
+  SwitcherModule,
+  TableModule
+} from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DueDateModule } from 'src/components/shared/due-date/due-date.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
@@ -22,7 +30,13 @@ import { MergeRequestsListComponent } from './merge-requests-list.component';
     ReactiveFormsModule,
     RouterModule,
 
-    JunteUiModule,
+    InformerModule,
+    FormModule,
+    TableModule,
+    SwitcherModule,
+    StackModule,
+    BadgeModule,
+    MenuModule,
     DateFnsModule,
     DueDateModule,
     DatePipesModule,

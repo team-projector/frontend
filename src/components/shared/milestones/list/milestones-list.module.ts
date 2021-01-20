@@ -1,7 +1,17 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from '@junte/ui';
+import {
+  BadgeModule,
+  DatePeriodModule,
+  FormModule,
+  InformerModule,
+  LabelModule,
+  MenuModule,
+  StackModule,
+  SwitcherModule,
+  TableModule
+} from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { BudgetModule } from 'src/components/shared/budget/budget.module';
 import { ProfitModule } from 'src/components/shared/profit/profit.module';
@@ -19,7 +29,15 @@ import { MilestonesListComponent } from './milestones-list.component';
   ],
   imports: [
     CommonModule,
-    JunteUiModule,
+    FormModule,
+    InformerModule,
+    TableModule,
+    StackModule,
+    SwitcherModule,
+    BadgeModule,
+    MenuModule,
+    LabelModule,
+    DatePeriodModule,
     ReactiveFormsModule,
     DateFnsModule,
     MoneyPipesModule,
