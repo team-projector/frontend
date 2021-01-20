@@ -1,7 +1,23 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from '@junte/ui';
+import {
+  AvatarModule,
+  BadgeModule,
+  ButtonModule,
+  DatePickerModule,
+  FormModule,
+  GridModule,
+  IconModule,
+  InformerModule,
+  LabelModule,
+  LinkModule,
+  MenuModule,
+  SelectModule,
+  StackModule,
+  SwitcherModule,
+  TableModule
+} from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DueDateModule } from 'src/components/shared/due-date/due-date.module';
 import { WorkProgressModule } from '../../work-progress/work-progress.module';
@@ -22,7 +38,21 @@ import { IssuesListComponent } from './issues-list.component';
     CommonModule,
     ReactiveFormsModule,
 
-    JunteUiModule,
+    InformerModule,
+    FormModule,
+    TableModule,
+    GridModule,
+    ButtonModule,
+    StackModule,
+    AvatarModule,
+    BadgeModule,
+    SelectModule,
+    DatePickerModule,
+    SwitcherModule,
+    IconModule,
+    LabelModule,
+    LinkModule,
+    MenuModule,
     DateFnsModule,
 
     DatePipesModule,

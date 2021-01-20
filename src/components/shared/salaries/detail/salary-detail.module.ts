@@ -1,7 +1,18 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from '@junte/ui';
+import {
+  StackModule,
+  GridModule,
+  BlockModule,
+  DatePeriodModule,
+  LabelModule,
+  AvatarModule,
+  IconModule,
+  AppLayoutModule,
+  MenuModule,
+  BadgeModule,
+} from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { BonusesListModule } from 'src/components/shared/bonuses/list/bonuses-list.module';
 import { PenaltiesModule } from 'src/components/shared/penalties/penalties.module';
@@ -27,7 +38,16 @@ import { SalaryTimeExpensesListComponent } from './time-expenses/time-expenses-l
 
         CommonModule,
         ReactiveFormsModule,
-        JunteUiModule,
+        StackModule,
+        GridModule,
+        BlockModule,
+        DatePeriodModule,
+        LabelModule,
+        AvatarModule,
+        IconModule,
+        AppLayoutModule,
+        MenuModule,
+        BadgeModule,
         DatePipesModule,
         MoneyPipesModule,
         IssuesListModule,
