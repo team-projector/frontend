@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
+  AvatarModule,
   BadgeModule,
   DatePeriodModule,
   FormModule,
   InformerModule,
-  LabelModule,
+  LabelModule, LinkModule,
   MenuModule,
   StackModule,
   SwitcherModule,
@@ -44,7 +45,9 @@ import { MilestonesListComponent } from './milestones-list.component';
     DatePipesModule,
     ProfitModule,
     BudgetModule,
-    WorkProgressModule
+    WorkProgressModule,
+    LinkModule,
+    AvatarModule
   ]
 })
 export class MilestonesListModule {
