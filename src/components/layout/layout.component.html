@@ -94,11 +94,13 @@
               </jnt-stack>
             </jnt-stack>
             <app-select-lang></app-select-lang>
-            <jnt-button text="Logout"
-                        i18n-text="@@action.logout"
-                        [icon]="{icon: ui.icons.chevronRight, position: ui.position.right}"
-                        (click)="logout()"
-                        [width]="ui.width.fluid"></jnt-button>
+            <jnt-menu [orientation]="ui.orientation.vertical">
+              <jnt-menu-item title="Logout"
+                             i18n-title="@@action.logout"
+                             [icon]="ui.icons.logout"
+                             (click)="logout()">
+              </jnt-menu-item>
+            </jnt-menu>
           </jnt-stack>
         </ng-template>
       </jnt-app-header-userbar>

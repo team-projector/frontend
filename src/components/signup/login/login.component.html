@@ -101,7 +101,8 @@
                          [jntShortcuts]="[{key: ui.keyboard.key.enter, action: submit.bind(this)}]"
                          [icon]="ui.icons.lock"
                          [type]="ui.input.type.password"></jnt-input>
-              <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+              <jnt-form-message i18n="@@message.field_required"
+                                [validator]="ui.validator.required">
                 This field is required
               </jnt-form-message>
             </jnt-form-control>
@@ -110,7 +111,7 @@
         <ng-template #formFooterTemplate>
           <jnt-form-item>
             <jnt-button [type]="ui.button.type.submit"
-                        [icon]="{icon: ui.icons.chevronRight, position: ui.position.right}"
+                        [icon]="ui.icons.login"
                         text="Login"
                         i18n-text="@@action.login"
                         [width]="ui.width.fluid">
