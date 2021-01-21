@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from '@junte/ui';
+import { AppLayoutModule, BlockModule, MenuModule } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { NumberPipesModule } from 'src/pipes/number-pipes.module';
@@ -24,7 +24,9 @@ import { ShareholderProjectsComponent } from './shareholder-projects.component';
     CommonModule,
     ProjectsListModule,
     ProjectGroupsListModule,
-    JunteUiModule,
+    AppLayoutModule,
+    BlockModule,
+    MenuModule,
 
     ReactiveFormsModule,
     DatePipesModule,

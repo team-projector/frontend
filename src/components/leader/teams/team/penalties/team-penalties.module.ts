@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from '@junte/ui';
+import { AppLayoutModule, BlockModule } from '@junte/ui';
 import { PenaltiesModule } from '../../../../shared/penalties/penalties.module';
 import { TeamPenaltiesRoutingModule } from './team-penalties-routing.module';
 import { TeamPenaltiesComponent } from './team-penalties.component';
@@ -15,7 +15,8 @@ import { TeamPenaltiesComponent } from './team-penalties.component';
 
     CommonModule,
     ReactiveFormsModule,
-    JunteUiModule,
+    AppLayoutModule,
+    BlockModule,
 
     PenaltiesModule
   ]

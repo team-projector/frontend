@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { JunteUiModule } from '@junte/ui';
+import { AppLayoutModule, BlockModule } from '@junte/ui';
 import { UsersListModule } from '../../shared/users/list/users-list.module';
 import { CompanyUsersRoutingModule } from './company-users-routing.module';
 import { CompanyUsersComponent } from './company-users.component';
@@ -13,7 +13,8 @@ import { CompanyUsersComponent } from './company-users.component';
     CompanyUsersRoutingModule,
 
     CommonModule,
-    JunteUiModule,
+    AppLayoutModule,
+    BlockModule,
     UsersListModule
   ]
 })

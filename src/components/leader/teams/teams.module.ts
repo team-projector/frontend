@@ -2,7 +2,16 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { JunteUiModule } from '@junte/ui';
+import {
+  AppLayoutModule, AvatarModule,
+  BreadcrumbsModule,
+  CardModule, FormModule,
+  GridModule,
+  InformerModule,
+  JunteUiModule, LabelModule, PagerModule,
+  SkeletonModule,
+  StackModule
+} from '@junte/ui';
 import { AppFooterModule } from 'src/components/layout/footer/app-footer.module';
 import { TeamsRoutingModule } from 'src/components/leader/teams/teams-routing.module';
 import { TeamsComponent } from 'src/components/leader/teams/teams.component';
@@ -19,7 +28,17 @@ import { DatePipesModule } from 'src/pipes/date-pipes.module';
 
     CommonModule,
     ReactiveFormsModule,
-    JunteUiModule,
+    AppLayoutModule,
+    InformerModule,
+    GridModule,
+    BreadcrumbsModule,
+    CardModule,
+    StackModule,
+    SkeletonModule,
+    AvatarModule,
+    LabelModule,
+    FormModule,
+    PagerModule,
     RouterModule,
     DatePipesModule,
     OutletModule,

@@ -3,11 +3,28 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from '@junte/ui';
+import {
+  AppLayoutModule,
+  BadgeModule,
+  BlockModule,
+  ButtonModule,
+  DotModule,
+  FormModule,
+  GanttModule,
+  GridModule,
+  InformerModule,
+  LabelModule,
+  LinkModule,
+  MenuModule,
+  StackModule,
+  SwitcherModule,
+  TabsModule
+} from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { EditTicketComponent } from 'src/components/manager/milestones/milestone/edit-ticket/edit-ticket.component';
 import { TicketStateColorPipe } from 'src/components/manager/milestones/milestone/milestone.pipes';
 import { OutletModule } from 'src/components/outlet/outlet.module';
+import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { MoneyPipesModule } from 'src/pipes/money-pipes.module';
 import { IssueCardModule } from '../../shared/issues/card/issue-card.module';
@@ -28,7 +45,22 @@ import { ManagerMilestonesComponent } from './milestones.component';
 
     CommonModule,
     ReactiveFormsModule,
-    JunteUiModule,
+    AppLayoutModule,
+    BlockModule,
+    InformerModule,
+    FormModule,
+    GanttModule,
+    StackModule,
+    SwitcherModule,
+    ButtonModule,
+    GridModule,
+    BadgeModule,
+    MenuModule,
+    LabelModule,
+    TabsModule,
+    DotModule,
+    LinkModule,
+    ArrayPipesModule,
     DragDropModule,
     ClipboardModule,
 

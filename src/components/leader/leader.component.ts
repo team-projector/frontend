@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { UI } from '@junte/ui';
 
 @Component({
   selector: 'app-leader',
@@ -8,7 +7,5 @@ import { UI } from '@junte/ui';
 })
 
 export class LeaderComponent {
-
-  ui = UI;
 
 }
