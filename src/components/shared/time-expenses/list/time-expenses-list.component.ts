@@ -39,7 +39,7 @@ export class TimeExpensesListComponent implements OnInit {
   ownerType = OwnerType;
   durationFormat = DurationFormat;
   userCardSize = CardSize;
-  today = new Date();
+  today = () => new Date();
 
   // will be used for reset offset
   private reset: Object;

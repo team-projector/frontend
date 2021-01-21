@@ -49,7 +49,7 @@ export class IssuesListComponent implements OnInit {
   standardLabel = StandardLabel;
   durationFormat = DurationFormat;
   userCardSize = CardSize;
-  today = new Date();
+  today = () => new Date();
 
   tablet = (this.breakpoint.current === UI.breakpoint.tablet) || (this.breakpoint.current === UI.breakpoint.mobile);
 
