@@ -15,7 +15,7 @@
                   [icon]="localUi.icons.today"
                   [scheme]="ui.scheme.secondary"
                   [outline]="ui.outline.transparent"
-                  (click)="form.patchValue({dueDate: today, type: issuesType.opened})"></jnt-button>
+                  (click)="form.patchValue({dueDate: today(), type: issuesType.opened})"></jnt-button>
     </ng-template>
 
     <ng-template #tableFiltersTemplate>

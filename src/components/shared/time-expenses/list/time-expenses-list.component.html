@@ -13,7 +13,7 @@
                   [icon]="localUi.icons.today"
                   [scheme]="ui.scheme.secondary"
                   [outline]="ui.outline.transparent"
-                  (click)="form.patchValue({date: today})"></jnt-button>
+                  (click)="form.patchValue({date: today()})"></jnt-button>
     </ng-template>
 
     <ng-template *ngIf="view !== viewType.salary" #tableFiltersTemplate>
