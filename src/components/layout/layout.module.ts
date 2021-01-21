@@ -1,7 +1,27 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from '@junte/ui';
+import {
+  AppLayoutModule,
+  AvatarModule,
+  ButtonModule,
+  DatePickerModule,
+  DotModule,
+  FormModule,
+  GridModule,
+  IconModule,
+  InformerModule,
+  InputModule,
+  LabelModule,
+  LinkModule,
+  MenuModule,
+  ModalModule,
+  PopoverModule,
+  SelectModule,
+  SkeletonModule,
+  StackModule,
+  SwitcherModule
+} from '@junte/ui';
 import { CookieService } from 'ngx-cookie-service';
 import { DateFnsModule } from 'ngx-date-fns';
 import { AuthorizationGuard } from 'src/guards/authorization.guard';
@@ -29,8 +49,26 @@ import { AppThemeSwitcherModule } from './theme-switcher/app-theme-switcher.modu
     CommonModule,
     ReactiveFormsModule,
     LayoutRoutingModule,
-    JunteUiModule,
+    ModalModule,
+    PopoverModule,
+    AppLayoutModule,
+    MenuModule,
+    StackModule,
+    ButtonModule,
+    SkeletonModule,
+    LabelModule,
+    IconModule,
+    AvatarModule,
+    SwitcherModule,
+    InformerModule,
+    LinkModule,
+    FormModule,
+    GridModule,
+    InputModule,
+    SelectModule,
     ArrayPipesModule,
+    DatePickerModule,
+    DotModule,
     DatePipesModule,
     IssueCardModule,
     AppThemeSwitcherModule,

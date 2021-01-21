@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from '@junte/ui';
+import { AppLayoutModule, BlockModule } from '@junte/ui';
 import { MergeRequestsModule } from '../../shared/merge-requests/list/merge-requests.module';
 import { DeveloperMergeRequestsRoutingModule } from './developer-merge-requests-routing.module';
 import { DeveloperMergeRequestsComponent } from './developer-merge-requests.component';
@@ -15,7 +15,8 @@ import { DeveloperMergeRequestsComponent } from './developer-merge-requests.comp
 
     CommonModule,
     ReactiveFormsModule,
-    JunteUiModule,
+    AppLayoutModule,
+    BlockModule,
 
     MergeRequestsModule
   ]

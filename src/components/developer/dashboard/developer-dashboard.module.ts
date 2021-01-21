@@ -1,7 +1,21 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from '@junte/ui';
+import {
+  AppLayoutModule,
+  AvatarModule,
+  BlockModule,
+  ButtonModule,
+  CalendarModule,
+  CircleBarModule,
+  DotModule,
+  FormModule,
+  GridModule,
+  IconModule,
+  LabelModule,
+  MenuModule,
+  StackModule
+} from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { MoneyPipesModule } from 'src/pipes/money-pipes.module';
@@ -28,7 +42,19 @@ import { DeveloperWorkBreaksComponent } from './work-breaks/developer-work-break
     CommonModule,
     ReactiveFormsModule,
     DateFnsModule,
-    JunteUiModule,
+    AppLayoutModule,
+    GridModule,
+    StackModule,
+    BlockModule,
+    CircleBarModule,
+    DotModule,
+    FormModule,
+    ButtonModule,
+    CalendarModule,
+    MenuModule,
+    AvatarModule,
+    LabelModule,
+    IconModule,
 
     DatePipesModule,
     NumberPipesModule,

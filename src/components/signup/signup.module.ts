@@ -3,7 +3,16 @@ import { CommonModule } from '@angular/common';
 import { LoginComponent } from './login/login.component';
 import { SignupRoutingModule } from './signup-routing.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { JunteUiModule } from '@junte/ui';
+import {
+  BlockModule,
+  ButtonModule,
+  FormModule,
+  InformerModule,
+  InputModule,
+  LinkModule,
+  MenuModule,
+  StackModule
+} from '@junte/ui';
 
 @NgModule({
   declarations: [LoginComponent],
@@ -11,7 +20,14 @@ import { JunteUiModule } from '@junte/ui';
     CommonModule,
     ReactiveFormsModule,
     SignupRoutingModule,
-    JunteUiModule
+    LinkModule,
+    InformerModule,
+    BlockModule,
+    FormModule,
+    MenuModule,
+    InputModule,
+    StackModule,
+    ButtonModule
   ]
 })
 export class SignupModule {

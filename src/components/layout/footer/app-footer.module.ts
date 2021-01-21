@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppFooterComponent } from './app-footer.component';
-import { JunteUiModule } from '@junte/ui';
+import { AppLayoutModule } from '@junte/ui';
 
 @NgModule({
   imports: [
     CommonModule,
-    JunteUiModule
+    AppLayoutModule
   ],
   declarations: [
     AppFooterComponent

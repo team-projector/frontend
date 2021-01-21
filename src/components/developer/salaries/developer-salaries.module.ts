@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { JunteUiModule } from '@junte/ui';
+import { AppLayoutModule, BlockModule } from '@junte/ui';
 import { DeveloperSalariesRoutingModule } from 'src/components/developer/salaries/developer-salaries-routing.module';
 import { SalariesListModule } from '../../shared/salaries/list/salaries-list.module';
 import { DeveloperSalariesComponent } from './developer-salaries.component';
@@ -13,7 +13,8 @@ import { DeveloperSalariesComponent } from './developer-salaries.component';
     DeveloperSalariesRoutingModule,
 
     CommonModule,
-    JunteUiModule,
+    AppLayoutModule,
+    BlockModule,
     SalariesListModule
   ]
 })
