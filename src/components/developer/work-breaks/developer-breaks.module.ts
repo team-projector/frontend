@@ -1,7 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AppLayoutModule, BlockModule, GanttModule, InformerModule, LabelModule, MenuModule, StackModule } from '@junte/ui';
+import {
+  AppLayoutModule,
+  BlockModule,
+  MenuModule,
+  InformerModule,
+  GanttModule,
+  StackModule,
+  LabelModule,
+  PopoverModule
+} from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { WorkBreaksListModule } from 'src/components/shared/work-breaks/list/work-breaks-list.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
@@ -30,6 +39,7 @@ import { DeveloperBreaksTableComponent } from './list/developer-breaks-table.com
     GanttModule,
     StackModule,
     LabelModule,
+    PopoverModule,
 
     ReactiveFormsModule,
     DatePipesModule,

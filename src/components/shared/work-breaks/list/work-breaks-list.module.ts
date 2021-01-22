@@ -14,7 +14,10 @@ import {
   LabelModule,
   MenuModule,
   InputModule,
-  DotModule, SwitcherModule, GridModule
+  DotModule,
+  SwitcherModule,
+  GridModule,
+  DatePickerModule
 } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { BreakDeclineComponent } from 'src/components/shared/work-breaks/decline/break-decline.component';
@@ -40,6 +43,7 @@ import { WorkBreaksListComponent } from './work-breaks-list.component';
     GanttModule,
     ButtonModule,
     DatePeriodModule,
+    DatePickerModule,
     StackModule,
     LabelModule,
     DotModule,
