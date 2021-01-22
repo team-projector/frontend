@@ -14,6 +14,7 @@ import {
   IconModule,
   LabelModule,
   MenuModule,
+  PopoverModule,
   StackModule
 } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
@@ -55,6 +56,7 @@ import { DeveloperWorkBreaksComponent } from './work-breaks/developer-work-break
     AvatarModule,
     LabelModule,
     IconModule,
+    PopoverModule,
 
     DatePipesModule,
     NumberPipesModule,
