@@ -58,7 +58,7 @@ export class ProjectsSummaryComponent implements OnInit {
   }
 
   private load() {
-    const filter = new IssuesFilter({user: this.user?.id, team: this.team?.id});
+    const filter = new IssuesFilter({assignedTo: this.user?.id, team: this.team?.id});
     this.progress.projects = true;
     (environment.mocks
         ? of(getMock(IssuesSummary)).pipe(delay(MOCKS_DELAY))
