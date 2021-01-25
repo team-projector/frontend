@@ -1,6 +1,6 @@
 import { DATE_FORMAT } from 'src/consts';
 import { field, model } from 'src/decorators/model';
-import { IssuesType } from 'src/models/enums/issue';
+import { AssigneeType, IssuesType } from 'src/models/enums/issue';
 import { Project } from 'src/models/project';
 import { Team } from 'src/models/team';
 import { User } from 'src/models/user';
@@ -11,6 +11,7 @@ export interface IssuesState {
   offset: number;
   q: string;
   type: IssuesType;
+  assignee: AssigneeType;
   dueDate: Date;
   user: User;
   team: Team;
@@ -32,6 +33,9 @@ export class IssuesStateUpdate {
 
   @field()
   type: IssuesType;
+
+  @field()
+  assignee: AssigneeType;
 
   @field({serializer: new DateSerializer(DATE_FORMAT)})
   dueDate: Date;

@@ -16,6 +16,12 @@ export enum IssuesType {
   problems = 'problems'
 }
 
+export enum AssigneeType {
+  assignedTo = 'assignedTo',
+  createdBy = 'createdBy',
+  participatedBy = 'participatedBy'
+}
+
 export enum IssueSort {
   dueDateAsc = 'DUE_DATE_ASC',
   dueDateDesc = 'DUE_DATE_DESC',

@@ -17,6 +17,7 @@ import {
   MenuModule,
   ModalModule,
   PopoverModule,
+  ResponsiveModule,
   SelectModule,
   SkeletonModule,
   StackModule,
@@ -72,6 +73,7 @@ import { AppThemeSwitcherModule } from './theme-switcher/app-theme-switcher.modu
     DatePipesModule,
     IssueCardModule,
     AppThemeSwitcherModule,
+    ResponsiveModule,
     DateFnsModule,
 
     UserCardModule

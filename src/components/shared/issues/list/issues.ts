@@ -5,14 +5,12 @@ import { combineLatest } from 'rxjs';
 import { serialize } from '@junte/serialize-ts';
 import { ViewType } from 'src/models/enums/view-type';
 import { IssueState } from 'src/models/enums/issue';
-import { StandardLabel } from 'src/models/enums/standard-label';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
 
 export abstract class IssuesComponent implements OnInit {
 
   viewType = ViewType;
   issueState = IssueState;
-  standardLabel = StandardLabel;
 
   state: IssuesState;
 
@@ -23,7 +21,7 @@ export abstract class IssuesComponent implements OnInit {
 
   ngOnInit() {
     combineLatest([this.route.data, this.route.params])
-      .subscribe(([{team, user, developer, project, dueDate}, {q, first, offset, type}]) => {
+      .subscribe(([{team, user, developer, project, dueDate}, {q, first, offset, type, assignee}]) => {
         this.logger.debug('read router data & params');
         this.state = {
           first: +first || null,
@@ -33,6 +31,7 @@ export abstract class IssuesComponent implements OnInit {
           dueDate: dueDate,
           team: team || null,
           user: user || null,
+          assignee: assignee || null,
           project: project || null,
           developer: developer || null
         };

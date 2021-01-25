@@ -20,6 +20,21 @@
 
     <ng-template #tableFiltersTemplate>
       <jnt-row>
+        <jnt-col [mobile]="12" [tablet]="12" [desktop]="6">
+          <jnt-switcher data-summary formControlName="assignee" [features]="[ui.feature.adapted]">
+            <jnt-switcher-option label="Assigned with me"
+                                 [value]="assigneeType.assignedTo">
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Assigned by me"
+                                 [value]="assigneeType.createdBy">
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Discuss"
+                                 [value]="assigneeType.participatedBy">
+            </jnt-switcher-option>
+          </jnt-switcher>
+        </jnt-col>
+      </jnt-row>
+      <jnt-row>
         <jnt-col [wide]="2" [desktop]="4" [tablet]="12">
           <ng-template #projectOption let-project="value"
                        let-selected="selected">

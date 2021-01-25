@@ -10,7 +10,7 @@ import { deserialize, serialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
-import { IssueProblem, IssueSort, IssueState, IssuesType } from 'src/models/enums/issue';
+import { AssigneeType, IssueSort, IssueState, IssuesType } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { ViewType } from 'src/models/enums/view-type';
 import { BackendError } from 'src/types/gql-errors';
@@ -43,13 +43,12 @@ export class IssuesListComponent implements OnInit {
   localUi = LocalUI;
   ui = UI;
   issueState = IssueState;
-  issueProblem = IssueProblem;
   issuesType = IssuesType;
+  assigneeType = AssigneeType;
   viewType = ViewType;
   standardLabel = StandardLabel;
   durationFormat = DurationFormat;
   userCardSize = CardSize;
-  today = () => new Date();
 
   tablet = (this.breakpoint.current === UI.breakpoint.tablet) || (this.breakpoint.current === UI.breakpoint.mobile);
 
@@ -107,11 +106,12 @@ export class IssuesListComponent implements OnInit {
     type: [IssuesType.opened],
     dueDate: this.dueDateControl,
     project: [null],
-    developer: [null]
+    developer: [null],
+    assignee: [AssigneeType.assignedTo]
   });
 
   @Input()
-  set state({first, offset, q, type, dueDate, user, team, developer, project}: IssuesState) {
+  set state({first, offset, q, type, dueDate, user, team, developer, project, assignee}: IssuesState) {
     this.team = team;
     this.user = user;
     this.project = project;
@@ -123,6 +123,8 @@ export class IssuesListComponent implements OnInit {
         offset: offset || 0
       },
       type: type || IssuesType.opened,
+      user: user || null,
+      assignee: assignee || AssigneeType.assignedTo,
       dueDate: dueDate || null,
       project: project?.id || null,
       developer: developer?.id || null
@@ -139,6 +141,8 @@ export class IssuesListComponent implements OnInit {
 
   @ViewChild('table', {static: true})
   table: TableComponent;
+
+  today = () => new Date();
 
   constructor(private issuesGQL: IssuesGQL,
               private teamMembersGQL: TeamMembersGQL,
@@ -168,8 +172,7 @@ export class IssuesListComponent implements OnInit {
 
   private loadProjects() {
     const filter = new IssuesFilter({
-      team: this.team?.id,
-      user: this.user?.id
+      team: this.team?.id
     });
     this.logger.debug('load projects');
     this.progress.projects = true;
@@ -195,7 +198,7 @@ export class IssuesListComponent implements OnInit {
   }
 
   private load() {
-    const {table: {first, q}, type, dueDate, project, developer} = this.form.getRawValue();
+    const {table: {first, q}, type, dueDate, project, developer, assignee} = this.form.getRawValue();
     const filter = new IssuesFilter({
       first: first,
       q: q,
@@ -203,7 +206,9 @@ export class IssuesListComponent implements OnInit {
       dueDate: !!dueDate ? startOfDay(dueDate) : null,
       team: this.team?.id,
       project: project,
-      user: this.user?.id || developer,
+      assignedTo: assignee === AssigneeType.assignedTo ? (this.user?.id || developer) : null,
+      createdBy: assignee === AssigneeType.createdBy ? this.user?.id : null,
+      participatedBy: assignee === AssigneeType.participatedBy ? this.user?.id : null,
       state: type === IssuesType.opened ? IssueState.opened :
         (type === IssuesType.closed ? IssueState.closed : null),
       problems: type === IssuesType.problems ? true : null
@@ -235,6 +240,7 @@ export class IssuesListComponent implements OnInit {
       first: first !== PAGE_SIZE ? first : undefined,
       offset: offset > 0 ? offset : undefined,
       type: type !== IssuesType.opened ? type : undefined,
+      assignee: assignee !== AssigneeType.assignedTo ? assignee : undefined,
       dueDate: dueDate || undefined,
       project: project || undefined,
       developer: developer || undefined

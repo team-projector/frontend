@@ -203,9 +203,6 @@ export class IssuesFilter implements SearchFilter {
   team: string;
 
   @field()
-  user: string;
-
-  @field()
   project: string;
 
   @field()
@@ -216,6 +213,15 @@ export class IssuesFilter implements SearchFilter {
 
   @field()
   state: IssueState | null;
+
+  @field()
+  assignedTo: string;
+
+  @field()
+  createdBy: string;
+
+  @field()
+  participatedBy: string;
 
   @field()
   problems: boolean | null;

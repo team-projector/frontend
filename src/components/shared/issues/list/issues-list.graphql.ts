@@ -25,10 +25,12 @@ mutation($id: ID!) {
 export class IssuesGQL extends Query<{ issues }> {
   document = gql`
 query(
+    $assignedTo: ID
+    $createdBy: ID
+    $participatedBy: ID
     $milestone: ID
     $ticket: ID
     $team: ID
-    $user: ID
     $project: ID
     $dueDate: Date
     $state: IssueState
@@ -39,10 +41,12 @@ query(
     $q: String
 ) {
     issues: allIssues(
+        assignedTo: $assignedTo
+        createdBy: $createdBy
+        participatedBy: $participatedBy
         milestone: $milestone
         ticket: $ticket
         team: $team
-        assignedTo: $user
         project: $project
         dueDate: $dueDate
         state: $state
@@ -151,14 +155,16 @@ query ($team: ID, $user: ID, $project: ID, $dueDate: Date) {
 export class IssuesSummaryGQL extends Query<{ summary }> {
   document = gql`
 query(
-    $team: ID
-    $user: ID
+    $assignedTo: ID
+    $createdBy: ID
+    $participatedBy: ID
     $project: ID
     $dueDate: Date
 ) {
     summary: issuesSummary(
-        team: $team
-        user: $user
+        assignedTo: $assignedTo
+        createdBy: $createdBy
+        participatedBy: $participatedBy
         project: $project
         dueDate: $dueDate
     ) {
