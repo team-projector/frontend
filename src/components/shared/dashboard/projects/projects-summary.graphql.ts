@@ -8,9 +8,9 @@ import { IssueSummaryProjectSort } from 'src/models/enums/issues-summary';
 })
 export class ProjectsSummaryGQL extends Query<{ issues }> {
   document = gql`
-query($user: ID, $team: ID, $dueDate: Date) {
+query($assignedTo: ID, $team: ID, $dueDate: Date) {
     issues: issuesSummary(
-        user: $user
+        assignedTo: $assignedTo
         team: $team
         dueDate: $dueDate
         state: "OPENED"
