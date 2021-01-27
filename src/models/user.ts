@@ -95,7 +95,7 @@ export class User {
   @field({mock: () => faker.name.findName()})
   name: string;
 
-  @field({name: 'glAvatar', mock: () => faker.internet.avatar()})
+  @field({name: 'glAvatar', mock: () => mocks.avatar()})
   avatar: string;
 
   @field()
