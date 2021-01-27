@@ -17,7 +17,6 @@ $jnt-ng-deep: true;
     color: $jnt-white-color;
   }
 
-  // TODO: I want to use jnt-link(color: $jnt-white-color));
-  @include jnt-link((schemes: (primary: (color: $jnt-orange-color))));
+  @include jnt-link((color: $jnt-orange-color));
 }
 
