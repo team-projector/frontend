@@ -28,6 +28,8 @@ export class EditProfileComponent implements OnInit {
   };
   errors: BackendError[] = [];
 
+  me: Me;
+
   form = this.fb.group({
     name: [null, Validators.required],
     email: null,
@@ -55,7 +57,15 @@ export class EditProfileComponent implements OnInit {
       : this.getMeGQL.fetch()
         .pipe(catchGQLErrors(), map(({data: {me}}) => deserialize(me, Me))))
       .pipe(delay(UI_DELAY), finalize(() => this.progress.loading = false))
-      .subscribe(me => this.form.patchValue({name: me.name, email: me.name, glToken: me.glToken}),
+      .subscribe(me => {
+          this.me = me;
+          this.form.patchValue(
+            {
+              name: me.name,
+              email: me.email,
+              glToken: me.glToken
+            });
+        },
         err => this.errors = err);
   }
 

@@ -1,16 +1,7 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import "~@junte/ui/lib/assets/styles/layout/responsive";
-@import "~@junte/ui/lib/assets/styles/navigation/link";
-
-$jnt-ng-deep: true;
 
 :host {
   display: block;
 }
 
-[data-changed] {
-  p {
-    color: $jnt-white-color;
-  }
-}
 

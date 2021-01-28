@@ -11,6 +11,7 @@ import {
   InputModule,
   LinkModule,
   MenuModule,
+  ShortcutsModule,
   StackModule
 } from '@junte/ui';
 
@@ -27,7 +28,8 @@ import {
     MenuModule,
     InputModule,
     StackModule,
-    ButtonModule
+    ButtonModule,
+    ShortcutsModule
   ]
 })
 export class SignupModule {

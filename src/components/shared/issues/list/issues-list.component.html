@@ -237,7 +237,7 @@
                    let-problems="problems">
         <app-work-progress [estimate]="timeEstimate"
                            [spent]="totalTimeSpent"
-                           [efficiency]="state == issueState.closed ? timeEstimate / totalTimeSpent : null"
+                           [efficiency]="totalTimeSpent > timeEstimate ? timeEstimate / totalTimeSpent : null"
                            [problems]="problems"></app-work-progress>
       </ng-template>
     </jnt-table-column>

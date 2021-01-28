@@ -16,7 +16,7 @@
 
       <jnt-button text="Ok"
                   i18n-text="@@action.ok"
-                  (click)="issue = null"></jnt-button>
+                  (click)="created.emit(issue);issue = null"></jnt-button>
     </jnt-stack>
   </ng-template>
 </jnt-informer>

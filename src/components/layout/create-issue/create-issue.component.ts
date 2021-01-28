@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { getMock } from '@junte/mocker';
 import { deserialize, serialize } from '@junte/serialize-ts';
@@ -67,6 +67,9 @@ export class CreateIssueComponent implements OnInit {
 
   @ViewChild('content', {read: ElementRef})
   backdrop: ElementRef<HTMLElement>;
+
+  @Output()
+  created = new EventEmitter<Issue>();
 
   constructor(private projectsGQL: ProjectsGQL,
               private projectMilestonesGQL: ProjectMilestonesGQL,

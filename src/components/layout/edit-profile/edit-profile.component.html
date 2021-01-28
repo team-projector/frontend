@@ -49,16 +49,19 @@
     </jnt-form-item>
   </jnt-stack>
 
-  <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between" [padding]="ui.gutter.normal">
-    <jnt-button text="Cancel"
-                i18n-title="@@action.cancel"
-                [scheme]="ui.scheme.secondary"
-                (click)="closed.emit()">
-    </jnt-button>
-    <jnt-button text="Save"
-                i18n-title="@@action.save"
-                [icon]="ui.icons.save"
-                [type]="ui.button.type.submit">
-    </jnt-button>
-  </jnt-stack>
+  <ng-template #formFooterTemplate>
+    <jnt-stack [orientation]="ui.orientation.horizontal"
+               [justify]="ui.justify.between">
+      <jnt-button text="Cancel"
+                  i18n-title="@@action.cancel"
+                  [scheme]="ui.scheme.secondary"
+                  (click)="closed.emit()">
+      </jnt-button>
+      <jnt-button text="Save"
+                  i18n-title="@@action.save"
+                  [icon]="ui.icons.save"
+                  [type]="ui.button.type.submit">
+      </jnt-button>
+    </jnt-stack>
+  </ng-template>
 </jnt-form>

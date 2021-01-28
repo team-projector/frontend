@@ -14,7 +14,7 @@
 <div data-efficiency *ngIf="spent > 0">
   <span [attr.data-slow]="spent > estimate">
     {{(spent > estimate ? estimate - spent : spent) | duration}}
-    <ng-container *ngIf="efficiency > 0 && efficiency !== 1">/ {{ efficiency | number:'0.0-2'}}x</ng-container>
+    <ng-container *ngIf="efficiency > 0 && efficiency !== 1">| {{ efficiency | number:'0.0-2'}}×</ng-container>
   </span>
 </div>
 <jnt-label *ngIf="problems?.includes(issueProblem.emptyEstimate)"
