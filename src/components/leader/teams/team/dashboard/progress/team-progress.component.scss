@@ -1,5 +1,8 @@
 @import "~@junte/ui/lib/assets/styles/jnt-variables";
 @import '~@junte/ui/lib/assets/styles/elements/dot';
+@import '~@junte/ui/lib/assets/styles/layout/skeleton';
+
+$jnt-ng-deep: true;
 
 :host {
   display: block;
@@ -95,6 +98,7 @@ table {
           &[data-day] {
             cursor: pointer;
             user-select: none;
+            white-space: nowrap;
 
             &:hover,
             &[today='true'] {
@@ -204,6 +208,10 @@ table {
       &[data-loading] {
         td {
           padding: $jnt-gutter-normal;
+          [data-name] {
+            flex: 1;
+            @include jnt-skeleton((line: (height: 10px)));
+          }
         }
       }
 
