@@ -3,6 +3,7 @@ import { endOfDay, endOfWeek, format, isPast, startOfDay, startOfWeek } from 'da
 import { ArraySerializer, PrimitiveSerializer } from '@junte/serialize-ts';
 import { Paging } from 'src/models/paging';
 import { EdgesToArray, EdgesToPaging } from 'src/serializers/graphql';
+import { HourToSecondsSerializer } from 'src/serializers/time';
 import { DATE_FORMAT, DFNS_OPTIONS } from '../consts';
 import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
@@ -171,6 +172,15 @@ export class User {
 })
 export class Me extends User {
 
+  @field()
+  name: string;
+
+  @field()
+  email: string;
+
+  @field()
+  glToken: string;
+
   @field({
     serializer: new ArraySerializer(new PrimitiveSerializer()),
     mock: [UserPermission.inviteUser]
@@ -179,8 +189,23 @@ export class Me extends User {
 }
 
 @model()
-export class UserMetricsFilter {
+export class MeUpdate {
+  @field()
+  name: string;
 
+  @field()
+  email: string;
+
+  @field()
+  glToken: string;
+
+  constructor(defs: Partial<MeUpdate>) {
+    Object.assign(this, defs);
+  }
+}
+
+@model()
+export class UserMetricsFilter {
   @field()
   user: string;
 

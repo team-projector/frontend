@@ -1,12 +1,14 @@
-import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, Inject, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalComponent, ModalService, PopoverComponent, PopoverService, UI } from '@junte/ui';
+import { ModalComponent, ModalOptions, ModalService, PopoverComponent, PopoverService, UI } from '@junte/ui';
+import { merge } from 'rxjs';
 import { AppConfig } from 'src/app-config';
 import { APPLICATION_READY } from 'src/consts';
+import { LocalUI } from 'src/enums/local-ui';
 import { Themes } from 'src/models/enums/themes';
 import { UserRole } from 'src/models/enums/user';
-import { LocalUI } from 'src/enums/local-ui';
 import { Me } from 'src/models/user';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { GitlabStatusComponent } from './gitlab-status/gitlab-status.component';
 
 @Component({
@@ -33,6 +35,8 @@ export class LayoutComponent implements OnInit {
   constructor(@Inject(AppConfig) public config: AppConfig,
               private modalService: ModalService,
               private popoverService: PopoverService,
+              private injector: Injector,
+              private cfr: ComponentFactoryResolver,
               private route: ActivatedRoute,
               private router: Router) {
   }
@@ -43,6 +47,19 @@ export class LayoutComponent implements OnInit {
     window.postMessage(APPLICATION_READY, location.origin);
     this.modalService.register(this.modal);
     this.popoverService.register(this.popover);
+  }
+
+  editProfile() {
+    const component = this.cfr.resolveComponentFactory(EditProfileComponent).create(this.injector);
+    const options = new ModalOptions({
+      title: {
+        text: 'Edit profile',
+        icon: UI.icons.settings
+      }
+    });
+    merge(component.instance.closed, component.instance.saved)
+      .subscribe(() => this.modalService.close());
+    this.modalService.open(component, options);
   }
 
   logout() {

@@ -1,0 +1,64 @@
+<jnt-informer *ngIf="errors.length > 0"
+              [backdrop]="backdrop"
+              [placement]="ui.placement.absolute"
+              (ok)="this.errors = []">
+  <jnt-informer-message *ngFor="let e of errors"
+                        [message]="e.toString()">
+  </jnt-informer-message>
+</jnt-informer>
+
+<jnt-form #content [formGroup]="form"
+          [state]="progress.saving || progress.loading ? ui.state.loading : null"
+          (submitted)="save()">
+  <jnt-stack [align]="ui.align.stretch">
+
+    <jnt-form-item>
+      <jnt-form-label for="name"
+                      i18n="@@label.name">Name</jnt-form-label>
+      <jnt-form-control name="name">
+        <jnt-input formControlName="name"
+                   placeholder="Your name"
+                   i18n-placeholder="@@label.name">
+        </jnt-input>
+        <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+          This field is required
+        </jnt-form-message>
+      </jnt-form-control>
+    </jnt-form-item>
+
+    <jnt-form-item>
+      <jnt-form-label for="email"
+                      i18n="@@label.email">Email</jnt-form-label>
+      <jnt-form-control name="email">
+        <jnt-input formControlName="email"
+                   placeholder="Your email"
+                   i18n-placeholder="@@label.email">
+        </jnt-input>
+      </jnt-form-control>
+    </jnt-form-item>
+
+    <jnt-form-item>
+      <jnt-form-label for="glToken"
+                      i18n="@@label.personal_gitlab_token">Personal GitLab token</jnt-form-label>
+      <jnt-form-control name="glToken">
+        <jnt-input formControlName="glToken"
+                   placeholder="Your personal GitLab token"
+                   i18n-placeholder="@@label.your_personal_gitlab_token">
+        </jnt-input>
+      </jnt-form-control>
+    </jnt-form-item>
+  </jnt-stack>
+
+  <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between" [padding]="ui.gutter.normal">
+    <jnt-button text="Cancel"
+                i18n-title="@@action.cancel"
+                [scheme]="ui.scheme.secondary"
+                (click)="closed.emit()">
+    </jnt-button>
+    <jnt-button text="Save"
+                i18n-title="@@action.save"
+                [icon]="ui.icons.save"
+                [type]="ui.button.type.submit">
+    </jnt-button>
+  </jnt-stack>
+</jnt-form>
