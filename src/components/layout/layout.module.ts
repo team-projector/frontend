@@ -37,6 +37,7 @@ import { LayoutComponent } from './layout.component';
 import { DifferencePipe } from './layout.pipes';
 import { SelectLangComponent } from './select-lang/select-lang.component';
 import { AppThemeSwitcherModule } from './theme-switcher/app-theme-switcher.module';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { AppThemeSwitcherModule } from './theme-switcher/app-theme-switcher.modu
     GitlabStatusComponent,
     DifferencePipe,
     SelectLangComponent,
-    CreateIssueComponent
+    CreateIssueComponent,
+    EditProfileComponent
   ],
   imports: [
     CommonModule,

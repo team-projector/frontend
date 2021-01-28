@@ -81,7 +81,7 @@
           </jnt-stack>
 
         </ng-template>
-        <ng-template #userbarMenuTemplate>
+        <ng-template #userbarMenuTemplate let-hide="hide">
           <jnt-stack data-content *jntMinFor="ui.breakpoint.desktop"
                      [align]="ui.align.stretch">
             <jnt-stack [orientation]="ui.orientation.horizontal"
@@ -95,6 +95,11 @@
             </jnt-stack>
             <app-select-lang></app-select-lang>
             <jnt-menu [orientation]="ui.orientation.vertical">
+              <jnt-menu-item title="Edit profile"
+                             i18n-title="@@action.edit_profile"
+                             [icon]="ui.icons.settings"
+                             (click)="editProfile(); hide?.call()">
+              </jnt-menu-item>
               <jnt-menu-item title="Logout"
                              i18n-title="@@action.logout"
                              [icon]="ui.icons.logout"
