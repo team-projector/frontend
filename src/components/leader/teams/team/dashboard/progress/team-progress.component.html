@@ -195,12 +195,23 @@
         </tr>
       </ng-container>
       <ng-template #noDataTemplate>
-        <ng-container *ngIf="progress.developers; else emptyTemplate">
-          <tr data-loading>
-            <td [attr.colspan]="17">
-              <jnt-skeleton [lines]="6"></jnt-skeleton>
-            </td>
-          </tr>
+        <ng-container *ngIf="!!progress.developers; else emptyTemplate">
+          <ng-container *ngFor="let s of 6 | mockArray">
+            <tr data-loading>
+              <td colspan="3">
+                <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center">
+                  <jnt-skeleton [type]="ui.skeleton.type.avatar" [size]="ui.size.tiny"></jnt-skeleton>
+                  <jnt-stack data-name [align]="ui.align.stretch" [gutter]="ui.gutter.tiny">
+                    <jnt-skeleton></jnt-skeleton>
+                    <jnt-skeleton></jnt-skeleton>
+                  </jnt-stack>
+                </jnt-stack>
+              </td>
+              <td [attr.colspan]="11">
+                <jnt-skeleton></jnt-skeleton>
+              </td>
+            </tr>
+          </ng-container>
         </ng-container>
         <ng-template #emptyTemplate>
           <tr data-nodata>

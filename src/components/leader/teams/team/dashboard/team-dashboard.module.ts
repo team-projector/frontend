@@ -2,17 +2,18 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  AppLayoutModule,
-  BlockModule,
-  ButtonModule,
-  CircleBarModule,
-  DotModule,
-  FormModule,
-  GridModule,
-  IconModule,
-  InformerModule,
-  LabelModule,
-  StackModule
+    AppLayoutModule,
+    BlockModule,
+    ButtonModule,
+    CircleBarModule,
+    DotModule,
+    FormModule,
+    GridModule,
+    IconModule,
+    InformerModule,
+    LabelModule,
+    SkeletonModule,
+    StackModule
 } from '@junte/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { TeamProgressComponent } from 'src/components/leader/teams/team/dashboard/progress/team-progress.component';
@@ -56,7 +57,8 @@ import { TeamDashboardRoutingModule } from './team-dashboard-routing.module';
     DueDateModule,
     DateFnsModule,
     UserCardModule,
-    ProjectsSummaryModule
+    ProjectsSummaryModule,
+    SkeletonModule
   ]
 })
 export class TeamDashboardModule {
