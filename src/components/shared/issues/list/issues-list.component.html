@@ -171,7 +171,8 @@
                    let-project="project"
                    let-closedAt="closedAt">
         <jnt-stack [orientation]="ui.orientation.horizontal"
-                   [gutter]="ui.gutter.small">
+                   [gutter]="ui.gutter.small"
+                   [align]="ui.align.center">
           <ng-container *ngIf="view === viewType.leader">
             <jnt-avatar *ngIf="!!author"
                         [name]="author.name"

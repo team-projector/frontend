@@ -1,5 +1,6 @@
 <jnt-stack [orientation]="ui.orientation.horizontal"
-           [gutter]="ui.gutter.small">
+           [gutter]="ui.gutter.small"
+           [align]="ui.align.center">
   <jnt-avatar *ngIf="(issue.author || issue.user) as u"
               [name]="u.name"
               [image]="u.avatar"
