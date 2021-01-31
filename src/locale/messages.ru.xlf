@@ -12,7 +12,7 @@
       </trans-unit>
       <trans-unit id="message.select_role" datatype="html">
         <source>Select your role:</source>
-        <target state="new">Select your role:</target>
+        <target>Выберите свою роль:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/signup/login/login.component.html</context>
           <context context-type="linenumber">33</context>
@@ -60,7 +60,7 @@
       </trans-unit>
       <trans-unit id="label.some_nice_task" datatype="html">
         <source>Some nice task</source>
-        <target state="new">Some nice task</target>
+        <target>Хорошая задача</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/layout/create-issue/create-issue.component.html</context>
           <context context-type="linenumber">41</context>
@@ -68,7 +68,7 @@
       </trans-unit>
       <trans-unit id="label.project" datatype="html">
         <source>Project</source>
-        <target state="new">Project</target>
+        <target>Проект</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/layout/create-issue/create-issue.component.html</context>
           <context context-type="linenumber">54</context>
@@ -80,7 +80,7 @@
       </trans-unit>
       <trans-unit id="label.select_from_list" datatype="html">
         <source>Select from list</source>
-        <target state="new">Select from list</target>
+        <target>Выберите из списка</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/layout/create-issue/create-issue.component.html</context>
           <context context-type="linenumber">67</context>
@@ -96,7 +96,7 @@
       </trans-unit>
       <trans-unit id="label.milestone" datatype="html">
         <source>Milestone</source>
-        <target state="new">Milestone</target>
+        <target>Этап</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/layout/create-issue/create-issue.component.html</context>
           <context context-type="linenumber">87</context>
@@ -348,7 +348,7 @@
       </trans-unit>
       <trans-unit id="label.time_expenses" datatype="html">
         <source>Time Expenses</source>
-        <target state="new">Time Expenses</target>
+        <target>Затраченное время</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/time-expenses/developer-time-expenses.component.html</context>
           <context context-type="linenumber">2</context>
@@ -360,7 +360,7 @@
       </trans-unit>
       <trans-unit id="message.time_expenses_teaser" datatype="html">
         <source>in issues or merge requests</source>
-        <target state="new">in issues or merge requests</target>
+        <target>в задачах или мерж запросах</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/time-expenses/developer-time-expenses.component.html</context>
           <context context-type="linenumber">4</context>
@@ -408,7 +408,7 @@
       </trans-unit>
       <trans-unit id="message.bonuses_teaser" datatype="html">
         <source>for your wins</source>
-        <target state="new">for your wins</target>
+        <target>за Ваши победы</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/bonuses/developer-bonuses.component.html</context>
           <context context-type="linenumber">5</context>
@@ -416,7 +416,7 @@
       </trans-unit>
       <trans-unit id="message.penalties_teaser" datatype="html">
         <source>for your fails</source>
-        <target state="new">for your fails</target>
+        <target>за Ваши промахи</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/penalties/developer-penalties.component.html</context>
           <context context-type="linenumber">5</context>
@@ -432,7 +432,7 @@
       </trans-unit>
       <trans-unit id="label.merge_requests" datatype="html">
         <source>Merge Requests</source>
-        <target state="new">Merge Requests</target>
+        <target>Merge запросы</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/merge-requests/developer-merge-requests.component.html</context>
           <context context-type="linenumber">2</context>
@@ -440,7 +440,7 @@
       </trans-unit>
       <trans-unit id="message.merge_requests_teaser" datatype="html">
         <source>assigned to you for code review</source>
-        <target state="new">assigned to you for code review</target>
+        <target>назначенные на Вас для ревью кода</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/merge-requests/developer-merge-requests.component.html</context>
           <context context-type="linenumber">5</context>
@@ -448,7 +448,7 @@
       </trans-unit>
       <trans-unit id="label.spent_where" datatype="html">
         <source>Spent where</source>
-        <target state="new">Spent where</target>
+        <target>Где затрачено</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shared/time-expenses/list/time-expenses-list.component.html</context>
           <context context-type="linenumber">55</context>
@@ -520,7 +520,7 @@
       </trans-unit>
       <trans-unit id="label.login" datatype="html">
         <source>Login</source>
-        <target state="new">Login</target>
+        <target>Логин</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/signup/login/login.component.html</context>
           <context context-type="linenumber">88</context>
@@ -612,7 +612,7 @@
       </trans-unit>
       <trans-unit id="message.last_sync_time" datatype="html">
         <source>Last Sync Time</source>
-        <target state="new">Last Sync Time</target>
+        <target>Последняя синхронизация</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/layout/gitlab-status/gitlab-status.component.html</context>
           <context context-type="linenumber">8</context>
@@ -644,7 +644,7 @@
       </trans-unit>
       <trans-unit id="label.on_gitlab" datatype="html">
         <source>on GitLab</source>
-        <target state="new">on GitLab</target>
+        <target>в GitLab</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/layout/create-issue/create-issue.component.html</context>
           <context context-type="linenumber">8</context>
@@ -797,7 +797,7 @@
       </trans-unit>
       <trans-unit id="message.salaries_teaser" datatype="html">
         <source>for your job</source>
-        <target state="new">for your job</target>
+        <target>за Вашу работу</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/salaries/developer-salaries.component.html</context>
           <context context-type="linenumber">5</context>
@@ -837,7 +837,7 @@
       </trans-unit>
       <trans-unit id="label.vacation" datatype="html">
         <source>Vacation</source>
-        <target state="new">Vacation</target>
+        <target>Отпуск</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/work-breaks/gantt/developer-breaks-gantt.components.html</context>
           <context context-type="linenumber">19</context>
@@ -853,7 +853,7 @@
       </trans-unit>
       <trans-unit id="label.dayoff" datatype="html">
         <source>Dayoff</source>
-        <target state="new">Dayoff</target>
+        <target>Выходной</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/work-breaks/gantt/developer-breaks-gantt.components.html</context>
           <context context-type="linenumber">29</context>
@@ -863,8 +863,8 @@
         <source>
             <x id="INTERPOLATION" equiv-text="{{(workBreak['toDate'] | dfnsDifferenceInDays:workBreak['fromDate']) + 1 }}"/> days
           </source>
-        <target state="new">
-            <x id="INTERPOLATION" equiv-text="{{(workBreak['toDate'] | dfnsDifferenceInDays:workBreak['fromDate']) + 1 }}"/> days
+        <target>
+            <x id="INTERPOLATION" equiv-text="{{(workBreak['toDate'] | dfnsDifferenceInDays:workBreak['fromDate']) + 1 }}"/> дней
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/work-breaks/gantt/developer-breaks-gantt.components.html</context>
@@ -881,7 +881,7 @@
       </trans-unit>
       <trans-unit id="message.teams_teaser" datatype="html">
         <source>where you leader</source>
-        <target state="new">where you leader</target>
+        <target>в которых Вы являетесь лидером</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/leader/teams/teams.component.html</context>
           <context context-type="linenumber">16</context>
@@ -897,7 +897,7 @@
       </trans-unit>
       <trans-unit id="message.team_dashboard_teaser" datatype="html">
         <source>for <x id="INTERPOLATION" equiv-text="{{team.title}}"/> team</source>
-        <target state="new">for <x id="INTERPOLATION" equiv-text="{{team.title}}"/> team</target>
+        <target>для <x id="INTERPOLATION" equiv-text="{{team.title}}"/> команды</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/leader/teams/team/dashboard/team-dashboard.component.html</context>
           <context context-type="linenumber">5</context>
@@ -930,7 +930,7 @@
       </trans-unit>
       <trans-unit id="message.for_your_team" datatype="html">
         <source>for your team</source>
-        <target state="new">for your team</target>
+        <target>для Вашей команды</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/leader/teams/team/issues/team-issues.component.html</context>
           <context context-type="linenumber">5</context>
@@ -958,14 +958,6 @@
         <context-group purpose="location">
           <context context-type="sourcefile">components/leader/teams/team/work-breaks/team-breaks.component.html</context>
           <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
-      <trans-unit id="label.breaks" datatype="html">
-        <source>Work Breaks</source>
-        <target state="new">Work Breaks</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/leader/teams/team/work-breaks/team-breaks.component.html</context>
-          <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
       <trans-unit id="action.filter_type_active" datatype="html">
@@ -1002,7 +994,7 @@
       </trans-unit>
       <trans-unit id="message.earning_for_work" datatype="html">
         <source>Your earning for the work.</source>
-        <target state="new">Your earning for the work.</target>
+        <target>Ваша оплата труда</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/dashboard/payroll/developer-payroll.component.html</context>
           <context context-type="linenumber">6</context>
@@ -1010,7 +1002,7 @@
       </trans-unit>
       <trans-unit id="label.closed" datatype="html">
         <source>Closed</source>
-        <target state="new">Closed</target>
+        <target>Закрыто</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/dashboard/payroll/developer-payroll.component.html</context>
           <context context-type="linenumber">37</context>
@@ -1018,7 +1010,7 @@
       </trans-unit>
       <trans-unit id="label.bonuses" datatype="html">
         <source>Bonuses</source>
-        <target state="new">Bonuses</target>
+        <target>Бонусы</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/dashboard/payroll/developer-payroll.component.html</context>
           <context context-type="linenumber">56</context>
@@ -1038,7 +1030,7 @@
       </trans-unit>
       <trans-unit id="label.penalties" datatype="html">
         <source>Penalties</source>
-        <target state="new">Penalties</target>
+        <target>Штрафы</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/dashboard/payroll/developer-payroll.component.html</context>
           <context context-type="linenumber">67</context>
@@ -1085,10 +1077,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="label.paid_days" datatype="html">
-        <source>Paid Days
-      </source>
-        <target state="new">Paid Days
-      </target>
+        <source>Paid Days</source>
+        <target>Оплаченные дни</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shared/work-breaks/edit/break-edit.component.html</context>
           <context context-type="linenumber">85</context>
@@ -1221,7 +1211,7 @@
       </trans-unit>
       <trans-unit id="label.work_breaks" datatype="html">
         <source>Work Breaks</source>
-        <target state="new">Work Breaks</target>
+        <target>Перерывы в работе</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/work-breaks/developer-breaks.component.html</context>
           <context context-type="linenumber">2</context>
@@ -1229,7 +1219,7 @@
       </trans-unit>
       <trans-unit id="message.work_breaks_teaser" datatype="html">
         <source>when you can't work</source>
-        <target state="new">when you can't work</target>
+        <target>когда Вы не сможете работать</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/work-breaks/developer-breaks.component.html</context>
           <context context-type="linenumber">5</context>
@@ -1245,7 +1235,7 @@
       </trans-unit>
       <trans-unit id="message.shareholder_salaries_teaser" datatype="html">
         <source>of developers in your company</source>
-        <target state="new">of developers in your company</target>
+        <target>разработчикам в Вашей компании</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shareholder/salaries/company-salaries.component.html</context>
           <context context-type="linenumber">5</context>
@@ -1376,10 +1366,8 @@
         </context-group>
       </trans-unit>
       <trans-unit id="label.url" datatype="html">
-        <source>Url
-            </source>
-        <target state="new">Url
-            </target>
+        <source>Url</source>
+        <target>Ссылка</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
           <context context-type="linenumber">192</context>
@@ -1615,7 +1603,7 @@
       </trans-unit>
       <trans-unit id="action.get_link" datatype="html">
         <source>Get link</source>
-        <target state="new">Get link</target>
+        <target>Получить ссылку</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
           <context context-type="linenumber">153</context>
@@ -1623,7 +1611,7 @@
       </trans-unit>
       <trans-unit id="action.go_source" datatype="html">
         <source>Go to source</source>
-        <target state="new">Go to source</target>
+        <target>Перейти к источинку</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
           <context context-type="linenumber">159</context>
@@ -1631,7 +1619,7 @@
       </trans-unit>
       <trans-unit id="label.spend" datatype="html">
         <source>Spend</source>
-        <target state="new">Spend</target>
+        <target>Затрачено</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
           <context context-type="linenumber">200</context>
@@ -1639,7 +1627,7 @@
       </trans-unit>
       <trans-unit id="message.no_issue_ticket" datatype="html">
         <source>No one issue has been attached to ticket.</source>
-        <target state="new">No one issue has been attached to ticket.</target>
+        <target>К этому тикету не было прикреплено ни одной задачи.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/milestone.component.html</context>
           <context context-type="linenumber">233</context>
@@ -1723,7 +1711,7 @@
       </trans-unit>
       <trans-unit id="label.developers" datatype="html">
         <source>Developers</source>
-        <target state="new">Developers</target>
+        <target>Разработчики</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shareholder/users/company-users.component.html</context>
           <context context-type="linenumber">2</context>
@@ -1731,7 +1719,7 @@
       </trans-unit>
       <trans-unit id="message.shareholder_developers_teaser" datatype="html">
         <source>in your company</source>
-        <target state="new">in your company</target>
+        <target>в Вашей компании</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shareholder/users/company-users.component.html</context>
           <context context-type="linenumber">5</context>
@@ -1751,7 +1739,7 @@
       </trans-unit>
       <trans-unit id="label.you_have_earned" datatype="html">
         <source>You've earned:</source>
-        <target state="new">You've earned:</target>
+        <target>Вы заработали:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/dashboard/payroll/developer-payroll.component.html</context>
           <context context-type="linenumber">89</context>
@@ -1759,7 +1747,7 @@
       </trans-unit>
       <trans-unit id="label.opened_tasks" datatype="html">
         <source>Opened tasks:</source>
-        <target state="new">Opened tasks:</target>
+        <target>Открытые задачи:</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/dashboard/payroll/developer-payroll.component.html</context>
           <context context-type="linenumber">101</context>
@@ -1815,7 +1803,7 @@
       </trans-unit>
       <trans-unit id="label.team" datatype="html">
         <source>Team</source>
-        <target state="new">Team</target>
+        <target>Команда</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shared/projects/list/projects-list.component.html</context>
           <context context-type="linenumber">62</context>
@@ -1823,23 +1811,15 @@
       </trans-unit>
       <trans-unit id="label.projects" datatype="html">
         <source>Projects</source>
-        <target state="new">Projects</target>
+        <target>Проекты</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shareholder/projects/shareholder-projects.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="message.when_you_cant_work" datatype="html">
-        <source>when you can't work</source>
-        <target state="new">when you can't work</target>
-        <context-group purpose="location">
-          <context context-type="sourcefile">components/shareholder/projects/shareholder-projects.component.html</context>
-          <context context-type="linenumber">5</context>
-        </context-group>
-      </trans-unit>
       <trans-unit id="action.groups" datatype="html">
         <source>Groups</source>
-        <target state="new">Groups</target>
+        <target>Группы</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shareholder/projects/shareholder-projects.component.html</context>
           <context context-type="linenumber">12</context>
@@ -1879,7 +1859,7 @@
       </trans-unit>
       <trans-unit id="label.dashboard" datatype="html">
         <source>Dashboard</source>
-        <target state="new">Dashboard</target>
+        <target>Панель</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/dashboard/developer-dashboard.component.html</context>
           <context context-type="linenumber">2</context>
@@ -1891,7 +1871,7 @@
       </trans-unit>
       <trans-unit id="message.dashboard_teaser" datatype="html">
         <source>for your work in the company</source>
-        <target state="new">for your work in the company</target>
+        <target>для Вашей работы в компании</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/dashboard/developer-dashboard.component.html</context>
           <context context-type="linenumber">5</context>
@@ -1899,7 +1879,7 @@
       </trans-unit>
       <trans-unit id="message.here_find_progress" datatype="html">
         <source>Here you can find your work progress.</source>
-        <target state="new">Here you can find your work progress.</target>
+        <target>Здесь Вы можете найти свой рабочий прогресс.</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/dashboard/progress/developer-progress.component.html</context>
           <context context-type="linenumber">83</context>
@@ -1907,7 +1887,7 @@
       </trans-unit>
       <trans-unit id="label.work_progress" datatype="html">
         <source>Work progress</source>
-        <target state="new">Work progress</target>
+        <target>Прогресс в работе</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/dashboard/progress/developer-progress.component.html</context>
           <context context-type="linenumber">90</context>
@@ -1979,7 +1959,7 @@
       </trans-unit>
       <trans-unit id="label.ticket" datatype="html">
         <source>Ticket</source>
-        <target state="new">Ticket</target>
+        <target>Тикет</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shared/issues/list/issues-list.component.html</context>
           <context context-type="linenumber">191</context>
@@ -2009,9 +1989,9 @@
           <context context-type="linenumber">206</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="message.issues_teaser" datatype="html">
+      <trans-unit id="message.developer_issues_teaser" datatype="html">
         <source>assigned to you</source>
-        <target state="new">assigned to you</target>
+        <target>назначенные на Вас</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/developer/issues/developer-issues.component.html</context>
           <context context-type="linenumber">5</context>
@@ -2035,15 +2015,15 @@
       </trans-unit>
       <trans-unit id="label.milestones" datatype="html">
         <source>Milestones</source>
-        <target state="new">Milestones</target>
+        <target>Этапы</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestones.component.html</context>
           <context context-type="linenumber">2</context>
         </context-group>
       </trans-unit>
-      <trans-unit id="message.for_your_projects" datatype="html">
+      <trans-unit id="message.milestones_teaser" datatype="html">
         <source>for your projects</source>
-        <target state="new">for your projects</target>
+        <target>для ваших проектов</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestones.component.html</context>
           <context context-type="linenumber">5</context>
@@ -2055,10 +2035,10 @@
             <x id="CLOSE_TAG_JNT-LINK" ctype="x-jnt-link" equiv-text="&lt;/jnt-link>"/>
             ticket in admin dashboard.
           </source>
-        <target state="new">
+        <target>
             <x id="START_TAG_JNT-LINK" ctype="x-jnt-link" equiv-text="&lt;jnt-link>"/>
             <x id="CLOSE_TAG_JNT-LINK" ctype="x-jnt-link" equiv-text="&lt;/jnt-link>"/>
-            ticket in admin dashboard.
+            тикет в админ панели.
           </target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
@@ -2067,7 +2047,7 @@
       </trans-unit>
       <trans-unit id="label.role" datatype="html">
         <source>Role</source>
-        <target state="new">Role</target>
+        <target>Роль</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
           <context context-type="linenumber">82</context>
@@ -2083,7 +2063,7 @@
       </trans-unit>
       <trans-unit id="label.start_date" datatype="html">
         <source>Start date</source>
-        <target state="new">Start date</target>
+        <target>Начальная дата</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
           <context context-type="linenumber">94</context>
@@ -2095,7 +2075,7 @@
       </trans-unit>
       <trans-unit id="label.state" datatype="html">
         <source>State</source>
-        <target state="new">State</target>
+        <target>Состояние</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
           <context context-type="linenumber">147</context>
@@ -2123,7 +2103,7 @@
       </trans-unit>
       <trans-unit id="label.1h" datatype="html">
         <source>1h</source>
-        <target state="new">1h</target>
+        <target>1ч</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/layout/create-issue/create-issue.component.html</context>
           <context context-type="linenumber">187</context>
@@ -2131,7 +2111,7 @@
       </trans-unit>
       <trans-unit id="label.2h" datatype="html">
         <source>2h</source>
-        <target state="new">2h</target>
+        <target>2ч</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/layout/create-issue/create-issue.component.html</context>
           <context context-type="linenumber">190</context>
@@ -2139,7 +2119,7 @@
       </trans-unit>
       <trans-unit id="label.6h" datatype="html">
         <source>6h</source>
-        <target state="new">6h</target>
+        <target>6ч</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/layout/create-issue/create-issue.component.html</context>
           <context context-type="linenumber">193</context>
