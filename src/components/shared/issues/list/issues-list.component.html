@@ -197,6 +197,9 @@
                    [justify]="ui.justify.start"
                    [wrap]="ui.wrap.wrap"
                    [spacing]="ui.gutter.small">
+          <jnt-label *ngFor="let l of (labels | labels)"
+                     [size]="ui.size.small"
+                     [color]="l.color" [label]="l.title"></jnt-label>
         </jnt-stack>
       </ng-template>
     </jnt-table-column>
