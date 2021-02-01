@@ -208,10 +208,6 @@ table {
       &[data-loading] {
         td {
           padding: $jnt-gutter-normal;
-          [data-name] {
-            flex: 1;
-            @include jnt-skeleton((line: (height: 10px)));
-          }
         }
       }
 
