@@ -2055,7 +2055,7 @@
       </trans-unit>
       <trans-unit id="label.target_role" datatype="html">
         <source>Target role</source>
-        <target state="new">Target role</target>
+        <target>Для роли</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/manager/milestones/milestone/edit-ticket/edit-ticket.component.html</context>
           <context context-type="linenumber">84</context>
