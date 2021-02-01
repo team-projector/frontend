@@ -68,6 +68,18 @@ export class UserPosition {
   title: string;
 }
 
+@model()
+export class UserIssuesSummary {
+  @field()
+  assignedCount: number;
+
+  @field()
+  createdCount: number;
+
+  @field()
+  participationCount: number;
+}
+
 @model({
   mocking: (user: User) => {
     user.hourRate = mocks.hourlyRate(10, 20);
@@ -142,6 +154,8 @@ export class User {
   })
   problems: UserProblem[];
 
+  @field({mock: UserIssuesSummary})
+  issuesSummary: UserIssuesSummary;
 }
 
 @model({
