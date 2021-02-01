@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, ElementRef, Inject, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalComponent, ModalOptions, ModalService, PopoverComponent, PopoverService, UI } from '@junte/ui';
+import { ModalOptions, ModalService, PopoverService, UI } from '@junte/ui';
 import { merge } from 'rxjs';
 import { AppConfig } from 'src/app-config';
 import { APPLICATION_READY } from 'src/consts';
@@ -26,8 +26,6 @@ export class LayoutComponent implements OnInit {
   me: Me;
 
   @ViewChild('layout', {read: ElementRef, static: true}) backdrop;
-  @ViewChild('modal', {static: true}) modal: ModalComponent;
-  @ViewChild('popover', {static: true}) popover: PopoverComponent;
 
   @ViewChild(GitlabStatusComponent)
   gitlabStatus: GitlabStatusComponent;
@@ -45,8 +43,6 @@ export class LayoutComponent implements OnInit {
     this.route.data.subscribe(({me}) => this.me = me);
 
     window.postMessage(APPLICATION_READY, location.origin);
-    this.modalService.register(this.modal);
-    this.popoverService.register(this.popover);
   }
 
   editProfile() {
