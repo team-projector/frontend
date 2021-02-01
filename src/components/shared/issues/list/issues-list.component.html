@@ -19,129 +19,143 @@
     </ng-template>
 
     <ng-template #tableFiltersTemplate>
-      <jnt-row>
-        <jnt-col [mobile]="12" [tablet]="12" [desktop]="6">
-          <jnt-switcher data-summary formControlName="assignee" [features]="[ui.feature.adapted]">
-            <jnt-switcher-option label="Assigned with me"
-                                 [value]="assigneeType.assignedTo">
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Assigned by me"
-                                 [value]="assigneeType.createdBy">
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Discuss"
-                                 [value]="assigneeType.participatedBy">
-            </jnt-switcher-option>
-          </jnt-switcher>
-        </jnt-col>
-      </jnt-row>
-      <jnt-row>
-        <jnt-col [wide]="2" [desktop]="4" [tablet]="12">
-          <ng-template #projectOption let-project="value"
-                       let-selected="selected">
-            <jnt-stack [orientation]="ui.orientation.horizontal"
-                       [align]="ui.align.center"
-                       [justify]="ui.justify.between"
-                       [gutter]="ui.gutter.small">
+      <jnt-stack [align]="ui.align.stretch">
+        <jnt-row>
+          <jnt-col [mobile]="12" [tablet]="12" [desktop]="6">
+            <jnt-switcher data-summary formControlName="assignee" [features]="[ui.feature.adapted]">
+              <jnt-switcher-option label="Assigned to me"
+                                   [disabled]="summary?.user.assignedCount <= 0"
+                                   [value]="assigneeType.assignedTo">
+                <jnt-badge *ngIf="summary?.user.assignedCount > 0"
+                           [value]="summary?.user.assignedCount"
+                           [color]="ui.color.paleNavy"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Assigned by me"
+                                   [disabled]="summary?.user.createdCount <= 0"
+                                   [value]="assigneeType.createdBy">
+                <jnt-badge *ngIf="summary?.user.createdCount > 0"
+                           [value]="summary?.user.createdCount"
+                           [color]="ui.color.paleNavy"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Discuss"
+                                   [disabled]="summary?.user.participationCount <= 0"
+                                   [value]="assigneeType.participatedBy">
+                <jnt-badge *ngIf="summary?.user.participationCount > 0"
+                           [value]="summary?.user.participationCount"
+                           [color]="ui.color.paleNavy"></jnt-badge>
+              </jnt-switcher-option>
+            </jnt-switcher>
+          </jnt-col>
+        </jnt-row>
+        <jnt-row>
+          <jnt-col [wide]="2" [desktop]="4" [tablet]="12">
+            <ng-template #projectOption let-project="value"
+                         let-selected="selected">
               <jnt-stack [orientation]="ui.orientation.horizontal"
                          [align]="ui.align.center"
+                         [justify]="ui.justify.between"
                          [gutter]="ui.gutter.small">
-                <jnt-avatar [size]="ui.size.tiny"
-                            [image]="project.project.group?.glAvatar"></jnt-avatar>
-                <div><span *ngIf="!selected">{{project.project.group?.title}} &bull; </span>{{project.project.title}}
-                </div>
+                <jnt-stack [orientation]="ui.orientation.horizontal"
+                           [align]="ui.align.center"
+                           [gutter]="ui.gutter.small">
+                  <jnt-avatar [size]="ui.size.tiny"
+                              [image]="project.project.group?.glAvatar"></jnt-avatar>
+                  <div><span *ngIf="!selected">{{project.project.group?.title}} &bull; </span>{{project.project.title}}
+                  </div>
+                </jnt-stack>
+                <jnt-badge *ngIf="!selected && project.issues?.remains > 0"
+                           [position]="ui.position.inline"
+                           [text]="project.issues.remains | duration:durationFormat.short"
+                           [color]="ui.color.green"></jnt-badge>
               </jnt-stack>
-              <jnt-badge *ngIf="!selected && project.issues?.remains > 0"
-                         [position]="ui.position.inline"
-                         [text]="project.issues.remains | duration:durationFormat.short"
-                         [color]="ui.color.green"></jnt-badge>
-            </jnt-stack>
-          </ng-template>
-          <jnt-select formControlName="project"
-                      placeholder="Project"
-                      i18n-placeholder="@@label.project"
-                      [width]="ui.width.fluid"
-                      [state]="progress.projects ? ui.state.loading : null"
-                      [features]="[ui.feature.search, ui.feature.allowEmpty]"
-                      [optionTemplate]="projectOption">
-            <jnt-select-option *ngIf="!!project"
-                               [key]="project.id"
-                               [label]="project.fullTitle"
-                               [value]="{project: project}"></jnt-select-option>
-            <jnt-select-option *ngFor="let p of projects"
-                               [key]="p.project.id"
-                               [label]="p.project.fullTitle"
-                               [value]="p"></jnt-select-option>
-          </jnt-select>
-        </jnt-col>
-        <jnt-col *ngIf="!!team" [wide]="2" [desktop]="4" [tablet]="12">
-          <ng-template #userOption let-member="value"
-                       let-selected="selected">
-            <app-user [user]="member.user"
-                      [roles]="member.roles"
-                      [size]="userCardSize.small"></app-user>
-          </ng-template>
-          <jnt-select formControlName="developer"
-                      placeholder="Developer"
-                      i18n-placeholder="@@label.developer"
-                      [width]="ui.width.fluid"
-                      [features]="[ui.feature.search, ui.feature.allowEmpty]"
-                      [state]="progress.developers ? ui.state.loading : null"
-                      [optionTemplate]="userOption">
-            <jnt-select-option *ngIf="!!developer"
-                               [key]="developer.id"
-                               [label]="developer.name"
-                               [value]="{user: developer}"></jnt-select-option>
-            <jnt-select-option *ngFor="let m of developers"
-                               [key]="m.user.id"
-                               [label]="m.user.name"
-                               [value]="m"></jnt-select-option>
-          </jnt-select>
-        </jnt-col>
-        <jnt-col [wide]="2" [desktop]="2" [tablet]="12">
-          <jnt-date-picker data-due-date formControlName="dueDate"
-                           [width]="ui.width.fluid"
-                           [features]="[ui.feature.allowEmpty]"></jnt-date-picker>
-        </jnt-col>
-        <jnt-col [wide]="6" [desktop]="6" [tablet]="12">
-          <jnt-switcher data-summary formControlName="type" [features]="[ui.feature.adapted]">
-            <jnt-switcher-option label="All"
-                                 i18n-label="@@action.filter_issues_all"
-                                 [disabled]="summary?.count <= 0"
-                                 [value]="issuesType.all">
-              <jnt-badge *ngIf="summary?.timeSpent > 0"
-                         [color]="ui.color.yellow"
-                         [text]="summary?.timeSpent | duration:durationFormat.short"></jnt-badge>
-              <jnt-badge *ngIf="summary?.count > 0"
-                         [overflow]="null"
-                         [value]="summary?.count"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Closed"
-                                 i18n-label="@@action.filter_type_closed"
-                                 [disabled]="summary?.closedCount <= 0"
-                                 [value]="issuesType.closed">
-              <jnt-badge *ngIf="summary?.closedCount > 0"
-                         [overflow]="null"
-                         [value]="summary?.closedCount"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Opened"
-                                 i18n-label="@@action.filter_type_opened"
-                                 [disabled]="summary?.openedCount <= 0"
-                                 [value]="issuesType.opened">
-              <jnt-badge *ngIf="summary?.openedCount > 0"
-                         [value]="summary?.openedCount"
-                         [color]="ui.color.green"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Problems"
-                                 i18n-label="@@action.filter_type_problems"
-                                 [disabled]="summary?.problemsCount <= 0"
-                                 [value]="issuesType.problems">
-              <jnt-badge *ngIf="summary?.problemsCount > 0"
-                         [value]="summary?.problemsCount"
-                         [color]="ui.color.red"></jnt-badge>
-            </jnt-switcher-option>
-          </jnt-switcher>
-        </jnt-col>
-      </jnt-row>
+            </ng-template>
+            <jnt-select formControlName="project"
+                        placeholder="Project"
+                        i18n-placeholder="@@label.project"
+                        [width]="ui.width.fluid"
+                        [state]="progress.projects ? ui.state.loading : null"
+                        [features]="[ui.feature.search, ui.feature.allowEmpty]"
+                        [optionTemplate]="projectOption">
+              <jnt-select-option *ngIf="!!project"
+                                 [key]="project.id"
+                                 [label]="project.fullTitle"
+                                 [value]="{project: project}"></jnt-select-option>
+              <jnt-select-option *ngFor="let p of projects"
+                                 [key]="p.project.id"
+                                 [label]="p.project.fullTitle"
+                                 [value]="p"></jnt-select-option>
+            </jnt-select>
+          </jnt-col>
+          <jnt-col *ngIf="!!team" [wide]="2" [desktop]="4" [tablet]="12">
+            <ng-template #userOption let-member="value"
+                         let-selected="selected">
+              <app-user [user]="member.user"
+                        [roles]="member.roles"
+                        [size]="userCardSize.small"></app-user>
+            </ng-template>
+            <jnt-select formControlName="developer"
+                        placeholder="Developer"
+                        i18n-placeholder="@@label.developer"
+                        [width]="ui.width.fluid"
+                        [features]="[ui.feature.search, ui.feature.allowEmpty]"
+                        [state]="progress.developers ? ui.state.loading : null"
+                        [optionTemplate]="userOption">
+              <jnt-select-option *ngIf="!!developer"
+                                 [key]="developer.id"
+                                 [label]="developer.name"
+                                 [value]="{user: developer}"></jnt-select-option>
+              <jnt-select-option *ngFor="let m of developers"
+                                 [key]="m.user.id"
+                                 [label]="m.user.name"
+                                 [value]="m"></jnt-select-option>
+            </jnt-select>
+          </jnt-col>
+          <jnt-col [wide]="2" [desktop]="2" [tablet]="12">
+            <jnt-date-picker data-due-date formControlName="dueDate"
+                             [width]="ui.width.fluid"
+                             [features]="[ui.feature.allowEmpty]"></jnt-date-picker>
+          </jnt-col>
+          <jnt-col [wide]="6" [desktop]="6" [tablet]="12">
+            <jnt-switcher data-summary formControlName="type" [features]="[ui.feature.adapted]">
+              <jnt-switcher-option label="All"
+                                   i18n-label="@@action.filter_issues_all"
+                                   [disabled]="summary?.issues.count <= 0"
+                                   [value]="issuesType.all">
+                <jnt-badge *ngIf="summary?.issues.timeSpent > 0"
+                           [color]="ui.color.yellow"
+                           [text]="summary?.issues.timeSpent | duration:durationFormat.short"></jnt-badge>
+                <jnt-badge *ngIf="summary?.issues.count > 0"
+                           [overflow]="null"
+                           [value]="summary?.issues.count"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Closed"
+                                   i18n-label="@@action.filter_type_closed"
+                                   [disabled]="summary?.issues.closedCount <= 0"
+                                   [value]="issuesType.closed">
+                <jnt-badge *ngIf="summary?.issues.closedCount > 0"
+                           [overflow]="null"
+                           [value]="summary?.issues.closedCount"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Opened"
+                                   i18n-label="@@action.filter_type_opened"
+                                   [disabled]="summary?.issues.openedCount <= 0"
+                                   [value]="issuesType.opened">
+                <jnt-badge *ngIf="summary?.issues.openedCount > 0"
+                           [value]="summary?.issues.openedCount"
+                           [color]="ui.color.green"></jnt-badge>
+              </jnt-switcher-option>
+              <jnt-switcher-option label="Problems"
+                                   i18n-label="@@action.filter_type_problems"
+                                   [disabled]="summary?.issues.problemsCount <= 0"
+                                   [value]="issuesType.problems">
+                <jnt-badge *ngIf="summary?.issues.problemsCount > 0"
+                           [value]="summary?.issues.problemsCount"
+                           [color]="ui.color.red"></jnt-badge>
+              </jnt-switcher-option>
+            </jnt-switcher>
+          </jnt-col>
+        </jnt-row>
+      </jnt-stack>
     </ng-template>
 
     <jnt-table-column width="55px" [align]="ui.align.center">

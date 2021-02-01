@@ -18,7 +18,7 @@ import { IssuesFilter, IssuesSummary, PagingIssues, ProjectSummary } from 'src/m
 import { getMock } from '@junte/mocker';
 import { Project } from 'src/models/project';
 import { PagingTeamMembers, Team, TeamMember } from 'src/models/team';
-import { User } from 'src/models/user';
+import { User, UserIssuesSummary } from 'src/models/user';
 import { equals } from 'src/utils/equals';
 import { CardSize } from '../../users/card/user-card.types';
 import {
@@ -70,7 +70,7 @@ export class IssuesListComponent implements OnInit {
   filter: IssuesFilter;
   projects: ProjectSummary[] = [];
   developers: TeamMember[] = [];
-  summary: IssuesSummary;
+  summary: {issues: IssuesSummary, user: UserIssuesSummary};
 
   set team(team: Team) {
     if (!!team && team.id !== this._team?.id) {
@@ -251,12 +251,12 @@ export class IssuesListComponent implements OnInit {
     this.logger.debug('load summary');
     this.progress.summary = true;
     return (environment.mocks
-      ? of(getMock(IssuesSummary)).pipe(delay(MOCKS_DELAY))
+      ? of([getMock(IssuesSummary), getMock(UserIssuesSummary)]).pipe(delay(MOCKS_DELAY))
       : this.issuesSummaryGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {summary}}) =>
-          deserialize(summary, IssuesSummary))))
+        .pipe(map(({data: {summary, user}}) =>
+        [deserialize(summary, IssuesSummary), deserialize(user, User).issuesSummary])))
       .pipe(delay(UI_DELAY), finalize(() => this.progress.summary = false))
-      .subscribe(summary => this.summary = summary,
+      .subscribe(([issues, user]) => this.summary = {issues: <IssuesSummary>issues, user: <UserIssuesSummary>user},
         err => this.errors = err);
   }
 
