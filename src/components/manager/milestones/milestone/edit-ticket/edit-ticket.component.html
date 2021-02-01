@@ -120,7 +120,9 @@
                 <jnt-form-item>
                   <jnt-form-label for="dueDate">Due date</jnt-form-label>
                   <jnt-form-control name="dueDate">
-                    <jnt-date-picker placeholder="Due date" formControlName="dueDate"></jnt-date-picker>
+                    <jnt-date-picker placeholder="Due date"
+                                     i18n-placeholder="@@label.due_date"
+                                     formControlName="dueDate"></jnt-date-picker>
                     <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
                       This field is required
                     </jnt-form-message>
