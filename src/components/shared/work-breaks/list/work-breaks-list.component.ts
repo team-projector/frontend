@@ -145,7 +145,7 @@ export class WorkBreaksListComponent implements OnInit {
       component.instance.team = this.team;
     }
 
-    const options = {title: {icon: LocalUI.icons.workBreak, text: $localize`:@@label.add_break:Add break`}};
+    const options = {title: {icon: LocalUI.icons.workBreak, text: $localize`:@@label.add_work_break:Add work break`}};
     this.modal.open(component, options);
     component.instance.saved.subscribe(() => {
       this.modal.close();

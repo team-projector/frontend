@@ -8,6 +8,7 @@ import {
   InformerModule,
   MenuModule,
   StackModule,
+  LabelModule,
   SwitcherModule,
   TableModule
 } from '@junte/ui';
@@ -37,6 +38,7 @@ import { MergeRequestsListComponent } from './merge-requests-list.component';
     StackModule,
     BadgeModule,
     MenuModule,
+    LabelModule,
     DateFnsModule,
     DueDateModule,
     DatePipesModule,

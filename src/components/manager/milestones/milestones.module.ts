@@ -20,6 +20,7 @@ import {
   MenuModule,
   PopoverModule,
   SelectModule,
+  SkeletonModule,
   StackModule,
   SwitcherModule,
   TabsModule
@@ -56,6 +57,7 @@ import { ManagerMilestonesComponent } from './milestones.component';
     GanttModule,
     StackModule,
     SwitcherModule,
+    SkeletonModule,
     ButtonModule,
     GridModule,
     BadgeModule,
