@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, ElementRef, Inject, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalOptions, ModalService, PopoverService, UI } from '@junte/ui';
+import { AppLayoutComponent, ModalOptions, ModalService, PopoverService, UI } from '@junte/ui';
 import { merge } from 'rxjs';
 import { AppConfig } from 'src/app-config';
 import { APPLICATION_READY } from 'src/consts';
@@ -25,7 +25,8 @@ export class LayoutComponent implements OnInit {
 
   me: Me;
 
-  @ViewChild('layout', {read: ElementRef, static: true}) backdrop;
+  @ViewChild(AppLayoutComponent, {read: ElementRef, static: true})
+  layout: ElementRef<HTMLElement>;
 
   @ViewChild(GitlabStatusComponent)
   gitlabStatus: GitlabStatusComponent;
