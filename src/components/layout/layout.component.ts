@@ -57,7 +57,7 @@ export class LayoutComponent implements OnInit {
         icon: UI.icons.settings
       }
     });
-    merge(component.instance.closed, component.instance.saved)
+    merge(component.instance.canceled, component.instance.saved)
       .subscribe(() => this.modalService.close());
     this.modalService.open(component, options);
   }

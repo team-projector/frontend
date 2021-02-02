@@ -40,7 +40,7 @@ export class EditProfileComponent implements OnInit {
   backdrop: ElementRef<HTMLElement>;
 
   @Output()
-  closed = new EventEmitter<any>();
+  canceled = new EventEmitter();
 
   @Output()
   saved = new EventEmitter<Me>();
