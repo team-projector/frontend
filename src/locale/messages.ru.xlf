@@ -1137,6 +1137,10 @@
         <source>Today</source>
         <target>Сегодня</target>
         <context-group purpose="location">
+          <context context-type="sourcefile">components/shared/issues/list/issues-list.component.html</context>
+          <context context-type="linenumber">13</context>
+        </context-group>
+        <context-group purpose="location">
           <context context-type="sourcefile">components/shared/time-expenses/list/time-expenses-list.component.html</context>
           <context context-type="linenumber">12</context>
         </context-group>
@@ -1916,7 +1920,7 @@
         </context-group>
       </trans-unit>
       <trans-unit id="message.shareholder_projects_teaser" datatype="html">
-        <source>your developers working on</source>
+        <source>when you can't work</source>
         <target>над которыми работают Ваши разработчики</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shareholder/projects/shareholder-projects.component.html</context>
@@ -2192,7 +2196,15 @@
         <target>Открытые проекты</target>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shared/dashboard/projects/projects-summary.component.html</context>
-          <context context-type="linenumber">11</context>
+          <context context-type="linenumber">12</context>
+        </context-group>
+      </trans-unit>
+      <trans-unit id="label.projects_in_work" datatype="html">
+        <source>Projects in work</source>
+        <target>Проекты в работе</target>
+        <context-group purpose="location">
+          <context context-type="sourcefile">components/shared/dashboard/projects/projects-summary.component.html</context>
+          <context context-type="linenumber">7</context>
         </context-group>
       </trans-unit>
       <trans-unit id="label.hours" datatype="html">
@@ -2204,7 +2216,7 @@
         </context-group>
         <context-group purpose="location">
           <context context-type="sourcefile">components/shared/dashboard/projects/projects-summary.component.html</context>
-          <context context-type="linenumber">12</context>
+          <context context-type="linenumber">13</context>
         </context-group>
       </trans-unit>
       <trans-unit id="label.1h" datatype="html">

@@ -113,7 +113,7 @@
 
     <jnt-stack [orientation]="ui.orientation.horizontal"
                [justify]="ui.justify.center">
-      <jnt-button [text]="opened ? 'Hide details' : 'More details'"
+      <jnt-button [text]="opened ? i18n.hideDetails : i18n.moreDetails"
                   [outline]="ui.outline.transparent"
                   [size]="ui.size.small"
                   (click)="opened = !opened"></jnt-button>
