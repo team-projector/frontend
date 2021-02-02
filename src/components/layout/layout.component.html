@@ -1,11 +1,11 @@
 <jnt-modal #modal [backdrop]="backdrop"></jnt-modal>
-<jnt-popover #popover></jnt-popover>
-<jnt-app-layout #layout [position]="ui.placement.fixed">
+<jnt-popover></jnt-popover>
+<jnt-app-layout [position]="ui.placement.fixed">
   <jnt-app-busyness></jnt-app-busyness>
   <jnt-app-header>
     <ng-template #headerLogoTemplate>
       <a routerLink="/">
-        <img width="100" height="58" [src]="'assets/images/logo-' + (theme === 'dark' ? 'dark' : 'light') + '.svg?v=2'">
+        <img width="100" height="58" [src]="'assets/images/logo-' + (theme === 'dark' ? 'dark' : 'light') + '.svg?v=3'">
       </a>
     </ng-template>
 
@@ -66,28 +66,18 @@
     <ng-template #headerUserbarTemplate>
       <jnt-app-header-userbar>
         <ng-template #userbarAvatarTemplate>
-          <jnt-avatar *jntMinFor="ui.breakpoint.desktop" [size]="ui.size.small"
-                      [image]="me.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
-
-          <jnt-stack *jntMaxFor="ui.breakpoint.tablet"
-                     [orientation]="ui.orientation.horizontal"
-                     [gutter]="ui.gutter.small">
-            <jnt-avatar [size]="ui.size.small"
-                        [image]="me.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
-            <jnt-stack [gutter]="ui.gutter.none">
-              <div>{{me.name}}</div>
-              <small>{{me.position?.title}}</small>
-            </jnt-stack>
-          </jnt-stack>
-
+          <jnt-avatar *jntMinFor="ui.breakpoint.desktop"
+                      [size]="ui.size.small"
+                      [image]="me.avatar || '/assets/images/avatar.jpg'">
+          </jnt-avatar>
         </ng-template>
         <ng-template #userbarMenuTemplate let-hide="hide">
-          <jnt-stack data-content *jntMinFor="ui.breakpoint.desktop"
-                     [align]="ui.align.stretch">
+          <jnt-stack data-content [align]="ui.align.stretch">
             <jnt-stack [orientation]="ui.orientation.horizontal"
                        [gutter]="ui.gutter.small">
               <jnt-avatar [size]="ui.size.small"
-                          [image]="me.avatar || '/assets/images/avatar.jpg'"></jnt-avatar>
+                          [image]="me.avatar || '/assets/images/avatar.jpg'">
+              </jnt-avatar>
               <jnt-stack [gutter]="ui.gutter.none">
                 <div>{{me.name}}</div>
                 <small>{{me.position?.title}}</small>
