@@ -26,7 +26,8 @@ import {
   IssuesSummaryGQL,
   ProjectsSummaryGQL,
   SyncIssueGQL,
-  TeamMembersGQL
+  TeamMembersGQL,
+  UserIssuesSummaryGQL
 } from './issues-list.graphql';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
 import { LocalUI } from 'src/enums/local-ui';
@@ -70,7 +71,7 @@ export class IssuesListComponent implements OnInit {
   filter: IssuesFilter;
   projects: ProjectSummary[] = [];
   developers: TeamMember[] = [];
-  summary: {issues: IssuesSummary, user: UserIssuesSummary};
+  summary: {issues?: IssuesSummary, user?: UserIssuesSummary} = {};
 
   set team(team: Team) {
     if (!!team && team.id !== this._team?.id) {
@@ -148,6 +149,7 @@ export class IssuesListComponent implements OnInit {
               private teamMembersGQL: TeamMembersGQL,
               private projectsSummaryGQL: ProjectsSummaryGQL,
               private issuesSummaryGQL: IssuesSummaryGQL,
+              private userIssuesSummaryGQL: UserIssuesSummaryGQL,
               private syncIssueGQL: SyncIssueGQL,
               private fb: FormBuilder,
               private logger: NGXLogger,
@@ -231,6 +233,9 @@ export class IssuesListComponent implements OnInit {
 
     this.logger.debug('load issues', this.filter);
     this.loadSummary();
+    if (!!this.user?.id || !!developer) {
+      this.loadUserSummary();
+    }
     if (!!this.table) {
       this.table.load();
     }
@@ -253,11 +258,22 @@ export class IssuesListComponent implements OnInit {
     return (environment.mocks
       ? of([getMock(IssuesSummary), getMock(UserIssuesSummary)]).pipe(delay(MOCKS_DELAY))
       : this.issuesSummaryGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {summary, user}}) =>
-        [deserialize(summary, IssuesSummary), deserialize(user, User).issuesSummary])))
+        .pipe(map(({data: {summary}}) => deserialize(summary, IssuesSummary)))
       .pipe(delay(UI_DELAY), finalize(() => this.progress.summary = false))
-      .subscribe(([issues, user]) => this.summary = {issues: <IssuesSummary>issues, user: <UserIssuesSummary>user},
-        err => this.errors = err);
+      .subscribe(issues => this.summary.issues = <IssuesSummary>issues,
+        err => this.errors = err));
+  }
+
+  loadUserSummary() {
+    this.logger.debug('load user summary');
+    this.progress.summary = true;
+    return (environment.mocks
+      ? of([getMock(IssuesSummary), getMock(UserIssuesSummary)]).pipe(delay(MOCKS_DELAY))
+      : this.userIssuesSummaryGQL.fetch(serialize(this.filter) as R)
+        .pipe(map(({data: {user}}) => deserialize(user, User).issuesSummary))
+      .pipe(delay(UI_DELAY), finalize(() => this.progress.summary = false))
+      .subscribe(user => this.summary.user = <UserIssuesSummary>user,
+        err => this.errors = err));
   }
 
   sync(issue: number, hide: Function) {
