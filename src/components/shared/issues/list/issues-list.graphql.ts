@@ -155,7 +155,7 @@ query ($team: ID, $user: ID, $project: ID, $dueDate: Date) {
 export class IssuesSummaryGQL extends Query<{ summary, user }> {
   document = gql`
 query(
-    $assignedTo: ID!
+    $assignedTo: ID
     $createdBy: ID
     $participatedBy: ID
     $project: ID
@@ -174,6 +174,19 @@ query(
         problemsCount
         timeSpent
     }
+}`;
+}
+
+@Injectable({
+  providedIn: 'root'
+})
+export class UserIssuesSummaryGQL extends Query<{ summary, user }> {
+  document = gql`
+query(
+    $assignedTo: ID!
+    $project: ID
+    $dueDate: Date
+) {
     user(id: $assignedTo) {
         issuesSummary(project: $project, dueDate: $dueDate) {
             assignedCount

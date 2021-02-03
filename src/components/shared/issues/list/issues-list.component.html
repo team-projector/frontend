@@ -20,31 +20,31 @@
 
     <ng-template #tableFiltersTemplate>
       <jnt-stack [align]="ui.align.stretch">
-        <jnt-row>
+        <jnt-row *ngIf="view === viewType.developer">
           <jnt-col [mobile]="12" [tablet]="12" [desktop]="6">
             <jnt-switcher data-summary formControlName="assignee" [features]="[ui.feature.adapted]">
               <jnt-switcher-option label="Assigned to me"
                                    i18n-label="@@action.assigned_to_me"
-                                   [disabled]="summary?.user.assignedCount <= 0"
+                                   [disabled]="summary.user?.assignedCount <= 0"
                                    [value]="assigneeType.assignedTo">
-                <jnt-badge *ngIf="summary?.user.assignedCount > 0"
-                           [value]="summary?.user.assignedCount"
+                <jnt-badge *ngIf="summary.user?.assignedCount > 0"
+                           [value]="summary.user?.assignedCount"
                            [color]="ui.color.paleNavy"></jnt-badge>
               </jnt-switcher-option>
               <jnt-switcher-option label="Assigned by me"
                                    i18n-label="@@action.assigned_by_me"
-                                   [disabled]="summary?.user.createdCount <= 0"
+                                   [disabled]="summary.user?.createdCount <= 0"
                                    [value]="assigneeType.createdBy">
-                <jnt-badge *ngIf="summary?.user.createdCount > 0"
-                           [value]="summary?.user.createdCount"
+                <jnt-badge *ngIf="summary.user?.createdCount > 0"
+                           [value]="summary.user?.createdCount"
                            [color]="ui.color.paleNavy"></jnt-badge>
               </jnt-switcher-option>
               <jnt-switcher-option label="Discuss"
                                    i18n-label="@@action.discuss"
-                                   [disabled]="summary?.user.participationCount <= 0"
+                                   [disabled]="summary.user?.participationCount <= 0"
                                    [value]="assigneeType.participatedBy">
-                <jnt-badge *ngIf="summary?.user.participationCount > 0"
-                           [value]="summary?.user.participationCount"
+                <jnt-badge *ngIf="summary.user?.participationCount > 0"
+                           [value]="summary.user?.participationCount"
                            [color]="ui.color.paleNavy"></jnt-badge>
               </jnt-switcher-option>
             </jnt-switcher>
@@ -122,37 +122,37 @@
             <jnt-switcher data-summary formControlName="type" [features]="[ui.feature.adapted]">
               <jnt-switcher-option label="All"
                                    i18n-label="@@action.filter_issues_all"
-                                   [disabled]="summary?.issues.count <= 0"
+                                   [disabled]="summary.issues?.count <= 0"
                                    [value]="issuesType.all">
-                <jnt-badge *ngIf="summary?.issues.timeSpent > 0"
+                <jnt-badge *ngIf="summary.issues?.timeSpent > 0"
                            [color]="ui.color.yellow"
-                           [text]="summary?.issues.timeSpent | duration:durationFormat.short"></jnt-badge>
-                <jnt-badge *ngIf="summary?.issues.count > 0"
+                           [text]="summary.issues?.timeSpent | duration:durationFormat.short"></jnt-badge>
+                <jnt-badge *ngIf="summary.issues?.count > 0"
                            [overflow]="null"
-                           [value]="summary?.issues.count"></jnt-badge>
+                           [value]="summary.issues?.count"></jnt-badge>
               </jnt-switcher-option>
               <jnt-switcher-option label="Closed"
                                    i18n-label="@@action.filter_type_closed"
-                                   [disabled]="summary?.issues.closedCount <= 0"
+                                   [disabled]="summary.issues?.closedCount <= 0"
                                    [value]="issuesType.closed">
-                <jnt-badge *ngIf="summary?.issues.closedCount > 0"
+                <jnt-badge *ngIf="summary.issues?.closedCount > 0"
                            [overflow]="null"
-                           [value]="summary?.issues.closedCount"></jnt-badge>
+                           [value]="summary.issues?.closedCount"></jnt-badge>
               </jnt-switcher-option>
               <jnt-switcher-option label="Opened"
                                    i18n-label="@@action.filter_type_opened"
-                                   [disabled]="summary?.issues.openedCount <= 0"
+                                   [disabled]="summary.issues?.openedCount <= 0"
                                    [value]="issuesType.opened">
-                <jnt-badge *ngIf="summary?.issues.openedCount > 0"
-                           [value]="summary?.issues.openedCount"
+                <jnt-badge *ngIf="summary.issues?.openedCount > 0"
+                           [value]="summary.issues?.openedCount"
                            [color]="ui.color.green"></jnt-badge>
               </jnt-switcher-option>
               <jnt-switcher-option label="Problems"
                                    i18n-label="@@action.filter_type_problems"
-                                   [disabled]="summary?.issues.problemsCount <= 0"
+                                   [disabled]="summary.issues?.problemsCount <= 0"
                                    [value]="issuesType.problems">
-                <jnt-badge *ngIf="summary?.issues.problemsCount > 0"
-                           [value]="summary?.issues.problemsCount"
+                <jnt-badge *ngIf="summary.issues?.problemsCount > 0"
+                           [value]="summary.issues?.problemsCount"
                            [color]="ui.color.red"></jnt-badge>
               </jnt-switcher-option>
             </jnt-switcher>
