@@ -1,6 +1,6 @@
 export enum Metrics {
-  day = 'day',
-  week = 'week'
+  day = 'DAY',
+  week = 'WEEK'
 }
 
 export enum MetricType {
