@@ -1,24 +1,25 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { getMock } from '@junte/mocker';
+import { deserialize, serialize } from '@junte/serialize-ts';
 import { BreakpointService, TableComponent, UI } from '@junte/ui';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';
-import { deserialize, serialize } from '@junte/serialize-ts';
 import { MOCKS_DELAY, UI_DELAY } from 'src/consts';
+import { LocalUI } from 'src/enums/local-ui';
 import { environment } from 'src/environments/environment';
 import { DurationFormat } from 'src/models/enums/duration-format';
 import { AssigneeType, IssueSort, IssueState, IssuesType } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';
 import { ViewType } from 'src/models/enums/view-type';
-import { BackendError } from 'src/types/gql-errors';
 import { IssuesFilter, IssuesSummary, PagingIssues, ProjectSummary } from 'src/models/issue';
-import { getMock } from '@junte/mocker';
 import { Project } from 'src/models/project';
 import { PagingTeamMembers, Team, TeamMember } from 'src/models/team';
 import { User, UserIssuesSummary } from 'src/models/user';
+import { BackendError } from 'src/types/gql-errors';
 import { equals } from 'src/utils/equals';
 import { CardSize } from '../../users/card/user-card.types';
 import {
@@ -30,7 +31,6 @@ import {
   UserIssuesSummaryGQL
 } from './issues-list.graphql';
 import { IssuesState, IssuesStateUpdate } from './issues-list.types';
-import { LocalUI } from 'src/enums/local-ui';
 
 const PAGE_SIZE = 10;
 
@@ -71,7 +71,7 @@ export class IssuesListComponent implements OnInit {
   filter: IssuesFilter;
   projects: ProjectSummary[] = [];
   developers: TeamMember[] = [];
-  summary: {issues?: IssuesSummary, user?: UserIssuesSummary} = {};
+  summary: { issues?: IssuesSummary, user?: UserIssuesSummary } = {};
 
   set team(team: Team) {
     if (!!team && team.id !== this._team?.id) {
@@ -256,24 +256,25 @@ export class IssuesListComponent implements OnInit {
     this.logger.debug('load summary');
     this.progress.summary = true;
     return (environment.mocks
-      ? of([getMock(IssuesSummary), getMock(UserIssuesSummary)]).pipe(delay(MOCKS_DELAY))
+      ? of(getMock(IssuesSummary)).pipe(delay(MOCKS_DELAY))
       : this.issuesSummaryGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {summary}}) => deserialize(summary, IssuesSummary)))
+        .pipe(map(({data: {summary}}) => deserialize(summary, IssuesSummary))))
       .pipe(delay(UI_DELAY), finalize(() => this.progress.summary = false))
       .subscribe(issues => this.summary.issues = <IssuesSummary>issues,
-        err => this.errors = err));
+        err => this.errors = err);
   }
 
   loadUserSummary() {
     this.logger.debug('load user summary');
     this.progress.summary = true;
     return (environment.mocks
-      ? of([getMock(IssuesSummary), getMock(UserIssuesSummary)]).pipe(delay(MOCKS_DELAY))
-      : this.userIssuesSummaryGQL.fetch(serialize(this.filter) as R)
-        .pipe(map(({data: {user}}) => deserialize(user, User).issuesSummary))
+      ? of(getMock(UserIssuesSummary)).pipe(delay(MOCKS_DELAY))
+      : this.userIssuesSummaryGQL.fetch(
+        serialize({...this.filter, assignedTo: this.user?.id || this.developer?.id}) as R)
+        .pipe(map(({data: {user}}) => deserialize(user, User).issuesSummary)))
       .pipe(delay(UI_DELAY), finalize(() => this.progress.summary = false))
       .subscribe(user => this.summary.user = <UserIssuesSummary>user,
-        err => this.errors = err));
+        err => this.errors = err);
   }
 
   sync(issue: number, hide: Function) {
