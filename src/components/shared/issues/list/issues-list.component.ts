@@ -267,10 +267,11 @@ export class IssuesListComponent implements OnInit {
   loadUserSummary() {
     this.logger.debug('load user summary');
     this.progress.summary = true;
+    const filter = new IssuesFilter({...this.filter, assignedTo: this.user?.id || this.developer?.id});
     return (environment.mocks
       ? of(getMock(UserIssuesSummary)).pipe(delay(MOCKS_DELAY))
       : this.userIssuesSummaryGQL.fetch(
-        serialize({...this.filter, assignedTo: this.user?.id || this.developer?.id}) as R)
+        serialize(filter) as R)
         .pipe(map(({data: {user}}) => deserialize(user, User).issuesSummary)))
       .pipe(delay(UI_DELAY), finalize(() => this.progress.summary = false))
       .subscribe(user => this.summary.user = <UserIssuesSummary>user,
