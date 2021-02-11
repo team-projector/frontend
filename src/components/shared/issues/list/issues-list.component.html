@@ -23,24 +23,24 @@
         <jnt-row *ngIf="view === viewType.developer">
           <jnt-col [mobile]="12" [tablet]="12" [desktop]="6">
             <jnt-switcher data-summary formControlName="assignee" [features]="[ui.feature.adapted]">
-              <jnt-switcher-option label="Assigned to me"
-                                   i18n-label="@@action.assigned_to_me"
+              <jnt-switcher-option label="My issues"
+                                   i18n-label="@@action.my_issues"
                                    [disabled]="summary.user?.assignedCount <= 0"
                                    [value]="assigneeType.assignedTo">
                 <jnt-badge *ngIf="summary.user?.assignedCount > 0"
                            [value]="summary.user?.assignedCount"
                            [color]="ui.color.paleNavy"></jnt-badge>
               </jnt-switcher-option>
-              <jnt-switcher-option label="Assigned by me"
-                                   i18n-label="@@action.assigned_by_me"
+              <jnt-switcher-option label="Created by me"
+                                   i18n-label="@@action.created_by_me"
                                    [disabled]="summary.user?.createdCount <= 0"
                                    [value]="assigneeType.createdBy">
                 <jnt-badge *ngIf="summary.user?.createdCount > 0"
                            [value]="summary.user?.createdCount"
                            [color]="ui.color.paleNavy"></jnt-badge>
               </jnt-switcher-option>
-              <jnt-switcher-option label="Discuss"
-                                   i18n-label="@@action.discuss"
+              <jnt-switcher-option label="Follow"
+                                   i18n-label="@@action.follow"
                                    [disabled]="summary.user?.participationCount <= 0"
                                    [value]="assigneeType.participatedBy">
                 <jnt-badge *ngIf="summary.user?.participationCount > 0"

@@ -18,7 +18,7 @@ import { ViewType } from 'src/models/enums/view-type';
 import { IssuesFilter, IssuesSummary, PagingIssues, ProjectSummary } from 'src/models/issue';
 import { Project } from 'src/models/project';
 import { PagingTeamMembers, Team, TeamMember } from 'src/models/team';
-import { User, UserIssuesSummary } from 'src/models/user';
+import { User, UserIssuesFilter, UserIssuesSummary } from 'src/models/user';
 import { BackendError } from 'src/types/gql-errors';
 import { equals } from 'src/utils/equals';
 import { CardSize } from '../../users/card/user-card.types';
@@ -233,7 +233,7 @@ export class IssuesListComponent implements OnInit {
 
     this.logger.debug('load issues', this.filter);
     this.loadSummary();
-    if (!!this.user?.id || !!developer) {
+    if (!!this.user?.id) {
       this.loadUserSummary();
     }
     if (!!this.table) {
@@ -266,15 +266,19 @@ export class IssuesListComponent implements OnInit {
 
   loadUserSummary() {
     this.logger.debug('load user summary');
+    const {dueDate, project} = this.form.getRawValue();
+    const filter = new UserIssuesFilter({
+      user: this.user?.id,
+      dueDate: !!dueDate ? startOfDay(dueDate) : null,
+      project: project,
+    });
     this.progress.summary = true;
-    const filter = new IssuesFilter({...this.filter, assignedTo: this.user?.id || this.developer?.id});
     return (environment.mocks
-      ? of(getMock(UserIssuesSummary)).pipe(delay(MOCKS_DELAY))
-      : this.userIssuesSummaryGQL.fetch(
-        serialize(filter) as R)
-        .pipe(map(({data: {user}}) => deserialize(user, User).issuesSummary)))
+      ? of(getMock(User)).pipe(delay(MOCKS_DELAY))
+      : this.userIssuesSummaryGQL.fetch(serialize(filter) as R)
+        .pipe(map(({data: {user}}) => deserialize(user, User))))
       .pipe(delay(UI_DELAY), finalize(() => this.progress.summary = false))
-      .subscribe(user => this.summary.user = <UserIssuesSummary>user,
+      .subscribe(user => this.summary.user = user.issuesSummary,
         err => this.errors = err);
   }
 

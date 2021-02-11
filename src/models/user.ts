@@ -9,6 +9,7 @@ import { field, model } from '../decorators/model';
 import { DateSerializer } from '../serializers/date';
 import { faker, mocks, TimeAccuracy } from '../utils/mocks';
 import { ModelRef } from '../utils/types';
+import { IssueSort, IssueState } from './enums/issue';
 import { Metrics } from './enums/metrics';
 import { UserPermission, UserProblem, UserRole } from './enums/user';
 import { IssuesMetrics, MergeRequestsMetrics } from './metrics';
@@ -56,6 +57,26 @@ export class UserMetrics {
 }
 
 @model()
+export class UserIssuesFilter {
+
+  @field()
+  user: string;
+
+  @field()
+  project: string;
+
+  @field({serializer: new DateSerializer(DATE_FORMAT)})
+  dueDate: Date;
+
+  constructor(defs: Partial<UserIssuesFilter> = null) {
+    if (!!defs) {
+      Object.assign(this, defs);
+    }
+  }
+
+}
+
+@model()
 export class UserPosition {
 
   @field({
@@ -70,6 +91,7 @@ export class UserPosition {
 
 @model()
 export class UserIssuesSummary {
+
   @field()
   assignedCount: number;
 
@@ -78,6 +100,7 @@ export class UserIssuesSummary {
 
   @field()
   participationCount: number;
+
 }
 
 @model({

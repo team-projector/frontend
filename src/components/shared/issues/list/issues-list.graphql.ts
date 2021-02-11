@@ -183,11 +183,11 @@ query(
 export class UserIssuesSummaryGQL extends Query<{ summary, user }> {
   document = gql`
 query(
-    $assignedTo: ID!
+    $user: ID!
     $project: ID
     $dueDate: Date
 ) {
-    user(id: $assignedTo) {
+    user(id: $user) {
         issuesSummary(project: $project, dueDate: $dueDate) {
             assignedCount
             createdCount
