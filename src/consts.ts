@@ -1,7 +1,7 @@
 import { registerLocaleData } from '@angular/common';
 import localeEn from '@angular/common/locales/en';
 import localeRu from '@angular/common/locales/ru';
-import { DEFAULT_CURRENCY_CODE, LOCALE_ID } from '@angular/core';
+import { DEFAULT_CURRENCY_CODE, LOCALE_ID, Provider } from '@angular/core';
 import { Locale } from 'date-fns';
 import { enUS as dfnsEnUS, ru as dfnsRu } from 'date-fns/locale';
 import { localeEnUs as jntEnUs, i18nEn, JunteUiModule, localeRu as jntRu, i18nRu } from '@junte/ui';
@@ -72,7 +72,7 @@ function mergeDfnsLocale(l: Locale): Locale {
 }
 
 const language = detectLanguage();
-export const providers: any[] = [
+export let APP_PROVIDERS: Provider[] = [
   {
     provide: Language,
     useValue: language
@@ -100,7 +100,7 @@ switch (language) {
         dfns: dfnsLocale
       }
     };
-    providers.push({
+    APP_PROVIDERS.push({
       provide: LOCALE_ID,
       useValue: 'ru'
     });
@@ -120,7 +120,7 @@ switch (language) {
         dfns: dfnsLocale
       }
     };
-    providers.push({
+    APP_PROVIDERS.push({
       provide: LOCALE_ID,
       useValue: 'en'
     });
@@ -129,12 +129,12 @@ switch (language) {
 export const DFNS_LOCALE = dfnsLocale;
 export const DFNS_OPTIONS = {locale: DFNS_LOCALE, weekStartsOn: FIRST_DAY_OF_WEEK};
 
-providers.push({
+APP_PROVIDERS.push({
   provide: DEFAULT_CURRENCY_CODE,
   useValue: data[LocaleData.CurrencyCode]
 });
 
-export const APP_MODULE_IMPORTS = [JunteUiModule.forRoot(config)];
+APP_PROVIDERS = APP_PROVIDERS.concat(JunteUiModule.forRoot(config).providers);
 
 export const SECONDS_IN_MINUTE = 60;
 export const SECONDS_IN_HOUR = 3600;

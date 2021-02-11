@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DateFnsModule } from 'ngx-date-fns';
 import { LoggerModule, NgxLoggerLevel } from 'ngx-logger';
-import { APP_MODULE_IMPORTS, providers } from 'src/consts';
+import { APP_PROVIDERS } from 'src/consts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GraphQLModule } from './graphql.module';
@@ -22,11 +22,10 @@ import { GraphQLModule } from './graphql.module';
     HttpClientModule,
     LoggerModule.forRoot({
       level: NgxLoggerLevel.DEBUG
-    }),
-    ...APP_MODULE_IMPORTS
+    })
   ],
   providers: [
-    ...providers
+    ...APP_PROVIDERS
   ],
   bootstrap: [AppComponent]
 })
