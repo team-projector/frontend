@@ -103,22 +103,25 @@ export class UserIssuesSummary {
 
 }
 
+export function userMock(user: User) {
+  user.hourRate = mocks.hourlyRate(10, 20);
+  user.dailyWorkHours = mocks.random(6, 8);
+  const payroll = user.hourRate * user.dailyWorkHours * 10;
+  user.metrics.payroll = payroll;
+  user.metrics.payrollOpened = payroll * mocks.percents(30, 60);
+  user.metrics.payrollClosed = payroll - user.metrics.payrollOpened;
+  user.metrics.issues.closedSpent = user.metrics.payrollClosed / user.dailyWorkHours * 3600;
+  user.metrics.penalty = payroll * mocks.percents(5, 15);
+  user.metrics.bonus = payroll * mocks.percents(5, 15);
+  const taxRate = mocks.percents(20, 40);
+  user.taxRate = taxRate;
+  user.metrics.taxes = payroll * taxRate;
+  user.metrics.taxesOpened = user.metrics.payrollOpened * taxRate;
+  user.metrics.taxesClosed = user.metrics.payrollClosed * taxRate;
+}
+
 @model({
-  mocking: (user: User) => {
-    user.hourRate = mocks.hourlyRate(10, 20);
-    user.dailyWorkHours = mocks.random(6, 8);
-    const payroll = user.hourRate * user.dailyWorkHours * 10;
-    user.metrics.payroll = payroll;
-    user.metrics.payrollOpened = payroll * mocks.percents(30, 60);
-    user.metrics.payrollClosed = payroll - user.metrics.payrollOpened;
-    user.metrics.penalty = payroll * mocks.percents(5, 15);
-    user.metrics.bonus = payroll * mocks.percents(5, 15);
-    const taxRate = mocks.percents(20, 40);
-    user.taxRate = taxRate;
-    user.metrics.taxes = payroll * taxRate;
-    user.metrics.taxesOpened = user.metrics.payrollOpened * taxRate;
-    user.metrics.taxesClosed = user.metrics.payrollClosed * taxRate;
-  }
+  mocking: (user: User) => userMock(user)
 })
 export class User {
 
@@ -183,6 +186,7 @@ export class User {
 
 @model({
   mocking: (me: Me) => {
+    userMock(me);
     me.roles = [];
     switch (localStorage.role) {
       case UserRole.developer:

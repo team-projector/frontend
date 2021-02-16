@@ -61,7 +61,7 @@ export class Team {
 
   @field({
     mock: {type: TeamMember, length: 5},
-    serializer: new EdgesToArray(TeamMember),
+    serializer: new EdgesToArray(TeamMember)
   })
   members: TeamMember[];
 

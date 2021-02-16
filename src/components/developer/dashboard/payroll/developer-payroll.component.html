@@ -40,7 +40,7 @@
                        [align]="ui.align.center">
               <jnt-icon *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) > 0"
                         [icon]="ui.icons.time"></jnt-icon>
-              <span>{{(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) | duration}}</span>
+              <span>{{(metrics.issues.closedSpent) | duration}}</span>
             </jnt-stack>
           </jnt-stack>
           <span>
