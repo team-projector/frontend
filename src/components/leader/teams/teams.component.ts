@@ -60,6 +60,8 @@ export class TeamsComponent implements OnInit {
       this.form.patchValue(state, {emitEvent: false});
 
       this.load();
+
+      console.log(getMock(PagingTeams));
     });
 
     this.form.valueChanges

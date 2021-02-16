@@ -7,7 +7,7 @@ import { faker, mocks } from '../utils/mocks';
     metrics.openedCount = metrics.count - mocks.random(150, 200);
     metrics.openedEstimated = metrics.openedCount * mocks.time(3, 9);
     metrics.openedSpent = metrics.openedEstimated * mocks.percents(65, 85);
-    metrics.closedSpent = metrics.openedSpent * mocks.percents(65, 85);
+    metrics.closedSpent = 36000000;
 
     metrics.payroll = (metrics.openedSpent + metrics.closedSpent) * mocks.random(10, 20);
     metrics.payrollClosed = metrics.payroll * mocks.percents(60, 75);

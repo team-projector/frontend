@@ -6,9 +6,9 @@ import {
   BadgeModule,
   FormModule,
   InformerModule,
+  LabelModule,
   MenuModule,
   StackModule,
-  LabelModule,
   SwitcherModule,
   TableModule
 } from '@junte/ui';
