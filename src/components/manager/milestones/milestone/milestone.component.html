@@ -14,7 +14,78 @@
                title="Tickets"
                i18n-title="@@label.tickets"
                [loading]="progress.tickets">
-
+      <ng-template #toolsTemplate>
+        <jnt-stack [orientation]="ui.orientation.horizontal"
+                   [gutter]="ui.gutter.small"
+                   [align]="ui.align.center">
+          <jnt-button [outline]="ui.outline.transparent"
+                      [icon]="ui.icons.add"
+                      (click)="add()">
+          </jnt-button>
+          <jnt-button [outline]="ui.outline.transparent"
+                      [icon]="progress.tickets || progress.issues ? ui.icons.animated.reload : ui.icons.reload"
+                      [disabled]="progress.tickets || progress.issues"
+                      (click)="load(loadMode.force);loadIssues(loadMode.force)">
+          </jnt-button>
+          <jnt-switcher formControlName="type">
+            <jnt-switcher-option label="All"
+                                 i18n-label="@@action.filter_issues_all"
+                                 [disabled]="summary?.count <= 0"
+                                 [value]="ticketsTypes.all">
+              <jnt-badge *ngIf="summary?.count"
+                         [value]="summary?.count"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Created"
+                                 i18n-label="@@label.created"
+                                 [disabled]="summary?.createdCount <= 0"
+                                 [value]="ticketsTypes.created">
+              <jnt-badge *ngIf="summary?.createdCount"
+                         [value]="summary?.createdCount"
+                         [color]="ui.color.purple"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Planning"
+                                 i18n-label="@@label.planning"
+                                 [disabled]="summary?.planningCount <= 0"
+                                 [value]="ticketsTypes.planning">
+              <jnt-badge *ngIf="summary?.planningCount > 0"
+                         [value]="summary?.planningCount"
+                         [color]="ui.color.red"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Doing"
+                                 i18n-label="@@label.doing"
+                                 [disabled]="summary?.doingCount <= 0"
+                                 [value]="ticketsTypes.doing">
+              <jnt-badge *ngIf="summary?.doingCount"
+                         [value]="summary?.doingCount"
+                         [color]="ui.color.blue"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Testing"
+                                 i18n-label="@@label.testing"
+                                 [disabled]="summary?.testingCount <= 0"
+                                 [value]="ticketsTypes.testing">
+              <jnt-badge *ngIf="summary?.testingCount"
+                         [value]="summary?.testingCount"
+                         [color]="ui.color.yellow"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Accepting"
+                                 i18n-label="@@label.accepting"
+                                 [disabled]="summary?.acceptingCount <= 0"
+                                 [value]="ticketsTypes.accepting">
+              <jnt-badge *ngIf="summary?.acceptingCount"
+                         [value]="summary?.acceptingCount"
+                         [color]="ui.color.gray"></jnt-badge>
+            </jnt-switcher-option>
+            <jnt-switcher-option label="Done"
+                                 i18n-label="@@label.done"
+                                 [disabled]="summary?.doneCount <= 0"
+                                 [value]="ticketsTypes.done">
+              <jnt-badge *ngIf="summary?.doneCount"
+                         [value]="summary?.doneCount"
+                         [color]="ui.color.green"></jnt-badge>
+            </jnt-switcher-option>
+          </jnt-switcher>
+        </jnt-stack>
+      </ng-template>
 
       <ng-container *ngFor="let ticket of tickets">
         <jnt-gantt-line>
