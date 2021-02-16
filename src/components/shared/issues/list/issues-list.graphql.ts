@@ -26,7 +26,7 @@ export class IssuesGQL extends Query<{ issues }> {
   document = gql`
 query(
     $assignedTo: ID
-    $createdBy: ID
+    $createdByForOther: ID
     $participatedBy: ID
     $milestone: ID
     $ticket: ID
@@ -42,7 +42,7 @@ query(
 ) {
     issues: allIssues(
         assignedTo: $assignedTo
-        createdBy: $createdBy
+        createdByForOther: $createdByForOther
         participatedBy: $participatedBy
         milestone: $milestone
         ticket: $ticket
@@ -182,18 +182,14 @@ query(
 })
 export class UserIssuesSummaryGQL extends Query<{ summary, user }> {
   document = gql`
-query(
-    $user: ID!
-    $project: ID
-    $dueDate: Date
-) {
-    user(id: $user) {
-        issuesSummary(project: $project, dueDate: $dueDate) {
-            assignedCount
-            createdCount
-            participationCount
-        }
+query ($user: ID!, $project: ID, $dueDate: Date) {
+  user(id: $user) {
+    issuesSummary(project: $project, dueDate: $dueDate) {
+      assignedOpenedCount
+      createdOpenedCount
+      participationOpenedCount
     }
+  }
 }`;
 }
 

@@ -209,7 +209,7 @@ export class IssuesListComponent implements OnInit {
       team: this.team?.id,
       project: project,
       assignedTo: assignee === AssigneeType.assignedTo ? (this.user?.id || developer) : null,
-      createdBy: assignee === AssigneeType.createdBy ? this.user?.id : null,
+      createdByForOther: assignee === AssigneeType.createdBy ? this.user?.id : null,
       participatedBy: assignee === AssigneeType.participatedBy ? this.user?.id : null,
       state: type === IssuesType.opened ? IssueState.opened :
         (type === IssuesType.closed ? IssueState.closed : null),

@@ -218,7 +218,7 @@ export class IssuesFilter implements SearchFilter {
   assignedTo: string;
 
   @field()
-  createdBy: string;
+  createdByForOther: string;
 
   @field()
   participatedBy: string;

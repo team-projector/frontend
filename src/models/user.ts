@@ -93,13 +93,13 @@ export class UserPosition {
 export class UserIssuesSummary {
 
   @field()
-  assignedCount: number;
+  assignedOpenedCount: number;
 
   @field()
-  createdCount: number;
+  createdOpenedCount: number;
 
   @field()
-  participationCount: number;
+  participationOpenedCount: number;
 
 }
 
