@@ -156,14 +156,14 @@ export class IssuesSummaryGQL extends Query<{ summary, user }> {
   document = gql`
 query(
     $assignedTo: ID
-    $createdBy: ID
+    $createdByForOther: ID
     $participatedBy: ID
     $project: ID
     $dueDate: Date
 ) {
     summary: issuesSummary(
         assignedTo: $assignedTo
-        createdBy: $createdBy
+        createdByForOther: $createdByForOther
         participatedBy: $participatedBy
         project: $project
         dueDate: $dueDate
