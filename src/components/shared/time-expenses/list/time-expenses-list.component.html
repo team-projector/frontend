@@ -6,6 +6,7 @@
 
 <jnt-form [formGroup]="form">
   <jnt-table #table [features]="[view !== viewType.salary ? ui.feature.reload : null]"
+             (reloaded)="loadSummary()"
              formControlName="table">
 
     <ng-template *ngIf="view !== viewType.salary" #tableActionsTemplate>

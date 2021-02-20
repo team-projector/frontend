@@ -6,7 +6,7 @@
 
 <jnt-form [formGroup]="form">
   <jnt-table #table [features]="[ui.feature.reload, ui.feature.search]"
-             (reloaded)="loadSummary()"
+             (reloaded)="loadSummary(); loadUserSummary()"
              formControlName="table">
 
     <ng-template #tableActionsTemplate>
