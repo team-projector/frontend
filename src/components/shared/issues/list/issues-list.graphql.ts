@@ -160,6 +160,7 @@ query(
     $participatedBy: ID
     $project: ID
     $dueDate: Date
+    $team: ID
 ) {
     summary: issuesSummary(
         assignedTo: $assignedTo
@@ -167,6 +168,7 @@ query(
         participatedBy: $participatedBy
         project: $project
         dueDate: $dueDate
+        team: $team
     ) {
         count
         closedCount
