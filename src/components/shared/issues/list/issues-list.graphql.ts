@@ -187,8 +187,11 @@ export class UserIssuesSummaryGQL extends Query<{ summary, user }> {
 query ($user: ID!, $project: ID, $dueDate: Date) {
   user(id: $user) {
     issuesSummary(project: $project, dueDate: $dueDate) {
+      assignedCount
       assignedOpenedCount
+      createdCount
       createdOpenedCount
+      participationCount
       participationOpenedCount
     }
   }

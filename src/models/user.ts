@@ -93,14 +93,22 @@ export class UserPosition {
 export class UserIssuesSummary {
 
   @field()
+  assignedCount: number;
+
+  @field()
   assignedOpenedCount: number;
+
+  @field()
+  createdCount: number;
 
   @field()
   createdOpenedCount: number;
 
   @field()
-  participationOpenedCount: number;
+  participationCount: number;
 
+  @field()
+  participationOpenedCount: number;
 }
 
 export function userMock(user: User) {
