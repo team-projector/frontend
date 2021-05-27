@@ -102,9 +102,10 @@ export class IssuesListComponent implements OnInit {
     offset: 0
   });
   dueDateControl = this.fb.control(null);
+  typeControl = this.fb.control(IssuesType.opened);
   form = this.fb.group({
     table: this.tableControl,
-    type: [IssuesType.opened],
+    type: this.typeControl,
     dueDate: this.dueDateControl,
     project: [null],
     developer: [null],

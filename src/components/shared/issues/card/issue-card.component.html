@@ -23,9 +23,6 @@
                    [size]="ui.size.small"
                    [color]="l.color" [label]="l.title"></jnt-label>
       </jnt-stack>
-      <small *ngIf="issue.state == issueState.closed && !!issue.closedAt">
-        &nbsp;{{issue.closedAt | dfnsFormatDistanceToNow}}
-      </small>
     </jnt-stack>
     <small>{{issue.project?.group?.title}} / {{issue.project?.title}}</small>
   </jnt-stack>

@@ -238,9 +238,11 @@
                       title="Due date"
                       i18n-title="@@label.due_date"
                       [align]="ui.text.align.center">
-      <ng-template #tableCellTemplate let-dueDate="dueDate" let-problems="problems">
-        <jnt-stack [align]="tablet ? ui.align.start : ui.align.center">
+      <ng-template #tableCellTemplate let-dueDate="dueDate" let-closedAt=closedAt let-problems="problems">
+        <jnt-stack [align]="tablet ? ui.align.start : ui.align.center"
+                   [gutter]="ui.gutter.small">
           <app-due-date [dueDate]="dueDate" [problems]="problems"></app-due-date>
+          <small *ngIf="!!closedAt">{{closedAt | dfnsFormat:'PPp'}}</small>
         </jnt-stack>
       </ng-template>
     </jnt-table-column>
