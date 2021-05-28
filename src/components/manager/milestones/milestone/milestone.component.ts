@@ -229,7 +229,7 @@ export class MilestoneComponent implements OnInit {
       title: !!ticket
         ? {text: $localize`:@@action.edit_ticket:Edit ticket`, icon: UI.icons.edit}
         : {text: $localize`:@@action.add_ticket:Add ticket`, icon: UI.icons.add},
-      maxWidth: '400px'
+      maxWidth: '500px'
     });
     this.modal.open(component, options);
   }
