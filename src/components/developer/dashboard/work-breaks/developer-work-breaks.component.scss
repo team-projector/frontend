@@ -25,7 +25,7 @@ $jnt-ng-deep: true;
 
   [data-circle] {
     @include jnt-circle-bar((width: 100px, height: 100px), '&');
-    @include jnt-circle-bar-indicator((fill: $jnt-secondary-dark-color));
+    @include jnt-circle-bar-indicator((fill: $jnt-highlight-background));
 
     [data-days] {
       width: 80%;
@@ -36,7 +36,7 @@ $jnt-ng-deep: true;
       font-weight: $jnt-font-weight-bold;
       font-size: 20px;
       line-height: 1.2;
-      color: $jnt-secondary-dark-color;
+      color: $jnt-highlight-background;
 
       [data-paid] {
         color: $jnt-primary-color;
