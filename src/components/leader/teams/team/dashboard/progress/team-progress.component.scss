@@ -156,7 +156,7 @@ table {
           }
 
           &:hover {
-            background-color: $jnt-secondary-dark-color;
+            background-color: $jnt-highlight-background;
           }
 
           [data-issues-count] {
@@ -184,7 +184,7 @@ table {
           &:focus {
             outline: 0;
             border-radius: $jnt-corner-small;
-            box-shadow: $jnt-outline-shadow-small $jnt-secondary-dark-color;
+            box-shadow: $jnt-outline-shadow-small $jnt-highlight-background;
           }
         }
 
