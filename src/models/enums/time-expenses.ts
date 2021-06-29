@@ -17,7 +17,7 @@ export enum TimeExpenseState {
 
 export enum SpentTimeSort {
   dateAsc = 'DATE_ASC',
-  dateDesc = 'DATE_DESC',
+  date = 'DATE_DESC',
   createdAtAsc = 'CREATED_AT_ASC',
   createdAtDesc = 'CREATED_AT_DESC'
 }
