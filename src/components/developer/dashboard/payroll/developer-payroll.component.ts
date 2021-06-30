@@ -55,8 +55,8 @@ export class DeveloperPayrollComponent implements OnInit {
   opened = false;
 
   i18n = {
-    hideDetails: $localize`:@@action.more_details:More details`,
-    moreDetails: $localize`:@@action.hide_details:Hide details`
+    hideDetails: $localize`:@@action.more_details:Hide details`,
+    moreDetails: $localize`:@@action.hide_details:More details`
   };
 
   @Input()
