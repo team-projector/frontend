@@ -26,8 +26,12 @@ RUN addgroup -S -g 10001 app \
         -s /sbin/false \
         -G app \
         -H -h /app  \
-        app
+        app \
+    && mkdir /var/run/nginx \
+    && chown app:app /var/run/nginx
 
 ENV APP_VERSION=$APP_VERSION
+
+USER app
 
 EXPOSE 8080
