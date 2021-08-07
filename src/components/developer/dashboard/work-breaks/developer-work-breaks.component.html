@@ -16,7 +16,7 @@
         </jnt-stack>
       </ng-template>
       <jnt-bar-indicator-group data-indicator>
-        <jnt-bar-indicator [value]="metrics.paidWorkBreaksDays * 100 / 30"
+        <jnt-bar-indicator [value]="metrics.paidWorkBreaksDays * 100 / me.annualPaidWorkBreaksDays"
                            [color]="ui.color.purple">
         </jnt-bar-indicator>
       </jnt-bar-indicator-group>
