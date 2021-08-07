@@ -21,6 +21,13 @@ WORKDIR /var/www
 COPY deploy/nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /src/dist .
 
+RUN addgroup -S -g 10001 app \
+    && adduser -S -u 10001 \
+        -s /sbin/false \
+        -G app \
+        -H -h /app  \
+        app
+
 ENV APP_VERSION=$APP_VERSION
 
 EXPOSE 8080
