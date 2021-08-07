@@ -28,7 +28,8 @@ RUN addgroup -S -g 10001 app \
         -H -h /app  \
         app \
     && mkdir /var/run/nginx \
-    && chown app:app /var/run/nginx
+    && chown app:app /var/run/nginx \
+    && ln -sf /dev/stderr /var/run/nginx/error.log
 
 ENV APP_VERSION=$APP_VERSION
 
