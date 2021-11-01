@@ -1,5 +1,5 @@
-@import "~@junte/ui/lib/assets/styles/layout/responsive";
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@esanum/ui/lib/assets/styles/layout/responsive";
+@import "src/assets/styles/variables";
 
 :host {
   display: block;
@@ -11,7 +11,7 @@
 
 [calendar] {
   @include max-for-desktop() {
-    margin-bottom: $jnt-gutter-normal;
+    margin-bottom: $sn-gutter-normal;
   }
 }
 
@@ -20,22 +20,22 @@
   display: flex;
   align-items: center;
   min-height: 40px;
-  color: $jnt-primary-text-light-color;
-  padding: $jnt-gutter-small $jnt-gutter-normal;
-  border: 1px dashed $jnt-secondary-dark-color;
-  border-radius: $jnt-corner-normal;
+  color: $sn-primary-text-light-color;
+  padding: $sn-gutter-small $sn-gutter-normal;
+  border: 1px dashed $sn-secondary-dark-color;
+  border-radius: $sn-corner-normal;
   line-height: 1em;
   &[active='true'] {
     border-color: transparent;
-    background: $jnt-primary-light-color;
-    color: $jnt-white-color;
-    padding-right: $jnt-gutter-huge;
-    box-shadow: $jnt-shadow-normal;
+    background: $sn-primary-light-color;
+    color: $sn-white-color;
+    padding-right: $sn-gutter-huge;
+    box-shadow: $sn-shadow-normal;
   }
   [reset] {
     position: absolute;
-    top: $jnt-gutter-small;
-    right: $jnt-gutter-small;
+    top: $sn-gutter-small;
+    right: $sn-gutter-small;
   }
 }
 

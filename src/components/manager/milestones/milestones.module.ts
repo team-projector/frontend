@@ -24,7 +24,7 @@ import {
   StackModule,
   SwitcherModule,
   TabsModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { EditTicketComponent } from 'src/components/manager/milestones/milestone/edit-ticket/edit-ticket.component';
 import { TicketStateColorPipe } from 'src/components/manager/milestones/milestone/milestone.pipes';

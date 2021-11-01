@@ -1,51 +1,51 @@
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               (ok)="errors = []">
-  <jnt-informer-message *ngFor="let error of errors"
-                        [message]="error.toString()"></jnt-informer-message>
-</jnt-informer>
+  <sn-informer-message *ngFor="let error of errors"
+                        [message]="error.toString()"></sn-informer-message>
+</sn-informer>
 
-<jnt-form [formGroup]="form">
-  <jnt-table #table formControlName="table">
+<sn-form [formGroup]="form">
+  <sn-table #table formControlName="table">
     <ng-template #tableFiltersTemplate>
-      <jnt-button text="Add"
+      <sn-button text="Add"
                   i18n-text="@@action.add"
                   [icon]="ui.icons.add"
                   [outline]="ui.outline.transparent"
                   (click)="open()">
-      </jnt-button>
+      </sn-button>
     </ng-template>
-    <jnt-table-column *ngIf="view === viewType.leader || view === viewType.shareholder"
+    <sn-table-column *ngIf="view === viewType.leader || view === viewType.shareholder"
                       title="Developer"
                       i18n-title="@@label.developer">
       <ng-template #tableCellTemplate let-user="user">
         <app-user [user]="user"
                   [size]="userCardSize.small"></app-user>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column title="Period"
+    <sn-table-column title="Period"
                       i18n-title="@@label.period"
                       width="250px"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-fromDate="fromDate" let-toDate="toDate">
-        <jnt-date-period [start]="fromDate" [end]="toDate"></jnt-date-period>
+        <sn-date-period [start]="fromDate" [end]="toDate"></sn-date-period>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="75px"
+    <sn-table-column width="75px"
                       title="Paid"
                       i18n-title="@@label.paid"
                       [align]="ui.text.align.right">
       <ng-template #tableCellTemplate let-paidDays="paidDays" let-paid="paid">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end">
-          <jnt-label [label]="paidDays"
-                     [color]="paid ? ui.color.green : ui.color.paleNavy"></jnt-label>
-        </jnt-stack>
+          <sn-label [label]="paidDays"
+                     [color]="paid ? ui.color.green : ui.color.paleNavy"></sn-label>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column title="Reason"
+    <sn-table-column title="Reason"
                       i18n-title="@@label.reason"
                       width="10%">
       <ng-template #tableCellTemplate let-reason="reason">
@@ -61,52 +61,52 @@
           </ng-container>
         </ng-container>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column title="Comment"
+    <sn-table-column title="Comment"
                       i18n-title="@@label.comment"
                       width="20%">
       <ng-template #tableCellTemplate let-comment="comment">
         {{comment}}
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column title="State"
+    <sn-table-column title="State"
                       i18n-title="@@label.break_state"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate
                    let-approveState="approveState">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.center">
           <ng-container [ngSwitch]="approveState">
-            <jnt-label *ngSwitchCase="approveStates.created"
+            <sn-label *ngSwitchCase="approveStates.created"
                        i18n-label="@@label.created"
                        [color]="ui.color.purple"
                        label="Approving">
-            </jnt-label>
-            <jnt-label *ngSwitchCase="approveStates.approved"
+            </sn-label>
+            <sn-label *ngSwitchCase="approveStates.approved"
                        i18n-label="@@label.approved"
                        [color]="ui.color.green"
                        label="Approved">
-            </jnt-label>
+            </sn-label>
 
-            <jnt-label *ngSwitchCase="approveStates.declined"
+            <sn-label *ngSwitchCase="approveStates.declined"
                        i18n-label="@@label.declined"
                        [color]="ui.color.red"
                        label="Declined">
-            </jnt-label>
+            </sn-label>
           </ng-container>
-        </jnt-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column title="Approved by"
+    <sn-table-column title="Approved by"
                       i18n-title="@@label.approved_by">
       <ng-template #tableCellTemplate
                    let-approvedBy="approvedBy"
                    let-approvedAt="approvedAt"
                    let-declineReason="declineReason">
-        <jnt-stack [orientation]="ui.orientation.vertical"
+        <sn-stack [orientation]="ui.orientation.vertical"
                    [gutter]="ui.gutter.tiny">
           <app-user *ngIf="approvedBy"
                     [user]="approvedBy"
@@ -117,34 +117,34 @@
           <small *ngIf="declineReason">
             {{ declineReason }}
           </small>
-        </jnt-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
     <ng-template #tableRowActionsTemplate
                  let-break="row" let-hide="hide">
-      <jnt-menu *ngIf="break.approveState === approveStates.created"
+      <sn-menu *ngIf="break.approveState === approveStates.created"
                 [orientation]="ui.orientation.vertical">
-        <jnt-menu-item title="Approve"
+        <sn-menu-item title="Approve"
                        i18n-title="@@action.approve"
                        [icon]="ui.icons.checked"
                        (click)="approve(break.id)">
-        </jnt-menu-item>
-        <jnt-menu-item title="Decline"
+        </sn-menu-item>
+        <sn-menu-item title="Decline"
                        i18n-title="@@action.decline"
                        [icon]="ui.icons.cancel"
                        (click)="openDecline(break)">
-        </jnt-menu-item>
-        <jnt-menu-item title="Edit"
+        </sn-menu-item>
+        <sn-menu-item title="Edit"
                        i18n-title="@@action.edit"
                        [icon]="ui.icons.edit"
-                       (click)="open(break);hide()"></jnt-menu-item>
-        <jnt-menu-item title="Delete"
+                       (click)="open(break);hide()"></sn-menu-item>
+        <sn-menu-item title="Delete"
                        i18n-title="@@action.delete"
                        [icon]="ui.icons.delete"
-                       (click)="delete(break.id)"></jnt-menu-item>
-      </jnt-menu>
+                       (click)="delete(break.id)"></sn-menu-item>
+      </sn-menu>
     </ng-template>
 
-  </jnt-table>
-</jnt-form>
+  </sn-table>
+</sn-form>

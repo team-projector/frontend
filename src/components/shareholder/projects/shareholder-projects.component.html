@@ -1,21 +1,21 @@
-<jnt-app-page-header [icon]="localUi.icons.project"
+<sn-app-page-header [icon]="localUi.icons.project"
                      title="Projects"
                      i18n-title="@@label.projects"
                      i18n-teaser="@@message.shareholder_projects_teaser"
-                     teaser="when you can't work"></jnt-app-page-header>
+                     teaser="when you can't work"></sn-app-page-header>
 
-<jnt-block data-tabs [padding]="ui.gutter.none"
+<sn-block data-tabs [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
-  <jnt-menu data-nav [style]="ui.menu.style.tabs"
+  <sn-menu data-nav [style]="ui.menu.style.tabs"
             [spacing]="ui.gutter.normal">
-    <jnt-menu-item [link]="['groups']"
+    <sn-menu-item [link]="['groups']"
                    title="Groups"
                    i18n-title="@@action.groups">
-    </jnt-menu-item>
-    <jnt-menu-item [link]="['.']"
+    </sn-menu-item>
+    <sn-menu-item [link]="['.']"
                    title="Projects"
                    i18n-title="@@action.projects">
-    </jnt-menu-item>s
-  </jnt-menu>
+    </sn-menu-item>s
+  </sn-menu>
   <router-outlet></router-outlet>
-</jnt-block>
+</sn-block>

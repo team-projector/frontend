@@ -3,7 +3,7 @@ import { CdkDrag, CdkDragDrop } from '@angular/cdk/drag-drop';
 import { Component, ComponentFactoryResolver, Injector, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ModalOptions, ModalService, PopoverInstance, UI } from '@junte/ui';
+import { ModalOptions, ModalService, PopoverInstance, UI } from '@esanum/ui';
 import { R } from 'apollo-angular/types';
 import { NGXLogger } from 'ngx-logger';
 import { combineLatest, of } from 'rxjs';

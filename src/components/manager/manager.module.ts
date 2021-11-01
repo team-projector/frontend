@@ -7,7 +7,7 @@ import {
   DotModule,
   GridModule,
   LinkModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';
 import { AppFooterModule } from '../layout/footer/app-footer.module';
 import { ManagerRoutingModule } from './manager-routing.module';

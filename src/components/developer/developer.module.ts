@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { AppLayoutModule, BreadcrumbsModule, GridModule, MenuModule } from '@junte/ui';
+import { AppLayoutModule, BreadcrumbsModule, GridModule, MenuModule } from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { AppFooterModule } from '../layout/footer/app-footer.module';
 import { DeveloperRoutingModule } from './developer-routing.module';

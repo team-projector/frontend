@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { BreaksTableComponent } from 'src/components/shared/work-breaks/list/work-breaks-list';
 import { LocalUI } from 'src/enums/local-ui';
 import { Me } from 'src/models/user';

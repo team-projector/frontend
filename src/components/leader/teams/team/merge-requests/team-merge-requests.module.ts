@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AppLayoutModule, BlockModule } from '@junte/ui';
+import { AppLayoutModule, BlockModule } from '@esanum/ui';
 import { MergeRequestsModule } from '../../../../shared/merge-requests/list/merge-requests.module';
 import { TeamMergeRequestsComponent } from './team-merge-requests.component';
 import { TeamMergeRequestsRoutingModule } from './team-merge-requests-routing.module';

@@ -1,16 +1,16 @@
 <ng-container *ngIf="!!dueDate">
-  <jnt-label
+  <sn-label
     [color]="(dueDate | dfnsDifferenceInDays:today) > 0 ? ui.color.paleNavy
       : (problems?.includes(issueProblem.overDueDate) ? ui.color.red : ui.color.green)"
-    [label]="dueDate | dueDate"></jnt-label>
+    [label]="dueDate | dueDate"></sn-label>
   <div data-remains *ngIf="(dueDate | dfnsDifferenceInDays:today) > 0">
     {{(dueDate | dfnsFormatDistanceStrict:today:dfnsOptions)}}
   </div>
 </ng-container>
 
 
-<jnt-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
+<sn-label *ngIf="problems?.includes(issueProblem.emptyDueDate)"
            [color]="ui.color.red"
            label="empty"
            i18n-label="@@label.empty">
-</jnt-label>
+</sn-label>

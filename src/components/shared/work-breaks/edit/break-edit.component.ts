@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';

@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 
 @Component({
   selector: 'app-profit',

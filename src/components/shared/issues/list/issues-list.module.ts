@@ -17,7 +17,7 @@ import {
   StackModule,
   SwitcherModule,
   TableModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DueDateModule } from 'src/components/shared/due-date/due-date.module';
 import { WorkProgressModule } from '../../work-progress/work-progress.module';

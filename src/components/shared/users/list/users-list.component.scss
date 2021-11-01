@@ -1,4 +1,4 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "src/assets/styles/variables";
 
 :host {
   display: block;
@@ -9,7 +9,7 @@
 }
 
 [data-paid-work-breaks-days] {
-  margin-top: $jnt-gutter-tiny;
+  margin-top: $sn-gutter-tiny;
   text-align: center;
   font-size: .85em;
 }
@@ -20,11 +20,11 @@
 
 [data-metrics] {
   border-collapse: collapse;
-  font-size: $jnt-font-size-small;
+  font-size: $sn-font-size-small;
 
   td {
-    border: 1px solid $jnt-secondary-color;
-    padding: $jnt-gutter-small;
+    border: 1px solid $sn-secondary-color;
+    padding: $sn-gutter-small;
   }
 
   tr td:nth-child(2) {

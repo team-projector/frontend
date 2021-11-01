@@ -1,54 +1,54 @@
-$jnt-theme-type: 'dark';
+$sn-theme-type: 'dark';
 
-$jnt-white-color: white;
-$jnt-gray-100: #F5F5F5;
-$jnt-gray-200: #F7F7F7;
-$jnt-gray-300: #F0F0F0;
-$jnt-gray-400: #E9E9E9;
-$jnt-gray-500: #F3F4FC;
-$jnt-gray-600: #C4C4C4;
-$jnt-gray-700: #D0D0D0;
-$jnt-gray-800: #828282;
-$jnt-gray-900: #4F4F4F;
-$jnt-gray-dark: #262626;
-$jnt-purple-color: #3949AB;
-$jnt-purple-light-color: #6F74DD;
+$sn-white-color: white;
+$sn-gray-100: #F5F5F5;
+$sn-gray-200: #F7F7F7;
+$sn-gray-300: #F0F0F0;
+$sn-gray-400: #E9E9E9;
+$sn-gray-500: #F3F4FC;
+$sn-gray-600: #C4C4C4;
+$sn-gray-700: #D0D0D0;
+$sn-gray-800: #828282;
+$sn-gray-900: #4F4F4F;
+$sn-gray-dark: #262626;
+$sn-purple-color: #3949AB;
+$sn-purple-light-color: #6F74DD;
 
-$jnt-gray-dark-100: #121212;
+$sn-gray-dark-100: #121212;
 
-$jnt-muted-color: $jnt-gray-800;
+$sn-muted-color: $sn-gray-800;
 
-$jnt-primary-text-color: $jnt-gray-200;
-$jnt-primary-text-dark-color: $jnt-gray-100;
-$jnt-primary-text-light-color: $jnt-gray-600;
+$sn-primary-text-color: $sn-gray-200;
+$sn-primary-text-dark-color: $sn-gray-100;
+$sn-primary-text-light-color: $sn-gray-600;
 
-$jnt-primary-background: $jnt-gray-dark;
-$jnt-secondary-background: $jnt-gray-dark-100;
-$jnt-page-background: $jnt-gray-dark-100;
-$jnt-highlight-background: #292929;
+$sn-primary-background: $sn-gray-dark;
+$sn-secondary-background: $sn-gray-dark-100;
+$sn-page-background: $sn-gray-dark-100;
+$sn-highlight-background: #292929;
 
-$jnt-primary-color: $jnt-purple-light-color;
-$jnt-primary-light-color: lighten($jnt-purple-light-color, 10%);
-$jnt-secondary-color: #343434;
-$jnt-secondary-dark-color: $jnt-gray-800;
-//$jnt-primary-dark-color: $jnt-purple-color;
+$sn-primary-color: $sn-purple-light-color;
+$sn-primary-light-color: lighten($sn-purple-light-color, 10%);
+$sn-secondary-color: #343434;
+$sn-secondary-dark-color: $sn-gray-800;
+//$sn-primary-dark-color: $sn-purple-color;
 
-$jnt-control-border-color: $jnt-gray-900;
+$sn-control-border-color: $sn-gray-900;
 
-$jnt-control-field-label-color: $jnt-primary-text-light-color;
-$jnt-control-field-label-border-color: $jnt-gray-900;
+$sn-control-field-label-color: $sn-primary-text-light-color;
+$sn-control-field-label-border-color: $sn-gray-900;
 
-$jnt-control-disabled-indicator-icon-color: $jnt-gray-800;
-$jnt-control-disabled-border-color: $jnt-highlight-background;
-$jnt-control-disabled-background: $jnt-highlight-background;
+$sn-control-disabled-indicator-icon-color: $sn-gray-800;
+$sn-control-disabled-border-color: $sn-highlight-background;
+$sn-control-disabled-background: $sn-highlight-background;
 
-$jnt-shadow-light: 0px 4px 10px rgba(255, 255, 255, 0.15);
-$jnt-shadow-normal: 0px 2px 8px rgba(255, 255, 255, 0.25);
+$sn-shadow-light: 0px 4px 10px rgba(255, 255, 255, 0.15);
+$sn-shadow-normal: 0px 2px 8px rgba(255, 255, 255, 0.25);
 
-$jnt-body-color: $jnt-primary-text-color;
+$sn-body-color: $sn-primary-text-color;
 
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "~@esanum/ui/lib/assets/styles/sn-variables";
 
 [theme='dark'] {
-  @import "~@junte/ui/lib/assets/styles/jnt-all";
+  @import "~@esanum/ui/lib/assets/styles/sn-all";
 }

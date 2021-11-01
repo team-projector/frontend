@@ -1,12 +1,12 @@
-<jnt-app-page-header [icon]="localUi.icons.bonus"
+<sn-app-page-header [icon]="localUi.icons.bonus"
                      title="Bonuses"
                      i18n-title="@@label.bonuses"
                      i18n-teaser="@@message.bonuses_teaser"
-                     teaser="for your wins"></jnt-app-page-header>
+                     teaser="for your wins"></sn-app-page-header>
 
-<jnt-block [padding]="ui.gutter.none"
+<sn-block [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
   <app-bonuses [view]="viewType.developer"
                [state]="state"
                (filtered)="save($event)"></app-bonuses>
-</jnt-block>
+</sn-block>

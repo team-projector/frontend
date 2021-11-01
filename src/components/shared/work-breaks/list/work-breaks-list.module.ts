@@ -18,7 +18,7 @@ import {
   SwitcherModule,
   GridModule,
   DatePickerModule, SelectModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { BreakDeclineComponent } from 'src/components/shared/work-breaks/decline/break-decline.component';
 import { BreakEditComponent } from 'src/components/shared/work-breaks/edit/break-edit.component';

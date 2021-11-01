@@ -1,11 +1,11 @@
-<jnt-app-page-header [icon]="localUi.icons.mergeRequest"
+<sn-app-page-header [icon]="localUi.icons.mergeRequest"
                      title="Merge Requests"
                      i18n-title="@@label.merge_requests"
                      i18n-teaser="@@message.merge_requests_teaser"
-                     teaser="assigned to you for code review"></jnt-app-page-header>
+                     teaser="assigned to you for code review"></sn-app-page-header>
 
-<jnt-block [padding]="ui.gutter.none"
+<sn-block [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
   <app-merge-requests [state]="state"
                       (filtered)="save($event)"></app-merge-requests>
-</jnt-block>
+</sn-block>

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { deserialize } from '@junte/serialize-ts';

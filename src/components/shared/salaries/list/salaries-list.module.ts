@@ -9,7 +9,7 @@ import {
   LinkModule,
   StackModule,
   TableModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { SalariesListComponent } from 'src/components/shared/salaries/list/salaries-list.component';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';

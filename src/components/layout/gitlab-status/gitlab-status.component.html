@@ -1,29 +1,29 @@
 <ng-container *ngIf="!status && progress.loading; else dataTemplate">
-  <jnt-skeleton [lines]="5"></jnt-skeleton>
+  <sn-skeleton [lines]="5"></sn-skeleton>
 </ng-container>
 
 <ng-template #dataTemplate>
-  <jnt-stack [align]="ui.align.stretch" *ngIf="status; else noDataTemplate">
-    <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between">
+  <sn-stack [align]="ui.align.stretch" *ngIf="status; else noDataTemplate">
+    <sn-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between">
       <div i18n="@@message.last_sync_time">Last Sync Time</div>
-      <jnt-label [label]="status.lastSync | dfnsFormat:'HH:mm:ss'"></jnt-label>
-    </jnt-stack>
-    <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between">
+      <sn-label [label]="status.lastSync | dfnsFormat:'HH:mm:ss'"></sn-label>
+    </sn-stack>
+    <sn-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between">
       <div>WEB</div>
-      <jnt-label [label]="status.services.webHooks | diff | duration"></jnt-label>
-    </jnt-stack>
-    <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between">
+      <sn-label [label]="status.services.webHooks | diff | duration"></sn-label>
+    </sn-stack>
+    <sn-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.between">
       <div>API</div>
-      <jnt-label [label]="status.services.api | diff | duration"></jnt-label>
-    </jnt-stack>
+      <sn-label [label]="status.services.api | diff | duration"></sn-label>
+    </sn-stack>
     <hr>
-    <jnt-stack>
+    <sn-stack>
       <app-issue *ngFor="let issue of status.lastIssues"
                  [issue]="issue" issue></app-issue>
-    </jnt-stack>
-  </jnt-stack>
+    </sn-stack>
+  </sn-stack>
 </ng-template>
 
 <ng-template #noDataTemplate>
-  <jnt-skeleton [lines]="5" [animated]="false"></jnt-skeleton>
+  <sn-skeleton [lines]="5" [animated]="false"></sn-skeleton>
 </ng-template>

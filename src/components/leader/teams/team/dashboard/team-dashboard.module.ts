@@ -14,7 +14,7 @@ import {
     LabelModule,
     SkeletonModule,
     StackModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { TeamProgressComponent } from 'src/components/leader/teams/team/dashboard/progress/team-progress.component';
 import { TeamDashboardComponent } from 'src/components/leader/teams/team/dashboard/team-dashboard.component';

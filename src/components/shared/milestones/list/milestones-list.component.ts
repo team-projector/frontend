@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TableComponent, UI } from '@junte/ui';
+import { TableComponent, UI } from '@esanum/ui';
 import { R } from 'apollo-angular/types';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';

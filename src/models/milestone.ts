@@ -1,4 +1,4 @@
-import { SearchFilter } from '@junte/ui';
+import { SearchFilter } from '@esanum/ui';
 import { addDays } from 'date-fns';
 import { ArraySerializer } from '@junte/serialize-ts';
 import { PrimitiveSerializer } from '@junte/serialize-ts';

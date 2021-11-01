@@ -1,4 +1,4 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "src/assets/styles/variables";
 
 :host {
   display: block;
@@ -13,8 +13,8 @@ hr {
   width: 100%;
   &:not(:last-child) {
     display: block;
-    padding-top: $jnt-gutter-tiny;
-    margin-bottom: $jnt-gutter-tiny;
-    border-bottom: 1px solid $jnt-secondary-background;
+    padding-top: $sn-gutter-tiny;
+    margin-bottom: $sn-gutter-tiny;
+    border-bottom: 1px solid $sn-secondary-background;
   }
 }

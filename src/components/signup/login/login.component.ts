@@ -1,7 +1,7 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FormComponent, UI } from '@junte/ui';
+import { FormComponent, UI } from '@esanum/ui';
 import 'reflect-metadata';
 import { of } from 'rxjs';
 import { delay, filter, finalize, map } from 'rxjs/operators';

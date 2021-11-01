@@ -1,11 +1,11 @@
-<jnt-app-page-header [icon]="localUi.icons.mergeRequest"
+<sn-app-page-header [icon]="localUi.icons.mergeRequest"
                      title="Merge Requests"
                      i18n-title="@@label.penalties"
                      i18n-teaser="@@message.for_your_team"
-                     teaser="for your team"></jnt-app-page-header>
+                     teaser="for your team"></sn-app-page-header>
 
-<jnt-block [padding]="ui.gutter.none"
+<sn-block [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
   <app-merge-requests [state]="state"
                       (filtered)="save($event)"></app-merge-requests>
-</jnt-block>
+</sn-block>

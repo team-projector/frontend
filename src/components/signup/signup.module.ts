@@ -13,7 +13,7 @@ import {
   MenuModule,
   ShortcutsModule,
   StackModule
-} from '@junte/ui';
+} from '@esanum/ui';
 
 @NgModule({
   declarations: [LoginComponent],

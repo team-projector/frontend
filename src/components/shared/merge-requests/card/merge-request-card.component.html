@@ -1,30 +1,30 @@
-<jnt-stack [orientation]="ui.orientation.horizontal"
+<sn-stack [orientation]="ui.orientation.horizontal"
            [gutter]="ui.gutter.small"
            [align]="ui.align.center">
-  <jnt-stack [orientation]="ui.orientation.horizontal"
+  <sn-stack [orientation]="ui.orientation.horizontal"
              [gutter]="ui.gutter.small"
              [align]="ui.align.center">
     <ng-container *ngIf="mergeRequest.issues?.length > 0 && mergeRequest.issues[0]?.user as user">
-      <jnt-avatar [name]="user.name"
+      <sn-avatar [name]="user.name"
                   [image]="user.avatar"
-                  [size]="ui.size.tiny"></jnt-avatar>
-      <jnt-icon [icon]="ui.icons.chevronRight"
-                [size]="ui.size.small"></jnt-icon>
+                  [size]="ui.size.tiny"></sn-avatar>
+      <sn-icon [icon]="ui.icons.chevronRight"
+                [size]="ui.size.small"></sn-icon>
     </ng-container>
-    <jnt-avatar [name]="mergeRequest.user?.name"
+    <sn-avatar [name]="mergeRequest.user?.name"
                 [image]="mergeRequest.user?.avatar"
-                [size]="ui.size.tiny"></jnt-avatar>
-  </jnt-stack>
+                [size]="ui.size.tiny"></sn-avatar>
+  </sn-stack>
 
-  <jnt-stack [gutter]="ui.gutter.none">
-    <jnt-stack [orientation]="ui.orientation.horizontal"
+  <sn-stack [gutter]="ui.gutter.none">
+    <sn-stack [orientation]="ui.orientation.horizontal"
                [gutter]="ui.gutter.small">
-      <jnt-link [source]="mergeRequest.glUrl" target="_blank"
+      <sn-link [source]="mergeRequest.glUrl" target="_blank"
                 [attr.closed]="mergeRequest.state == mergeRequestState.closed"
                 [icon]="localUi.icons.mergeRequest"
                 [title]="mergeRequest.title">
-      </jnt-link>
-    </jnt-stack>
+      </sn-link>
+    </sn-stack>
     <small>{{mergeRequest.project?.fullTitle}}</small>
-  </jnt-stack>
-</jnt-stack>
+  </sn-stack>
+</sn-stack>

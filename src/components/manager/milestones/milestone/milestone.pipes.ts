@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { TicketStates } from 'src/models/enums/ticket';
 
 @Pipe({name: 'ticketStateColor'})

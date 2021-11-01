@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, finalize, map } from 'rxjs/operators';

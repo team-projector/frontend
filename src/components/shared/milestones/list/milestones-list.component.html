@@ -1,75 +1,75 @@
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               (ok)="errors = []">
-  <jnt-informer-message *ngFor="let error of errors"
-                        [message]="error.toString()"></jnt-informer-message>
-</jnt-informer>
+  <sn-informer-message *ngFor="let error of errors"
+                        [message]="error.toString()"></sn-informer-message>
+</sn-informer>
 
-<jnt-form [formGroup]="form">
-  <jnt-table #table [features]="[ui.feature.reload, ui.feature.search]"
+<sn-form [formGroup]="form">
+  <sn-table #table [features]="[ui.feature.reload, ui.feature.search]"
              formControlName="table">
     <ng-template #tableFiltersTemplate>
-      <jnt-stack [orientation]="ui.orientation.horizontal">
-        <jnt-switcher formControlName="type">
-          <jnt-switcher-option i18n-label="@@action.filter_issues_all"
+      <sn-stack [orientation]="ui.orientation.horizontal">
+        <sn-switcher formControlName="type">
+          <sn-switcher-option i18n-label="@@action.filter_issues_all"
                                label="All"
                                [value]="milestoneType.all">
-            <jnt-badge *ngIf="summary?.count"
+            <sn-badge *ngIf="summary?.count"
                        [color]="ui.color.green"
                        [overflow]="999"
-                       [value]="summary?.count"></jnt-badge>
-          </jnt-switcher-option>
-          <jnt-switcher-option i18n-label="@@action.filter_type_closed"
+                       [value]="summary?.count"></sn-badge>
+          </sn-switcher-option>
+          <sn-switcher-option i18n-label="@@action.filter_type_closed"
                                label="Closed"
                                [value]="milestoneType.closed">
-            <jnt-badge *ngIf="summary?.closedCount"
+            <sn-badge *ngIf="summary?.closedCount"
                        [color]="ui.color.yellow"
                        [overflow]="999"
-                       [value]="summary?.closedCount"></jnt-badge>
-          </jnt-switcher-option>
-          <jnt-switcher-option i18n-label="@@action.filter_type_active"
+                       [value]="summary?.closedCount"></sn-badge>
+          </sn-switcher-option>
+          <sn-switcher-option i18n-label="@@action.filter_type_active"
                                label="Active"
                                [value]="milestoneType.active">
-            <jnt-badge *ngIf="summary?.activeCount"
+            <sn-badge *ngIf="summary?.activeCount"
                        [color]="ui.color.green"
-                       [value]="summary?.activeCount"></jnt-badge>
-          </jnt-switcher-option>
-        </jnt-switcher>
-      </jnt-stack>
+                       [value]="summary?.activeCount"></sn-badge>
+          </sn-switcher-option>
+        </sn-switcher>
+      </sn-stack>
     </ng-template>
-    <jnt-table-column i18n-title="@@label.title" title="Title">
+    <sn-table-column i18n-title="@@label.title" title="Title">
       <ng-template #tableCellTemplate
                    let-title="title"
                    let-id="id"
                    let-owner="owner"
                    let-state="state">
-        <jnt-stack [orientation]="ui.orientation.horizontal">
-          <jnt-avatar [size]="ui.size.small"
-                      [image]="owner.glAvatar"></jnt-avatar>
-          <jnt-stack [gutter]="ui.gutter.tiny">
-            <jnt-link [source]="[id]" [target]="ui.target.blank"
+        <sn-stack [orientation]="ui.orientation.horizontal">
+          <sn-avatar [size]="ui.size.small"
+                      [image]="owner.glAvatar"></sn-avatar>
+          <sn-stack [gutter]="ui.gutter.tiny">
+            <sn-link [source]="[id]" [target]="ui.target.blank"
                       [title]="title"
                       [attr.data-closed]="state == milestoneState.closed">
-            </jnt-link>
+            </sn-link>
             <small>{{owner?.fullTitle}}</small>
-          </jnt-stack>
-        </jnt-stack>
+          </sn-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
-    <jnt-table-column width="15%"
+    </sn-table-column>
+    <sn-table-column width="15%"
                       title="Period"
                       i18n-title="@@label.period"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-startDate="startDate" let-problems="problems" let-dueDate="dueDate">
-        <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.stretch">
-          <jnt-date-period [start]="startDate" [end]="dueDate"></jnt-date-period>
-          <jnt-label *ngIf="problems?.includes(milestoneProblem.overDueDate)"
+        <sn-stack [gutter]="ui.gutter.tiny" [align]="ui.align.stretch">
+          <sn-date-period [start]="startDate" [end]="dueDate"></sn-date-period>
+          <sn-label *ngIf="problems?.includes(milestoneProblem.overDueDate)"
                      [color]="ui.color.red" label="overdue">
-          </jnt-label>
-        </jnt-stack>
+          </sn-label>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="15%"
+    <sn-table-column width="15%"
                       title="Budget"
                       i18n-title="@@label.budget"
                       [align]="ui.text.align.center">
@@ -80,9 +80,9 @@
                       [remains]="metrics.budgetRemains"></app-budget>
         </ng-container>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="15%"
+    <sn-table-column width="15%"
                       title="Profit"
                       i18n-title="@@label.profit"
                       [align]="ui.text.align.center">
@@ -91,9 +91,9 @@
                     [budget]="budget"
                     [profit]="metrics.profit"></app-profit>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="15%"
+    <sn-table-column width="15%"
                       title="Progress"
                       i18n-title="@@label.progress"
                       [align]="ui.text.align.center">
@@ -101,44 +101,44 @@
         <app-work-progress [estimate]="metrics.timeEstimate"
                            [spent]="metrics.timeSpent"></app-work-progress>
       </ng-template>
-    </jnt-table-column>
-    <jnt-table-column width="150px"
+    </sn-table-column>
+    <sn-table-column width="150px"
                       title="Issues"
                       i18n-title="@@label.issues"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-metrics="metrics">
-        <jnt-stack [justify]="ui.justify.center"
+        <sn-stack [justify]="ui.justify.center"
                    [orientation]="ui.orientation.horizontal"
                    [gutter]="ui.gutter.tiny">
-          <jnt-label *ngIf="metrics.issuesOpenedCount" [label]="metrics.issuesOpenedCount"
-                     [color]="ui.color.green"></jnt-label>
-          <jnt-label *ngIf="metrics.issuesClosedCount" [label]="metrics.issuesClosedCount"
-                     [color]="ui.color.paleNavy"></jnt-label>
-        </jnt-stack>
+          <sn-label *ngIf="metrics.issuesOpenedCount" [label]="metrics.issuesOpenedCount"
+                     [color]="ui.color.green"></sn-label>
+          <sn-label *ngIf="metrics.issuesClosedCount" [label]="metrics.issuesClosedCount"
+                     [color]="ui.color.paleNavy"></sn-label>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
     <ng-template #tableRowActionsTemplate let-row="row" let-hide="hide">
-      <jnt-menu [orientation]="ui.orientation.vertical"
+      <sn-menu [orientation]="ui.orientation.vertical"
                 [spacing]="ui.gutter.small">
-        <jnt-menu-item [icon]="ui.icons.link"
+        <sn-menu-item [icon]="ui.icons.link"
                        title="GitLab"
                        i18n-title="@@action.view_on_gitlab"
                        target="_blank"
-                       [link]="row.glUrl"></jnt-menu-item>
-        <jnt-menu-item [icon]="ui.icons.edit"
+                       [link]="row.glUrl"></sn-menu-item>
+        <sn-menu-item [icon]="ui.icons.edit"
                        title="Edit"
                        i18n-title="@@action.edit"
                        target="_blank"
-                       [link]="'/admin/development/milestone/' + row.id + '/change/'"></jnt-menu-item>
-        <jnt-menu-item [icon]="ui.icons.sync"
+                       [link]="'/admin/development/milestone/' + row.id + '/change/'"></sn-menu-item>
+        <sn-menu-item [icon]="ui.icons.sync"
                        title="Sync"
                        i18n-title="@@action.sync_from_gitlab"
                        [loading]="progress.syncing"
-                       (click)="sync(row.id, hide)"></jnt-menu-item>
-      </jnt-menu>
+                       (click)="sync(row.id, hide)"></sn-menu-item>
+      </sn-menu>
     </ng-template>
 
-  </jnt-table>
-</jnt-form>
+  </sn-table>
+</sn-form>
 

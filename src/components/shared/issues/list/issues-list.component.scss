@@ -1,14 +1,14 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import "~@junte/ui/lib/assets/styles/forms/date-picker";
-@import "~@junte/ui/lib/assets/styles/elements/icon";
-$jnt-ng-deep: true;
+@import "src/assets/styles/variables";
+@import "~@esanum/ui/lib/assets/styles/forms/date-picker";
+@import "~@esanum/ui/lib/assets/styles/elements/icon";
+$sn-ng-deep: true;
 
 :host {
   display: block;
 }
 
 [data-group] {
-  color: $jnt-muted-color;
+  color: $sn-muted-color;
 }
 
 [data-summary] {
@@ -18,17 +18,17 @@ $jnt-ng-deep: true;
 }
 
 [data-due-date] {
-  @include jnt-date-picker((width: 150px), '&');
+  @include sn-date-picker((width: 150px), '&');
 }
 
 [data-doing], [data-done] {
-  @include jnt-icon((size: 20px, color: $jnt-green-color), '&');
+  @include sn-icon((size: 20px, color: $sn-green-color), '&');
 }
 
 [data-delayed] {
-  @include jnt-icon((size: 20px, color: $jnt-orange-color), '&');
+  @include sn-icon((size: 20px, color: $sn-orange-color), '&');
 }
 
 [data-bug] {
-  color: $jnt-fail-color;
+  color: $sn-fail-color;
 }

@@ -1,26 +1,26 @@
-<jnt-link data-admin *ngIf="mode === systemMode.prod"
+<sn-link data-admin *ngIf="mode === systemMode.prod"
           [icon]="ui.icons.settings"
           [outline]="ui.outline.ghost"
           source="/admin/"
           title="Administrator"
           i18n-title="@@action.administrator">
-</jnt-link>
+</sn-link>
 
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               [backdrop]="backdrop"
               (ok)="this.errors = []">
-  <jnt-informer-message *ngFor="let e of errors"
-                        [message]="e.toString()"></jnt-informer-message>
-</jnt-informer>
+  <sn-informer-message *ngFor="let e of errors"
+                        [message]="e.toString()"></sn-informer-message>
+</sn-informer>
 
-<jnt-block #content [padding]="ui.gutter.large"
+<sn-block #content [padding]="ui.gutter.large"
            [state]="progress.gitlab ? ui.state.loading : null">
   <ng-template #blockHeaderTemplate>
     <div data-logo>
       <img [src]="'assets/images/logo-dark.svg'" height="32">
     </div>
   </ng-template>
-  <jnt-form data-form
+  <sn-form data-form
             #formComponent
             [formGroup]="form"
             [state]="progress.login ? ui.state.loading : null"
@@ -30,98 +30,98 @@
       <ng-container *ngSwitchCase="systemMode.mocks">
         <p>The current version uses mocks! No real backend or database is needed. You can be a god 😎</p>
         <p><b i18n="@@message.select_role">Select your role:</b></p>
-        <jnt-menu [orientation]="ui.orientation.vertical"
+        <sn-menu [orientation]="ui.orientation.vertical"
                   [spacing]="ui.gutter.small">
-          <jnt-menu-item title="Developer"
+          <sn-menu-item title="Developer"
                          i18n-title="@@action.developer"
                          [icon]="localUi.icons.top.developer"
-                         (click)="god(userRole.developer)"></jnt-menu-item>
-          <jnt-menu-item title="Team Leader"
+                         (click)="god(userRole.developer)"></sn-menu-item>
+          <sn-menu-item title="Team Leader"
                          i18n-title="@@action.team_leader"
                          [icon]="localUi.icons.top.leader"
-                         (click)="god(userRole.leader)"></jnt-menu-item>
+                         (click)="god(userRole.leader)"></sn-menu-item>
 
-          <jnt-menu-item title="Project Manager"
+          <sn-menu-item title="Project Manager"
                          i18n-title="@@action.project_manager"
                          [icon]="localUi.icons.top.manager"
-                         (click)="god(userRole.manager)"></jnt-menu-item>
+                         (click)="god(userRole.manager)"></sn-menu-item>
 
-          <jnt-menu-item title="Shareholder"
+          <sn-menu-item title="Shareholder"
                          i18n-title="@@action.shareholder"
                          [icon]="localUi.icons.top.shareholder"
-                         (click)="god(userRole.shareholder)"></jnt-menu-item>
-        </jnt-menu>
+                         (click)="god(userRole.shareholder)"></sn-menu-item>
+        </sn-menu>
       </ng-container>
 
       <ng-container *ngSwitchCase="systemMode.demo">
         <p>The current version in demo mode!</p>
         <p><b i18n="@@message.select_role">Select your role:</b></p>
-        <jnt-menu [orientation]="ui.orientation.vertical"
+        <sn-menu [orientation]="ui.orientation.vertical"
                   [spacing]="ui.gutter.small">
-          <jnt-menu-item title="Developer"
+          <sn-menu-item title="Developer"
                          i18n-title="@@action.developer"
                          [icon]="localUi.icons.top.developer"
-                         (click)="demo(userRole.developer)"></jnt-menu-item>
-          <jnt-menu-item title="Team Leader"
+                         (click)="demo(userRole.developer)"></sn-menu-item>
+          <sn-menu-item title="Team Leader"
                          i18n-title="@@action.team_leader"
                          [icon]="localUi.icons.top.leader"
-                         (click)="demo(userRole.leader)"></jnt-menu-item>
+                         (click)="demo(userRole.leader)"></sn-menu-item>
 
-          <jnt-menu-item title="Project Manager"
+          <sn-menu-item title="Project Manager"
                          i18n-title="@@action.project_manager"
                          [icon]="localUi.icons.top.manager"
-                         (click)="demo(userRole.manager)"></jnt-menu-item>
+                         (click)="demo(userRole.manager)"></sn-menu-item>
 
-          <jnt-menu-item title="Shareholder"
+          <sn-menu-item title="Shareholder"
                          i18n-title="@@action.shareholder"
                          [icon]="localUi.icons.top.shareholder"
-                         (click)="demo(userRole.shareholder)"></jnt-menu-item>
-        </jnt-menu>
+                         (click)="demo(userRole.shareholder)"></sn-menu-item>
+        </sn-menu>
       </ng-container>
 
       <ng-container *ngSwitchDefault>
-        <jnt-stack [align]="ui.align.stretch">
-          <jnt-form-item>
-            <jnt-form-control name="login">
-              <jnt-input formControlName="login"
+        <sn-stack [align]="ui.align.stretch">
+          <sn-form-item>
+            <sn-form-control name="login">
+              <sn-input formControlName="login"
                          placeholder="Login"
                          i18n-placeholder="@@label.login"
-                         [icon]="ui.icons.user"></jnt-input>
-              <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+                         [icon]="ui.icons.user"></sn-input>
+              <sn-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
                 This field is required
-              </jnt-form-message>
-            </jnt-form-control>
-          </jnt-form-item>
+              </sn-form-message>
+            </sn-form-control>
+          </sn-form-item>
 
-          <jnt-form-item>
-            <jnt-form-control name="password">
-              <jnt-input formControlName="password"
+          <sn-form-item>
+            <sn-form-control name="password">
+              <sn-input formControlName="password"
                          placeholder="Password"
                          i18n-placeholder="@@label.password"
-                         [jntShortcuts]="[{key: ui.keyboard.key.enter, action: submit.bind(this)}]"
+                         [snShortcuts]="[{key: ui.keyboard.key.enter, action: submit.bind(this)}]"
                          [icon]="ui.icons.lock"
-                         [type]="ui.input.type.password"></jnt-input>
-              <jnt-form-message i18n="@@message.field_required"
+                         [type]="ui.input.type.password"></sn-input>
+              <sn-form-message i18n="@@message.field_required"
                                 [validator]="ui.validator.required">
                 This field is required
-              </jnt-form-message>
-            </jnt-form-control>
-          </jnt-form-item>
-        </jnt-stack>
+              </sn-form-message>
+            </sn-form-control>
+          </sn-form-item>
+        </sn-stack>
         <ng-template #formFooterTemplate>
-          <jnt-form-item>
-            <jnt-button [type]="ui.button.type.submit"
+          <sn-form-item>
+            <sn-button [type]="ui.button.type.submit"
                         [icon]="ui.icons.login"
                         text="Login"
                         i18n-text="@@action.login"
                         [width]="ui.width.fluid">
-            </jnt-button>
-          </jnt-form-item>
+            </sn-button>
+          </sn-form-item>
           <a *ngIf="!!backend.config.gitlabLoginEnabled" href="/api/login/gitlab/">
             <img src="assets/images/gitlab.svg" height="30">
           </a>
         </ng-template>
       </ng-container>
     </ng-container>
-  </jnt-form>
-</jnt-block>
+  </sn-form>
+</sn-block>

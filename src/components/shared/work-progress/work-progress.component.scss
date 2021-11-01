@@ -1,4 +1,4 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "src/assets/styles/variables";
 
 // TODO: Use mixin API
 [data-progress] {
@@ -6,12 +6,12 @@
 }
 
 [data-efficiency] {
-  margin-top: $jnt-gutter-tiny;
+  margin-top: $sn-gutter-tiny;
   text-align: center;
   font-size: .85em;
 
   [data-slow='true'] {
-    color: $jnt-fail-color;
+    color: $sn-fail-color;
   }
 }
 
@@ -20,7 +20,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: .85em;
-  color: $jnt-primary-text-light-color;
+  color: $sn-primary-text-light-color;
 
   &:first-of-type {
     flex: 1;

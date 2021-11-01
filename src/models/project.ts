@@ -1,4 +1,4 @@
-import { SearchFilter } from '@junte/ui';
+import { SearchFilter } from '@esanum/ui';
 import { ArraySerializer, PrimitiveSerializer } from '@junte/serialize-ts';
 import { field, model } from '../decorators/model';
 import { EdgesToArray, EdgesToPaging } from '../serializers/graphql';

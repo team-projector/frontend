@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { FormBuilder } from '@angular/forms';
 import { getMock } from '@junte/mocker';
 import { deserialize, serialize } from '@junte/serialize-ts';
-import { BreakpointService, TableComponent, UI } from '@junte/ui';
+import { BreakpointService, TableComponent, UI } from '@esanum/ui';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';

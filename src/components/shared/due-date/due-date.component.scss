@@ -1,4 +1,4 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "src/assets/styles/variables";
 
 :host {
   display: flex;
@@ -7,6 +7,6 @@
 }
 
 [data-remains] {
-  color: $jnt-primary-text-light-color;
+  color: $sn-primary-text-light-color;
   font-size: .85em;
 }

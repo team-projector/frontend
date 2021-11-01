@@ -1,96 +1,96 @@
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               (ok)="errors = []">
-  <jnt-informer-message *ngFor="let error of errors"
-                        [message]="error.toString()"></jnt-informer-message>
-</jnt-informer>
+  <sn-informer-message *ngFor="let error of errors"
+                        [message]="error.toString()"></sn-informer-message>
+</sn-informer>
 
-<jnt-app-page-header [icon]="localUi.icons.milestone"
+<sn-app-page-header [icon]="localUi.icons.milestone"
                      [title]="milestone.title"
-                     [teaser]="milestone.owner?.fullTitle"></jnt-app-page-header>
+                     [teaser]="milestone.owner?.fullTitle"></sn-app-page-header>
 
-<jnt-block [padding]="ui.gutter.none">
-  <jnt-form [formGroup]="form">
-    <jnt-gantt cdkDropListGroup
+<sn-block [padding]="ui.gutter.none">
+  <sn-form [formGroup]="form">
+    <sn-gantt cdkDropListGroup
                title="Tickets"
                i18n-title="@@label.tickets"
                [loading]="progress.tickets">
       <ng-template #ganttToolsTemplate>
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [gutter]="ui.gutter.small"
                    [align]="ui.align.center">
-          <jnt-button [outline]="ui.outline.transparent"
+          <sn-button [outline]="ui.outline.transparent"
                       [icon]="ui.icons.add"
                       (click)="add()">
-          </jnt-button>
-          <jnt-button [outline]="ui.outline.transparent"
+          </sn-button>
+          <sn-button [outline]="ui.outline.transparent"
                       [icon]="progress.tickets || progress.issues ? ui.icons.animated.reload : ui.icons.reload"
                       [disabled]="progress.tickets || progress.issues"
                       (click)="load(loadMode.force);loadIssues(loadMode.force)">
-          </jnt-button>
-          <jnt-switcher formControlName="type">
-            <jnt-switcher-option label="All"
+          </sn-button>
+          <sn-switcher formControlName="type">
+            <sn-switcher-option label="All"
                                  i18n-label="@@action.filter_issues_all"
                                  [disabled]="summary?.count <= 0"
                                  [value]="ticketsTypes.all">
-              <jnt-badge *ngIf="summary?.count"
-                         [value]="summary?.count"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Created"
+              <sn-badge *ngIf="summary?.count"
+                         [value]="summary?.count"></sn-badge>
+            </sn-switcher-option>
+            <sn-switcher-option label="Created"
                                  i18n-label="@@label.created"
                                  [disabled]="summary?.createdCount <= 0"
                                  [value]="ticketsTypes.created">
-              <jnt-badge *ngIf="summary?.createdCount"
+              <sn-badge *ngIf="summary?.createdCount"
                          [value]="summary?.createdCount"
-                         [color]="ui.color.purple"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Planning"
+                         [color]="ui.color.purple"></sn-badge>
+            </sn-switcher-option>
+            <sn-switcher-option label="Planning"
                                  i18n-label="@@label.planning"
                                  [disabled]="summary?.planningCount <= 0"
                                  [value]="ticketsTypes.planning">
-              <jnt-badge *ngIf="summary?.planningCount > 0"
+              <sn-badge *ngIf="summary?.planningCount > 0"
                          [value]="summary?.planningCount"
-                         [color]="ui.color.red"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Doing"
+                         [color]="ui.color.red"></sn-badge>
+            </sn-switcher-option>
+            <sn-switcher-option label="Doing"
                                  i18n-label="@@label.doing"
                                  [disabled]="summary?.doingCount <= 0"
                                  [value]="ticketsTypes.doing">
-              <jnt-badge *ngIf="summary?.doingCount"
+              <sn-badge *ngIf="summary?.doingCount"
                          [value]="summary?.doingCount"
-                         [color]="ui.color.blue"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Testing"
+                         [color]="ui.color.blue"></sn-badge>
+            </sn-switcher-option>
+            <sn-switcher-option label="Testing"
                                  i18n-label="@@label.testing"
                                  [disabled]="summary?.testingCount <= 0"
                                  [value]="ticketsTypes.testing">
-              <jnt-badge *ngIf="summary?.testingCount"
+              <sn-badge *ngIf="summary?.testingCount"
                          [value]="summary?.testingCount"
-                         [color]="ui.color.yellow"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Accepting"
+                         [color]="ui.color.yellow"></sn-badge>
+            </sn-switcher-option>
+            <sn-switcher-option label="Accepting"
                                  i18n-label="@@label.accepting"
                                  [disabled]="summary?.acceptingCount <= 0"
                                  [value]="ticketsTypes.accepting">
-              <jnt-badge *ngIf="summary?.acceptingCount"
+              <sn-badge *ngIf="summary?.acceptingCount"
                          [value]="summary?.acceptingCount"
-                         [color]="ui.color.gray"></jnt-badge>
-            </jnt-switcher-option>
-            <jnt-switcher-option label="Done"
+                         [color]="ui.color.gray"></sn-badge>
+            </sn-switcher-option>
+            <sn-switcher-option label="Done"
                                  i18n-label="@@label.done"
                                  [disabled]="summary?.doneCount <= 0"
                                  [value]="ticketsTypes.done">
-              <jnt-badge *ngIf="summary?.doneCount"
+              <sn-badge *ngIf="summary?.doneCount"
                          [value]="summary?.doneCount"
-                         [color]="ui.color.green"></jnt-badge>
-            </jnt-switcher-option>
-          </jnt-switcher>
-        </jnt-stack>
+                         [color]="ui.color.green"></sn-badge>
+            </sn-switcher-option>
+          </sn-switcher>
+        </sn-stack>
       </ng-template>
 
       <ng-container *ngFor="let ticket of tickets">
-        <jnt-gantt-line>
+        <sn-gantt-line>
           <ng-template #ganttLineTitleTemplate>
-            <jnt-stack cdkDropList [id]="ticket.id"
+            <sn-stack cdkDropList [id]="ticket.id"
                        [attr.ticket]="ticket.id"
                        [attr.current]="ticket.id === ticketControl.value"
                        [cdkDropListEnterPredicate]="predicate"
@@ -98,85 +98,85 @@
                        [orientation]="ui.orientation.horizontal"
                        [align]="ui.align.center"
                        [justify]="ui.align.stretch">
-              <jnt-row data-ticket [align]="ui.align.center">
-                <jnt-col [span]="7">
-                  <jnt-stack [orientation]="ui.orientation.horizontal"
+              <sn-row data-ticket [align]="ui.align.center">
+                <sn-col [span]="7">
+                  <sn-stack [orientation]="ui.orientation.horizontal"
                              [align]="ui.align.center"
                              [gutter]="ui.gutter.small">
-                    <jnt-button [outline]="ui.outline.transparent"
+                    <sn-button [outline]="ui.outline.transparent"
                                 [size]="ui.size.small"
                                 [shape]="ui.shape.circle"
                                 [icon]="ticketControl.value === ticket.id ? ui.icons.chevronDown : ui.icons.chevronRight"
                                 (click)="toggleIssues(ticket.id)">
-                    </jnt-button>
-                    <jnt-dot [color]="ticket.type === ticketTypes.feature ? ui.color.green
+                    </sn-button>
+                    <sn-dot [color]="ticket.type === ticketTypes.feature ? ui.color.green
                     : (ticket.type === ticketTypes.improvement ? ui.color.purple : ui.color.red)">
-                    </jnt-dot>
-                    <jnt-link [title]="ticket.title"
-                              (click)="toggleIssues(ticket.id)"></jnt-link>
-                    <jnt-label *ngIf="ticket.problems | includes: ticketProblem.unassignedIssues"
+                    </sn-dot>
+                    <sn-link [title]="ticket.title"
+                              (click)="toggleIssues(ticket.id)"></sn-link>
+                    <sn-label *ngIf="ticket.problems | includes: ticketProblem.unassignedIssues"
                                [color]="ui.color.red"
                                [size]="ui.size.small"
-                               label="Unassigned"></jnt-label>
-                  </jnt-stack>
-                </jnt-col>
-                <jnt-col [span]="3">
-                  <jnt-label *ngIf="ticket.role as role"
+                               label="Unassigned"></sn-label>
+                  </sn-stack>
+                </sn-col>
+                <sn-col [span]="3">
+                  <sn-label *ngIf="ticket.role as role"
                              [color]="ui.color.paleNavy"
                              [label]="role">
-                  </jnt-label>
-                </jnt-col>
-                <jnt-col [span]="2">
-                  <jnt-label [color]="ticket.state | ticketStateColor"
+                  </sn-label>
+                </sn-col>
+                <sn-col [span]="2">
+                  <sn-label [color]="ticket.state | ticketStateColor"
                              label="{{ticket.metrics.issuesClosedCount}} / {{ticket.metrics.issuesCount}}">
-                  </jnt-label>
-                </jnt-col>
-              </jnt-row>
-              <jnt-button [outline]="ui.outline.transparent"
+                  </sn-label>
+                </sn-col>
+              </sn-row>
+              <sn-button [outline]="ui.outline.transparent"
                           [icon]="ui.icons.actions"
                           [loading]="progress.deleting[ticket.id]"
                           (attached)="instance.popover = $event"
-                          [jntPopover]="{
+                          [snPopover]="{
                                 contentTemplate: menuTemplate,
                                 trigger: ui.trigger.click,
                                 behaviour: ui.behaviour.dropdown,
                                 padding: ui.gutter.small
                               }">
-              </jnt-button>
+              </sn-button>
               <ng-template #menuTemplate>
-                <jnt-menu [orientation]="ui.orientation.vertical"
+                <sn-menu [orientation]="ui.orientation.vertical"
                           [spacing]="ui.gutter.small">
-                  <jnt-menu-item title="Edit"
+                  <sn-menu-item title="Edit"
                                  i18n-title="@@action.edit"
                                  [icon]="ui.icons.edit"
-                                 (click)="edit(ticket)"></jnt-menu-item>
-                  <jnt-menu-item title="Get link"
+                                 (click)="edit(ticket)"></sn-menu-item>
+                  <sn-menu-item title="Get link"
                                  i18n-title="@@action.get_link"
                                  [icon]="state.copied ? ui.icons.animated.success : ui.icons.anchor"
                                  (click)="getLink(ticket.id)">
-                  </jnt-menu-item>
-                  <jnt-menu-item *ngIf="ticket.url"
+                  </sn-menu-item>
+                  <sn-menu-item *ngIf="ticket.url"
                                  title="Go to source"
                                  i18n-title="@@action.go_source"
                                  [icon]="ui.icons.link"
                                  [link]="ticket.url"
                                  [target]="ui.target.blank">
-                  </jnt-menu-item>
-                  <jnt-menu-item title="Delete"
+                  </sn-menu-item>
+                  <sn-menu-item title="Delete"
                                  i18n-title="@@action.delete"
                                  [icon]="ui.icons.delete"
-                                 (click)="delete(ticket.id)"></jnt-menu-item>
-                </jnt-menu>
+                                 (click)="delete(ticket.id)"></sn-menu-item>
+                </sn-menu>
               </ng-template>
-            </jnt-stack>
+            </sn-stack>
           </ng-template>
-          <jnt-gantt-line-period [from]="ticket.startDate"
+          <sn-gantt-line-period [from]="ticket.startDate"
                                  [to]="ticket.dueDate">
             <ng-template #indicatorMonthTemplate let-current="current">
               <div data-period [attr.over-from]="(ticket['startDate'] | dfnsGetMonth) < (current | dfnsGetMonth)"
                    [attr.over-to]="(ticket['dueDate'] | dfnsGetMonth) > (current | dfnsGetMonth)"
                    [attr.over-due]="ticket.problems | includes:ticketProblem.overDueDate"
-                   [jntPopover]="{contentTemplate: ticketMetricsTemplate, trigger: ui.trigger.click, position: ui.position.right}">
+                   [snPopover]="{contentTemplate: ticketMetricsTemplate, trigger: ui.trigger.click, position: ui.position.right}">
                 <ng-template #ticketMetricsTemplate>
                   <table data-ticket-metrics>
                     <tr>
@@ -214,46 +214,46 @@
                 </div>
               </div>
             </ng-template>
-          </jnt-gantt-line-period>
-        </jnt-gantt-line>
+          </sn-gantt-line-period>
+        </sn-gantt-line>
 
         <ng-template #noIssuesTemplate>
           <ng-template #loadingIssuesTemplate>
-            <jnt-gantt-line>
+            <sn-gantt-line>
               <ng-template #ganttLineTitleTemplate>
-                <jnt-skeleton [type]="ui.skeleton.type.text"
-                              [lines]="ticket.metrics.issuesCount || 1"></jnt-skeleton>
+                <sn-skeleton [type]="ui.skeleton.type.text"
+                              [lines]="ticket.metrics.issuesCount || 1"></sn-skeleton>
               </ng-template>
-              <jnt-gantt-line-period></jnt-gantt-line-period>
-            </jnt-gantt-line>
+              <sn-gantt-line-period></sn-gantt-line-period>
+            </sn-gantt-line>
           </ng-template>
           <ng-container *ngIf="!progress.issues; else loadingIssuesTemplate">
-            <jnt-gantt-line>
+            <sn-gantt-line>
               <ng-template #ganttLineTitleTemplate>
                 <p i18n="@@message.no_issue_ticket">No one issue has been attached to ticket.</p>
               </ng-template>
-              <jnt-gantt-line-period></jnt-gantt-line-period>
-            </jnt-gantt-line>
+              <sn-gantt-line-period></sn-gantt-line-period>
+            </sn-gantt-line>
           </ng-container>
         </ng-template>
 
         <ng-container *ngIf="ticketControl.value === ticket.id">
           <ng-container *ngIf="issues.length > 0; else noIssuesTemplate">
 
-            <jnt-gantt-line cdkDropList *ngFor="let issue of issues"
+            <sn-gantt-line cdkDropList *ngFor="let issue of issues"
                             [cdkDropListEnterPredicate]="predicateIssue">
               <ng-template #ganttLineTitleTemplate>
-                <jnt-stack data-issue cdkDrag [orientation]="ui.orientation.horizontal"
+                <sn-stack data-issue cdkDrag [orientation]="ui.orientation.horizontal"
                            [gutter]="ui.gutter.small"
                            [cdkDragData]="{issue: issue.id}">
-                  <jnt-button cdkDragHandle [icon]="ui.icons.menu"
+                  <sn-button cdkDragHandle [icon]="ui.icons.menu"
                               [scheme]="ui.scheme.secondary"
-                              [size]="ui.size.tiny"></jnt-button>
+                              [size]="ui.size.tiny"></sn-button>
                   <app-issue [issue]="issue"></app-issue>
-                </jnt-stack>
+                </sn-stack>
               </ng-template>
 
-              <jnt-gantt-line-period [from]="[ticket.startDate, issue.dueDate] | dfnsMin"
+              <sn-gantt-line-period [from]="[ticket.startDate, issue.dueDate] | dfnsMin"
                                      [to]="issue.dueDate">
                 <ng-template #indicatorMonthTemplate let-period="period"
                              let-current="current">
@@ -265,12 +265,12 @@
                     </div>
                   </div>
                 </ng-template>
-              </jnt-gantt-line-period>
-            </jnt-gantt-line>
+              </sn-gantt-line-period>
+            </sn-gantt-line>
           </ng-container>
         </ng-container>
       </ng-container>
-    </jnt-gantt>
-  </jnt-form>
-</jnt-block>
+    </sn-gantt>
+  </sn-form>
+</sn-block>
 

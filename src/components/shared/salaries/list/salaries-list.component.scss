@@ -1,10 +1,10 @@
-@import '~@junte/ui/lib/assets/styles/layout/block';
-$jnt-ng-deep: true;
+@import '~@esanum/ui/lib/assets/styles/layout/block';
+$sn-ng-deep: true;
 
 :host {
   display: block;
 }
 
 [data-tabs] {
-  @include jnt-block((body: (padding: $jnt-gutter-normal 0 0 0)), '&');
+  @include sn-block((body: (padding: $sn-gutter-normal 0 0 0)), '&');
 }

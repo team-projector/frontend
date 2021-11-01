@@ -7,7 +7,7 @@ import {
   StackModule,
   AvatarModule,
   LabelModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';
 import { DueDateModule } from '../../due-date/due-date.module';

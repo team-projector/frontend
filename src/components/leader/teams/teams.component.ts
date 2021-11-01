@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { R } from 'apollo-angular/types';
 import { NGXLogger } from 'ngx-logger';
 import { of } from 'rxjs';

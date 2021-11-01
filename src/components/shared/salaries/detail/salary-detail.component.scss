@@ -1,91 +1,91 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import "~@junte/ui/lib/assets/styles/layout/block";
-@import "~@junte/ui/lib/assets/styles/elements/label";
-@import "~@junte/ui/lib/assets/styles/dynamic/date-period";
-@import "~@junte/ui/lib/assets/styles/elements/icon";
-$jnt-ng-deep: true;
+@import "src/assets/styles/variables";
+@import "~@esanum/ui/lib/assets/styles/layout/block";
+@import "~@esanum/ui/lib/assets/styles/elements/label";
+@import "~@esanum/ui/lib/assets/styles/dynamic/date-period";
+@import "~@esanum/ui/lib/assets/styles/elements/icon";
+$sn-ng-deep: true;
 
 :host {
   display: block;
-  @include jnt-date-period((
-    color: $jnt-primary-light-color,
+  @include sn-date-period((
+    color: $sn-primary-light-color,
     line: (
-      background: $jnt-primary-light-color
+      background: $sn-primary-light-color
     ),
     progress: (
-      background: $jnt-primary-light-color
+      background: $sn-primary-light-color
     ),
     date: (
-      color: $jnt-white-color,
+      color: $sn-white-color,
     )
   ));
 }
 
 [data-tabs] {
-  @include jnt-block((body: (padding: $jnt-gutter-normal 0 0 0)), '&');
+  @include sn-block((body: (padding: $sn-gutter-normal 0 0 0)), '&');
 
   [data-nav] {
     // TODO: Move to mixins api
-    margin: 0 $jnt-gutter-normal $jnt-gutter-normal;
+    margin: 0 $sn-gutter-normal $sn-gutter-normal;
   }
 }
 
 [data-user] {
-  padding: 0 $jnt-gutter-large;
-  @include jnt-label((color: $jnt-primary-color));
+  padding: 0 $sn-gutter-large;
+  @include sn-label((color: $sn-primary-color));
 
   [data-position] {
-    color: $jnt-primary-light-color;
-    font-weight: $jnt-font-weight-bold;
-    font-size: $jnt-font-size-base;
+    color: $sn-primary-light-color;
+    font-weight: $sn-font-weight-bold;
+    font-size: $sn-font-size-base;
   }
 }
 
 [data-salary] {
   position: relative;
-  padding: $jnt-gutter-normal $jnt-gutter-large;
+  padding: $sn-gutter-normal $sn-gutter-large;
   font-size: 26px;
-  background: $jnt-primary-color;
-  color: $jnt-white-color;
+  background: $sn-primary-color;
+  color: $sn-white-color;
 
   [data-label] {
     font-size: 12px;
   }
 
   [data-money] {
-    @include jnt-icon((color: $jnt-primary-light-color, size: 30px), '&');
+    @include sn-icon((color: $sn-primary-light-color, size: 30px), '&');
   }
 
   [data-opened] {
-    color: rgba($jnt-white-color, .5);
+    color: rgba($sn-white-color, .5);
     font-size: 18px;
 
     [data-label] {
       font-size: 12px;
-      color: $jnt-primary-light-color;
+      color: $sn-primary-light-color;
     }
   }
 
   [data-digit] {
-    font-weight: $jnt-font-weight-bold;
+    font-weight: $sn-font-weight-bold;
   }
 
   [data-line] {
-    font-size: $jnt-font-size-base;
-    padding: $jnt-gutter-small 0;
+    font-size: $sn-font-size-base;
+    padding: $sn-gutter-small 0;
 
     &:not(:last-of-type) {
-      border-bottom: 1px dashed $jnt-primary-light-color;
+      border-bottom: 1px dashed $sn-primary-light-color;
     }
 
     [data-title] {
-      font-weight: $jnt-font-weight-bold;
+      font-weight: $sn-font-weight-bold;
     }
 
     [data-time] {
-      color: $jnt-secondary-dark-color;
-      font-size: $jnt-font-size-normal;
-      @include jnt-icon((color: $jnt-secondary-dark-color));
+      color: $sn-secondary-dark-color;
+      font-size: $sn-font-size-normal;
+      @include sn-icon((color: $sn-secondary-dark-color));
 
       span {
         font-size: 12px;
@@ -94,18 +94,18 @@ $jnt-ng-deep: true;
 
     > span {
       font-size: 18px;
-      font-weight: $jnt-font-weight-bold;
+      font-weight: $sn-font-weight-bold;
     }
 
     &[data-success] {
       > span {
-        color: $jnt-success-color;
+        color: $sn-success-color;
       }
     }
 
     &[data-fail] {
       > span {
-        color: $jnt-fail-color;
+        color: $sn-fail-color;
       }
     }
   }
@@ -113,7 +113,7 @@ $jnt-ng-deep: true;
   hr {
     border: 0;
     height: 1px;
-    background: $jnt-primary-light-color;
+    background: $sn-primary-light-color;
     width: 80px;
     align-self: flex-end;
     margin-right: 0;

@@ -1,8 +1,8 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import '~@junte/ui/lib/assets/styles/elements/dot';
-@import '~@junte/ui/lib/assets/styles/layout/skeleton';
+@import "src/assets/styles/variables";
+@import '~@esanum/ui/lib/assets/styles/elements/dot';
+@import '~@esanum/ui/lib/assets/styles/layout/skeleton';
 
-$jnt-ng-deep: true;
+$sn-ng-deep: true;
 
 :host {
   display: block;
@@ -18,13 +18,13 @@ $jnt-ng-deep: true;
         &[data-rewind] {
           th {
             [data-date] {
-              color: $jnt-gray-100-color;
+              color: $sn-gray-100-color;
             }
           }
         }
 
         &[data-week] {
-          background-color: $jnt-gray-800-color;
+          background-color: $sn-gray-800-color;
         }
       }
     }
@@ -34,7 +34,7 @@ $jnt-ng-deep: true;
         td {
           &[data-day] {
             &:hover {
-              background-color: $jnt-gray-700-color;
+              background-color: $sn-gray-700-color;
             }
           }
         }
@@ -49,7 +49,7 @@ table {
   table-layout: auto;
   border: 0;
   border-spacing: 0;
-  font-size: $jnt-font-size-small;
+  font-size: $sn-font-size-small;
 
   td, th:not([data-tools]) {
     text-align: center;
@@ -61,12 +61,12 @@ table {
   thead {
     tr {
       [data-tools] {
-        padding: $jnt-gutter-normal $jnt-gutter-normal 0 $jnt-gutter-normal;
+        padding: $sn-gutter-normal $sn-gutter-normal 0 $sn-gutter-normal;
 
         [data-title] {
-          color: $jnt-primary-color;
+          color: $sn-primary-color;
           font-size: 18px;
-          font-weight: $jnt-font-weight-bold;
+          font-weight: $sn-font-weight-bold;
           text-align: center;
           flex: 1;
         }
@@ -76,8 +76,8 @@ table {
         th {
           [data-date] {
             display: flex;
-            color: $jnt-primary-text-dark-color;
-            font-weight: $jnt-font-weight-bold;
+            color: $sn-primary-text-dark-color;
+            font-weight: $sn-font-weight-bold;
 
             span {
               margin: auto;
@@ -87,12 +87,12 @@ table {
       }
 
       &[data-week] {
-        background-color: $jnt-secondary-background;
+        background-color: $sn-secondary-background;
 
         th {
           &:nth-child(2),
           &:nth-child(9) {
-            border-right: 1px solid $jnt-muted-color;
+            border-right: 1px solid $sn-muted-color;
           }
 
           &[data-day] {
@@ -102,24 +102,24 @@ table {
 
             &:hover,
             &[today='true'] {
-              background-color: $jnt-success-color;
-              color: $jnt-white-color;
+              background-color: $sn-success-color;
+              color: $sn-white-color;
             }
           }
 
           &[data-metric-name] {
-            color: $jnt-primary-dark-color;
+            color: $sn-primary-dark-color;
           }
         }
       }
 
       th {
-        padding: $jnt-gutter-normal $jnt-gutter-tiny;
+        padding: $sn-gutter-normal $sn-gutter-tiny;
         min-width: 48px;
 
         &[data-gutter] {
-          width: $jnt-gutter-tiny;
-          min-width: $jnt-gutter-tiny;
+          width: $sn-gutter-tiny;
+          min-width: $sn-gutter-tiny;
         }
 
         &:nth-child(2) {
@@ -140,11 +140,11 @@ table {
   tbody {
     tr {
       td {
-        border-top: 1px solid $jnt-muted-color;
-        padding: 10px $jnt-gutter-tiny;
+        border-top: 1px solid $sn-muted-color;
+        padding: 10px $sn-gutter-tiny;
 
         &[slow='true'] span {
-          border-bottom: 2px solid $jnt-fail-color;
+          border-bottom: 2px solid $sn-fail-color;
         }
 
         &[data-day] {
@@ -152,15 +152,15 @@ table {
           position: relative;
 
           [data-day-text] {
-            font-size: $jnt-font-size-small;
+            font-size: $sn-font-size-small;
           }
 
           &:hover {
-            background-color: $jnt-highlight-background;
+            background-color: $sn-highlight-background;
           }
 
           [data-issues-count] {
-            @include jnt-dot((size: 5px), '&');
+            @include sn-dot((size: 5px), '&');
             position: absolute;
             top: 4px;
             right: 4px;
@@ -179,12 +179,12 @@ table {
 
         [data-developer] {
           cursor: pointer;
-          padding: $jnt-gutter-tiny;
+          padding: $sn-gutter-tiny;
 
           &:focus {
             outline: 0;
-            border-radius: $jnt-corner-small;
-            box-shadow: $jnt-outline-shadow-small $jnt-highlight-background;
+            border-radius: $sn-corner-small;
+            box-shadow: $sn-outline-shadow-small $sn-highlight-background;
           }
         }
 
@@ -201,28 +201,28 @@ table {
 
         td {
           font-size: 80px;
-          color: $jnt-muted-color;
+          color: $sn-muted-color;
         }
       }
 
       &[data-loading] {
         td {
-          padding: $jnt-gutter-normal;
+          padding: $sn-gutter-normal;
         }
       }
 
       &[active='true'] {
         td {
-          background-color: $jnt-secondary-background;
+          background-color: $sn-secondary-background;
         }
 
         &:last-child {
           td:first-child {
-            border-bottom-left-radius: $jnt-corner-normal;
+            border-bottom-left-radius: $sn-corner-normal;
           }
 
           td:last-child {
-            border-bottom-right-radius: $jnt-corner-normal;
+            border-bottom-right-radius: $sn-corner-normal;
           }
         }
       }

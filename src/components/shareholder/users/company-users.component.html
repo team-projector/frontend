@@ -1,11 +1,11 @@
-<jnt-app-page-header [icon]="localUi.icons.developer"
+<sn-app-page-header [icon]="localUi.icons.developer"
                      title="Developers"
                      i18n-title="@@label.developers"
                      i18n-teaser="@@message.shareholder_developers_teaser"
-                     teaser="in your company"></jnt-app-page-header>
+                     teaser="in your company"></sn-app-page-header>
 
-<jnt-block [padding]="ui.gutter.none"
+<sn-block [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
   <app-users [state]="state"
              (filtered)="save($event)"></app-users>
-</jnt-block>
+</sn-block>

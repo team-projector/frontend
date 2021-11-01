@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { TableComponent, UI } from '@junte/ui';
+import { TableComponent, UI } from '@esanum/ui';
 import { R } from 'apollo-angular/types';
 import { startOfDay } from 'date-fns';
 import { of } from 'rxjs';

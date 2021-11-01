@@ -8,10 +8,10 @@ import {
   CardModule, FormModule,
   GridModule,
   InformerModule,
-  JunteUiModule, LabelModule, PagerModule,
+  LabelModule, PagerModule,
   SkeletonModule,
   StackModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { AppFooterModule } from 'src/components/layout/footer/app-footer.module';
 import { TeamsRoutingModule } from 'src/components/leader/teams/teams-routing.module';
 import { TeamsComponent } from 'src/components/leader/teams/teams.component';

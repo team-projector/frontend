@@ -1,9 +1,9 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "src/assets/styles/variables";
 
 :host {
   display: block;
 }
 
 [salary] {
-  margin-bottom: $jnt-gutter-normal;
+  margin-bottom: $sn-gutter-normal;
 }

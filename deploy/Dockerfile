@@ -5,7 +5,9 @@ ARG BUILD_COMMAND="npm run build"
 WORKDIR /src
 
 COPY package.json .
-RUN npm install
+RUN npm config set @esanum:registry https://gitlab.com/api/v4/projects/29742141/packages/npm/ \
+    && npm config set //gitlab.com/api/v4/projects/29742141/packages/npm/:_authToken TSK1w1ap2BQ5QDzJ4Fqi \
+    && npm install
 
 COPY . .
 

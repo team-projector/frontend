@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { Period, UI } from '@junte/ui';
+import { Period, UI } from '@esanum/ui';
 import { R } from 'apollo-angular/types';
 import { NGXLogger } from 'ngx-logger';
 import { of, zip } from 'rxjs';

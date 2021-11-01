@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { format } from 'date-fns';
 import { DATE_FORMAT } from 'src/consts';
 import { LocalUI } from 'src/enums/local-ui';

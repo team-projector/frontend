@@ -11,7 +11,7 @@ import {
   StackModule,
   SwitcherModule,
   TableModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { BudgetModule } from 'src/components/shared/budget/budget.module';
 import { ProfitModule } from 'src/components/shared/profit/profit.module';
 import { MoneyPipesModule } from 'src/pipes/money-pipes.module';

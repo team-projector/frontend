@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '
 import { FormBuilder, Validators } from '@angular/forms';
 import { getMock } from '@junte/mocker';
 import { deserialize, serialize } from '@junte/serialize-ts';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { R } from 'apollo-angular/types';
 import { addDays, addWeeks, endOfWeek } from 'date-fns';
 import { NGXLogger } from 'ngx-logger';
