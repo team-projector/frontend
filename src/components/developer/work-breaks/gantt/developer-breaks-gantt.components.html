@@ -1,40 +1,40 @@
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               (ok)="errors = []">
-  <jnt-informer-message *ngFor="let error of errors"
-                        [message]="error.toString()"></jnt-informer-message>
-</jnt-informer>
+  <sn-informer-message *ngFor="let error of errors"
+                        [message]="error.toString()"></sn-informer-message>
+</sn-informer>
 
-<jnt-gantt [type]="ui.gantt.type.year"
+<sn-gantt [type]="ui.gantt.type.year"
            [loading]="loading">
   <ng-template #ganttTitleTemplate>
     <strong i18n="@@label.developer">Work break</strong>
   </ng-template>
-  <jnt-gantt-line *ngFor="let workBreak of workBreaks"
+  <sn-gantt-line *ngFor="let workBreak of workBreaks"
                   [title]="workBreak.user.name">
     <ng-template #ganttLineTitleTemplate>
-      <jnt-stack [orientation]="ui.orientation.horizontal">
+      <sn-stack [orientation]="ui.orientation.horizontal">
         <ng-container [ngSwitch]="workBreak.reason">
-          <jnt-label *ngSwitchCase="reasons.vacation"
+          <sn-label *ngSwitchCase="reasons.vacation"
                      [color]="ui.color.green"
                      label="Vacation"
                      i18n-label="@@label.vacation">
-          </jnt-label>
-          <jnt-label *ngSwitchCase="reasons.disease"
+          </sn-label>
+          <sn-label *ngSwitchCase="reasons.disease"
                      [color]="ui.color.red"
                      label="Disease"
                      i18n-label="@@label.disease">
-          </jnt-label>
-          <jnt-label *ngSwitchCase="reasons.dayoff"
+          </sn-label>
+          <sn-label *ngSwitchCase="reasons.dayoff"
                      [color]="ui.color.yellow"
                      label="Dayoff"
                      i18n-label="@@label.dayoff">
-          </jnt-label>
+          </sn-label>
         </ng-container>
 
         <div data-comment>{{workBreak.comment}}</div>
-      </jnt-stack>
+      </sn-stack>
     </ng-template>
-    <jnt-gantt-line-period [from]="workBreak.fromDate"
+    <sn-gantt-line-period [from]="workBreak.fromDate"
                            [to]="workBreak.toDate">
 
       <ng-template #indicatorYearTemplate let-current="current" let-today="today">
@@ -50,7 +50,7 @@
         </div>
       </ng-template>
 
-    </jnt-gantt-line-period>
-  </jnt-gantt-line>
-</jnt-gantt>
+    </sn-gantt-line-period>
+  </sn-gantt-line>
+</sn-gantt>
 

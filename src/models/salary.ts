@@ -1,5 +1,5 @@
 import { addDays } from 'date-fns';
-import { SearchFilter } from '@junte/ui';
+import { SearchFilter } from '@esanum/ui';
 import { ArraySerializer } from '@junte/serialize-ts';
 import { User, UserPosition } from 'src/models/user';
 import { mocks, TimeAccuracy } from 'src/utils/mocks';

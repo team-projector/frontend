@@ -1,20 +1,20 @@
-<jnt-app-page-header [icon]="localUi.icons.dashboard"
+<sn-app-page-header [icon]="localUi.icons.dashboard"
                      title="Dashboard"
                      i18n-title="@@label.dashboard"
                      i18n-teaser="@@message.dashboard_teaser"
-                     teaser="for your work in the company"></jnt-app-page-header>
+                     teaser="for your work in the company"></sn-app-page-header>
 
-<jnt-row>
-  <jnt-col [desktop]="8" [tablet]="12">
-    <jnt-stack [align]="ui.align.stretch">
+<sn-row>
+  <sn-col [desktop]="8" [tablet]="12">
+    <sn-stack [align]="ui.align.stretch">
       <app-developer-progress [me]="me"></app-developer-progress>
       <app-projects-summary [user]="me" (selected)="issuesByProject($event)"></app-projects-summary>
-    </jnt-stack>
-  </jnt-col>
-  <jnt-col [desktop]="4" [tablet]="12">
-    <jnt-stack [align]="ui.align.stretch">
+    </sn-stack>
+  </sn-col>
+  <sn-col [desktop]="4" [tablet]="12">
+    <sn-stack [align]="ui.align.stretch">
       <app-developer-payroll [me]="me"></app-developer-payroll>
       <app-developer-work-breaks [me]="me"></app-developer-work-breaks>
-    </jnt-stack>
-  </jnt-col>
-</jnt-row>
+    </sn-stack>
+  </sn-col>
+</sn-row>

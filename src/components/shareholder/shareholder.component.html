@@ -1,38 +1,38 @@
-<jnt-app-aside #aside>
-  <jnt-menu [spacing]="ui.gutter.none">
-    <jnt-menu-item title="Developers"
+<sn-app-aside #aside>
+  <sn-menu [spacing]="ui.gutter.none">
+    <sn-menu-item title="Developers"
                    i18n-title="@@action.developers"
                    [link]="['users']"
                    [matching]="ui.matching.wildcard"
-                   [icon]="localUi.icons.developer"></jnt-menu-item>
-    <jnt-menu-item title="Projects"
+                   [icon]="localUi.icons.developer"></sn-menu-item>
+    <sn-menu-item title="Projects"
                    i18n-title="@@action.projects"
                    [link]="['projects']"
                    [matching]="ui.matching.wildcard"
-                   [icon]="localUi.icons.project"></jnt-menu-item>
-    <jnt-menu-item title="Salaries"
+                   [icon]="localUi.icons.project"></sn-menu-item>
+    <sn-menu-item title="Salaries"
                    i18n-title="@@action.salaries"
                    [link]="['salaries']"
                    [matching]="ui.matching.wildcard"
-                   [icon]="localUi.icons.salary"></jnt-menu-item>
-    <jnt-menu-item title="Bonuses"
+                   [icon]="localUi.icons.salary"></sn-menu-item>
+    <sn-menu-item title="Bonuses"
                    i18n-title="@@action.bonuses"
                    [link]="['bonuses']"
                    [matching]="ui.matching.wildcard"
-                   [icon]="localUi.icons.bonus"></jnt-menu-item>
-    <jnt-menu-item title="Penalties"
+                   [icon]="localUi.icons.bonus"></sn-menu-item>
+    <sn-menu-item title="Penalties"
                    i18n-title="@@action.penalties"
                    [link]="['penalties']"
                    [matching]="ui.matching.wildcard"
-                   [icon]="localUi.icons.penalty"></jnt-menu-item>
-  </jnt-menu>
-</jnt-app-aside>
-<jnt-app-content [aside]="aside">
-  <jnt-breadcrumb [aside]="aside"></jnt-breadcrumb>
-  <jnt-app-body>
-    <jnt-container [width]="ui.width.fluid">
+                   [icon]="localUi.icons.penalty"></sn-menu-item>
+  </sn-menu>
+</sn-app-aside>
+<sn-app-content [aside]="aside">
+  <sn-breadcrumb [aside]="aside"></sn-breadcrumb>
+  <sn-app-body>
+    <sn-container [width]="ui.width.fluid">
       <router-outlet></router-outlet>
-    </jnt-container>
-  </jnt-app-body>
+    </sn-container>
+  </sn-app-body>
   <app-footer></app-footer>
-</jnt-app-content>
+</sn-app-content>

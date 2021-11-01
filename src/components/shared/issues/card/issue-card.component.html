@@ -1,29 +1,29 @@
-<jnt-stack [orientation]="ui.orientation.horizontal"
+<sn-stack [orientation]="ui.orientation.horizontal"
            [gutter]="ui.gutter.small"
            [align]="ui.align.center">
-  <jnt-avatar *ngIf="(issue.author || issue.user) as u"
+  <sn-avatar *ngIf="(issue.author || issue.user) as u"
               [name]="u.name"
               [image]="u.avatar"
-              [size]="ui.size.tiny"></jnt-avatar>
-  <jnt-stack [gutter]="ui.gutter.none">
-    <jnt-stack [orientation]="ui.orientation.horizontal"
+              [size]="ui.size.tiny"></sn-avatar>
+  <sn-stack [gutter]="ui.gutter.none">
+    <sn-stack [orientation]="ui.orientation.horizontal"
                [gutter]="ui.gutter.small">
-      <jnt-link [attr.data-closed]="issue.state == issueState.closed"
+      <sn-link [attr.data-closed]="issue.state == issueState.closed"
                 [source]="issue.glUrl"
                 [target]="ui.target.blank"
                 [attr.closed]="issue.state == issueState.closed"
                 [title]="issue.title">
-      </jnt-link>
-      <jnt-stack [orientation]="ui.orientation.horizontal"
+      </sn-link>
+      <sn-stack [orientation]="ui.orientation.horizontal"
                  [gutter]="ui.gutter.small"
                  [justify]="ui.justify.start"
                  [wrap]="ui.wrap.wrap"
                  [spacing]="ui.gutter.small">
-        <jnt-label *ngFor="let l of issue.labels"
+        <sn-label *ngFor="let l of issue.labels"
                    [size]="ui.size.small"
-                   [color]="l.color" [label]="l.title"></jnt-label>
-      </jnt-stack>
-    </jnt-stack>
+                   [color]="l.color" [label]="l.title"></sn-label>
+      </sn-stack>
+    </sn-stack>
     <small>{{issue.project?.group?.title}} / {{issue.project?.title}}</small>
-  </jnt-stack>
-</jnt-stack>
+  </sn-stack>
+</sn-stack>

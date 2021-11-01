@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { of } from 'rxjs';
 import { DeclineWorkBreakGQL } from 'src/components/shared/work-breaks/list/work-breaks-list.graphql';
 import { environment } from 'src/environments/environment';

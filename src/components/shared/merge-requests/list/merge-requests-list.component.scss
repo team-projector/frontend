@@ -1,16 +1,16 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import "~@junte/ui/lib/assets/styles/navigation/link";
-$jnt-ng-deep: true;
+@import "src/assets/styles/variables";
+@import "~@esanum/ui/lib/assets/styles/navigation/link";
+$sn-ng-deep: true;
 
 :host {
   display: block;
 }
 
 [slow='true'] {
-  border-bottom: 2px solid $jnt-fail-color;
+  border-bottom: 2px solid $sn-fail-color;
 }
 
 [closed='true'] {
-  @include jnt-link((text-decoration: line-through), '&');
+  @include sn-link((text-decoration: line-through), '&');
 }
 

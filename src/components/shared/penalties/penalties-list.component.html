@@ -1,15 +1,15 @@
-<jnt-form [formGroup]="form">
-  <jnt-table #table formControlName="table">
+<sn-form [formGroup]="form">
+  <sn-table #table formControlName="table">
 
-    <jnt-table-column width="20%"
+    <sn-table-column width="20%"
                       title="Created at"
                       i18n-title="@@label.created_at">
       <ng-template #tableCellTemplate let-createdAt="createdAt">
         {{createdAt | date:'medium'}}
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column *ngIf="view === viewType.leader || view === viewType.shareholder"
+    <sn-table-column *ngIf="view === viewType.leader || view === viewType.shareholder"
                       width="20%"
                       title="Developer"
                       i18n-title="@@label.user">
@@ -19,41 +19,41 @@
         <app-user [user]="user"
                   [size]="userCardSize.small"></app-user>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="20%"
+    <sn-table-column width="20%"
                       title="Created by"
                       i18n-title="@@label.created_by">
       <ng-template #tableCellTemplate let-createdBy="createdBy">
         <app-user *ngIf="!!createdBy" [user]="createdBy"
                   [size]="userCardSize.small"></app-user>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column title="Comment"
+    <sn-table-column title="Comment"
                       i18n-title="@@label.comment">
       <ng-template #tableCellTemplate let-comment="comment">
         {{comment}}
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="100px"
+    <sn-table-column width="100px"
                       title="Sum"
                       i18n-title="@@label.sum">
       <ng-template #tableCellTemplate let-sum="sum">
         {{sum | money}}
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column *ngIf="view !== viewType.salary"
+    <sn-table-column *ngIf="view !== viewType.salary"
                       width="20%"
                       title="Salary"
                       i18n-title="@@label.salary">
       <ng-template #tableCellTemplate let-salary="salary">
-        <jnt-link *ngIf="!!salary" [title]="salary.createdAt | dfnsFormat:'PPp'"
-                  [source]="['../salaries', salary.id]"></jnt-link>
+        <sn-link *ngIf="!!salary" [title]="salary.createdAt | dfnsFormat:'PPp'"
+                  [source]="['../salaries', salary.id]"></sn-link>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-  </jnt-table>
-</jnt-form>
+  </sn-table>
+</sn-form>

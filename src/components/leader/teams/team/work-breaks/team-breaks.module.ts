@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AppLayoutModule, BlockModule, GanttModule, InformerModule, MenuModule } from '@junte/ui';
+import { AppLayoutModule, BlockModule, GanttModule, InformerModule, MenuModule } from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { TeamBreaksListGanttComponent } from 'src/components/leader/teams/team/work-breaks/gantt/breaks-list-gantt.component';
 import { TeamBreaksRoutingModule } from 'src/components/leader/teams/team/work-breaks/team-breaks-routing.module';

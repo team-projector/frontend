@@ -12,7 +12,7 @@ import {
   StackModule,
   SwitcherModule,
   TableModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { BudgetModule } from 'src/components/shared/budget/budget.module';
 import { ProfitModule } from 'src/components/shared/profit/profit.module';

@@ -1,87 +1,87 @@
-<jnt-form [formGroup]="form">
-  <jnt-table #table formControlName="table"
+<sn-form [formGroup]="form">
+  <sn-table #table formControlName="table"
              [features]="[ui.feature.reload]">
 
-    <jnt-table-column title="Name"
+    <sn-table-column title="Name"
                       i18n-title="@@label.name">
       <ng-template #tableCellTemplate let-name="name"
                    let-avatar="avatar"
                    let-position="position">
         <app-user [user]="{name: name, avatar: avatar, position: position}"></app-user>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="100px"
+    <sn-table-column width="100px"
                       title="Hour rate"
                       i18n-title="@@label.hour_rate"
                       [align]="ui.text.align.right">
       <ng-template #tableCellTemplate let-rate="hourRate">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end">
           {{rate | money}}
-        </jnt-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="150px"
+    <sn-table-column width="150px"
                       title="Cust. hour rate"
                       i18n-title="@@label.customer_hour_rate"
                       [align]="ui.text.align.right">
       <ng-template #tableCellTemplate let-rate="customerHourRate">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end">
           {{rate | money}}
-        </jnt-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="100px"
+    <sn-table-column width="100px"
                       title="Tax rate"
                       i18n-title="@@label.tax_rate"
                       [align]="ui.text.align.right">
       <ng-template #tableCellTemplate let-rate="taxRate">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end">
           {{rate | number}}
-        </jnt-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="160px"
+    <sn-table-column width="160px"
                       title="Daily work hours"
                       i18n-title="@@label.daily_work_hours"
                       [align]="ui.text.align.right">
       <ng-template #tableCellTemplate let-hours="dailyWorkHours">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end">
           {{hours | number}}h
-        </jnt-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="15%"
+    <sn-table-column width="15%"
                       title="Paid work breaks"
                       i18n-title="@@label.annual_paid_work_breaks"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-days="annualPaidWorkBreaksDays"
                    let-metrics="metrics">
-        <jnt-progress-bar [value]="metrics.paidWorkBreaksDays / days * 100">
+        <sn-progress-bar [value]="metrics.paidWorkBreaksDays / days * 100">
           <ng-template #progressBarLegendTemplate>
-            <jnt-stack [orientation]="ui.orientation.horizontal"
+            <sn-stack [orientation]="ui.orientation.horizontal"
                        [align]="ui.align.center"
                        [justify]="ui.justify.between"
                        [gutter]="ui.gutter.normal">
               <div></div>
               <div data-annual-paid-work-breaks>{{days > 0 ? (days | number) : '&nbsp;'}}</div>
-            </jnt-stack>
+            </sn-stack>
           </ng-template>
-        </jnt-progress-bar>
+        </sn-progress-bar>
         <div
           data-paid-work-breaks-days>{{metrics.paidWorkBreaksDays > 0 ? (metrics.paidWorkBreaksDays | number) : '&nbsp;'}}</div>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="200px"
+    <sn-table-column width="200px"
                       title="Payroll"
                       i18n-title="@@label.payroll"
                       [align]="ui.text.align.right">
@@ -102,37 +102,37 @@
             </tr>
           </table>
         </ng-template>
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [gutter]="ui.gutter.small"
                    [justify]="ui.justify.end">
-          <jnt-label data-payroll [label]="metrics.payrollClosed | money"
+          <sn-label data-payroll [label]="metrics.payrollClosed | money"
                      [color]="ui.color.paleNavy"
-                     [jntPopover]="{contentTemplate: developerMetricsTemplate, position: ui.position.left}"></jnt-label>
-        </jnt-stack>
+                     [snPopover]="{contentTemplate: developerMetricsTemplate, position: ui.position.left}"></sn-label>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="75px"
+    <sn-table-column width="75px"
                       title="Taxes"
                       i18n-title="@@label.taxes"
                       [align]="ui.text.align.right">
       <ng-template #tableCellTemplate let-metrics="metrics">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end">
           {{metrics.taxes | money}}
-        </jnt-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
     <ng-template #tableRowActionsTemplate let-user="row" let-hide="hide">
-      <jnt-menu [orientation]="ui.orientation.vertical">
-        <jnt-menu-item title="Edit"
+      <sn-menu [orientation]="ui.orientation.vertical">
+        <sn-menu-item title="Edit"
                        i18n-title="@@action.edit"
                        [icon]="ui.icons.link"
                        (click)="hide()"
-                       [link]="{source: '/admin/users/user/' + user.id + '/change/', target: ui.target.blank}"></jnt-menu-item>
-      </jnt-menu>
+                       [link]="{source: '/admin/users/user/' + user.id + '/change/', target: ui.target.blank}"></sn-menu-item>
+      </sn-menu>
     </ng-template>
 
-  </jnt-table>
-</jnt-form>
+  </sn-table>
+</sn-form>

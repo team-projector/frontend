@@ -1,65 +1,65 @@
-<jnt-form [formGroup]="form">
-  <jnt-table #table formControlName="table">
+<sn-form [formGroup]="form">
+  <sn-table #table formControlName="table">
 
     <ng-template #tableFiltersTemplate>
-      <jnt-switcher formControlName="type">
-        <jnt-switcher-option label="All"
+      <sn-switcher formControlName="type">
+        <sn-switcher-option label="All"
                              i18n-label="@@action.filter_projects_all"
                              [disabled]="summary?.count <= 0"
                              [value]="projectType.all">
-          <jnt-badge *ngIf="summary?.count > 0"
+          <sn-badge *ngIf="summary?.count > 0"
                      [overflow]="null"
-                     [value]="summary?.count"></jnt-badge>
-        </jnt-switcher-option>
-        <jnt-switcher-option label="Archived"
+                     [value]="summary?.count"></sn-badge>
+        </sn-switcher-option>
+        <sn-switcher-option label="Archived"
                              i18n-label="@@action.filter_type_archived"
                              [disabled]="summary?.archivedCount <= 0"
                              [value]="projectType.archived">
-          <jnt-badge *ngIf="summary?.archivedCount > 0"
+          <sn-badge *ngIf="summary?.archivedCount > 0"
                      [value]="summary?.archivedCount"
-                     [color]="ui.color.gray"></jnt-badge>
-        </jnt-switcher-option>
-        <jnt-switcher-option label="Supporting"
+                     [color]="ui.color.gray"></sn-badge>
+        </sn-switcher-option>
+        <sn-switcher-option label="Supporting"
                              i18n-label="@@action.filter_supporting"
                              [disabled]="summary?.supportingCount <= 0"
                              [value]="projectType.supporting">
-          <jnt-badge *ngIf="summary?.supportingCount > 0"
+          <sn-badge *ngIf="summary?.supportingCount > 0"
                      [value]="summary?.supportingCount"
-                     [color]="ui.color.yellow"></jnt-badge>
-        </jnt-switcher-option>
-        <jnt-switcher-option label="Developing"
+                     [color]="ui.color.yellow"></sn-badge>
+        </sn-switcher-option>
+        <sn-switcher-option label="Developing"
                              i18n-label="@@action.filter_developing"
                              [disabled]="summary?.developingCount <= 0"
                              [value]="projectType.developing">
-          <jnt-badge *ngIf="summary?.developingCount > 0"
+          <sn-badge *ngIf="summary?.developingCount > 0"
                      [value]="summary?.developingCount"
-                     [color]="ui.color.green"></jnt-badge>
-        </jnt-switcher-option>
-      </jnt-switcher>
+                     [color]="ui.color.green"></sn-badge>
+        </sn-switcher-option>
+      </sn-switcher>
     </ng-template>
 
-    <jnt-table-column title="Title"
+    <sn-table-column title="Title"
                       i18n-title="@@label.title">
       <ng-template #tableCellTemplate let-title="title"
                    let-avatar="glAvatar"
                    let-fullTitle="fullTitle"
                    let-url="glUrl">
-        <jnt-stack [orientation]="ui.orientation.horizontal">
-          <jnt-avatar [size]="ui.size.small"
+        <sn-stack [orientation]="ui.orientation.horizontal">
+          <sn-avatar [size]="ui.size.small"
                       [icon]="localUi.icons.project"
-                      [image]="avatar"></jnt-avatar>
-          <jnt-stack [gutter]="ui.gutter.tiny">
-            <jnt-link [source]="url + '/-/boards'"
+                      [image]="avatar"></sn-avatar>
+          <sn-stack [gutter]="ui.gutter.tiny">
+            <sn-link [source]="url + '/-/boards'"
                       [target]="ui.target.blank"
                       [title]="title">
-            </jnt-link>
+            </sn-link>
             <small>{{fullTitle}}</small>
-          </jnt-stack>
-        </jnt-stack>
+          </sn-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column title="Budget"
+    <sn-table-column title="Budget"
                       i18n-title="@@label.budget"
                       width="25%"
                       [align]="ui.text.align.center">
@@ -70,9 +70,9 @@
                       [remains]="metrics.budgetRemains"></app-budget>
         </ng-container>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column title="Profit"
+    <sn-table-column title="Profit"
                       i18n-title="@@label.profit"
                       width="25%"
                       [align]="ui.text.align.center">
@@ -81,22 +81,22 @@
                     [budget]="metrics.budget"
                     [profit]="metrics.profit"></app-profit>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
     <ng-template #tableRowActionsTemplate let-row="row">
-      <jnt-menu [orientation]="ui.orientation.vertical">
-        <jnt-menu-item [icon]="ui.icons.link"
+      <sn-menu [orientation]="ui.orientation.vertical">
+        <sn-menu-item [icon]="ui.icons.link"
                        title="GitLab"
                        i18n-title="@@action.view_on_gitlab"
                        target="_blank"
-                       [link]="row.glUrl"></jnt-menu-item>
-        <jnt-menu-item [icon]="ui.icons.edit"
+                       [link]="row.glUrl"></sn-menu-item>
+        <sn-menu-item [icon]="ui.icons.edit"
                        title="Edit"
                        i18n-title="@@action.edit"
                        target="_blank"
-                       [link]="'/admin/development/project/' + row.id + '/change/'"></jnt-menu-item>
-      </jnt-menu>
+                       [link]="'/admin/development/project/' + row.id + '/change/'"></sn-menu-item>
+      </sn-menu>
     </ng-template>
 
-  </jnt-table>
-</jnt-form>
+  </sn-table>
+</sn-form>

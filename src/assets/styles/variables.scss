@@ -1,7 +1,6 @@
-$sn-theme-type: 'light';
-
 $sn-white-color: white;
 $sn-black-color: black;
+
 $sn-teal-color: #1D2932;
 $sn-yellow-color: #F8DB42;
 $sn-orange-color: #EE8030;
@@ -57,7 +56,7 @@ $sn-accent-color: $sn-magenta-dark-color;
 
 $sn-muted-color: $sn-gray-400-color;
 
-$sn-primary-background: $sn-white-color;
+$sn-primary-background: #fff;
 $sn-secondary-background: $sn-pale-navy-color;
 $sn-highlight-background: $sn-blue-100-color;
 
@@ -73,17 +72,20 @@ $sn-gutter-big: $sn-gutter-base * 6;
 $sn-gutter-large: $sn-gutter-base * 8;
 $sn-gutter-huge: $sn-gutter-base * 12;
 
+
 $sn-corner-base: 4px;
 
 $sn-corner-small: $sn-corner-base;
 $sn-corner-normal: $sn-corner-base * 2;
 $sn-corner-large: $sn-corner-base * 10;
 
+
 $sn-shadow-light: 0px 4px 10px rgba($sn-black-color, .15);
 $sn-shadow-normal: 0px 2px 8px rgba($sn-black-color, .25);
 $sn-shadow-primary: 0px 2px 8px rgba($sn-primary-color, .25);
 $sn-outline-shadow-small: 0 0 0 2px;
 $sn-outline-shadow-normal: 0 0 0 4px;
+
 
 $sn-grid-gutter: $sn-gutter-normal;
 
@@ -145,6 +147,3 @@ $sn-lp-layout-font-family: 'Montserrat', sans-serif;
 $sn-body-font-weight: $sn-font-weight-base;
 $sn-body-line-height: $sn-line-height-base;
 $sn-body-font-size: $sn-font-size-base;
-
-@import "~@esanum/ui/lib/assets/styles/sn-variables";
-@import "~@esanum/ui/lib/assets/styles/sn-all";

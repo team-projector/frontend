@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { LocalUI } from 'src/enums/local-ui';
 import { ViewType } from 'src/models/enums/view-type';
 import { Salaries } from '../../shared/salaries/list/salaries';

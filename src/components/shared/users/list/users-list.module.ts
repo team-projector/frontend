@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormModule, LabelModule, MenuModule, PopoverModule, ProgressBarModule, StackModule, TableModule } from '@junte/ui';
+import { FormModule, LabelModule, MenuModule, PopoverModule, ProgressBarModule, StackModule, TableModule } from '@esanum/ui';
 import { MoneyPipesModule } from 'src/pipes/money-pipes.module';
 import { UserCardModule } from '../card/user-card.module';
 import { UsersListComponent } from './users-list.component';

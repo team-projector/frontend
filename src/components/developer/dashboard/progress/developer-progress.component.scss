@@ -1,22 +1,23 @@
-@import '~@junte/ui/lib/assets/styles/layout/responsive';
-@import '~@junte/ui/lib/assets/styles/forms/calendar';
-@import '~@junte/ui/lib/assets/styles/dynamic/circle-bar';
-@import '~@junte/ui/lib/assets/styles/elements/dot';
+@import '~@esanum/ui/lib/assets/styles/layout/responsive';
+@import '~@esanum/ui/lib/assets/styles/forms/calendar';
+@import '~@esanum/ui/lib/assets/styles/dynamic/circle-bar';
+@import '~@esanum/ui/lib/assets/styles/elements/dot';
+@import "src/assets/styles/variables";
 
-$jnt-ng-deep: true;
+$sn-ng-deep: true;
 
 :host {
   display: block;
 
-  @include jnt-calendar((metrics: (width: 50%)));
+  @include sn-calendar((metrics: (width: 50%)));
 }
 
 [data-header] {
-  padding-top: $jnt-gutter-normal;
+  padding-top: $sn-gutter-normal;
 
   [data-title] {
-    color: $jnt-primary-color;
-    // TODO: Do we need to use $jnt-font-size-big?
+    color: $sn-primary-color;
+    // TODO: Do we need to use $sn-font-size-big?
     font-size: 18px;
     font-weight: bold;
     text-align: center;
@@ -36,15 +37,15 @@ $jnt-ng-deep: true;
   position: relative;
 
   [data-day-text] {
-    font-size: $jnt-font-size-small;
+    font-size: $sn-font-size-small;
   }
 
   &[today='true'] {
-    @include jnt-circle-bar((content: (color: $jnt-white-color)), '&');
+    @include sn-circle-bar((content: (color: $sn-white-color)), '&');
   }
 
   [data-issues-count] {
-    @include jnt-dot((size: 5px), '&');
+    @include sn-dot((size: 5px), '&');
     position: absolute;
     top: 4px;
     right: 4px;
@@ -59,7 +60,7 @@ $jnt-ng-deep: true;
       height: 40px;
 
       &[data-time] {
-        color: $jnt-primary-text-light-color
+        color: $sn-primary-text-light-color
       }
     }
   }

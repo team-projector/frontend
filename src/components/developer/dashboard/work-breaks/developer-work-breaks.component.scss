@@ -1,51 +1,51 @@
-@import '~@junte/ui/lib/assets/styles/jnt-variables';
-@import '~@junte/ui/lib/assets/styles/dynamic/circle-bar';
-$jnt-ng-deep: true;
+@import 'src/assets/styles/variables';
+@import '~@esanum/ui/lib/assets/styles/dynamic/circle-bar';
+$sn-ng-deep: true;
 
 :host-context([theme='dark']) {
   [data-vacations] [data-circle] [data-days] {
-    background-color: $jnt-gray-dark-color;
+    background-color: $sn-gray-dark-color;
 
     [data-label] {
-      color: $jnt-gray-600-color;
+      color: $sn-gray-600-color;
     }
   }
 }
 
 [data-vacations] {
-  padding-bottom: $jnt-gutter-normal;
+  padding-bottom: $sn-gutter-normal;
 
   p {
-    color: $jnt-primary-text-light-color;
+    color: $sn-primary-text-light-color;
     span {
-      font-weight: $jnt-font-weight-semi-bold;
-      color: $jnt-primary-color;
+      font-weight: $sn-font-weight-semi-bold;
+      color: $sn-primary-color;
     }
   }
 
   [data-circle] {
-    @include jnt-circle-bar((width: 100px, height: 100px), '&');
-    @include jnt-circle-bar-indicator((fill: $jnt-highlight-background));
+    @include sn-circle-bar((width: 100px, height: 100px), '&');
+    @include sn-circle-bar-indicator((fill: $sn-highlight-background));
 
     [data-days] {
       width: 80%;
       height: 80%;
-      background-color: $jnt-primary-background;
+      background-color: $sn-primary-background;
       position: relative;
       border-radius: 50%;
-      font-weight: $jnt-font-weight-bold;
+      font-weight: $sn-font-weight-bold;
       font-size: 20px;
       line-height: 1.2;
-      color: $jnt-highlight-background;
+      color: $sn-highlight-background;
 
       [data-paid] {
-        color: $jnt-primary-color;
+        color: $sn-primary-color;
       }
 
       [data-label] {
-        font-size: $jnt-font-size-base;
-        font-weight: $jnt-font-weight-base;
-        color: $jnt-primary-color;
+        font-size: $sn-font-size-base;
+        font-weight: $sn-font-weight-base;
+        color: $sn-primary-color;
       }
     }
   }

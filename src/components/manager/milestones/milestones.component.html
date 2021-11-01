@@ -1,11 +1,11 @@
-<jnt-app-page-header [icon]="localUi.icons.milestone"
+<sn-app-page-header [icon]="localUi.icons.milestone"
                      title="Milestones"
                      i18n-title="@@label.milestones"
                      i18n-teaser="@@message.milestones_teaser"
-                     teaser="for your projects"></jnt-app-page-header>
+                     teaser="for your projects"></sn-app-page-header>
 
-<jnt-block [padding]="ui.gutter.none"
+<sn-block [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
   <app-milestones [state]="state"
                   (filtered)="save($event)"></app-milestones>
-</jnt-block>
+</sn-block>

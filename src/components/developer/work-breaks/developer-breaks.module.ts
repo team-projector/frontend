@@ -10,7 +10,7 @@ import {
   StackModule,
   LabelModule,
   PopoverModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { WorkBreaksListModule } from 'src/components/shared/work-breaks/list/work-breaks-list.module';
 import { DatePipesModule } from 'src/pipes/date-pipes.module';

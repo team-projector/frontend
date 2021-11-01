@@ -1,21 +1,21 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "src/assets/styles/variables";
 
 :host {
   display: block;
 }
 
 [footer] {
-  padding-top: $jnt-gutter-normal;
-  border-top: 1px solid $jnt-muted-color;
+  padding-top: $sn-gutter-normal;
+  border-top: 1px solid $sn-muted-color;
   font-size: 12px;
 }
 
 [avatars] {
-  margin: $jnt-gutter-big auto $jnt-gutter-small auto;
+  margin: $sn-gutter-big auto $sn-gutter-small auto;
 }
 
 [problems] {
   position: absolute;
-  top: -$jnt-gutter-small;
-  right: -$jnt-gutter-small;
+  top: -$sn-gutter-small;
+  right: -$sn-gutter-small;
 }

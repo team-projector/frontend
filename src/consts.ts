@@ -4,7 +4,7 @@ import localeRu from '@angular/common/locales/ru';
 import { DEFAULT_CURRENCY_CODE, LOCALE_ID, Provider } from '@angular/core';
 import { Locale } from 'date-fns';
 import { enUS as dfnsEnUS, ru as dfnsRu } from 'date-fns/locale';
-import { localeEnUs as jntEnUs, i18nEn, JunteUiModule, localeRu as jntRu, i18nRu } from '@junte/ui';
+import { localeEnUs as jntEnUs, i18nEn, EsanumUiModule, localeRu as jntRu, i18nRu } from '@esanum/ui';
 import { DateFnsConfigurationService } from 'ngx-date-fns';
 import { detectLanguage } from 'src/utils/lang';
 import { Language } from './enums/language';
@@ -134,7 +134,7 @@ APP_PROVIDERS.push({
   useValue: data[LocaleData.CurrencyCode]
 });
 
-APP_PROVIDERS = APP_PROVIDERS.concat(JunteUiModule.forRoot(config).providers);
+APP_PROVIDERS = APP_PROVIDERS.concat(EsanumUiModule.forRoot(config).providers);
 
 export const SECONDS_IN_MINUTE = 60;
 export const SECONDS_IN_HOUR = 3600;

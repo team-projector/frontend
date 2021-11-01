@@ -1,6 +1,6 @@
 import { ArraySerializer, PrimitiveSerializer } from '@junte/serialize-ts';
 import { ModelMetadataSerializer } from '@junte/serialize-ts/dist/serializers/model-metadata.serializer';
-import { SearchFilter, UI } from '@junte/ui';
+import { SearchFilter, UI } from '@esanum/ui';
 import { addDays } from 'date-fns';
 import { IssueProblem, IssueSort, IssueState } from 'src/models/enums/issue';
 import { StandardLabel } from 'src/models/enums/standard-label';

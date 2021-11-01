@@ -1,21 +1,21 @@
-<jnt-app-page-header [icon]="localUi.icons.workBreak"
+<sn-app-page-header [icon]="localUi.icons.workBreak"
                      title="Work Breaks"
                      i18n-title="@@label.work_breaks"
                      i18n-teaser="@@message.work_breaks_teaser"
-                     teaser="when you can't work"></jnt-app-page-header>
+                     teaser="when you can't work"></sn-app-page-header>
 
-<jnt-block data-tabs [padding]="ui.gutter.none"
+<sn-block data-tabs [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
-  <jnt-menu data-nav [style]="ui.menu.style.tabs"
+  <sn-menu data-nav [style]="ui.menu.style.tabs"
             [spacing]="ui.gutter.normal">
-    <jnt-menu-item [link]="['.']"
+    <sn-menu-item [link]="['.']"
                    title="Table"
                    i18n-title="@@action.table">
-    </jnt-menu-item>
-    <jnt-menu-item [link]="['gantt']"
+    </sn-menu-item>
+    <sn-menu-item [link]="['gantt']"
                    title="Gantt"
                    i18n-title="@@action.gantt">
-    </jnt-menu-item>
-  </jnt-menu>
+    </sn-menu-item>
+  </sn-menu>
   <router-outlet></router-outlet>
-</jnt-block>
+</sn-block>

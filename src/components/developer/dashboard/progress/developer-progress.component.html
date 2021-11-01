@@ -2,19 +2,19 @@
              let-metric="metric"
              let-date="date"
              let-presentation="presentation">
-  <jnt-dot data-issues-count *ngIf="!!metric?.issuesCount"></jnt-dot>
+  <sn-dot data-issues-count *ngIf="!!metric?.issuesCount"></sn-dot>
   <ng-template #noMetricTemplate>{{date | dfnsGetDate}}</ng-template>
   <ng-template #metricTemplate let-metric="metric" let-color="color" let-planned="planned">
-    <jnt-circle-bar data-circle data-time>
+    <sn-circle-bar data-circle data-time>
       <ng-template #circleBarContentTemplate>
         <div data-day-text>{{metric | duration:durationFormat.short}}</div>
       </ng-template>
-      <jnt-bar-indicator-group>
-        <jnt-bar-indicator [color]="color"
+      <sn-bar-indicator-group>
+        <sn-bar-indicator [color]="color"
                            [value]="metric | percentage:(planned * 3600)">
-        </jnt-bar-indicator>
-      </jnt-bar-indicator-group>
-    </jnt-circle-bar>
+        </sn-bar-indicator>
+      </sn-bar-indicator-group>
+    </sn-circle-bar>
   </ng-template>
   <div data-metric *ngIf="!!metric; else noMetricTemplate" [ngSwitch]="presentation">
     <ng-container *ngSwitchCase="metricType.spent">
@@ -51,36 +51,36 @@
 
     <ng-container *ngSwitchDefault>
       <ng-container>
-        <jnt-circle-bar data-circle>
+        <sn-circle-bar data-circle>
           <ng-template #circleBarContentTemplate>
             <div data-day-text>{{date | dfnsGetDate}}</div>
           </ng-template>
-          <jnt-bar-indicator-group>
-            <jnt-bar-indicator [color]="ui.color.green"
+          <sn-bar-indicator-group>
+            <sn-bar-indicator [color]="ui.color.green"
                                [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
-            </jnt-bar-indicator>
-            <jnt-bar-indicator *ngIf="(date | isFuture)" [color]="ui.color.yellow"
+            </sn-bar-indicator>
+            <sn-bar-indicator *ngIf="(date | isFuture)" [color]="ui.color.yellow"
                                [value]="metric.timeRemains | percentage:(metric.plannedWorkHours * 3600)">
-            </jnt-bar-indicator>
-          </jnt-bar-indicator-group>
-          <jnt-bar-indicator-group *ngIf="(date | isFuture)">
-            <jnt-bar-indicator [color]="ui.color.red"
+            </sn-bar-indicator>
+          </sn-bar-indicator-group>
+          <sn-bar-indicator-group *ngIf="(date | isFuture)">
+            <sn-bar-indicator [color]="ui.color.red"
                                [value]="metric.timeEstimate | percentage:(metric.plannedWorkHours * 3600)">
-            </jnt-bar-indicator>
-          </jnt-bar-indicator-group>
-          <jnt-bar-indicator-group *ngIf="(date | isFuture)">
-            <jnt-bar-indicator [color]="ui.color.purpleDark"
+            </sn-bar-indicator>
+          </sn-bar-indicator-group>
+          <sn-bar-indicator-group *ngIf="(date | isFuture)">
+            <sn-bar-indicator [color]="ui.color.purpleDark"
                                [value]="metric.loading | percentage:(metric.plannedWorkHours * 3600)">
-            </jnt-bar-indicator>
-          </jnt-bar-indicator-group>
-        </jnt-circle-bar>
+            </sn-bar-indicator>
+          </sn-bar-indicator-group>
+        </sn-circle-bar>
       </ng-container>
     </ng-container>
   </div>
 </ng-template>
 
-<jnt-form [formGroup]="form">
-  <jnt-block [padding]="ui.gutter.small"
+<sn-form [formGroup]="form">
+  <sn-block [padding]="ui.gutter.small"
              [width]="ui.width.fluid">
     <ng-template #blockHelpTemplate>
       <p i18n="@@message.here_find_progress">Here you can see your work progress.</p>
@@ -90,46 +90,46 @@
     </ng-template>
 
     <ng-template #blockHeaderTemplate>
-      <jnt-stack data-header [orientation]="ui.orientation.horizontal"
+      <sn-stack data-header [orientation]="ui.orientation.horizontal"
                  [align]="ui.align.center">
         <div data-title i18n="@@label.work_progress">Work progress</div>
-        <jnt-stack [orientation]="ui.orientation.horizontal">
-          <jnt-button [icon]="progress.loading ? ui.icons.animated.reload : ui.icons.reload"
+        <sn-stack [orientation]="ui.orientation.horizontal">
+          <sn-button [icon]="progress.loading ? ui.icons.animated.reload : ui.icons.reload"
                       [outline]="ui.outline.transparent"
                       [disabled]="progress.loading"
-                      (click)="loadMetrics()"></jnt-button>
+                      (click)="loadMetrics()"></sn-button>
           <app-metrics-type formControlName="metric"></app-metrics-type>
-        </jnt-stack>
-      </jnt-stack>
+        </sn-stack>
+      </sn-stack>
     </ng-template>
 
-    <jnt-calendar (updated)="period = $event;loadMetrics()">
-      <jnt-week-metric title="Est"
-                       i18n-title="@@label.est"></jnt-week-metric>
-      <jnt-week-metric title="Spent"
-                       i18n-title="@@label.spent"></jnt-week-metric>
-      <jnt-week-metric title="Eff"
-                       i18n-title="@@label.eff"></jnt-week-metric>
-      <jnt-week-metric title="Payroll"
-                       i18n-title="@@label.payroll"></jnt-week-metric>
-      <jnt-week-metric title="Paid"
-                       i18n-title="@@label.paid"></jnt-week-metric>
+    <sn-calendar (updated)="period = $event;loadMetrics()">
+      <sn-week-metric title="Est"
+                       i18n-title="@@label.est"></sn-week-metric>
+      <sn-week-metric title="Spent"
+                       i18n-title="@@label.spent"></sn-week-metric>
+      <sn-week-metric title="Eff"
+                       i18n-title="@@label.eff"></sn-week-metric>
+      <sn-week-metric title="Payroll"
+                       i18n-title="@@label.payroll"></sn-week-metric>
+      <sn-week-metric title="Paid"
+                       i18n-title="@@label.paid"></sn-week-metric>
       <ng-template #calendarDayTemplate let-date="date">
         <ng-template #dayDetails>
-          <jnt-menu [orientation]="ui.orientation.horizontal"
+          <sn-menu [orientation]="ui.orientation.horizontal"
                     [spacing]="ui.gutter.small">
-            <jnt-menu-item title="Issues"
+            <sn-menu-item title="Issues"
                            i18n-title="@@action.issues"
                            [icon]="localUi.icons.issue"
-                           [link]="['issues', {dueDate: (date | dfnsFormat:dateFormat)}]"></jnt-menu-item>
-            <jnt-menu-item title="Time Expenses"
+                           [link]="['issues', {dueDate: (date | dfnsFormat:dateFormat)}]"></sn-menu-item>
+            <sn-menu-item title="Time Expenses"
                            i18n-title="@@action.time_expenses"
                            [icon]="localUi.icons.spentTime"
-                           [link]="['time-expenses', {date: (date | dfnsFormat:dateFormat)}]"></jnt-menu-item>
-          </jnt-menu>
+                           [link]="['time-expenses', {date: (date | dfnsFormat:dateFormat)}]"></sn-menu-item>
+          </sn-menu>
         </ng-template>
         <div data-day [attr.today]="(date | isToday)"
-             [jntPopover]="{contentTemplate: dayDetails, trigger: ui.trigger.click}">
+             [snPopover]="{contentTemplate: dayDetails, trigger: ui.trigger.click}">
           <ng-container *ngTemplateOutlet="dayTemplate; context: {presentation: metricControl.value,
                 date: date, metric: metrics?.days.get((date | dfnsFormat:dateFormat))}">
           </ng-container>
@@ -157,7 +157,7 @@
           </ng-container>
         </ng-container>
       </ng-template>
-    </jnt-calendar>
+    </sn-calendar>
 
-  </jnt-block>
-</jnt-form>
+  </sn-block>
+</sn-form>

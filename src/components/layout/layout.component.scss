@@ -1,12 +1,12 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import "~@junte/ui/lib/assets/styles/elements/icon";
-@import "~@junte/ui/lib/assets/styles/forms/button";
+@import "src/assets/styles/variables";
+@import "~@esanum/ui/lib/assets/styles/elements/icon";
+@import "~@esanum/ui/lib/assets/styles/forms/button";
 
-$jnt-ng-deep: true;
+$sn-ng-deep: true;
 
 :host-context([theme='dark']) {
   [data-gitlab] {
-    @include jnt-icon((size: 30px), '&');
+    @include sn-icon((size: 30px), '&');
   }
 }
 
@@ -15,17 +15,17 @@ $jnt-ng-deep: true;
 }
 
 [data-content] {
-  padding: $jnt-gutter-small;
+  padding: $sn-gutter-small;
 }
 
 small {
-  color: $jnt-primary-text-light-color;
+  color: $sn-primary-text-light-color;
 }
 
 [data-gitlab] {
-  @include jnt-icon((size: 30px), '&');
+  @include sn-icon((size: 30px), '&');
 }
 
 [data-create-issue] {
-  @include jnt-button((background: linear-gradient(to right, #f857a6 0%, #ff5858  51%, #f857a6  100%)), '&');
+  @include sn-button((background: linear-gradient(to right, #f857a6 0%, #ff5858  51%, #f857a6  100%)), '&');
 }

@@ -1,4 +1,4 @@
-<jnt-block *ngIf="me?.metrics as metrics" title="Current payroll"
+<sn-block *ngIf="me?.metrics as metrics" title="Current payroll"
            i18n-title="@@label.current_payroll"
            [width]="ui.width.fluid"
            [padding]="ui.gutter.none">
@@ -7,49 +7,49 @@
     <iframe src="https://giphy.com/embed/5fBH6z8aMV1RbA4FaSc" width="480" height="270" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p><a href="https://giphy.com/gifs/BillionBackRecords-get-your-billion-back-records-hr-block-5fBH6z8aMV1RbA4FaSc">via GIPHY</a></p>
   </ng-template>
 
-  <jnt-stack [align]="ui.align.stretch">
-    <jnt-stack data-user [gutter]="ui.gutter.small">
-      <jnt-stack [orientation]="ui.orientation.horizontal"
+  <sn-stack [align]="ui.align.stretch">
+    <sn-stack data-user [gutter]="ui.gutter.small">
+      <sn-stack [orientation]="ui.orientation.horizontal"
                  [align]="ui.align.center">
-        <jnt-avatar [size]="ui.size.small"
-                    [image]="me.avatar"></jnt-avatar>
-        <jnt-stack [gutter]="ui.gutter.tiny">
+        <sn-avatar [size]="ui.size.small"
+                    [image]="me.avatar"></sn-avatar>
+        <sn-stack [gutter]="ui.gutter.tiny">
           <span data-position *ngIf="!!me.position">{{me.position.title}}</span>
-          <jnt-label i18n-label="@@label.hour"
+          <sn-label i18n-label="@@label.hour"
                      [label]="(me.hourRate | money) + ' / ' + 'hour'"
                      [color]="ui.color.gray100">
-          </jnt-label>
-        </jnt-stack>
+          </sn-label>
+        </sn-stack>
 
-      </jnt-stack>
-    </jnt-stack>
+      </sn-stack>
+    </sn-stack>
 
-    <jnt-stack data-salary
+    <sn-stack data-salary
                [gutter]="ui.gutter.tiny"
                [align]="ui.align.stretch">
 
-      <jnt-stack *ngIf="opened" [@appear]="opened" [gutter]="ui.gutter.none" [align]="ui.align.stretch">
-        <jnt-stack data-line data-success
+      <sn-stack *ngIf="opened" [@appear]="opened" [gutter]="ui.gutter.none" [align]="ui.align.stretch">
+        <sn-stack data-line data-success
                    [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.between"
                    [align]="ui.align.center">
-          <jnt-stack [orientation]="ui.orientation.horizontal">
+          <sn-stack [orientation]="ui.orientation.horizontal">
             <div data-title i18n="@@label.closed">Closed</div>
-            <jnt-stack data-time [orientation]="ui.orientation.horizontal"
+            <sn-stack data-time [orientation]="ui.orientation.horizontal"
                        [gutter]="ui.gutter.small"
                        [align]="ui.align.center">
-              <jnt-icon *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) > 0"
-                        [icon]="ui.icons.time"></jnt-icon>
+              <sn-icon *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) > 0"
+                        [icon]="ui.icons.time"></sn-icon>
               <span>{{(metrics.issues.closedSpent) | duration}}</span>
-            </jnt-stack>
-          </jnt-stack>
+            </sn-stack>
+          </sn-stack>
           <span>
               <span *ngIf="metrics.payrollClosed + metrics.taxesClosed > 0">+</span>
             {{(metrics.payrollClosed + metrics.taxesClosed) | money}}
             </span>
-        </jnt-stack>
+        </sn-stack>
 
-        <jnt-stack data-line data-success
+        <sn-stack data-line data-success
                    [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.between"
                    [align]="ui.align.center">
@@ -58,9 +58,9 @@
               <span *ngIf="metrics.bonus > 0">+</span>
             {{metrics.bonus | money}}
             </span>
-        </jnt-stack>
+        </sn-stack>
 
-        <jnt-stack data-line data-fail
+        <sn-stack data-line data-fail
                    [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.between"
                    [align]="ui.align.center">
@@ -69,9 +69,9 @@
               <span *ngIf="metrics.penalty > 0">-</span>
             {{metrics.penalty | money}}
             </span>
-        </jnt-stack>
+        </sn-stack>
 
-        <jnt-stack data-line data-fail
+        <sn-stack data-line data-fail
                    [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.between"
                    [align]="ui.align.center">
@@ -80,44 +80,44 @@
               <span *ngIf="metrics.taxesClosed > 0">-</span>
             {{metrics.taxesClosed | money}}
             </span>
-        </jnt-stack>
+        </sn-stack>
 
         <hr>
-      </jnt-stack>
+      </sn-stack>
 
-      <jnt-stack [gutter]="ui.gutter.tiny" [align]="ui.align.end">
+      <sn-stack [gutter]="ui.gutter.tiny" [align]="ui.align.end">
         <span data-label i18n="@@label.you_have_earned">You've earned:</span>
 
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end"
                    [align]="ui.align.center">
-          <jnt-icon data-money [icon]="localUi.icons.money"></jnt-icon>
+          <sn-icon data-money [icon]="localUi.icons.money"></sn-icon>
           <span data-digit>
             {{metrics.payrollClosed + metrics.bonus - metrics.penalty | money}}
           </span>
-        </jnt-stack>
+        </sn-stack>
 
-        <jnt-stack data-opened [gutter]="ui.gutter.none" [align]="ui.align.end">
+        <sn-stack data-opened [gutter]="ui.gutter.none" [align]="ui.align.end">
           <span data-label i18n="@@label.opened_tasks">Opened tasks:</span>
           <span data-digit>
             {{metrics.payrollOpened | money}}</span>
-        </jnt-stack>
-      </jnt-stack>
+        </sn-stack>
+      </sn-stack>
 
       <svg [attr.data-opened]="opened" width="19" height="8" viewBox="0 0 19 8" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M0.500001 -1.43099e-07C4.91827 2.43159e-07 7.49999 8.00002 9.5 8C11.5 7.99998 14.0817 1.04425e-06 18.5 1.43051e-06L0.500001 -1.43099e-07Z"/>
       </svg>
 
-    </jnt-stack>
+    </sn-stack>
 
-    <jnt-stack [orientation]="ui.orientation.horizontal"
+    <sn-stack [orientation]="ui.orientation.horizontal"
                [justify]="ui.justify.center">
-      <jnt-button [text]="opened ? i18n.hideDetails : i18n.moreDetails"
+      <sn-button [text]="opened ? i18n.hideDetails : i18n.moreDetails"
                   [outline]="ui.outline.transparent"
                   [size]="ui.size.small"
-                  (click)="opened = !opened"></jnt-button>
-    </jnt-stack>
+                  (click)="opened = !opened"></sn-button>
+    </sn-stack>
 
-  </jnt-stack>
-</jnt-block>
+  </sn-stack>
+</sn-block>

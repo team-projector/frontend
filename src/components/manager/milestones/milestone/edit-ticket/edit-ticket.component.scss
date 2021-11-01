@@ -1,8 +1,8 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import "~@junte/ui/lib/assets/styles/forms/select";
-@import "~@junte/ui/lib/assets/styles/layout/responsive";
+@import "src/assets/styles/variables";
+@import "~@esanum/ui/lib/assets/styles/forms/select";
+@import "~@esanum/ui/lib/assets/styles/layout/responsive";
 
-$jnt-ng-deep: true;
+$sn-ng-deep: true;
 
 :host {
   display: flex;
@@ -14,7 +14,7 @@ $jnt-ng-deep: true;
 }
 
 p {
-  font-size: $jnt-font-size-small;
+  font-size: $sn-font-size-small;
 }
 
 [data-issue] {
@@ -22,5 +22,5 @@ p {
 }
 
 [data-issues] {
-  @include jnt-select((chips: (width: 'fluid')), '&');
+  @include sn-select((chips: (width: 'fluid')), '&');
 }

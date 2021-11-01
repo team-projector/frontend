@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, ElementRef, Inject, Injector, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AppLayoutComponent, ModalOptions, ModalService, PopoverService, UI } from '@junte/ui';
+import { AppLayoutComponent, ModalOptions, ModalService, PopoverService, UI } from '@esanum/ui';
 import { merge } from 'rxjs';
 import { AppConfig } from 'src/app-config';
 import { APPLICATION_READY } from 'src/consts';

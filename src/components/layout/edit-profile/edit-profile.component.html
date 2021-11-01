@@ -1,67 +1,67 @@
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               [backdrop]="backdrop"
               [placement]="ui.placement.absolute"
               (ok)="this.errors = []">
-  <jnt-informer-message *ngFor="let e of errors"
+  <sn-informer-message *ngFor="let e of errors"
                         [message]="e.toString()">
-  </jnt-informer-message>
-</jnt-informer>
+  </sn-informer-message>
+</sn-informer>
 
-<jnt-form #content [formGroup]="form"
+<sn-form #content [formGroup]="form"
           [state]="progress.saving || progress.loading ? ui.state.loading : null"
           (submitted)="save()">
-  <jnt-stack [align]="ui.align.stretch">
+  <sn-stack [align]="ui.align.stretch">
 
-    <jnt-form-item>
-      <jnt-form-label for="name"
-                      i18n="@@label.name">Name</jnt-form-label>
-      <jnt-form-control name="name">
-        <jnt-input formControlName="name"
+    <sn-form-item>
+      <sn-form-label for="name"
+                      i18n="@@label.name">Name</sn-form-label>
+      <sn-form-control name="name">
+        <sn-input formControlName="name"
                    placeholder="Your name"
                    i18n-placeholder="@@label.name">
-        </jnt-input>
-        <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+        </sn-input>
+        <sn-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
           This field is required
-        </jnt-form-message>
-      </jnt-form-control>
-    </jnt-form-item>
+        </sn-form-message>
+      </sn-form-control>
+    </sn-form-item>
 
-    <jnt-form-item>
-      <jnt-form-label for="email"
-                      i18n="@@label.email">Email</jnt-form-label>
-      <jnt-form-control name="email">
-        <jnt-input formControlName="email"
+    <sn-form-item>
+      <sn-form-label for="email"
+                      i18n="@@label.email">Email</sn-form-label>
+      <sn-form-control name="email">
+        <sn-input formControlName="email"
                    placeholder="Your email"
                    i18n-placeholder="@@label.email">
-        </jnt-input>
-      </jnt-form-control>
-    </jnt-form-item>
+        </sn-input>
+      </sn-form-control>
+    </sn-form-item>
 
-    <jnt-form-item>
-      <jnt-form-label for="glToken"
-                      i18n="@@label.personal_gitlab_token">Personal GitLab token</jnt-form-label>
-      <jnt-form-control name="glToken">
-        <jnt-input formControlName="glToken"
+    <sn-form-item>
+      <sn-form-label for="glToken"
+                      i18n="@@label.personal_gitlab_token">Personal GitLab token</sn-form-label>
+      <sn-form-control name="glToken">
+        <sn-input formControlName="glToken"
                    placeholder="Your personal GitLab token"
                    i18n-placeholder="@@label.your_personal_gitlab_token">
-        </jnt-input>
-      </jnt-form-control>
-    </jnt-form-item>
-  </jnt-stack>
+        </sn-input>
+      </sn-form-control>
+    </sn-form-item>
+  </sn-stack>
 
   <ng-template #formFooterTemplate>
-    <jnt-stack [orientation]="ui.orientation.horizontal"
+    <sn-stack [orientation]="ui.orientation.horizontal"
                [justify]="ui.justify.between">
-      <jnt-button text="Cancel"
+      <sn-button text="Cancel"
                   i18n-title="@@action.cancel"
                   [scheme]="ui.scheme.secondary"
                   (click)="canceled.emit()">
-      </jnt-button>
-      <jnt-button text="Save"
+      </sn-button>
+      <sn-button text="Save"
                   i18n-title="@@action.save"
                   [icon]="ui.icons.save"
                   [type]="ui.button.type.submit">
-      </jnt-button>
-    </jnt-stack>
+      </sn-button>
+    </sn-stack>
   </ng-template>
-</jnt-form>
+</sn-form>

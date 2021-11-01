@@ -1,105 +1,105 @@
-<jnt-modal [backdrop]="layout"></jnt-modal>
-<jnt-popover></jnt-popover>
-<jnt-app-layout [position]="ui.placement.fixed">
-  <jnt-app-busyness></jnt-app-busyness>
-  <jnt-app-header>
+<sn-modal [backdrop]="layout"></sn-modal>
+<sn-popover></sn-popover>
+<sn-app-layout [position]="ui.placement.fixed">
+  <sn-app-busyness></sn-app-busyness>
+  <sn-app-header>
     <ng-template #headerLogoTemplate>
       <a routerLink="/">
         <img width="130" height="32" [src]="'assets/images/logo.svg?v=4'">
       </a>
     </ng-template>
 
-    <jnt-menu #headerTopMenu>
-      <jnt-menu-item *ngIf="me.roles | includes : userRole.developer"
+    <sn-menu #headerTopMenu>
+      <sn-menu-item *ngIf="me.roles | includes : userRole.developer"
                      title="Developer"
                      i18n-title="@@action.developer" [link]="['/developer']"
                      [icon]="localUi.icons.top.developer"
-                     [matching]="ui.matching.wildcard"></jnt-menu-item>
-      <jnt-menu-item *ngIf="me.roles?.includes(userRole.leader)"
+                     [matching]="ui.matching.wildcard"></sn-menu-item>
+      <sn-menu-item *ngIf="me.roles?.includes(userRole.leader)"
                      title="Team Leader"
                      i18n-title="@@action.team_leader"
                      [link]="['/leader']"
                      [icon]="localUi.icons.top.leader"
-                     [matching]="ui.matching.wildcard"></jnt-menu-item>
-      <jnt-menu-item *ngIf="me.roles?.includes(userRole.manager)"
+                     [matching]="ui.matching.wildcard"></sn-menu-item>
+      <sn-menu-item *ngIf="me.roles?.includes(userRole.manager)"
                      title="Project Manager"
                      i18n-title="@@action.project_manager"
                      [link]="['/manager']"
                      [icon]="localUi.icons.top.manager"
-                     [matching]="ui.matching.wildcard"></jnt-menu-item>
-      <jnt-menu-item *ngIf="me.roles?.includes(userRole.shareholder)"
+                     [matching]="ui.matching.wildcard"></sn-menu-item>
+      <sn-menu-item *ngIf="me.roles?.includes(userRole.shareholder)"
                      title="Shareholder"
                      i18n-title="@@action.shareholder"
                      [link]="['/shareholder']"
                      [icon]="localUi.icons.top.shareholder"
-                     [matching]="ui.matching.wildcard"></jnt-menu-item>
-    </jnt-menu>
+                     [matching]="ui.matching.wildcard"></sn-menu-item>
+    </sn-menu>
 
     <ng-template #headerContentTemplate let-hide="hide">
-      <jnt-stack [orientation]="ui.orientation.horizontal"
+      <sn-stack [orientation]="ui.orientation.horizontal"
                  [align]="ui.align.center">
         <ng-template #createIssueTemplate>
           <app-create-issue></app-create-issue>
         </ng-template>
-        <jnt-button data-create-issue text="Create issue"
+        <sn-button data-create-issue text="Create issue"
                     i18n-text="@@action.create_issue"
                     [icon]="localUi.icons.wizard"
-                    [jntModal]="{title: {icon: localUi.icons.wizard, text: 'Create issue'}, content: createIssueTemplate}"
-                    (click)="hide?.call()"></jnt-button>
+                    [snModal]="{title: {icon: localUi.icons.wizard, text: 'Create issue'}, content: createIssueTemplate}"
+                    (click)="hide?.call()"></sn-button>
         <app-theme-switcher (changed)="theme = $event"></app-theme-switcher>
-      </jnt-stack>
+      </sn-stack>
     </ng-template>
 
     <ng-template #headerActionsTemplate>
-      <jnt-app-header-actions>
-        <jnt-app-header-action>
+      <sn-app-header-actions>
+        <sn-app-header-action>
           <ng-template #actionLabelTemplate>
-            <jnt-icon data-gitlab [icon]="ui.icons.gitlab" (mouseenter)="gitlabStatus.load()"></jnt-icon>
+            <sn-icon data-gitlab [icon]="ui.icons.gitlab" (mouseenter)="gitlabStatus.load()"></sn-icon>
           </ng-template>
           <ng-template #actionContentTemplate>
             <app-gitlab-status #gitlabStatus></app-gitlab-status>
           </ng-template>
-        </jnt-app-header-action>
-      </jnt-app-header-actions>
+        </sn-app-header-action>
+      </sn-app-header-actions>
     </ng-template>
 
     <ng-template #headerUserbarTemplate>
-      <jnt-app-header-userbar>
+      <sn-app-header-userbar>
         <ng-template #userbarAvatarTemplate>
-          <jnt-avatar *jntMinFor="ui.breakpoint.desktop"
+          <sn-avatar *snMinFor="ui.breakpoint.desktop"
                       [size]="ui.size.small"
                       [image]="me.avatar || '/assets/images/avatar.jpg'">
-          </jnt-avatar>
+          </sn-avatar>
         </ng-template>
         <ng-template #userbarMenuTemplate let-hide="hide">
-          <jnt-stack data-content [align]="ui.align.stretch">
-            <jnt-stack [orientation]="ui.orientation.horizontal"
+          <sn-stack data-content [align]="ui.align.stretch">
+            <sn-stack [orientation]="ui.orientation.horizontal"
                        [gutter]="ui.gutter.small">
-              <jnt-avatar [size]="ui.size.small"
+              <sn-avatar [size]="ui.size.small"
                           [image]="me.avatar || '/assets/images/avatar.jpg'">
-              </jnt-avatar>
-              <jnt-stack [gutter]="ui.gutter.none">
+              </sn-avatar>
+              <sn-stack [gutter]="ui.gutter.none">
                 <div>{{me.name}}</div>
                 <small>{{me.position?.title}}</small>
-              </jnt-stack>
-            </jnt-stack>
+              </sn-stack>
+            </sn-stack>
             <app-select-lang></app-select-lang>
-            <jnt-menu [orientation]="ui.orientation.vertical">
-              <jnt-menu-item title="Edit profile"
+            <sn-menu [orientation]="ui.orientation.vertical">
+              <sn-menu-item title="Edit profile"
                              i18n-title="@@action.edit_profile"
                              [icon]="ui.icons.settings"
                              (click)="editProfile(); hide?.call()">
-              </jnt-menu-item>
-              <jnt-menu-item title="Logout"
+              </sn-menu-item>
+              <sn-menu-item title="Logout"
                              i18n-title="@@action.logout"
                              [icon]="ui.icons.logout"
                              (click)="logout()">
-              </jnt-menu-item>
-            </jnt-menu>
-          </jnt-stack>
+              </sn-menu-item>
+            </sn-menu>
+          </sn-stack>
         </ng-template>
-      </jnt-app-header-userbar>
+      </sn-app-header-userbar>
     </ng-template>
-  </jnt-app-header>
+  </sn-app-header>
   <router-outlet></router-outlet>
-</jnt-app-layout>
+</sn-app-layout>

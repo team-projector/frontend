@@ -1,12 +1,12 @@
-<jnt-app-page-header [icon]="localUi.icons.salary"
+<sn-app-page-header [icon]="localUi.icons.salary"
                      title="Salaries"
                      i18n-title="@@label.salaries"
                      i18n-teaser="@@message.shareholder_salaries_teaser"
-                     teaser="of developers in your company"></jnt-app-page-header>
+                     teaser="of developers in your company"></sn-app-page-header>
 
-<jnt-block [padding]="ui.gutter.none"
+<sn-block [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
   <app-salaries [view]="viewType.shareholder"
                 [state]="state"
                 (filtered)="save($event)"></app-salaries>
-</jnt-block>
+</sn-block>

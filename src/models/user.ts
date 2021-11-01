@@ -1,4 +1,4 @@
-import { SearchFilter } from '@junte/ui';
+import { SearchFilter } from '@esanum/ui';
 import { endOfDay, endOfWeek, format, isPast, startOfDay, startOfWeek } from 'date-fns';
 import { ArraySerializer, PrimitiveSerializer } from '@junte/serialize-ts';
 import { Paging } from 'src/models/paging';

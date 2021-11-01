@@ -1,12 +1,12 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import "~@junte/ui/lib/assets/styles/layout/block";
-$jnt-ng-deep: true;
+@import "src/assets/styles/variables";
+@import "~@esanum/ui/lib/assets/styles/layout/block";
+$sn-ng-deep: true;
 
 [data-tabs] {
-  @include jnt-block((body: (padding: $jnt-gutter-normal 0 0 0)), '&');
+  @include sn-block((body: (padding: $sn-gutter-normal 0 0 0)), '&');
 
   [data-nav] {
     // TODO: Move to mixins api
-    margin: 0 $jnt-gutter-normal;
+    margin: 0 $sn-gutter-normal;
   }
 }

@@ -1,20 +1,20 @@
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               (ok)="errors = []">
-  <jnt-informer-message *ngFor="let error of errors"
-                        [message]="error.toString()"></jnt-informer-message>
-</jnt-informer>
+  <sn-informer-message *ngFor="let error of errors"
+                        [message]="error.toString()"></sn-informer-message>
+</sn-informer>
 
-<jnt-gantt [type]="ui.gantt.type.year"
+<sn-gantt [type]="ui.gantt.type.year"
            [loading]="progress.loading">
   <ng-template #ganttTitleTemplate>
     <strong i18n="@@label.developer">Developer</strong>
   </ng-template>
-  <jnt-gantt-line *ngFor="let m of member"
+  <sn-gantt-line *ngFor="let m of member"
                   [title]="m.user.name">
     <ng-template #ganttLineTitleTemplate>
       <app-user [user]="m.user"></app-user>
     </ng-template>
-    <jnt-gantt-line-period *ngFor="let workBreak of m.user.workBreaks"
+    <sn-gantt-line-period *ngFor="let workBreak of m.user.workBreaks"
                            [from]="workBreak.fromDate"
                            [to]="workBreak.toDate">
 
@@ -31,8 +31,8 @@
         </div>
       </ng-template>
 
-    </jnt-gantt-line-period>
-  </jnt-gantt-line>
-</jnt-gantt>
+    </sn-gantt-line-period>
+  </sn-gantt-line>
+</sn-gantt>
 
 

@@ -1,5 +1,5 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import "~@junte/ui/lib/assets/styles/navigation/link";
+@import "src/assets/styles/variables";
+@import "~@esanum/ui/lib/assets/styles/navigation/link";
 
 :host {
   display: block;
@@ -7,10 +7,10 @@
 
 [data-period] {
   position: relative;
-  margin: $jnt-gutter-tiny;
-  border-radius: $jnt-corner-large;
-  background-color: $jnt-gray-600-color;
-  color: $jnt-white-color;
+  margin: $sn-gutter-tiny;
+  border-radius: $sn-corner-large;
+  background-color: $sn-gray-600-color;
+  color: $sn-white-color;
   height: 20px;
   pointer-events: none;
   overflow: hidden;
@@ -26,26 +26,26 @@
   }
 
   &[over-due='true'] {
-    border-right: 10px solid $jnt-fail-color;
+    border-right: 10px solid $sn-fail-color;
   }
 
   &[accepting='true'] {
     cursor: pointer;
     pointer-events: all;
-    background-color: $jnt-primary-color;
+    background-color: $sn-primary-color;
   }
 
   &[accepted='true'] {
-    background-color: $jnt-success-color;
+    background-color: $sn-success-color;
   }
 
   &[declined='true'] {
-    background-color: $jnt-fail-color;
+    background-color: $sn-fail-color;
   }
 
   [data-label] {
     position: absolute;
-    font-size: $jnt-font-size-small;
+    font-size: $sn-font-size-small;
     text-align: center;
     top: 0;
     right: 0;

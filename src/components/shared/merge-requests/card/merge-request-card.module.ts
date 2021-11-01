@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AvatarModule, IconModule, LinkModule, StackModule } from '@junte/ui';
+import { AvatarModule, IconModule, LinkModule, StackModule } from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DueDateModule } from 'src/components/shared/due-date/due-date.module';
 import { ArrayPipesModule } from 'src/pipes/array-pipes.module';

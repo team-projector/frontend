@@ -22,7 +22,7 @@ import {
   SkeletonModule,
   StackModule,
   SwitcherModule
-} from '@junte/ui';
+} from '@esanum/ui';
 import { CookieService } from 'ngx-cookie-service';
 import { DateFnsModule } from 'ngx-date-fns';
 import { AuthorizationGuard } from 'src/guards/authorization.guard';

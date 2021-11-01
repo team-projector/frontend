@@ -1,16 +1,16 @@
-<jnt-form [formGroup]="form">
-  <jnt-table #table formControlName="table">
+<sn-form [formGroup]="form">
+  <sn-table #table formControlName="table">
 
-    <jnt-table-column width="20%"
+    <sn-table-column width="20%"
                       title="Created"
                       i18n-title="@@label.charged_time">
       <ng-template #tableCellTemplate let-id="id" let-createdAt="createdAt">
-        <jnt-link [source]="[id]"
-                  [title]="createdAt | dfnsFormat:'PP'"></jnt-link>
+        <sn-link [source]="[id]"
+                  [title]="createdAt | dfnsFormat:'PP'"></sn-link>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column *ngIf="view === viewType.leader || view === viewType.shareholder"
+    <sn-table-column *ngIf="view === viewType.leader || view === viewType.shareholder"
                       title="Developer"
                       i18n-title="@@label.user">
       <ng-template #tableCellTemplate
@@ -18,77 +18,77 @@
         <app-user [user]="user"
                   [size]="userCardSize.small"></app-user>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="150px"
+    <sn-table-column width="150px"
                       title="Charged Time"
                       i18n-title="@@label.charged_time"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-id="id" let-chargedTime="chargedTime">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end">
-          <jnt-label [label]="chargedTime | duration"
-                     [color]="ui.color.paleNavy"></jnt-label>
-        </jnt-stack>
+          <sn-label [label]="chargedTime | duration"
+                     [color]="ui.color.paleNavy"></sn-label>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="150px"
+    <sn-table-column width="150px"
                       title="Period"
                       i18n-title="@@label.period"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-periodTo="periodTo"
                    let-periodFrom="periodFrom">
-        <jnt-date-period [start]="periodFrom" [end]="periodTo"></jnt-date-period>
+        <sn-date-period [start]="periodFrom" [end]="periodTo"></sn-date-period>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="100px"
+    <sn-table-column width="100px"
                       title="Bonus"
                       i18n-title="@@label.bonus"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-bonus="bonus">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end">
           {{bonus | money}}
-        </jnt-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="100px"
+    <sn-table-column width="100px"
                       title="Penalty"
                       i18n-title="@@label.penalty"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-penalty="penalty">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end">
           {{penalty | money}}
-        </jnt-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="10%"
+    <sn-table-column width="10%"
                       title="Total"
                       i18n-title="@@label.total"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-total="total">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.end">
           {{total | money}}
-        </jnt-stack>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
+    </sn-table-column>
 
-    <jnt-table-column width="55px"
+    <sn-table-column width="55px"
                       title="Payed"
                       i18n-title="@@label.payed"
                       [align]="ui.text.align.center">
       <ng-template #tableCellTemplate let-payed="payed">
-        <jnt-stack [orientation]="ui.orientation.horizontal"
+        <sn-stack [orientation]="ui.orientation.horizontal"
                    [justify]="ui.justify.center">
-          <jnt-icon *ngIf="payed" [icon]="ui.icons.checked"></jnt-icon>
-        </jnt-stack>
+          <sn-icon *ngIf="payed" [icon]="ui.icons.checked"></sn-icon>
+        </sn-stack>
       </ng-template>
-    </jnt-table-column>
-  </jnt-table>
-</jnt-form>
+    </sn-table-column>
+  </sn-table>
+</sn-form>

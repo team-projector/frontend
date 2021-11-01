@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { R } from 'apollo-angular/types';
 import { addDays, addWeeks, endOfWeek, getDate, startOfDay, startOfWeek, subWeeks } from 'date-fns';
 import { of, zip } from 'rxjs';

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { LocalUI } from 'src/enums/local-ui';
 
 @Component({

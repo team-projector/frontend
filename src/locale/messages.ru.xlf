@@ -646,7 +646,7 @@
       </trans-unit>
       <trans-unit id="message.awesome_task_created" datatype="html">
         <source>Awesome! The task was created
-        <x id="START_TAG_JNT-LINK" ctype="x-jnt-link" equiv-text="&lt;jnt-link>"/><x id="CLOSE_TAG_JNT-LINK" ctype="x-jnt-link" equiv-text="&lt;/jnt-link>"/>
+        <x id="START_TAG_SN-LINK" ctype="x-sn-link" equiv-text="&lt;sn-link>"/><x id="CLOSE_TAG_SN-LINK" ctype="x-sn-link" equiv-text="&lt;/sn-link>"/>
       </source>
         <target>Отлично! Задача создана</target>
         <context-group purpose="location">
@@ -2141,13 +2141,13 @@
       </trans-unit>
       <trans-unit id="message.ticket_in_dashboard" datatype="html">
         <source>
-            <x id="START_TAG_JNT-LINK" ctype="x-jnt-link" equiv-text="&lt;jnt-link>"/>
-            <x id="CLOSE_TAG_JNT-LINK" ctype="x-jnt-link" equiv-text="&lt;/jnt-link>"/>
+            <x id="START_TAG_SN-LINK" ctype="x-sn-link" equiv-text="&lt;sn-link>"/>
+            <x id="CLOSE_TAG_SN-LINK" ctype="x-sn-link" equiv-text="&lt;/sn-link>"/>
             ticket in admin dashboard.
           </source>
         <target>
-            <x id="START_TAG_JNT-LINK" ctype="x-jnt-link" equiv-text="&lt;jnt-link>"/>
-            <x id="CLOSE_TAG_JNT-LINK" ctype="x-jnt-link" equiv-text="&lt;/jnt-link>"/>
+            <x id="START_TAG_SN-LINK" ctype="x-sn-link" equiv-text="&lt;sn-link>"/>
+            <x id="CLOSE_TAG_SN-LINK" ctype="x-sn-link" equiv-text="&lt;/sn-link>"/>
             тикет в админ панели.
           </target>
         <context-group purpose="location">

@@ -1,16 +1,16 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-$jnt-ng-deep: true;
+@import "src/assets/styles/variables";
+$sn-ng-deep: true;
 
 [data-remains] {
-  margin-top: $jnt-gutter-tiny;
+  margin-top: $sn-gutter-tiny;
   text-align: center;
   font-size: .85em;
 
   [data-overflow='true'] {
-    background: $jnt-fail-color;
-    color: $jnt-white-color;
-    border-radius: $jnt-gutter-tiny;
+    background: $sn-fail-color;
+    color: $sn-white-color;
+    border-radius: $sn-gutter-tiny;
     line-height: 1em;
-    padding: 0 $jnt-gutter-tiny;
+    padding: 0 $sn-gutter-tiny;
   }
 }

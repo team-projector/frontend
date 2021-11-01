@@ -1,6 +1,6 @@
 import { OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { combineLatest } from 'rxjs';
 import { serialize } from '@junte/serialize-ts';
 import { SalariesState, SalariesStateUpdate } from './salaries-list.types';

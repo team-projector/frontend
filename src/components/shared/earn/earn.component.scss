@@ -1,4 +1,4 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
+@import "src/assets/styles/variables";
 
 div {
   text-align: right;
@@ -10,6 +10,6 @@ div {
 
 small {
   display: block;
-  color: $jnt-green-color;
+  color: $sn-green-color;
 }
 

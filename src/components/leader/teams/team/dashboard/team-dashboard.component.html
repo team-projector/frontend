@@ -1,15 +1,15 @@
-<jnt-app-page-header [icon]="localUi.icons.dashboard"
+<sn-app-page-header [icon]="localUi.icons.dashboard"
                      title="Dashboard"
                      i18n-title="@@label.dashboard"
                      i18n-teaser="@@message.team_dashboard_teaser"
-                     teaser="for {{team.title}} team"></jnt-app-page-header>
+                     teaser="for {{team.title}} team"></sn-app-page-header>
 
-<jnt-row>
-  <jnt-col [wide]="7" [desktop]="12">
+<sn-row>
+  <sn-col [wide]="7" [desktop]="12">
     <app-team-progress [team]="team"
                        (selected)="issuesByDeveloper($event)"></app-team-progress>
-  </jnt-col>
-  <jnt-col [wide]="5" [desktop]="12">
+  </sn-col>
+  <sn-col [wide]="5" [desktop]="12">
     <app-projects-summary [team]="team" (selected)="issuesByProject($event)"></app-projects-summary>
-  </jnt-col>
-</jnt-row>
+  </sn-col>
+</sn-row>

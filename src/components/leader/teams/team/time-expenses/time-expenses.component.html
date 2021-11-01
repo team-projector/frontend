@@ -1,12 +1,12 @@
-<jnt-app-page-header [icon]="localUi.icons.spentTime"
+<sn-app-page-header [icon]="localUi.icons.spentTime"
                      title="Time Expenses"
                      i18n-title="@@label.time_expenses"
                      i18n-teaser="@@message.for_your_team"
-                     teaser="for your team"></jnt-app-page-header>
+                     teaser="for your team"></sn-app-page-header>
 
-<jnt-block [padding]="ui.gutter.none"
+<sn-block [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
   <app-time-expenses [view]="viewType.leader"
                      [state]="state"
                      (filtered)="save($event)"></app-time-expenses>
-</jnt-block>
+</sn-block>

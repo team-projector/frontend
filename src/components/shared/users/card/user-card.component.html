@@ -1,9 +1,9 @@
-<jnt-stack [orientation]="ui.orientation.horizontal"
+<sn-stack [orientation]="ui.orientation.horizontal"
            [align]="ui.align.center"
            [gutter]="cardSize.small ? ui.size.tiny : ui.size.small">
-  <jnt-avatar [image]="user.avatar"
-              [size]="size === cardSize.small ? ui.size.tiny : ui.size.small"></jnt-avatar>
-  <jnt-stack [gutter]="ui.gutter.none">
+  <sn-avatar [image]="user.avatar"
+              [size]="size === cardSize.small ? ui.size.tiny : ui.size.small"></sn-avatar>
+  <sn-stack [gutter]="ui.gutter.none">
     <div>{{user.name}}</div>
     <small *ngIf="!!roles;else positionTemplate">
       <ng-container *ngFor="let r of roles" [ngSwitch]="r">
@@ -15,5 +15,5 @@
     <ng-template #positionTemplate>
       <small>{{user.position?.title}}</small>
     </ng-template>
-  </jnt-stack>
-</jnt-stack>
+  </sn-stack>
+</sn-stack>

@@ -1,8 +1,8 @@
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               (ok)="errors = []">
-  <jnt-informer-message *ngFor="let error of errors"
-                        [message]="error.toString()"></jnt-informer-message>
-</jnt-informer>
+  <sn-informer-message *ngFor="let error of errors"
+                        [message]="error.toString()"></sn-informer-message>
+</sn-informer>
 
 <ng-template #weekMetricTemplate let-metric="metric">
   <td>
@@ -17,104 +17,104 @@
 </ng-template>
 
 <ng-template #dayMetricTemplate let-metric="metric" let-date="date">
-  <jnt-dot data-issues-count *ngIf="!!metric?.issuesCount"></jnt-dot>
+  <sn-dot data-issues-count *ngIf="!!metric?.issuesCount"></sn-dot>
   <div *ngIf="!!metric" data-metric [ngSwitch]="metricControl.value">
     <ng-container *ngSwitchCase="metricType.spent">
-      <jnt-circle-bar data-circle>
+      <sn-circle-bar data-circle>
         <ng-template #circleBarContentTemplate>
           <div data-day-text>{{metric.timeSpent | duration:durationFormat.short}}</div>
         </ng-template>
-        <jnt-bar-indicator-group>
-          <jnt-bar-indicator [color]="ui.color.green"
+        <sn-bar-indicator-group>
+          <sn-bar-indicator [color]="ui.color.green"
                              [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
-          </jnt-bar-indicator>
-        </jnt-bar-indicator-group>
-      </jnt-circle-bar>
+          </sn-bar-indicator>
+        </sn-bar-indicator-group>
+      </sn-circle-bar>
     </ng-container>
     <ng-container *ngSwitchCase="metricType.estimate">
-      <jnt-circle-bar *ngIf="(date | isFuture)" data-circle>
+      <sn-circle-bar *ngIf="(date | isFuture)" data-circle>
         <ng-template #circleBarContentTemplate>{{metric.timeEstimate | duration:durationFormat.short}}</ng-template>
-        <jnt-bar-indicator-group>
-          <jnt-bar-indicator [color]="ui.color.red"
+        <sn-bar-indicator-group>
+          <sn-bar-indicator [color]="ui.color.red"
                              [value]="metric.timeEstimate | percentage:(metric.plannedWorkHours * 3600)">
-          </jnt-bar-indicator>
-        </jnt-bar-indicator-group>
-      </jnt-circle-bar>
+          </sn-bar-indicator>
+        </sn-bar-indicator-group>
+      </sn-circle-bar>
     </ng-container>
     <ng-container *ngSwitchCase="metricType.remains">
-      <jnt-circle-bar *ngIf="(date | isFuture)" data-circle>
+      <sn-circle-bar *ngIf="(date | isFuture)" data-circle>
         <ng-template #circleBarContentTemplate>{{metric.timeRemains | duration:durationFormat.short}}</ng-template>
-        <jnt-bar-indicator-group>
-          <jnt-bar-indicator [color]="ui.color.yellow"
+        <sn-bar-indicator-group>
+          <sn-bar-indicator [color]="ui.color.yellow"
                              [value]="metric.timeRemains | percentage:(metric.plannedWorkHours * 3600)">
-          </jnt-bar-indicator>
-        </jnt-bar-indicator-group>
-      </jnt-circle-bar>
+          </sn-bar-indicator>
+        </sn-bar-indicator-group>
+      </sn-circle-bar>
     </ng-container>
     <ng-container *ngSwitchCase="metricType.loading">
-      <jnt-circle-bar data-circle>
+      <sn-circle-bar data-circle>
         <ng-template #circleBarContentTemplate>{{metric.loading | duration:durationFormat.short}}</ng-template>
-        <jnt-bar-indicator-group>
-          <jnt-bar-indicator [color]="ui.color.purpleDark"
+        <sn-bar-indicator-group>
+          <sn-bar-indicator [color]="ui.color.purpleDark"
                              [value]="metric.loading | percentage:(metric.plannedWorkHours * 3600)">
-          </jnt-bar-indicator>
-        </jnt-bar-indicator-group>
-      </jnt-circle-bar>
+          </sn-bar-indicator>
+        </sn-bar-indicator-group>
+      </sn-circle-bar>
     </ng-container>
     <ng-container *ngSwitchDefault>
       <ng-container *ngIf="(date | isPast); else futureMetrics">
-        <jnt-circle-bar data-circle>
-          <jnt-bar-indicator-group>
-            <jnt-bar-indicator [color]="ui.color.green"
+        <sn-circle-bar data-circle>
+          <sn-bar-indicator-group>
+            <sn-bar-indicator [color]="ui.color.green"
                                [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
-            </jnt-bar-indicator>
-          </jnt-bar-indicator-group>
-        </jnt-circle-bar>
+            </sn-bar-indicator>
+          </sn-bar-indicator-group>
+        </sn-circle-bar>
       </ng-container>
       <ng-template #futureMetrics>
-        <jnt-circle-bar data-circle>
-          <jnt-bar-indicator-group>
-            <jnt-bar-indicator [color]="ui.color.green"
+        <sn-circle-bar data-circle>
+          <sn-bar-indicator-group>
+            <sn-bar-indicator [color]="ui.color.green"
                                [value]="metric.timeSpent | percentage:(metric.plannedWorkHours * 3600)">
-            </jnt-bar-indicator>
-            <jnt-bar-indicator [color]="ui.color.yellow"
+            </sn-bar-indicator>
+            <sn-bar-indicator [color]="ui.color.yellow"
                                [value]="metric.timeRemains | percentage:(metric.plannedWorkHours * 3600)">
-            </jnt-bar-indicator>
-          </jnt-bar-indicator-group>
-          <jnt-bar-indicator-group>
-            <jnt-bar-indicator [color]="ui.color.red"
+            </sn-bar-indicator>
+          </sn-bar-indicator-group>
+          <sn-bar-indicator-group>
+            <sn-bar-indicator [color]="ui.color.red"
                                [value]="metric.timeEstimate | percentage:(metric.plannedWorkHours * 3600)">
-            </jnt-bar-indicator>
-          </jnt-bar-indicator-group>
-          <jnt-bar-indicator-group>
-            <jnt-bar-indicator [color]="ui.color.purpleDark"
+            </sn-bar-indicator>
+          </sn-bar-indicator-group>
+          <sn-bar-indicator-group>
+            <sn-bar-indicator [color]="ui.color.purpleDark"
                                [value]="metric.loading | percentage:(metric.plannedWorkHours * 3600)">
-            </jnt-bar-indicator>
-          </jnt-bar-indicator-group>
-        </jnt-circle-bar>
+            </sn-bar-indicator>
+          </sn-bar-indicator-group>
+        </sn-circle-bar>
       </ng-template>
     </ng-container>
   </div>
 </ng-template>
 
-<jnt-block [padding]="ui.gutter.none"
+<sn-block [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
-  <jnt-form [formGroup]="form">
+  <sn-form [formGroup]="form">
     <table>
       <thead>
       <tr>
         <th colspan="14" data-tools>
-          <jnt-stack [orientation]="ui.orientation.horizontal"
+          <sn-stack [orientation]="ui.orientation.horizontal"
                      [align]="ui.align.center">
             <div data-title i18n="@@label.work_progress">Work progress</div>
-            <jnt-stack [orientation]="ui.orientation.horizontal">
-              <jnt-button [icon]="progress.metrics ? ui.icons.animated.reload : ui.icons.reload"
+            <sn-stack [orientation]="ui.orientation.horizontal">
+              <sn-button [icon]="progress.metrics ? ui.icons.animated.reload : ui.icons.reload"
                           [disabled]="progress.metrics"
                           [outline]="ui.outline.transparent"
-                          (click)="loadMetrics()"></jnt-button>
+                          (click)="loadMetrics()"></sn-button>
               <app-metrics-type formControlName="metric"></app-metrics-type>
-            </jnt-stack>
-          </jnt-stack>
+            </sn-stack>
+          </sn-stack>
         </th>
       </tr>
       <tr data-rewind>
@@ -122,17 +122,17 @@
         <th colspan="2"></th>
         <th data-week colspan="7">
           <div data-date>
-            <jnt-button [icon]="ui.icons.chevronLeft"
+            <sn-button [icon]="ui.icons.chevronLeft"
                         [size]="ui.size.small"
                         [outline]="ui.outline.transparent"
                         [disabled]="progress.metrics"
-                        (click)="current = subWeeks(current, 1);loadMetrics()"></jnt-button>
+                        (click)="current = subWeeks(current, 1);loadMetrics()"></sn-button>
             <span [innerHTML]="days[0] | period:days[6]"></span>
-            <jnt-button [icon]="ui.icons.chevronRight"
+            <sn-button [icon]="ui.icons.chevronRight"
                         [size]="ui.size.small"
                         [outline]="ui.outline.transparent"
                         [disabled]="progress.metrics"
-                        (click)="current = addWeeks(current, 1);loadMetrics()"></jnt-button>
+                        (click)="current = addWeeks(current, 1);loadMetrics()"></sn-button>
           </div>
         </th>
         <th data-metrics colspan="3"></th>
@@ -170,15 +170,15 @@
                       [roles]="member.roles"></app-user>
           </td>
           <td>
-            <jnt-stack [gutter]="ui.gutter.tiny"
+            <sn-stack [gutter]="ui.gutter.tiny"
                        [align]="ui.justify.end">
-              <jnt-label data-spent *ngIf="member.user.metrics.issues.closedSpent"
+              <sn-label data-spent *ngIf="member.user.metrics.issues.closedSpent"
                          [label]="member.user.metrics.issues.closedSpent | duration:durationFormat.short"
-                         [color]="ui.color.green"></jnt-label>
-              <jnt-label data-spent *ngIf="member.user.metrics.issues.openedSpent"
+                         [color]="ui.color.green"></sn-label>
+              <sn-label data-spent *ngIf="member.user.metrics.issues.openedSpent"
                          [label]="member.user.metrics.issues.openedSpent | duration:durationFormat.short"
-                         [color]="member.user.problems?.includes(userProblem.payrollOpenedOverflow) ? ui.color.red : ui.color.paleNavy"></jnt-label>
-            </jnt-stack>
+                         [color]="member.user.problems?.includes(userProblem.payrollOpenedOverflow) ? ui.color.red : ui.color.paleNavy"></sn-label>
+            </sn-stack>
           </td>
           <td data-day *ngFor="let day of days"
               (click)="selected.emit({developer: member.user.id, dueDate: day})">
@@ -199,13 +199,13 @@
           <ng-container *ngFor="let s of 6 | mockArray">
             <tr data-loading>
               <td colspan="3">
-                <jnt-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center">
-                  <jnt-skeleton [type]="ui.skeleton.type.avatar" [size]="ui.size.tiny"></jnt-skeleton>
-                  <jnt-skeleton></jnt-skeleton>
-                </jnt-stack>
+                <sn-stack [orientation]="ui.orientation.horizontal" [align]="ui.align.center">
+                  <sn-skeleton [type]="ui.skeleton.type.avatar" [size]="ui.size.tiny"></sn-skeleton>
+                  <sn-skeleton></sn-skeleton>
+                </sn-stack>
               </td>
               <td [attr.colspan]="11">
-                <jnt-skeleton></jnt-skeleton>
+                <sn-skeleton></sn-skeleton>
               </td>
             </tr>
           </ng-container>
@@ -213,13 +213,13 @@
         <ng-template #emptyTemplate>
           <tr data-nodata>
             <td [attr.colspan]="17">
-              <jnt-icon [icon]="ui.icons.sad"></jnt-icon>
+              <sn-icon [icon]="ui.icons.sad"></sn-icon>
             </td>
           </tr>
         </ng-template>
       </ng-template>
       </tbody>
     </table>
-  </jnt-form>
-</jnt-block>
+  </sn-form>
+</sn-block>
 

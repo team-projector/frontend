@@ -1,68 +1,68 @@
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               (ok)="errors = []">
-  <jnt-informer-message *ngFor="let error of errors"
-                        [message]="error.toString()"></jnt-informer-message>
-</jnt-informer>
+  <sn-informer-message *ngFor="let error of errors"
+                        [message]="error.toString()"></sn-informer-message>
+</sn-informer>
 
-<jnt-form [formGroup]="form" (submitted)="save()"
+<sn-form [formGroup]="form" (submitted)="save()"
           [height]="ui.height.fluid"
           [state]="progress.saving ? ui.state.loading : null">
-  <jnt-tabs>
-    <jnt-tab title="Common"
+  <sn-tabs>
+    <sn-tab title="Common"
              i18n-title="@@label.common">
       <ng-template #tabContentTemplate>
-        <jnt-stack
+        <sn-stack
           [gutter]="ui.gutter.small"
           [align]="ui.align.stretch">
           <p *ngIf="!!ticket" i18n="@@message.ticket_in_dashboard">
-            <jnt-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
+            <sn-link [source]="'/admin/development/ticket/' + ticket.id + '/change/'"
                       [icon]="ui.icons.link"
                       target="_blank"
                       title="Edit"
                       i18n-title="@@action.edit">
-            </jnt-link>
+            </sn-link>
             ticket in admin dashboard.
           </p>
-          <jnt-form-item>
-            <jnt-form-control name="type">
-              <jnt-switcher formControlName="type">
-                <jnt-switcher-option label="Feature"
+          <sn-form-item>
+            <sn-form-control name="type">
+              <sn-switcher formControlName="type">
+                <sn-switcher-option label="Feature"
                                      i18n-title="@@label.feature"
                                      [value]="milestoneTicketTypes.feature">
-                  <jnt-dot [color]="ui.color.green"></jnt-dot>
-                </jnt-switcher-option>
-                <jnt-switcher-option label="Improvement"
+                  <sn-dot [color]="ui.color.green"></sn-dot>
+                </sn-switcher-option>
+                <sn-switcher-option label="Improvement"
                                      i18n-title="@@label.improvement"
                                      [value]="milestoneTicketTypes.improvement">
-                  <jnt-dot [color]="ui.color.purple"></jnt-dot>
-                </jnt-switcher-option>
-                <jnt-switcher-option label="Bug fixing"
+                  <sn-dot [color]="ui.color.purple"></sn-dot>
+                </sn-switcher-option>
+                <sn-switcher-option label="Bug fixing"
                                      i18n-title="@@label.bug_fixing"
                                      [value]="milestoneTicketTypes.bugFixing">
-                  <jnt-dot [color]="ui.color.red"></jnt-dot>
-                </jnt-switcher-option>
-              </jnt-switcher>
-              <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+                  <sn-dot [color]="ui.color.red"></sn-dot>
+                </sn-switcher-option>
+              </sn-switcher>
+              <sn-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
                 This field is required
-              </jnt-form-message>
-            </jnt-form-control>
-          </jnt-form-item>
+              </sn-form-message>
+            </sn-form-control>
+          </sn-form-item>
 
-          <jnt-form-item *ngIf="!!ticket">
-            <jnt-form-label for="milestone" i18n="@@label.milestone">Milestone</jnt-form-label>
-            <jnt-form-control name="milestone">
+          <sn-form-item *ngIf="!!ticket">
+            <sn-form-label for="milestone" i18n="@@label.milestone">Milestone</sn-form-label>
+            <sn-form-control name="milestone">
               <ng-template #milestoneOptionTemplate let-milestone="value"
                            let-selected="selected">
-                <jnt-stack [orientation]="ui.orientation.horizontal"
+                <sn-stack [orientation]="ui.orientation.horizontal"
                            [align]="ui.align.center"
                            [justify]="ui.justify.between">
                   <div>{{milestone.title}}</div>
-                  <jnt-label *ngIf="!selected && !!milestone.owner"
+                  <sn-label *ngIf="!selected && !!milestone.owner"
                              [label]="milestone.owner?.title"
-                             [outline]="ui.outline.ghost"></jnt-label>
-                </jnt-stack>
+                             [outline]="ui.outline.ghost"></sn-label>
+                </sn-stack>
               </ng-template>
-              <jnt-select placeholder="Milestone"
+              <sn-select placeholder="Milestone"
                           i18n-placeholder="@@label.milestone"
                           formControlName="milestone"
                           [features]="[ui.feature.search]"
@@ -70,163 +70,163 @@
                           [optionTemplate]="milestoneOptionTemplate"
                           keyField="id"
                           labelField="title">
-                <jnt-select-option [key]="ticket.milestone.id"
+                <sn-select-option [key]="ticket.milestone.id"
                                    [label]="ticket.milestone.title"
                                    [value]="ticket.milestone">
-                </jnt-select-option>
-              </jnt-select>
-            </jnt-form-control>
-          </jnt-form-item>
+                </sn-select-option>
+              </sn-select>
+            </sn-form-control>
+          </sn-form-item>
 
-          <jnt-form-item>
-            <jnt-form-label for="title" i18n="@@label.title">Title</jnt-form-label>
-            <jnt-form-control name="title">
-              <jnt-input placeholder="Title"
+          <sn-form-item>
+            <sn-form-label for="title" i18n="@@label.title">Title</sn-form-label>
+            <sn-form-control name="title">
+              <sn-input placeholder="Title"
                          i18n-placeholder="@@label.title"
-                         formControlName="title"></jnt-input>
-              <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+                         formControlName="title"></sn-input>
+              <sn-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
                 This field is required
-              </jnt-form-message>
-            </jnt-form-control>
-          </jnt-form-item>
+              </sn-form-message>
+            </sn-form-control>
+          </sn-form-item>
 
-          <jnt-form-item>
-            <jnt-form-label for="role" i18n="@@label.role">Role</jnt-form-label>
-            <jnt-form-control name="role">
-              <jnt-input placeholder="Target role"
+          <sn-form-item>
+            <sn-form-label for="role" i18n="@@label.role">Role</sn-form-label>
+            <sn-form-control name="role">
+              <sn-input placeholder="Target role"
                          i18n-placeholder="@@label.target_role"
-                         formControlName="role"></jnt-input>
-            </jnt-form-control>
-          </jnt-form-item>
+                         formControlName="role"></sn-input>
+            </sn-form-control>
+          </sn-form-item>
 
 
-          <jnt-row>
-            <jnt-col [desktop]="6">
-              <jnt-form-item>
-                <jnt-form-label for="startDate" i18n="@@label.start_date">Start date</jnt-form-label>
-                <jnt-form-control name="startDate">
-                  <jnt-date-picker placeholder="Start date"
+          <sn-row>
+            <sn-col [desktop]="6">
+              <sn-form-item>
+                <sn-form-label for="startDate" i18n="@@label.start_date">Start date</sn-form-label>
+                <sn-form-control name="startDate">
+                  <sn-date-picker placeholder="Start date"
                                    i18n-placeholder="@@label.start_date"
-                                   formControlName="startDate"></jnt-date-picker>
-                  <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+                                   formControlName="startDate"></sn-date-picker>
+                  <sn-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
                     This field is required
-                  </jnt-form-message>
-                </jnt-form-control>
-              </jnt-form-item>
-            </jnt-col>
-            <jnt-col [desktop]="6">
-              <jnt-stack [gutter]="ui.gutter.small"
+                  </sn-form-message>
+                </sn-form-control>
+              </sn-form-item>
+            </sn-col>
+            <sn-col [desktop]="6">
+              <sn-stack [gutter]="ui.gutter.small"
                          [align]="ui.align.stretch">
-                <jnt-form-item>
-                  <jnt-form-label for="dueDate">Due date</jnt-form-label>
-                  <jnt-form-control name="dueDate">
-                    <jnt-date-picker placeholder="Due date"
+                <sn-form-item>
+                  <sn-form-label for="dueDate">Due date</sn-form-label>
+                  <sn-form-control name="dueDate">
+                    <sn-date-picker placeholder="Due date"
                                      i18n-placeholder="@@label.due_date"
-                                     formControlName="dueDate"></jnt-date-picker>
-                    <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+                                     formControlName="dueDate"></sn-date-picker>
+                    <sn-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
                       This field is required
-                    </jnt-form-message>
-                  </jnt-form-control>
-                </jnt-form-item>
-                <jnt-stack [orientation]="ui.orientation.horizontal"
+                    </sn-form-message>
+                  </sn-form-control>
+                </sn-form-item>
+                <sn-stack [orientation]="ui.orientation.horizontal"
                            [justify]="ui.justify.center">
-                  <jnt-button-group [scheme]="ui.scheme.secondary"
+                  <sn-button-group [scheme]="ui.scheme.secondary"
                                     [size]="ui.size.tiny">
-                    <jnt-button text="This week"
+                    <sn-button text="This week"
                                 i18n-text="@@action.this_week"
-                                (click)="thisWeek()"></jnt-button>
-                    <jnt-button text="Next week"
+                                (click)="thisWeek()"></sn-button>
+                    <sn-button text="Next week"
                                 i18n-text="@@action.next_week"
-                                (click)="nextWeek()"></jnt-button>
-                  </jnt-button-group>
-                </jnt-stack>
-              </jnt-stack>
-            </jnt-col>
-          </jnt-row>
+                                (click)="nextWeek()"></sn-button>
+                  </sn-button-group>
+                </sn-stack>
+              </sn-stack>
+            </sn-col>
+          </sn-row>
 
-          <jnt-row>
-            <jnt-col [desktop]="6">
-              <jnt-form-item>
-                <jnt-form-label for="estimate" i18n="@@label.estimate">Estimate</jnt-form-label>
-                <jnt-form-control name="estimate">
-                  <jnt-input placeholder="Estimate"
+          <sn-row>
+            <sn-col [desktop]="6">
+              <sn-form-item>
+                <sn-form-label for="estimate" i18n="@@label.estimate">Estimate</sn-form-label>
+                <sn-form-control name="estimate">
+                  <sn-input placeholder="Estimate"
                              i18n-placeholder="@@label.estimate"
                              formControlName="estimate"
-                             [type]="ui.input.type.number"></jnt-input>
-                </jnt-form-control>
-              </jnt-form-item>
-            </jnt-col>
-            <jnt-col [desktop]="6">
-              <jnt-form-item>
-                <jnt-form-label for="state" i18n="@@label.state">State</jnt-form-label>
-                <jnt-form-control name="state">
+                             [type]="ui.input.type.number"></sn-input>
+                </sn-form-control>
+              </sn-form-item>
+            </sn-col>
+            <sn-col [desktop]="6">
+              <sn-form-item>
+                <sn-form-label for="state" i18n="@@label.state">State</sn-form-label>
+                <sn-form-control name="state">
                   <ng-template #stateTemplate let-label="label" let-state="value">
-                    <jnt-stack [orientation]="ui.orientation.horizontal"
+                    <sn-stack [orientation]="ui.orientation.horizontal"
                                [gutter]="ui.gutter.small"
                                [align]="ui.align.center">
-                      <jnt-dot [color]="state | ticketStateColor"></jnt-dot>
+                      <sn-dot [color]="state | ticketStateColor"></sn-dot>
                       <div>{{label}}</div>
-                    </jnt-stack>
+                    </sn-stack>
                   </ng-template>
 
-                  <jnt-select formControlName="state"
+                  <sn-select formControlName="state"
                               [optionTemplate]="stateTemplate">
-                    <jnt-select-option label="Created"
+                    <sn-select-option label="Created"
                                        i18n-label="@@label.created"
                                        [key]="milestoneTicketStates.created"
-                                       [value]="milestoneTicketStates.created"></jnt-select-option>
-                    <jnt-select-option label="Planning"
+                                       [value]="milestoneTicketStates.created"></sn-select-option>
+                    <sn-select-option label="Planning"
                                        i18n-label="@@label.planning"
                                        [key]="milestoneTicketStates.planning"
-                                       [value]="milestoneTicketStates.planning"></jnt-select-option>
-                    <jnt-select-option label="Doing"
+                                       [value]="milestoneTicketStates.planning"></sn-select-option>
+                    <sn-select-option label="Doing"
                                        i18n-label="@@label.doing"
                                        [key]="milestoneTicketStates.doing"
-                                       [value]="milestoneTicketStates.doing"></jnt-select-option>
-                    <jnt-select-option label="Testing"
+                                       [value]="milestoneTicketStates.doing"></sn-select-option>
+                    <sn-select-option label="Testing"
                                        i18n-label="@@label.testing"
                                        [key]="milestoneTicketStates.testing"
-                                       [value]="milestoneTicketStates.testing"></jnt-select-option>
-                    <jnt-select-option label="Accepting"
+                                       [value]="milestoneTicketStates.testing"></sn-select-option>
+                    <sn-select-option label="Accepting"
                                        i18n-label="@@label.accepting"
                                        [key]="milestoneTicketStates.accepting"
-                                       [value]="milestoneTicketStates.accepting"></jnt-select-option>
-                    <jnt-select-option label="Done"
+                                       [value]="milestoneTicketStates.accepting"></sn-select-option>
+                    <sn-select-option label="Done"
                                        i18n-label="@@label.done"
                                        [key]="milestoneTicketStates.done"
-                                       [value]="milestoneTicketStates.done"></jnt-select-option>
-                  </jnt-select>
-                </jnt-form-control>
-              </jnt-form-item>
-            </jnt-col>
-          </jnt-row>
+                                       [value]="milestoneTicketStates.done"></sn-select-option>
+                  </sn-select>
+                </sn-form-control>
+              </sn-form-item>
+            </sn-col>
+          </sn-row>
 
-          <jnt-form-item>
-            <jnt-form-label for="url"
+          <sn-form-item>
+            <sn-form-label for="url"
                             i18n="@@label.url">Url
-            </jnt-form-label>
-            <jnt-form-control name="url">
-              <jnt-input placeholder="Url"
+            </sn-form-label>
+            <sn-form-control name="url">
+              <sn-input placeholder="Url"
                          i18n-placeholder="@@label.url"
-                         formControlName="url"></jnt-input>
-              <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+                         formControlName="url"></sn-input>
+              <sn-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
                 This field is required
-              </jnt-form-message>
-            </jnt-form-control>
-          </jnt-form-item>
-        </jnt-stack>
+              </sn-form-message>
+            </sn-form-control>
+          </sn-form-item>
+        </sn-stack>
       </ng-template>
-    </jnt-tab>
-    <jnt-tab title="Issues"
+    </sn-tab>
+    <sn-tab title="Issues"
              i18n-title="@@label.issues">
-      <jnt-badge *ngIf="ticket?.issues.length"
-                 [value]="ticket?.issues.length"></jnt-badge>
+      <sn-badge *ngIf="ticket?.issues.length"
+                 [value]="ticket?.issues.length"></sn-badge>
       <ng-template #tabContentTemplate>
-        <jnt-form-item>
+        <sn-form-item>
           <ng-template #issueTemplate let-issue="value">
             <app-issue data-issue [issue]="issue"></app-issue>
           </ng-template>
-          <jnt-select data-issues placeholder="Issues"
+          <sn-select data-issues placeholder="Issues"
                       i18n-placeholder="@@label.issues"
                       formControlName="issues"
                       [mode]="ui.select.mode.multiple"
@@ -236,29 +236,29 @@
                       labelField="title"
                       (selected)="selected.issues.push($event)"
                       [optionTemplate]="issueTemplate">
-            <jnt-select-option *ngFor="let i of selected.issues"
+            <sn-select-option *ngFor="let i of selected.issues"
                                [key]="i.id"
                                [label]="i.title"
-                               [value]="i"></jnt-select-option>
-            <jnt-select-option *ngFor="let i of ticket?.issues"
+                               [value]="i"></sn-select-option>
+            <sn-select-option *ngFor="let i of ticket?.issues"
                                [key]="i.id"
                                [label]="i.title"
-                               [value]="i"></jnt-select-option>
-          </jnt-select>
-        </jnt-form-item>
+                               [value]="i"></sn-select-option>
+          </sn-select>
+        </sn-form-item>
       </ng-template>
-    </jnt-tab>
-  </jnt-tabs>
+    </sn-tab>
+  </sn-tabs>
 
   <ng-template #formFooterTemplate>
-    <jnt-stack [orientation]="ui.orientation.horizontal"
+    <sn-stack [orientation]="ui.orientation.horizontal"
                [justify]="ui.justify.end">
-      <jnt-stack [orientation]="ui.orientation.horizontal"
+      <sn-stack [orientation]="ui.orientation.horizontal"
                  [justify]="ui.justify.end">
-        <jnt-button [type]="ui.button.type.submit"
+        <sn-button [type]="ui.button.type.submit"
                     [icon]="ui.icons.save"
-                    text="Save"></jnt-button>
-      </jnt-stack>
-    </jnt-stack>
+                    text="Save"></sn-button>
+      </sn-stack>
+    </sn-stack>
   </ng-template>
-</jnt-form>
+</sn-form>

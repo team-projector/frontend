@@ -12,7 +12,7 @@ import {
   AppLayoutModule,
   MenuModule,
   BadgeModule,
-} from '@junte/ui';
+} from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { BonusesListModule } from 'src/components/shared/bonuses/list/bonuses-list.module';
 import { PenaltiesModule } from 'src/components/shared/penalties/penalties.module';

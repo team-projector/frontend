@@ -1,6 +1,6 @@
-@import "~@junte/ui/lib/assets/styles/jnt-variables";
-@import "~@junte/ui/lib/assets/styles/navigation/link";
-$jnt-ng-deep: true;
+@import "src/assets/styles/variables";
+@import "~@esanum/ui/lib/assets/styles/navigation/link";
+$sn-ng-deep: true;
 
 :host {
   display: block;
@@ -11,25 +11,25 @@ $jnt-ng-deep: true;
 }
 
 [state] {
-  color: $jnt-success-color;
+  color: $sn-success-color;
   &[doing] {
     min-width: 18px;
     width: 18px;
     min-height: 18px;
     height: 18px;
     border-radius: 50%;
-    fill: $jnt-success-color;
+    fill: $sn-success-color;
     padding: 1px;
-    border: 1px solid $jnt-success-color;
+    border: 1px solid $sn-success-color;
   }
   &[delayed] {
-    color: $jnt-orange-color;
+    color: $sn-orange-color;
   }
   &[bug] {
-    color: $jnt-fail-color;
+    color: $sn-fail-color;
   }
 }
 
 [closed='true'] {
-  @include jnt-link((text-decoration: line-through), '&');
+  @include sn-link((text-decoration: line-through), '&');
 }

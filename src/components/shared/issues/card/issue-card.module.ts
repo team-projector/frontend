@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { AvatarModule, LabelModule, LinkModule, StackModule } from '@junte/ui';
+import { AvatarModule, LabelModule, LinkModule, StackModule } from '@esanum/ui';
 import { DateFnsModule } from 'ngx-date-fns';
 import { DueDateModule } from 'src/components/shared/due-date/due-date.module';
 import { IssueCardComponent } from 'src/components/shared/issues/card/issue-card.component';

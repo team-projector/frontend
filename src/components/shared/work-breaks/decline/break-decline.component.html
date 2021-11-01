@@ -1,31 +1,31 @@
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               (ok)="errors = []">
-  <jnt-informer-message *ngFor="let error of errors"
-                        [message]="error.toString()"></jnt-informer-message>
-</jnt-informer>
+  <sn-informer-message *ngFor="let error of errors"
+                        [message]="error.toString()"></sn-informer-message>
+</sn-informer>
 
-<jnt-form [formGroup]="form" (submitted)="decline()">
-  <jnt-stack [orientation]="ui.orientation.vertical" [align]="ui.align.stretch">
-    <jnt-form-item>
-      <jnt-form-label for="declineReason"
-                      i18n="@@label.comment">Comment</jnt-form-label>
-      <jnt-form-control name="declineReason">
-        <jnt-input placeholder="Decline Reason"
+<sn-form [formGroup]="form" (submitted)="decline()">
+  <sn-stack [orientation]="ui.orientation.vertical" [align]="ui.align.stretch">
+    <sn-form-item>
+      <sn-form-label for="declineReason"
+                      i18n="@@label.comment">Comment</sn-form-label>
+      <sn-form-control name="declineReason">
+        <sn-input placeholder="Decline Reason"
                    i18n-placeholder="@@label.decline_reason"
-                   formControlName="declineReason"></jnt-input>
-        <jnt-form-message i18n="@@label.required" [validator]="ui.validator.required">
+                   formControlName="declineReason"></sn-input>
+        <sn-form-message i18n="@@label.required" [validator]="ui.validator.required">
           This field is required
-        </jnt-form-message>
-      </jnt-form-control>
-    </jnt-form-item>
-  </jnt-stack>
+        </sn-form-message>
+      </sn-form-control>
+    </sn-form-item>
+  </sn-stack>
 
   <ng-template #formFooterTemplate>
-    <jnt-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.center">
-      <jnt-button text="Save"
+    <sn-stack [orientation]="ui.orientation.horizontal" [justify]="ui.justify.center">
+      <sn-button text="Save"
                   i18n-text="@@action.save"
                   [type]="ui.button.type.submit"
-                  [loading]="saving"></jnt-button>
-    </jnt-stack>
+                  [loading]="saving"></sn-button>
+    </sn-stack>
   </ng-template>
-</jnt-form>
+</sn-form>

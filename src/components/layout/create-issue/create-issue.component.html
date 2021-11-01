@@ -1,247 +1,247 @@
-<jnt-informer *ngIf="!!issue"
+<sn-informer *ngIf="!!issue"
               [backdrop]="backdrop"
               [context]="ui.context.modal"
               [placement]="ui.placement.absolute">
   <ng-template #informerContentTemplate>
-    <jnt-stack data-issue [align]="ui.align.center">
+    <sn-stack data-issue [align]="ui.align.center">
       <p i18n="@@message.awesome_task_created">Awesome! The task was created
-        <jnt-link title="on GitLab"
+        <sn-link title="on GitLab"
                   i18n-title="@@label.on_gitlab"
                   [context]="ui.context.box"
                   [target]="ui.target.blank"
                   [icon]="{icon: ui.icons.link, position: ui.position.right}"
                   [outline]="ui.outline.fill"
-                  [source]="issue.glUrl"></jnt-link>
+                  [source]="issue.glUrl"></sn-link>
       </p>
 
-      <jnt-button text="Ok"
+      <sn-button text="Ok"
                   i18n-text="@@action.ok"
-                  (click)="created.emit(issue);issue = null"></jnt-button>
-    </jnt-stack>
+                  (click)="created.emit(issue);issue = null"></sn-button>
+    </sn-stack>
   </ng-template>
-</jnt-informer>
+</sn-informer>
 
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               [backdrop]="backdrop"
               [placement]="ui.placement.absolute"
               (ok)="this.errors = []">
-  <jnt-informer-message *ngFor="let e of errors"
-                        [message]="e.toString()"></jnt-informer-message>
-</jnt-informer>
+  <sn-informer-message *ngFor="let e of errors"
+                        [message]="e.toString()"></sn-informer-message>
+</sn-informer>
 
-<jnt-form #content [formGroup]="form"
+<sn-form #content [formGroup]="form"
           [state]="progress.creating ? ui.state.loading : null"
           (submitted)="createIssue()">
-  <jnt-stack [align]="ui.align.stretch">
+  <sn-stack [align]="ui.align.stretch">
 
-    <jnt-form-item>
-      <jnt-form-label for="title"
-                      i18n="@@label.title">Title</jnt-form-label>
-      <jnt-form-control name="title">
-        <jnt-input formControlName="title"
+    <sn-form-item>
+      <sn-form-label for="title"
+                      i18n="@@label.title">Title</sn-form-label>
+      <sn-form-control name="title">
+        <sn-input formControlName="title"
                    placeholder="Some nice task"
                    i18n-placeholder="@@label.some_nice_task">
-        </jnt-input>
-        <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+        </sn-input>
+        <sn-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
           This field is required
-        </jnt-form-message>
-      </jnt-form-control>
-    </jnt-form-item>
+        </sn-form-message>
+      </sn-form-control>
+    </sn-form-item>
 
-    <jnt-row>
-      <jnt-col [tablet]="6">
-        <jnt-form-item>
-          <jnt-form-label for="project"
-                          i18n="@@label.project">Project</jnt-form-label>
-          <jnt-form-control name="project">
+    <sn-row>
+      <sn-col [tablet]="6">
+        <sn-form-item>
+          <sn-form-label for="project"
+                          i18n="@@label.project">Project</sn-form-label>
+          <sn-form-control name="project">
             <ng-template #projectOption let-project="value"
                          let-selected="selected">
-              <jnt-stack [orientation]="ui.orientation.horizontal"
+              <sn-stack [orientation]="ui.orientation.horizontal"
                          [align]="ui.align.center"
                          [gutter]="ui.gutter.small">
-                <jnt-avatar [size]="ui.size.tiny"
-                            [image]="project.group?.glAvatar"></jnt-avatar>
+                <sn-avatar [size]="ui.size.tiny"
+                            [image]="project.group?.glAvatar"></sn-avatar>
                 <div><span *ngIf="!selected">{{project.group?.title}} &bull; </span>{{project.title}}
                 </div>
-              </jnt-stack>
+              </sn-stack>
             </ng-template>
-            <jnt-select formControlName="project"
+            <sn-select formControlName="project"
                         placeholder="Select from list"
                         i18n-placeholder="@@label.select_from_list"
                         [state]="progress.projects ? ui.state.loading : null"
                         [features]="[ui.feature.search]"
                         [optionTemplate]="projectOption">
-              <jnt-select-option *ngFor="let p of projects"
+              <sn-select-option *ngFor="let p of projects"
                                  [key]="p.id"
                                  [label]="p.fullTitle"
-                                 [value]="p"></jnt-select-option>
-            </jnt-select>
-            <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+                                 [value]="p"></sn-select-option>
+            </sn-select>
+            <sn-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
               This field is required
-            </jnt-form-message>
-          </jnt-form-control>
-        </jnt-form-item>
-      </jnt-col>
+            </sn-form-message>
+          </sn-form-control>
+        </sn-form-item>
+      </sn-col>
 
-      <jnt-col [tablet]="6">
-        <jnt-form-item>
-          <jnt-form-label for="milestone"
-                          i18n="@@label.milestone">Milestone</jnt-form-label>
-          <jnt-form-control name="milestone">
-            <jnt-select formControlName="milestone"
+      <sn-col [tablet]="6">
+        <sn-form-item>
+          <sn-form-label for="milestone"
+                          i18n="@@label.milestone">Milestone</sn-form-label>
+          <sn-form-control name="milestone">
+            <sn-select formControlName="milestone"
                         placeholder="Select from list"
                         i18n-placeholder="@@label.select_from_list"
                         [state]="progress.milestones ? ui.state.loading : null"
                         [features]="[ui.feature.allowEmpty]">
-              <jnt-select-option *ngFor="let m of milestones"
+              <sn-select-option *ngFor="let m of milestones"
                                  [key]="m.id"
-                                 [label]="m.title"></jnt-select-option>
-            </jnt-select>
-            <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+                                 [label]="m.title"></sn-select-option>
+            </sn-select>
+            <sn-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
               This field is required
-            </jnt-form-message>
-          </jnt-form-control>
-        </jnt-form-item>
-      </jnt-col>
-    </jnt-row>
+            </sn-form-message>
+          </sn-form-control>
+        </sn-form-item>
+      </sn-col>
+    </sn-row>
 
-    <jnt-form-item>
-      <jnt-form-label for="user" i18n="@@label.developer">Developer</jnt-form-label>
-      <jnt-form-control name="user">
+    <sn-form-item>
+      <sn-form-label for="user" i18n="@@label.developer">Developer</sn-form-label>
+      <sn-form-control name="user">
         <ng-template #userOption let-member="value"
                      let-selected="selected">
-          <jnt-stack [orientation]="ui.orientation.horizontal"
+          <sn-stack [orientation]="ui.orientation.horizontal"
                      [align]="ui.align.center"
                      [justify]="ui.justify.between">
             <app-user [user]="member.user"
                       [roles]="member.roles"
                       [size]="userCardSize.small"></app-user>
-            <jnt-icon *ngIf="!selected && (member.roles | includes: teamMemberRole.leader)"
-                      [icon]="localUi.icons.leader"></jnt-icon>
-          </jnt-stack>
+            <sn-icon *ngIf="!selected && (member.roles | includes: teamMemberRole.leader)"
+                      [icon]="localUi.icons.leader"></sn-icon>
+          </sn-stack>
         </ng-template>
-        <jnt-select formControlName="user"
+        <sn-select formControlName="user"
                     placeholder="Select from list"
                     i18n-placeholder="@@label.select_from_list"
                     [state]="progress.developers ? ui.state.loading : null"
                     [features]="[ui.feature.search]"
                     [optionTemplate]="userOption">
-          <jnt-select-option *ngFor="let d of developers"
+          <sn-select-option *ngFor="let d of developers"
                              [key]="d.user.id"
                              [label]="d.user.name"
-                             [value]="d"></jnt-select-option>
-        </jnt-select>
-        <jnt-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
+                             [value]="d"></sn-select-option>
+        </sn-select>
+        <sn-form-message i18n="@@message.field_required" [validator]="ui.validator.required">
           This field is required
-        </jnt-form-message>
-      </jnt-form-control>
-    </jnt-form-item>
+        </sn-form-message>
+      </sn-form-control>
+    </sn-form-item>
 
-    <jnt-form-item>
-      <jnt-form-label for="labels" i18n="@@label.labels">Labels</jnt-form-label>
-      <jnt-form-control name="labels">
-        <jnt-switcher formControlName="labels"
+    <sn-form-item>
+      <sn-form-label for="labels" i18n="@@label.labels">Labels</sn-form-label>
+      <sn-form-control name="labels">
+        <sn-switcher formControlName="labels"
                       [mode]="ui.select.mode.multiple"
                       [features]="[ui.feature.allowEmpty, ui.feature.adapted, ui.feature.marks]">
-          <jnt-switcher-option label="Bug"
+          <sn-switcher-option label="Bug"
                                i18n-label="@@label.bug"
                                [value]="standardLabel.bug">
-            <jnt-dot [color]="ui.color.red"></jnt-dot>
-          </jnt-switcher-option>
-          <jnt-switcher-option label="Urgent"
+            <sn-dot [color]="ui.color.red"></sn-dot>
+          </sn-switcher-option>
+          <sn-switcher-option label="Urgent"
                                i18n-label="@@label.urgent"
                                [value]="standardLabel.urgent">
-            <jnt-dot [color]="ui.color.orange"></jnt-dot>
-          </jnt-switcher-option>
-          <jnt-switcher-option label="Hotfix"
+            <sn-dot [color]="ui.color.orange"></sn-dot>
+          </sn-switcher-option>
+          <sn-switcher-option label="Hotfix"
                                i18n-label="@@label.hotfix"
                                [value]="standardLabel.hotfix">
-            <jnt-dot [color]="ui.color.yellow"></jnt-dot>
-          </jnt-switcher-option>
-          <jnt-switcher-option label="Discuss"
+            <sn-dot [color]="ui.color.yellow"></sn-dot>
+          </sn-switcher-option>
+          <sn-switcher-option label="Discuss"
                                i18n-label="@@label.discuss"
                                [value]="standardLabel.discuss">
-            <jnt-dot [color]="ui.color.green"></jnt-dot>
-          </jnt-switcher-option>
-        </jnt-switcher>
-      </jnt-form-control>
-    </jnt-form-item>
+            <sn-dot [color]="ui.color.green"></sn-dot>
+          </sn-switcher-option>
+        </sn-switcher>
+      </sn-form-control>
+    </sn-form-item>
 
 
-    <jnt-row>
-      <jnt-col [tablet]="4">
-        <jnt-stack [gutter]="ui.gutter.small"
+    <sn-row>
+      <sn-col [tablet]="4">
+        <sn-stack [gutter]="ui.gutter.small"
                    [align]="ui.align.stretch">
-          <jnt-form-item>
-            <jnt-form-label for="estimate" i18n="@@label.estimate">Estimate</jnt-form-label>
-            <jnt-form-control name="estimate">
-              <jnt-input formControlName="estimate"
+          <sn-form-item>
+            <sn-form-label for="estimate" i18n="@@label.estimate">Estimate</sn-form-label>
+            <sn-form-control name="estimate">
+              <sn-input formControlName="estimate"
                          [type]="ui.input.type.number"
                          placeholder="Hours"
-                         i18n-placeholder="@@label.hours"></jnt-input>
-            </jnt-form-control>
-          </jnt-form-item>
+                         i18n-placeholder="@@label.hours"></sn-input>
+            </sn-form-control>
+          </sn-form-item>
 
-          <jnt-stack [orientation]="ui.orientation.horizontal"
+          <sn-stack [orientation]="ui.orientation.horizontal"
                      [justify]="ui.justify.center">
-            <jnt-button-group [scheme]="ui.scheme.secondary"
+            <sn-button-group [scheme]="ui.scheme.secondary"
                               [size]="ui.size.tiny">
-              <jnt-button text="1h"
+              <sn-button text="1h"
                           i18n-text="@@label.1h"
-                          (click)="estimateControl.setValue(1)"></jnt-button>
-              <jnt-button text="2h"
+                          (click)="estimateControl.setValue(1)"></sn-button>
+              <sn-button text="2h"
                           i18n-text="@@label.2h"
-                          (click)="estimateControl.setValue(2)"></jnt-button>
-              <jnt-button text="6h"
+                          (click)="estimateControl.setValue(2)"></sn-button>
+              <sn-button text="6h"
                           i18n-text="@@label.6h"
-                          (click)="estimateControl.setValue(6)"></jnt-button>
-            </jnt-button-group>
-          </jnt-stack>
-        </jnt-stack>
-      </jnt-col>
+                          (click)="estimateControl.setValue(6)"></sn-button>
+            </sn-button-group>
+          </sn-stack>
+        </sn-stack>
+      </sn-col>
 
-      <jnt-col [tablet]="8">
-        <jnt-stack [gutter]="ui.gutter.small"
+      <sn-col [tablet]="8">
+        <sn-stack [gutter]="ui.gutter.small"
                    [align]="ui.align.stretch">
-          <jnt-form-item>
-            <jnt-form-label for="dueDate" i18n="@@label.due_date">Due Date</jnt-form-label>
-            <jnt-form-control name="dueDate">
-              <jnt-date-picker formControlName="dueDate"></jnt-date-picker>
-              <jnt-form-message i18n="@@message.field_required"
+          <sn-form-item>
+            <sn-form-label for="dueDate" i18n="@@label.due_date">Due Date</sn-form-label>
+            <sn-form-control name="dueDate">
+              <sn-date-picker formControlName="dueDate"></sn-date-picker>
+              <sn-form-message i18n="@@message.field_required"
                                 [validator]="ui.validator.required">
                 This field is required
-              </jnt-form-message>
-            </jnt-form-control>
-          </jnt-form-item>
+              </sn-form-message>
+            </sn-form-control>
+          </sn-form-item>
 
-          <jnt-stack [orientation]="ui.orientation.horizontal"
+          <sn-stack [orientation]="ui.orientation.horizontal"
                      [justify]="ui.justify.center">
-            <jnt-button-group [scheme]="ui.scheme.secondary"
+            <sn-button-group [scheme]="ui.scheme.secondary"
                               [size]="ui.size.tiny">
-              <jnt-button text="Tomorrow"
+              <sn-button text="Tomorrow"
                           i18n-text="@@action.tomorrow"
-                          (click)="tomorrow()"></jnt-button>
-              <jnt-button text="This week"
+                          (click)="tomorrow()"></sn-button>
+              <sn-button text="This week"
                           i18n-text="@@action.this_week"
-                          (click)="thisWeek()"></jnt-button>
-              <jnt-button text="Next week"
+                          (click)="thisWeek()"></sn-button>
+              <sn-button text="Next week"
                           i18n-text="@@action.next_week"
-                          (click)="nextWeek()"></jnt-button>
-            </jnt-button-group>
-          </jnt-stack>
-        </jnt-stack>
-      </jnt-col>
-    </jnt-row>
-  </jnt-stack>
+                          (click)="nextWeek()"></sn-button>
+            </sn-button-group>
+          </sn-stack>
+        </sn-stack>
+      </sn-col>
+    </sn-row>
+  </sn-stack>
 
   <ng-template #formFooterTemplate>
-    <jnt-stack [orientation]="ui.orientation.horizontal"
+    <sn-stack [orientation]="ui.orientation.horizontal"
                [justify]="ui.justify.end">
-      <jnt-button [type]="ui.button.type.submit"
+      <sn-button [type]="ui.button.type.submit"
                   [icon]="ui.icons.add"
                   text="Create"
-                  i18n-text="@@action.create"></jnt-button>
-    </jnt-stack>
+                  i18n-text="@@action.create"></sn-button>
+    </sn-stack>
   </ng-template>
 
-</jnt-form>
+</sn-form>

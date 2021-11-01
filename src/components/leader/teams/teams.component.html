@@ -1,33 +1,33 @@
-<jnt-informer *ngIf="errors.length > 0"
+<sn-informer *ngIf="errors.length > 0"
               (ok)="errors = []">
-  <jnt-informer-message *ngFor="let error of errors"
-                        [message]="error.toString()"></jnt-informer-message>
-</jnt-informer>
+  <sn-informer-message *ngFor="let error of errors"
+                        [message]="error.toString()"></sn-informer-message>
+</sn-informer>
 
-<jnt-app-content>
-  <jnt-breadcrumb></jnt-breadcrumb>
-  <jnt-app-body>
-    <jnt-container [width]="ui.width.fluid">
+<sn-app-content>
+  <sn-breadcrumb></sn-breadcrumb>
+  <sn-app-body>
+    <sn-container [width]="ui.width.fluid">
 
-      <jnt-app-page-header [icon]="localUi.icons.team"
+      <sn-app-page-header [icon]="localUi.icons.team"
                            title="Teams"
                            i18n-title="@@label.teams"
                            i18n-teaser="@@message.teams_teaser"
-                           teaser="where you are leader"></jnt-app-page-header>
+                           teaser="where you are leader"></sn-app-page-header>
 
       <ng-template #noDataTemplate>
         <ng-container *ngIf="loading;else emptyDataTemplate">
-          <jnt-row>
-            <jnt-col [wide]="2" [desktop]="3" *ngFor="let i of 3 | mockArray">
-              <jnt-card [width]="ui.width.fluid">
-                <jnt-stack [align]="ui.align.center">
-                  <jnt-skeleton [lines]="1"></jnt-skeleton>
-                  <jnt-skeleton [type]="ui.skeleton.type.avatar"></jnt-skeleton>
-                  <jnt-skeleton [lines]="1"></jnt-skeleton>
-                </jnt-stack>
-              </jnt-card>
-            </jnt-col>
-          </jnt-row>
+          <sn-row>
+            <sn-col [wide]="2" [desktop]="3" *ngFor="let i of 3 | mockArray">
+              <sn-card [width]="ui.width.fluid">
+                <sn-stack [align]="ui.align.center">
+                  <sn-skeleton [lines]="1"></sn-skeleton>
+                  <sn-skeleton [type]="ui.skeleton.type.avatar"></sn-skeleton>
+                  <sn-skeleton [lines]="1"></sn-skeleton>
+                </sn-stack>
+              </sn-card>
+            </sn-col>
+          </sn-row>
         </ng-container>
       </ng-template>
 
@@ -36,43 +36,43 @@
       </ng-template>
 
       <ng-container *ngIf="teams.length > 0;else noDataTemplate">
-        <jnt-form [formGroup]="form">
-          <jnt-stack [align]="ui.align.stretch">
-            <jnt-row>
-              <jnt-col [wide]="2" [desktop]="3" *ngFor="let team of teams">
-                <jnt-card [title]="team.title"
+        <sn-form [formGroup]="form">
+          <sn-stack [align]="ui.align.stretch">
+            <sn-row>
+              <sn-col [wide]="2" [desktop]="3" *ngFor="let team of teams">
+                <sn-card [title]="team.title"
                           [width]="ui.width.fluid"
                           [features]="[ui.feature.clickable]"
                           (selected)="router.navigate([team.id], {relativeTo: this.route})"
                           [padding]="ui.gutter.normal">
-                  <jnt-label problems *ngIf="team.metrics.problemsCount > 0"
+                  <sn-label problems *ngIf="team.metrics.problemsCount > 0"
                              [icon]="ui.icons.warning"
                              [color]="ui.color.red"
-                             [label]="team.metrics.problemsCount.toString()"></jnt-label>
-                  <jnt-avatars-group avatars [size]="ui.size.normal">
-                    <jnt-avatar *ngFor="let member of team.members"
+                             [label]="team.metrics.problemsCount.toString()"></sn-label>
+                  <sn-avatars-group avatars [size]="ui.size.normal">
+                    <sn-avatar *ngFor="let member of team.members"
                                 [image]="member.user.avatar">
-                    </jnt-avatar>
-                  </jnt-avatars-group>
+                    </sn-avatar>
+                  </sn-avatars-group>
                   <ng-template #cardFooterTemplate>
                     <div footer><b>{{!!team.metrics.issues.openedEstimated ? (team.metrics.issues.openedEstimated |
                       duration:durationFormat.short) : '&ndash;'}}</b>
                       hours for <b>{{team.metrics.issues.openedCount || '&ndash;'}}</b> tasks
                     </div>
                   </ng-template>
-                </jnt-card>
-              </jnt-col>
-            </jnt-row>
-            <jnt-pager formControlName="offset"
+                </sn-card>
+              </sn-col>
+            </sn-row>
+            <sn-pager formControlName="offset"
                        pageSize="10"
-                       [count]="count"></jnt-pager>
-          </jnt-stack>
-        </jnt-form>
+                       [count]="count"></sn-pager>
+          </sn-stack>
+        </sn-form>
       </ng-container>
 
-    </jnt-container>
-  </jnt-app-body>
+    </sn-container>
+  </sn-app-body>
 
   <app-footer></app-footer>
 
-</jnt-app-content>
+</sn-app-content>

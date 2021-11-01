@@ -1,6 +1,6 @@
 import { Component, ComponentFactoryResolver, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { ModalOptions, ModalService, TableComponent, UI } from '@junte/ui';
+import { ModalOptions, ModalService, TableComponent, UI } from '@esanum/ui';
 import { R } from 'apollo-angular/types';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';

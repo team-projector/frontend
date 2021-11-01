@@ -1,5 +1,5 @@
 import { Component, HostBinding, Input } from '@angular/core';
-import { UI } from '@junte/ui';
+import { UI } from '@esanum/ui';
 import { LocalUI } from 'src/enums/local-ui';
 import { TeamMemberRole } from 'src/models/enums/team';
 import { UserRole } from 'src/models/enums/user';
