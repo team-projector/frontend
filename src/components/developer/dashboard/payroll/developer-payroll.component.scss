@@ -7,91 +7,91 @@ $sn-ng-deep: true;
 :host {
   display: block;
 
-  @include sn-block((body: (padding: 0 0 $sn-gutter-normal 0)));
+  @include sn-block((body: (padding: 0 0 $app-gutter-normal 0)));
 }
 
 [data-user] {
-  padding: 0 $sn-gutter-large;
-  @include sn-label((color: $sn-primary-color));
+  padding: 0 $app-gutter-large;
+  @include sn-label((color: $app-primary-color));
   [data-position] {
-    color: $sn-primary-light-color;
-    font-weight: $sn-font-weight-bold;
-    font-size: $sn-font-size-base;
+    color: $app-primary-light-color;
+    font-weight: $app-font-weight-bold;
+    font-size: $app-font-size-base;
   }
 }
 
 [data-salary] {
   position: relative;
-  padding: $sn-gutter-normal $sn-gutter-large;
+  padding: $app-gutter-normal $app-gutter-large;
   font-size: 26px;
-  background: $sn-primary-color;
-  color: $sn-white-color;
+  background: $app-primary-color;
+  color: $app-white-color;
   [data-label] {
     font-size: 12px;
   }
   [data-money] {
-    @include sn-icon((color: $sn-primary-light-color, size: 30px), '&');
+    @include sn-icon((color: $app-primary-light-color, size: 30px), '&');
   }
   [data-opened] {
-    color: rgba($sn-white-color, .5);
+    color: rgba($app-white-color, .5);
     font-size: 18px;
     [data-label] {
       font-size: 12px;
-      color: $sn-primary-light-color;
+      color: $app-primary-light-color;
     }
   }
   [data-digit] {
-    font-weight: $sn-font-weight-bold;
+    font-weight: $app-font-weight-bold;
   }
   [data-line] {
-    font-size: $sn-font-size-base;
-    padding: $sn-gutter-small 0;
+    font-size: $app-font-size-base;
+    padding: $app-gutter-small 0;
     &:not(:last-of-type) {
-      border-bottom: 1px dashed $sn-primary-light-color;
+      border-bottom: 1px dashed $app-primary-light-color;
     }
     [data-title] {
-      font-weight: $sn-font-weight-bold;
+      font-weight: $app-font-weight-bold;
     }
     [data-time] {
-      color: $sn-secondary-dark-color;
-      font-size: $sn-font-size-normal;
-      @include sn-icon((color: $sn-secondary-dark-color));
+      color: $app-secondary-dark-color;
+      font-size: $app-font-size-normal;
+      @include sn-icon((color: $app-secondary-dark-color));
       span {
         font-size: 12px;
       }
     }
     > span {
       font-size: 18px;
-      font-weight: $sn-font-weight-bold;
+      font-weight: $app-font-weight-bold;
     }
     &[data-success] {
       > span {
-        color: $sn-success-color;
+        color: $app-success-color;
       }
     }
     &[data-fail] {
       > span {
-        color: $sn-fail-color;
+        color: $app-fail-color;
       }
     }
   }
   hr {
     border: 0;
     height: 1px;
-    background: $sn-primary-light-color;
+    background: $app-primary-light-color;
     width: 80px;
     align-self: flex-end;
     margin-right: 0;
   }
   svg {
-    fill: $sn-primary-color;
+    fill: $app-primary-color;
     position: absolute;
     top: 100%;
     left: 50%;
     transform: translateX(-50%);
     &[data-opened='true'] {
       transform: translateX(-50%) rotate(180deg);
-      fill: $sn-white-color;
+      fill: $app-white-color;
       top: auto;
       bottom: 0;
     }

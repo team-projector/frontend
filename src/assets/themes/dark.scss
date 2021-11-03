@@ -1,3 +1,5 @@
+@import "src/assets/styles/variables";
+
 $sn-theme-type: 'dark';
 
 $sn-white-color: white;
@@ -31,7 +33,7 @@ $sn-primary-color: $sn-purple-light-color;
 $sn-primary-light-color: lighten($sn-purple-light-color, 10%);
 $sn-secondary-color: #343434;
 $sn-secondary-dark-color: $sn-gray-800;
-//$sn-primary-dark-color: $sn-purple-color;
+$sn-primary-dark-color: $app-purple-dark-color;
 
 $sn-control-border-color: $sn-gray-900;
 
@@ -46,6 +48,37 @@ $sn-shadow-light: 0px 4px 10px rgba(255, 255, 255, 0.15);
 $sn-shadow-normal: 0px 2px 8px rgba(255, 255, 255, 0.25);
 
 $sn-body-color: $sn-primary-text-color;
+
+$sn-gutter-base: $app-gutter-base;
+
+$sn-gutter-none: 0;
+$sn-gutter-tiny: $sn-gutter-base;
+$sn-gutter-small: $sn-gutter-base * 2;
+$sn-gutter-normal: $sn-gutter-base * 4;
+$sn-gutter-big: $sn-gutter-base * 6;
+$sn-gutter-large: $sn-gutter-base * 8;
+$sn-gutter-huge: $sn-gutter-base * 12;
+
+$sn-corner-base: $app-corner-base;
+
+$sn-corner-small: $sn-corner-base;
+$sn-corner-normal: $sn-corner-base * 2;
+$sn-corner-large: $sn-corner-base * 10;
+
+$sn-font-size-tiny: $app-font-size-tiny;
+$sn-font-size-small: $app-font-size-small;
+$sn-font-size-base: $app-font-size-base;
+$sn-font-size-normal: $app-font-size-normal;
+$sn-font-size-big: $app-font-size-big;
+$sn-font-size-large: $app-font-size-large;
+$sn-font-size-huge: $app-font-size-huge;
+
+$sn-h1-font-size: $sn-font-size-base * 4;
+$sn-h2-font-size: $sn-font-size-base * 3;
+$sn-h3-font-size: $sn-font-size-base * 1.85;
+$sn-h4-font-size: $sn-font-size-base * 1.28;
+$sn-h5-font-size: $sn-font-size-base * 1.2;
+$sn-h6-font-size: $sn-font-size-base;
 
 @import "~@esanum/ui/lib/assets/styles/sn-variables";
 

@@ -6,12 +6,12 @@
 }
 
 [data-efficiency] {
-  margin-top: $sn-gutter-tiny;
+  margin-top: $app-gutter-tiny;
   text-align: center;
   font-size: .85em;
 
   [data-slow='true'] {
-    color: $sn-fail-color;
+    color: $app-fail-color;
   }
 }
 
@@ -20,7 +20,7 @@
   white-space: nowrap;
   text-overflow: ellipsis;
   font-size: .85em;
-  color: $sn-primary-text-light-color;
+  color: $app-primary-text-light-color;
 
   &:first-of-type {
     flex: 1;

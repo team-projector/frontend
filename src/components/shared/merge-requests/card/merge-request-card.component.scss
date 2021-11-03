@@ -11,22 +11,22 @@ $sn-ng-deep: true;
 }
 
 [state] {
-  color: $sn-success-color;
+  color: $app-success-color;
   &[doing] {
     min-width: 18px;
     width: 18px;
     min-height: 18px;
     height: 18px;
     border-radius: 50%;
-    fill: $sn-success-color;
+    fill: $app-success-color;
     padding: 1px;
-    border: 1px solid $sn-success-color;
+    border: 1px solid $app-success-color;
   }
   &[delayed] {
-    color: $sn-orange-color;
+    color: $app-orange-color;
   }
   &[bug] {
-    color: $sn-fail-color;
+    color: $app-fail-color;
   }
 }
 

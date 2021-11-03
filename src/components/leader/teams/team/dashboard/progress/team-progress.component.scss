@@ -18,13 +18,13 @@ $sn-ng-deep: true;
         &[data-rewind] {
           th {
             [data-date] {
-              color: $sn-gray-100-color;
+              color: $app-gray-100-color;
             }
           }
         }
 
         &[data-week] {
-          background-color: $sn-gray-800-color;
+          background-color: $app-gray-800-color;
         }
       }
     }
@@ -34,7 +34,7 @@ $sn-ng-deep: true;
         td {
           &[data-day] {
             &:hover {
-              background-color: $sn-gray-700-color;
+              background-color: $app-gray-700-color;
             }
           }
         }
@@ -49,7 +49,7 @@ table {
   table-layout: auto;
   border: 0;
   border-spacing: 0;
-  font-size: $sn-font-size-small;
+  font-size: $app-font-size-small;
 
   td, th:not([data-tools]) {
     text-align: center;
@@ -61,12 +61,12 @@ table {
   thead {
     tr {
       [data-tools] {
-        padding: $sn-gutter-normal $sn-gutter-normal 0 $sn-gutter-normal;
+        padding: $app-gutter-normal $app-gutter-normal 0 $app-gutter-normal;
 
         [data-title] {
-          color: $sn-primary-color;
+          color: $app-primary-color;
           font-size: 18px;
-          font-weight: $sn-font-weight-bold;
+          font-weight: $app-font-weight-bold;
           text-align: center;
           flex: 1;
         }
@@ -76,8 +76,8 @@ table {
         th {
           [data-date] {
             display: flex;
-            color: $sn-primary-text-dark-color;
-            font-weight: $sn-font-weight-bold;
+            color: $app-primary-text-dark-color;
+            font-weight: $app-font-weight-bold;
 
             span {
               margin: auto;
@@ -87,12 +87,12 @@ table {
       }
 
       &[data-week] {
-        background-color: $sn-secondary-background;
+        background-color: $app-secondary-background;
 
         th {
           &:nth-child(2),
           &:nth-child(9) {
-            border-right: 1px solid $sn-muted-color;
+            border-right: 1px solid $app-muted-color;
           }
 
           &[data-day] {
@@ -102,24 +102,24 @@ table {
 
             &:hover,
             &[today='true'] {
-              background-color: $sn-success-color;
-              color: $sn-white-color;
+              background-color: $app-success-color;
+              color: $app-white-color;
             }
           }
 
           &[data-metric-name] {
-            color: $sn-primary-dark-color;
+            color: $app-primary-dark-color;
           }
         }
       }
 
       th {
-        padding: $sn-gutter-normal $sn-gutter-tiny;
+        padding: $app-gutter-normal $app-gutter-tiny;
         min-width: 48px;
 
         &[data-gutter] {
-          width: $sn-gutter-tiny;
-          min-width: $sn-gutter-tiny;
+          width: $app-gutter-tiny;
+          min-width: $app-gutter-tiny;
         }
 
         &:nth-child(2) {
@@ -140,11 +140,11 @@ table {
   tbody {
     tr {
       td {
-        border-top: 1px solid $sn-muted-color;
-        padding: 10px $sn-gutter-tiny;
+        border-top: 1px solid $app-muted-color;
+        padding: 10px $app-gutter-tiny;
 
         &[slow='true'] span {
-          border-bottom: 2px solid $sn-fail-color;
+          border-bottom: 2px solid $app-fail-color;
         }
 
         &[data-day] {
@@ -152,11 +152,11 @@ table {
           position: relative;
 
           [data-day-text] {
-            font-size: $sn-font-size-small;
+            font-size: $app-font-size-small;
           }
 
           &:hover {
-            background-color: $sn-highlight-background;
+            background-color: $app-highlight-background;
           }
 
           [data-issues-count] {
@@ -179,12 +179,12 @@ table {
 
         [data-developer] {
           cursor: pointer;
-          padding: $sn-gutter-tiny;
+          padding: $app-gutter-tiny;
 
           &:focus {
             outline: 0;
-            border-radius: $sn-corner-small;
-            box-shadow: $sn-outline-shadow-small $sn-highlight-background;
+            border-radius: $app-corner-small;
+            box-shadow: $app-outline-shadow-small $app-highlight-background;
           }
         }
 
@@ -201,28 +201,28 @@ table {
 
         td {
           font-size: 80px;
-          color: $sn-muted-color;
+          color: $app-muted-color;
         }
       }
 
       &[data-loading] {
         td {
-          padding: $sn-gutter-normal;
+          padding: $app-gutter-normal;
         }
       }
 
       &[active='true'] {
         td {
-          background-color: $sn-secondary-background;
+          background-color: $app-secondary-background;
         }
 
         &:last-child {
           td:first-child {
-            border-bottom-left-radius: $sn-corner-normal;
+            border-bottom-left-radius: $app-corner-normal;
           }
 
           td:last-child {
-            border-bottom-right-radius: $sn-corner-normal;
+            border-bottom-right-radius: $app-corner-normal;
           }
         }
       }

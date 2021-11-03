@@ -11,7 +11,7 @@
 
 [calendar] {
   @include max-for-desktop() {
-    margin-bottom: $sn-gutter-normal;
+    margin-bottom: $app-gutter-normal;
   }
 }
 
@@ -20,22 +20,22 @@
   display: flex;
   align-items: center;
   min-height: 40px;
-  color: $sn-primary-text-light-color;
-  padding: $sn-gutter-small $sn-gutter-normal;
-  border: 1px dashed $sn-secondary-dark-color;
-  border-radius: $sn-corner-normal;
+  color: $app-primary-text-light-color;
+  padding: $app-gutter-small $app-gutter-normal;
+  border: 1px dashed $app-secondary-dark-color;
+  border-radius: $app-corner-normal;
   line-height: 1em;
   &[active='true'] {
     border-color: transparent;
-    background: $sn-primary-light-color;
-    color: $sn-white-color;
-    padding-right: $sn-gutter-huge;
-    box-shadow: $sn-shadow-normal;
+    background: $app-primary-light-color;
+    color: $app-white-color;
+    padding-right: $app-gutter-huge;
+    box-shadow: $app-shadow-normal;
   }
   [reset] {
     position: absolute;
-    top: $sn-gutter-small;
-    right: $sn-gutter-small;
+    top: $app-gutter-small;
+    right: $app-gutter-small;
   }
 }
 

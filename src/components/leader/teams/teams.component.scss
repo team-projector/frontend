@@ -5,17 +5,17 @@
 }
 
 [footer] {
-  padding-top: $sn-gutter-normal;
-  border-top: 1px solid $sn-muted-color;
+  padding-top: $app-gutter-normal;
+  border-top: 1px solid $app-muted-color;
   font-size: 12px;
 }
 
 [avatars] {
-  margin: $sn-gutter-big auto $sn-gutter-small auto;
+  margin: $app-gutter-big auto $app-gutter-small auto;
 }
 
 [problems] {
   position: absolute;
-  top: -$sn-gutter-small;
-  right: -$sn-gutter-small;
+  top: -$app-gutter-small;
+  right: -$app-gutter-small;
 }

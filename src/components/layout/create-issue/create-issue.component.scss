@@ -14,9 +14,9 @@ $sn-ng-deep: true;
 
 [data-issue] {
   p {
-    color: $sn-white-color;
+    color: $app-white-color;
   }
 
-  @include sn-link((color: $sn-orange-color));
+  @include sn-link((color: $app-orange-color));
 }
 
