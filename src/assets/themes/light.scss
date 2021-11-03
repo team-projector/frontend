@@ -1,41 +1,42 @@
+@import "src/assets/styles/variables";
+
 $sn-theme-type: 'light';
 
-$sn-white-color: white;
-$sn-black-color: black;
-$sn-teal-color: #1D2932;
-$sn-yellow-color: #F8DB42;
-$sn-orange-color: #EE8030;
+$sn-white-color: $app-white-color;
+$sn-black-color: $app-black-color;
+$sn-teal-color: $app-teal-color;
+$sn-yellow-color: $app-yellow-color;
+$sn-orange-color: $app-orange-color;
 
-$sn-blue-color: #E7F5FF;
-$sn-blue-100-color: #E6E9FA;
+$sn-blue-color: $app-blue-color;
+$sn-blue-100-color: $app-blue-100-color;
 
-$sn-green-color: #00CCB1;
-$sn-green-dark-color: #00B89F;
-$sn-red-color: #FF6262;
-$sn-red-dark-color: #DE5B5B;
+$sn-green-color: $app-green-color;
+$sn-green-dark-color: $app-green-dark-color;
+$sn-red-color: $app-red-color;
+$sn-red-dark-color: $app-red-dark-color;
 
-$sn-aqua-color: #45BFDA;
-$sn-aqua-dark-color: #008EA8;
-$sn-aqua-light-color: #80F2FF;
+$sn-aqua-color: $app-aqua-color;
+$sn-aqua-dark-color: $app-aqua-dark-color;
+$sn-aqua-light-color: $app-aqua-light-color;
 
-$sn-purple-color: #3949AB;
-$sn-purple-dark-color: #00227B;
-$sn-purple-light-color: #6F74DD;
-$sn-purple-lighten-color: #C4C9E7;
+$sn-purple-color: $app-purple-color;
+$sn-purple-dark-color: $app-purple-dark-color;
+$sn-purple-light-color: $app-purple-light-color;
+$sn-purple-lighten-color: $app-purple-lighten-color;
 
-$sn-magenta-dark-color: #933183;
+$sn-magenta-dark-color: $app-magenta-dark-color;
 
-$sn-gray-100-color: #F5F5F5;
-$sn-gray-200-color: #F7F7F7;
-$sn-gray-300-color: #F0F0F0;
-$sn-gray-400-color: #E9E9E9;
-$sn-pale-navy-color: #F3F4FC;
-$sn-gray-600-color: #C4C4C4;
-$sn-gray-700-color: #D0D0D0;
-$sn-gray-800-color: #828282;
-$sn-gray-900-color: #4F4F4F;
-$sn-gray-dark-color: #343434;
-
+$sn-gray-100-color: $app-gray-100-color;
+$sn-gray-200-color: $app-gray-200-color;
+$sn-gray-300-color: $app-gray-300-color;
+$sn-gray-400-color: $app-gray-400-color;
+$sn-pale-navy-color: $app-pale-navy-color;
+$sn-gray-600-color: $app-gray-600-color;
+$sn-gray-700-color: $app-gray-700-color;
+$sn-gray-800-color: $app-gray-800-color;
+$sn-gray-900-color: $app-gray-900-color;
+$sn-gray-dark-color: $app-gray-dark-color;
 
 $sn-primary-color: $sn-purple-color;
 $sn-primary-dark-color: $sn-purple-dark-color;
@@ -63,7 +64,7 @@ $sn-highlight-background: $sn-blue-100-color;
 
 $sn-page-background: $sn-gray-200-color;
 
-$sn-gutter-base: 4px;
+$sn-gutter-base: $app-gutter-base;
 
 $sn-gutter-none: 0;
 $sn-gutter-tiny: $sn-gutter-base;
@@ -73,7 +74,7 @@ $sn-gutter-big: $sn-gutter-base * 6;
 $sn-gutter-large: $sn-gutter-base * 8;
 $sn-gutter-huge: $sn-gutter-base * 12;
 
-$sn-corner-base: 4px;
+$sn-corner-base: $app-corner-base;
 
 $sn-corner-small: $sn-corner-base;
 $sn-corner-normal: $sn-corner-base * 2;
@@ -92,26 +93,26 @@ $sn-primary-text-dark-color: $sn-gray-dark-color;
 $sn-primary-text-light-color: $sn-gray-800-color;
 $sn-primary-text-inverse-color: $sn-white-color;
 
-$sn-font-size-tiny: 11px;
-$sn-font-size-small: 13px;
-$sn-font-size-base: 14px;
-$sn-font-size-normal: 16px;
-$sn-font-size-big: 24px;
-$sn-font-size-large: 32px;
-$sn-font-size-huge: 48px;
+$sn-font-size-tiny: $app-font-size-tiny;
+$sn-font-size-small: $app-font-size-small;
+$sn-font-size-base: $app-font-size-base;
+$sn-font-size-normal: $app-font-size-normal;
+$sn-font-size-big: $app-font-size-big;
+$sn-font-size-large: $app-font-size-large;
+$sn-font-size-huge: $app-font-size-huge;
 
-$sn-font-weight-light: 300;
-$sn-font-weight-base: 400;
-$sn-font-weight-semi-bold: 600;
-$sn-font-weight-bold: 700;
-$sn-font-weight-extra-bold: 800;
+$sn-font-weight-light: $app-font-weight-light;
+$sn-font-weight-base: $app-font-weight-base;
+$sn-font-weight-semi-bold: $app-font-weight-semi-bold;
+$sn-font-weight-bold: $app-font-weight-bold;
+$sn-font-weight-extra-bold: $app-font-weight-extra-bold;
 
-$sn-line-height-base: 1.5;
-$sn-line-height-large: 2.5;
-$sn-line-height-small: 1.3;
-$sn-line-height-tiny: 1;
+$sn-line-height-base: $app-line-height-base;
+$sn-line-height-large: $app-line-height-large;
+$sn-line-height-small: $app-line-height-small;
+$sn-line-height-tiny: $app-line-height-tiny;
 
-$sn-font-family-base: "Open Sans", Tahoma;
+$sn-font-family-base: $app-font-family-base;
 
 $sn-h1-font-size: $sn-font-size-base * 4;
 $sn-h2-font-size: $sn-font-size-base * 3;

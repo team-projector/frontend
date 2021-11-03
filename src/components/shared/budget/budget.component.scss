@@ -1,16 +1,15 @@
 @import "src/assets/styles/variables";
-$sn-ng-deep: true;
 
 [data-remains] {
-  margin-top: $sn-gutter-tiny;
+  margin-top: $app-gutter-tiny;
   text-align: center;
   font-size: .85em;
 
   [data-overflow='true'] {
-    background: $sn-fail-color;
-    color: $sn-white-color;
-    border-radius: $sn-gutter-tiny;
+    background: $app-fail-color;
+    color: $app-white-color;
+    border-radius: $app-gutter-tiny;
     line-height: 1em;
-    padding: 0 $sn-gutter-tiny;
+    padding: 0 $app-gutter-tiny;
   }
 }

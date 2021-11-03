@@ -8,7 +8,7 @@ $sn-ng-deep: true;
 }
 
 [data-group] {
-  color: $sn-muted-color;
+  color: $app-muted-color;
 }
 
 [data-summary] {
@@ -22,13 +22,13 @@ $sn-ng-deep: true;
 }
 
 [data-doing], [data-done] {
-  @include sn-icon((size: 20px, color: $sn-green-color), '&');
+  @include sn-icon((size: 20px, color: $app-green-color), '&');
 }
 
 [data-delayed] {
-  @include sn-icon((size: 20px, color: $sn-orange-color), '&');
+  @include sn-icon((size: 20px, color: $app-orange-color), '&');
 }
 
 [data-bug] {
-  color: $sn-fail-color;
+  color: $app-fail-color;
 }

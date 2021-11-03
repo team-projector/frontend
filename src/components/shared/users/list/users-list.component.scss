@@ -9,7 +9,7 @@
 }
 
 [data-paid-work-breaks-days] {
-  margin-top: $sn-gutter-tiny;
+  margin-top: $app-gutter-tiny;
   text-align: center;
   font-size: .85em;
 }
@@ -20,11 +20,11 @@
 
 [data-metrics] {
   border-collapse: collapse;
-  font-size: $sn-font-size-small;
+  font-size: $app-font-size-small;
 
   td {
-    border: 1px solid $sn-secondary-color;
-    padding: $sn-gutter-small;
+    border: 1px solid $app-secondary-color;
+    padding: $app-gutter-small;
   }
 
   tr td:nth-child(2) {

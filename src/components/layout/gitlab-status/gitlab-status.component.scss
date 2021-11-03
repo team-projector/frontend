@@ -13,8 +13,8 @@ hr {
   width: 100%;
   &:not(:last-child) {
     display: block;
-    padding-top: $sn-gutter-tiny;
-    margin-bottom: $sn-gutter-tiny;
-    border-bottom: 1px solid $sn-secondary-background;
+    padding-top: $app-gutter-tiny;
+    margin-bottom: $app-gutter-tiny;
+    border-bottom: 1px solid $app-secondary-background;
   }
 }

@@ -13,11 +13,11 @@ $sn-ng-deep: true;
 }
 
 [data-header] {
-  padding-top: $sn-gutter-normal;
+  padding-top: $app-gutter-normal;
 
   [data-title] {
-    color: $sn-primary-color;
-    // TODO: Do we need to use $sn-font-size-big?
+    color: $app-primary-color;
+    // TODO: Do we need to use $app-font-size-big?
     font-size: 18px;
     font-weight: bold;
     text-align: center;
@@ -37,11 +37,11 @@ $sn-ng-deep: true;
   position: relative;
 
   [data-day-text] {
-    font-size: $sn-font-size-small;
+    font-size: $app-font-size-small;
   }
 
   &[today='true'] {
-    @include sn-circle-bar((content: (color: $sn-white-color)), '&');
+    @include sn-circle-bar((content: (color: $app-white-color)), '&');
   }
 
   [data-issues-count] {
@@ -60,7 +60,7 @@ $sn-ng-deep: true;
       height: 40px;
 
       &[data-time] {
-        color: $sn-primary-text-light-color
+        color: $app-primary-text-light-color
       }
     }
   }

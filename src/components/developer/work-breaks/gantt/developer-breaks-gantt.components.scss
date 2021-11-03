@@ -3,10 +3,10 @@
 
 [period] {
   position: relative;
-  margin: $sn-gutter-tiny;
-  border-radius: $sn-corner-large;
-  background-color: $sn-gray-600-color;
-  color: $sn-white-color;
+  margin: $app-gutter-tiny;
+  border-radius: $app-corner-large;
+  background-color: $app-gray-600-color;
+  color: $app-white-color;
   height: 40px;
   pointer-events: none;
   overflow: hidden;
@@ -22,26 +22,26 @@
   }
 
   &[over-due='true'] {
-     border-right: 10px solid $sn-fail-color;
+     border-right: 10px solid $app-fail-color;
   }
 
   &[accepting='true'] {
      cursor: pointer;
      pointer-events: all;
-     background-color: $sn-primary-color;
+     background-color: $app-primary-color;
   }
 
   &[accepted='true'] {
-     background-color: $sn-success-color;
+     background-color: $app-success-color;
   }
 
   &[declined='true'] {
-     background-color: $sn-fail-color;
+     background-color: $app-fail-color;
   }
 
   [label] {
     position: absolute;
-    font-size: $sn-font-size-small;
+    font-size: $app-font-size-small;
     text-align: center;
     top: 0;
     right: 0;
@@ -54,7 +54,7 @@
   }
 
   [progress] {
-    background-color: $sn-success-color;
+    background-color: $app-success-color;
     transform: translateX(-50%);
     height: 100%;
   }
