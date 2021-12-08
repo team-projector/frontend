@@ -15,7 +15,7 @@ export class TicketStateColorPipe implements PipeTransform {
       case TicketStates.testing:
         return UI.color.yellow;
       case TicketStates.accepting:
-        return UI.color.gray;
+        return UI.color.gray550;
       default:
         return UI.color.green;
     }

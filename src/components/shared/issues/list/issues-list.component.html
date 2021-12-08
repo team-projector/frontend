@@ -51,7 +51,7 @@
           </sn-col>
         </sn-row>
         <sn-row>
-          <sn-col [desktop]="4" [tablet]="12">
+          <sn-col [wide]="2" [tablet]="12">
             <ng-template #projectOption let-project="value"
                          let-selected="selected">
               <sn-stack [orientation]="ui.orientation.horizontal"
@@ -89,7 +89,7 @@
                                  [value]="p"></sn-select-option>
             </sn-select>
           </sn-col>
-          <sn-col *ngIf="!!team" [desktop]="4" [tablet]="12">
+          <sn-col *ngIf="!!team" [wide]="3" [tablet]="12">
             <ng-template #userOption let-member="value"
                          let-selected="selected">
               <app-user [user]="member.user"
@@ -113,12 +113,12 @@
                                  [value]="m"></sn-select-option>
             </sn-select>
           </sn-col>
-          <sn-col [desktop]="2" [tablet]="12">
+          <sn-col [wide]="2" [tablet]="12">
             <sn-date-picker data-due-date formControlName="dueDate"
                              [width]="ui.width.fluid"
                              [features]="[ui.feature.allowEmpty]"></sn-date-picker>
           </sn-col>
-          <sn-col [desktop]="6" [tablet]="12">
+          <sn-col [wide]="5" [tablet]="12">
             <sn-switcher data-summary formControlName="type" [features]="[ui.feature.adapted]">
               <sn-switcher-option label="All"
                                    i18n-label="@@action.filter_issues_all"
