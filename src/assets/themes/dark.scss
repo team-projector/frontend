@@ -3,9 +3,12 @@
 $sn-theme-type: 'dark';
 
 $sn-white-color: white;
+$sn-gray-50-color: #303030;
 $sn-gray-100: #F5F5F5;
 $sn-gray-200: #F7F7F7;
+$sn-gray-250-color: #101010;
 $sn-gray-300: #F0F0F0;
+$sn-gray-250-color: #141414;
 $sn-gray-400: #E9E9E9;
 $sn-gray-500: #F3F4FC;
 $sn-gray-600: #C4C4C4;
@@ -29,11 +32,13 @@ $sn-secondary-background: $sn-gray-dark-100;
 $sn-page-background: $sn-gray-dark-100;
 $sn-highlight-background: #292929;
 
-$sn-primary-color: $sn-purple-light-color;
-$sn-primary-light-color: lighten($sn-purple-light-color, 10%);
-$sn-secondary-color: #343434;
-$sn-secondary-dark-color: $sn-gray-800;
-$sn-primary-dark-color: $app-purple-dark-color;
+$sn-primary-500-color: $app-purple-color;
+$sn-primary-600-color: $app-purple-dark-color;
+$sn-primary-400-color: $sn-purple-light-color;
+
+$sn-secondary-500-color: $app-aqua-color;
+$sn-secondary-600-color: $app-aqua-dark-color;
+$sn-secondary-400-color: $app-aqua-light-color;
 
 $sn-control-border-color: $sn-gray-900;
 
@@ -80,8 +85,13 @@ $sn-h4-font-size: $sn-font-size-base * 1.28;
 $sn-h5-font-size: $sn-font-size-base * 1.2;
 $sn-h6-font-size: $sn-font-size-base;
 
+$app-aside-collapsed-width: 86px;
+
 @import "~@esanum/ui/lib/assets/styles/sn-variables";
 
 [theme='dark'] {
   @import "~@esanum/ui/lib/assets/styles/sn-all";
+
+  @include sn-link((color: $sn-primary-500-color, hover-color: $sn-primary-600-color));
+
 }

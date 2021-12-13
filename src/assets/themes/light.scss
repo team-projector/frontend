@@ -38,13 +38,13 @@ $sn-gray-800-color: $app-gray-800-color;
 $sn-gray-900-color: $app-gray-900-color;
 $sn-gray-dark-color: $app-gray-dark-color;
 
-$sn-primary-color: $sn-purple-color;
-$sn-primary-dark-color: $sn-purple-dark-color;
-$sn-primary-light-color: $sn-purple-light-color;
+$sn-primary-500-color: $sn-purple-color;
+$sn-primary-600-color: $sn-purple-dark-color;
+$sn-primary-400-color: $sn-purple-light-color;
 
-$sn-secondary-color: $sn-aqua-color;
-$sn-secondary-dark-color: $sn-aqua-dark-color;
-$sn-secondary-light-color: $sn-aqua-light-color;
+$sn-secondary-500-color: $sn-aqua-color;
+$sn-secondary-600-color: $sn-aqua-dark-color;
+$sn-secondary-400-color: $sn-aqua-light-color;
 
 $sn-success-color: $sn-green-color;
 $sn-success-dark-color: $sn-green-dark-color;
@@ -82,7 +82,7 @@ $sn-corner-large: $sn-corner-base * 10;
 
 $sn-shadow-light: 0px 4px 10px rgba($sn-black-color, .15);
 $sn-shadow-normal: 0px 2px 8px rgba($sn-black-color, .25);
-$sn-shadow-primary: 0px 2px 8px rgba($sn-primary-color, .25);
+$sn-shadow-primary: 0px 2px 8px rgba($sn-primary-500-color, .25);
 $sn-outline-shadow-small: 0 0 0 2px;
 $sn-outline-shadow-normal: 0 0 0 4px;
 
@@ -150,3 +150,5 @@ $app-aside-collapsed-width: 86px;
 
 @import "~@esanum/ui/lib/assets/styles/sn-variables";
 @import "~@esanum/ui/lib/assets/styles/sn-all";
+
+@include sn-link((color: $sn-primary-500-color, hover-color: $sn-primary-600-color));

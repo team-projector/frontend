@@ -10,6 +10,16 @@ $sn-ng-deep: true;
   @include sn-block((body: (padding: 0 0 $app-gutter-normal 0)));
 }
 
+:host-context([theme='dark']) {
+  [data-wrapper] {
+    svg {
+      &[data-opened='true'] {
+        fill: #262626;
+      }
+    }
+  }
+}
+
 [data-user] {
   padding: 0 $app-gutter-large;
   @include sn-label((color: $app-primary-color));
@@ -20,69 +30,64 @@ $sn-ng-deep: true;
   }
 }
 
-[data-salary] {
+[data-wrapper] {
   position: relative;
-  padding: $app-gutter-normal $app-gutter-large;
-  font-size: 26px;
-  background: $app-primary-color;
-  color: $app-white-color;
-  [data-label] {
-    font-size: 12px;
-  }
-  [data-money] {
-    @include sn-icon((color: $app-primary-light-color, size: 30px), '&');
-  }
-  [data-opened] {
-    color: rgba($app-white-color, .5);
-    font-size: 18px;
+  [data-salary] {
+    padding: $app-gutter-normal $app-gutter-large;
+    font-size: 26px;
+    background: $app-primary-color;
+    color: $app-white-color;
     [data-label] {
       font-size: 12px;
-      color: $app-primary-light-color;
     }
-  }
-  [data-digit] {
-    font-weight: $app-font-weight-bold;
-  }
-  [data-line] {
-    font-size: $app-font-size-base;
-    padding: $app-gutter-small 0;
-    &:not(:last-of-type) {
-      border-bottom: 1px dashed $app-primary-light-color;
+    [data-money] {
+      @include sn-icon((color: $app-primary-light-color, size: 30px), '&');
     }
-    [data-title] {
+    [data-digit] {
       font-weight: $app-font-weight-bold;
     }
-    [data-time] {
-      color: $app-secondary-dark-color;
-      font-size: $app-font-size-normal;
-      @include sn-icon((color: $app-secondary-dark-color));
-      span {
-        font-size: 12px;
+    [data-line] {
+      font-size: $app-font-size-base;
+      padding: $app-gutter-small 0;
+      &:not(:last-of-type) {
+        border-bottom: 1px dashed $app-primary-light-color;
       }
-    }
-    > span {
-      font-size: 18px;
-      font-weight: $app-font-weight-bold;
-    }
-    &[data-success] {
+      [data-title] {
+        font-weight: $app-font-weight-bold;
+      }
+      [data-time] {
+        color: $app-secondary-dark-color;
+        font-size: $app-font-size-normal;
+        @include sn-icon((color: $app-secondary-dark-color));
+        span {
+          font-size: 12px;
+        }
+      }
       > span {
-        color: $app-success-color;
+        font-size: 18px;
+        font-weight: $app-font-weight-bold;
+      }
+      &[data-success] {
+        > span {
+          color: $app-success-color;
+        }
+      }
+      &[data-fail] {
+        > span {
+          color: $app-fail-color;
+        }
       }
     }
-    &[data-fail] {
-      > span {
-        color: $app-fail-color;
-      }
+    hr {
+      border: 0;
+      height: 1px;
+      background: $app-primary-light-color;
+      width: 80px;
+      align-self: flex-end;
+      margin-right: 0;
     }
   }
-  hr {
-    border: 0;
-    height: 1px;
-    background: $app-primary-light-color;
-    width: 80px;
-    align-self: flex-end;
-    margin-right: 0;
-  }
+
   svg {
     fill: $app-primary-color;
     position: absolute;
@@ -96,4 +101,13 @@ $sn-ng-deep: true;
       bottom: 0;
     }
   }
+  [data-opened] {
+    color: rgba($app-white-color, .5);
+    font-size: 18px;
+    [data-label] {
+      font-size: 12px;
+      color: $app-primary-light-color;
+    }
+  }
 }
+
