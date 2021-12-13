@@ -24,92 +24,93 @@
       </sn-stack>
     </sn-stack>
 
-    <sn-stack data-salary
-               [gutter]="ui.gutter.tiny"
-               [align]="ui.align.stretch">
+    <div data-wrapper>
+      <sn-stack data-salary
+                [gutter]="ui.gutter.tiny"
+                [align]="ui.align.stretch">
 
-      <sn-stack *ngIf="opened" [@appear]="opened" [gutter]="ui.gutter.none" [align]="ui.align.stretch">
-        <sn-stack data-line data-success
-                   [orientation]="ui.orientation.horizontal"
-                   [justify]="ui.justify.between"
-                   [align]="ui.align.center">
-          <sn-stack [orientation]="ui.orientation.horizontal">
-            <div data-title i18n="@@label.closed">Closed</div>
-            <sn-stack data-time [orientation]="ui.orientation.horizontal"
-                       [gutter]="ui.gutter.small"
-                       [align]="ui.align.center">
-              <sn-icon *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) > 0"
-                        [icon]="ui.icons.time"></sn-icon>
-              <span>{{(metrics.issues.closedSpent) | duration}}</span>
+        <sn-stack *ngIf="opened" [@appear]="opened" [gutter]="ui.gutter.none" [align]="ui.align.stretch">
+          <sn-stack data-line data-success
+                    [orientation]="ui.orientation.horizontal"
+                    [justify]="ui.justify.between"
+                    [align]="ui.align.center">
+            <sn-stack [orientation]="ui.orientation.horizontal">
+              <div data-title i18n="@@label.closed">Closed</div>
+              <sn-stack data-time [orientation]="ui.orientation.horizontal"
+                        [gutter]="ui.gutter.small"
+                        [align]="ui.align.center">
+                <sn-icon *ngIf="(metrics.issues.closedSpent + metrics.mergeRequests.closedSpent) > 0"
+                         [icon]="ui.icons.time"></sn-icon>
+                <span>{{(metrics.issues.closedSpent) | duration}}</span>
+              </sn-stack>
             </sn-stack>
-          </sn-stack>
-          <span>
+            <span>
               <span *ngIf="metrics.payrollClosed + metrics.taxesClosed > 0">+</span>
-            {{(metrics.payrollClosed + metrics.taxesClosed) | money}}
+              {{(metrics.payrollClosed + metrics.taxesClosed) | money}}
             </span>
-        </sn-stack>
+          </sn-stack>
 
-        <sn-stack data-line data-success
-                   [orientation]="ui.orientation.horizontal"
-                   [justify]="ui.justify.between"
-                   [align]="ui.align.center">
-          <div data-title i18n="@@label.bonuses">Bonuses</div>
-          <span>
+          <sn-stack data-line data-success
+                    [orientation]="ui.orientation.horizontal"
+                    [justify]="ui.justify.between"
+                    [align]="ui.align.center">
+            <div data-title i18n="@@label.bonuses">Bonuses</div>
+            <span>
               <span *ngIf="metrics.bonus > 0">+</span>
-            {{metrics.bonus | money}}
+              {{metrics.bonus | money}}
             </span>
-        </sn-stack>
+          </sn-stack>
 
-        <sn-stack data-line data-fail
-                   [orientation]="ui.orientation.horizontal"
-                   [justify]="ui.justify.between"
-                   [align]="ui.align.center">
-          <div data-title i18n="@@label.penalties">Penalties</div>
-          <span>
+          <sn-stack data-line data-fail
+                    [orientation]="ui.orientation.horizontal"
+                    [justify]="ui.justify.between"
+                    [align]="ui.align.center">
+            <div data-title i18n="@@label.penalties">Penalties</div>
+            <span>
               <span *ngIf="metrics.penalty > 0">-</span>
-            {{metrics.penalty | money}}
+              {{metrics.penalty | money}}
             </span>
-        </sn-stack>
+          </sn-stack>
 
-        <sn-stack data-line data-fail
-                   [orientation]="ui.orientation.horizontal"
-                   [justify]="ui.justify.between"
-                   [align]="ui.align.center">
-          <div data-title i18n="@@label.taxes">Taxes</div>
-          <span>
+          <sn-stack data-line data-fail
+                    [orientation]="ui.orientation.horizontal"
+                    [justify]="ui.justify.between"
+                    [align]="ui.align.center">
+            <div data-title i18n="@@label.taxes">Taxes</div>
+            <span>
               <span *ngIf="metrics.taxesClosed > 0">-</span>
-            {{metrics.taxesClosed | money}}
+              {{metrics.taxesClosed | money}}
             </span>
+          </sn-stack>
+
+          <hr>
         </sn-stack>
 
-        <hr>
-      </sn-stack>
+        <sn-stack [gutter]="ui.gutter.tiny" [align]="ui.align.end">
+          <span data-label i18n="@@label.you_have_earned">You've earned:</span>
 
-      <sn-stack [gutter]="ui.gutter.tiny" [align]="ui.align.end">
-        <span data-label i18n="@@label.you_have_earned">You've earned:</span>
-
-        <sn-stack [orientation]="ui.orientation.horizontal"
-                   [justify]="ui.justify.end"
-                   [align]="ui.align.center">
-          <sn-icon data-money [icon]="localUi.icons.money"></sn-icon>
-          <span data-digit>
+          <sn-stack [orientation]="ui.orientation.horizontal"
+                    [justify]="ui.justify.end"
+                    [align]="ui.align.center">
+            <sn-icon data-money [icon]="localUi.icons.money"></sn-icon>
+            <span data-digit>
             {{metrics.payrollClosed + metrics.bonus - metrics.penalty | money}}
           </span>
-        </sn-stack>
+          </sn-stack>
 
-        <sn-stack data-opened [gutter]="ui.gutter.none" [align]="ui.align.end">
-          <span data-label i18n="@@label.opened_tasks">Opened tasks:</span>
-          <span data-digit>
+          <sn-stack data-opened [gutter]="ui.gutter.none" [align]="ui.align.end">
+            <span data-label i18n="@@label.opened_tasks">Opened tasks:</span>
+            <span data-digit>
             {{metrics.payrollOpened | money}}</span>
+          </sn-stack>
         </sn-stack>
-      </sn-stack>
 
+      </sn-stack>
       <svg [attr.data-opened]="opened" width="19" height="8" viewBox="0 0 19 8" xmlns="http://www.w3.org/2000/svg">
         <path
           d="M0.500001 -1.43099e-07C4.91827 2.43159e-07 7.49999 8.00002 9.5 8C11.5 7.99998 14.0817 1.04425e-06 18.5 1.43051e-06L0.500001 -1.43099e-07Z"/>
       </svg>
-
-    </sn-stack>
+    </div>
 
     <sn-stack [orientation]="ui.orientation.horizontal"
                [justify]="ui.justify.center">
