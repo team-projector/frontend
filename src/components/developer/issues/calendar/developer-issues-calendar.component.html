@@ -1,0 +1,84 @@
+<sn-stack [orientation]="ui.orientation.horizontal">
+  <sn-button text="Reload"
+             [icon]="progress.loading ? ui.icons.animated.reload : ui.icons.reload"
+             [outline]="ui.outline.transparent"
+             [disabled]="progress.loading"
+             (click)="loadDays()"></sn-button>
+</sn-stack>
+
+<sn-calendar [readonly]="true"
+             (updated)="period = $event; loadDays()">
+  <ng-template #calendarDayTemplate
+               let-date="date">
+    <sn-stack data-day-template
+              [align]="ui.align.stretch"
+              [padding]="ui.gutter.small">
+      <ng-container *ngTemplateOutlet="dayTemplate;
+        context: {date: date, info: days?.get((date | dfnsFormat:dateFormat))}"></ng-container>
+    </sn-stack>
+  </ng-template>
+</sn-calendar>
+
+<ng-template #noIssues>
+  <sn-stack data-no-issues
+            [align]="ui.align.center"
+            [gutter]="ui.gutter.tiny">
+    <sn-icon [icon]="localUi.icons.noIssues"
+             [color]="ui.color.gray400"></sn-icon>
+    <span data-no-issues-text>No issues yet</span>
+  </sn-stack>
+</ng-template>
+
+<ng-template #issueIcon
+             let-state="state"
+             let-labels="labels">
+  <sn-icon *ngIf="state == issueState?.opened && (labels | hasLabel:standardLabel.doing); else delayedTemplate"
+           [icon]="localUi.icons.doing"
+           [size]="ui.size.small"></sn-icon>
+  <ng-template #delayedTemplate>
+    <sn-icon *ngIf="labels | hasLabel:standardLabel.delayed; else doneTemplate"
+             [icon]="localUi.icons.delayed"
+             [size]="ui.size.small"></sn-icon>
+  </ng-template>
+  <ng-template #doneTemplate>
+    <sn-icon *ngIf="labels | hasLabel:standardLabel.done"
+             [icon]="localUi.icons.done"
+             [size]="ui.size.small"></sn-icon>
+  </ng-template>
+</ng-template>
+
+<ng-template #dayTemplate
+             let-date="date"
+             let-info="info">
+  <sn-stack [orientation]="ui.orientation.horizontal"
+            [justify]="ui.justify.end"
+            [align]="ui.align.center">
+    <ng-container *ngIf="info?.metrics.timeSpent">
+      <sn-stack [orientation]="ui.orientation.horizontal"
+                [align]="ui.align.center"
+                [gutter]="ui.gutter.tiny">
+        <sn-icon [icon]="localUi.icons.loading"
+                 [size]="ui.size.small"
+                 [color]="ui.color.primary500"></sn-icon>
+        <span>{{ info?.metrics.timeSpent | duration:durationFormat.short }}</span>
+      </sn-stack>
+    </ng-container>
+    <span data-date>{{ date | dfnsGetDate }}</span>
+  </sn-stack>
+
+  <ng-container *ngIf="info?.issues.length > 0; else noIssues">
+    <sn-stack data-issue
+              *ngFor="let issue of info?.issues"
+              [orientation]="ui.orientation.horizontal"
+              [align]="ui.align.center"
+              [gutter]="ui.gutter.small">
+      <ng-container *ngTemplateOutlet="issueIcon;
+            context: {state: issue.state, labels: issue.labels}"></ng-container>
+      <sn-link data-issue-link
+               [source]="issue.glUrl"
+               [outline]="ui.outline.fill"
+               [target]="ui.target.blank"
+               [title]="issue.title"></sn-link>
+    </sn-stack>
+  </ng-container>
+</ng-template>

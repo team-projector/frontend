@@ -4,9 +4,18 @@
                      i18n-teaser="@@message.developer_issues_teaser"
                      teaser="assigned to you"></sn-app-page-header>
 
-<sn-block [padding]="ui.gutter.none"
+<sn-block data-tabs [padding]="ui.gutter.none"
            [width]="ui.width.fluid">
-  <app-issues [view]="viewType.developer"
-              [state]="state"
-              (filtered)="save($event)"></app-issues>
+  <sn-menu data-nav [style]="ui.menu.style.tabs"
+           [spacing]="ui.gutter.normal">
+    <sn-menu-item [link]="['.']"
+                  title="List"
+                  i18n-title="@@action.list">
+    </sn-menu-item>
+    <sn-menu-item [link]="['calendar']"
+                  title="Calendar"
+                  i18n-title="@@action.calendar">
+    </sn-menu-item>
+  </sn-menu>
+  <router-outlet></router-outlet>
 </sn-block>

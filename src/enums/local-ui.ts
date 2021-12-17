@@ -24,6 +24,8 @@ export class LocalUI {
     developer: 'developer:svg:local:stroked',
     project: 'project:svg:local:stroked',
     today: 'today:svg:local:filled',
+    loading: 'loading:svg:local:stroked',
+    noIssues: 'no-issues:svg:local:stroked',
 
     leader: 'leader:svg:local',
 

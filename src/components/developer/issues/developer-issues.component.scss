@@ -1,3 +1,11 @@
-:host {
-  display: block;
+@import "src/assets/styles/variables";
+@import "~@esanum/ui/lib/assets/styles/layout/block";
+$sn-ng-deep: true;
+
+[data-tabs] {
+  @include sn-block((body: (padding: $app-gutter-normal 0 0 0)), '&');
+
+  [data-nav] {
+    margin: 0 $app-gutter-normal;
+  }
 }
