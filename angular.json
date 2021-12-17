@@ -45,6 +45,11 @@
               "src/assets/themes",
               {
                 "glob": "**/*",
+                "input": "node_modules/@esanum/ui/lib/assets/fonts/esanum-ui-icons-default/",
+                "output": "./assets/fonts/icons/"
+              },
+              {
+                "glob": "**/*",
                 "input": "node_modules/@esanum/ui/lib/assets/icons/animated/",
                 "output": "./assets/icons/animated/"
               },
