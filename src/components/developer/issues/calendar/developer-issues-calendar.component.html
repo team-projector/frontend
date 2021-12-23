@@ -1,33 +1,24 @@
-<sn-stack [orientation]="ui.orientation.horizontal">
-  <sn-button text="Reload"
-             [icon]="progress.loading ? ui.icons.animated.reload : ui.icons.reload"
-             [outline]="ui.outline.transparent"
-             [disabled]="progress.loading"
-             (click)="loadDays()"></sn-button>
-</sn-stack>
-
 <sn-calendar [readonly]="true"
              (updated)="period = $event; loadDays()">
+  <ng-template #calendarHeaderTemplate>
+    <sn-button text='Reload'
+               [icon]="progress.loading ? ui.icons.animated.reload : ui.icons.reload"
+               [outline]="ui.outline.transparent"
+               [disabled]="progress.loading"
+               (click)="loadDays()"></sn-button>
+  </ng-template>
   <ng-template #calendarDayTemplate
                let-date="date">
     <sn-stack data-day-template
               [align]="ui.align.stretch"
+              [gutter]="ui.gutter.small"
               [padding]="ui.gutter.small">
       <ng-container *ngTemplateOutlet="dayTemplate;
-        context: {date: date, info: days?.get((date | dfnsFormat:dateFormat))}"></ng-container>
+        context: {date: date, info: days?.get((date | dfnsFormat:dateFormat)), isToday: (date | isToday)}">
+      </ng-container>
     </sn-stack>
   </ng-template>
 </sn-calendar>
-
-<ng-template #noIssues>
-  <sn-stack data-no-issues
-            [align]="ui.align.center"
-            [gutter]="ui.gutter.tiny">
-    <sn-icon [icon]="localUi.icons.noIssues"
-             [color]="ui.color.gray400"></sn-icon>
-    <span data-no-issues-text>No issues yet</span>
-  </sn-stack>
-</ng-template>
 
 <ng-template #issueIcon
              let-state="state"
@@ -49,7 +40,8 @@
 
 <ng-template #dayTemplate
              let-date="date"
-             let-info="info">
+             let-info="info"
+             let-isToday="isToday">
   <sn-stack [orientation]="ui.orientation.horizontal"
             [justify]="ui.justify.end"
             [align]="ui.align.center">
@@ -63,22 +55,23 @@
         <span>{{ info?.metrics.timeSpent | duration:durationFormat.short }}</span>
       </sn-stack>
     </ng-container>
-    <span data-date>{{ date | dfnsGetDate }}</span>
+    <div data-date [attr.data-today]="isToday">{{ date | dfnsGetDate }}</div>
   </sn-stack>
 
-  <ng-container *ngIf="info?.issues.length > 0; else noIssues">
+  <ng-container *ngIf="info?.issues.length > 0">
     <sn-stack data-issue
               *ngFor="let issue of info?.issues"
               [orientation]="ui.orientation.horizontal"
-              [align]="ui.align.center"
-              [gutter]="ui.gutter.small">
+              [gutter]="ui.gutter.small"
+              [align]="ui.align.center">
       <ng-container *ngTemplateOutlet="issueIcon;
             context: {state: issue.state, labels: issue.labels}"></ng-container>
       <sn-link data-issue-link
                [source]="issue.glUrl"
                [outline]="ui.outline.fill"
                [target]="ui.target.blank"
-               [title]="issue.title"></sn-link>
+               [title]="issue.title"
+               [attr.data-issue-closed]="issue.state == issueState?.closed"></sn-link>
     </sn-stack>
   </ng-container>
 </ng-template>

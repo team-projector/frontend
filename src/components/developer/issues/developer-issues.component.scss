@@ -1,5 +1,6 @@
 @import "src/assets/styles/variables";
 @import "~@esanum/ui/lib/assets/styles/layout/block";
+@import "~@esanum/ui/lib/assets/styles/navigation/menu";
 $sn-ng-deep: true;
 
 [data-tabs] {
@@ -7,5 +8,6 @@ $sn-ng-deep: true;
 
   [data-nav] {
     margin: 0 $app-gutter-normal;
+    border-bottom: none;
   }
 }
