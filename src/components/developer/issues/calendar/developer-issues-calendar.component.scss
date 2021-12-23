@@ -6,32 +6,39 @@ $sn-ng-deep: true;
 
 :host {
   display: block;
-  padding: $app-gutter-normal;
 }
 
-[data-no-issues] {
-  padding: 0 $app-gutter-normal $app-gutter-normal;
+[data-day-template] {
+  min-height: 100px;
 
-  [data-no-issues-text] {
-    font-size: $app-font-size-tiny;
-    color: $app-gray-400-color;
+  [data-date] {
+    padding: $app-gutter-tiny $app-gutter-small;
+    font: {
+      size: $app-font-size-small;
+      weight: $app-font-weight-bold;
+    }
+
+    &[data-today='true'] {
+      color: $app-primary-text-inverse-color;
+      background-color: $app-primary-color;
+      border-radius: $app-gutter-small;
+    }
   }
-}
 
-[data-date] {
-  font-size: $app-font-size-small;
-  font-weight: $app-font-weight-bold;
-}
+  [data-issue] {
+    @include sn-link((
+      font-size: $app-font-size-tiny,
+      color: $app-secondary-background,
+      inverse-color: $app-primary-color,
+    ));
 
-[data-issue] {
-  @include sn-link((
-    font-size: $app-font-size-tiny,
-    color: $app-secondary-background,
-    inverse-color: $app-primary-color,
-  ));
+    [data-issue-link] {
+      display: flex;
+      flex: 1;
+    }
 
-  [data-issue-link] {
-    display: flex;
-    flex: 1;
+    [data-issue-link][data-issue-closed='true'] {
+      text-decoration: line-through;
+    }
   }
 }

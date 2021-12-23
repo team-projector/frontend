@@ -26,6 +26,8 @@ export class LocalUI {
     today: 'today:svg:local:filled',
     loading: 'loading:svg:local:stroked',
     noIssues: 'no-issues:svg:local:stroked',
+    list: 'list:svg:local:stroked',
+    calendar: 'calendar:svg:local:stroked',
 
     leader: 'leader:svg:local',
 

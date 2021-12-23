@@ -39,6 +39,7 @@ export const APPLICATION_READY = 'application_ready';
 
 const CURRENCY_CODE = BACKEND.config.currencyCode;
 export const FIRST_DAY_OF_WEEK: 0 | 1 = BACKEND.config.firstWeekDay;
+const BUILD_HASH = 'v7';
 
 const fnsConfig = new DateFnsConfigurationService();
 
@@ -113,7 +114,7 @@ switch (language) {
     fnsConfig.setLocale(dfnsLocale);
     config = {
       i18n: i18nEn,
-      hash: 'v6',
+      hash: BUILD_HASH,
       weekStartsOn: FIRST_DAY_OF_WEEK,
       locale: {
         ui: jntEnUs,
