@@ -28,6 +28,7 @@ export class LocalUI {
     noIssues: 'no-issues:svg:local:stroked',
     list: 'list:svg:local:stroked',
     calendar: 'calendar:svg:local:stroked',
+    bug: 'bug:svg:local:stroked',
 
     leader: 'leader:svg:local',
 

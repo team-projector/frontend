@@ -43,16 +43,20 @@
              let-info="info"
              let-isToday="isToday">
   <sn-stack [orientation]="ui.orientation.horizontal"
-            [justify]="ui.justify.end"
+            [justify]="ui.justify.between"
             [align]="ui.align.center">
-    <ng-container *ngIf="info?.metrics.timeSpent">
+    <ng-container *ngIf="!!info?.metrics.timeSpent || !!info?.metrics.timeEstimate">
       <sn-stack [orientation]="ui.orientation.horizontal"
                 [align]="ui.align.center"
                 [gutter]="ui.gutter.tiny">
         <sn-icon [icon]="localUi.icons.loading"
                  [size]="ui.size.small"
                  [color]="ui.color.primary500"></sn-icon>
-        <span>{{ info?.metrics.timeSpent | duration:durationFormat.short }}</span>
+        <span *ngIf="!!info?.metrics.timeSpent"
+              data-time-spent>{{ info?.metrics.timeSpent | duration:durationFormat.short }}</span>
+        <span *ngIf="!!info?.metrics.timeEstimate"
+              [attr.data-overestimate]="info?.metrics.timeEstimate > info?.metrics.plannedWorkHours * 3600">
+          {{ info?.metrics.timeEstimate | duration:durationFormat.short }}</span>
       </sn-stack>
     </ng-container>
     <div data-date [attr.data-today]="isToday">{{ date | dfnsGetDate }}</div>
@@ -72,6 +76,10 @@
                [target]="ui.target.blank"
                [title]="issue.title"
                [attr.data-issue-closed]="issue.state == issueState?.closed"></sn-link>
+      <sn-icon *ngIf="issue.labels | hasLabel:standardLabel.bug"
+               [icon]="localUi.icons.bug"
+               [size]="ui.size.small"
+               [color]="ui.color.red"></sn-icon>
     </sn-stack>
   </ng-container>
 </ng-template>

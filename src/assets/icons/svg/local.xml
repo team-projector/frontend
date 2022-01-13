@@ -293,4 +293,19 @@
     <path d="M15 9V21" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
     <path d="M3 15H21" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
   </svg>
+
+  <svg id="bug" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11.9999 4.66669L11.3332 6.00002L10.4446 6.61135" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M3.33325 8.00002H5.40658" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M10.5933 8.00002H12.6666" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M4 2H3.33333C2.59667 2 2 2.59667 2 3.33333V4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M12 14H12.6667C13.4033 14 14 13.4033 14 12.6667V12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M2 12V12.6667C2 13.4033 2.59667 14 3.33333 14H4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M14 4V3.33333C14 2.59667 13.4033 2 12.6667 2H12" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M4 4.66669L4.66667 6.00002L5.55533 6.61135" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.29604 11.3333H7.70337C6.5987 11.3333 5.70337 10.438 5.70337 9.33333V7.33333C5.70337 6.59667 6.30004 6 7.0367 6H8.9627C9.69937 6 10.296 6.59667 10.296 7.33333V9.33333C10.296 10.438 9.4007 11.3333 8.29604 11.3333Z" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M4 11.3333L4.66667 10L5.55533 9.38867" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path d="M11.9999 11.3333L11.3332 10L10.4446 9.38867" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M9.33341 6H6.66675V4.66667C6.66675 4.29867 6.96541 4 7.33341 4H8.66675C9.03475 4 9.33341 4.29867 9.33341 4.66667V6Z" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  </svg>
 </icons>
