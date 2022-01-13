@@ -39,7 +39,7 @@ export const APPLICATION_READY = 'application_ready';
 
 const CURRENCY_CODE = BACKEND.config.currencyCode;
 export const FIRST_DAY_OF_WEEK: 0 | 1 = BACKEND.config.firstWeekDay;
-const BUILD_HASH = 'v7';
+const BUILD_HASH = 'v8';
 
 const fnsConfig = new DateFnsConfigurationService();
 

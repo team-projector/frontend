@@ -11,6 +11,14 @@ $sn-ng-deep: true;
 [data-day-template] {
   min-height: 100px;
 
+  [data-time-spent] {
+    color: $app-primary-color;
+  }
+
+  [data-overestimate="true"] {
+    color: $app-warning-color;
+  }
+
   [data-date] {
     padding: $app-gutter-tiny $app-gutter-small;
     font: {
